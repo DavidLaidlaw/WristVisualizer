@@ -33,8 +33,7 @@ namespace WristVizualizer
             _bones = new Separator[15];
             _currentPositionIndex = 0;
             setupControlBox();
-            showControlBox();
-            
+            //showControlBox();            
         }
 
         private void hideControlBox()
@@ -77,6 +76,7 @@ namespace WristVizualizer
 
         private void resetForm()
         {
+            importToolStripMenuItem.Enabled = true;
             _bones = new Separator[15];
             for (int i = 0; i < _bnames.Length; i++)
             {
@@ -157,6 +157,9 @@ namespace WristVizualizer
             string basepath = Path.GetDirectoryName(radius);
             string extension = Path.GetExtension(radius);
             string series = Path.GetFileNameWithoutExtension(radius).Substring(3, 3);
+
+            //block importing a file
+            importToolStripMenuItem.Enabled = false;
 
             //Setup motion files, etc
             _wrist = new Wrist(radius);
