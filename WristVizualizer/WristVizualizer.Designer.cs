@@ -36,6 +36,7 @@ namespace WristVizualizer
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pos2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCoin = new System.Windows.Forms.Panel();
             this.checkBoxRad = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -68,8 +69,11 @@ namespace WristVizualizer
             this.label15 = new System.Windows.Forms.Label();
             this.checkBoxMC3 = new System.Windows.Forms.CheckBox();
             this.panelControl = new System.Windows.Forms.Panel();
+            this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.pos2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label17 = new System.Windows.Forms.Label();
+            this.linkLabelShowAll = new System.Windows.Forms.LinkLabel();
+            this.linkLabelHideAll = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +85,7 @@ namespace WristVizualizer
             this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(614, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(680, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -139,9 +143,16 @@ namespace WristVizualizer
             this.decoratorToolStripMenuItem.CheckOnClick = true;
             this.decoratorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.decoratorToolStripMenuItem.Name = "decoratorToolStripMenuItem";
-            this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
             this.decoratorToolStripMenuItem.Text = "&Decorator";
             this.decoratorToolStripMenuItem.CheckedChanged += new System.EventHandler(this.decoratorToolStripMenuItem_CheckedChanged);
+            // 
+            // pos2ToolStripMenuItem
+            // 
+            this.pos2ToolStripMenuItem.Name = "pos2ToolStripMenuItem";
+            this.pos2ToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.pos2ToolStripMenuItem.Text = "Pos2";
+            this.pos2ToolStripMenuItem.Click += new System.EventHandler(this.pos2ToolStripMenuItem_Click);
             // 
             // panelCoin
             // 
@@ -151,14 +162,14 @@ namespace WristVizualizer
             this.panelCoin.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelCoin.Location = new System.Drawing.Point(15, 37);
             this.panelCoin.Name = "panelCoin";
-            this.panelCoin.Size = new System.Drawing.Size(587, 346);
+            this.panelCoin.Size = new System.Drawing.Size(653, 359);
             this.panelCoin.TabIndex = 1;
             // 
             // checkBoxRad
             // 
             this.checkBoxRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxRad.AutoSize = true;
-            this.checkBoxRad.Location = new System.Drawing.Point(89, 29);
+            this.checkBoxRad.Location = new System.Drawing.Point(102, 29);
             this.checkBoxRad.Name = "checkBoxRad";
             this.checkBoxRad.Size = new System.Drawing.Size(15, 14);
             this.checkBoxRad.TabIndex = 2;
@@ -169,7 +180,7 @@ namespace WristVizualizer
             // 
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 30);
+            this.label1.Location = new System.Drawing.Point(25, 30);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(40, 13);
             this.label1.TabIndex = 3;
@@ -179,7 +190,7 @@ namespace WristVizualizer
             // 
             this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 50);
+            this.label2.Location = new System.Drawing.Point(25, 50);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(29, 13);
             this.label2.TabIndex = 5;
@@ -189,7 +200,7 @@ namespace WristVizualizer
             // 
             this.checkBoxUln.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxUln.AutoSize = true;
-            this.checkBoxUln.Location = new System.Drawing.Point(89, 49);
+            this.checkBoxUln.Location = new System.Drawing.Point(102, 49);
             this.checkBoxUln.Name = "checkBoxUln";
             this.checkBoxUln.Size = new System.Drawing.Size(15, 14);
             this.checkBoxUln.TabIndex = 4;
@@ -200,7 +211,7 @@ namespace WristVizualizer
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(12, 70);
+            this.label3.Location = new System.Drawing.Point(25, 70);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(52, 13);
             this.label3.TabIndex = 7;
@@ -210,7 +221,7 @@ namespace WristVizualizer
             // 
             this.checkBoxSca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxSca.AutoSize = true;
-            this.checkBoxSca.Location = new System.Drawing.Point(89, 69);
+            this.checkBoxSca.Location = new System.Drawing.Point(102, 69);
             this.checkBoxSca.Name = "checkBoxSca";
             this.checkBoxSca.Size = new System.Drawing.Size(15, 14);
             this.checkBoxSca.TabIndex = 6;
@@ -221,7 +232,7 @@ namespace WristVizualizer
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(12, 90);
+            this.label4.Location = new System.Drawing.Point(25, 90);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(40, 13);
             this.label4.TabIndex = 9;
@@ -231,7 +242,7 @@ namespace WristVizualizer
             // 
             this.checkBoxLun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxLun.AutoSize = true;
-            this.checkBoxLun.Location = new System.Drawing.Point(89, 89);
+            this.checkBoxLun.Location = new System.Drawing.Point(102, 89);
             this.checkBoxLun.Name = "checkBoxLun";
             this.checkBoxLun.Size = new System.Drawing.Size(15, 14);
             this.checkBoxLun.TabIndex = 8;
@@ -242,7 +253,7 @@ namespace WristVizualizer
             // 
             this.label5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 170);
+            this.label5.Location = new System.Drawing.Point(25, 170);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(56, 13);
             this.label5.TabIndex = 17;
@@ -252,7 +263,7 @@ namespace WristVizualizer
             // 
             this.checkBoxTpm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxTpm.AutoSize = true;
-            this.checkBoxTpm.Location = new System.Drawing.Point(89, 169);
+            this.checkBoxTpm.Location = new System.Drawing.Point(102, 169);
             this.checkBoxTpm.Name = "checkBoxTpm";
             this.checkBoxTpm.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTpm.TabIndex = 16;
@@ -263,7 +274,7 @@ namespace WristVizualizer
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 150);
+            this.label6.Location = new System.Drawing.Point(25, 150);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 13);
             this.label6.TabIndex = 15;
@@ -273,7 +284,7 @@ namespace WristVizualizer
             // 
             this.checkBoxTpd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxTpd.AutoSize = true;
-            this.checkBoxTpd.Location = new System.Drawing.Point(89, 149);
+            this.checkBoxTpd.Location = new System.Drawing.Point(102, 149);
             this.checkBoxTpd.Name = "checkBoxTpd";
             this.checkBoxTpd.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTpd.TabIndex = 14;
@@ -284,7 +295,7 @@ namespace WristVizualizer
             // 
             this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(12, 130);
+            this.label7.Location = new System.Drawing.Point(25, 130);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(43, 13);
             this.label7.TabIndex = 13;
@@ -294,7 +305,7 @@ namespace WristVizualizer
             // 
             this.checkBoxPis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxPis.AutoSize = true;
-            this.checkBoxPis.Location = new System.Drawing.Point(89, 129);
+            this.checkBoxPis.Location = new System.Drawing.Point(102, 129);
             this.checkBoxPis.Name = "checkBoxPis";
             this.checkBoxPis.Size = new System.Drawing.Size(15, 14);
             this.checkBoxPis.TabIndex = 12;
@@ -305,7 +316,7 @@ namespace WristVizualizer
             // 
             this.label8.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(12, 110);
+            this.label8.Location = new System.Drawing.Point(25, 110);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(57, 13);
             this.label8.TabIndex = 11;
@@ -315,7 +326,7 @@ namespace WristVizualizer
             // 
             this.checkBoxTrq.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxTrq.AutoSize = true;
-            this.checkBoxTrq.Location = new System.Drawing.Point(89, 109);
+            this.checkBoxTrq.Location = new System.Drawing.Point(102, 109);
             this.checkBoxTrq.Name = "checkBoxTrq";
             this.checkBoxTrq.Size = new System.Drawing.Size(15, 14);
             this.checkBoxTrq.TabIndex = 10;
@@ -326,7 +337,7 @@ namespace WristVizualizer
             // 
             this.label9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(12, 250);
+            this.label9.Location = new System.Drawing.Point(25, 250);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(32, 13);
             this.label9.TabIndex = 25;
@@ -336,7 +347,7 @@ namespace WristVizualizer
             // 
             this.checkBoxMC2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxMC2.AutoSize = true;
-            this.checkBoxMC2.Location = new System.Drawing.Point(89, 249);
+            this.checkBoxMC2.Location = new System.Drawing.Point(102, 249);
             this.checkBoxMC2.Name = "checkBoxMC2";
             this.checkBoxMC2.Size = new System.Drawing.Size(15, 14);
             this.checkBoxMC2.TabIndex = 24;
@@ -347,7 +358,7 @@ namespace WristVizualizer
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(12, 230);
+            this.label10.Location = new System.Drawing.Point(25, 230);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(32, 13);
             this.label10.TabIndex = 23;
@@ -357,7 +368,7 @@ namespace WristVizualizer
             // 
             this.checkBoxMC1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxMC1.AutoSize = true;
-            this.checkBoxMC1.Location = new System.Drawing.Point(89, 229);
+            this.checkBoxMC1.Location = new System.Drawing.Point(102, 229);
             this.checkBoxMC1.Name = "checkBoxMC1";
             this.checkBoxMC1.Size = new System.Drawing.Size(15, 14);
             this.checkBoxMC1.TabIndex = 22;
@@ -368,7 +379,7 @@ namespace WristVizualizer
             // 
             this.label11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(12, 210);
+            this.label11.Location = new System.Drawing.Point(25, 210);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(44, 13);
             this.label11.TabIndex = 21;
@@ -378,7 +389,7 @@ namespace WristVizualizer
             // 
             this.checkBoxHam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxHam.AutoSize = true;
-            this.checkBoxHam.Location = new System.Drawing.Point(89, 209);
+            this.checkBoxHam.Location = new System.Drawing.Point(102, 209);
             this.checkBoxHam.Name = "checkBoxHam";
             this.checkBoxHam.Size = new System.Drawing.Size(15, 14);
             this.checkBoxHam.TabIndex = 20;
@@ -389,7 +400,7 @@ namespace WristVizualizer
             // 
             this.label12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(12, 190);
+            this.label12.Location = new System.Drawing.Point(25, 190);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(46, 13);
             this.label12.TabIndex = 19;
@@ -399,7 +410,7 @@ namespace WristVizualizer
             // 
             this.checkBoxCap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxCap.AutoSize = true;
-            this.checkBoxCap.Location = new System.Drawing.Point(89, 189);
+            this.checkBoxCap.Location = new System.Drawing.Point(102, 189);
             this.checkBoxCap.Name = "checkBoxCap";
             this.checkBoxCap.Size = new System.Drawing.Size(15, 14);
             this.checkBoxCap.TabIndex = 18;
@@ -410,7 +421,7 @@ namespace WristVizualizer
             // 
             this.label13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(12, 310);
+            this.label13.Location = new System.Drawing.Point(25, 310);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(32, 13);
             this.label13.TabIndex = 31;
@@ -420,7 +431,7 @@ namespace WristVizualizer
             // 
             this.checkBoxMC5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxMC5.AutoSize = true;
-            this.checkBoxMC5.Location = new System.Drawing.Point(89, 309);
+            this.checkBoxMC5.Location = new System.Drawing.Point(102, 309);
             this.checkBoxMC5.Name = "checkBoxMC5";
             this.checkBoxMC5.Size = new System.Drawing.Size(15, 14);
             this.checkBoxMC5.TabIndex = 30;
@@ -431,7 +442,7 @@ namespace WristVizualizer
             // 
             this.label14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(12, 290);
+            this.label14.Location = new System.Drawing.Point(25, 290);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(32, 13);
             this.label14.TabIndex = 29;
@@ -441,7 +452,7 @@ namespace WristVizualizer
             // 
             this.checkBoxMC4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxMC4.AutoSize = true;
-            this.checkBoxMC4.Location = new System.Drawing.Point(89, 289);
+            this.checkBoxMC4.Location = new System.Drawing.Point(102, 289);
             this.checkBoxMC4.Name = "checkBoxMC4";
             this.checkBoxMC4.Size = new System.Drawing.Size(15, 14);
             this.checkBoxMC4.TabIndex = 28;
@@ -452,7 +463,7 @@ namespace WristVizualizer
             // 
             this.label15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(12, 270);
+            this.label15.Location = new System.Drawing.Point(25, 270);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(32, 13);
             this.label15.TabIndex = 27;
@@ -462,7 +473,7 @@ namespace WristVizualizer
             // 
             this.checkBoxMC3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.checkBoxMC3.AutoSize = true;
-            this.checkBoxMC3.Location = new System.Drawing.Point(89, 269);
+            this.checkBoxMC3.Location = new System.Drawing.Point(102, 269);
             this.checkBoxMC3.Name = "checkBoxMC3";
             this.checkBoxMC3.Size = new System.Drawing.Size(15, 14);
             this.checkBoxMC3.TabIndex = 26;
@@ -472,6 +483,10 @@ namespace WristVizualizer
             // panelControl
             // 
             this.panelControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelControl.Controls.Add(this.linkLabelHideAll);
+            this.panelControl.Controls.Add(this.linkLabelShowAll);
+            this.panelControl.Controls.Add(this.label17);
+            this.panelControl.Controls.Add(this.seriesListBox);
             this.panelControl.Controls.Add(this.label16);
             this.panelControl.Controls.Add(this.label8);
             this.panelControl.Controls.Add(this.label13);
@@ -503,33 +518,68 @@ namespace WristVizualizer
             this.panelControl.Controls.Add(this.checkBoxCap);
             this.panelControl.Controls.Add(this.checkBoxTpm);
             this.panelControl.Controls.Add(this.label5);
-            this.panelControl.Location = new System.Drawing.Point(475, 37);
+            this.panelControl.Location = new System.Drawing.Point(437, 37);
             this.panelControl.Name = "panelControl";
-            this.panelControl.Size = new System.Drawing.Size(118, 331);
+            this.panelControl.Size = new System.Drawing.Size(228, 359);
             this.panelControl.TabIndex = 32;
             this.panelControl.Visible = false;
             // 
+            // seriesListBox
+            // 
+            this.seriesListBox.FormattingEnabled = true;
+            this.seriesListBox.Location = new System.Drawing.Point(140, 29);
+            this.seriesListBox.Name = "seriesListBox";
+            this.seriesListBox.Size = new System.Drawing.Size(85, 290);
+            this.seriesListBox.TabIndex = 33;
+            this.seriesListBox.SelectedIndexChanged += new System.EventHandler(this.seriesListBox_SelectedIndexChanged);
+            // 
             // label16
             // 
+            this.label16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(78, 10);
+            this.label16.Location = new System.Drawing.Point(91, 10);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(29, 13);
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
-            // pos2ToolStripMenuItem
+            // label17
             // 
-            this.pos2ToolStripMenuItem.Name = "pos2ToolStripMenuItem";
-            this.pos2ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.pos2ToolStripMenuItem.Text = "Pos2";
-            this.pos2ToolStripMenuItem.Click += new System.EventHandler(this.pos2ToolStripMenuItem_Click);
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(154, 10);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(36, 13);
+            this.label17.TabIndex = 34;
+            this.label17.Text = "Series";
+            // 
+            // linkLabelShowAll
+            // 
+            this.linkLabelShowAll.AutoSize = true;
+            this.linkLabelShowAll.Location = new System.Drawing.Point(89, 326);
+            this.linkLabelShowAll.Name = "linkLabelShowAll";
+            this.linkLabelShowAll.Size = new System.Drawing.Size(45, 13);
+            this.linkLabelShowAll.TabIndex = 35;
+            this.linkLabelShowAll.TabStop = true;
+            this.linkLabelShowAll.Text = "show all";
+            this.linkLabelShowAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowAll_LinkClicked);
+            // 
+            // linkLabelHideAll
+            // 
+            this.linkLabelHideAll.AutoSize = true;
+            this.linkLabelHideAll.Location = new System.Drawing.Point(91, 341);
+            this.linkLabelHideAll.Name = "linkLabelHideAll";
+            this.linkLabelHideAll.Size = new System.Drawing.Size(40, 13);
+            this.linkLabelHideAll.TabIndex = 36;
+            this.linkLabelHideAll.TabStop = true;
+            this.linkLabelHideAll.Text = "hide all";
+            this.linkLabelHideAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHideAll_LinkClicked);
             // 
             // WristVizualizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(614, 395);
+            this.ClientSize = new System.Drawing.Size(680, 408);
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.panelCoin);
             this.Controls.Add(this.menuStrip1);
@@ -596,6 +646,10 @@ namespace WristVizualizer
         private System.Windows.Forms.Panel panelControl;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ToolStripMenuItem pos2ToolStripMenuItem;
+        private System.Windows.Forms.ListBox seriesListBox;
+        private System.Windows.Forms.LinkLabel linkLabelHideAll;
+        private System.Windows.Forms.LinkLabel linkLabelShowAll;
+        private System.Windows.Forms.Label label17;
     }
 }
 

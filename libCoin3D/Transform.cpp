@@ -6,6 +6,7 @@
 libCoin3D::Transform::Transform(void)
 {
 	_transform = new SoTransform();
+	_transform->ref();
 	_rotMatrix = NULL;
 	_transVector = NULL;
 }
@@ -17,6 +18,8 @@ libCoin3D::Transform::~Transform()
 
 	if (_transVector == NULL)
 		delete _transVector;
+
+	_transform->unref();
 }
 
 void
@@ -39,6 +42,8 @@ libCoin3D::Transform::setRotation(double r00, double r01, double r02, double r10
 	R[2][0] = (float)r20;
 	R[2][1] = (float)r21;
 	R[2][2] = (float)r22;
+
+	
 
 	SbRotation tempR;
 //	r1.setValue((const float*)R);
@@ -75,15 +80,17 @@ void libCoin3D::Transform::setTransform(double r00,double r01,double r02,double 
 	R[2][1] = (float)r21;
 	R[2][2] = (float)r22;
 
-	R[3][0] = (float)v0;
-	R[3][1] = (float)v1;
-	R[3][2] = (float)v2;
+	R[0][3] = (float)v0;
+	R[1][3] = (float)v1;
+	R[2][3] = (float)v2;
 	
 
 	//SbRotation tempR;
 //	r1.setValue((const float*)R);
 	//tempR.setValue(R.transpose());
 	_transform->setMatrix(R.transpose());
+	_rotMatrix = new SbMatrix[1];
+	_rotMatrix[0]=R.transpose();
 	//_transform->rotation.setValue(R.transpose());
 
 
@@ -91,10 +98,15 @@ void libCoin3D::Transform::setTransform(double r00,double r01,double r02,double 
 
 void libCoin3D::Transform::test(double^ values)
 {
-
 }
 
 void libCoin3D::Transform::invert()
 {
-	//_transform->getm
+	_transform->setMatrix(_rotMatrix[0].inverse());
+}
+
+bool libCoin3D::Transform::isIdentity()
+{
+	SbMatrix ident = SbMatrix::identity();
+	return ident.equals(_rotMatrix[0],0.001f);
 }

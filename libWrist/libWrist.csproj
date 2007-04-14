@@ -46,6 +46,10 @@
       <Project>{6ABA6EAD-58B0-4FCE-A97F-BC884281A170}</Project>
       <Name>GeneralMatrix</Name>
     </ProjectReference>
+    <ProjectReference Include="..\libCoin3D\libCoin3D.vcproj">
+      <Project>{34510B6D-EB60-4DBA-952B-49C6729C1367}</Project>
+      <Name>libCoin3D</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

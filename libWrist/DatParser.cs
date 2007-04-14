@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using DotNetMatrix;
+using libCoin3D;
 
 
 namespace libWrist
 {
-    public struct Transform 
+    public struct TransformMatrix
     {
         public GeneralMatrix R;
         public GeneralMatrix T;
@@ -19,6 +20,34 @@ namespace libWrist
         {
  
             
+        }
+
+        public static Transform[][] makeAllTransforms(string[] motionFiles, int numBones)
+        {
+            Transform[][] transforms = new Transform[motionFiles.Length][];
+            for (int i = 0; i < motionFiles.Length; i++)
+            {
+                transforms[i] = new Transform[numBones];
+                TransformMatrix[] tfm = parseMotionFile2(motionFiles[i]);
+                for (int j = 0; j < numBones; j++)
+                {
+                    transforms[i][j] = new Transform();
+                    /*
+                    t.setRotation(tfm[i].R.Array[0][0], tfm[i].R.Array[0][1], tfm[i].R.Array[0][2],
+                        tfm[i].R.Array[1][0], tfm[i].R.Array[1][1], tfm[i].R.Array[1][2],
+                        tfm[i].R.Array[2][0], tfm[i].R.Array[2][1], tfm[i].R.Array[2][2]);
+                     
+                    t.setTranslation(tfm[i].T.Array[0][0], tfm[i].T.Array[0][1], tfm[i].T.Array[0][2]);
+                    _bones[i].addTransform(t);
+                     */
+                    transforms[i][j].setTransform(tfm[j].R.Array[0][0], tfm[j].R.Array[0][1], tfm[j].R.Array[0][2],
+                        tfm[j].R.Array[1][0], tfm[j].R.Array[1][1], tfm[j].R.Array[1][2],
+                        tfm[j].R.Array[2][0], tfm[j].R.Array[2][1], tfm[j].R.Array[2][2],
+                        tfm[j].T.Array[0][0], tfm[j].T.Array[0][1], tfm[j].T.Array[0][2]);
+                }
+            }
+            return transforms;
+
         }
 
         public static double[][] parseDatFile(string filename)
@@ -58,18 +87,26 @@ namespace libWrist
             return dat;
         }
 
-        public static Transform[] parseMotionFile2(string filename)
+        public static TransformMatrix[] parseMotionFile2(string filename)
         {
             double[][] dat = parseMotionFile(filename);
-            Transform[] transforms = new Transform[15];
+            TransformMatrix[] transforms = new TransformMatrix[15];
             for (int i = 0; i < 15; i++)
             {
-                transforms[i] = new Transform();
+                transforms[i] = new TransformMatrix();
                 double[][] tempR = { dat[i * 4], dat[i * 4 + 1], dat[i * 4 + 2] };
                 transforms[i].R = new GeneralMatrix(tempR, 3, 3);
                 transforms[i].T = new GeneralMatrix(dat[i * 4 + 3], 1);
             }
             return transforms;
+        }
+
+        public static void addRTtoTransform(TransformMatrix tfm, Transform transform)
+        {
+            transform.setTransform(tfm.R.Array[0][0], tfm.R.Array[0][1], tfm.R.Array[0][2],
+                tfm.R.Array[1][0], tfm.R.Array[1][1], tfm.R.Array[1][2],
+                tfm.R.Array[2][0], tfm.R.Array[2][1], tfm.R.Array[2][2],
+                tfm.T.Array[0][0], tfm.T.Array[0][1], tfm.T.Array[0][2]);       
         }
 
     }

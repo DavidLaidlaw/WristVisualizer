@@ -53,4 +53,13 @@ SoSeparator* libCoin3D::Separator::getSoSeparator(void)
 void libCoin3D::Separator::addTransform(libCoin3D::Transform ^transform)
 {
 	_separator->insertChild(transform->getSoTransform(),0);
+	_numTransforms++;
+}
+
+void libCoin3D::Separator::removeTransform()
+{
+	if (_numTransforms>0) {
+		_separator->removeChild(0);
+		_numTransforms--;
+	}
 }

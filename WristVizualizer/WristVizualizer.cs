@@ -20,6 +20,8 @@ namespace WristVizualizer
         private string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
         private CheckBox[] _hideBoxes;
         private Wrist _wrist;
+        private Transform[][] _transforms;
+        private int _currentPositionIndex;
 
         public WristVizualizer()
         {
@@ -29,6 +31,7 @@ namespace WristVizualizer
             _root = null;
             _wrist = null;
             _bones = new Separator[15];
+            _currentPositionIndex = 0;
             setupControlBox();
             showControlBox();
             
@@ -121,9 +124,6 @@ namespace WristVizualizer
 
                 if (loadFull)
                 {
-                    _wrist = new Wrist(open.FileName);
-                    _wrist.setupPaths(open.FileName);
-                    _wrist.findAllSeries();
 
                     showControlBox();
                     loadFullWrist(open.FileName, _root);
@@ -139,11 +139,35 @@ namespace WristVizualizer
             }
         }
 
+        private void populateSeriesList()
+        {
+            if (_wrist != null)
+            {
+                _currentPositionIndex = 0;
+                seriesListBox.Items.Clear();
+                //add neutral
+                seriesListBox.Items.Add(_wrist.neturalSeries);
+                seriesListBox.Items.AddRange(_wrist.series);
+                seriesListBox.SelectedIndex = 0;
+            }
+        }
+
         private void loadFullWrist(string radius, Separator root)
         {
             string basepath = Path.GetDirectoryName(radius);
             string extension = Path.GetExtension(radius);
             string series = Path.GetFileNameWithoutExtension(radius).Substring(3, 3);
+
+            //Setup motion files, etc
+            _wrist = new Wrist(radius);
+            _wrist.setupPaths(radius);
+            _wrist.findAllSeries();
+            _transforms = DatParser.makeAllTransforms(_wrist.motionFiles,_bnames.Length);
+            populateSeriesList();
+
+
+
+
             for (int i = 0; i < _bnames.Length; i++)
             {
                 string fname = Path.Combine(basepath,_bnames[i]+series+extension);
@@ -239,7 +263,7 @@ namespace WristVizualizer
         {
             if (_wrist != null)
             {
-                libWrist.Transform[] tfm = DatParser.parseMotionFile2(_wrist.getMotionFilePath(2));
+                libWrist.TransformMatrix[] tfm = DatParser.parseMotionFile2(_wrist.getMotionFilePath(2));
                 for (int i = 0; i < _bones.Length; i++)
                 {
                     libCoin3D.Transform t = new libCoin3D.Transform();
@@ -272,6 +296,58 @@ namespace WristVizualizer
                 */
             }
 
+        }
+
+        private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (_currentPositionIndex == seriesListBox.SelectedIndex)
+                return;
+
+            //check if neutral
+            if (seriesListBox.SelectedIndex == 0)
+            {
+                _currentPositionIndex = 0;
+                //do the neutral thing....
+                if (_root.hasTransform())
+                    _root.removeTransform();
+                for (int i = 0; i < _bones.Length; i++)
+                    if (_bones[i].hasTransform())
+                        _bones[i].removeTransform();
+            }
+            else
+            {
+                //int seriesIndex = _wrist.getSeriesIndexFromName((string)seriesListBox.SelectedItem);
+                _currentPositionIndex = seriesListBox.SelectedIndex;
+                if (_root.hasTransform())
+                    _root.removeTransform();
+                Transform t = new Transform();
+                DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex-1))[0], t);
+                t.invert();
+                //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
+                _root.addTransform(t);
+                for (int i = 0; i < _bones.Length; i++)
+                {
+                    //remove the old
+                    if (_bones[i].hasTransform())
+                        _bones[i].removeTransform();
+
+                    _bones[i].addTransform(_transforms[_currentPositionIndex-1][i]);
+                    if (_transforms[_currentPositionIndex - 1][i].isIdentity())
+                        _hideBoxes[i].Checked = true;
+                }
+            }
+        }
+
+        private void linkLabelShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            for (int i = 0; i < _hideBoxes.Length; i++ )
+                _hideBoxes[i].Checked = false;
+        }
+
+        private void linkLabelHideAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            for (int i = 0; i < _hideBoxes.Length; i++ )
+                _hideBoxes[i].Checked = true;
         }
     }
 }

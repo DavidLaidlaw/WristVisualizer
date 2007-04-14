@@ -15,6 +15,7 @@ public:
 	virtual void test(double^ values);
 	SoTransform* getSoTransform() { return _transform; }
 	void invert();
+	bool isIdentity();
 	
 private:
 	SoTransform* _transform;

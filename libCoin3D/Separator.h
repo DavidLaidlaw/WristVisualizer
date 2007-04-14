@@ -15,6 +15,8 @@ public:
 	void addFile(System::String^ filename, bool canhide);
 	SoSeparator* getSoSeparator(void);
 	void addTransform(Transform^ transform);
+	void removeTransform();
+	bool hasTransform() { return (_numTransforms>0); }
 
 	void hide();
 	void show();
@@ -22,6 +24,7 @@ public:
 private:
 	SoSeparator* _separator;
 	SoDrawStyle* _style;
+	int _numTransforms;
 	
 };
 }

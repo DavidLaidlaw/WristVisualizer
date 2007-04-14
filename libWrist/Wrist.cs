@@ -34,6 +34,41 @@ namespace libWrist
 
         }
 
+        public string neturalSeries
+        {
+            get { return "S"+_neutralSeries+_side; }
+        }
+
+        public string[] series
+        {
+            get
+            {
+                string[] s = new string[_info.Length];
+                for (int i = 0; i < _info.Length; i++)
+                    s[i] = _info[i].series;
+                return s;
+            }
+        }
+
+        public string[] motionFiles
+        {
+            get
+            {
+                string[] s = new string[_info.Length];
+                for (int i = 0; i < _info.Length; i++)
+                    s[i] = Path.Combine(getSeriesPath(i), "Motion" + _neutralSeries + _side + _info[i].series.Substring(1, 3) + ".dat");
+                return s;
+            }
+        }
+
+        public int getSeriesIndexFromName(string series)
+        {
+            for (int i = 0; i < _info.Length; i++)
+                if (_info[i].series.Equals(series)) return i;
+
+            throw new ArgumentException("Unable to locate series in list");
+        }
+
         public string getMotionFilePath(int positionIndex)
         {
             if (positionIndex >= _info.Length)
@@ -111,17 +146,6 @@ namespace libWrist
             if (!Regex.Match(Path.GetFileName(_subjectPath), @"E\d{5}").Success)
                 throw new ArgumentException("Invalid subject path: " + _subjectPath);
 
-            /*
-            if (Path.GetFileName(_subjectPath).Length!=5)
-                throw new ArgumentException("Invalid subject path: " + _subjectPath);
-
-            if (!Path.GetFileName(_subjectPath).ToUpper().StartsWith("E"))
-                throw new ArgumentException("Invalid subject path: " + _subjectPath);
-
-            int junk;
-            if (!Int32.TryParse(Path.GetFileName(_subjectPath).Substring(1,5),out junk))
-                throw new ArgumentException("Invalid subject path: " + _subjectPath);
-             */
         }
 
         static public bool isRadius(string path)
