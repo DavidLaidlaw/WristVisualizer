@@ -8,9 +8,9 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("WristVizualizer")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Lifespan")]
+[assembly: AssemblyCompany("Networking Doc")]
 [assembly: AssemblyProduct("WristVizualizer")]
-[assembly: AssemblyCopyright("Copyright © Lifespan 2007")]
+[assembly: AssemblyCopyright("Copyright © Networking Doc 2007")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

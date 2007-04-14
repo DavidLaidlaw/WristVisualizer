@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="$(COIN3DDIR)\include"
-				PreprocessorDefinitions="COIN_DLL;SOWIN_DLL;WIN32;_DEBUG"
+				PreprocessorDefinitions="COIN_DLL;SOWIN_DLL"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
@@ -117,7 +117,8 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				PreprocessorDefinitions="WIN32;NDEBUG"
+				AdditionalIncludeDirectories="$(COIN3DDIR)\include"
+				PreprocessorDefinitions="COIN_DLL;SOWIN_DLL"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="2"
 				WarningLevel="3"
@@ -134,8 +135,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="$(NoInherit)"
+				AdditionalDependencies="coin2.lib sowin1.lib $(NoInherit)"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(COIN3DDIR)\lib"
 				GenerateDebugInformation="true"
 				TargetMachine="1"
 			/>

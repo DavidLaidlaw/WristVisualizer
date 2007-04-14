@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneralMatrix", "GeneralMat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libWrist", "libWrist\libWrist.csproj", "{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupWristVizualizer", "SetupWristVizualizer\SetupWristVizualizer.vdproj", "{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,12 @@ Global
 		{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}.Release|Win32.ActiveCfg = Release|Any CPU
+		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|Any CPU.ActiveCfg = Debug
+		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|Mixed Platforms.ActiveCfg = Debug
+		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|Win32.ActiveCfg = Debug
+		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|Any CPU.ActiveCfg = Release
+		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|Mixed Platforms.ActiveCfg = Release
+		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|Win32.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
