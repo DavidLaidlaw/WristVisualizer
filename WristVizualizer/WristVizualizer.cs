@@ -262,45 +262,6 @@ namespace WristVizualizer
             }
         }
 
-        private void pos2ToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (_wrist != null)
-            {
-                libWrist.TransformMatrix[] tfm = DatParser.parseMotionFile2(_wrist.getMotionFilePath(2));
-                for (int i = 0; i < _bones.Length; i++)
-                {
-                    libCoin3D.Transform t = new libCoin3D.Transform();
-                    /*
-                    t.setRotation(tfm[i].R.Array[0][0], tfm[i].R.Array[0][1], tfm[i].R.Array[0][2],
-                        tfm[i].R.Array[1][0], tfm[i].R.Array[1][1], tfm[i].R.Array[1][2],
-                        tfm[i].R.Array[2][0], tfm[i].R.Array[2][1], tfm[i].R.Array[2][2]);
-                     
-                    t.setTranslation(tfm[i].T.Array[0][0], tfm[i].T.Array[0][1], tfm[i].T.Array[0][2]);
-                    _bones[i].addTransform(t);
-                     */
-                    t.setTransform(tfm[i].R.Array[0][0], tfm[i].R.Array[0][1], tfm[i].R.Array[0][2],
-                        tfm[i].R.Array[1][0], tfm[i].R.Array[1][1], tfm[i].R.Array[1][2],
-                        tfm[i].R.Array[2][0], tfm[i].R.Array[2][1], tfm[i].R.Array[2][2],
-                        tfm[i].T.Array[0][0], tfm[i].T.Array[0][1], tfm[i].T.Array[0][2]);
-                    _bones[i].addTransform(t);
-                }    
-
-                /*
-                //do root
-                libCoin3D.Transform t = new libCoin3D.Transform();
-
-                t.setRotation(tfm[0].R.Array[0][0], tfm[0].R.Array[0][1], tfm[0].R.Array[0][2],
-                    tfm[0].R.Array[1][0], tfm[0].R.Array[1][1], tfm[0].R.Array[1][2],
-                    tfm[0].R.Array[2][0], tfm[0].R.Array[2][1], tfm[0].R.Array[2][2]);
-
-                t.setTranslation(tfm[0].T.Array[0][0], tfm[0].T.Array[0][1], tfm[0].T.Array[0][2]);
-                
-                _bones[i].addTransform(t);
-                */
-            }
-
-        }
-
         private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (_currentPositionIndex == seriesListBox.SelectedIndex)

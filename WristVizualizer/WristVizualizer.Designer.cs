@@ -28,6 +28,7 @@ namespace WristVizualizer
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WristVizualizer));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,7 +37,6 @@ namespace WristVizualizer
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pos2ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCoin = new System.Windows.Forms.Panel();
             this.checkBoxRad = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -69,11 +69,11 @@ namespace WristVizualizer
             this.label15 = new System.Windows.Forms.Label();
             this.checkBoxMC3 = new System.Windows.Forms.CheckBox();
             this.panelControl = new System.Windows.Forms.Panel();
+            this.linkLabelHideAll = new System.Windows.Forms.LinkLabel();
+            this.linkLabelShowAll = new System.Windows.Forms.LinkLabel();
+            this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.linkLabelShowAll = new System.Windows.Forms.LinkLabel();
-            this.linkLabelHideAll = new System.Windows.Forms.LinkLabel();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -131,8 +131,7 @@ namespace WristVizualizer
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.decoratorToolStripMenuItem,
-            this.pos2ToolStripMenuItem});
+            this.decoratorToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.viewToolStripMenuItem.Text = "&View";
@@ -143,16 +142,9 @@ namespace WristVizualizer
             this.decoratorToolStripMenuItem.CheckOnClick = true;
             this.decoratorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.decoratorToolStripMenuItem.Name = "decoratorToolStripMenuItem";
-            this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
+            this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.decoratorToolStripMenuItem.Text = "&Decorator";
             this.decoratorToolStripMenuItem.CheckedChanged += new System.EventHandler(this.decoratorToolStripMenuItem_CheckedChanged);
-            // 
-            // pos2ToolStripMenuItem
-            // 
-            this.pos2ToolStripMenuItem.Name = "pos2ToolStripMenuItem";
-            this.pos2ToolStripMenuItem.Size = new System.Drawing.Size(133, 22);
-            this.pos2ToolStripMenuItem.Text = "Pos2";
-            this.pos2ToolStripMenuItem.Click += new System.EventHandler(this.pos2ToolStripMenuItem_Click);
             // 
             // panelCoin
             // 
@@ -524,6 +516,38 @@ namespace WristVizualizer
             this.panelControl.TabIndex = 32;
             this.panelControl.Visible = false;
             // 
+            // linkLabelHideAll
+            // 
+            this.linkLabelHideAll.AutoSize = true;
+            this.linkLabelHideAll.Location = new System.Drawing.Point(91, 341);
+            this.linkLabelHideAll.Name = "linkLabelHideAll";
+            this.linkLabelHideAll.Size = new System.Drawing.Size(40, 13);
+            this.linkLabelHideAll.TabIndex = 36;
+            this.linkLabelHideAll.TabStop = true;
+            this.linkLabelHideAll.Text = "hide all";
+            this.linkLabelHideAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHideAll_LinkClicked);
+            // 
+            // linkLabelShowAll
+            // 
+            this.linkLabelShowAll.AutoSize = true;
+            this.linkLabelShowAll.Location = new System.Drawing.Point(89, 326);
+            this.linkLabelShowAll.Name = "linkLabelShowAll";
+            this.linkLabelShowAll.Size = new System.Drawing.Size(45, 13);
+            this.linkLabelShowAll.TabIndex = 35;
+            this.linkLabelShowAll.TabStop = true;
+            this.linkLabelShowAll.Text = "show all";
+            this.linkLabelShowAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowAll_LinkClicked);
+            // 
+            // label17
+            // 
+            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(154, 10);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(36, 13);
+            this.label17.TabIndex = 34;
+            this.label17.Text = "Series";
+            // 
             // seriesListBox
             // 
             this.seriesListBox.FormattingEnabled = true;
@@ -543,38 +567,6 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
-            // label17
-            // 
-            this.label17.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(154, 10);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(36, 13);
-            this.label17.TabIndex = 34;
-            this.label17.Text = "Series";
-            // 
-            // linkLabelShowAll
-            // 
-            this.linkLabelShowAll.AutoSize = true;
-            this.linkLabelShowAll.Location = new System.Drawing.Point(89, 326);
-            this.linkLabelShowAll.Name = "linkLabelShowAll";
-            this.linkLabelShowAll.Size = new System.Drawing.Size(45, 13);
-            this.linkLabelShowAll.TabIndex = 35;
-            this.linkLabelShowAll.TabStop = true;
-            this.linkLabelShowAll.Text = "show all";
-            this.linkLabelShowAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowAll_LinkClicked);
-            // 
-            // linkLabelHideAll
-            // 
-            this.linkLabelHideAll.AutoSize = true;
-            this.linkLabelHideAll.Location = new System.Drawing.Point(91, 341);
-            this.linkLabelHideAll.Name = "linkLabelHideAll";
-            this.linkLabelHideAll.Size = new System.Drawing.Size(40, 13);
-            this.linkLabelHideAll.TabIndex = 36;
-            this.linkLabelHideAll.TabStop = true;
-            this.linkLabelHideAll.Text = "hide all";
-            this.linkLabelHideAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHideAll_LinkClicked);
-            // 
             // WristVizualizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -583,6 +575,7 @@ namespace WristVizualizer
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.panelCoin);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(500, 429);
             this.Name = "WristVizualizer";
@@ -645,7 +638,6 @@ namespace WristVizualizer
         private System.Windows.Forms.CheckBox checkBoxMC3;
         private System.Windows.Forms.Panel panelControl;
         private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.ToolStripMenuItem pos2ToolStripMenuItem;
         private System.Windows.Forms.ListBox seriesListBox;
         private System.Windows.Forms.LinkLabel linkLabelHideAll;
         private System.Windows.Forms.LinkLabel linkLabelShowAll;
