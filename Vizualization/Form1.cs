@@ -18,11 +18,11 @@ namespace Vizualization
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string fname = @"L:\Data\NIH_Phase_II\snu\E32266\S05L\motion15L05L.dat";
-            string rad = @"L:\Data\NIH_Phase_II\SNU\E32266\S15R\IV.files\rad15R.iv";
-            libWrist.Wrist w = new libWrist.Wrist("test");
-            w.setupPaths(rad);
-            w.findAllSeries();
+            string fname = @"L:\Data\NIH_Phase_II\Young_Male\E16689\\S05L\motion15L05L.dat";
+            //string rad = @"L:\Data\NIH_Phase_II\SNU\E32266\S15R\IV.files\rad15R.iv";
+            //libWrist.Wrist w = new libWrist.Wrist("test");
+            //w.setupPaths(rad);
+            //w.findAllSeries();
             libWrist.DatParser.parseDatFile(fname);
             libWrist.DatParser.parseMotionFile2(fname);
 
