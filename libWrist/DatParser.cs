@@ -19,8 +19,7 @@ namespace libWrist
     {
         public DatParser()
         {
- 
-            
+   
         }
 
         public static Transform[][] makeAllTransforms(string[] motionFiles, int numBones)
@@ -48,7 +47,6 @@ namespace libWrist
                 }
             }
             return transforms;
-
         }
 
         public static double[][] parseDatFile(string filename)
@@ -75,6 +73,8 @@ namespace libWrist
                 }
                 dat.Add(values);
             }
+            r.Close();
+            r.Dispose();
             return (double[][])dat.ToArray(typeof(double[]));
         }
 
@@ -113,7 +113,5 @@ namespace libWrist
                 tfm.R.Array[2][0], tfm.R.Array[2][1], tfm.R.Array[2][2],
                 tfm.T.Array[0][0], tfm.T.Array[0][1], tfm.T.Array[0][2]);       
         }
-
     }
-
 }
