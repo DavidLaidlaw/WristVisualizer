@@ -37,6 +37,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HelpAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpAbout.Designer.cs">
+      <DependentUpon>HelpAbout.cs</DependentUpon>
+    </Compile>
     <Compile Include="WristHelper.cs" />
     <Compile Include="WristVizualizer.cs">
       <SubType>Form</SubType>
@@ -46,6 +52,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="HelpAbout.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>HelpAbout.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="WristVizualizer.resx">
       <SubType>Designer</SubType>
       <DependentUpon>WristVizualizer.cs</DependentUpon>
@@ -58,6 +68,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -84,6 +95,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="logo.gif" />
     <Content Include="OrthoIcon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

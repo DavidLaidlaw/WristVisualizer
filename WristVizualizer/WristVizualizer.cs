@@ -77,6 +77,8 @@ namespace WristVizualizer
         private void resetForm()
         {
             importToolStripMenuItem.Enabled = true;
+            decoratorToolStripMenuItem.Enabled = true;
+            saveFrameToolStripMenuItem.Enabled = true;
             _bones = new Separator[15];
             for (int i = 0; i < _bnames.Length; i++)
             {
@@ -312,6 +314,52 @@ namespace WristVizualizer
         {
             for (int i = 0; i < _hideBoxes.Length; i++ )
                 _hideBoxes[i].Checked = true;
+        }
+
+        private void saveFrameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.DefaultExt = "jpeg";
+            save.AddExtension = true;
+            save.Filter = "JPEG Files (*.jpeg;*.jpg)|*.jpeg;*.jpg|PNG Files (*.png)|*.png|All Files (*.*)|*.*";
+            save.CheckPathExists = true;
+            save.ValidateNames = true;
+
+            if (save.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string fname = save.FileName;
+            switch (Path.GetExtension(fname).ToLower())
+            {
+                case ".png":
+                    _viewer.saveToPNG(fname);
+                    break;
+                /* - Unknown error with these filetypes. might need to include simage - http://doc.coin3d.org/Coin/classSoOffscreenRenderer.html#a18
+            case ".tiff":
+            case ".tif":
+                _viewer.saveToTIFF(fname);
+                break;
+            case ".gif":
+                _viewer.saveToGIF(fname);
+                break;
+            case ".bmp":
+                _viewer.saveToBMP(fname);
+                break;
+                 */
+                case ".jpg":
+                case ".jpeg":
+                default:
+                    _viewer.saveToJPEG(fname);
+                    break;
+            }
+
+            //_viewer.saveToJPEG(@"C:\test.jpg");
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelpAbout ha = new HelpAbout();
+            ha.ShowDialog();
         }
     }
 }

@@ -74,6 +74,10 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.saveFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -82,7 +86,8 @@ namespace WristVizualizer
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
-            this.viewToolStripMenuItem});
+            this.viewToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(680, 24);
@@ -94,6 +99,8 @@ namespace WristVizualizer
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.importToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.saveFrameToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -110,6 +117,7 @@ namespace WristVizualizer
             // 
             // importToolStripMenuItem
             // 
+            this.importToolStripMenuItem.Enabled = false;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
             this.importToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
             this.importToolStripMenuItem.Text = "&Import...";
@@ -141,6 +149,7 @@ namespace WristVizualizer
             this.decoratorToolStripMenuItem.Checked = true;
             this.decoratorToolStripMenuItem.CheckOnClick = true;
             this.decoratorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.decoratorToolStripMenuItem.Enabled = false;
             this.decoratorToolStripMenuItem.Name = "decoratorToolStripMenuItem";
             this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.decoratorToolStripMenuItem.Text = "&Decorator";
@@ -567,6 +576,34 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
+            // saveFrameToolStripMenuItem
+            // 
+            this.saveFrameToolStripMenuItem.Enabled = false;
+            this.saveFrameToolStripMenuItem.Name = "saveFrameToolStripMenuItem";
+            this.saveFrameToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.saveFrameToolStripMenuItem.Text = "&Save Frame...";
+            this.saveFrameToolStripMenuItem.Click += new System.EventHandler(this.saveFrameToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
+            this.helpToolStripMenuItem.Text = "&Help";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "&About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
             // WristVizualizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -642,6 +679,10 @@ namespace WristVizualizer
         private System.Windows.Forms.LinkLabel linkLabelHideAll;
         private System.Windows.Forms.LinkLabel linkLabelShowAll;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem saveFrameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 

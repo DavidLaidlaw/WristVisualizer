@@ -1,11 +1,17 @@
 #include "StdAfx.h"
 #include "ExaminerViewer.h"
 
-#include <Inventor/nodes/SoSeparator.h> // remove me later
+ // remove me later
 #include <Inventor/nodes/SoCone.h>      // remove me later
 #include <Inventor/nodes/SoSphere.h>      // remove me later
 #include <Inventor/nodes/SoPerspectiveCamera.h>
 #include <Inventor/nodes/SoOrthographicCamera.h>
+
+
+//for output
+#include <Inventor/SoOffscreenRenderer.h>
+#include <Inventor/actions/SoGLRenderAction.h>
+#include <Inventor/actions/SoWriteAction.h>
 
 libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 {
@@ -13,9 +19,9 @@ libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 	_decorated = TRUE;
 	_viewer = new SoWinExaminerViewer((HWND)parrent);
 
-	SoSeparator *root = new SoSeparator; // remove me later
+	_root = new SoSeparator; // remove me later
     //root->addChild(new SoCone);          // remove me later
-    _viewer->setSceneGraph(root);         // remove me later
+    _viewer->setSceneGraph(_root);         // remove me later
 	_viewer->setCameraType(SoOrthographicCamera::getClassTypeId());
 }
 
@@ -37,6 +43,91 @@ void libCoin3D::ExaminerViewer::setDecorator(bool decorate)
 
 void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
 {
+	_root = root->getSoSeparator();
 	if (_viewer != NULL)
 		_viewer->setSceneGraph(root->getSoSeparator());
+}
+
+
+bool libCoin3D::ExaminerViewer::saveToJPEG(System::String ^filename)
+{
+	return saveToImage(filename,"jpg");
+}
+bool libCoin3D::ExaminerViewer::saveToPNG(System::String ^filename)
+{
+	return saveToImage(filename,"png");
+}
+bool libCoin3D::ExaminerViewer::saveToGIF(System::String ^filename)
+{
+	return saveToImage(filename,"gif");
+}
+bool libCoin3D::ExaminerViewer::saveToTIFF(System::String ^filename)
+{
+	return saveToImage(filename,"tiff");
+}
+bool libCoin3D::ExaminerViewer::saveToBMP(System::String ^filename)
+{
+	return saveToImage(filename,"bmp");
+}
+
+bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext) 
+{
+	char* fname = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename).ToPointer();
+
+	//SoOutput *postfile = new SoOutput;
+	//postfile->openFile(fname);
+  
+	const SbViewportRegion &vp  = _viewer->getViewportRegion();
+	const SbVec2s &imagePixSize = vp.getViewportSizePixels();
+	SbVec2f imageInches;
+	float pixPerInch;
+	float quality = 1;
+	int screenDPI = 400;
+  
+	//pixPerInch = SoOffscreenRenderer::getScreenPixelsPerInch();
+	pixPerInch = 300;
+	imageInches.setValue((float)imagePixSize[0] / pixPerInch,
+		       (float)imagePixSize[1] / pixPerInch);
+  
+    // The resolution to render the scene for the printer
+	// is equal to the size of the image in inches times
+	// the printer DPI;
+	SbVec2s postScriptRes;
+    postScriptRes.setValue((short)(imageInches[0]*screenDPI),
+                          (short)(imageInches[1]*screenDPI));
+
+    // Create a viewport to render the scene into.
+    SbViewportRegion myViewport;
+    myViewport.setWindowSize(postScriptRes);
+    myViewport.setPixelsPerInch((float)screenDPI);
+
+	// Render the scene
+	SoGLRenderAction *newRA = new SoGLRenderAction(myViewport);
+	newRA->setTransparencyType(SoGLRenderAction::BLEND);    
+	SoOffscreenRenderer *myRenderer = new SoOffscreenRenderer(newRA);
+	myRenderer->setBackgroundColor(_viewer->getBackgroundColor());
+
+
+    if (!myRenderer->render(_viewer->getSceneManager()->getSceneGraph())) {  //render root?
+		delete myRenderer;
+		System::Console::WriteLine("Couldn't capture root of tree");
+		return false;
+    }
+
+
+//    if (!myRenderer->render(root)) {
+//	delete myRenderer;
+//	return FALSE;
+//  }
+
+    // Generate PostScript and write it to the given file
+    //myRenderer->writeToRGB(postfile->getFilePointer());
+	bool result = myRenderer->writeToFile(fname,ext);
+	//myRenderer->writeToJPEG(postfile->getFilePointer(), quality);
+
+    delete myRenderer;
+	//postfile->closeFile();
+
+	return result;
+
 }
