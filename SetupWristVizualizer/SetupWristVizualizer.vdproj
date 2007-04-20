@@ -15,20 +15,146 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_39A50D0F08E141CFB6157166EFBEF289"
-        "OwnerKey" = "8:_679B633C1727419990BD5443D3E41D42"
+        "MsmKey" = "8:_083A0276AD5B6B08F931D00EB4F7541A"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_67292F20BADBB1D619727E6022AD1789"
+        "MsmKey" = "8:_083A0276AD5B6B08F931D00EB4F7541A"
+        "OwnerKey" = "8:_B34AD8BEC18F4965A24CC94C07D11C88"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_083A0276AD5B6B08F931D00EB4F7541A"
+        "OwnerKey" = "8:_54E33F2242B9617CA070E23600BE21BB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0C9F3FCEDC084FBE8DFDB9C7BD7574C0"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0DBCC630F01D4F3BA7B7D2BE499E3FF1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_108F77DB0B3C4EEFB17FC5726ADC47C5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_17D5FDFFD33E4E3FAE15172831C79317"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1BB422AD969748C98079ED853C26D59B"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1DA8D623D9E24F62931A64761A49B2F1"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2193950E00E14838868D4D39E7963D80"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_22930E4141BE4885A65BD019AA851ADF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4412AF997C0747F3811297577B854A79"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4725BDC0615E438A83762CBACD6CC587"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_48F51D2A7B634DAFB8C57C0830255519"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_4DD37FDA77427FC868411B553755DF63"
         "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_679B633C1727419990BD5443D3E41D42"
-        "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
+        "MsmKey" = "8:_4EC925A366834187BF49A5CE2DA2C378"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_54E33F2242B9617CA070E23600BE21BB"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_54EE4D19914A47AA961641D342522166"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5A54DA63759C46FC8B1B6B933076317A"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5F6B33B9891B4B0AA2A6F157DB4BC81C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_71CED6CE67034C1F88905CB7157CCE5C"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_735BA2D2B66546D2A5DB85448DDCE6FB"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_73B5E1FD826C41868E933D102B9417CD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_798F9D1A8D084ADFAFD9E27B6B1B2BA0"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,8 +165,32 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_86879D709CE5D403260D8CCD39A11447"
+        "MsmKey" = "8:_84BA5631A3704B1EB2B61710DFA3CA95"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8AF7B06BACA08AF9E67FE1A3E7EBB543"
         "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8AF7B06BACA08AF9E67FE1A3E7EBB543"
+        "OwnerKey" = "8:_B34AD8BEC18F4965A24CC94C07D11C88"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8AF7B06BACA08AF9E67FE1A3E7EBB543"
+        "OwnerKey" = "8:_54E33F2242B9617CA070E23600BE21BB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_8F3513C7D9E34487B39AE72BE90955B9"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -51,7 +201,31 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_9325EAC17BBF4CEFAB80168A7FF05BDD"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_9E671F0D6C0B4DEB8DB08FBA2D6DAFE4"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_9F2CFD7931694C24BE82A001B0B71397"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_A328EB4D8E674E098C2A01F58022933F"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_B27E7C2889164349B46B8542DCC15573"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -69,56 +243,44 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_BCC304EDDAB0A8CDBFBC386ABFC0A5F0"
-        "OwnerKey" = "8:_86879D709CE5D403260D8CCD39A11447"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BCC304EDDAB0A8CDBFBC386ABFC0A5F0"
-        "OwnerKey" = "8:_B34AD8BEC18F4965A24CC94C07D11C88"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_BCC304EDDAB0A8CDBFBC386ABFC0A5F0"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E0FDE59E814F97B8FD85A67E3079B328"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E0FDE59E814F97B8FD85A67E3079B328"
-        "OwnerKey" = "8:_B34AD8BEC18F4965A24CC94C07D11C88"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E0FDE59E814F97B8FD85A67E3079B328"
-        "OwnerKey" = "8:_86879D709CE5D403260D8CCD39A11447"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_EF63105C94B84E7AB9954E8197A7D616"
+        "MsmKey" = "8:_B7AA93A38F34463595ABB9BBBABDB770"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F2103D44DA464697AF0B152264007AF2"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_C39B6E7CC8CE41E090C6ED503A53C1A9"
+        "OwnerKey" = "8:_E4F23DA3C37947CC9A8758A69F96299E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_F6106B3D9E06B0DF376F42F2AA1EA3FF"
+        "MsmKey" = "8:_CCEDF3FEF3B555F1FFD998AF2108CD6E"
         "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D14FEB1B05164F8298E5918992DD4643"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E4F23DA3C37947CC9A8758A69F96299E"
+        "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E607CDC6D7D24C1C9A9418A9495E0DAF"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_ED2624B7D40C423ABD6BFFC4370883A6"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -130,6 +292,24 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_54E33F2242B9617CA070E23600BE21BB"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_8AF7B06BACA08AF9E67FE1A3E7EBB543"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_083A0276AD5B6B08F931D00EB4F7541A"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_B34AD8BEC18F4965A24CC94C07D11C88"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -137,24 +317,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BCC304EDDAB0A8CDBFBC386ABFC0A5F0"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_86879D709CE5D403260D8CCD39A11447"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_E0FDE59E814F97B8FD85A67E3079B328"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -248,85 +410,14 @@
         }
         "File"
         {
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_67292F20BADBB1D619727E6022AD1789"
-            {
-            "SourcePath" = "8:sowin1.dll"
-            "TargetName" = "8:sowin1.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_86879D709CE5D403260D8CCD39A11447"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_083A0276AD5B6B08F931D00EB4F7541A"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libWrist, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.2666.20569, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
-                    "_86879D709CE5D403260D8CCD39A11447"
-                    {
-                    "Name" = "8:libWrist.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:libWrist.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B671030A41854E62AD7BB0278B0496E8"
-            {
-            "SourcePath" = "8:C:\\WINDOWS\\system32\\msvcrt.dll"
-            "TargetName" = "8:msvcrt.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BCC304EDDAB0A8CDBFBC386ABFC0A5F0"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.2663.9451, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_BCC304EDDAB0A8CDBFBC386ABFC0A5F0"
+                    "_083A0276AD5B6B08F931D00EB4F7541A"
                     {
                     "Name" = "8:libCoin3D.dll"
                     "Attributes" = "3:512"
@@ -350,14 +441,465 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E0FDE59E814F97B8FD85A67E3079B328"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0C9F3FCEDC084FBE8DFDB9C7BD7574C0"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\66582_ClinicalExam_R.txt"
+            "TargetName" = "8:66582_ClinicalExam_R.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_633255633B8647C689610F2A244B54F9"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0DBCC630F01D4F3BA7B7D2BE499E3FF1"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_tpd_L.iv"
+            "TargetName" = "8:66582_tpd_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_108F77DB0B3C4EEFB17FC5726ADC47C5"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_tpm_L.iv"
+            "TargetName" = "8:66582_tpm_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_17D5FDFFD33E4E3FAE15172831C79317"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\04L\\66582_Motion04L.dat"
+            "TargetName" = "8:66582_Motion04L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_76988B07A1684F8CB65AD4D68145DF39"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1BB422AD969748C98079ED853C26D59B"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_ham_L.iv"
+            "TargetName" = "8:66582_ham_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1DA8D623D9E24F62931A64761A49B2F1"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\06L\\66582_Motion06L.dat"
+            "TargetName" = "8:66582_Motion06L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_769405F382374530A1B94211F7E28113"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_2193950E00E14838868D4D39E7963D80"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_lun_L.iv"
+            "TargetName" = "8:66582_lun_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_22930E4141BE4885A65BD019AA851ADF"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\03L\\66582_Motion03L.dat"
+            "TargetName" = "8:66582_Motion03L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_FEC53413757C489AB452628FAF8305E8"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4412AF997C0747F3811297577B854A79"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftInfo\\66582_RCS_L.dat"
+            "TargetName" = "8:66582_RCS_L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_B848A2DB327A44EAA0ADF0F1214F1B7B"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4725BDC0615E438A83762CBACD6CC587"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_trq_L.iv"
+            "TargetName" = "8:66582_trq_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_48F51D2A7B634DAFB8C57C0830255519"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_mc5_L.iv"
+            "TargetName" = "8:66582_mc5_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4DD37FDA77427FC868411B553755DF63"
+            {
+            "SourcePath" = "8:sowin1d.dll"
+            "TargetName" = "8:sowin1d.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4EC925A366834187BF49A5CE2DA2C378"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_sca_L.iv"
+            "TargetName" = "8:66582_sca_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_54E33F2242B9617CA070E23600BE21BB"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.2663.9445, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:libWrist, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_E0FDE59E814F97B8FD85A67E3079B328"
+                    "_54E33F2242B9617CA070E23600BE21BB"
+                    {
+                    "Name" = "8:libWrist.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:libWrist.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_54EE4D19914A47AA961641D342522166"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\01L\\66582_Motion01L.dat"
+            "TargetName" = "8:66582_Motion01L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_5C0A115B52F74103B80B3A7696CA68C8"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5A54DA63759C46FC8B1B6B933076317A"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_mc2_L.iv"
+            "TargetName" = "8:66582_mc2_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_5F6B33B9891B4B0AA2A6F157DB4BC81C"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_mc4_L.iv"
+            "TargetName" = "8:66582_mc4_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_71CED6CE67034C1F88905CB7157CCE5C"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\66582_ClinicalExam_L.txt"
+            "TargetName" = "8:66582_ClinicalExam_L.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_633255633B8647C689610F2A244B54F9"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_735BA2D2B66546D2A5DB85448DDCE6FB"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\66582_demographic.txt"
+            "TargetName" = "8:66582_demographic.txt"
+            "Tag" = "8:"
+            "Folder" = "8:_633255633B8647C689610F2A244B54F9"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_73B5E1FD826C41868E933D102B9417CD"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_mc1_L.iv"
+            "TargetName" = "8:66582_mc1_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_798F9D1A8D084ADFAFD9E27B6B1B2BA0"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_uln_L.iv"
+            "TargetName" = "8:66582_uln_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_84BA5631A3704B1EB2B61710DFA3CA95"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\08L\\66582_Motion08L.dat"
+            "TargetName" = "8:66582_Motion08L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_7F7C0F0F5E7641DBA848A17E96FCD9CA"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_8AF7B06BACA08AF9E67FE1A3E7EBB543"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.2663.9411, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_8AF7B06BACA08AF9E67FE1A3E7EBB543"
                     {
                     "Name" = "8:GeneralMatrix.dll"
                     "Attributes" = "3:512"
@@ -381,10 +923,110 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_EF63105C94B84E7AB9954E8197A7D616"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_8F3513C7D9E34487B39AE72BE90955B9"
             {
-            "SourcePath" = "8:C:\\Coin3D-2\\bin\\sowin1.dll"
-            "TargetName" = "8:sowin1.dll"
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_mc3_L.iv"
+            "TargetName" = "8:66582_mc3_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9325EAC17BBF4CEFAB80168A7FF05BDD"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_rad_L.iv"
+            "TargetName" = "8:66582_rad_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9E671F0D6C0B4DEB8DB08FBA2D6DAFE4"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftInfo\\66582_volume_L.dat"
+            "TargetName" = "8:66582_volume_L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_B848A2DB327A44EAA0ADF0F1214F1B7B"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A328EB4D8E674E098C2A01F58022933F"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_cap_L.iv"
+            "TargetName" = "8:66582_cap_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B27E7C2889164349B46B8542DCC15573"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_pis_L.iv"
+            "TargetName" = "8:66582_pis_L.iv"
+            "Tag" = "8:"
+            "Folder" = "8:_207B026DDFD84AE69AB0CDA343B651BC"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B671030A41854E62AD7BB0278B0496E8"
+            {
+            "SourcePath" = "8:C:\\WINDOWS\\system32\\msvcrt.dll"
+            "TargetName" = "8:msvcrt.dll"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
             "Condition" = "8:"
@@ -401,13 +1043,13 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F2103D44DA464697AF0B152264007AF2"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_B7AA93A38F34463595ABB9BBBABDB770"
             {
-            "SourcePath" = "8:C:\\Coin3D-2\\bin\\coin2.dll"
-            "TargetName" = "8:coin2.dll"
+            "SourcePath" = "8:Sample Wrist\\66582\\LeftInfo\\66582_inertia_L.dat"
+            "TargetName" = "8:66582_inertia_L.dat"
             "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
+            "Folder" = "8:_B848A2DB327A44EAA0ADF0F1214F1B7B"
+            "Condition" = "8:CHECKBOXA1=1"
             "Transitive" = "11:FALSE"
             "Vital" = "11:TRUE"
             "ReadOnly" = "11:FALSE"
@@ -421,10 +1063,10 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F6106B3D9E06B0DF376F42F2AA1EA3FF"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_CCEDF3FEF3B555F1FFD998AF2108CD6E"
             {
-            "SourcePath" = "8:coin2.dll"
-            "TargetName" = "8:coin2.dll"
+            "SourcePath" = "8:coin2d.dll"
+            "TargetName" = "8:coin2d.dll"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
             "Condition" = "8:"
@@ -439,6 +1081,66 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_D14FEB1B05164F8298E5918992DD4643"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\05L\\66582_Motion05L.dat"
+            "TargetName" = "8:66582_Motion05L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_B963039736014F9D9CA30CDF31B0A000"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E607CDC6D7D24C1C9A9418A9495E0DAF"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\02L\\66582_Motion02L.dat"
+            "TargetName" = "8:66582_Motion02L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_AB7C3ED3CAD149F79747E875F08C281D"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_ED2624B7D40C423ABD6BFFC4370883A6"
+            {
+            "SourcePath" = "8:Sample Wrist\\66582\\07L\\66582_Motion07L.dat"
+            "TargetName" = "8:66582_Motion07L.dat"
+            "Tag" = "8:"
+            "Folder" = "8:_A88E596B5DC543F9AF290F4A72B67733"
+            "Condition" = "8:CHECKBOXA1=1"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
         }
@@ -456,6 +1158,17 @@
             "Property" = "8:ProgramMenuFolder"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_A7F932758234420094AF8493AB3159CE"
+                    {
+                    "Name" = "8:Wrist Visualizer"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_91B6AD7321514C0F8FF042927FCB8844"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_DFD604275C1241BF8E046F45E1B14EDB"
@@ -468,6 +1181,138 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_CEBCD9B098464994888AE57D4F5FC617"
+                    {
+                    "Name" = "8:Example"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:CHECKBOXA1=1"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_F9C4162591E24717A81E9CF1728BF121"
+                        "Folders"
+                        {
+                            "{9EF0B969-E518-4E46-987F-47570745A589}:_633255633B8647C689610F2A244B54F9"
+                            {
+                            "Name" = "8:66582"
+                            "AlwaysCreate" = "11:FALSE"
+                            "Condition" = "8:CHECKBOXA1=1"
+                            "Transitive" = "11:FALSE"
+                            "Property" = "8:_CFF1CEFE9D894CD386BBFBF5031FFA90"
+                                "Folders"
+                                {
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_207B026DDFD84AE69AB0CDA343B651BC"
+                                    {
+                                    "Name" = "8:LeftIV"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_52CB2716F2484A738BC11528382ABD38"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_5C0A115B52F74103B80B3A7696CA68C8"
+                                    {
+                                    "Name" = "8:01L"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_2F6ABB332EE04D6BB93001BDBCA60CC3"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_769405F382374530A1B94211F7E28113"
+                                    {
+                                    "Name" = "8:06L"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_D607FCA796B04266B7808933E7C72B4E"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_76988B07A1684F8CB65AD4D68145DF39"
+                                    {
+                                    "Name" = "8:04L"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_C11580E970F045FB82EB9B45C14FD219"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_7F7C0F0F5E7641DBA848A17E96FCD9CA"
+                                    {
+                                    "Name" = "8:08L"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_C4BC1FFA10B14135938D112146600706"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_A88E596B5DC543F9AF290F4A72B67733"
+                                    {
+                                    "Name" = "8:07L"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_5304288F06E84151A4561753388BEBBB"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_AB7C3ED3CAD149F79747E875F08C281D"
+                                    {
+                                    "Name" = "8:02L"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_91D30A3861804554844EDB55AAB2DB79"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B848A2DB327A44EAA0ADF0F1214F1B7B"
+                                    {
+                                    "Name" = "8:LeftInfo"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_4A04E64E6F0D4A2F99049D3EBF458768"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_B963039736014F9D9CA30CDF31B0A000"
+                                    {
+                                    "Name" = "8:05L"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_D047239E80F844C59DC5862706F0A3F2"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                    "{9EF0B969-E518-4E46-987F-47570745A589}:_FEC53413757C489AB452628FAF8305E8"
+                                    {
+                                    "Name" = "8:03L"
+                                    "AlwaysCreate" = "11:FALSE"
+                                    "Condition" = "8:CHECKBOXA1=1"
+                                    "Transitive" = "11:FALSE"
+                                    "Property" = "8:_1A2915E766A2488598519A956DFC6859"
+                                        "Folders"
+                                        {
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -486,7 +1331,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
         "ProductCode" = "8:{F2A88AC0-5D8E-4E54-A240-2AED7F556EE9}"
-        "PackageCode" = "8:{08828BC1-54C2-4748-83B5-9D0215091BD6}"
+        "PackageCode" = "8:{3AD58AF7-51FC-4CC9-926F-C37180DCE733}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
@@ -614,7 +1459,7 @@
             "IconIndex" = "3:32512"
             "Transitive" = "11:FALSE"
             "Target" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
-            "Folder" = "8:_8AC23453624241B6919C088E8F780438"
+            "Folder" = "8:_A7F932758234420094AF8493AB3159CE"
             "WorkingFolder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
             "Icon" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
             "Feature" = "8:"
@@ -822,6 +1667,262 @@
                             }
                         }
                     }
+                    "{688940B3-5CA9-4162-8DEE-2993FA9D8CBC}:_FE5CEFFB63FA4681B81A10C9EDA15F61"
+                    {
+                    "Sequence" = "3:210"
+                    "DisplayName" = "8:Checkboxes   (A)"
+                    "UseDynamicProperties" = "11:TRUE"
+                    "IsDependency" = "11:FALSE"
+                    "SourcePath" = "8:<VsdDialogDir>\\VsdCustomCheck1Dlg.wid"
+                        "Properties"
+                        {
+                            "BannerBitmap"
+                            {
+                            "Name" = "8:BannerBitmap"
+                            "DisplayName" = "8:#1001"
+                            "Description" = "8:#1101"
+                            "Type" = "3:8"
+                            "ContextData" = "8:Bitmap"
+                            "Attributes" = "3:4"
+                            "Setting" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "BannerText"
+                            {
+                            "Name" = "8:BannerText"
+                            "DisplayName" = "8:#1014"
+                            "Description" = "8:#1114"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Optional Components"
+                            "DefaultValue" = "8:#1214"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "BodyText"
+                            {
+                            "Name" = "8:BodyText"
+                            "DisplayName" = "8:#1015"
+                            "Description" = "8:#1115"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Do you wish to install a sample wrist?"
+                            "DefaultValue" = "8:#1215"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox1Label"
+                            {
+                            "Name" = "8:Checkbox1Label"
+                            "DisplayName" = "8:#1034"
+                            "Description" = "8:#1134"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:Install Sample Wrist"
+                            "DefaultValue" = "8:#1234"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox1Property"
+                            {
+                            "Name" = "8:Checkbox1Property"
+                            "DisplayName" = "8:#1030"
+                            "Description" = "8:#1130"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:CHECKBOXA1"
+                            "DefaultValue" = "8:CHECKBOXA1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox1Value"
+                            {
+                            "Name" = "8:Checkbox1Value"
+                            "DisplayName" = "8:#1038"
+                            "Description" = "8:#1138"
+                            "Type" = "3:2"
+                            "ContextData" = "8:Unchecked=;Checked=1"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:1"
+                            "DefaultValue" = "8:"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox1Visible"
+                            {
+                            "Name" = "8:Checkbox1Visible"
+                            "DisplayName" = "8:#1026"
+                            "Description" = "8:#1126"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:1"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox2Label"
+                            {
+                            "Name" = "8:Checkbox2Label"
+                            "DisplayName" = "8:#1035"
+                            "Description" = "8:#1135"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1235"
+                            "DefaultValue" = "8:#1235"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox2Property"
+                            {
+                            "Name" = "8:Checkbox2Property"
+                            "DisplayName" = "8:#1031"
+                            "Description" = "8:#1131"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:CHECKBOXA2"
+                            "DefaultValue" = "8:CHECKBOXA2"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox2Value"
+                            {
+                            "Name" = "8:Checkbox2Value"
+                            "DisplayName" = "8:#1039"
+                            "Description" = "8:#1139"
+                            "Type" = "3:2"
+                            "ContextData" = "8:Unchecked=;Checked=1"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
+                            "DefaultValue" = "8:"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox2Visible"
+                            {
+                            "Name" = "8:Checkbox2Visible"
+                            "DisplayName" = "8:#1027"
+                            "Description" = "8:#1127"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:0"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox3Label"
+                            {
+                            "Name" = "8:Checkbox3Label"
+                            "DisplayName" = "8:#1036"
+                            "Description" = "8:#1136"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1236"
+                            "DefaultValue" = "8:#1236"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox3Property"
+                            {
+                            "Name" = "8:Checkbox3Property"
+                            "DisplayName" = "8:#1032"
+                            "Description" = "8:#1132"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:CHECKBOXA3"
+                            "DefaultValue" = "8:CHECKBOXA3"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox3Value"
+                            {
+                            "Name" = "8:Checkbox3Value"
+                            "DisplayName" = "8:#1040"
+                            "Description" = "8:#1140"
+                            "Type" = "3:2"
+                            "ContextData" = "8:Unchecked=;Checked=1"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
+                            "DefaultValue" = "8:"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox3Visible"
+                            {
+                            "Name" = "8:Checkbox3Visible"
+                            "DisplayName" = "8:#1028"
+                            "Description" = "8:#1128"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:0"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox4Label"
+                            {
+                            "Name" = "8:Checkbox4Label"
+                            "DisplayName" = "8:#1037"
+                            "Description" = "8:#1137"
+                            "Type" = "3:3"
+                            "ContextData" = "8:"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:1"
+                            "Value" = "8:#1237"
+                            "DefaultValue" = "8:#1237"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox4Property"
+                            {
+                            "Name" = "8:Checkbox4Property"
+                            "DisplayName" = "8:#1033"
+                            "Description" = "8:#1133"
+                            "Type" = "3:14"
+                            "ContextData" = "8:Public"
+                            "Attributes" = "3:2"
+                            "Setting" = "3:2"
+                            "Value" = "8:CHECKBOXA4"
+                            "DefaultValue" = "8:CHECKBOXA4"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox4Value"
+                            {
+                            "Name" = "8:Checkbox4Value"
+                            "DisplayName" = "8:#1041"
+                            "Description" = "8:#1141"
+                            "Type" = "3:2"
+                            "ContextData" = "8:Unchecked=;Checked=1"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:2"
+                            "Value" = "8:"
+                            "DefaultValue" = "8:"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                            "Checkbox4Visible"
+                            {
+                            "Name" = "8:Checkbox4Visible"
+                            "DisplayName" = "8:#1029"
+                            "Description" = "8:#1129"
+                            "Type" = "3:5"
+                            "ContextData" = "8:1;True=1;False=0"
+                            "Attributes" = "3:0"
+                            "Setting" = "3:0"
+                            "Value" = "3:0"
+                            "DefaultValue" = "3:1"
+                            "UsePlugInResources" = "11:TRUE"
+                            }
+                        }
+                    }
                 }
             }
             "{DF760B10-853B-4699-99F2-AFF7185B4A62}:_55BCC46B2B5545E49BD9D0779538457A"
@@ -1015,11 +2116,11 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_39A50D0F08E141CFB6157166EFBEF289"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_C39B6E7CC8CE41E090C6ED503A53C1A9"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_8_0_microsoft_vc80_crt_x86.msm"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_debugcrt_x86.msm"
                 "Properties"
                 {
                 }
@@ -1029,11 +2130,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_679B633C1727419990BD5443D3E41D42"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E4F23DA3C37947CC9A8758A69F96299E"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_DebugCRT_x86.msm"
                 "Properties"
                 {
                 }
