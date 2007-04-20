@@ -63,6 +63,29 @@ bool libCoin3D::ExaminerViewer::saveToGIF(System::String ^filename)
 }
 bool libCoin3D::ExaminerViewer::saveToTIFF(System::String ^filename)
 {
+	//test Code....don't know why I can't load these other types...
+	/*
+	SbPList extlist;
+    SbString fullname, description;
+	SoOffscreenRenderer * r = new SoOffscreenRenderer(*(new SbViewportRegion));
+	int num = r->getNumWriteFiletypes();
+	for (int i=0; i<num; i++) {
+    r->getWriteFiletypeInfo(i, extlist, fullname, description);
+	fullname += ": ";
+	fullname += description;
+	System::Console::Write(fullname.getString());
+    //(void)fprintf(stdout, "%s: %s (extension%s: ",
+      //                fullname.getString(), description.getString(),
+        //              extlist.getLength() > 1 ? "s" : "");
+        for (int j=0; j < extlist.getLength(); j++) {
+			System::Console::Write((const char*) extlist[j]);
+          //(void)fprintf(stdout, "%s%s", j>0 ? ", " : "", (const char*) extlist[j]);
+        }
+		System::Console::WriteLine("");
+   //(void)fprintf(stdout, ")\n");
+	}
+	delete r;
+	*/
 	return saveToImage(filename,"tiff");
 }
 bool libCoin3D::ExaminerViewer::saveToBMP(System::String ^filename)

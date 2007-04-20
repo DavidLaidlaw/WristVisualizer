@@ -329,30 +329,32 @@ namespace WristVizualizer
                 return;
 
             string fname = save.FileName;
+            bool res;
             switch (Path.GetExtension(fname).ToLower())
             {
                 case ".png":
-                    _viewer.saveToPNG(fname);
+                    res = _viewer.saveToPNG(fname);
                     break;
                 /* - Unknown error with these filetypes. might need to include simage - http://doc.coin3d.org/Coin/classSoOffscreenRenderer.html#a18
-            case ".tiff":
-            case ".tif":
-                _viewer.saveToTIFF(fname);
-                break;
-            case ".gif":
-                _viewer.saveToGIF(fname);
-                break;
-            case ".bmp":
-                _viewer.saveToBMP(fname);
-                break;
+                case ".tiff":
+                case ".tif":
+                    res = _viewer.saveToTIFF(fname);
+                    break;
+                case ".gif":
+                    res = _viewer.saveToGIF(fname);
+                    break;
+                case ".bmp":
+                    res = _viewer.saveToBMP(fname);
+                    break;
                  */
                 case ".jpg":
                 case ".jpeg":
                 default:
-                    _viewer.saveToJPEG(fname);
+                    res = _viewer.saveToJPEG(fname);
                     break;
             }
-
+            if (!res)
+                MessageBox.Show("Unknown error saving file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             //_viewer.saveToJPEG(@"C:\test.jpg");
         }
 
