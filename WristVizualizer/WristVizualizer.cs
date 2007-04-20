@@ -87,6 +87,32 @@ namespace WristVizualizer
             }
         }
 
+        private void openFile(string[] filenames, bool loadFull)
+        {
+            if (_viewer == null)
+                _viewer = new ExaminerViewer((int)panelCoin.Handle);
+
+            _root = new Separator();
+
+            //if we get here, then we are loading a new file....so
+            resetForm();
+
+            if (loadFull)
+            {
+
+                showControlBox();
+                loadFullWrist(filenames[0], _root);
+            }
+            else
+            {
+                hideControlBox();
+                foreach (string filename in filenames)
+                    _root.addFile(filename);
+            }
+
+            _viewer.setSceneGraph(_root);
+        }
+
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog open = new OpenFileDialog();
@@ -99,11 +125,6 @@ namespace WristVizualizer
             if (DialogResult.OK == open.ShowDialog())
             {
                 if (open.FileNames.Length == 0) return;
-
-                if (_viewer == null)
-                    _viewer = new ExaminerViewer((int)panelCoin.Handle);
-
-                _root = new Separator();
 
                 bool loadFull = false;
 
@@ -121,23 +142,7 @@ namespace WristVizualizer
                     }
                 }
 
-                //if we get here, then we are loading a new file....so
-                resetForm();
-
-                if (loadFull)
-                {
-
-                    showControlBox();
-                    loadFullWrist(open.FileName, _root);
-                }
-                else
-                {
-                    hideControlBox();
-                    foreach (string filename in open.FileNames)
-                        _root.addFile(filename);
-                }
-
-                _viewer.setSceneGraph(_root);
+                openFile(open.FileNames, loadFull);
             }
         }
 
@@ -359,6 +364,24 @@ namespace WristVizualizer
         {
             HelpAbout ha = new HelpAbout();
             ha.ShowDialog();
+        }
+
+        private void loadSampleWristToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //string t = Application.ExecutablePath;
+            string baseFolder = Path.GetDirectoryName(Application.ExecutablePath);
+            string location = Path.Combine(Path.Combine(Path.Combine("Example", "66582"), "LeftIV"), "66582_rad_L.iv");
+            string radFile = Path.Combine(baseFolder, location);
+            if (!File.Exists(radFile))
+            {
+                string msg = "Unable to find the sample wrist:\n" + radFile + "\n\n";
+                msg += "Please try reinstalling this application to install the sample wrist";
+                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            string[] files = new string[1];
+            files[0] = radFile;
+            openFile(files, true);
         }
     }
 }

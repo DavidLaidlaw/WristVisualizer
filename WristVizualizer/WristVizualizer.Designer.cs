@@ -78,6 +78,8 @@ namespace WristVizualizer
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadSampleWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -592,6 +594,8 @@ namespace WristVizualizer
             // helpToolStripMenuItem
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadSampleWristToolStripMenuItem,
+            this.toolStripSeparator3,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
@@ -600,9 +604,21 @@ namespace WristVizualizer
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
+            // 
+            // loadSampleWristToolStripMenuItem
+            // 
+            this.loadSampleWristToolStripMenuItem.Name = "loadSampleWristToolStripMenuItem";
+            this.loadSampleWristToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.loadSampleWristToolStripMenuItem.Text = "Load Sample Wrist";
+            this.loadSampleWristToolStripMenuItem.Click += new System.EventHandler(this.loadSampleWristToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(170, 6);
             // 
             // WristVizualizer
             // 
@@ -683,6 +699,8 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem saveFrameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadSampleWristToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
     }
 }
 
