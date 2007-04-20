@@ -16,6 +16,12 @@ namespace libWrist
             RIGHT,
         }
 
+        public enum Database
+        {
+            DATA,
+            DATABASE,
+        }
+
         private struct SeriesInfo
         {
             public string series;
@@ -27,6 +33,7 @@ namespace libWrist
         private string _ivFolderPath;
         private string _neutralSeries;
         private string _side;
+        private Database _db;
         private SeriesInfo[] _info;
 
         public Wrist(string pathRadiusIV)
@@ -148,27 +155,21 @@ namespace libWrist
 
         }
 
+        static public bool isDatabaseStructure(string radiusPath)
+        {
+            string fname = Path.GetFileNameWithoutExtension(radiusPath);
+            return (Regex.Match(fname, @"^\d{5}_rad_[lr]$", RegexOptions.IgnoreCase).Success);
+        }
+
+        static public bool isDataStructure(string radiusPath)
+        {
+            string fname = Path.GetFileNameWithoutExtension(radiusPath);
+            return (Regex.Match(fname, @"^rad\d{2}[lr]$", RegexOptions.IgnoreCase).Success);;
+        }
+
         static public bool isRadius(string path)
         {
-            string fname = Path.GetFileNameWithoutExtension(path);
-            //check length
-            if (fname.Length != 6)
-                return false;
-
-            //check is rad bone
-            if (!fname.Substring(0, 3).ToLower().Equals("rad"))
-                return false;
-
-            //check is numeric
-            int junk;
-            if (!Int32.TryParse(fname.Substring(3, 2), out junk))
-                return false;
-
-            //check ends in L or R
-            if (!fname.EndsWith("L", StringComparison.CurrentCultureIgnoreCase) && !fname.EndsWith("R", StringComparison.CurrentCultureIgnoreCase))
-                return false;
-
-            return true;
+            return (isDataStructure(path) || isDatabaseStructure(path));
         }
 
     }

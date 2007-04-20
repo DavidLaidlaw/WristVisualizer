@@ -110,7 +110,7 @@ namespace WristVizualizer
                 if (open.FileNames.Length == 1)
                 {
                     //check if this is a radius and what we want to do....
-                    if (WristHelper.isRadius(open.FileName))
+                    if (Wrist.isRadius(open.FileName))
                     {
                         string msg = "It looks like you are trying to open a radius.\n\nDo you wish to load the entire wrist?";
                         if (DialogResult.Yes == MessageBox.Show(msg, "Wrist Vizualizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
