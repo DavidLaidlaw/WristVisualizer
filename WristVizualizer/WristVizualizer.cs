@@ -148,7 +148,7 @@ namespace WristVizualizer
                 _currentPositionIndex = 0;
                 seriesListBox.Items.Clear();
                 //add neutral
-                seriesListBox.Items.Add(_wrist.neturalSeries);
+                seriesListBox.Items.Add(_wrist.neutralSeries);
                 seriesListBox.Items.AddRange(_wrist.series);
                 seriesListBox.SelectedIndex = 0;
             }
@@ -165,17 +165,14 @@ namespace WristVizualizer
 
             //Setup motion files, etc
             _wrist = new Wrist(radius);
-            _wrist.setupPaths(radius);
-            _wrist.findAllSeries();
+            //_wrist.setupPaths(radius);
+            //_wrist.findAllSeries();
             _transforms = DatParser.makeAllTransforms(_wrist.motionFiles,_bnames.Length);
             populateSeriesList();
 
-
-
-
             for (int i = 0; i < _bnames.Length; i++)
             {
-                string fname = Path.Combine(basepath,_bnames[i]+series+extension);
+                string fname = _wrist.bpaths[i];
                 if (File.Exists(fname))
                 {
                     _bones[i] = new Separator();

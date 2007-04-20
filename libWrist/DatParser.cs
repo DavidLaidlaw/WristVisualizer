@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Text.RegularExpressions;
 using DotNetMatrix;
 using libCoin3D;
 
@@ -55,17 +56,21 @@ namespace libWrist
             StreamReader r = new StreamReader(filename);
             char[] div = { ' ', '\t', ',' };
             System.Collections.ArrayList dat = new System.Collections.ArrayList(100);
+
+            Regex reg = new Regex(@"([-\d\.e+]+)[ \t,]+([-\d\.e+]+)[ \t,]+([-\d\.e+]+)");
             while (!r.EndOfStream)
             {
                 //Console.WriteLine("new Line");
                 string line = r.ReadLine().Trim();
                 if (line.Length == 0) continue;
 
-                string[] parts = line.Split(div);
-                double[] values = new double[parts.Length];
-                for (int i=0; i<parts.Length; i++)
+                Match m = reg.Match(line);
+                //string[] parts = line.Split(div);
+                double[] values = new double[m.Groups.Count-1];
+                for (int i = 0; i < m.Groups.Count-1; i++)
                 {
-                    values[i] = Double.Parse(parts[i]);
+                    //string junk = m.Groups[i+1].Value;
+                    values[i] = Double.Parse(m.Groups[i+1].Value);
                     //Console.WriteLine("Found: " + values[i].ToString());
                 }
                 dat.Add(values);
