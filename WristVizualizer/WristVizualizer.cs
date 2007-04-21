@@ -79,6 +79,8 @@ namespace WristVizualizer
             importToolStripMenuItem.Enabled = true;
             decoratorToolStripMenuItem.Enabled = true;
             saveFrameToolStripMenuItem.Enabled = true;
+            showInertiasToolStripMenuItem.Enabled = false;
+            showInertiasToolStripMenuItem.Checked = false;
             _bones = new Separator[15];
             for (int i = 0; i < _bnames.Length; i++)
             {
@@ -167,6 +169,7 @@ namespace WristVizualizer
 
             //block importing a file
             importToolStripMenuItem.Enabled = false;
+            showInertiasToolStripMenuItem.Enabled = true;
 
             //Setup motion files, etc
             _wrist = new Wrist(radius);
@@ -382,6 +385,19 @@ namespace WristVizualizer
             string[] files = new string[1];
             files[0] = radFile;
             openFile(files, true);
+        }
+
+        private void showInertiasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                DatParser.parseInertiaFile2(_wrist.inertiaFile);
+            }
+            catch (ArgumentException ex)
+            {
+                string msg = "Error loading inertia file.\n\n" + ex.Message;
+                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

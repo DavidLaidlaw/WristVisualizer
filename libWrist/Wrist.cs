@@ -39,6 +39,7 @@ namespace libWrist
         private string _neutralSeries;
         private string _side;
         private string _radius;
+        private string _inertiaFile;
         private Database _db;
         private SeriesInfo[] _info;
 
@@ -56,6 +57,11 @@ namespace libWrist
         public string neutralSeries
         {
             get { return _neutralSeries; }
+        }
+
+        public string inertiaFile
+        {
+            get { return _inertiaFile; }
         }
 
         public string[] bpaths
@@ -203,6 +209,8 @@ namespace libWrist
 
             _subjectPath = Path.GetDirectoryName(_ivFolderPath);
             _subject = Path.GetFileName(_subjectPath);
+            string infoFolder = Path.Combine(_subjectPath,_side.Equals("L") ? "LeftInfo" : "RightInfo");
+            _inertiaFile = Path.Combine(infoFolder,_subject + "_inertia_" + _side + ".dat");
 
             //Now verify that this is the subject path
             if (!Regex.Match(Path.GetFileName(_subjectPath), @"^\d{5}$").Success)
@@ -249,6 +257,7 @@ namespace libWrist
                 throw new ArgumentException("Unable to locate subject path");
 
             _subject = Path.GetFileName(_subjectPath);
+            _inertiaFile = Path.Combine(Path.Combine(_subjectPath,_neutralSeries),"inertia"+ _neutralSeriesNum + _side + ".dat");
 
             //Now verify that this is the subject path
             if (!Regex.Match(Path.GetFileName(_subjectPath), @"E\d{5}").Success)

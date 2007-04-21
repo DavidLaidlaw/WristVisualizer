@@ -51,6 +51,9 @@ namespace libWrist
 
         public static double[][] parseDatFile(string filename)
         {
+            if (!File.Exists(filename))
+                throw new ArgumentException("File does not exist. (" + filename + ")");
+
             StreamReader r = new StreamReader(filename);
             char[] div = { ' ', '\t', ',' };
             System.Collections.ArrayList dat = new System.Collections.ArrayList(100);
@@ -90,6 +93,34 @@ namespace libWrist
                     throw new ArgumentException("Each row of the motion file should have 3 elements. (Line: " + i.ToString() + ")");
             }
             return dat;
+        }
+
+        private static double[][] parseInertiaFile(string filename)
+        {
+            double[][] dat = parseDatFile(filename);
+            if (dat.Length != 75)
+                throw new ArgumentException("Inertia files should have 75 lines");
+
+            for (int i = 0; i < dat.Length; i++)
+            {
+                if (dat[i].Length != 3)
+                    throw new ArgumentException("Each row of the inertia files should have 3 elements. (Line: " + i.ToString() + ")");
+            }
+            return dat;
+        }
+
+        public static TransformMatrix[] parseInertiaFile2(string filename)
+        {
+            double[][] dat = parseInertiaFile(filename);
+            TransformMatrix[] inertias = new TransformMatrix[15];
+            for (int i = 0; i < 15; i++)
+            {
+                inertias[i] = new TransformMatrix();
+                double[][] tempR = { dat[i * 5 + 2], dat[i * 5 + 3], dat[i * 5 + 4] };
+                inertias[i].R = new GeneralMatrix(tempR, 3, 3);
+                inertias[i].T = new GeneralMatrix(dat[i * 5], 1);
+            }
+            return inertias;
         }
 
         public static TransformMatrix[] parseMotionFile2(string filename)
