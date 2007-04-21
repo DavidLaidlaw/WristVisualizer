@@ -188,6 +188,10 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath=".\ACS.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\AssemblyInfo.cpp"
 				>
 			</File>
@@ -201,6 +205,10 @@
 			</File>
 			<File
 				RelativePath=".\libCoin3D.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Node.cpp"
 				>
 			</File>
 			<File
@@ -238,6 +246,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\ACS.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Coin3DBase.h"
 				>
 			</File>
@@ -247,6 +259,10 @@
 			</File>
 			<File
 				RelativePath=".\libCoin3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Node.h"
 				>
 			</File>
 			<File

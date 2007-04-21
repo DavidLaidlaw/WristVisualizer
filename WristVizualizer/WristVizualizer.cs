@@ -17,6 +17,7 @@ namespace WristVizualizer
         private ExaminerViewer _viewer;
         private Separator _root;
         private Separator[] _bones;
+        private Separator[] _inertias;
         private string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
         private CheckBox[] _hideBoxes;
         private Wrist _wrist;
@@ -31,6 +32,7 @@ namespace WristVizualizer
             _root = null;
             _wrist = null;
             _bones = new Separator[15];
+            _inertias = new Separator[15];
             _currentPositionIndex = 0;
             setupControlBox();
             //showControlBox();            
@@ -389,15 +391,43 @@ namespace WristVizualizer
 
         private void showInertiasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            try
+            if (showInertiasToolStripMenuItem.Checked)
             {
-                DatParser.parseInertiaFile2(_wrist.inertiaFile);
+                try
+                {
+                    //If its checked, then we need to add it
+                    TransformMatrix[] inert = DatParser.parseInertiaFile2(_wrist.inertiaFile);
+                    for (int i = 2; i < 10; i++) //skip the long bones
+                    {
+                        if (_bones[i] == null)
+                            continue;
+
+                        _inertias[i] = new Separator();
+                        Transform t = new Transform();
+                        DatParser.addRTtoTransform(inert[i], t);
+                        _inertias[i].addNode(new ACS());
+                        _inertias[i].addTransform(t);
+                        _bones[i].addChild(_inertias[i]);
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    string msg = "Error loading inertia file.\n\n" + ex.Message;
+                    MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    showInertiasToolStripMenuItem.Checked = false;
+                }
             }
-            catch (ArgumentException ex)
+            else
             {
-                string msg = "Error loading inertia file.\n\n" + ex.Message;
-                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //so we want to remove the inertia files
+                for (int i = 2; i < 10; i++)
+                {
+                    _bones[i].removeChild(_inertias[i]);
+                    _inertias[i] = null;
+                }
+
             }
+           
         }
     }
 }

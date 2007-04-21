@@ -39,6 +39,7 @@ namespace WristVizualizer
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSampleWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -80,7 +81,6 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -171,6 +171,15 @@ namespace WristVizualizer
             this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.decoratorToolStripMenuItem.Text = "&Decorator";
             this.decoratorToolStripMenuItem.CheckedChanged += new System.EventHandler(this.decoratorToolStripMenuItem_CheckedChanged);
+            // 
+            // showInertiasToolStripMenuItem
+            // 
+            this.showInertiasToolStripMenuItem.CheckOnClick = true;
+            this.showInertiasToolStripMenuItem.Enabled = false;
+            this.showInertiasToolStripMenuItem.Name = "showInertiasToolStripMenuItem";
+            this.showInertiasToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.showInertiasToolStripMenuItem.Text = "Show Inertias";
+            this.showInertiasToolStripMenuItem.Click += new System.EventHandler(this.showInertiasToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -621,14 +630,6 @@ namespace WristVizualizer
             this.label16.Size = new System.Drawing.Size(29, 13);
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
-            // 
-            // showInertiasToolStripMenuItem
-            // 
-            this.showInertiasToolStripMenuItem.Enabled = false;
-            this.showInertiasToolStripMenuItem.Name = "showInertiasToolStripMenuItem";
-            this.showInertiasToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.showInertiasToolStripMenuItem.Text = "Show Inertias";
-            this.showInertiasToolStripMenuItem.Click += new System.EventHandler(this.showInertiasToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
