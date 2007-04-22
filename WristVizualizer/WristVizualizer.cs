@@ -79,6 +79,7 @@ namespace WristVizualizer
         private void resetForm()
         {
             importToolStripMenuItem.Enabled = true;
+            backgroundColorToolStripMenuItem.Enabled = true;
             decoratorToolStripMenuItem.Enabled = true;
             saveFrameToolStripMenuItem.Enabled = true;
             showInertiasToolStripMenuItem.Enabled = false;
@@ -428,6 +429,20 @@ namespace WristVizualizer
 
             }
            
+        }
+
+        private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog cg = new ColorDialog();
+            int r = _viewer.getBackgroundColorR();
+            int g = _viewer.getBackgroundColorG();
+            int b = _viewer.getBackgroundColorB();
+            cg.Color = Color.FromArgb(r, g, b);
+            cg.FullOpen = true;
+            if (cg.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            _viewer.setBackgroundColor(cg.Color.R, cg.Color.G, cg.Color.B);
         }
     }
 }

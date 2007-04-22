@@ -18,6 +18,12 @@ public:
 	bool saveToGIF(System::String^ filename);
 	bool saveToTIFF(System::String^ filename);
 	bool saveToBMP(System::String^ filename);
+
+	//background color stuff
+	int getBackgroundColorR();
+	int getBackgroundColorG();
+	int getBackgroundColorB();
+	void setBackgroundColor(float r, float g, float b);
 private:
 	bool saveToImage(System::String^ filename,char* ext);
 	SoWinExaminerViewer* _viewer;

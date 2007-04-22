@@ -154,3 +154,20 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 	return result;
 
 }
+int libCoin3D::ExaminerViewer::getBackgroundColorR()
+{
+	return (int)_viewer->getBackgroundColor()[0];
+}
+int libCoin3D::ExaminerViewer::getBackgroundColorG()
+{
+	return (int)_viewer->getBackgroundColor()[1];
+}
+int libCoin3D::ExaminerViewer::getBackgroundColorB()
+{
+	return (int)_viewer->getBackgroundColor()[2];
+}
+
+void libCoin3D::ExaminerViewer::setBackgroundColor(float r, float g, float b)
+{
+	_viewer->setBackgroundColor(SbColor(r,g,b));
+}
