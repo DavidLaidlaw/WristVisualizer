@@ -32,18 +32,12 @@ namespace libWrist
                 for (int j = 0; j < numBones; j++)
                 {
                     transforms[i][j] = new Transform();
+                    addRTtoTransform(tfm[j], transforms[i][j]);
                     /*
-                    t.setRotation(tfm[i].R.Array[0][0], tfm[i].R.Array[0][1], tfm[i].R.Array[0][2],
-                        tfm[i].R.Array[1][0], tfm[i].R.Array[1][1], tfm[i].R.Array[1][2],
-                        tfm[i].R.Array[2][0], tfm[i].R.Array[2][1], tfm[i].R.Array[2][2]);
-                     
-                    t.setTranslation(tfm[i].T.Array[0][0], tfm[i].T.Array[0][1], tfm[i].T.Array[0][2]);
-                    _bones[i].addTransform(t);
-                     */
                     transforms[i][j].setTransform(tfm[j].R.Array[0][0], tfm[j].R.Array[0][1], tfm[j].R.Array[0][2],
                         tfm[j].R.Array[1][0], tfm[j].R.Array[1][1], tfm[j].R.Array[1][2],
                         tfm[j].R.Array[2][0], tfm[j].R.Array[2][1], tfm[j].R.Array[2][2],
-                        tfm[j].T.Array[0][0], tfm[j].T.Array[0][1], tfm[j].T.Array[0][2]);
+                        tfm[j].T.Array[0][0], tfm[j].T.Array[0][1], tfm[j].T.Array[0][2]); */
                 }
             }
             return transforms;
@@ -58,20 +52,19 @@ namespace libWrist
             char[] div = { ' ', '\t', ',' };
             System.Collections.ArrayList dat = new System.Collections.ArrayList(100);
 
-            Regex reg = new Regex(@"([-\d\.e+]+)[ \t,]+([-\d\.e+]+)[ \t,]+([-\d\.e+]+)");
+            //Regex reg = new Regex(@"([-\d\.e+]+)[ \t,]+([-\d\.e+]+)[ \t,]+([-\d\.e+]+)");
+            Regex reg = new Regex(@"([-\d\.e+]+)");
             while (!r.EndOfStream)
             {
                 //Console.WriteLine("new Line");
                 string line = r.ReadLine().Trim();
                 if (line.Length == 0) continue;
 
-                Match m = reg.Match(line);
-                //string[] parts = line.Split(div);
-                double[] values = new double[m.Groups.Count-1];
-                for (int i = 0; i < m.Groups.Count-1; i++)
+                MatchCollection m = reg.Matches(line);
+                double[] values = new double[m.Count];
+                for (int i = 0; i < m.Count; i++)
                 {
-                    //string junk = m.Groups[i+1].Value;
-                    values[i] = Double.Parse(m.Groups[i+1].Value);
+                    values[i] = Double.Parse(m[i].Value);
                     //Console.WriteLine("Found: " + values[i].ToString());
                 }
                 dat.Add(values);
