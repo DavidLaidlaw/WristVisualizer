@@ -434,15 +434,18 @@ namespace WristVizualizer
         private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog cg = new ColorDialog();
-            int r = _viewer.getBackgroundColorR();
-            int g = _viewer.getBackgroundColorG();
-            int b = _viewer.getBackgroundColorB();
-            cg.Color = Color.FromArgb(r, g, b);
+            int oldc = _viewer.getBackgroundColor();
+            oldc = (oldc >> 8);
+            cg.Color = Color.FromArgb(oldc);
+            
             cg.FullOpen = true;
             if (cg.ShowDialog() == DialogResult.Cancel)
                 return;
 
-            _viewer.setBackgroundColor(cg.Color.R, cg.Color.G, cg.Color.B);
+            int col = cg.Color.ToArgb();
+            //bit correction needed to move from 0xAARRGGBB -> 0xRRGGBBAA
+            col = (col << 8) | 0x000000FF;
+            _viewer.setBackgroundColor(col);
         }
     }
 }

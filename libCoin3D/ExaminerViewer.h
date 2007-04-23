@@ -20,10 +20,12 @@ public:
 	bool saveToBMP(System::String^ filename);
 
 	//background color stuff
-	int getBackgroundColorR();
-	int getBackgroundColorG();
-	int getBackgroundColorB();
+	float getBackgroundColorR();
+	float getBackgroundColorG();
+	float getBackgroundColorB();
+	int getBackgroundColor();
 	void setBackgroundColor(float r, float g, float b);
+	void setBackgroundColor(int rgb);
 private:
 	bool saveToImage(System::String^ filename,char* ext);
 	SoWinExaminerViewer* _viewer;
