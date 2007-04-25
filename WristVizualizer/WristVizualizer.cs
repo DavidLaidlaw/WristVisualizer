@@ -192,6 +192,7 @@ namespace WristVizualizer
                 }
                 else
                 {
+                    _bones[i] = null;
                     _hideBoxes[i].Enabled = false;
                 }
             }
@@ -285,8 +286,12 @@ namespace WristVizualizer
                 if (_root.hasTransform())
                     _root.removeTransform();
                 for (int i = 0; i < _bones.Length; i++)
+                {
+                    if (_bones[i] == null) continue; //skip missing bone
+
                     if (_bones[i].hasTransform())
                         _bones[i].removeTransform();
+                }
             }
             else
             {
@@ -301,6 +306,9 @@ namespace WristVizualizer
                 _root.addTransform(t);
                 for (int i = 0; i < _bones.Length; i++)
                 {
+                    //skip missing bones
+                    if (_bones[i] == null) continue;
+
                     //remove the old
                     if (_bones[i].hasTransform())
                         _bones[i].removeTransform();
