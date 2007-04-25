@@ -26,6 +26,8 @@ public:
 	int getBackgroundColor();
 	void setBackgroundColor(float r, float g, float b);
 	void setBackgroundColor(int rgb);
+
+	void setFeedbackVisibility(bool visible);
 private:
 	bool saveToImage(System::String^ filename,char* ext);
 	SoWinExaminerViewer* _viewer;

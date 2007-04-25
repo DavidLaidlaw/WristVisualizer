@@ -84,6 +84,7 @@ namespace WristVizualizer
             saveFrameToolStripMenuItem.Enabled = true;
             showInertiasToolStripMenuItem.Enabled = false;
             showInertiasToolStripMenuItem.Checked = false;
+            showAxesToolStripMenuItem.Enabled = true;
             _bones = new Separator[15];
             for (int i = 0; i < _bnames.Length; i++)
             {
@@ -454,6 +455,11 @@ namespace WristVizualizer
             //bit correction needed to move from 0xAARRGGBB -> 0xRRGGBBAA
             col = (col << 8) | 0x000000FF;
             _viewer.setBackgroundColor(col);
+        }
+
+        private void showAxesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _viewer.setFeedbackVisibility(showAxesToolStripMenuItem.Checked);
         }
     }
 }

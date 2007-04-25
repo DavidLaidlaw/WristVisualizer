@@ -184,3 +184,11 @@ void libCoin3D::ExaminerViewer::setBackgroundColor(int rgb)
 	c.setPackedValue(rgb,junk);
 	_viewer->setBackgroundColor(c);
 }
+
+void libCoin3D::ExaminerViewer::setFeedbackVisibility(bool visible)
+{
+	//only change, if its different
+	if (_viewer->isFeedbackVisible() != visible)
+		_viewer->setFeedbackVisibility(visible);
+
+}
