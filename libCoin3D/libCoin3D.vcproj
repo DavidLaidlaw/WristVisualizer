@@ -59,7 +59,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="coin2d.lib sowin1d.lib simage1d.lib $(NoInherit)"
+				AdditionalDependencies="coin2d.lib sowin1d.lib $(NoInherit)"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="$(COIN3DDIR)\lib"
 				GenerateDebugInformation="true"
@@ -135,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="coin2.lib sowin1.lib simage1.lib $(NoInherit)"
+				AdditionalDependencies="coin2.lib sowin1.lib $(NoInherit)"
 				LinkIncremental="1"
 				AdditionalLibraryDirectories="$(COIN3DDIR)\lib"
 				GenerateDebugInformation="true"
