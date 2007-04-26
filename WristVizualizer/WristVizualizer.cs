@@ -20,9 +20,11 @@ namespace WristVizualizer
         private Separator[] _inertias;
         private string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
         private CheckBox[] _hideBoxes;
+        private RadioButton[] _fixRadios;
         private Wrist _wrist;
         private Transform[][] _transforms;
         private int _currentPositionIndex;
+        private int _fixedBoneIndex;
 
         public WristVizualizer()
         {
@@ -34,6 +36,7 @@ namespace WristVizualizer
             _bones = new Separator[15];
             _inertias = new Separator[15];
             _currentPositionIndex = 0;
+            _fixedBoneIndex = 0;
             setupControlBox();
             //showControlBox();            
         }
@@ -74,6 +77,23 @@ namespace WristVizualizer
             _hideBoxes[12] = checkBoxMC3;
             _hideBoxes[13] = checkBoxMC4;
             _hideBoxes[14] = checkBoxMC5;
+
+            _fixRadios = new RadioButton[15];
+            _fixRadios[0] = radioButtonFixedRad;
+            _fixRadios[1] = radioButtonFixedUln;
+            _fixRadios[2] = radioButtonFixedSca;
+            _fixRadios[3] = radioButtonFixedLun;
+            _fixRadios[4] = radioButtonFixedTrq;
+            _fixRadios[5] = radioButtonFixedPis;
+            _fixRadios[6] = radioButtonFixedTpd;
+            _fixRadios[7] = radioButtonFixedTpm;
+            _fixRadios[8] = radioButtonFixedCap;
+            _fixRadios[9] = radioButtonFixedHam;
+            _fixRadios[10] = radioButtonFixedMC1;
+            _fixRadios[11] = radioButtonFixedMC2;
+            _fixRadios[12] = radioButtonFixedMC3;
+            _fixRadios[13] = radioButtonFixedMC4;
+            _fixRadios[14] = radioButtonFixedMC5;
         }
 
         private void resetForm()
@@ -88,9 +108,11 @@ namespace WristVizualizer
             _bones = new Separator[15];
             for (int i = 0; i < _bnames.Length; i++)
             {
+                _bones[i] = null;
                 _hideBoxes[i].Checked = false;
                 _hideBoxes[i].Enabled = true;
             }
+            radioButtonFixedRad.Checked = true;
         }
 
         private void openFile(string[] filenames, bool loadFull)
@@ -195,6 +217,7 @@ namespace WristVizualizer
                 {
                     _bones[i] = null;
                     _hideBoxes[i].Enabled = false;
+                    _fixRadios[i].Enabled = false;
                 }
             }
         }
@@ -301,7 +324,7 @@ namespace WristVizualizer
                 if (_root.hasTransform())
                     _root.removeTransform();
                 Transform t = new Transform();
-                DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex-1))[0], t);
+                DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex - 1))[_fixedBoneIndex], t);
                 t.invert();
                 //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
                 _root.addTransform(t);
@@ -460,6 +483,41 @@ namespace WristVizualizer
         private void showAxesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _viewer.setFeedbackVisibility(showAxesToolStripMenuItem.Checked);
+        }
+
+        private void radioButtonFixed_CheckedChanged(object sender, EventArgs e)
+        {
+            /* This method will get called twice on a change, once when checked, 
+             * and once when unchecked. To prevent problems, we will ignore 
+             * events for the button that was unchecked, and deal only with
+             * events for the check event
+             */
+            RadioButton b = (RadioButton)sender;
+            if (!b.Checked) return; //only want to deal with the checked button
+
+            //figure out what box this is
+            for (int i = 0; i < _bones.Length; i++)
+            {
+                if (_fixRadios[i] == sender && _bones[i] != null)
+                {
+                    _fixedBoneIndex = i;
+
+                    //do nothing for neutral
+                    if (_currentPositionIndex == 0) return;
+
+                    //so now change the top level
+                    //do the neutral thing....
+                    if (_root.hasTransform())
+                        _root.removeTransform();
+                    
+                    Transform t = new Transform();
+                    DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex - 1))[i], t);
+                    t.invert();
+                    //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
+                    _root.addTransform(t);
+
+                }
+            }
         }
     }
 }

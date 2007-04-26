@@ -78,7 +78,7 @@ namespace WristVizualizer
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(84, 16);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Version 1.0.2";
+            this.label2.Text = "Version 1.0.3";
             // 
             // label3
             // 
