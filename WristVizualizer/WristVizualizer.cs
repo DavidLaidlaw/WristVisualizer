@@ -105,12 +105,14 @@ namespace WristVizualizer
             showInertiasToolStripMenuItem.Enabled = false;
             showInertiasToolStripMenuItem.Checked = false;
             showAxesToolStripMenuItem.Enabled = true;
+            seriesListBox.Items.Clear();
             _bones = new Separator[15];
             for (int i = 0; i < _bnames.Length; i++)
             {
                 _bones[i] = null;
                 _hideBoxes[i].Checked = false;
                 _hideBoxes[i].Enabled = true;
+                _fixRadios[i].Enabled = true;
             }
             radioButtonFixedRad.Checked = true;
         }
@@ -198,11 +200,26 @@ namespace WristVizualizer
             showInertiasToolStripMenuItem.Enabled = true;
 
             //Setup motion files, etc
-            _wrist = new Wrist(radius);
-            //_wrist.setupPaths(radius);
-            //_wrist.findAllSeries();
-            _transforms = DatParser.makeAllTransforms(_wrist.motionFiles,_bnames.Length);
-            populateSeriesList();
+
+            _wrist = new Wrist();
+            try
+            {
+                _wrist.setupWrist(radius);
+                _transforms = DatParser.makeAllTransforms(_wrist.motionFiles, _bnames.Length);
+                populateSeriesList();
+            }
+            catch (ArgumentException ex)
+            {
+                if (!hideErrorMessagesToolStripMenuItem.Checked)
+                {
+                    string msg = "Error loading wrist kinematics.\n\n" + ex.Message;
+                    //TODO: Change to abort,retry, and find way of cancelling load
+                    MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                for (int i = 0; i < _bnames.Length; i++)
+                    _fixRadios[i].Enabled = false;
+            }
+            
 
             for (int i = 0; i < _bnames.Length; i++)
             {

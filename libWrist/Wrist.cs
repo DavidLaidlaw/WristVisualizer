@@ -54,6 +54,18 @@ namespace libWrist
             findAllSeries();
         }
 
+        public Wrist()
+        {
+        }
+
+        public void setupWrist(string pathRadiusIV)
+        {
+            _radius = pathRadiusIV;
+            _bpaths = new string[_bnames.Length];
+            setupPaths();
+            findAllSeries();
+        }
+
         public string neutralSeries
         {
             get { return _neutralSeries; }
@@ -237,6 +249,11 @@ namespace libWrist
 
             _neutralSeries = "S" + _neutralSeriesNum + _side;
 
+
+            //now setup bonenames & paths
+            for (int i = 0; i < _bnames.Length; i++)
+                _bpaths[i] = Path.Combine(_ivFolderPath, _bnames[i] + _neutralSeriesNum + _side + ext);
+
             /* Finding the subject path
              * - Try and find the directory of the neutral series and then set the 
              * subject path to its parent directory.
@@ -263,9 +280,6 @@ namespace libWrist
             if (!Regex.Match(Path.GetFileName(_subjectPath), @"E\d{5}").Success)
                 throw new ArgumentException("Invalid subject path: " + _subjectPath);
 
-            //now setup bonenames & paths
-            for (int i = 0; i < _bnames.Length; i++)
-                _bpaths[i] = Path.Combine(_ivFolderPath, _bnames[i] + _neutralSeriesNum + _side + ext);
         }
 
         static public bool isDatabaseStructure(string radiusPath)

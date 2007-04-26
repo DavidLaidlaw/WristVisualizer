@@ -79,27 +79,29 @@ namespace WristVizualizer
             this.label15 = new System.Windows.Forms.Label();
             this.checkBoxMC3 = new System.Windows.Forms.CheckBox();
             this.panelControl = new System.Windows.Forms.Panel();
+            this.label18 = new System.Windows.Forms.Label();
+            this.radioButtonFixedMC5 = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedMC4 = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedMC3 = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedMC2 = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedMC1 = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedHam = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedCap = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedTpm = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedTpd = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedPis = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedTrq = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedLun = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedSca = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedUln = new System.Windows.Forms.RadioButton();
+            this.radioButtonFixedRad = new System.Windows.Forms.RadioButton();
             this.linkLabelHideAll = new System.Windows.Forms.LinkLabel();
             this.linkLabelShowAll = new System.Windows.Forms.LinkLabel();
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.radioButtonFixedRad = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedUln = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedSca = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedLun = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedTrq = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedPis = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedTpd = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedTpm = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedCap = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedHam = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedMC1 = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedMC2 = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedMC3 = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedMC4 = new System.Windows.Forms.RadioButton();
-            this.radioButtonFixedMC5 = new System.Windows.Forms.RadioButton();
-            this.label18 = new System.Windows.Forms.Label();
+            this.hideErrorMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -193,7 +195,9 @@ namespace WristVizualizer
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.decoratorToolStripMenuItem,
             this.showInertiasToolStripMenuItem,
-            this.showAxesToolStripMenuItem});
+            this.showAxesToolStripMenuItem,
+            this.toolStripSeparator4,
+            this.hideErrorMessagesToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
             this.viewToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
             this.viewToolStripMenuItem.Text = "&View";
@@ -205,7 +209,7 @@ namespace WristVizualizer
             this.decoratorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.decoratorToolStripMenuItem.Enabled = false;
             this.decoratorToolStripMenuItem.Name = "decoratorToolStripMenuItem";
-            this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.decoratorToolStripMenuItem.Text = "&Decorator";
             this.decoratorToolStripMenuItem.CheckedChanged += new System.EventHandler(this.decoratorToolStripMenuItem_CheckedChanged);
             // 
@@ -214,7 +218,7 @@ namespace WristVizualizer
             this.showInertiasToolStripMenuItem.CheckOnClick = true;
             this.showInertiasToolStripMenuItem.Enabled = false;
             this.showInertiasToolStripMenuItem.Name = "showInertiasToolStripMenuItem";
-            this.showInertiasToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.showInertiasToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.showInertiasToolStripMenuItem.Text = "Show Inertias";
             this.showInertiasToolStripMenuItem.Click += new System.EventHandler(this.showInertiasToolStripMenuItem_Click);
             // 
@@ -223,7 +227,7 @@ namespace WristVizualizer
             this.showAxesToolStripMenuItem.CheckOnClick = true;
             this.showAxesToolStripMenuItem.Enabled = false;
             this.showAxesToolStripMenuItem.Name = "showAxesToolStripMenuItem";
-            this.showAxesToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.showAxesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.showAxesToolStripMenuItem.Text = "Show Axes";
             this.showAxesToolStripMenuItem.Click += new System.EventHandler(this.showAxesToolStripMenuItem_Click);
             // 
@@ -642,6 +646,183 @@ namespace WristVizualizer
             this.panelControl.TabIndex = 32;
             this.panelControl.Visible = false;
             // 
+            // label18
+            // 
+            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(109, 10);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(32, 13);
+            this.label18.TabIndex = 52;
+            this.label18.Text = "Fixed";
+            // 
+            // radioButtonFixedMC5
+            // 
+            this.radioButtonFixedMC5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedMC5.AutoSize = true;
+            this.radioButtonFixedMC5.Location = new System.Drawing.Point(113, 310);
+            this.radioButtonFixedMC5.Name = "radioButtonFixedMC5";
+            this.radioButtonFixedMC5.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedMC5.TabIndex = 51;
+            this.radioButtonFixedMC5.UseVisualStyleBackColor = true;
+            this.radioButtonFixedMC5.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedMC4
+            // 
+            this.radioButtonFixedMC4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedMC4.AutoSize = true;
+            this.radioButtonFixedMC4.Location = new System.Drawing.Point(113, 289);
+            this.radioButtonFixedMC4.Name = "radioButtonFixedMC4";
+            this.radioButtonFixedMC4.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedMC4.TabIndex = 50;
+            this.radioButtonFixedMC4.UseVisualStyleBackColor = true;
+            this.radioButtonFixedMC4.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedMC3
+            // 
+            this.radioButtonFixedMC3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedMC3.AutoSize = true;
+            this.radioButtonFixedMC3.Location = new System.Drawing.Point(113, 270);
+            this.radioButtonFixedMC3.Name = "radioButtonFixedMC3";
+            this.radioButtonFixedMC3.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedMC3.TabIndex = 49;
+            this.radioButtonFixedMC3.UseVisualStyleBackColor = true;
+            this.radioButtonFixedMC3.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedMC2
+            // 
+            this.radioButtonFixedMC2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedMC2.AutoSize = true;
+            this.radioButtonFixedMC2.Location = new System.Drawing.Point(113, 249);
+            this.radioButtonFixedMC2.Name = "radioButtonFixedMC2";
+            this.radioButtonFixedMC2.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedMC2.TabIndex = 48;
+            this.radioButtonFixedMC2.UseVisualStyleBackColor = true;
+            this.radioButtonFixedMC2.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedMC1
+            // 
+            this.radioButtonFixedMC1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedMC1.AutoSize = true;
+            this.radioButtonFixedMC1.Location = new System.Drawing.Point(113, 230);
+            this.radioButtonFixedMC1.Name = "radioButtonFixedMC1";
+            this.radioButtonFixedMC1.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedMC1.TabIndex = 47;
+            this.radioButtonFixedMC1.UseVisualStyleBackColor = true;
+            this.radioButtonFixedMC1.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedHam
+            // 
+            this.radioButtonFixedHam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedHam.AutoSize = true;
+            this.radioButtonFixedHam.Location = new System.Drawing.Point(113, 210);
+            this.radioButtonFixedHam.Name = "radioButtonFixedHam";
+            this.radioButtonFixedHam.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedHam.TabIndex = 46;
+            this.radioButtonFixedHam.UseVisualStyleBackColor = true;
+            this.radioButtonFixedHam.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedCap
+            // 
+            this.radioButtonFixedCap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedCap.AutoSize = true;
+            this.radioButtonFixedCap.Location = new System.Drawing.Point(113, 190);
+            this.radioButtonFixedCap.Name = "radioButtonFixedCap";
+            this.radioButtonFixedCap.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedCap.TabIndex = 45;
+            this.radioButtonFixedCap.UseVisualStyleBackColor = true;
+            this.radioButtonFixedCap.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedTpm
+            // 
+            this.radioButtonFixedTpm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedTpm.AutoSize = true;
+            this.radioButtonFixedTpm.Location = new System.Drawing.Point(113, 170);
+            this.radioButtonFixedTpm.Name = "radioButtonFixedTpm";
+            this.radioButtonFixedTpm.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedTpm.TabIndex = 44;
+            this.radioButtonFixedTpm.UseVisualStyleBackColor = true;
+            this.radioButtonFixedTpm.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedTpd
+            // 
+            this.radioButtonFixedTpd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedTpd.AutoSize = true;
+            this.radioButtonFixedTpd.Location = new System.Drawing.Point(113, 150);
+            this.radioButtonFixedTpd.Name = "radioButtonFixedTpd";
+            this.radioButtonFixedTpd.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedTpd.TabIndex = 43;
+            this.radioButtonFixedTpd.UseVisualStyleBackColor = true;
+            this.radioButtonFixedTpd.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedPis
+            // 
+            this.radioButtonFixedPis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedPis.AutoSize = true;
+            this.radioButtonFixedPis.Location = new System.Drawing.Point(113, 130);
+            this.radioButtonFixedPis.Name = "radioButtonFixedPis";
+            this.radioButtonFixedPis.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedPis.TabIndex = 42;
+            this.radioButtonFixedPis.UseVisualStyleBackColor = true;
+            this.radioButtonFixedPis.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedTrq
+            // 
+            this.radioButtonFixedTrq.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedTrq.AutoSize = true;
+            this.radioButtonFixedTrq.Location = new System.Drawing.Point(113, 110);
+            this.radioButtonFixedTrq.Name = "radioButtonFixedTrq";
+            this.radioButtonFixedTrq.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedTrq.TabIndex = 41;
+            this.radioButtonFixedTrq.UseVisualStyleBackColor = true;
+            this.radioButtonFixedTrq.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedLun
+            // 
+            this.radioButtonFixedLun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedLun.AutoSize = true;
+            this.radioButtonFixedLun.Location = new System.Drawing.Point(113, 90);
+            this.radioButtonFixedLun.Name = "radioButtonFixedLun";
+            this.radioButtonFixedLun.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedLun.TabIndex = 40;
+            this.radioButtonFixedLun.UseVisualStyleBackColor = true;
+            this.radioButtonFixedLun.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedSca
+            // 
+            this.radioButtonFixedSca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedSca.AutoSize = true;
+            this.radioButtonFixedSca.Location = new System.Drawing.Point(113, 70);
+            this.radioButtonFixedSca.Name = "radioButtonFixedSca";
+            this.radioButtonFixedSca.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedSca.TabIndex = 39;
+            this.radioButtonFixedSca.UseVisualStyleBackColor = true;
+            this.radioButtonFixedSca.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedUln
+            // 
+            this.radioButtonFixedUln.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedUln.AutoSize = true;
+            this.radioButtonFixedUln.Location = new System.Drawing.Point(113, 50);
+            this.radioButtonFixedUln.Name = "radioButtonFixedUln";
+            this.radioButtonFixedUln.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedUln.TabIndex = 38;
+            this.radioButtonFixedUln.UseVisualStyleBackColor = true;
+            this.radioButtonFixedUln.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
+            // radioButtonFixedRad
+            // 
+            this.radioButtonFixedRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.radioButtonFixedRad.AutoSize = true;
+            this.radioButtonFixedRad.Checked = true;
+            this.radioButtonFixedRad.Location = new System.Drawing.Point(113, 30);
+            this.radioButtonFixedRad.Name = "radioButtonFixedRad";
+            this.radioButtonFixedRad.Size = new System.Drawing.Size(14, 13);
+            this.radioButtonFixedRad.TabIndex = 37;
+            this.radioButtonFixedRad.TabStop = true;
+            this.radioButtonFixedRad.UseVisualStyleBackColor = true;
+            this.radioButtonFixedRad.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            // 
             // linkLabelHideAll
             // 
             this.linkLabelHideAll.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
@@ -696,182 +877,19 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
-            // radioButtonFixedRad
+            // hideErrorMessagesToolStripMenuItem
             // 
-            this.radioButtonFixedRad.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedRad.AutoSize = true;
-            this.radioButtonFixedRad.Checked = true;
-            this.radioButtonFixedRad.Location = new System.Drawing.Point(113, 30);
-            this.radioButtonFixedRad.Name = "radioButtonFixedRad";
-            this.radioButtonFixedRad.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedRad.TabIndex = 37;
-            this.radioButtonFixedRad.TabStop = true;
-            this.radioButtonFixedRad.UseVisualStyleBackColor = true;
-            this.radioButtonFixedRad.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
+            this.hideErrorMessagesToolStripMenuItem.Checked = true;
+            this.hideErrorMessagesToolStripMenuItem.CheckOnClick = true;
+            this.hideErrorMessagesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hideErrorMessagesToolStripMenuItem.Name = "hideErrorMessagesToolStripMenuItem";
+            this.hideErrorMessagesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.hideErrorMessagesToolStripMenuItem.Text = "Hide Error Messages";
             // 
-            // radioButtonFixedUln
+            // toolStripSeparator4
             // 
-            this.radioButtonFixedUln.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedUln.AutoSize = true;
-            this.radioButtonFixedUln.Location = new System.Drawing.Point(113, 50);
-            this.radioButtonFixedUln.Name = "radioButtonFixedUln";
-            this.radioButtonFixedUln.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedUln.TabIndex = 38;
-            this.radioButtonFixedUln.UseVisualStyleBackColor = true;
-            this.radioButtonFixedUln.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedSca
-            // 
-            this.radioButtonFixedSca.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedSca.AutoSize = true;
-            this.radioButtonFixedSca.Location = new System.Drawing.Point(113, 70);
-            this.radioButtonFixedSca.Name = "radioButtonFixedSca";
-            this.radioButtonFixedSca.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedSca.TabIndex = 39;
-            this.radioButtonFixedSca.UseVisualStyleBackColor = true;
-            this.radioButtonFixedSca.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedLun
-            // 
-            this.radioButtonFixedLun.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedLun.AutoSize = true;
-            this.radioButtonFixedLun.Location = new System.Drawing.Point(113, 90);
-            this.radioButtonFixedLun.Name = "radioButtonFixedLun";
-            this.radioButtonFixedLun.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedLun.TabIndex = 40;
-            this.radioButtonFixedLun.UseVisualStyleBackColor = true;
-            this.radioButtonFixedLun.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedTrq
-            // 
-            this.radioButtonFixedTrq.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedTrq.AutoSize = true;
-            this.radioButtonFixedTrq.Location = new System.Drawing.Point(113, 110);
-            this.radioButtonFixedTrq.Name = "radioButtonFixedTrq";
-            this.radioButtonFixedTrq.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedTrq.TabIndex = 41;
-            this.radioButtonFixedTrq.UseVisualStyleBackColor = true;
-            this.radioButtonFixedTrq.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedPis
-            // 
-            this.radioButtonFixedPis.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedPis.AutoSize = true;
-            this.radioButtonFixedPis.Location = new System.Drawing.Point(113, 130);
-            this.radioButtonFixedPis.Name = "radioButtonFixedPis";
-            this.radioButtonFixedPis.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedPis.TabIndex = 42;
-            this.radioButtonFixedPis.UseVisualStyleBackColor = true;
-            this.radioButtonFixedPis.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedTpd
-            // 
-            this.radioButtonFixedTpd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedTpd.AutoSize = true;
-            this.radioButtonFixedTpd.Location = new System.Drawing.Point(113, 150);
-            this.radioButtonFixedTpd.Name = "radioButtonFixedTpd";
-            this.radioButtonFixedTpd.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedTpd.TabIndex = 43;
-            this.radioButtonFixedTpd.UseVisualStyleBackColor = true;
-            this.radioButtonFixedTpd.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedTpm
-            // 
-            this.radioButtonFixedTpm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedTpm.AutoSize = true;
-            this.radioButtonFixedTpm.Location = new System.Drawing.Point(113, 170);
-            this.radioButtonFixedTpm.Name = "radioButtonFixedTpm";
-            this.radioButtonFixedTpm.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedTpm.TabIndex = 44;
-            this.radioButtonFixedTpm.UseVisualStyleBackColor = true;
-            this.radioButtonFixedTpm.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedCap
-            // 
-            this.radioButtonFixedCap.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedCap.AutoSize = true;
-            this.radioButtonFixedCap.Location = new System.Drawing.Point(113, 190);
-            this.radioButtonFixedCap.Name = "radioButtonFixedCap";
-            this.radioButtonFixedCap.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedCap.TabIndex = 45;
-            this.radioButtonFixedCap.UseVisualStyleBackColor = true;
-            this.radioButtonFixedCap.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedHam
-            // 
-            this.radioButtonFixedHam.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedHam.AutoSize = true;
-            this.radioButtonFixedHam.Location = new System.Drawing.Point(113, 210);
-            this.radioButtonFixedHam.Name = "radioButtonFixedHam";
-            this.radioButtonFixedHam.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedHam.TabIndex = 46;
-            this.radioButtonFixedHam.UseVisualStyleBackColor = true;
-            this.radioButtonFixedHam.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedMC1
-            // 
-            this.radioButtonFixedMC1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedMC1.AutoSize = true;
-            this.radioButtonFixedMC1.Location = new System.Drawing.Point(113, 230);
-            this.radioButtonFixedMC1.Name = "radioButtonFixedMC1";
-            this.radioButtonFixedMC1.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedMC1.TabIndex = 47;
-            this.radioButtonFixedMC1.UseVisualStyleBackColor = true;
-            this.radioButtonFixedMC1.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedMC2
-            // 
-            this.radioButtonFixedMC2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedMC2.AutoSize = true;
-            this.radioButtonFixedMC2.Location = new System.Drawing.Point(113, 249);
-            this.radioButtonFixedMC2.Name = "radioButtonFixedMC2";
-            this.radioButtonFixedMC2.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedMC2.TabIndex = 48;
-            this.radioButtonFixedMC2.UseVisualStyleBackColor = true;
-            this.radioButtonFixedMC2.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedMC3
-            // 
-            this.radioButtonFixedMC3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedMC3.AutoSize = true;
-            this.radioButtonFixedMC3.Location = new System.Drawing.Point(113, 270);
-            this.radioButtonFixedMC3.Name = "radioButtonFixedMC3";
-            this.radioButtonFixedMC3.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedMC3.TabIndex = 49;
-            this.radioButtonFixedMC3.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            this.radioButtonFixedMC3.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonFixedMC4
-            // 
-            this.radioButtonFixedMC4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedMC4.AutoSize = true;
-            this.radioButtonFixedMC4.Location = new System.Drawing.Point(113, 289);
-            this.radioButtonFixedMC4.Name = "radioButtonFixedMC4";
-            this.radioButtonFixedMC4.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedMC4.TabIndex = 50;
-            this.radioButtonFixedMC4.UseVisualStyleBackColor = true;
-            this.radioButtonFixedMC4.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // radioButtonFixedMC5
-            // 
-            this.radioButtonFixedMC5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.radioButtonFixedMC5.AutoSize = true;
-            this.radioButtonFixedMC5.Location = new System.Drawing.Point(113, 310);
-            this.radioButtonFixedMC5.Name = "radioButtonFixedMC5";
-            this.radioButtonFixedMC5.Size = new System.Drawing.Size(14, 13);
-            this.radioButtonFixedMC5.TabIndex = 51;
-            this.radioButtonFixedMC5.UseVisualStyleBackColor = true;
-            this.radioButtonFixedMC5.CheckedChanged += new System.EventHandler(this.radioButtonFixed_CheckedChanged);
-            // 
-            // label18
-            // 
-            this.label18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(109, 10);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(32, 13);
-            this.label18.TabIndex = 52;
-            this.label18.Text = "Fixed";
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(180, 6);
             // 
             // WristVizualizer
             // 
@@ -974,6 +992,8 @@ namespace WristVizualizer
         private System.Windows.Forms.RadioButton radioButtonFixedRad;
         private System.Windows.Forms.RadioButton radioButtonFixedMC5;
         private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
+        private System.Windows.Forms.ToolStripMenuItem hideErrorMessagesToolStripMenuItem;
     }
 }
 
