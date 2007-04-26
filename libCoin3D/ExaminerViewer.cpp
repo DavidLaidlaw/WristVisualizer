@@ -63,6 +63,7 @@ bool libCoin3D::ExaminerViewer::saveToGIF(System::String ^filename)
 }
 bool libCoin3D::ExaminerViewer::saveToTIFF(System::String ^filename)
 {
+	//TODO: Fix error with saveing screenshots to other formats - include simage.lib?
 	//test Code....don't know why I can't load these other types...
 	/*
 	SbPList extlist;

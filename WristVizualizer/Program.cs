@@ -22,6 +22,7 @@ namespace WristVizualizer
 
         static void Application_ThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
+            //TODO: Need more error checking captan. We really shouldn't be getting here as often as we do...
             string log = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "error.log");
             //log = @"C:\Documents and Settings\Evan\My Documents\Visual Studio 2005\Projects\Vizualization\WristVizualizer\bin\Release\test.txt";
             try //there is a chance of failure when writing to the log file
