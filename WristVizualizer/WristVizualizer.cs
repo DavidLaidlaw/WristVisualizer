@@ -104,6 +104,8 @@ namespace WristVizualizer
             saveFrameToolStripMenuItem.Enabled = true;
             showInertiasToolStripMenuItem.Enabled = false;
             showInertiasToolStripMenuItem.Checked = false;
+            showACSToolStripMenuItem.Enabled = false;
+            showACSToolStripMenuItem.Checked = false;
             showAxesToolStripMenuItem.Enabled = true;
             seriesListBox.Items.Clear();
             _bones = new Separator[15];
@@ -198,6 +200,7 @@ namespace WristVizualizer
             //block importing a file
             importToolStripMenuItem.Enabled = false;
             showInertiasToolStripMenuItem.Enabled = true;
+            showACSToolStripMenuItem.Enabled = true;
 
             //Setup motion files, etc
 
@@ -481,6 +484,41 @@ namespace WristVizualizer
            
         }
 
+        private void showACSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (showACSToolStripMenuItem.Checked)
+            {
+                try
+                {
+                    //If its checked, then we need to add it
+                    TransformMatrix[] inert = DatParser.parseACSFile2(_wrist.acsFile);
+
+                    //only for radius, check if it exists
+                    if (_bones[0] == null)
+                        return;
+
+                    _inertias[0] = new Separator();
+                    Transform t = new Transform();
+                    DatParser.addRTtoTransform(inert[0], t);
+                    _inertias[0].addNode(new ACS());
+                    _inertias[0].addTransform(t);
+                    _bones[0].addChild(_inertias[0]);
+                }
+                catch (ArgumentException ex)
+                {
+                    string msg = "Error loading ACS file.\n\n" + ex.Message;
+                    MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    showACSToolStripMenuItem.Checked = false;
+                }
+            }
+            else
+            {
+                //so we want to remove the inertia files
+                _bones[0].removeChild(_inertias[0]);
+                _inertias[0] = null;
+            }
+        }
+
         private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog cg = new ColorDialog();
@@ -537,6 +575,8 @@ namespace WristVizualizer
                 }
             }
         }
+
+
 
     }
 }

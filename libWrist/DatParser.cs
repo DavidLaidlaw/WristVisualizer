@@ -116,6 +116,33 @@ namespace libWrist
             return inertias;
         }
 
+        private static double[][] parseACSFile(string filename)
+        {
+            double[][] dat = parseDatFile(filename);
+            if (dat.Length != 4)
+                throw new ArgumentException("ACS files should have 4 lines");
+
+            for (int i = 0; i < dat.Length; i++)
+            {
+                if (dat[i].Length != 3)
+                    throw new ArgumentException("Each row of the ACS files should have 3 elements. (Line: " + i.ToString() + ")");
+            }
+            return dat;
+        }
+
+        public static TransformMatrix[] parseACSFile2(string filename)
+        {
+            double[][] dat = parseACSFile(filename);
+            TransformMatrix[] ACS = new TransformMatrix[1];
+
+            ACS[0] = new TransformMatrix();
+            double[][] tempR = { dat[0], dat[1], dat[2] };
+            ACS[0].R = new GeneralMatrix(tempR, 3, 3);
+            ACS[0].T = new GeneralMatrix(dat[3], 1);
+
+            return ACS;
+        }
+
         public static TransformMatrix[] parseMotionFile2(string filename)
         {
             double[][] dat = parseMotionFile(filename);

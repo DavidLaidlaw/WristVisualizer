@@ -102,6 +102,7 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.showACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -195,6 +196,7 @@ namespace WristVizualizer
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.decoratorToolStripMenuItem,
             this.showInertiasToolStripMenuItem,
+            this.showACSToolStripMenuItem,
             this.showAxesToolStripMenuItem,
             this.toolStripSeparator4,
             this.hideErrorMessagesToolStripMenuItem});
@@ -891,6 +893,15 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
+            // showACSToolStripMenuItem
+            // 
+            this.showACSToolStripMenuItem.CheckOnClick = true;
+            this.showACSToolStripMenuItem.Enabled = false;
+            this.showACSToolStripMenuItem.Name = "showACSToolStripMenuItem";
+            this.showACSToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.showACSToolStripMenuItem.Text = "Show ACS";
+            this.showACSToolStripMenuItem.Click += new System.EventHandler(this.showACSToolStripMenuItem_Click);
+            // 
             // WristVizualizer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -994,6 +1005,7 @@ namespace WristVizualizer
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem hideErrorMessagesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem showACSToolStripMenuItem;
     }
 }
 

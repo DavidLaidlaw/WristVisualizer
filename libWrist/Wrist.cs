@@ -40,6 +40,7 @@ namespace libWrist
         private string _side;
         private string _radius;
         private string _inertiaFile;
+        private string _acsFile;
         private Database _db;
         private SeriesInfo[] _info;
 
@@ -74,6 +75,11 @@ namespace libWrist
         public string inertiaFile
         {
             get { return _inertiaFile; }
+        }
+
+        public string acsFile
+        {
+            get { return _acsFile; }
         }
 
         public string[] bpaths
@@ -223,6 +229,7 @@ namespace libWrist
             _subject = Path.GetFileName(_subjectPath);
             string infoFolder = Path.Combine(_subjectPath,_side.Equals("L") ? "LeftInfo" : "RightInfo");
             _inertiaFile = Path.Combine(infoFolder,_subject + "_inertia_" + _side + ".dat");
+            _acsFile = Path.Combine(infoFolder, _subject + "_RCS_" + _side + ".dat");
 
             //Now verify that this is the subject path
             if (!Regex.Match(Path.GetFileName(_subjectPath), @"^\d{5}$").Success)
@@ -275,6 +282,7 @@ namespace libWrist
 
             _subject = Path.GetFileName(_subjectPath);
             _inertiaFile = Path.Combine(Path.Combine(_subjectPath,_neutralSeries),"inertia"+ _neutralSeriesNum + _side + ".dat");
+            _acsFile = Path.Combine(Path.Combine(_subjectPath, _neutralSeries), "AnatCoordSys.dat");
 
             //Now verify that this is the subject path
             if (!Regex.Match(Path.GetFileName(_subjectPath), @"E\d{5}").Success)
