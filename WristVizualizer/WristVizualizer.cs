@@ -500,7 +500,7 @@ namespace WristVizualizer
                     _inertias[0] = new Separator();
                     Transform t = new Transform();
                     DatParser.addRTtoTransform(inert[0], t);
-                    _inertias[0].addNode(new ACS());
+                    _inertias[0].addNode(new ACS(45)); //longer axes for the radius/ACS
                     _inertias[0].addTransform(t);
                     _bones[0].addChild(_inertias[0]);
                 }

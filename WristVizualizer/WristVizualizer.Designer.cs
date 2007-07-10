@@ -398,9 +398,9 @@ namespace WristVizualizer
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(10, 150);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(50, 13);
+            this.label6.Size = new System.Drawing.Size(54, 13);
             this.label6.TabIndex = 15;
-            this.label6.Text = "Trapizoid";
+            this.label6.Text = "Trapezoid";
             // 
             // checkBoxTpd
             // 
