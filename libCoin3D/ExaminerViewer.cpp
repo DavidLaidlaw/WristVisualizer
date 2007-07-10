@@ -13,6 +13,8 @@
 #include <Inventor/actions/SoGLRenderAction.h>
 #include <Inventor/actions/SoWriteAction.h>
 
+#include "MyViewport.h"
+
 libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 {
 	_viewer = NULL;
@@ -37,7 +39,7 @@ void libCoin3D::ExaminerViewer::setDecorator(bool decorate)
 		_decorated = decorate;
 		_viewer->setDecoration(decorate);
 	}
-	
+	//_root->addChild(new MyViewport);
 
 }
 

@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\MyViewport.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Node.cpp"
 				>
 			</File>
@@ -259,6 +263,10 @@
 			</File>
 			<File
 				RelativePath=".\libCoin3D.h"
+				>
+			</File>
+			<File
+				RelativePath=".\MyViewport.h"
 				>
 			</File>
 			<File

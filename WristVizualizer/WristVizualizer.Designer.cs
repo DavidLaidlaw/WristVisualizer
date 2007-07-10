@@ -43,6 +43,8 @@ namespace WristVizualizer
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showAxesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.hideErrorMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSampleWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -100,8 +102,6 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.hideErrorMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -230,6 +230,20 @@ namespace WristVizualizer
             this.showAxesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.showAxesToolStripMenuItem.Text = "Show Axes";
             this.showAxesToolStripMenuItem.Click += new System.EventHandler(this.showAxesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator4
+            // 
+            this.toolStripSeparator4.Name = "toolStripSeparator4";
+            this.toolStripSeparator4.Size = new System.Drawing.Size(180, 6);
+            // 
+            // hideErrorMessagesToolStripMenuItem
+            // 
+            this.hideErrorMessagesToolStripMenuItem.Checked = true;
+            this.hideErrorMessagesToolStripMenuItem.CheckOnClick = true;
+            this.hideErrorMessagesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.hideErrorMessagesToolStripMenuItem.Name = "hideErrorMessagesToolStripMenuItem";
+            this.hideErrorMessagesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.hideErrorMessagesToolStripMenuItem.Text = "Hide Error Messages";
             // 
             // helpToolStripMenuItem
             // 
@@ -876,20 +890,6 @@ namespace WristVizualizer
             this.label16.Size = new System.Drawing.Size(29, 13);
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
-            // 
-            // hideErrorMessagesToolStripMenuItem
-            // 
-            this.hideErrorMessagesToolStripMenuItem.Checked = true;
-            this.hideErrorMessagesToolStripMenuItem.CheckOnClick = true;
-            this.hideErrorMessagesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.hideErrorMessagesToolStripMenuItem.Name = "hideErrorMessagesToolStripMenuItem";
-            this.hideErrorMessagesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.hideErrorMessagesToolStripMenuItem.Text = "Hide Error Messages";
-            // 
-            // toolStripSeparator4
-            // 
-            this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(180, 6);
             // 
             // WristVizualizer
             // 
