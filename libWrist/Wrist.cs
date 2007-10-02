@@ -45,7 +45,7 @@ namespace libWrist
         private SeriesInfo[] _info;
 
         //this is precompiled crap
-        private string[] _series;
+        //private string[] _series;
 
         public Wrist(string pathRadiusIV)
         {
@@ -65,6 +65,21 @@ namespace libWrist
             _bpaths = new string[_bnames.Length];
             setupPaths();
             findAllSeries();
+        }
+
+        public string subject
+        {
+            get { return _subject; }
+        }
+
+        public string subjectPath
+        {
+            get { return _subjectPath; }
+        }
+
+        public string side
+        {
+            get { return _side; }
         }
 
         public string neutralSeries

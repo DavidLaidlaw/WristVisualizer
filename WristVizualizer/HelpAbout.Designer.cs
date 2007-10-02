@@ -38,6 +38,7 @@ namespace WristVizualizer
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -53,7 +54,7 @@ namespace WristVizualizer
             // buttonOK
             // 
             this.buttonOK.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonOK.Location = new System.Drawing.Point(318, 84);
+            this.buttonOK.Location = new System.Drawing.Point(332, 77);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(89, 31);
             this.buttonOK.TabIndex = 1;
@@ -78,7 +79,7 @@ namespace WristVizualizer
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(84, 16);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Version 1.0.5";
+            this.label2.Text = "Version 1.0.6";
             // 
             // label3
             // 
@@ -129,6 +130,15 @@ namespace WristVizualizer
             this.label6.TabIndex = 8;
             this.label6.Text = "Brown University";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(132, 111);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(242, 13);
+            this.label7.TabIndex = 9;
+            this.label7.Text = "Supported in part by NIH HD052127 && AR044005";
+            // 
             // HelpAbout
             // 
             this.AcceptButton = this.buttonOK;
@@ -137,6 +147,7 @@ namespace WristVizualizer
             this.CancelButton = this.buttonOK;
             this.ClientSize = new System.Drawing.Size(433, 131);
             this.ControlBox = false;
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.linkLabelEmail);
@@ -168,5 +179,6 @@ namespace WristVizualizer
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }

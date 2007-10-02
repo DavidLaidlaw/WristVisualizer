@@ -25,6 +25,7 @@ namespace WristVizualizer
         private Transform[][] _transforms;
         private int _currentPositionIndex;
         private int _fixedBoneIndex;
+        private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
         public WristVizualizer()
         {
@@ -98,6 +99,7 @@ namespace WristVizualizer
 
         private void resetForm()
         {
+            this.Text = PROGRAM_TITLE;
             importToolStripMenuItem.Enabled = true;
             backgroundColorToolStripMenuItem.Enabled = true;
             decoratorToolStripMenuItem.Enabled = true;
@@ -240,6 +242,9 @@ namespace WristVizualizer
                     _fixRadios[i].Enabled = false;
                 }
             }
+
+            //set title bar now
+            this.Text = PROGRAM_TITLE + " - " + _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
         }
 
         void checkBox_CheckedChanged(object sender, System.EventArgs e)
