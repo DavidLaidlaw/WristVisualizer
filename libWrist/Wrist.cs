@@ -155,6 +155,12 @@ namespace libWrist
 
 #endregion
 
+        #region Public Get Methods
+        /// <summary>
+        /// Given a series, it will try and find the index for it in the current object. (Case sensitive)
+        /// </summary>
+        /// <param name="series">Series name to check</param>
+        /// <returns>Index to the series</returns>
         public int getSeriesIndexFromName(string series)
         {
             for (int i = 0; i < _info.Length; i++)
@@ -163,6 +169,11 @@ namespace libWrist
             throw new ArgumentException("Unable to locate series in list");
         }
 
+        /// <summary>
+        /// Returns the full full path to the motion file for the given position index
+        /// </summary>
+        /// <param name="positionIndex">Index of the position you are looking for</param>
+        /// <returns>Full path to motion file</returns>
         public string getMotionFilePath(int positionIndex)
         {
             if (positionIndex >= _info.Length)
@@ -171,6 +182,11 @@ namespace libWrist
             return _info[positionIndex].motionFile;
         }
 
+        /// <summary>
+        /// Returns the full full path to the series folder for the given index
+        /// </summary>
+        /// <param name="positionIndex">Index of the position you are looking for</param>
+        /// <returns>Full apth to the series folder</returns>
         public string getSeriesPath(int positionIndex)
         {
             if (positionIndex >= _info.Length)
@@ -178,6 +194,8 @@ namespace libWrist
 
             return Path.Combine(_subjectPath, _info[positionIndex].series);
         }
+
+        #endregion
 
         private void findAllSeries()
         {
@@ -187,6 +205,12 @@ namespace libWrist
                 findAllSeries_Database();
         }
 
+        /// <summary>
+        /// Tries to find all of the series for the current wrist, assuming a Database structure.
+        /// Searches the subject folder for folders with the correct name (ie 01R or 02R)
+        /// A folder is then checked for the existance of the requisite Motion file (ie 12345_Motion_01R.dat)
+        /// All folders matching these conditions are added to a new array stored in _info
+        /// </summary>
         private void findAllSeries_Database()
         {
             DirectoryInfo sub = new DirectoryInfo(_subjectPath);
@@ -211,6 +235,12 @@ namespace libWrist
             _info = (SeriesInfo[])list.ToArray(typeof(SeriesInfo));
         }
 
+        /// <summary>
+        /// Tries to find all of the series for the current wrist, assuming a Database structure. 
+        /// Searches the subject folder for folders with the correct name (ie S01R or S02R)
+        /// A folder is then checked for the existance of the requisite Motion file (ie Motion15R01R.dat)
+        /// All folders matching these conditions are added to a new array stored in _info
+        /// </summary>
         private void findAllSeries_Data()
         {
             DirectoryInfo sub = new DirectoryInfo(_subjectPath);
