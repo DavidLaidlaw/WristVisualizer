@@ -44,6 +44,12 @@
     <Compile Include="HelpAbout.Designer.cs">
       <DependentUpon>HelpAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="SideSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SideSelector.Designer.cs">
+      <DependentUpon>SideSelector.cs</DependentUpon>
+    </Compile>
     <Compile Include="WristHelper.cs" />
     <Compile Include="WristVizualizer.cs">
       <SubType>Form</SubType>
@@ -56,6 +62,10 @@
     <EmbeddedResource Include="HelpAbout.resx">
       <SubType>Designer</SubType>
       <DependentUpon>HelpAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SideSelector.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SideSelector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WristVizualizer.resx">
       <SubType>Designer</SubType>

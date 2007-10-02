@@ -161,7 +161,6 @@ namespace WristVizualizer
                 if (open.FileNames.Length == 0) return;
 
                 bool loadFull = false;
-
                 if (open.FileNames.Length == 1)
                 {
                     //check if this is a radius and what we want to do....
@@ -171,12 +170,53 @@ namespace WristVizualizer
                         if (DialogResult.Yes == MessageBox.Show(msg, "Wrist Vizualizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
                             //load full wrist
                             loadFull = true;
-                    
-
                     }
                 }
-
                 openFile(open.FileNames, loadFull);
+            }
+        }
+
+        private void openFullWristToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog folder = new FolderBrowserDialog();
+#if DEBUG
+            if (System.IO.Directory.Exists(@"L:\Data\NIH_Phase_I\Normal_Male\E17172"))
+#endif
+                folder.SelectedPath = @"L:\Data\NIH_Phase_I\Normal_Male\E17172";
+            folder.ShowNewFolderButton=false;
+            folder.Description = "Select the subject folder to open";
+            if (DialogResult.OK == folder.ShowDialog())
+            {
+                try
+                {
+                    string left = Wrist.findLeftRadius(folder.SelectedPath);
+                    string right = Wrist.findRightRadius(folder.SelectedPath);
+                    if (left.Length == 0 && right.Length == 0)
+                        throw new ArgumentException("No wrist found.");
+
+                    string[] files = new string[1];
+                    if (left.Length == 0) // so only a right
+                        files[0] = right;
+                    else if (right.Length == 0) //so only a left
+                        files[0] = left;
+                    else
+                    {
+                        // have both a left and a right, need to ask the user what to open.
+                        SideSelector s = new SideSelector();
+                        s.ShowDialog();
+                        if (s.results == SideSelector.SideResult.LEFT)
+                            files[0] = left;
+                        else if (s.results == SideSelector.SideResult.RIGHT)
+                            files[0] = right;
+                        else
+                            return;
+                    }
+                    openFile(files, true);
+                }
+                catch (ArgumentException ex)
+                {
+                    MessageBox.Show("Error opening wrist. " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
         }
 

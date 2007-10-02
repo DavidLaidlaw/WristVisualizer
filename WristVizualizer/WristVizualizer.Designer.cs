@@ -42,6 +42,7 @@ namespace WristVizualizer
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showAxesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.hideErrorMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -102,7 +103,7 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.showACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFullWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -124,6 +125,7 @@ namespace WristVizualizer
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
+            this.openFullWristToolStripMenuItem,
             this.importToolStripMenuItem,
             this.toolStripSeparator2,
             this.saveFrameToolStripMenuItem,
@@ -137,7 +139,7 @@ namespace WristVizualizer
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.openToolStripMenuItem.Text = "&Open...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
@@ -145,33 +147,33 @@ namespace WristVizualizer
             // 
             this.importToolStripMenuItem.Enabled = false;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.importToolStripMenuItem.Text = "&Import...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(167, 6);
             // 
             // saveFrameToolStripMenuItem
             // 
             this.saveFrameToolStripMenuItem.Enabled = false;
             this.saveFrameToolStripMenuItem.Name = "saveFrameToolStripMenuItem";
-            this.saveFrameToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.saveFrameToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.saveFrameToolStripMenuItem.Text = "&Save Frame...";
             this.saveFrameToolStripMenuItem.Click += new System.EventHandler(this.saveFrameToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(163, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -223,6 +225,15 @@ namespace WristVizualizer
             this.showInertiasToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.showInertiasToolStripMenuItem.Text = "Show Inertias";
             this.showInertiasToolStripMenuItem.Click += new System.EventHandler(this.showInertiasToolStripMenuItem_Click);
+            // 
+            // showACSToolStripMenuItem
+            // 
+            this.showACSToolStripMenuItem.CheckOnClick = true;
+            this.showACSToolStripMenuItem.Enabled = false;
+            this.showACSToolStripMenuItem.Name = "showACSToolStripMenuItem";
+            this.showACSToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.showACSToolStripMenuItem.Text = "Show ACS";
+            this.showACSToolStripMenuItem.Click += new System.EventHandler(this.showACSToolStripMenuItem_Click);
             // 
             // showAxesToolStripMenuItem
             // 
@@ -893,14 +904,12 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
-            // showACSToolStripMenuItem
+            // openFullWristToolStripMenuItem
             // 
-            this.showACSToolStripMenuItem.CheckOnClick = true;
-            this.showACSToolStripMenuItem.Enabled = false;
-            this.showACSToolStripMenuItem.Name = "showACSToolStripMenuItem";
-            this.showACSToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.showACSToolStripMenuItem.Text = "Show ACS";
-            this.showACSToolStripMenuItem.Click += new System.EventHandler(this.showACSToolStripMenuItem_Click);
+            this.openFullWristToolStripMenuItem.Name = "openFullWristToolStripMenuItem";
+            this.openFullWristToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.openFullWristToolStripMenuItem.Text = "Open Full Wrist...";
+            this.openFullWristToolStripMenuItem.Click += new System.EventHandler(this.openFullWristToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -1006,6 +1015,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem hideErrorMessagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showACSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openFullWristToolStripMenuItem;
     }
 }
 

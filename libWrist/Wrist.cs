@@ -400,6 +400,79 @@ namespace libWrist
         }
 
         /// <summary>
+        /// Tries to locate a left radius for the given subject in either a data or Database format. Returns the empty string on failure
+        /// </summary>
+        /// <param name="subjectPath">Subject path to look at</param>
+        /// <returns>The full path to the radius, empty string if none can be found</returns>
+        static public string findLeftRadius(string subjectPath)
+        {
+            return findRadius(subjectPath, "Left");
+        }
+
+        /// <summary>
+        /// Tries to locate a right radius for the given subject in either a data or Database format. Returns the empty string on failure
+        /// </summary>
+        /// <param name="subjectPath">Subject path to look at</param>
+        /// <returns>The full path to the radius, empty string if none can be found</returns>
+        static public string findRightRadius(string subjectPath)
+        {
+            return findRadius(subjectPath, "Right");
+        }
+
+        /// <summary>
+        /// Tries to locate a radius for the given subject, for a given side, in either a data or Database format. Returns the empty string on failure
+        /// </summary>
+        /// <param name="subjectPath">Subject path to look at</param>
+        /// <param name="side">The side to look for, must be either "Left" or "Right"</param>
+        /// <returns>The full path to the radius, empty string if none can be found</returns>
+        static private string findRadius(string subjectPath, string side)
+        {
+            string subject = Path.GetFileName(subjectPath);
+            //check if subject is in Data format
+            if (Regex.Match(subject, @"^E\d{5}$", RegexOptions.IgnoreCase).Success)
+            {
+                // 1) Find Neutral series folder
+                string seriesPath = Path.Combine(subjectPath,"S15"+side.Substring(0,1));
+                string series = "15"+side.Substring(0,1);
+                if (!Directory.Exists(seriesPath)) {
+                    //not a 15, shit, lets try some more stuff
+                    DirectoryInfo subjectFolder = new DirectoryInfo(subjectPath);
+                    DirectoryInfo[] dirs = subjectFolder.GetDirectories("S??" + side.Substring(0, 1));
+                    if (dirs.Length == 0) return "";
+                    seriesPath = dirs[0].FullName;
+                    series = dirs[0].Name.Substring(1, 3);
+                }
+                // 2) Now try and find the IV folder and the radius
+                string rad = Path.Combine(Path.Combine(seriesPath,"IV.Files"),"rad"+series+".iv");
+                if (File.Exists(rad))
+                    return rad;
+                else if (File.Exists(Path.Combine(seriesPath,"rad"+series+".iv")))
+                    return Path.Combine(seriesPath,"rad"+series+".iv");
+                else 
+                    return "";
+
+                //DirectoryInfo ivFolder = new DirectoryInfo(Path.Combine(subjectPath, side + "IV"));
+                //ivFolder.GetFiles("")
+            }
+            else if (Regex.Match(subject, @"^\d{5}$", RegexOptions.IgnoreCase).Success)
+            {
+                //in this case its in Database format, much easier
+                // 1) Check that the IV folder exists
+                if (!Directory.Exists(Path.Combine(subjectPath, side + "IV"))) return "";
+                // 2) Check if a radius file exists
+                string rad = Path.Combine(Path.Combine(subjectPath, side + "IV"),subject+"_rad_"+side.Substring(0,1)+".iv");
+                if (File.Exists(rad))
+                    return rad;
+                else 
+                    return "";
+            }
+            else
+                throw new ArgumentException("Not a valid subject path: " + subjectPath);
+        }
+
+        #endregion
+
+        /// <summary>
         /// Tests if the path this object was initialized with is a valid Radius IV filename in either the Data or Database format
         /// </summary>
         /// <returns></returns>
@@ -407,7 +480,5 @@ namespace libWrist
         {
             return isRadius(_radius);
         }
-        #endregion
-
     }
 }
