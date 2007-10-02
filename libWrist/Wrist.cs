@@ -67,41 +67,67 @@ namespace libWrist
             findAllSeries();
         }
 
+#region Public Accessors
+
+        /// <summary>
+        /// The wrist's subject (ie. E02366 (data) or 12345 (database))
+        /// </summary>
         public string subject
         {
             get { return _subject; }
         }
 
+        /// <summary>
+        /// Full path to the subject folder. (ie p:\data\young\E02366)
+        /// </summary>
         public string subjectPath
         {
             get { return _subjectPath; }
         }
 
+        /// <summary>
+        /// Which hand the current wrist really is (R or L)
+        /// </summary>
         public string side
         {
             get { return _side; }
         }
 
+        /// <summary>
+        /// The series ID for the neutral (ie. S15L for data). Note: for Database wrists always returns "Neut"
+        /// </summary>
         public string neutralSeries
         {
             get { return _neutralSeries; }
         }
 
+        /// <summary>
+        /// The full path to the neutral intertia file
+        /// </summary>
         public string inertiaFile
         {
             get { return _inertiaFile; }
         }
 
+        /// <summary>
+        /// The full path to the neutral ACS file
+        /// </summary>
         public string acsFile
         {
             get { return _acsFile; }
         }
 
+        /// <summary>
+        /// An array of full paths to all 15 bones for the wrist
+        /// </summary>
         public string[] bpaths
         {
             get { return _bpaths; }
         }
 
+        /// <summary>
+        /// An array of the series in this subject for this side (ie {"S01L", "S02L", "S03L",...})
+        /// </summary>
         public string[] series
         {
             get
@@ -113,6 +139,9 @@ namespace libWrist
             }
         }
 
+        /// <summary>
+        /// An array of the full paths to all the motion files for the subject. One per non-neutral series
+        /// </summary>
         public string[] motionFiles
         {
             get
@@ -123,6 +152,8 @@ namespace libWrist
                 return s;
             }
         }
+
+#endregion
 
         public int getSeriesIndexFromName(string series)
         {
@@ -305,27 +336,48 @@ namespace libWrist
 
         }
 
+        #region Static Validator Functions
+        /// <summary>
+        /// Tests if the given string is a valid path for a Database structure wirst, tests based on a radius bone IV file
+        /// </summary>
+        /// <param name="radiusPath">Path to radius file to test</param>
+        /// <returns></returns>
         static public bool isDatabaseStructure(string radiusPath)
         {
             string fname = Path.GetFileNameWithoutExtension(radiusPath);
             return (Regex.Match(fname, @"^\d{5}_rad_[lr]$", RegexOptions.IgnoreCase).Success);
         }
 
+        /// <summary>
+        /// Tests if the given string is a valid path for a Data structure wirst, tests based on a radius bone IV file 
+        /// </summary>
+        /// <param name="radiusPath">Path to radius file to test</param>
+        /// <returns></returns>
         static public bool isDataStructure(string radiusPath)
         {
             string fname = Path.GetFileNameWithoutExtension(radiusPath);
             return (Regex.Match(fname, @"^rad\d{2}[lr]$", RegexOptions.IgnoreCase).Success);;
         }
 
+        /// <summary>
+        /// Tests if the given file is a radius bone IV file in either the Data or Database naming format
+        /// </summary>
+        /// <param name="path">Path to radius file to test</param>
+        /// <returns></returns>
         static public bool isRadius(string path)
         {
             return (isDataStructure(path) || isDatabaseStructure(path));
         }
 
+        /// <summary>
+        /// Tests if the path this object was initialized with is a valid Radius IV filename in either the Data or Database format
+        /// </summary>
+        /// <returns></returns>
         public bool isRadius()
         {
             return isRadius(_radius);
         }
+        #endregion
 
     }
 }
