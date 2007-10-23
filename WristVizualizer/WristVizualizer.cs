@@ -121,6 +121,43 @@ namespace WristVizualizer
             radioButtonFixedRad.Checked = true;
         }
 
+
+        /// <summary>
+        /// This function will take a file(s) and load them into the scene,
+        /// removing whatever was there before (so this is open, not import). 
+        /// It will try determine if this is a full wrist or not.
+        /// </summary>
+        /// <param name="filenames">List of files to open. If only a single file, and
+        /// a radius, it will ask and then try to open the full wrist</param>
+        private void openFile(string[] filenames)
+        {
+            if (filenames.Length == 0) return;
+
+            bool loadFull = false;
+            if (filenames.Length == 1)
+            {
+                //check if this is a radius and what we want to do....
+                if (Wrist.isRadius(filenames[0]))
+                {
+                    string msg = "It looks like you are trying to open a radius.\n\nDo you wish to load the entire wrist?";
+                    if (DialogResult.Yes == MessageBox.Show(msg, "Wrist Vizualizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                        //load full wrist
+                        loadFull = true;
+                }
+            }
+            openFile(filenames, loadFull);
+        }
+
+        /// <summary>
+        /// This function will take a file(s) and load them into the scene,
+        /// removing whatever was there before (so this is open, not import). 
+        /// It will try and load a full wrist if specified, or load the files as
+        /// individual objects
+        /// </summary>
+        /// <param name="filenames">List of files to open</param>
+        /// <param name="loadFull">Whether to treat the files as a full wrist. If so
+        /// only the first string in filenames is looked at, and it is assumed to be
+        /// the radius.</param>
         private void openFile(string[] filenames, bool loadFull)
         {
             if (_viewer == null)
@@ -158,6 +195,8 @@ namespace WristVizualizer
             open.Multiselect = true;
             if (DialogResult.OK == open.ShowDialog())
             {
+                openFile(open.FileNames);
+                /*
                 if (open.FileNames.Length == 0) return;
 
                 bool loadFull = false;
@@ -173,6 +212,7 @@ namespace WristVizualizer
                     }
                 }
                 openFile(open.FileNames, loadFull);
+                */
             }
         }
 
