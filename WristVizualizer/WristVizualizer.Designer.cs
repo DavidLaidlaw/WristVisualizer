@@ -296,6 +296,7 @@ namespace WristVizualizer
             // 
             // panelCoin
             // 
+            this.panelCoin.AllowDrop = true;
             this.panelCoin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
@@ -304,6 +305,8 @@ namespace WristVizualizer
             this.panelCoin.Name = "panelCoin";
             this.panelCoin.Size = new System.Drawing.Size(653, 359);
             this.panelCoin.TabIndex = 1;
+            this.panelCoin.DragDrop += new System.Windows.Forms.DragEventHandler(this.panelCoin_DragDrop);
+            this.panelCoin.DragEnter += new System.Windows.Forms.DragEventHandler(this.panelCoin_DragEnter);
             // 
             // checkBoxRad
             // 

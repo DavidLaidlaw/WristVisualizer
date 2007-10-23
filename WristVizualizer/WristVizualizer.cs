@@ -315,6 +315,40 @@ namespace WristVizualizer
             this.Text = PROGRAM_TITLE + " - " + _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
         }
 
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+#if DEBUG
+            if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
+                open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
+#endif
+            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
+            open.Multiselect = true;
+            if (DialogResult.OK == open.ShowDialog())
+            {
+                if (open.FileNames.Length == 0) return;
+
+                if (_root == null)
+                    _root = new Separator();
+
+                if (_viewer == null)
+                {
+                    _viewer = new ExaminerViewer((int)panelCoin.Handle);
+                    _viewer.setSceneGraph(_root);
+                }
+
+                if (open.FileNames.Length == 1)
+                {
+                    _root.addFile(open.FileName);
+                }
+                else
+                {
+                    foreach (string filename in open.FileNames)
+                        _root.addFile(filename);
+                }
+            }
+        }
+
         #endregion
 
         private void populateSeriesList()
@@ -369,41 +403,7 @@ namespace WristVizualizer
              */
         }
 
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-#if DEBUG
-            if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
-                open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
-#endif
-            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
-            open.Multiselect = true;
-            if (DialogResult.OK == open.ShowDialog())
-            {
-                if (open.FileNames.Length == 0) return;
 
-                if (_root == null)
-                    _root = new Separator();
-
-                if (_viewer == null)
-                {
-                    _viewer = new ExaminerViewer((int)panelCoin.Handle);
-                    _viewer.setSceneGraph(_root);
-                }
-
-                if (open.FileNames.Length == 1)
-                {
-                    _root.addFile(open.FileName);
-                }
-                else
-                {
-                    foreach (string filename in open.FileNames)
-                        _root.addFile(filename);
-                }
-
-                
-            }
-        }
 
         private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -687,7 +687,37 @@ namespace WristVizualizer
                 e.Effect = DragDropEffects.None;
         }
 
+        private void panelCoin_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("FileDrop"))
+            {
+                if (importToolStripMenuItem.Enabled)
+                    e.Effect = DragDropEffects.Copy;
+                else
+                    e.Effect = DragDropEffects.Move;
+            }
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        private void panelCoin_DragDrop(object sender, DragEventArgs e)
+        {
+            new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
+            string[] filenames = e.Data.GetData("FileDrop") as string[];
+            if (importToolStripMenuItem.Enabled && _viewer != null & _root != null)
+            {
+                foreach (string file in filenames)
+                {
+                    _root.addFile(file);
+                }
+            }
+            else
+                openFile(filenames);
+            System.Security.CodeAccessPermission.RevertAssert();
+        }
         #endregion
+
+
 
 
     }
