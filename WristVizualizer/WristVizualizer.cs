@@ -121,6 +121,7 @@ namespace WristVizualizer
             radioButtonFixedRad.Checked = true;
         }
 
+        #region File Open
 
         /// <summary>
         /// This function will take a file(s) and load them into the scene,
@@ -260,19 +261,6 @@ namespace WristVizualizer
             }
         }
 
-        private void populateSeriesList()
-        {
-            if (_wrist != null)
-            {
-                _currentPositionIndex = 0;
-                seriesListBox.Items.Clear();
-                //add neutral
-                seriesListBox.Items.Add(_wrist.neutralSeries);
-                seriesListBox.Items.AddRange(_wrist.series);
-                seriesListBox.SelectedIndex = 0;
-            }
-        }
-
         private void loadFullWrist(string radius, Separator root)
         {
             string basepath = Path.GetDirectoryName(radius);
@@ -325,6 +313,21 @@ namespace WristVizualizer
 
             //set title bar now
             this.Text = PROGRAM_TITLE + " - " + _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
+        }
+
+        #endregion
+
+        private void populateSeriesList()
+        {
+            if (_wrist != null)
+            {
+                _currentPositionIndex = 0;
+                seriesListBox.Items.Clear();
+                //add neutral
+                seriesListBox.Items.Add(_wrist.neutralSeries);
+                seriesListBox.Items.AddRange(_wrist.series);
+                seriesListBox.SelectedIndex = 0;
+            }
         }
 
         void checkBox_CheckedChanged(object sender, System.EventArgs e)
