@@ -32,6 +32,7 @@ namespace WristVizualizer
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openFullWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.saveFrameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -103,7 +104,6 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.openFullWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -142,6 +142,13 @@ namespace WristVizualizer
             this.openToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
             this.openToolStripMenuItem.Text = "&Open...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
+            // 
+            // openFullWristToolStripMenuItem
+            // 
+            this.openFullWristToolStripMenuItem.Name = "openFullWristToolStripMenuItem";
+            this.openFullWristToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.openFullWristToolStripMenuItem.Text = "Open Full Wrist...";
+            this.openFullWristToolStripMenuItem.Click += new System.EventHandler(this.openFullWristToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
@@ -904,15 +911,9 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
-            // openFullWristToolStripMenuItem
-            // 
-            this.openFullWristToolStripMenuItem.Name = "openFullWristToolStripMenuItem";
-            this.openFullWristToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
-            this.openFullWristToolStripMenuItem.Text = "Open Full Wrist...";
-            this.openFullWristToolStripMenuItem.Click += new System.EventHandler(this.openFullWristToolStripMenuItem_Click);
-            // 
             // WristVizualizer
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 408);
@@ -924,7 +925,9 @@ namespace WristVizualizer
             this.MinimumSize = new System.Drawing.Size(500, 429);
             this.Name = "WristVizualizer";
             this.Text = "Wrist Vizualizer";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WristVizualizer_FormClosing);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.panelControl.ResumeLayout(false);

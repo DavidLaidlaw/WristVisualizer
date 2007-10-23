@@ -664,6 +664,30 @@ namespace WristVizualizer
             }
         }
 
+        #region Drag and Drop
+        private void WristVizualizer_DragDrop(object sender, DragEventArgs e)
+        {
+            new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
+            string[] filenames = e.Data.GetData("FileDrop") as string[];
+            openFile(filenames);
+            /*
+            foreach (string fileListItem in (e.Data.GetData("FileDrop") as string[]))
+            {
+                Console.WriteLine(fileListItem);
+            }
+            */
+            System.Security.CodeAccessPermission.RevertAssert();
+        }
+
+        private void WristVizualizer_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent("FileDrop"))
+                e.Effect = DragDropEffects.Move;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        #endregion
 
 
     }
