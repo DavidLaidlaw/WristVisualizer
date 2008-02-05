@@ -12,7 +12,8 @@ namespace WristVizualizer
     {
         public HelpAbout()
         {
-            InitializeComponent();         
+            InitializeComponent();
+            labelVersion.Text = String.Format("Version {0}", Application.ProductVersion);
         }
 
         private void linkLabelEmail_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

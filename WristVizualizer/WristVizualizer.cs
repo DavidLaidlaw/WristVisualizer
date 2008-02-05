@@ -30,6 +30,7 @@ namespace WristVizualizer
         public WristVizualizer()
         {
             InitializeComponent();
+
             _base = new Coin3DBase();
             _viewer = null;
             _root = null;
@@ -40,6 +41,9 @@ namespace WristVizualizer
             _fixedBoneIndex = 0;
             setupControlBox();
             //showControlBox();            
+
+            VersionManager manager = new VersionManager();
+            manager.checkForUpdatesAsynch(); //check for updates in the backround
         }
 
         private void hideControlBox()
@@ -716,6 +720,12 @@ namespace WristVizualizer
             System.Security.CodeAccessPermission.RevertAssert();
         }
         #endregion
+
+        private void checkForupdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VersionManager manager = new VersionManager();
+            manager.checkForUpdates();
+        }
 
 
 

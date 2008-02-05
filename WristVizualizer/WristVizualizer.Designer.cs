@@ -104,6 +104,7 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
+            this.checkForupdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -270,6 +271,7 @@ namespace WristVizualizer
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadSampleWristToolStripMenuItem,
             this.toolStripSeparator3,
+            this.checkForupdatesToolStripMenuItem,
             this.aboutToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(40, 20);
@@ -278,19 +280,19 @@ namespace WristVizualizer
             // loadSampleWristToolStripMenuItem
             // 
             this.loadSampleWristToolStripMenuItem.Name = "loadSampleWristToolStripMenuItem";
-            this.loadSampleWristToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.loadSampleWristToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.loadSampleWristToolStripMenuItem.Text = "Load Sample Wrist";
             this.loadSampleWristToolStripMenuItem.Click += new System.EventHandler(this.loadSampleWristToolStripMenuItem_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(170, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(182, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
             this.aboutToolStripMenuItem.Text = "&About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -914,6 +916,13 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
+            // checkForupdatesToolStripMenuItem
+            // 
+            this.checkForupdatesToolStripMenuItem.Name = "checkForupdatesToolStripMenuItem";
+            this.checkForupdatesToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.checkForupdatesToolStripMenuItem.Text = "Check for &updates...";
+            this.checkForupdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForupdatesToolStripMenuItem_Click);
+            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -1022,6 +1031,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem hideErrorMessagesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showACSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFullWristToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem checkForupdatesToolStripMenuItem;
     }
 }
 
