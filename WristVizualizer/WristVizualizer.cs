@@ -27,7 +27,7 @@ namespace WristVizualizer
         private int _fixedBoneIndex;
         private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
-        public WristVizualizer()
+        public WristVizualizer(string[] fileArgs)
         {
             InitializeComponent();
 
@@ -44,6 +44,12 @@ namespace WristVizualizer
 
             VersionManager manager = new VersionManager();
             manager.checkForUpdatesAsynch(); //check for updates in the backround
+
+            //if we were passed something
+            if (fileArgs != null && fileArgs.Length >= 1)
+            {
+                openFile(fileArgs);
+            }
         }
 
         private void hideControlBox()

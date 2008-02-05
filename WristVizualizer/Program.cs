@@ -11,12 +11,12 @@ namespace WristVizualizer
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(Application_ThreadException);
-            Application.Run(new WristVizualizer());
+            Application.Run(new WristVizualizer(args));
 
         }
 
