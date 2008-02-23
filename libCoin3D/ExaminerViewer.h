@@ -9,7 +9,7 @@
 
 namespace libCoin3D {
 
-	public delegate void RaypickEventHandler(int, int);
+	public delegate void RaypickEventHandler(float, float, float);
 
 public ref class ExaminerViewer
 {
@@ -37,7 +37,7 @@ public:
 	void setRaypick();
 	void resetRaypick();
 
-	void fireClick(int x, int y);
+	void fireClick(float x, float y, float z);
 
 	event RaypickEventHandler^ OnRaypick;
 	static ExaminerViewer^ RaypickViewer = nullptr;

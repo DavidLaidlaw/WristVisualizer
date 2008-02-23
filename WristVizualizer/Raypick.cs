@@ -18,10 +18,11 @@ namespace WristVizualizer
             _viewer.OnRaypick += new RaypickEventHandler(_viewer_OnRaypick);
         }
 
-        public void _viewer_OnRaypick(int x, int y)
+        public void _viewer_OnRaypick(float x, float y, float z)
         {
-            //MessageBox.Show(String.Format("Clicked: ({0},{1})", x, y));
-            Console.WriteLine(String.Format("Clicked: ({0},{1})", x, y));
+            Console.WriteLine(String.Format("Clicked: ({0},{1},{2})", x, y, z));
+            //PointSelection p = new PointSelection();
+            //p.ShowDialog();
         }
 
         public void stopRaypicking()

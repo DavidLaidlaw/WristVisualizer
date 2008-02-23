@@ -226,9 +226,9 @@ void libCoin3D::ExaminerViewer::resetRaypick()
 	_ecb=NULL; //remove reference
 }
 
-void libCoin3D::ExaminerViewer::fireClick(int x, int y)
+void libCoin3D::ExaminerViewer::fireClick(float x, float y, float z)
 {
-	OnRaypick(x,y);
+	OnRaypick(x,y,z);
 }
 
 static void event_cb(void * ud, SoEventCallback * n)
@@ -244,17 +244,22 @@ static void event_cb(void * ud, SoEventCallback * n)
 
 	SoWinExaminerViewer * viewer = (SoWinExaminerViewer *)ud;
     SoRayPickAction rp(viewer->getViewportRegion());
+	rp.setPoint(mbe->getPosition());
+    rp.apply(viewer->getSceneManager()->getSceneGraph());
 
-	SbVec2s p1 = mbe->getPosition();
-	short x1, y1;
-	p1.getValue(x1,y1);
+    SoPickedPoint * point = rp.getPickedPoint();
+    if (point == NULL) {
+		return;
+    }
 
+    n->setHandled();
 
+    (void)fprintf(stdout, "\n");
 
-	n->setHandled();
+    SbVec3f v = point->getPoint();
+    //(void)fprintf(stdout, "point=<%f, %f, %f>, normvec=<%f, %f, %f>\n",
+    //              v[0], v[1], v[2], nv[0], nv[1], nv[2]);
 
-
-
-	libCoin3D::ExaminerViewer::RaypickViewer->fireClick((int)x1,(int)y1);
-	
+	//triger event
+	libCoin3D::ExaminerViewer::RaypickViewer->fireClick(v[0],v[1],v[2]);
 }

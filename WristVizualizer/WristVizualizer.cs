@@ -25,7 +25,7 @@ namespace WristVizualizer
         private Transform[][] _transforms;
         private int _currentPositionIndex;
         private int _fixedBoneIndex;
-        private Raypick _raypick;
+        private PointSelection _pointSelection;
         private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
         public WristVizualizer(string[] fileArgs)
@@ -123,6 +123,8 @@ namespace WristVizualizer
             pointIntersectionToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Checked = false;
             seriesListBox.Items.Clear();
+            hideStatusStrip();
+            toolStripStatusLabel1.Text = "";
             _bones = new Separator[15];
             for (int i = 0; i < _bnames.Length; i++)
             {
@@ -193,6 +195,10 @@ namespace WristVizualizer
                 hideControlBox();
                 foreach (string filename in filenames)
                     _root.addFile(filename);
+
+                //set title
+                if (filenames.Length == 1)
+                    this.Text = PROGRAM_TITLE + " - " + filenames[0];
             }
 
             _viewer.setSceneGraph(_root);
@@ -716,7 +722,49 @@ namespace WristVizualizer
             if (_viewer == null)  //can't do anything
                 return;
 
-            _raypick = new Raypick(_viewer);
+            
+            if (pointIntersectionToolStripMenuItem.Checked == true) //it was already running
+            {
+                pointIntersectionToolStripMenuItem.Checked = false;
+                _pointSelection.stopSelecting();
+                _pointSelection = null;
+                hideStatusStrip();
+                toolStripStatusLabel1.Text = "";
+            }
+            else
+            {
+                PointSelection ps = new PointSelection(_viewer, this);
+                ps.ShowDialog();
+                if (!ps.SelectionEnabled) return; //if we were canceled, etc.
+
+                pointIntersectionToolStripMenuItem.Checked = true;
+                _pointSelection = ps;
+                if (ps.ShowInTaskbar)
+                    showStatusStrip();
+            }
+        }
+
+        private void showStatusStrip()
+        {
+            if (statusStrip1.Visible)
+                return;
+
+            statusStrip1.Visible = true;
+            panelCoin.Height -= 22; //22 is the height of the statusStrip
+        }
+
+        private void hideStatusStrip()
+        {
+            if (!statusStrip1.Visible)
+                return;
+
+            statusStrip1.Visible = false;
+            panelCoin.Height += 22;
+        }
+
+        public void setStatusStripText(string text)
+        {
+            toolStripStatusLabel1.Text = text;
         }
 
     }
