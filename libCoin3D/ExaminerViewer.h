@@ -6,11 +6,10 @@
 #include <Inventor/nodes/SoEventCallback.h>
 
 #include "Separator.h"
-#include "IRaypickCallback.h"
 
 namespace libCoin3D {
 
-	public delegate void RaypickEventHandler(int, double);
+	public delegate void RaypickEventHandler(int, int);
 
 public ref class ExaminerViewer
 {
@@ -35,21 +34,19 @@ public:
 
 	void setFeedbackVisibility(bool visible);
 
-	void setRaypick(IRaypickCallback^ callback);
+	void setRaypick();
 	void resetRaypick();
 
-	void fireClick();
+	void fireClick(int x, int y);
+
 	event RaypickEventHandler^ OnRaypick;
-
-
-	static IRaypickCallback^ RaypickCallback = nullptr;
 	static ExaminerViewer^ RaypickViewer = nullptr;
-	//static void event_cb(void * ud, SoEventCallback * n);
 private:
 	bool saveToImage(System::String^ filename,char* ext);
 	SoWinExaminerViewer* _viewer;
 	SoSeparator* _root;
 	bool _decorated;
+
 	SoEventCallback* _ecb;
 };
 }

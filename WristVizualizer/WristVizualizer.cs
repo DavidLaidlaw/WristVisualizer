@@ -25,6 +25,7 @@ namespace WristVizualizer
         private Transform[][] _transforms;
         private int _currentPositionIndex;
         private int _fixedBoneIndex;
+        private Raypick _raypick;
         private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
         public WristVizualizer(string[] fileArgs)
@@ -119,6 +120,8 @@ namespace WristVizualizer
             showACSToolStripMenuItem.Enabled = false;
             showACSToolStripMenuItem.Checked = false;
             showAxesToolStripMenuItem.Enabled = true;
+            pointIntersectionToolStripMenuItem.Enabled = true;
+            pointIntersectionToolStripMenuItem.Checked = false;
             seriesListBox.Items.Clear();
             _bones = new Separator[15];
             for (int i = 0; i < _bnames.Length; i++)
@@ -207,23 +210,6 @@ namespace WristVizualizer
             if (DialogResult.OK == open.ShowDialog())
             {
                 openFile(open.FileNames);
-                /*
-                if (open.FileNames.Length == 0) return;
-
-                bool loadFull = false;
-                if (open.FileNames.Length == 1)
-                {
-                    //check if this is a radius and what we want to do....
-                    if (Wrist.isRadius(open.FileName))
-                    {
-                        string msg = "It looks like you are trying to open a radius.\n\nDo you wish to load the entire wrist?";
-                        if (DialogResult.Yes == MessageBox.Show(msg, "Wrist Vizualizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                            //load full wrist
-                            loadFull = true;
-                    }
-                }
-                openFile(open.FileNames, loadFull);
-                */
             }
         }
 
@@ -403,15 +389,6 @@ namespace WristVizualizer
             Application.Exit();
         }
 
-
-        void WristVizualizer_FormClosing(object sender, System.Windows.Forms.FormClosingEventArgs e)
-        {
-            /*
-            DialogResult r = MessageBox.Show("Are you sure you want to exit?", "Wrist Vizualizer", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Exclamation);
-            if (r != DialogResult.Yes)
-                e.Cancel = true;
-             */
-        }
 
 
 
@@ -735,15 +712,11 @@ namespace WristVizualizer
 
         private void pointIntersectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Raypick r = new Raypick();
-            if (_viewer == null) return;
-            _viewer.setRaypick(r);
-            _viewer.OnRaypick += new libCoin3D.RaypickEventHandler(this.test);
-        }
+            //TODO: Create gui for point selection output...
+            if (_viewer == null)  //can't do anything
+                return;
 
-        public void test(int i, double d)
-        {
-            Console.WriteLine("boo");
+            _raypick = new Raypick(_viewer);
         }
 
     }

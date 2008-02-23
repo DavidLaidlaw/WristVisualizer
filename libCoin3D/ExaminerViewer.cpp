@@ -14,6 +14,7 @@
 #include <Inventor/actions/SoWriteAction.h>
 
 //for raypick
+
 #include <Inventor/events/SoMouseButtonEvent.h>
 #include <Inventor/actions/SoRayPickAction.h>
 #include <Inventor/SoPickedPoint.h>
@@ -25,6 +26,7 @@ static void event_cb(void * ud, SoEventCallback * n);
 libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 {
 	_viewer = NULL;
+	_ecb = NULL;
 	_decorated = TRUE;
 	_viewer = new SoWinExaminerViewer((HWND)parrent);
 
@@ -203,32 +205,36 @@ void libCoin3D::ExaminerViewer::setFeedbackVisibility(bool visible)
 
 }
 
-void libCoin3D::ExaminerViewer::setRaypick(IRaypickCallback^ callback)
+void libCoin3D::ExaminerViewer::setRaypick()
 {
-	//TODO: Check if the thing was already there, if so, remove it, blah, blah, blah
+	if (_ecb != NULL) //then we already have a callback set
+		return;
+
 	_ecb = new SoEventCallback;
 	_ecb->addEventCallback(SoMouseButtonEvent::getClassTypeId(), event_cb, _viewer);
-	_root->insertChild(_ecb,0);
+	_root->insertChild(_ecb,0); //insert us right at the top, baby! we hear it all!
 
-	RaypickCallback = callback;
 	RaypickViewer = this;
 }
 
 void libCoin3D::ExaminerViewer::resetRaypick()
 {
-	//_root->removeChild(0);
-	_ecb->releaseEvents();
+	if (_ecb == NULL) //nothing to do
+		return;
+
+	_root->removeChild(_ecb); //remove from tree
+	_ecb=NULL; //remove reference
 }
 
-void libCoin3D::ExaminerViewer::fireClick()
+void libCoin3D::ExaminerViewer::fireClick(int x, int y)
 {
-	OnRaypick(7,12.3);
+	OnRaypick(x,y);
 }
 
 static void event_cb(void * ud, SoEventCallback * n)
 {
-	if (libCoin3D::ExaminerViewer::RaypickCallback == nullptr) 
-		return;
+	//if (libCoin3D::ExaminerViewer::RaypickCallback == nullptr) 
+	//	return;
 
 	const SoMouseButtonEvent * mbe = (SoMouseButtonEvent *)n->getEvent();
 
@@ -242,16 +248,13 @@ static void event_cb(void * ud, SoEventCallback * n)
 	SbVec2s p1 = mbe->getPosition();
 	short x1, y1;
 	p1.getValue(x1,y1);
-	////fprintf(stderr,"Mouse position: (%d,%d)\n",x1,y1);
 
-	bool a = n->isHandled();
+
+
 	n->setHandled();
-	bool b = n->isHandled();
-	//libCoin3D::ExaminerViewer::RaypickCallback->clicked((int)x1,(int)y1);
 
-	//libCoin3D::ExaminerViewer::RaypickViewer->resetRaypick();
-	//libCoin3D::ExaminerViewer::RaypickCallback->clicked();
 
-	libCoin3D::ExaminerViewer::RaypickViewer->fireClick();
+
+	libCoin3D::ExaminerViewer::RaypickViewer->fireClick((int)x1,(int)y1);
 	
 }

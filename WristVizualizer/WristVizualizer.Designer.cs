@@ -40,6 +40,8 @@ namespace WristVizualizer
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pointIntersectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,8 +107,6 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pointIntersectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -203,6 +203,22 @@ namespace WristVizualizer
             this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.backgroundColorToolStripMenuItem.Text = "Background Color...";
             this.backgroundColorToolStripMenuItem.Click += new System.EventHandler(this.backgroundColorToolStripMenuItem_Click);
+            // 
+            // advancedToolStripMenuItem
+            // 
+            this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pointIntersectionToolStripMenuItem});
+            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
+            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.advancedToolStripMenuItem.Text = "&Advanced";
+            // 
+            // pointIntersectionToolStripMenuItem
+            // 
+            this.pointIntersectionToolStripMenuItem.Enabled = false;
+            this.pointIntersectionToolStripMenuItem.Name = "pointIntersectionToolStripMenuItem";
+            this.pointIntersectionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.pointIntersectionToolStripMenuItem.Text = "Point &Intersection...";
+            this.pointIntersectionToolStripMenuItem.Click += new System.EventHandler(this.pointIntersectionToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -926,21 +942,6 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
-            // advancedToolStripMenuItem
-            // 
-            this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pointIntersectionToolStripMenuItem});
-            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
-            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
-            this.advancedToolStripMenuItem.Text = "&Advanced";
-            // 
-            // pointIntersectionToolStripMenuItem
-            // 
-            this.pointIntersectionToolStripMenuItem.Name = "pointIntersectionToolStripMenuItem";
-            this.pointIntersectionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.pointIntersectionToolStripMenuItem.Text = "Point &Intersection...";
-            this.pointIntersectionToolStripMenuItem.Click += new System.EventHandler(this.pointIntersectionToolStripMenuItem_Click);
-            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -956,7 +957,6 @@ namespace WristVizualizer
             this.Name = "WristVizualizer";
             this.Text = "Wrist Vizualizer";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WristVizualizer_FormClosing);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

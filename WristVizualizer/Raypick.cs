@@ -2,38 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using libCoin3D;
 
 namespace WristVizualizer
 {
-    public class Raypick : libCoin3D.IRaypickCallback
+    public class Raypick
     {
-        public Raypick()
+        private ExaminerViewer _viewer;
+
+        public Raypick(ExaminerViewer viewer)
         {
+            _viewer = viewer;
+
+            _viewer.setRaypick();  //active raypicking event handler
+            _viewer.OnRaypick += new RaypickEventHandler(_viewer_OnRaypick);
         }
 
-        public override void clicked()
+        public void _viewer_OnRaypick(int x, int y)
         {
-            MessageBox.Show("Test");
+            //MessageBox.Show(String.Format("Clicked: ({0},{1})", x, y));
+            Console.WriteLine(String.Format("Clicked: ({0},{1})", x, y));
         }
 
-        public override void clicked(int x, int y)
+        public void stopRaypicking()
         {
-            MessageBox.Show(String.Format("Clicked: ({0},{1})",x,y));
+            _viewer.OnRaypick -= new RaypickEventHandler(_viewer_OnRaypick);
+            _viewer.resetRaypick();
         }
-
-        //private void pointIntersectionToolStripMenuItem_Click(object sender, EventArgs e)
-        //{
-        //    Raypick r = new Raypick();
-        //    if (_viewer == null) return;
-        //    _viewer.setRaypick(r);
-        //    _viewer.OnRaypick += new libCoin3D.RaypickEventHandler(this.test);
-        //}
-
-        //public void test(int i, double d)
-        //{
-        //    Console.WriteLine("boo");
-        //}
-
 
     }
 }
