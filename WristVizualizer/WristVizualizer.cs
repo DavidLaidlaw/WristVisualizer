@@ -733,8 +733,18 @@ namespace WristVizualizer
             manager.checkForUpdates();
         }
 
+        private void pointIntersectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Raypick r = new Raypick();
+            if (_viewer == null) return;
+            _viewer.setRaypick(r);
+            _viewer.OnRaypick += new libCoin3D.RaypickEventHandler(this.test);
+        }
 
-
+        public void test(int i, double d)
+        {
+            Console.WriteLine("boo");
+        }
 
     }
 }

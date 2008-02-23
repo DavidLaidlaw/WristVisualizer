@@ -50,6 +50,7 @@ namespace WristVizualizer
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSampleWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.checkForupdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCoin = new System.Windows.Forms.Panel();
             this.checkBoxRad = new System.Windows.Forms.CheckBox();
@@ -104,7 +105,8 @@ namespace WristVizualizer
             this.label17 = new System.Windows.Forms.Label();
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label16 = new System.Windows.Forms.Label();
-            this.checkForupdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pointIntersectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.SuspendLayout();
@@ -114,6 +116,7 @@ namespace WristVizualizer
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.fileToolStripMenuItem,
             this.editToolStripMenuItem,
+            this.advancedToolStripMenuItem,
             this.viewToolStripMenuItem,
             this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -288,6 +291,13 @@ namespace WristVizualizer
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(182, 6);
+            // 
+            // checkForupdatesToolStripMenuItem
+            // 
+            this.checkForupdatesToolStripMenuItem.Name = "checkForupdatesToolStripMenuItem";
+            this.checkForupdatesToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.checkForupdatesToolStripMenuItem.Text = "Check for &updates...";
+            this.checkForupdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForupdatesToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -916,12 +926,20 @@ namespace WristVizualizer
             this.label16.TabIndex = 32;
             this.label16.Text = "Hide";
             // 
-            // checkForupdatesToolStripMenuItem
+            // advancedToolStripMenuItem
             // 
-            this.checkForupdatesToolStripMenuItem.Name = "checkForupdatesToolStripMenuItem";
-            this.checkForupdatesToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.checkForupdatesToolStripMenuItem.Text = "Check for &updates...";
-            this.checkForupdatesToolStripMenuItem.Click += new System.EventHandler(this.checkForupdatesToolStripMenuItem_Click);
+            this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pointIntersectionToolStripMenuItem});
+            this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
+            this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
+            this.advancedToolStripMenuItem.Text = "&Advanced";
+            // 
+            // pointIntersectionToolStripMenuItem
+            // 
+            this.pointIntersectionToolStripMenuItem.Name = "pointIntersectionToolStripMenuItem";
+            this.pointIntersectionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.pointIntersectionToolStripMenuItem.Text = "Point &Intersection...";
+            this.pointIntersectionToolStripMenuItem.Click += new System.EventHandler(this.pointIntersectionToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -1032,6 +1050,8 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem showACSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openFullWristToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem checkForupdatesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pointIntersectionToolStripMenuItem;
     }
 }
 

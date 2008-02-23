@@ -13,7 +13,14 @@
 #include <Inventor/actions/SoGLRenderAction.h>
 #include <Inventor/actions/SoWriteAction.h>
 
+//for raypick
+#include <Inventor/events/SoMouseButtonEvent.h>
+#include <Inventor/actions/SoRayPickAction.h>
+#include <Inventor/SoPickedPoint.h>
+
 #include "MyViewport.h"
+
+static void event_cb(void * ud, SoEventCallback * n);
 
 libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 {
@@ -194,4 +201,57 @@ void libCoin3D::ExaminerViewer::setFeedbackVisibility(bool visible)
 	if (_viewer->isFeedbackVisible() != visible)
 		_viewer->setFeedbackVisibility(visible);
 
+}
+
+void libCoin3D::ExaminerViewer::setRaypick(IRaypickCallback^ callback)
+{
+	//TODO: Check if the thing was already there, if so, remove it, blah, blah, blah
+	_ecb = new SoEventCallback;
+	_ecb->addEventCallback(SoMouseButtonEvent::getClassTypeId(), event_cb, _viewer);
+	_root->insertChild(_ecb,0);
+
+	RaypickCallback = callback;
+	RaypickViewer = this;
+}
+
+void libCoin3D::ExaminerViewer::resetRaypick()
+{
+	//_root->removeChild(0);
+	_ecb->releaseEvents();
+}
+
+void libCoin3D::ExaminerViewer::fireClick()
+{
+	OnRaypick(7,12.3);
+}
+
+static void event_cb(void * ud, SoEventCallback * n)
+{
+	if (libCoin3D::ExaminerViewer::RaypickCallback == nullptr) 
+		return;
+
+	const SoMouseButtonEvent * mbe = (SoMouseButtonEvent *)n->getEvent();
+
+	if (mbe->getButton() != SoMouseButtonEvent::BUTTON1 ||
+      mbe->getState() != SoButtonEvent::DOWN)
+	  return;
+
+	SoWinExaminerViewer * viewer = (SoWinExaminerViewer *)ud;
+    SoRayPickAction rp(viewer->getViewportRegion());
+
+	SbVec2s p1 = mbe->getPosition();
+	short x1, y1;
+	p1.getValue(x1,y1);
+	////fprintf(stderr,"Mouse position: (%d,%d)\n",x1,y1);
+
+	bool a = n->isHandled();
+	n->setHandled();
+	bool b = n->isHandled();
+	//libCoin3D::ExaminerViewer::RaypickCallback->clicked((int)x1,(int)y1);
+
+	//libCoin3D::ExaminerViewer::RaypickViewer->resetRaypick();
+	//libCoin3D::ExaminerViewer::RaypickCallback->clicked();
+
+	libCoin3D::ExaminerViewer::RaypickViewer->fireClick();
+	
 }

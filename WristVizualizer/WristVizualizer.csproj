@@ -45,6 +45,7 @@
     <Compile Include="HelpAbout.Designer.cs">
       <DependentUpon>HelpAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="Raypick.cs" />
     <Compile Include="SideSelector.cs">
       <SubType>Form</SubType>
     </Compile>

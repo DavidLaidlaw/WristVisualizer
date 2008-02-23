@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\IRaypickCallback.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\libCoin3D.cpp"
 				>
 			</File>
@@ -259,6 +263,10 @@
 			</File>
 			<File
 				RelativePath=".\ExaminerViewer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\IRaypickCallback.h"
 				>
 			</File>
 			<File
