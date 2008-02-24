@@ -47,6 +47,17 @@ namespace WristVizualizer
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showAxesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.transparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.screenDoorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delayedAddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortedObjectAddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.delayedBlendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortedObjectBlendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortedObjectSortedTriangleAddToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sortedObjectSortedTriangleBlendToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.hideErrorMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -230,6 +241,8 @@ namespace WristVizualizer
             this.showInertiasToolStripMenuItem,
             this.showACSToolStripMenuItem,
             this.showAxesToolStripMenuItem,
+            this.toolStripSeparator5,
+            this.transparencyToolStripMenuItem,
             this.toolStripSeparator4,
             this.hideErrorMessagesToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
@@ -273,6 +286,92 @@ namespace WristVizualizer
             this.showAxesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.showAxesToolStripMenuItem.Text = "Show Axes";
             this.showAxesToolStripMenuItem.Click += new System.EventHandler(this.showAxesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator5
+            // 
+            this.toolStripSeparator5.Name = "toolStripSeparator5";
+            this.toolStripSeparator5.Size = new System.Drawing.Size(180, 6);
+            // 
+            // transparencyToolStripMenuItem
+            // 
+            this.transparencyToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.screenDoorToolStripMenuItem,
+            this.addToolStripMenuItem,
+            this.delayedAddToolStripMenuItem,
+            this.sortedObjectAddToolStripMenuItem,
+            this.blendToolStripMenuItem,
+            this.delayedBlendToolStripMenuItem,
+            this.sortedObjectBlendToolStripMenuItem,
+            this.sortedObjectSortedTriangleAddToolStripMenuItem,
+            this.sortedObjectSortedTriangleBlendToolStripMenuItem});
+            this.transparencyToolStripMenuItem.Enabled = false;
+            this.transparencyToolStripMenuItem.Name = "transparencyToolStripMenuItem";
+            this.transparencyToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.transparencyToolStripMenuItem.Text = "Transparency Type";
+            this.transparencyToolStripMenuItem.DropDownOpening += new System.EventHandler(this.transparencyToolStripMenuItem_DropDownOpening);
+            // 
+            // screenDoorToolStripMenuItem
+            // 
+            this.screenDoorToolStripMenuItem.Name = "screenDoorToolStripMenuItem";
+            this.screenDoorToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.screenDoorToolStripMenuItem.Text = "Screen Door";
+            this.screenDoorToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
+            // 
+            // addToolStripMenuItem
+            // 
+            this.addToolStripMenuItem.Name = "addToolStripMenuItem";
+            this.addToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.addToolStripMenuItem.Text = "Add";
+            this.addToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
+            // 
+            // delayedAddToolStripMenuItem
+            // 
+            this.delayedAddToolStripMenuItem.Name = "delayedAddToolStripMenuItem";
+            this.delayedAddToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.delayedAddToolStripMenuItem.Text = "Delayed Add";
+            this.delayedAddToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
+            // 
+            // sortedObjectAddToolStripMenuItem
+            // 
+            this.sortedObjectAddToolStripMenuItem.Name = "sortedObjectAddToolStripMenuItem";
+            this.sortedObjectAddToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.sortedObjectAddToolStripMenuItem.Text = "Sorted Object Add";
+            this.sortedObjectAddToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
+            // 
+            // blendToolStripMenuItem
+            // 
+            this.blendToolStripMenuItem.Name = "blendToolStripMenuItem";
+            this.blendToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.blendToolStripMenuItem.Text = "Blend";
+            this.blendToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
+            // 
+            // delayedBlendToolStripMenuItem
+            // 
+            this.delayedBlendToolStripMenuItem.Name = "delayedBlendToolStripMenuItem";
+            this.delayedBlendToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.delayedBlendToolStripMenuItem.Text = "Delayed Blend";
+            this.delayedBlendToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
+            // 
+            // sortedObjectBlendToolStripMenuItem
+            // 
+            this.sortedObjectBlendToolStripMenuItem.Name = "sortedObjectBlendToolStripMenuItem";
+            this.sortedObjectBlendToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.sortedObjectBlendToolStripMenuItem.Text = "Sorted Object Blend";
+            this.sortedObjectBlendToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
+            // 
+            // sortedObjectSortedTriangleAddToolStripMenuItem
+            // 
+            this.sortedObjectSortedTriangleAddToolStripMenuItem.Name = "sortedObjectSortedTriangleAddToolStripMenuItem";
+            this.sortedObjectSortedTriangleAddToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.sortedObjectSortedTriangleAddToolStripMenuItem.Text = "Sorted Object Sorted Triangle Add";
+            this.sortedObjectSortedTriangleAddToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
+            // 
+            // sortedObjectSortedTriangleBlendToolStripMenuItem
+            // 
+            this.sortedObjectSortedTriangleBlendToolStripMenuItem.Name = "sortedObjectSortedTriangleBlendToolStripMenuItem";
+            this.sortedObjectSortedTriangleBlendToolStripMenuItem.Size = new System.Drawing.Size(257, 22);
+            this.sortedObjectSortedTriangleBlendToolStripMenuItem.Text = "Sorted Object Sorted Triangle Blend";
+            this.sortedObjectSortedTriangleBlendToolStripMenuItem.Click += new System.EventHandler(this.allTransparencyToolStripMenuItem_Click);
             // 
             // toolStripSeparator4
             // 
@@ -1076,6 +1175,17 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem pointIntersectionToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
+        private System.Windows.Forms.ToolStripMenuItem transparencyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem screenDoorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delayedAddToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortedObjectAddToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem delayedBlendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortedObjectBlendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortedObjectSortedTriangleAddToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sortedObjectSortedTriangleBlendToolStripMenuItem;
     }
 }
 

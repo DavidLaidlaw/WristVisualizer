@@ -123,6 +123,7 @@ namespace WristVizualizer
             showAxesToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Checked = false;
+            transparencyToolStripMenuItem.Enabled = true;
             seriesListBox.Items.Clear();
             if (_pointSelection != null)
             {
@@ -784,5 +785,37 @@ namespace WristVizualizer
             get { return _root; }
         }
 
+        #region Transparency Adjustments
+        private void transparencyToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            if (_viewer == null) return;
+            ExaminerViewer.TransparencyTypes t = _viewer.getTransparencyType();
+            screenDoorToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.SCREEN_DOOR);
+            addToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.ADD);
+            delayedAddToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.DELAYED_ADD);
+            sortedObjectAddToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.SORTED_OBJECT_ADD);
+            blendToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.BLEND);
+            delayedBlendToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.DELAYED_BLEND);
+            sortedObjectBlendToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.SORTED_OBJECT_BLEND);
+            sortedObjectSortedTriangleAddToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.SORTED_OBJECT_SORTED_TRIANGLE_ADD);
+            sortedObjectSortedTriangleBlendToolStripMenuItem.Checked = (t == ExaminerViewer.TransparencyTypes.SORTED_OBJECT_SORTED_TRIANGLE_BLEND);
+        }
+
+        private void allTransparencyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null) return;
+            ExaminerViewer.TransparencyTypes t = ExaminerViewer.TransparencyTypes.SCREEN_DOOR;
+            if (screenDoorToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.SCREEN_DOOR;
+            if (addToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.ADD;
+            if (delayedAddToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.DELAYED_ADD;
+            if (sortedObjectAddToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.SORTED_OBJECT_ADD;
+            if (blendToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.BLEND;
+            if (delayedBlendToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.DELAYED_BLEND;
+            if (sortedObjectBlendToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.SORTED_OBJECT_BLEND;
+            if (sortedObjectSortedTriangleAddToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.SORTED_OBJECT_SORTED_TRIANGLE_ADD;
+            if (sortedObjectSortedTriangleBlendToolStripMenuItem == sender) t = ExaminerViewer.TransparencyTypes.SORTED_OBJECT_SORTED_TRIANGLE_BLEND;
+            _viewer.setTransparencyType(t);
+        }
+        #endregion
     }
 }

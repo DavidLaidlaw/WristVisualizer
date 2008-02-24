@@ -52,6 +52,18 @@ public:
 	//void enableSelection();
 	//void disableSelection();
 
+	//get and set transparency rendering type
+	enum class TransparencyTypes {
+		SCREEN_DOOR,
+		ADD, DELAYED_ADD, SORTED_OBJECT_ADD,
+		BLEND, DELAYED_BLEND, SORTED_OBJECT_BLEND,
+		// The remaining are Coin extensions to the common Inventor API
+		SORTED_OBJECT_SORTED_TRIANGLE_ADD,
+		SORTED_OBJECT_SORTED_TRIANGLE_BLEND
+	};
+	TransparencyTypes getTransparencyType();
+	void setTransparencyType(TransparencyTypes type);
+
 private:
 	bool saveToImage(System::String^ filename,char* ext);
 	SoWinExaminerViewer* _viewer;

@@ -263,6 +263,75 @@ libCoin3D::ExaminerViewer^ libCoin3D::ExaminerViewer::getViewerByParentWidget(in
 //{
 //}
 
+libCoin3D::ExaminerViewer::TransparencyTypes libCoin3D::ExaminerViewer::getTransparencyType()
+{
+	SoGLRenderAction::TransparencyType current = _viewer->getGLRenderAction()->getTransparencyType();
+	switch (current) 
+	{
+	case SoGLRenderAction::ADD:
+		return TransparencyTypes::ADD;
+	case SoGLRenderAction::BLEND:
+		return TransparencyTypes::BLEND;
+	case SoGLRenderAction::DELAYED_ADD:
+		return TransparencyTypes::DELAYED_ADD;
+	case SoGLRenderAction::DELAYED_BLEND:
+		return TransparencyTypes::DELAYED_BLEND;
+	case SoGLRenderAction::SCREEN_DOOR:
+		return TransparencyTypes::SCREEN_DOOR;
+	case SoGLRenderAction::SORTED_OBJECT_ADD:
+		return TransparencyTypes::SORTED_OBJECT_ADD;
+	case SoGLRenderAction::SORTED_OBJECT_BLEND:
+		return TransparencyTypes::SORTED_OBJECT_BLEND;
+	case SoGLRenderAction::SORTED_OBJECT_SORTED_TRIANGLE_ADD:
+		return TransparencyTypes::SORTED_OBJECT_SORTED_TRIANGLE_ADD;
+	case SoGLRenderAction::SORTED_OBJECT_SORTED_TRIANGLE_BLEND:
+		return TransparencyTypes::SORTED_OBJECT_SORTED_TRIANGLE_BLEND;
+	default:
+		return TransparencyTypes::SCREEN_DOOR;
+	}
+}
+
+void libCoin3D::ExaminerViewer::setTransparencyType(TransparencyTypes type)
+{
+
+	SoGLRenderAction::TransparencyType newType;
+	switch (type) 
+	{
+	case TransparencyTypes::ADD:
+		newType = SoGLRenderAction::ADD; 
+		break;
+	case TransparencyTypes::BLEND:
+		newType = SoGLRenderAction::BLEND; 
+		break;
+	case TransparencyTypes::DELAYED_ADD:
+		newType = SoGLRenderAction::DELAYED_ADD; 
+		break;
+	case TransparencyTypes::DELAYED_BLEND:
+		newType = SoGLRenderAction::DELAYED_BLEND; 
+		break;
+	case TransparencyTypes::SCREEN_DOOR:
+		newType = SoGLRenderAction::SCREEN_DOOR; 
+		break;
+	case TransparencyTypes::SORTED_OBJECT_ADD:
+		newType = SoGLRenderAction::SORTED_OBJECT_ADD; 
+		break;
+	case TransparencyTypes::SORTED_OBJECT_BLEND:
+		newType = SoGLRenderAction::SORTED_OBJECT_BLEND; 
+		break;
+	case TransparencyTypes::SORTED_OBJECT_SORTED_TRIANGLE_ADD:
+		newType = SoGLRenderAction::SORTED_OBJECT_SORTED_TRIANGLE_ADD; 
+		break;
+	case TransparencyTypes::SORTED_OBJECT_SORTED_TRIANGLE_BLEND:
+		newType = SoGLRenderAction::SORTED_OBJECT_SORTED_TRIANGLE_BLEND; 
+		break;
+	default:
+		newType = SoGLRenderAction::SCREEN_DOOR;
+		break;
+	}
+	//_viewer->getGLRenderAction()->setTransparencyType(newType);
+	_viewer->getGLRenderAction()->setTransparencyType(SoGLRenderAction::NONE);
+}
+
 static void event_cb(void * ud, SoEventCallback * n)
 {
 	const SoMouseButtonEvent * mbe = (SoMouseButtonEvent *)n->getEvent();
