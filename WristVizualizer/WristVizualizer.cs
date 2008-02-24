@@ -26,6 +26,7 @@ namespace WristVizualizer
         private int _currentPositionIndex;
         private int _fixedBoneIndex;
         private PointSelection _pointSelection;
+        private string _firstFileName;
         private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
         public WristVizualizer(string[] fileArgs)
@@ -123,6 +124,11 @@ namespace WristVizualizer
             pointIntersectionToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Checked = false;
             seriesListBox.Items.Clear();
+            if (_pointSelection != null)
+            {
+                _pointSelection.stopSelecting();
+                _pointSelection = null;
+            }
             hideStatusStrip();
             toolStripStatusLabel1.Text = "";
             _bones = new Separator[15];
@@ -195,6 +201,9 @@ namespace WristVizualizer
                 hideControlBox();
                 foreach (string filename in filenames)
                     _root.addFile(filename);
+
+                //save first filename for recording sake
+                _firstFileName = filenames[0];
 
                 //set title
                 if (filenames.Length == 1)
@@ -315,6 +324,7 @@ namespace WristVizualizer
 
             //set title bar now
             this.Text = PROGRAM_TITLE + " - " + _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
+            _firstFileName = Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -729,11 +739,10 @@ namespace WristVizualizer
                 _pointSelection.stopSelecting();
                 _pointSelection = null;
                 hideStatusStrip();
-                toolStripStatusLabel1.Text = "";
             }
             else
             {
-                PointSelection ps = new PointSelection(_viewer, this);
+                PointSelection ps = new PointSelection(_viewer, this, _firstFileName);
                 ps.ShowDialog();
                 if (!ps.SelectionEnabled) return; //if we were canceled, etc.
 

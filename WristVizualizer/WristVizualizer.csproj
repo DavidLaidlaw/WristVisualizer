@@ -51,7 +51,6 @@
     <Compile Include="PointSelection.Designer.cs">
       <DependentUpon>PointSelection.cs</DependentUpon>
     </Compile>
-    <Compile Include="Raypick.cs" />
     <Compile Include="SideSelector.cs">
       <SubType>Form</SubType>
     </Compile>

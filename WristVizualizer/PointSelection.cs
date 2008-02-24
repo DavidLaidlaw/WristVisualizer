@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 using libCoin3D;
 
 namespace WristVizualizer
@@ -19,10 +20,11 @@ namespace WristVizualizer
         private string _saveFileFormat = "";
         private string _pointFormat;
 
-        public PointSelection(ExaminerViewer viewer, WristVizualizer visualizer)
+        public PointSelection(ExaminerViewer viewer, WristVizualizer visualizer, string firstFileName)
         {
             _viewer = viewer;
             _visualizer = visualizer;
+            _saveFileFormat = Path.Combine(Path.GetDirectoryName(firstFileName), Path.GetFileNameWithoutExtension(firstFileName));
 
             InitializeComponent();
         }
@@ -49,6 +51,7 @@ namespace WristVizualizer
         {
             _viewer.resetRaypick();
             _viewer.OnRaypick -= new RaypickEventHandler(_viewer_OnRaypick);
+            _visualizer.setStatusStripText("");
         }
 
         private string precisionOutput(int precision)
@@ -68,17 +71,40 @@ namespace WristVizualizer
             if (checkBoxSaveToFile.Checked)
             {
                 string fname = String.Format("{0}_point{1}.stack", _saveFileFormat, _currentPoint);
-                //TODO: save out to file....
+                if (!checkBoxOverwrite.Checked && File.Exists(fname))
+                {
+                    //error
+                    msg = String.Format("Error: File already exists! ({0})", fname);
+                    _visualizer.setStatusStripText(msg);
+                    return;
+                }
+                try
+                {
+                    saveToFile(fname, x, y, z);
+                    msg = String.Format("Point {3} saved: {4} " + _pointFormat, x, y, z, _currentPoint, fname);
 
-                msg = String.Format("Point {3} saved: {4} " + _pointFormat, x, y, z, _currentPoint, fname);
-
-                _currentPoint++; //update counter
+                    _currentPoint++; //update counter
+                }
+                catch (Exception ex)
+                {
+                    msg = "Error saving to file: " + ex.Message;
+                    _visualizer.setStatusStripText(msg);
+                    return;
+                }                
             }
             else
             {
                 msg = String.Format("Point selected: " + _pointFormat, x, y, z);
             }
             _visualizer.setStatusStripText(msg);
+        }
+
+        private void saveToFile(string fname, float x, float y, float z)
+        {
+            using (StreamWriter writer = new StreamWriter(fname, false))
+            {
+                writer.WriteLine(String.Format("{0}\t{1}\t{2}", x, y, z));
+            }
         }
 
         private void checkBoxSaveToFile_CheckedChanged(object sender, EventArgs e)
