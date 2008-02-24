@@ -185,10 +185,10 @@ namespace WristVizualizer
             if (_viewer == null)
                 _viewer = new ExaminerViewer((int)panelCoin.Handle);
 
-            _root = new Separator();
-
+            
             //if we get here, then we are loading a new file....so
             resetForm();
+            _root = new Separator(); //setup new node (might need to change that...
 
             if (loadFull)
             {
