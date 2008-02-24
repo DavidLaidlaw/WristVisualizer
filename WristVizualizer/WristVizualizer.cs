@@ -748,7 +748,7 @@ namespace WristVizualizer
 
                 pointIntersectionToolStripMenuItem.Checked = true;
                 _pointSelection = ps;
-                if (ps.ShowInTaskbar)
+                if (ps.DisplayInStatusBar)
                     showStatusStrip();
             }
         }

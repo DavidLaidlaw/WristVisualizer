@@ -191,6 +191,7 @@ namespace WristVizualizer
             this.Controls.Add(this.checkBoxShowStatus);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "PointSelection";
+            this.ShowInTaskbar = false;
             this.Text = "Point Selection";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrecision)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRadius)).EndInit();
