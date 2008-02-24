@@ -49,8 +49,8 @@ public:
 
 	//selectors, used for selections and selecting
 	SoSelection* _selection;
-	void enableSelection();
-	void disableSelection();
+	//void enableSelection();
+	//void disableSelection();
 
 private:
 	bool saveToImage(System::String^ filename,char* ext);

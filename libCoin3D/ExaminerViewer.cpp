@@ -255,13 +255,13 @@ libCoin3D::ExaminerViewer^ libCoin3D::ExaminerViewer::getViewerByParentWidget(in
 	return (ExaminerViewer^)ViewersHashtable[HWND]; //return it
 }
 
-void libCoin3D::ExaminerViewer::enableSelection()
-{
-}
-
-void libCoin3D::ExaminerViewer::disableSelection()
-{
-}
+//void libCoin3D::ExaminerViewer::enableSelection()
+//{
+//}
+//
+//void libCoin3D::ExaminerViewer::disableSelection()
+//{
+//}
 
 static void event_cb(void * ud, SoEventCallback * n)
 {
