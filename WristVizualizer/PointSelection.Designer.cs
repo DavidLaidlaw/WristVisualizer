@@ -63,7 +63,7 @@ namespace WristVizualizer
             this.checkBoxSaveToFile.Location = new System.Drawing.Point(12, 42);
             this.checkBoxSaveToFile.Name = "checkBoxSaveToFile";
             this.checkBoxSaveToFile.Size = new System.Drawing.Size(86, 17);
-            this.checkBoxSaveToFile.TabIndex = 1;
+            this.checkBoxSaveToFile.TabIndex = 2;
             this.checkBoxSaveToFile.Text = "Save To File";
             this.checkBoxSaveToFile.UseVisualStyleBackColor = true;
             this.checkBoxSaveToFile.CheckedChanged += new System.EventHandler(this.checkBoxSaveToFile_CheckedChanged);
@@ -73,7 +73,7 @@ namespace WristVizualizer
             this.buttonOK.Location = new System.Drawing.Point(115, 136);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(84, 28);
-            this.buttonOK.TabIndex = 2;
+            this.buttonOK.TabIndex = 6;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -84,7 +84,7 @@ namespace WristVizualizer
             this.buttonCancel.Location = new System.Drawing.Point(205, 136);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(84, 28);
-            this.buttonCancel.TabIndex = 3;
+            this.buttonCancel.TabIndex = 7;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
@@ -97,7 +97,7 @@ namespace WristVizualizer
             this.checkBoxOverwrite.Location = new System.Drawing.Point(34, 65);
             this.checkBoxOverwrite.Name = "checkBoxOverwrite";
             this.checkBoxOverwrite.Size = new System.Drawing.Size(124, 17);
-            this.checkBoxOverwrite.TabIndex = 4;
+            this.checkBoxOverwrite.TabIndex = 3;
             this.checkBoxOverwrite.Text = "Overwrite if file exists";
             this.checkBoxOverwrite.UseVisualStyleBackColor = true;
             // 
@@ -111,7 +111,7 @@ namespace WristVizualizer
             0});
             this.numericUpDownPrecision.Name = "numericUpDownPrecision";
             this.numericUpDownPrecision.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDownPrecision.TabIndex = 5;
+            this.numericUpDownPrecision.TabIndex = 1;
             this.numericUpDownPrecision.Value = new decimal(new int[] {
             2,
             0,
@@ -135,7 +135,7 @@ namespace WristVizualizer
             this.checkBoxShowMarker.Location = new System.Drawing.Point(12, 88);
             this.checkBoxShowMarker.Name = "checkBoxShowMarker";
             this.checkBoxShowMarker.Size = new System.Drawing.Size(134, 17);
-            this.checkBoxShowMarker.TabIndex = 7;
+            this.checkBoxShowMarker.TabIndex = 4;
             this.checkBoxShowMarker.Text = "Show Marker in Scene";
             this.checkBoxShowMarker.UseVisualStyleBackColor = true;
             this.checkBoxShowMarker.CheckedChanged += new System.EventHandler(this.checkBoxShowMarker_CheckedChanged);
@@ -165,7 +165,7 @@ namespace WristVizualizer
             0});
             this.numericUpDownRadius.Name = "numericUpDownRadius";
             this.numericUpDownRadius.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDownRadius.TabIndex = 9;
+            this.numericUpDownRadius.TabIndex = 5;
             this.numericUpDownRadius.Value = new decimal(new int[] {
             1,
             0,
