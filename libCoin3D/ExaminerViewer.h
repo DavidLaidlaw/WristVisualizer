@@ -35,6 +35,7 @@ public:
 
 	void setFeedbackVisibility(bool visible);
 
+	//methods for raypicking, used for point selection
 	void setRaypick();
 	void resetRaypick();
 
@@ -42,8 +43,15 @@ public:
 	void fireClick(float x, float y, float z); //needs to be public, called from global static function
 	event RaypickEventHandler^ OnRaypick;
 
+	//static members, keeping track of all global ExaminerViewers
 	static System::Collections::Hashtable^ ViewersHashtable = gcnew System::Collections::Hashtable();
 	static ExaminerViewer^ getViewerByParentWidget(int HWND);
+
+	//selectors, used for selections and selecting
+	SoSelection* _selection;
+	void enableSelection();
+	void disableSelection();
+
 private:
 	bool saveToImage(System::String^ filename,char* ext);
 	SoWinExaminerViewer* _viewer;

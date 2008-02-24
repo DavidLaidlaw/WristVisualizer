@@ -61,21 +61,21 @@ void libCoin3D::ExaminerViewer::setDecorator(bool decorate)
 void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
 {
 	_root = root->getSoSeparator();
-	SoSelection* selection = new SoSelection();
-	selection->ref();
-	selection->policy = SoSelection::SINGLE;
+	_selection = new SoSelection();
+	_selection->ref();
+	//_selection->policy = SoSelection::SINGLE;
 
-	selection->addSelectionCallback( event_selected_cb, _viewer );
-	selection->addDeselectionCallback( event_deselected_cb, _viewer );
+	_selection->addSelectionCallback( event_selected_cb, _viewer );
+	_selection->addDeselectionCallback( event_deselected_cb, _viewer );
 
-	selection->addChild(root->getSoSeparator());
+	_selection->addChild(root->getSoSeparator());
 	if (_viewer != NULL)
-		_viewer->setSceneGraph(selection);
+		_viewer->setSceneGraph(_selection);
 		//_viewer->setSceneGraph(root->getSoSeparator());
 
 	//_viewer->setGLRenderAction( new SoLineHighlightRenderAction );
 	_viewer->setGLRenderAction( new SoBoxHighlightRenderAction );
-	selection->unref(); //should be ref by _viewer
+	_selection->unref(); //should be ref by _viewer
 }
 
 
@@ -255,6 +255,14 @@ libCoin3D::ExaminerViewer^ libCoin3D::ExaminerViewer::getViewerByParentWidget(in
 	return (ExaminerViewer^)ViewersHashtable[HWND]; //return it
 }
 
+void libCoin3D::ExaminerViewer::enableSelection()
+{
+}
+
+void libCoin3D::ExaminerViewer::disableSelection()
+{
+}
+
 static void event_cb(void * ud, SoEventCallback * n)
 {
 	const SoMouseButtonEvent * mbe = (SoMouseButtonEvent *)n->getEvent();
@@ -292,6 +300,9 @@ static void event_selected_cb( void * userdata, SoPath * path )
 	if (lock) return;
 	lock = TRUE;
 
+	SoWinExaminerViewer * viewer = (SoWinExaminerViewer *)userdata;
+	libCoin3D::ExaminerViewer^ realViewer = libCoin3D::ExaminerViewer::getViewerByParentWidget((int)viewer->getParentWidget());
+	realViewer->_selection->touch();
 
 	lock = FALSE;
 }
@@ -304,6 +315,9 @@ static void event_deselected_cb( void * userdata, SoPath * path )
 	if (lock) return;
 	lock = TRUE;
 
+	SoWinExaminerViewer * viewer = (SoWinExaminerViewer *)userdata;
+	libCoin3D::ExaminerViewer^ realViewer = libCoin3D::ExaminerViewer::getViewerByParentWidget((int)viewer->getParentWidget());
+	realViewer->_selection->touch();
 
 	lock = FALSE;
 }
