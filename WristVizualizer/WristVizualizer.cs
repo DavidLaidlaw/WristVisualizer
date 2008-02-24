@@ -337,29 +337,11 @@ namespace WristVizualizer
 #endif
             open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
             open.Multiselect = true;
-            if (DialogResult.OK == open.ShowDialog())
-            {
-                if (open.FileNames.Length == 0) return;
+            if (DialogResult.OK != open.ShowDialog())
+                return;
 
-                if (_root == null)
-                    _root = new Separator();
-
-                if (_viewer == null)
-                {
-                    _viewer = new ExaminerViewer((int)panelCoin.Handle);
-                    _viewer.setSceneGraph(_root);
-                }
-
-                if (open.FileNames.Length == 1)
-                {
-                    _root.addFile(open.FileName);
-                }
-                else
-                {
-                    foreach (string filename in open.FileNames)
-                        _root.addFile(filename);
-                }
-            }
+            foreach (string filename in open.FileNames)
+                _root.addFile(filename);
         }
 
         #endregion
