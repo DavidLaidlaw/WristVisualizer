@@ -255,6 +255,17 @@ libCoin3D::ExaminerViewer^ libCoin3D::ExaminerViewer::getViewerByParentWidget(in
 	return (ExaminerViewer^)ViewersHashtable[HWND]; //return it
 }
 
+libCoin3D::Material^ libCoin3D::ExaminerViewer::getSelectedMaterial()
+{
+	if (_selection==NULL || _selection->getNumSelected()==0)
+		return nullptr;
+
+	//okay, need to find the material, no idea how
+	SoMaterial* result = NULL;
+
+	return gcnew Material(result);
+}
+
 //void libCoin3D::ExaminerViewer::enableSelection()
 //{
 //}

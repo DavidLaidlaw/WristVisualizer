@@ -45,6 +45,12 @@
     <Compile Include="HelpAbout.Designer.cs">
       <DependentUpon>HelpAbout.cs</DependentUpon>
     </Compile>
+    <Compile Include="MaterialEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaterialEditor.Designer.cs">
+      <DependentUpon>MaterialEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,10 @@
     <EmbeddedResource Include="HelpAbout.resx">
       <SubType>Designer</SubType>
       <DependentUpon>HelpAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaterialEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MaterialEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PointSelection.resx">
       <SubType>Designer</SubType>

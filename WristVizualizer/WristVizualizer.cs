@@ -26,6 +26,7 @@ namespace WristVizualizer
         private int _currentPositionIndex;
         private int _fixedBoneIndex;
         private PointSelection _pointSelection;
+        private MaterialEditor _materialEditor;
         private string _firstFileName;
         private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
@@ -123,7 +124,7 @@ namespace WristVizualizer
             showAxesToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Checked = false;
-            materialColorToolStripMenuItem.Enabled = false;
+            colorTransparencyToolStripMenuItem.Enabled = false;
             transparencyToolStripMenuItem.Enabled = true;
             seriesListBox.Items.Clear();
             if (_pointSelection != null)
@@ -151,15 +152,7 @@ namespace WristVizualizer
             _viewer.OnObjectDeselected += new ObjectDeselectedHandler(_viewer_OnObjectDeselected);
         }
 
-        void _viewer_OnObjectDeselected()
-        {
-            materialColorToolStripMenuItem.Enabled = false;
-        }
 
-        void _viewer_OnObjectSelected()
-        {
-            materialColorToolStripMenuItem.Enabled = true;
-        }
 
         #region File Open
 
@@ -816,5 +809,33 @@ namespace WristVizualizer
             _viewer.setTransparencyType(t);
         }
         #endregion
+
+        #region Material Editing
+        void _viewer_OnObjectDeselected()
+        {
+            colorTransparencyToolStripMenuItem.Enabled = false;
+        }
+
+        void _viewer_OnObjectSelected()
+        {
+            colorTransparencyToolStripMenuItem.Enabled = true;
+        }
+
+        private void colorTransparencyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_materialEditor != null)
+            {
+                //then we should simply show it
+                _materialEditor.Activate();
+                return;
+            }
+            //setup new editor
+            //TODO: Get selected material
+            Material m = null;
+            _materialEditor = new MaterialEditor(m);
+            _materialEditor.Show();
+        }
+        #endregion
+
     }
 }

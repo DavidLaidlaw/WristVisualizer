@@ -7,6 +7,7 @@
 #include <Inventor/nodes/SoEventCallback.h>
 
 #include "Separator.h"
+#include "Material.h"
 
 namespace libCoin3D {
 
@@ -54,6 +55,7 @@ public:
 	event ObjectSelectedHandler^ OnObjectSelected;
 	event ObjectDeselectedHandler^ OnObjectDeselected;
 	void fireChangeObjectSelection(bool selected);
+	Material^ getSelectedMaterial();
 	//void enableSelection();
 	//void disableSelection();
 
