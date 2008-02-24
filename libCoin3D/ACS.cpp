@@ -10,7 +10,7 @@
 
 libCoin3D::ACS::ACS()
 {
-	makeACS(20);
+	makeACS(20);  //20 is the default length
 }
 
 libCoin3D::ACS::ACS(int length)
