@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Material.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\MyViewport.cpp"
 				>
 			</File>
@@ -217,6 +221,10 @@
 			</File>
 			<File
 				RelativePath=".\Separator.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Sphere.cpp"
 				>
 			</File>
 			<File
@@ -266,6 +274,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Material.h"
+				>
+			</File>
+			<File
 				RelativePath=".\MyViewport.h"
 				>
 			</File>
@@ -279,6 +291,10 @@
 			</File>
 			<File
 				RelativePath=".\Separator.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Sphere.h"
 				>
 			</File>
 			<File

@@ -776,5 +776,13 @@ namespace WristVizualizer
             toolStripStatusLabel1.Text = text;
         }
 
+        /// <summary>
+        /// Get the Root Seperator node
+        /// </summary>
+        public Separator Root
+        {
+            get { return _root; }
+        }
+
     }
 }

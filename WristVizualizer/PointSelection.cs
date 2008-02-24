@@ -97,6 +97,21 @@ namespace WristVizualizer
                 msg = String.Format("Point selected: " + _pointFormat, x, y, z);
             }
             _visualizer.setStatusStripText(msg);
+
+            //now add marker if needed
+            if (checkBoxShowMarker.Checked)
+            {
+                Separator sep = new Separator();
+                Transform t = new Transform();
+                t.setTranslation(x, y, z);
+                sep.addTransform(t);
+                Material m = new Material();
+                m.setColor(1f, 0f, 0f);
+                sep.addNode(m);
+                Sphere s = new Sphere((float)numericUpDownRadius.Value);
+                sep.addNode(s);
+                _visualizer.Root.addChild(sep);
+            }
         }
 
         private void saveToFile(string fname, float x, float y, float z)
@@ -125,6 +140,11 @@ namespace WristVizualizer
         private void checkBoxShowStatus_CheckedChanged(object sender, EventArgs e)
         {
             numericUpDownPrecision.Enabled = checkBoxShowStatus.Checked;
+        }
+
+        private void checkBoxShowMarker_CheckedChanged(object sender, EventArgs e)
+        {
+            numericUpDownRadius.Enabled = checkBoxShowMarker.Checked;
         }
     }
 }

@@ -35,7 +35,11 @@ namespace WristVizualizer
             this.checkBoxOverwrite = new System.Windows.Forms.CheckBox();
             this.numericUpDownPrecision = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.checkBoxShowMarker = new System.Windows.Forms.CheckBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDownRadius = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrecision)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRadius)).BeginInit();
             this.SuspendLayout();
             // 
             // checkBoxShowStatus
@@ -66,7 +70,7 @@ namespace WristVizualizer
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(89, 92);
+            this.buttonOK.Location = new System.Drawing.Point(115, 136);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(84, 28);
             this.buttonOK.TabIndex = 2;
@@ -77,7 +81,7 @@ namespace WristVizualizer
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(179, 92);
+            this.buttonCancel.Location = new System.Drawing.Point(205, 136);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(84, 28);
             this.buttonCancel.TabIndex = 3;
@@ -99,14 +103,14 @@ namespace WristVizualizer
             // 
             // numericUpDownPrecision
             // 
-            this.numericUpDownPrecision.Location = new System.Drawing.Point(253, 16);
+            this.numericUpDownPrecision.Location = new System.Drawing.Point(248, 16);
             this.numericUpDownPrecision.Maximum = new decimal(new int[] {
             7,
             0,
             0,
             0});
             this.numericUpDownPrecision.Name = "numericUpDownPrecision";
-            this.numericUpDownPrecision.Size = new System.Drawing.Size(36, 20);
+            this.numericUpDownPrecision.Size = new System.Drawing.Size(41, 20);
             this.numericUpDownPrecision.TabIndex = 5;
             this.numericUpDownPrecision.Value = new decimal(new int[] {
             2,
@@ -123,13 +127,61 @@ namespace WristVizualizer
             this.label1.TabIndex = 6;
             this.label1.Text = "Display Precision";
             // 
+            // checkBoxShowMarker
+            // 
+            this.checkBoxShowMarker.AutoSize = true;
+            this.checkBoxShowMarker.Checked = true;
+            this.checkBoxShowMarker.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxShowMarker.Location = new System.Drawing.Point(12, 88);
+            this.checkBoxShowMarker.Name = "checkBoxShowMarker";
+            this.checkBoxShowMarker.Size = new System.Drawing.Size(134, 17);
+            this.checkBoxShowMarker.TabIndex = 7;
+            this.checkBoxShowMarker.Text = "Show Marker in Scene";
+            this.checkBoxShowMarker.UseVisualStyleBackColor = true;
+            this.checkBoxShowMarker.CheckedChanged += new System.EventHandler(this.checkBoxShowMarker_CheckedChanged);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(160, 92);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(77, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "Sphere Radius";
+            // 
+            // numericUpDownRadius
+            // 
+            this.numericUpDownRadius.DecimalPlaces = 2;
+            this.numericUpDownRadius.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDownRadius.Location = new System.Drawing.Point(248, 88);
+            this.numericUpDownRadius.Maximum = new decimal(new int[] {
+            7,
+            0,
+            0,
+            0});
+            this.numericUpDownRadius.Name = "numericUpDownRadius";
+            this.numericUpDownRadius.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDownRadius.TabIndex = 9;
+            this.numericUpDownRadius.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // PointSelection
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(301, 132);
+            this.ClientSize = new System.Drawing.Size(301, 176);
+            this.Controls.Add(this.numericUpDownRadius);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.checkBoxShowMarker);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numericUpDownPrecision);
             this.Controls.Add(this.checkBoxOverwrite);
@@ -141,6 +193,7 @@ namespace WristVizualizer
             this.Name = "PointSelection";
             this.Text = "Point Selection";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPrecision)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownRadius)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -155,5 +208,8 @@ namespace WristVizualizer
         private System.Windows.Forms.CheckBox checkBoxOverwrite;
         private System.Windows.Forms.NumericUpDown numericUpDownPrecision;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.CheckBox checkBoxShowMarker;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDownRadius;
     }
 }
