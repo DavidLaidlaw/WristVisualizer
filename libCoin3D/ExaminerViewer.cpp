@@ -19,9 +19,14 @@
 #include <Inventor/actions/SoRayPickAction.h>
 #include <Inventor/SoPickedPoint.h>
 
+#include <Inventor/actions/SoLineHighlightRenderAction.h>
+#include <Inventor/actions/SoBoxHighlightRenderAction.h>
+
 #include "MyViewport.h"
 
 static void event_cb(void * ud, SoEventCallback * n);
+static void event_selected_cb( void * userdata, SoPath * path );
+static void event_deselected_cb( void * userdata, SoPath * path );
 
 libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 {
@@ -34,6 +39,9 @@ libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
     //root->addChild(new SoCone);          // remove me later
     _viewer->setSceneGraph(_root);         // remove me later
 	_viewer->setCameraType(SoOrthographicCamera::getClassTypeId());
+
+	//add reference of this Viewer to the table, so we can get it if needed
+	ViewersHashtable->Add(parrent,this);
 }
 
 libCoin3D::ExaminerViewer::~ExaminerViewer()
@@ -48,15 +56,26 @@ void libCoin3D::ExaminerViewer::setDecorator(bool decorate)
 		_decorated = decorate;
 		_viewer->setDecoration(decorate);
 	}
-	//_root->addChild(new MyViewport);
-
 }
 
 void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
 {
 	_root = root->getSoSeparator();
+	SoSelection* selection = new SoSelection();
+	selection->ref();
+	selection->policy = SoSelection::SINGLE;
+
+	selection->addSelectionCallback( event_selected_cb, _viewer );
+	selection->addDeselectionCallback( event_deselected_cb, _viewer );
+
+	selection->addChild(root->getSoSeparator());
 	if (_viewer != NULL)
-		_viewer->setSceneGraph(root->getSoSeparator());
+		_viewer->setSceneGraph(selection);
+		//_viewer->setSceneGraph(root->getSoSeparator());
+
+	//_viewer->setGLRenderAction( new SoLineHighlightRenderAction );
+	_viewer->setGLRenderAction( new SoBoxHighlightRenderAction );
+	selection->unref(); //should be ref by _viewer
 }
 
 
@@ -213,8 +232,6 @@ void libCoin3D::ExaminerViewer::setRaypick()
 	_ecb = new SoEventCallback;
 	_ecb->addEventCallback(SoMouseButtonEvent::getClassTypeId(), event_cb, _viewer);
 	_root->insertChild(_ecb,0); //insert us right at the top, baby! we hear it all!
-
-	RaypickViewer = this;
 }
 
 void libCoin3D::ExaminerViewer::resetRaypick()
@@ -231,11 +248,15 @@ void libCoin3D::ExaminerViewer::fireClick(float x, float y, float z)
 	OnRaypick(x,y,z);
 }
 
+libCoin3D::ExaminerViewer^ libCoin3D::ExaminerViewer::getViewerByParentWidget(int HWND)
+{
+	if (ViewersHashtable == nullptr)
+		return nullptr; //this should never happen, but just in case
+	return (ExaminerViewer^)ViewersHashtable[HWND]; //return it
+}
+
 static void event_cb(void * ud, SoEventCallback * n)
 {
-	//if (libCoin3D::ExaminerViewer::RaypickCallback == nullptr) 
-	//	return;
-
 	const SoMouseButtonEvent * mbe = (SoMouseButtonEvent *)n->getEvent();
 
 	if (mbe->getButton() != SoMouseButtonEvent::BUTTON1 ||
@@ -257,9 +278,32 @@ static void event_cb(void * ud, SoEventCallback * n)
     (void)fprintf(stdout, "\n");
 
     SbVec3f v = point->getPoint();
-    //(void)fprintf(stdout, "point=<%f, %f, %f>, normvec=<%f, %f, %f>\n",
-    //              v[0], v[1], v[2], nv[0], nv[1], nv[2]);
 
 	//triger event
-	libCoin3D::ExaminerViewer::RaypickViewer->fireClick(v[0],v[1],v[2]);
+	libCoin3D::ExaminerViewer^ realViewer = libCoin3D::ExaminerViewer::getViewerByParentWidget((int)viewer->getParentWidget());
+	realViewer->fireClick(v[0],v[1],v[2]);
+}
+
+static void event_selected_cb( void * userdata, SoPath * path )
+{
+	static SbBool lock = FALSE;
+	// Avoid processing recursive calls when we explicitly
+	// select/deselect paths in the toplevel SoSelection node.
+	if (lock) return;
+	lock = TRUE;
+
+
+	lock = FALSE;
+}
+
+static void event_deselected_cb( void * userdata, SoPath * path )
+{
+	static SbBool lock = FALSE;
+	// Avoid processing recursive calls when we explicitly
+	// select/deselect paths in the toplevel SoSelection node.
+	if (lock) return;
+	lock = TRUE;
+
+
+	lock = FALSE;
 }

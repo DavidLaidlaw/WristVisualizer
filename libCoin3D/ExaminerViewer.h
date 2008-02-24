@@ -2,6 +2,7 @@
 
 #include <Inventor/Win/viewers/SoWinExaminerViewer.h>
 #include <Inventor/nodes/SoSeparator.h>
+#include <Inventor/nodes/SoSelection.h>
 
 #include <Inventor/nodes/SoEventCallback.h>
 
@@ -37,10 +38,12 @@ public:
 	void setRaypick();
 	void resetRaypick();
 
-	void fireClick(float x, float y, float z);
-
+	//events
+	void fireClick(float x, float y, float z); //needs to be public, called from global static function
 	event RaypickEventHandler^ OnRaypick;
-	static ExaminerViewer^ RaypickViewer = nullptr;
+
+	static System::Collections::Hashtable^ ViewersHashtable = gcnew System::Collections::Hashtable();
+	static ExaminerViewer^ getViewerByParentWidget(int HWND);
 private:
 	bool saveToImage(System::String^ filename,char* ext);
 	SoWinExaminerViewer* _viewer;
