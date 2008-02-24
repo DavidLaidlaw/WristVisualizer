@@ -328,8 +328,7 @@ void libCoin3D::ExaminerViewer::setTransparencyType(TransparencyTypes type)
 		newType = SoGLRenderAction::SCREEN_DOOR;
 		break;
 	}
-	//_viewer->getGLRenderAction()->setTransparencyType(newType);
-	_viewer->getGLRenderAction()->setTransparencyType(SoGLRenderAction::NONE);
+	_viewer->getGLRenderAction()->setTransparencyType(newType);
 }
 
 void libCoin3D::ExaminerViewer::fireChangeObjectSelection(bool selected)
