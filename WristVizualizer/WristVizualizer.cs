@@ -123,6 +123,7 @@ namespace WristVizualizer
             showAxesToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Checked = false;
+            materialColorToolStripMenuItem.Enabled = false;
             transparencyToolStripMenuItem.Enabled = true;
             seriesListBox.Items.Clear();
             if (_pointSelection != null)
@@ -141,6 +142,23 @@ namespace WristVizualizer
                 _fixRadios[i].Enabled = true;
             }
             radioButtonFixedRad.Checked = true;
+        }
+
+        private void setupExaminerWindow()
+        {
+            _viewer = new ExaminerViewer((int)panelCoin.Handle);
+            _viewer.OnObjectSelected += new ObjectSelectedHandler(_viewer_OnObjectSelected);
+            _viewer.OnObjectDeselected += new ObjectDeselectedHandler(_viewer_OnObjectDeselected);
+        }
+
+        void _viewer_OnObjectDeselected()
+        {
+            materialColorToolStripMenuItem.Enabled = false;
+        }
+
+        void _viewer_OnObjectSelected()
+        {
+            materialColorToolStripMenuItem.Enabled = true;
         }
 
         #region File Open
@@ -184,7 +202,7 @@ namespace WristVizualizer
         private void openFile(string[] filenames, bool loadFull)
         {
             if (_viewer == null)
-                _viewer = new ExaminerViewer((int)panelCoin.Handle);
+                setupExaminerWindow();
 
             
             //if we get here, then we are loading a new file....so
@@ -709,12 +727,11 @@ namespace WristVizualizer
             manager.checkForUpdates();
         }
 
+        #region Point Selection
         private void pointIntersectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //TODO: Create gui for point selection output...
             if (_viewer == null)  //can't do anything
                 return;
-
             
             if (pointIntersectionToolStripMenuItem.Checked == true) //it was already running
             {
@@ -758,7 +775,7 @@ namespace WristVizualizer
         {
             toolStripStatusLabel1.Text = text;
         }
-
+        #endregion
         /// <summary>
         /// Get the Root Seperator node
         /// </summary>

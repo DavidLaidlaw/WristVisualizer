@@ -63,7 +63,7 @@ void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
 	_root = root->getSoSeparator();
 	_selection = new SoSelection();
 	_selection->ref();
-	//_selection->policy = SoSelection::SINGLE;
+	_selection->policy = SoSelection::SINGLE;
 
 	_selection->addSelectionCallback( event_selected_cb, _viewer );
 	_selection->addDeselectionCallback( event_deselected_cb, _viewer );
@@ -332,6 +332,14 @@ void libCoin3D::ExaminerViewer::setTransparencyType(TransparencyTypes type)
 	_viewer->getGLRenderAction()->setTransparencyType(SoGLRenderAction::NONE);
 }
 
+void libCoin3D::ExaminerViewer::fireChangeObjectSelection(bool selected)
+{
+	if (selected)
+		OnObjectSelected();
+	else
+		OnObjectDeselected();
+}
+
 static void event_cb(void * ud, SoEventCallback * n)
 {
 	const SoMouseButtonEvent * mbe = (SoMouseButtonEvent *)n->getEvent();
@@ -372,6 +380,7 @@ static void event_selected_cb( void * userdata, SoPath * path )
 	SoWinExaminerViewer * viewer = (SoWinExaminerViewer *)userdata;
 	libCoin3D::ExaminerViewer^ realViewer = libCoin3D::ExaminerViewer::getViewerByParentWidget((int)viewer->getParentWidget());
 	realViewer->_selection->touch();
+	realViewer->fireChangeObjectSelection(true);
 
 	lock = FALSE;
 }
@@ -387,6 +396,7 @@ static void event_deselected_cb( void * userdata, SoPath * path )
 	SoWinExaminerViewer * viewer = (SoWinExaminerViewer *)userdata;
 	libCoin3D::ExaminerViewer^ realViewer = libCoin3D::ExaminerViewer::getViewerByParentWidget((int)viewer->getParentWidget());
 	realViewer->_selection->touch();
+	realViewer->fireChangeObjectSelection(false);
 
 	lock = FALSE;
 }

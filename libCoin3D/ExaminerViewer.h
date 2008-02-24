@@ -11,6 +11,8 @@
 namespace libCoin3D {
 
 	public delegate void RaypickEventHandler(float, float, float);
+	public delegate void ObjectSelectedHandler();
+	public delegate void ObjectDeselectedHandler();
 
 public ref class ExaminerViewer
 {
@@ -49,6 +51,9 @@ public:
 
 	//selectors, used for selections and selecting
 	SoSelection* _selection;
+	event ObjectSelectedHandler^ OnObjectSelected;
+	event ObjectDeselectedHandler^ OnObjectDeselected;
+	void fireChangeObjectSelection(bool selected);
 	//void enableSelection();
 	//void disableSelection();
 

@@ -120,6 +120,7 @@ namespace WristVizualizer
             this.label16 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.materialColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -205,6 +206,7 @@ namespace WristVizualizer
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.materialColorToolStripMenuItem,
             this.backgroundColorToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -1060,6 +1062,13 @@ namespace WristVizualizer
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
+            // materialColorToolStripMenuItem
+            // 
+            this.materialColorToolStripMenuItem.Enabled = false;
+            this.materialColorToolStripMenuItem.Name = "materialColorToolStripMenuItem";
+            this.materialColorToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.materialColorToolStripMenuItem.Text = "Material && Color";
+            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -1186,6 +1195,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem sortedObjectBlendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortedObjectSortedTriangleAddToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortedObjectSortedTriangleBlendToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem materialColorToolStripMenuItem;
     }
 }
 
