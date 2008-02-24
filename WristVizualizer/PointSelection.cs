@@ -20,6 +20,8 @@ namespace WristVizualizer
         private string _saveFileFormat = "";
         private string _pointFormat;
 
+        private Separator _separatorVisiblePoints = null;
+
         public PointSelection(ExaminerViewer viewer, WristVizualizer visualizer, string firstFileName)
         {
             _viewer = viewer;
@@ -52,6 +54,11 @@ namespace WristVizualizer
             _viewer.resetRaypick();
             _viewer.OnRaypick -= new RaypickEventHandler(_viewer_OnRaypick);
             _visualizer.setStatusStripText("");
+            if (_separatorVisiblePoints != null)
+            {
+                _visualizer.Root.removeChild(_separatorVisiblePoints);
+                _separatorVisiblePoints = null;
+            }
         }
 
         private string precisionOutput(int precision)
@@ -110,7 +117,13 @@ namespace WristVizualizer
                 sep.addNode(m);
                 Sphere s = new Sphere((float)numericUpDownRadius.Value);
                 sep.addNode(s);
-                _visualizer.Root.addChild(sep);
+                if (_separatorVisiblePoints == null)
+                {
+                    //this is the first one
+                    _separatorVisiblePoints = new Separator();
+                    _visualizer.Root.addChild(_separatorVisiblePoints);
+                }
+                _separatorVisiblePoints.addChild(sep);
             }
         }
 
