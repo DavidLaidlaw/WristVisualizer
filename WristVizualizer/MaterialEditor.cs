@@ -50,6 +50,8 @@ namespace WristVizualizer
             trackBarGreen.Value = _startColor.G;
             trackBarBlue.Value = _startColor.B;
 
+            trackBarTransparency.Value = (int)(_startTransparency*100f);
+
             updateColorSample();
         }
 
