@@ -58,7 +58,11 @@ namespace WristVizualizer
                 _downloadLocation = xml.GetElementsByTagName("ApplicationUrl")[0].InnerText;
                 _availableVersion = xml.GetElementsByTagName("AvailableVersion")[0].InnerText;
 
-                if (_availableVersion.CompareTo(_currentVersion) > 0)
+                Version current = new Version(_currentVersion);
+                Version available = new Version(_availableVersion);
+                if (available.Major > current.Major ||
+                    available.Minor > current.Minor ||
+                    available.Build > current.Build)  //don't want to test the revsion
                 {
                     newUpdateAvailable();
                 }
