@@ -120,7 +120,6 @@ namespace WristVizualizer
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            //TODO: Reset color to original.... um. yeah
             if (_hadMaterial)
             {
                 //then we need to re-apply the original material settings
