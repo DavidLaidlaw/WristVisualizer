@@ -429,6 +429,7 @@ SoMaterial* libCoin3D::ExaminerViewer::createMaterialForSelectedNode()
 
 	int childIndex = parentNode->findChild(selectedNode);
 	SoMaterial* myMaterial = new SoMaterial();
+	//TODO: Find a way to inherit the settings from before.
 	parentNode->insertChild(myMaterial,childIndex); //insert right before the child
 	return myMaterial;
 }

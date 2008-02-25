@@ -168,7 +168,7 @@ namespace WristVizualizer
             // trackBarTransparency
             // 
             this.trackBarTransparency.Location = new System.Drawing.Point(60, 154);
-            this.trackBarTransparency.Maximum = 255;
+            this.trackBarTransparency.Maximum = 100;
             this.trackBarTransparency.Name = "trackBarTransparency";
             this.trackBarTransparency.Size = new System.Drawing.Size(217, 45);
             this.trackBarTransparency.TabIndex = 3;
@@ -187,6 +187,7 @@ namespace WristVizualizer
             this.checkBoxLiveUpdate.TabIndex = 5;
             this.checkBoxLiveUpdate.Text = "Show Changes in Viewer";
             this.checkBoxLiveUpdate.UseVisualStyleBackColor = true;
+            this.checkBoxLiveUpdate.CheckedChanged += new System.EventHandler(this.checkBoxLiveUpdate_CheckedChanged);
             // 
             // MaterialEditor
             // 

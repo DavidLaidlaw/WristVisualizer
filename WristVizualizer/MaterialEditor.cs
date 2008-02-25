@@ -12,6 +12,7 @@ namespace WristVizualizer
     public partial class MaterialEditor : Form
     {
         private Color _startColor;
+        private float _startTransparency;
 
         private Material _material;
         private ExaminerViewer _viewer;
@@ -45,6 +46,7 @@ namespace WristVizualizer
 
             int packedC = _material.getColor();
             _startColor = unpackColor(packedC);
+            _startTransparency = _material.getTransparency();
 
             trackBarRed.Value = _startColor.R;
             trackBarGreen.Value = _startColor.G;
@@ -69,7 +71,7 @@ namespace WristVizualizer
         }
         private void updateMaterialTransparency()
         {
-            _material.setTransparency(trackBarTransparency.Value);
+            _material.setTransparency(trackBarTransparency.Value/100f);
         }
         #region Trackup Updates
         private void trackBarRed_Scroll(object sender, EventArgs e)
@@ -112,6 +114,7 @@ namespace WristVizualizer
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            //all we need to do, is ensure that we have updated everything, and close
             updateMaterialColor();
             updateMaterialTransparency();
             this.Close();
@@ -120,6 +123,7 @@ namespace WristVizualizer
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             //TODO: Reset color to original.... um. yeah
+
             this.Close();
         }
 
@@ -151,6 +155,15 @@ namespace WristVizualizer
             return unpackColor(packedColor).B;
         }
         #endregion
+
+        private void checkBoxLiveUpdate_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxLiveUpdate.Checked)
+            {
+                updateMaterialColor();
+                updateMaterialTransparency();
+            }
+        }
 
         
     }

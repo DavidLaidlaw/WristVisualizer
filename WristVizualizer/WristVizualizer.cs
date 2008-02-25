@@ -814,6 +814,12 @@ namespace WristVizualizer
         void _viewer_OnObjectDeselected()
         {
             colorTransparencyToolStripMenuItem.Enabled = false;
+
+            //if the material is being edited, then we need to shut it down.
+            if (_materialEditor != null && _materialEditor.Visible)
+            {
+                _materialEditor.materialDeselected();
+            }
         }
 
         void _viewer_OnObjectSelected()
@@ -823,7 +829,7 @@ namespace WristVizualizer
 
         private void colorTransparencyToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_materialEditor != null)
+            if (_materialEditor != null && _materialEditor.Visible)
             {
                 //then we should simply show it
                 _materialEditor.Activate();
