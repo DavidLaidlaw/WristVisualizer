@@ -16,6 +16,7 @@ libCoin3D::Material::Material(SoMaterial* material)
 void libCoin3D::Material::setColor(float r, float g, float b)
 {
 	_material->diffuseColor.setValue(r,g,b);
+	_material->diffuseColor.setIgnored(FALSE); //TODO: make more smart :-P
 }
 
 void libCoin3D::Material::setTransparency(float transparency)

@@ -23,6 +23,7 @@
 
 //for selecting and material editing
 #include <Inventor/actions/SoSearchAction.h>
+#include <Inventor/actions/SoCallbackAction.h>
 
 
 #include "MyViewport.h"
@@ -369,6 +370,50 @@ void libCoin3D::ExaminerViewer::fireChangeObjectSelection(bool selected)
 		OnObjectDeselected();
 }
 
+
+struct SearchData {
+	SoNode* searchNode;
+	SoMaterial* resultingMaterial;
+};
+
+SoCallbackAction::Response precallback_action_cb(void *userdata, SoCallbackAction *action, const SoNode *node)
+{
+	SearchData* data = (SearchData*)userdata;
+	SoNode* searchnode = data->searchNode;
+	if (searchnode==node) {
+		SbColor ambient;
+		SbColor diffuse;
+		SbColor specular;
+		SbColor emission;
+		float shininess;
+		float transparency;
+		action->getMaterial(ambient, diffuse, specular, emission, shininess, transparency);
+		data->resultingMaterial = new SoMaterial();
+		data->resultingMaterial->ref(); //make sure we don't disapear
+		data->resultingMaterial->ambientColor.setValue(ambient);
+		data->resultingMaterial->diffuseColor.setValue(diffuse);
+		data->resultingMaterial->specularColor.setValue(specular);
+		data->resultingMaterial->emissiveColor.setValue(emission);
+		data->resultingMaterial->shininess.setValue(shininess);
+		data->resultingMaterial->transparency.setValue(transparency);
+		return SoCallbackAction::ABORT;
+	}
+	return SoCallbackAction::CONTINUE;
+}
+
+SoMaterial* libCoin3D::ExaminerViewer::getMaterialPropertiesAtNode(SoNode* node)
+{
+	SearchData data;
+	data.resultingMaterial = NULL;
+	data.searchNode = node;
+
+	SoCallbackAction ca;
+	ca.addPreCallback(node->getTypeId(),precallback_action_cb,&data);
+	ca.apply(_root);
+	return data.resultingMaterial;
+}
+
+
 SoNode* libCoin3D::ExaminerViewer::getSelectedNode()
 {
 	if (_selection->getNumSelected()!=1) //only want to deal with one
@@ -397,13 +442,20 @@ SoGroup* libCoin3D::ExaminerViewer::getParentOfNode(SoNode* child)
 	return parent;
 }
 
+SoGroup* libCoin3D::ExaminerViewer::getParentOfSelectedNode()
+{
+	if (_selection->getPath(0)->getLength() < 2) {
+		fprintf(stderr,"Problem, no parrent!\n"); //TODO: More errors!
+		return NULL;
+	}
+	return (SoGroup*)_selection->getPath(0)->getNodeFromTail(1);
+}
+
 SoMaterial* libCoin3D::ExaminerViewer::getMaterialForSelectedNode()
 {
 	SoNode* selectedNode = getSelectedNode();
-	if (selectedNode==NULL)
-		return NULL; //error TODO: something
-	SoGroup* parentNode = getParentOfNode(selectedNode);
-	if (parentNode==NULL)
+	SoGroup* parentNode = getParentOfSelectedNode();
+	if (selectedNode==NULL || parentNode==NULL)
 		return NULL; //error TODO: something
 
 	int childIndex = parentNode->findChild(selectedNode);
@@ -421,17 +473,25 @@ SoMaterial* libCoin3D::ExaminerViewer::getMaterialForSelectedNode()
 SoMaterial* libCoin3D::ExaminerViewer::createMaterialForSelectedNode()
 {
 	SoNode* selectedNode = getSelectedNode();
-	if (selectedNode==NULL)
-		return NULL; //error TODO: something
-	SoGroup* parentNode = getParentOfNode(selectedNode);
-	if (parentNode==NULL)
-		return NULL; //error TODO: something
+	SoGroup* parentNode = getParentOfSelectedNode();
+	if (selectedNode==NULL || parentNode==NULL)
+		return NULL; //error TODO: somethingng
 
 	int childIndex = parentNode->findChild(selectedNode);
-	SoMaterial* myMaterial = new SoMaterial();
-	//TODO: Find a way to inherit the settings from before.
+	//inherit existing color properties
+	SoMaterial* myMaterial = getMaterialPropertiesAtNode(selectedNode); 
+	if (myMaterial==NULL)
+		myMaterial = new SoMaterial();
+
 	parentNode->insertChild(myMaterial,childIndex); //insert right before the child
 	return myMaterial;
+}
+
+void libCoin3D::ExaminerViewer::removeMaterialFromScene(Material^ material)
+{
+	SoNode* nodeToRemove = material->getNode();
+	SoGroup* parent = getParentOfNode(nodeToRemove);
+	parent->removeChild(nodeToRemove);
 }
 
 static void event_cb(void * ud, SoEventCallback * n)

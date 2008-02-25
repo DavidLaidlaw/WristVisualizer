@@ -57,6 +57,7 @@ public:
 	void fireChangeObjectSelection(bool selected);
 	Material^ getSelectedMaterial();
 	Material^ createMaterialForSelected();
+	void removeMaterialFromScene(Material^ material);
 	//void enableSelection();
 	//void disableSelection();
 
@@ -83,7 +84,9 @@ private:
 	//private calls for finding material nodes. Used for material editing
 	SoNode* getSelectedNode();
 	SoGroup* getParentOfNode(SoNode* child);
+	SoGroup* getParentOfSelectedNode();
 	SoMaterial* getMaterialForSelectedNode();
 	SoMaterial* createMaterialForSelectedNode();
+	SoMaterial* getMaterialPropertiesAtNode(SoNode* node);
 };
 }

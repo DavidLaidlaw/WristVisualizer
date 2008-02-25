@@ -17,7 +17,6 @@ namespace WristVizualizer
         private Material _material;
         private ExaminerViewer _viewer;
         private bool _hadMaterial;
-        private bool _error = false;
 
         public MaterialEditor(ExaminerViewer viewer)
         {
@@ -32,7 +31,6 @@ namespace WristVizualizer
                 if (_material == null)
                 {
                     //if still null, this is an error!
-                    _error = true;
                     this.Close();
                     return;
                 }
@@ -123,14 +121,24 @@ namespace WristVizualizer
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             //TODO: Reset color to original.... um. yeah
-
+            if (_hadMaterial)
+            {
+                //then we need to re-apply the original material settings
+                Color c = _startColor;
+                _material.setColor(c.R / 255f, c.G / 255f, c.B / 255f);
+                _material.setTransparency(_startTransparency);
+            }
+            else
+            {
+                //we need to remove the material from the scene
+                _viewer.removeMaterialFromScene(_material);
+            }
             this.Close();
         }
 
         public void materialDeselected()
         {
-            //get us out of here
-            //TODO: Save or not to save. Rather, restore or not restore
+            //get us out of here, leave the scene "as-is"
             this.Close();
         }
 
