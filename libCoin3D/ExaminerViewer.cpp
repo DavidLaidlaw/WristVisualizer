@@ -14,13 +14,16 @@
 #include <Inventor/actions/SoWriteAction.h>
 
 //for raypick
-
 #include <Inventor/events/SoMouseButtonEvent.h>
 #include <Inventor/actions/SoRayPickAction.h>
 #include <Inventor/SoPickedPoint.h>
 
 #include <Inventor/actions/SoLineHighlightRenderAction.h>
 #include <Inventor/actions/SoBoxHighlightRenderAction.h>
+
+//for selecting and material editing
+#include <Inventor/actions/SoSearchAction.h>
+
 
 #include "MyViewport.h"
 
@@ -261,8 +264,24 @@ libCoin3D::Material^ libCoin3D::ExaminerViewer::getSelectedMaterial()
 		return nullptr;
 
 	//okay, need to find the material, no idea how
-	SoMaterial* result = NULL;
+	SoMaterial* result = getMaterialForSelectedNode();
+	if (result==NULL)
+		return nullptr;
 
+	//else we are good, sent it back
+	return gcnew Material(result);
+}
+
+libCoin3D::Material^ libCoin3D::ExaminerViewer::createMaterialForSelected()
+{
+	if (_selection==NULL || _selection->getNumSelected()==0)
+		return nullptr;
+
+	SoMaterial* result = createMaterialForSelectedNode();
+	if (result==NULL)
+		return nullptr;
+
+	//else we are good, send it back
 	return gcnew Material(result);
 }
 
@@ -350,6 +369,70 @@ void libCoin3D::ExaminerViewer::fireChangeObjectSelection(bool selected)
 		OnObjectDeselected();
 }
 
+SoNode* libCoin3D::ExaminerViewer::getSelectedNode()
+{
+	if (_selection->getNumSelected()!=1) //only want to deal with one
+		return NULL;
+
+	return _selection->getPath(0)->getTail();
+}
+
+SoGroup* libCoin3D::ExaminerViewer::getParentOfNode(SoNode* child)
+{
+	SoSearchAction sa;
+	sa.setNode(child);
+	sa.setInterest(SoSearchAction::ALL);
+	sa.apply(_root);
+	SoPathList pl = sa.getPaths();
+	if (pl.getLength()!=1) {
+		fprintf(stderr,"Problem!\n"); //TODO: More errors!
+		return NULL;
+	}
+	SoPath* myPath = pl[0];
+	if (myPath->getLength() < 2) {
+		fprintf(stderr,"Problem, no parrent!\n"); //TODO: More errors!
+		return NULL;
+	}
+	SoGroup* parent = (SoGroup*)myPath->getNodeFromTail(1);
+	return parent;
+}
+
+SoMaterial* libCoin3D::ExaminerViewer::getMaterialForSelectedNode()
+{
+	SoNode* selectedNode = getSelectedNode();
+	if (selectedNode==NULL)
+		return NULL; //error TODO: something
+	SoGroup* parentNode = getParentOfNode(selectedNode);
+	if (parentNode==NULL)
+		return NULL; //error TODO: something
+
+	int childIndex = parentNode->findChild(selectedNode);
+	if (childIndex==0) //child is first, can't have a material
+		return NULL;
+
+	SoNode* previousNode = parentNode->getChild(childIndex-1);
+	if (previousNode->isOfType(SoMaterial::getClassTypeId())) {
+		//hey We found a material Node!!!!
+		return (SoMaterial*)previousNode;
+	}
+	return NULL;  //no luck
+}
+
+SoMaterial* libCoin3D::ExaminerViewer::createMaterialForSelectedNode()
+{
+	SoNode* selectedNode = getSelectedNode();
+	if (selectedNode==NULL)
+		return NULL; //error TODO: something
+	SoGroup* parentNode = getParentOfNode(selectedNode);
+	if (parentNode==NULL)
+		return NULL; //error TODO: something
+
+	int childIndex = parentNode->findChild(selectedNode);
+	SoMaterial* myMaterial = new SoMaterial();
+	parentNode->insertChild(myMaterial,childIndex); //insert right before the child
+	return myMaterial;
+}
+
 static void event_cb(void * ud, SoEventCallback * n)
 {
 	const SoMouseButtonEvent * mbe = (SoMouseButtonEvent *)n->getEvent();
@@ -389,7 +472,7 @@ static void event_selected_cb( void * userdata, SoPath * path )
 
 	SoWinExaminerViewer * viewer = (SoWinExaminerViewer *)userdata;
 	libCoin3D::ExaminerViewer^ realViewer = libCoin3D::ExaminerViewer::getViewerByParentWidget((int)viewer->getParentWidget());
-	realViewer->_selection->touch();
+	realViewer->_selection->touch();  //force redraw of the scene
 	realViewer->fireChangeObjectSelection(true);
 
 	lock = FALSE;
@@ -405,7 +488,7 @@ static void event_deselected_cb( void * userdata, SoPath * path )
 
 	SoWinExaminerViewer * viewer = (SoWinExaminerViewer *)userdata;
 	libCoin3D::ExaminerViewer^ realViewer = libCoin3D::ExaminerViewer::getViewerByParentWidget((int)viewer->getParentWidget());
-	realViewer->_selection->touch();
+	realViewer->_selection->touch(); //force redraw of the scene
 	realViewer->fireChangeObjectSelection(false);
 
 	lock = FALSE;

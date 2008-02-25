@@ -174,6 +174,7 @@ namespace WristVizualizer
             this.trackBarTransparency.TabIndex = 3;
             this.trackBarTransparency.TickFrequency = 16;
             this.trackBarTransparency.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.trackBarTransparency.Scroll += new System.EventHandler(this.trackBarTransparency_Scroll);
             // 
             // checkBoxLiveUpdate
             // 

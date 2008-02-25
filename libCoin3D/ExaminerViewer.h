@@ -56,6 +56,7 @@ public:
 	event ObjectDeselectedHandler^ OnObjectDeselected;
 	void fireChangeObjectSelection(bool selected);
 	Material^ getSelectedMaterial();
+	Material^ createMaterialForSelected();
 	//void enableSelection();
 	//void disableSelection();
 
@@ -78,5 +79,11 @@ private:
 	bool _decorated;
 
 	SoEventCallback* _ecb;
+
+	//private calls for finding material nodes. Used for material editing
+	SoNode* getSelectedNode();
+	SoGroup* getParentOfNode(SoNode* child);
+	SoMaterial* getMaterialForSelectedNode();
+	SoMaterial* createMaterialForSelectedNode();
 };
 }

@@ -830,9 +830,7 @@ namespace WristVizualizer
                 return;
             }
             //setup new editor
-            //TODO: Get selected material
-            Material m = null;
-            _materialEditor = new MaterialEditor(m);
+            _materialEditor = new MaterialEditor(_viewer);
             _materialEditor.Show();
         }
         #endregion

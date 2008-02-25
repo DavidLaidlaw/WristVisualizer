@@ -11,63 +11,88 @@ namespace WristVizualizer
 {
     public partial class MaterialEditor : Form
     {
-        private int _startR;
-        private int _startG;
-        private int _startB;
-
         private Color _startColor;
 
         private Material _material;
+        private ExaminerViewer _viewer;
+        private bool _hadMaterial;
+        private bool _error = false;
 
-        public MaterialEditor(int r, int g, int b)
+        public MaterialEditor(ExaminerViewer viewer)
         {
+            //lets get info on the selected node!
+            _viewer = viewer;
+            _material = _viewer.getSelectedMaterial();
+            if (_material == null)
+            {
+                _hadMaterial = false;
+                //keep searching
+                _material = _viewer.createMaterialForSelected();
+                if (_material == null)
+                {
+                    //if still null, this is an error!
+                    _error = true;
+                    this.Close();
+                    return;
+                }
+            }
+            else
+                _hadMaterial = true;
+
+            //setup the form at this point, we have a material
             InitializeComponent();
 
-            _startR = r;
-            _startG = g;
-            _startB = b;
 
-            trackBarRed.Value = r;
-            trackBarGreen.Value = g;
-            trackBarBlue.Value = b;
-
-            updateColor();
-        }
-
-        public MaterialEditor(Material material)
-        {
-            _material = material;
-
-            int packedC = material.getColor();
+            int packedC = _material.getColor();
             _startColor = unpackColor(packedC);
 
             trackBarRed.Value = _startColor.R;
             trackBarGreen.Value = _startColor.G;
             trackBarBlue.Value = _startColor.B;
 
-            updateColor();
+            updateColorSample();
         }
 
-        private void updateColor()
+        private void updateColorSample()
         {
             Color c = Color.FromArgb(trackBarRed.Value, trackBarGreen.Value, trackBarBlue.Value);
             panelColorSample.BackColor = c;
+            
+            if (checkBoxLiveUpdate.Checked)
+                updateMaterialColor();
         }
 
+        private void updateMaterialColor()
+        {
+            Color c = Color.FromArgb(trackBarRed.Value, trackBarGreen.Value, trackBarBlue.Value);
+            _material.setColor(c.R / 255f, c.G / 255f, c.B / 255f);
+        }
+        private void updateMaterialTransparency()
+        {
+            _material.setTransparency(trackBarTransparency.Value);
+        }
+        #region Trackup Updates
         private void trackBarRed_Scroll(object sender, EventArgs e)
         {
-            updateColor();
+            updateColorSample();
         }
 
         private void trackBarGreen_Scroll(object sender, EventArgs e)
         {
-            updateColor();
+            updateColorSample();
         }
 
         private void trackBarBlue_Scroll(object sender, EventArgs e)
         {
-            updateColor();
+            updateColorSample();
         }
+
+        private void trackBarTransparency_Scroll(object sender, EventArgs e)
+        {
+            if (checkBoxLiveUpdate.Checked)
+                updateMaterialTransparency();
+        }
+        #endregion
 
         private void buttonEdit_Click(object sender, EventArgs e)
         {
@@ -87,13 +112,14 @@ namespace WristVizualizer
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            //TODO: Update color in scene
+            updateMaterialColor();
+            updateMaterialTransparency();
             this.Close();
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
-            //TODO: Reset color to original
+            //TODO: Reset color to original.... um. yeah
             this.Close();
         }
 
@@ -125,5 +151,7 @@ namespace WristVizualizer
             return unpackColor(packedColor).B;
         }
         #endregion
+
+        
     }
 }
