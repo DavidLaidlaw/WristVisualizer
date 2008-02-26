@@ -30,7 +30,6 @@ namespace WristVizualizer
         private MaterialEditor _materialEditor;
         private string _firstFileName;
         private int _numberFilesLoaded;
-        private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
         private FileSystemWatcher _fileSysWatcher;
         private string _fileNameOfChangedFile;
@@ -127,7 +126,7 @@ namespace WristVizualizer
 
         private void resetForm()
         {
-            this.Text = PROGRAM_TITLE;
+            this.Text = Application.ProductName;
             importToolStripMenuItem.Enabled = true;
             backgroundColorToolStripMenuItem.Enabled = true;
             decoratorToolStripMenuItem.Enabled = true;
@@ -268,7 +267,7 @@ namespace WristVizualizer
 
                 //set title
                 if (filenames.Length == 1)
-                    this.Text = PROGRAM_TITLE + " - " + filenames[0];
+                    this.Text = Application.ProductName + " - " + filenames[0];
             }
 
             _viewer.setSceneGraph(_root);
@@ -338,6 +337,7 @@ namespace WristVizualizer
 
             //block importing a file
             importToolStripMenuItem.Enabled = false;
+            viewSourceToolStripMenuItem.Enabled = false;
             showInertiasToolStripMenuItem.Enabled = true;
             showACSToolStripMenuItem.Enabled = true;
 
@@ -380,7 +380,7 @@ namespace WristVizualizer
             }
 
             //set title bar now
-            this.Text = PROGRAM_TITLE + " - " + _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
+            this.Text = Application.ProductName + " - " + _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
             _firstFileName = Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
         }
 
@@ -962,9 +962,6 @@ namespace WristVizualizer
         }
 
         #endregion
-
-
-
 
     }
 }
