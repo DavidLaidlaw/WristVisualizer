@@ -32,6 +32,9 @@ namespace WristVizualizer
         private int _numberFilesLoaded;
         private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
+        private FileSystemWatcher _fileSysWatcher;
+        private string _fileNameOfChangedFile;
+
         public WristVizualizer(string[] fileArgs)
         {
             InitializeComponent();
@@ -258,6 +261,10 @@ namespace WristVizualizer
                 //save first filename for recording sake
                 _firstFileName = filenames[0];
                 _numberFilesLoaded = filenames.Length;
+
+                //setup watching
+                if (filenames.Length == 1)
+                    startWatchingFile(filenames[0]);
 
                 //set title
                 if (filenames.Length == 1)
@@ -899,6 +906,64 @@ namespace WristVizualizer
             _materialEditor.Show();
         }
         #endregion
+
+        #region FileWatching
+        private void startWatchingFile(string filename)
+        {
+            if (_fileSysWatcher == null)
+            {
+                _fileSysWatcher = new FileSystemWatcher();
+                _fileSysWatcher.IncludeSubdirectories = false;
+                _fileSysWatcher.Changed += new FileSystemEventHandler(_fileSysWatcher_Changed);
+            }
+            //setup watching
+            _fileSysWatcher.Path = Path.GetDirectoryName(filename);
+            _fileSysWatcher.Filter = Path.GetFileName(filename);
+            _fileSysWatcher.EnableRaisingEvents = true;
+        }
+
+        private void stopWatchingAllFiles()
+        {
+            if (_fileSysWatcher == null) return;
+            _fileSysWatcher.Changed -= new FileSystemEventHandler(_fileSysWatcher_Changed);
+            _fileSysWatcher.EnableRaisingEvents = false;
+            _fileSysWatcher.Dispose(); //kill it!
+            _fileSysWatcher = null;
+        }
+
+        void _fileSysWatcher_Changed(object sender, FileSystemEventArgs e)
+        {
+            //check if we are somehow watching a different file, or if there is more then one
+            //file loaded that we should be watching
+            if (!Path.Equals(_firstFileName.ToLower(), e.FullPath.ToLower()) || _numberFilesLoaded != 1)
+            {
+                _fileSysWatcher.EnableRaisingEvents = false; //stop watching and exit
+                return;
+            }
+            _fileNameOfChangedFile = e.FullPath;            
+        }
+
+        private void WristVizualizer_Activated(object sender, EventArgs e)
+        {
+            if (_fileNameOfChangedFile == null) return;
+            //now something exists, save local copy, and clear global
+            string fname = _fileNameOfChangedFile;
+            _fileNameOfChangedFile = null;
+
+            //check that we are dealing with the same file and again, that there is only one file loaded
+            if (!Path.Equals(_firstFileName.ToLower(), fname.ToLower()) || _numberFilesLoaded != 1)
+                return;  //if not, get out
+
+            //at this point, we should tell the user that a new file was loaded, and let them deal with it
+            string msg = String.Format("{0} has been updated outside of {1}.\n\nDo you wish to reload the file?", fname, Application.ProductName);
+            DialogResult r = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (r == DialogResult.Yes)
+                openFile(new string[] { _firstFileName }, false);
+        }
+
+        #endregion
+
+
 
 
     }
