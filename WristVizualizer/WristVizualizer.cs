@@ -172,10 +172,10 @@ namespace WristVizualizer
 #endif
             open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
             open.Multiselect = true;
-            if (DialogResult.OK == open.ShowDialog())
-            {
-                openFile(open.FileNames);
-            }
+            if (DialogResult.OK != open.ShowDialog())
+                return;
+
+            openFile(open.FileNames);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
@@ -207,16 +207,13 @@ namespace WristVizualizer
             if (filenames.Length == 0) return;
 
             bool loadFull = false;
-            if (filenames.Length == 1)
+            //check if this is a radius and what we want to do....
+            if (Wrist.isRadius(filenames))
             {
-                //check if this is a radius and what we want to do....
-                if (Wrist.isRadius(filenames[0]))
-                {
-                    string msg = "It looks like you are trying to open a radius.\n\nDo you wish to load the entire wrist?";
-                    if (DialogResult.Yes == MessageBox.Show(msg, "Wrist Vizualizer", MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                        //load full wrist
-                        loadFull = true;
-                }
+                string msg = "It looks like you are trying to open a radius.\n\nDo you wish to load the entire wrist?";
+                if (DialogResult.Yes == MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    //load full wrist
+                    loadFull = true;
             }
             openFile(filenames, loadFull);
         }

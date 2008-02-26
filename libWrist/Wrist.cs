@@ -66,7 +66,6 @@ namespace libWrist
             setupPaths();
             findAllSeries();
         }
-
 #region Public Accessors
 
         /// <summary>
@@ -387,6 +386,19 @@ namespace libWrist
         {
             string fname = Path.GetFileNameWithoutExtension(radiusPath);
             return (Regex.Match(fname, @"^rad\d{2}[lr]$", RegexOptions.IgnoreCase).Success);;
+        }
+
+        /// <summary>
+        /// Tests if the given file is a radius bone IV file in either the Data or Database naming format. 
+        /// Takes in an array of filenames to allow more diverse checking.
+        /// Note: does not check for a radius in the list, rather it checks that there is only a single file, and that it is a radius.
+        /// </summary>
+        /// <param name="filenames">List of filenames to check (for a radius, can only be length==1</param>
+        /// <returns></returns>
+        static public bool isRadius(string[] filenames)
+        {
+            if (filenames.Length != 1) return false;
+            return isRadius(filenames[0]);
         }
 
         /// <summary>
