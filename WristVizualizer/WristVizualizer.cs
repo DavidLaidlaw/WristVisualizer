@@ -163,7 +163,11 @@ namespace WristVizualizer
 
         #region File Open
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Presents the user with an OpenFileDialog and gets the list of files to open
+        /// </summary>
+        /// <returns>List of files to open, or null if the user cancels</returns>
+        private string[] getFilesToOpen()
         {
             OpenFileDialog open = new OpenFileDialog();
 #if DEBUG
@@ -173,25 +177,25 @@ namespace WristVizualizer
             open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
             open.Multiselect = true;
             if (DialogResult.OK != open.ShowDialog())
-                return;
+                return null;
 
-            openFile(open.FileNames);
+            return open.FileNames;
+        }
+
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] filenames = getFilesToOpen();
+            if (filenames == null) return;
+
+            openFile(filenames);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog open = new OpenFileDialog();
-#if DEBUG
-            if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
-                open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
-#endif
-            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
-            open.Multiselect = true;
-            if (DialogResult.OK != open.ShowDialog())
-                return;
+            string[] filenames = getFilesToOpen();
+            if (filenames == null) return;
 
-            foreach (string filename in open.FileNames)
-                _root.addFile(filename);
+            importFile(filenames);
         }
 
 
@@ -230,7 +234,7 @@ namespace WristVizualizer
         /// the radius.</param>
         private void openFile(string[] filenames, bool loadFull)
         {
-            if (_viewer == null)
+            if (_viewer == null) //should only happen for the first file opened
                 setupExaminerWindow();
 
 
@@ -260,6 +264,16 @@ namespace WristVizualizer
             _viewer.setSceneGraph(_root);
         }
 
+        /// <summary>
+        /// Adds the given files to the scene
+        /// </summary>
+        /// <param name="filenames">list of files to add</param>
+        private void importFile(string[] filenames)
+        {
+            if (filenames == null) return;
+            foreach (string filename in filenames)
+                _root.addFile(filename);
+        }
 
         private void openFullWristToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -317,7 +331,6 @@ namespace WristVizualizer
             showACSToolStripMenuItem.Enabled = true;
 
             //Setup motion files, etc
-
             _wrist = new Wrist();
             try
             {
@@ -359,8 +372,6 @@ namespace WristVizualizer
             this.Text = PROGRAM_TITLE + " - " + _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
             _firstFileName = Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
         }
-
-
 
         #endregion
 
@@ -733,12 +744,6 @@ namespace WristVizualizer
             new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
             string[] filenames = e.Data.GetData("FileDrop") as string[];
             openFile(filenames);
-            /*
-            foreach (string fileListItem in (e.Data.GetData("FileDrop") as string[]))
-            {
-                Console.WriteLine(fileListItem);
-            }
-            */
             System.Security.CodeAccessPermission.RevertAssert();
         }
 
@@ -767,12 +772,9 @@ namespace WristVizualizer
         {
             new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
             string[] filenames = e.Data.GetData("FileDrop") as string[];
-            if (importToolStripMenuItem.Enabled && _viewer != null & _root != null)
+            if (importToolStripMenuItem.Enabled && _viewer != null && _root != null)
             {
-                foreach (string file in filenames)
-                {
-                    _root.addFile(file);
-                }
+                importFile(filenames);
             }
             else
                 openFile(filenames);
