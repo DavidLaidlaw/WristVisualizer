@@ -163,6 +163,38 @@ namespace WristVizualizer
 
         #region File Open
 
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+#if DEBUG
+            if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
+                open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
+#endif
+            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
+            open.Multiselect = true;
+            if (DialogResult.OK == open.ShowDialog())
+            {
+                openFile(open.FileNames);
+            }
+        }
+
+        private void importToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+#if DEBUG
+            if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
+                open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
+#endif
+            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
+            open.Multiselect = true;
+            if (DialogResult.OK != open.ShowDialog())
+                return;
+
+            foreach (string filename in open.FileNames)
+                _root.addFile(filename);
+        }
+
+
         /// <summary>
         /// This function will take a file(s) and load them into the scene,
         /// removing whatever was there before (so this is open, not import). 
@@ -204,7 +236,7 @@ namespace WristVizualizer
             if (_viewer == null)
                 setupExaminerWindow();
 
-            
+
             //if we get here, then we are loading a new file....so
             resetForm();
             _root = new Separator(); //setup new node (might need to change that...
@@ -232,20 +264,6 @@ namespace WristVizualizer
             _viewer.setSceneGraph(_root);
         }
 
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-#if DEBUG
-            if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
-                open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
-#endif
-            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
-            open.Multiselect = true;
-            if (DialogResult.OK == open.ShowDialog())
-            {
-                openFile(open.FileNames);
-            }
-        }
 
         private void openFullWristToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -346,21 +364,7 @@ namespace WristVizualizer
             _firstFileName = Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
         }
 
-        private void importToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-#if DEBUG
-            if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
-                open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
-#endif
-            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
-            open.Multiselect = true;
-            if (DialogResult.OK != open.ShowDialog())
-                return;
 
-            foreach (string filename in open.FileNames)
-                _root.addFile(filename);
-        }
 
         #endregion
 
