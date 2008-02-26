@@ -64,7 +64,6 @@
       <DependentUpon>SideSelector.cs</DependentUpon>
     </Compile>
     <Compile Include="VersionManager.cs" />
-    <Compile Include="WristHelper.cs" />
     <Compile Include="WristVizualizer.cs">
       <SubType>Form</SubType>
     </Compile>
