@@ -243,7 +243,6 @@ namespace WristVizualizer
 
             if (loadFull)
             {
-
                 showControlBox();
                 loadFullWrist(filenames[0], _root);
             }
@@ -368,6 +367,24 @@ namespace WristVizualizer
 
         #endregion
 
+        private void loadSampleWristToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string baseFolder = Path.GetDirectoryName(Application.ExecutablePath);
+            string location = Path.Combine(Path.Combine(Path.Combine("Example", "66582"), "LeftIV"), "66582_rad_L.iv");
+            string radFile = Path.Combine(baseFolder, location);
+            if (!File.Exists(radFile))
+            {
+                string msg = "Unable to find the sample wrist:\n" + radFile + "\n\n";
+                msg += "Please try reinstalling this application to install the sample wrist";
+                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            string[] files = new string[1];
+            files[0] = radFile;
+            openFile(files, true);
+        }
+
+        #region Special Code for manipulating FullWrists
         private void populateSeriesList()
         {
             if (_wrist != null)
@@ -398,11 +415,19 @@ namespace WristVizualizer
             }
         }
 
-        void decoratorToolStripMenuItem_CheckedChanged(object sender, System.EventArgs e)
+        private void linkLabelShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (_viewer != null)
-                _viewer.setDecorator(decoratorToolStripMenuItem.Checked);
+            for (int i = 0; i < _hideBoxes.Length; i++)
+                _hideBoxes[i].Checked = false;
         }
+
+        private void linkLabelHideAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            for (int i = 0; i < _hideBoxes.Length; i++)
+                _hideBoxes[i].Checked = true;
+        }
+
+
 
         private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -452,78 +477,8 @@ namespace WristVizualizer
             }
         }
 
-        private void linkLabelShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < _hideBoxes.Length; i++ )
-                _hideBoxes[i].Checked = false;
-        }
-
-        private void linkLabelHideAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < _hideBoxes.Length; i++ )
-                _hideBoxes[i].Checked = true;
-        }
-
-        private void saveFrameToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog save = new SaveFileDialog();
-            save.DefaultExt = "jpeg";
-            save.AddExtension = true;
-            save.Filter = "JPEG Files (*.jpeg;*.jpg)|*.jpeg;*.jpg|PNG Files (*.png)|*.png|All Files (*.*)|*.*";
-            save.CheckPathExists = true;
-            save.ValidateNames = true;
-
-            if (save.ShowDialog() == DialogResult.Cancel)
-                return;
-
-            string fname = save.FileName;
-            bool res;
-            switch (Path.GetExtension(fname).ToLower())
-            {
-                case ".png":
-                    res = _viewer.saveToPNG(fname);
-                    break;
-                /* - Unknown error with these filetypes. might need to include simage - http://doc.coin3d.org/Coin/classSoOffscreenRenderer.html#a18
-                case ".tiff":
-                case ".tif":
-                    res = _viewer.saveToTIFF(fname);
-                    break;
-                case ".gif":
-                    res = _viewer.saveToGIF(fname);
-                    break;
-                case ".bmp":
-                    res = _viewer.saveToBMP(fname);
-                    break;
-                 */
-                case ".jpg":
-                case ".jpeg":
-                default:
-                    res = _viewer.saveToJPEG(fname);
-                    break;
-            }
-            if (!res)
-                MessageBox.Show("Unknown error saving file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //_viewer.saveToJPEG(@"C:\test.jpg");
-        }
 
 
-
-        private void loadSampleWristToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            string baseFolder = Path.GetDirectoryName(Application.ExecutablePath);
-            string location = Path.Combine(Path.Combine(Path.Combine("Example", "66582"), "LeftIV"), "66582_rad_L.iv");
-            string radFile = Path.Combine(baseFolder, location);
-            if (!File.Exists(radFile))
-            {
-                string msg = "Unable to find the sample wrist:\n" + radFile + "\n\n";
-                msg += "Please try reinstalling this application to install the sample wrist";
-                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            string[] files = new string[1];
-            files[0] = radFile;
-            openFile(files, true);
-        }
 
         private void showInertiasToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -637,6 +592,7 @@ namespace WristVizualizer
                 }
             }
         }
+        #endregion
 
         /// <summary>
         /// Get the Root Seperator node
@@ -647,6 +603,12 @@ namespace WristVizualizer
         }
 
         #region Callbacks for Menu Items
+        void decoratorToolStripMenuItem_CheckedChanged(object sender, System.EventArgs e)
+        {
+            if (_viewer != null)
+                _viewer.setDecorator(decoratorToolStripMenuItem.Checked);
+        }
+
         private void showAxesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _viewer.setFeedbackVisibility(showAxesToolStripMenuItem.Checked);
@@ -694,7 +656,50 @@ namespace WristVizualizer
             //launch in wordpad
             const string wordpadLocation = @"C:\Program Files\Windows NT\Accessories\wordpad.exe";
             System.Diagnostics.Process.Start(wordpadLocation,String.Format("\"{0}\"",_firstFileName));
-            
+
+        }
+
+        #region Saving/Output
+        private void saveFrameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+            save.DefaultExt = "jpeg";
+            save.AddExtension = true;
+            save.Filter = "JPEG Files (*.jpeg;*.jpg)|*.jpeg;*.jpg|PNG Files (*.png)|*.png|All Files (*.*)|*.*";
+            save.CheckPathExists = true;
+            save.ValidateNames = true;
+
+            if (save.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            string fname = save.FileName;
+            bool res;
+            switch (Path.GetExtension(fname).ToLower())
+            {
+                case ".png":
+                    res = _viewer.saveToPNG(fname);
+                    break;
+                /* - Unknown error with these filetypes. might need to include simage - http://doc.coin3d.org/Coin/classSoOffscreenRenderer.html#a18
+                case ".tiff":
+                case ".tif":
+                    res = _viewer.saveToTIFF(fname);
+                    break;
+                case ".gif":
+                    res = _viewer.saveToGIF(fname);
+                    break;
+                case ".bmp":
+                    res = _viewer.saveToBMP(fname);
+                    break;
+                 */
+                case ".jpg":
+                case ".jpeg":
+                default:
+                    res = _viewer.saveToJPEG(fname);
+                    break;
+            }
+            if (!res)
+                MessageBox.Show("Unknown error saving file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //_viewer.saveToJPEG(@"C:\test.jpg");
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -722,6 +727,7 @@ namespace WristVizualizer
                 MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+        #endregion
         #endregion
 
         #region Drag and Drop
