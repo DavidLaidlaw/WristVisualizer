@@ -692,6 +692,32 @@ namespace WristVizualizer
             System.Diagnostics.Process.Start(wordpadLocation,String.Format("\"{0}\"",_firstFileName));
             
         }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null) return;
+            SaveFileDialog save = new SaveFileDialog();
+            if (Directory.Exists(Path.GetDirectoryName(_firstFileName)))
+                save.InitialDirectory = Path.GetDirectoryName(_firstFileName);
+            save.Filter = "Inventor Files (*.iv)|*.iv|All Files (*.*)|*.*";
+            save.OverwritePrompt = true;
+            save.AddExtension = true;
+            save.DefaultExt = ".iv";
+            if (DialogResult.OK != save.ShowDialog())
+                return;
+
+            try
+            {
+                //save file
+                string filename = save.FileName;
+                _viewer.saveSceneGraph(filename);
+            }
+            catch (ApplicationException ex)
+            {
+                string msg = "Error: " + ex;
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
         #endregion
 
         #region Drag and Drop
@@ -860,33 +886,6 @@ namespace WristVizualizer
             _materialEditor.Show();
         }
         #endregion
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (_viewer == null) return;
-            SaveFileDialog save = new SaveFileDialog();
-            if (Directory.Exists(Path.GetDirectoryName(_firstFileName)))
-                save.InitialDirectory = Path.GetDirectoryName(_firstFileName);
-            save.Filter = "Inventor Files (*.iv)|*.iv|All Files (*.*)|*.*";
-            save.OverwritePrompt = true;
-            save.AddExtension = true;
-            save.DefaultExt = ".iv";
-            if (DialogResult.OK != save.ShowDialog())
-                return;
-
-            try
-            {
-                //save file
-                string filename = save.FileName;
-                _viewer.saveSceneGraph(filename);
-            }
-            catch (ApplicationException ex)
-            {
-                string msg = "Error: " + ex;
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
 
 
     }
