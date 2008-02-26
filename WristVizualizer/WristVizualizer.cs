@@ -73,6 +73,8 @@ namespace WristVizualizer
             }
         }
 
+        #region setupMethods
+
         private void setupControlBox()
         {
             _hideBoxes = new CheckBox[15];
@@ -110,6 +112,14 @@ namespace WristVizualizer
             _fixRadios[14] = radioButtonFixedMC5;
         }
 
+        private void setupExaminerWindow()
+        {
+            _viewer = new ExaminerViewer((int)panelCoin.Handle);
+            _viewer.OnObjectSelected += new ObjectSelectedHandler(_viewer_OnObjectSelected);
+            _viewer.OnObjectDeselected += new ObjectDeselectedHandler(_viewer_OnObjectDeselected);
+        }
+        #endregion
+
         private void resetForm()
         {
             this.Text = PROGRAM_TITLE;
@@ -145,12 +155,7 @@ namespace WristVizualizer
             radioButtonFixedRad.Checked = true;
         }
 
-        private void setupExaminerWindow()
-        {
-            _viewer = new ExaminerViewer((int)panelCoin.Handle);
-            _viewer.OnObjectSelected += new ObjectSelectedHandler(_viewer_OnObjectSelected);
-            _viewer.OnObjectDeselected += new ObjectDeselectedHandler(_viewer_OnObjectDeselected);
-        }
+
 
 
 
@@ -389,18 +394,9 @@ namespace WristVizualizer
 
         void decoratorToolStripMenuItem_CheckedChanged(object sender, System.EventArgs e)
         {
-            Console.WriteLine("State is: " + decoratorToolStripMenuItem.Checked.ToString());
             if (_viewer != null)
                 _viewer.setDecorator(decoratorToolStripMenuItem.Checked);
         }
-
-        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-
-
 
         private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -504,15 +500,10 @@ namespace WristVizualizer
             //_viewer.saveToJPEG(@"C:\test.jpg");
         }
 
-        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            HelpAbout ha = new HelpAbout();
-            ha.ShowDialog();
-        }
+
 
         private void loadSampleWristToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //string t = Application.ExecutablePath;
             string baseFolder = Path.GetDirectoryName(Application.ExecutablePath);
             string location = Path.Combine(Path.Combine(Path.Combine("Example", "66582"), "LeftIV"), "66582_rad_L.iv");
             string radFile = Path.Combine(baseFolder, location);
@@ -604,27 +595,7 @@ namespace WristVizualizer
             }
         }
 
-        private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            ColorDialog cg = new ColorDialog();
-            int oldc = _viewer.getBackgroundColor();
-            oldc = (oldc >> 8);
-            cg.Color = Color.FromArgb(oldc);
-            
-            cg.FullOpen = true;
-            if (cg.ShowDialog() == DialogResult.Cancel)
-                return;
 
-            int col = cg.Color.ToArgb();
-            //bit correction needed to move from 0xAARRGGBB -> 0xRRGGBBAA
-            col = (col << 8) | 0x000000FF;
-            _viewer.setBackgroundColor(col);
-        }
-
-        private void showAxesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _viewer.setFeedbackVisibility(showAxesToolStripMenuItem.Checked);
-        }
 
         private void radioButtonFixed_CheckedChanged(object sender, EventArgs e)
         {
@@ -659,6 +630,53 @@ namespace WristVizualizer
 
                 }
             }
+        }
+
+        /// <summary>
+        /// Get the Root Seperator node
+        /// </summary>
+        public Separator Root
+        {
+            get { return _root; }
+        }
+
+        private void showAxesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _viewer.setFeedbackVisibility(showAxesToolStripMenuItem.Checked);
+        }
+
+        private void backgroundColorToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorDialog cg = new ColorDialog();
+            int oldc = _viewer.getBackgroundColor();
+            oldc = (oldc >> 8);
+            cg.Color = Color.FromArgb(oldc);
+
+            cg.FullOpen = true;
+            if (cg.ShowDialog() == DialogResult.Cancel)
+                return;
+
+            int col = cg.Color.ToArgb();
+            //bit correction needed to move from 0xAARRGGBB -> 0xRRGGBBAA
+            col = (col << 8) | 0x000000FF;
+            _viewer.setBackgroundColor(col);
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HelpAbout ha = new HelpAbout();
+            ha.ShowDialog();
+        }
+
+        private void checkForupdatesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            VersionManager manager = new VersionManager();
+            manager.checkForUpdates();
         }
 
         #region Drag and Drop
@@ -714,11 +732,7 @@ namespace WristVizualizer
         }
         #endregion
 
-        private void checkForupdatesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            VersionManager manager = new VersionManager();
-            manager.checkForUpdates();
-        }
+
 
         #region Point Selection
         private void pointIntersectionToolStripMenuItem_Click(object sender, EventArgs e)
@@ -769,13 +783,7 @@ namespace WristVizualizer
             toolStripStatusLabel1.Text = text;
         }
         #endregion
-        /// <summary>
-        /// Get the Root Seperator node
-        /// </summary>
-        public Separator Root
-        {
-            get { return _root; }
-        }
+
 
         #region Transparency Adjustments
         private void transparencyToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
