@@ -25,9 +25,11 @@ namespace WristVizualizer
         private Transform[][] _transforms;
         private int _currentPositionIndex;
         private int _fixedBoneIndex;
+
         private PointSelection _pointSelection;
         private MaterialEditor _materialEditor;
         private string _firstFileName;
+        private int _numberFilesLoaded;
         private const string PROGRAM_TITLE = "Wrist Vizualizer";
 
         public WristVizualizer(string[] fileArgs)
@@ -255,6 +257,7 @@ namespace WristVizualizer
 
                 //save first filename for recording sake
                 _firstFileName = filenames[0];
+                _numberFilesLoaded = filenames.Length;
 
                 //set title
                 if (filenames.Length == 1)
@@ -271,6 +274,7 @@ namespace WristVizualizer
         private void importFile(string[] filenames)
         {
             if (filenames == null) return;
+            _numberFilesLoaded += filenames.Length;
             foreach (string filename in filenames)
                 _root.addFile(filename);
         }
