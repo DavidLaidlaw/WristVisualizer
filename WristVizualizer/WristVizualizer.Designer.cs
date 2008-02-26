@@ -39,6 +39,7 @@ namespace WristVizualizer
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorTransparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointIntersectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,7 +121,9 @@ namespace WristVizualizer
             this.label16 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.colorTransparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewSourceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -146,6 +149,9 @@ namespace WristVizualizer
             this.openToolStripMenuItem,
             this.openFullWristToolStripMenuItem,
             this.importToolStripMenuItem,
+            this.saveAsToolStripMenuItem,
+            this.toolStripSeparator6,
+            this.viewSourceToolStripMenuItem,
             this.toolStripSeparator2,
             this.saveFrameToolStripMenuItem,
             this.toolStripSeparator1,
@@ -211,6 +217,14 @@ namespace WristVizualizer
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.editToolStripMenuItem.Text = "&Edit";
+            // 
+            // colorTransparencyToolStripMenuItem
+            // 
+            this.colorTransparencyToolStripMenuItem.Enabled = false;
+            this.colorTransparencyToolStripMenuItem.Name = "colorTransparencyToolStripMenuItem";
+            this.colorTransparencyToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.colorTransparencyToolStripMenuItem.Text = "Color && Transparency...";
+            this.colorTransparencyToolStripMenuItem.Click += new System.EventHandler(this.colorTransparencyToolStripMenuItem_Click);
             // 
             // backgroundColorToolStripMenuItem
             // 
@@ -1062,13 +1076,26 @@ namespace WristVizualizer
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
-            // colorTransparencyToolStripMenuItem
+            // viewSourceToolStripMenuItem
             // 
-            this.colorTransparencyToolStripMenuItem.Enabled = false;
-            this.colorTransparencyToolStripMenuItem.Name = "colorTransparencyToolStripMenuItem";
-            this.colorTransparencyToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
-            this.colorTransparencyToolStripMenuItem.Text = "Color && Transparency...";
-            this.colorTransparencyToolStripMenuItem.Click += new System.EventHandler(this.colorTransparencyToolStripMenuItem_Click);
+            this.viewSourceToolStripMenuItem.Enabled = false;
+            this.viewSourceToolStripMenuItem.Name = "viewSourceToolStripMenuItem";
+            this.viewSourceToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.viewSourceToolStripMenuItem.Text = "&View source";
+            this.viewSourceToolStripMenuItem.Click += new System.EventHandler(this.viewSourceToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(167, 6);
+            // 
+            // saveAsToolStripMenuItem
+            // 
+            this.saveAsToolStripMenuItem.Enabled = false;
+            this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.saveAsToolStripMenuItem.Text = "Save As...";
+            this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -1197,6 +1224,9 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem sortedObjectSortedTriangleAddToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sortedObjectSortedTriangleBlendToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem colorTransparencyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
+        private System.Windows.Forms.ToolStripMenuItem viewSourceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
     }
 }
 

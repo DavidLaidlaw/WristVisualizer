@@ -136,6 +136,8 @@ namespace WristVizualizer
             pointIntersectionToolStripMenuItem.Checked = false;
             colorTransparencyToolStripMenuItem.Enabled = false;
             transparencyToolStripMenuItem.Enabled = true;
+            viewSourceToolStripMenuItem.Enabled = true;
+            saveAsToolStripMenuItem.Enabled = true;
             seriesListBox.Items.Clear();
             if (_pointSelection != null)
             {
@@ -640,6 +642,7 @@ namespace WristVizualizer
             get { return _root; }
         }
 
+        #region Callbacks for Menu Items
         private void showAxesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _viewer.setFeedbackVisibility(showAxesToolStripMenuItem.Checked);
@@ -678,6 +681,18 @@ namespace WristVizualizer
             VersionManager manager = new VersionManager();
             manager.checkForUpdates();
         }
+
+        private void viewSourceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null || _firstFileName == null || _firstFileName.Length == 0)
+                return;
+
+            //launch in wordpad
+            const string wordpadLocation = @"C:\Program Files\Windows NT\Accessories\wordpad.exe";
+            System.Diagnostics.Process.Start(wordpadLocation,String.Format("\"{0}\"",_firstFileName));
+            
+        }
+        #endregion
 
         #region Drag and Drop
         private void WristVizualizer_DragDrop(object sender, DragEventArgs e)
@@ -732,8 +747,6 @@ namespace WristVizualizer
         }
         #endregion
 
-
-
         #region Point Selection
         private void pointIntersectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -783,7 +796,6 @@ namespace WristVizualizer
             toolStripStatusLabel1.Text = text;
         }
         #endregion
-
 
         #region Transparency Adjustments
         private void transparencyToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
@@ -848,6 +860,34 @@ namespace WristVizualizer
             _materialEditor.Show();
         }
         #endregion
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null) return;
+            SaveFileDialog save = new SaveFileDialog();
+            if (Directory.Exists(Path.GetDirectoryName(_firstFileName)))
+                save.InitialDirectory = Path.GetDirectoryName(_firstFileName);
+            save.Filter = "Inventor Files (*.iv)|*.iv|All Files (*.*)|*.*";
+            save.OverwritePrompt = true;
+            save.AddExtension = true;
+            save.DefaultExt = ".iv";
+            if (DialogResult.OK != save.ShowDialog())
+                return;
+
+            try
+            {
+                //save file
+                string filename = save.FileName;
+                _viewer.saveSceneGraph(filename);
+            }
+            catch (ApplicationException ex)
+            {
+                string msg = "Error: " + ex;
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+
 
     }
 }

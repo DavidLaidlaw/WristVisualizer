@@ -82,6 +82,19 @@ void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
 	_selection->unref(); //should be ref by _viewer
 }
 
+void libCoin3D::ExaminerViewer::saveSceneGraph(System::String^ filename)
+{
+	char* fname = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename).ToPointer();
+	//check if the root exists
+	SoWriteAction wa;
+	SbBool success = wa.getOutput()->openFile(fname);
+	if (success==FALSE)
+		throw gcnew System::ArgumentException("Unable to open filename for writing: "+filename);
+
+	wa.getOutput()->setBinary(FALSE); //save in ASCII format
+	wa.apply(_root);  //TODO: Fix so we don't save the first SoSeparator and SoDrawStyle
+	wa.getOutput()->closeFile();
+}
 
 bool libCoin3D::ExaminerViewer::saveToJPEG(System::String ^filename)
 {

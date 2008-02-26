@@ -27,6 +27,7 @@ public:
 	bool saveToGIF(System::String^ filename);
 	bool saveToTIFF(System::String^ filename);
 	bool saveToBMP(System::String^ filename);
+	void saveSceneGraph(System::String^ filename);
 
 	//background color stuff
 	float getBackgroundColorR();
