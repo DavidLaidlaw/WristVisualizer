@@ -43,21 +43,15 @@ namespace libWrist
             return transforms;
         }
 
-        public static double[][] parseDatFile(string filename)
+        public static double[][] parseDatFile(StreamReader filestream)
         {
-            if (!File.Exists(filename))
-                throw new ArgumentException("File does not exist. (" + filename + ")");
-
-            StreamReader r = new StreamReader(filename);
             char[] div = { ' ', '\t', ',' };
             System.Collections.ArrayList dat = new System.Collections.ArrayList(100);
 
-            //Regex reg = new Regex(@"([-\d\.e+]+)[ \t,]+([-\d\.e+]+)[ \t,]+([-\d\.e+]+)");
             Regex reg = new Regex(@"([-\d\.e+]+)");
-            while (!r.EndOfStream)
+            while (!filestream.EndOfStream)
             {
-                //Console.WriteLine("new Line");
-                string line = r.ReadLine().Trim();
+                string line = filestream.ReadLine().Trim();
                 if (line.Length == 0) continue;
 
                 MatchCollection m = reg.Matches(line);
@@ -65,13 +59,21 @@ namespace libWrist
                 for (int i = 0; i < m.Count; i++)
                 {
                     values[i] = Double.Parse(m[i].Value);
-                    //Console.WriteLine("Found: " + values[i].ToString());
                 }
                 dat.Add(values);
             }
-            r.Close();
-            r.Dispose();
             return (double[][])dat.ToArray(typeof(double[]));
+        }
+
+        public static double[][] parseDatFile(string filename)
+        {
+            if (!File.Exists(filename))
+                throw new ArgumentException("File does not exist. (" + filename + ")");
+
+            using (StreamReader r = new StreamReader(filename))
+            {
+                return parseDatFile(r);
+            }            
         }
 
         public static double[][] parseMotionFile(string filename)
