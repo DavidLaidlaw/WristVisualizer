@@ -57,6 +57,12 @@
     <Compile Include="PointSelection.Designer.cs">
       <DependentUpon>PointSelection.cs</DependentUpon>
     </Compile>
+    <Compile Include="ScenegraphTreeViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScenegraphTreeViewer.Designer.cs">
+      <DependentUpon>ScenegraphTreeViewer.cs</DependentUpon>
+    </Compile>
     <Compile Include="SideSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,6 +89,10 @@
     <EmbeddedResource Include="PointSelection.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PointSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScenegraphTreeViewer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ScenegraphTreeViewer.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SideSelector.resx">
       <SubType>Designer</SubType>

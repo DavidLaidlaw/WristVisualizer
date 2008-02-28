@@ -220,6 +220,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ScenegraphNode.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Separator.cpp"
 				>
 			</File>
@@ -287,6 +291,10 @@
 			</File>
 			<File
 				RelativePath=".\resource.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ScenegraphNode.h"
 				>
 			</File>
 			<File

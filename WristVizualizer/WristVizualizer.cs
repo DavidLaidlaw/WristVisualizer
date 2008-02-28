@@ -687,6 +687,14 @@ namespace WristVizualizer
 
         }
 
+        private void showScenegraphToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null || _root == null)
+                return;
+            ScenegraphTreeViewer viewer = new ScenegraphTreeViewer(_root);
+            viewer.Show();
+        }
+
         #region Saving/Output
         private void saveFrameToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -971,6 +979,8 @@ namespace WristVizualizer
         }
 
         #endregion
+
+
 
 
 
