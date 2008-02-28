@@ -96,10 +96,6 @@ void libCoin3D::Transform::setTransform(double r00,double r01,double r02,double 
 
 }
 
-void libCoin3D::Transform::test(double^ values)
-{
-}
-
 void libCoin3D::Transform::invert()
 {
 	_transform->setMatrix(_rotMatrix[0].inverse());
