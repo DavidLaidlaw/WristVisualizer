@@ -30,6 +30,7 @@ void libCoin3D::Separator::addFile(System::String^ filename, bool canhide)
 		_separator->addChild(_style);
 		_separator->addChild(bone);
 	}
+	//System::Runtime::InteropServices::Marshal::FreeHGlobal(test);
 }
 
 void libCoin3D::Separator::addNode(Node^ node)
