@@ -17,7 +17,7 @@ public:
 	property System::String^ Name  { System::String^ get() { return _name; } }
 	property System::String^ TypeName  { System::String^ get() { return _typeName; } }
 
-	//System::String^ Name
+	SoNode* getNode();
 
 private:
 	void buildLocalData();

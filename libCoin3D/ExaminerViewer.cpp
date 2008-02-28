@@ -80,6 +80,8 @@ void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
 	//_viewer->setGLRenderAction( new SoLineHighlightRenderAction );
 	_viewer->setGLRenderAction( new SoBoxHighlightRenderAction );
 	_selection->unref(); //should be ref by _viewer
+
+	OnNewSceneGraphLoaded(); //raise an event for those listening
 }
 
 void libCoin3D::ExaminerViewer::saveSceneGraph(System::String^ filename)
@@ -504,7 +506,15 @@ void libCoin3D::ExaminerViewer::removeMaterialFromScene(Material^ material)
 {
 	SoNode* nodeToRemove = material->getNode();
 	SoGroup* parent = getParentOfNode(nodeToRemove);
+	if (nodeToRemove==NULL || parent==NULL) return; //lets try and be safe, yes we bury errors, oh well
 	parent->removeChild(nodeToRemove);
+}
+
+void libCoin3D::ExaminerViewer::setSelection(ScenegraphNode^ node)
+{
+	_selection->deselectAll();
+	_selection->select(node->getNode());
+	_selection->touch();
 }
 
 static void event_cb(void * ud, SoEventCallback * n)
@@ -548,6 +558,12 @@ static void event_selected_cb( void * userdata, SoPath * path )
 	libCoin3D::ExaminerViewer^ realViewer = libCoin3D::ExaminerViewer::getViewerByParentWidget((int)viewer->getParentWidget());
 	realViewer->_selection->touch();  //force redraw of the scene
 	realViewer->fireChangeObjectSelection(true);
+
+	//While not 100% accurate, this fixes a problem. Really, the event is only trying to say when there
+	//is 1 object selected (so we can edit it). If we have more, then we actually want to say that there
+	//is nothing selected, to prevent trying to edit the material of multiple objects :)
+	if (realViewer->_selection->getNumSelected() != 1)
+		realViewer->fireChangeObjectSelection(false);
 
 	lock = FALSE;
 }

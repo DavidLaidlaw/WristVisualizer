@@ -692,7 +692,7 @@ namespace WristVizualizer
         {
             if (_viewer == null || _root == null)
                 return;
-            ScenegraphTreeViewer viewer = new ScenegraphTreeViewer(_root);
+            ScenegraphTreeViewer viewer = new ScenegraphTreeViewer(_viewer, _root);
             viewer.Show();
         }
 

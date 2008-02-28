@@ -7,6 +7,7 @@
 #include <Inventor/nodes/SoEventCallback.h>
 
 #include "Separator.h"
+#include "ScenegraphNode.h"
 #include "Material.h"
 
 namespace libCoin3D {
@@ -14,6 +15,7 @@ namespace libCoin3D {
 	public delegate void RaypickEventHandler(float, float, float);
 	public delegate void ObjectSelectedHandler();
 	public delegate void ObjectDeselectedHandler();
+	public delegate void NewSceneGraphLoadedHandler();
 
 public ref class ExaminerViewer
 {
@@ -46,6 +48,7 @@ public:
 	//events
 	void fireClick(float x, float y, float z); //needs to be public, called from global static function
 	event RaypickEventHandler^ OnRaypick;
+	event NewSceneGraphLoadedHandler^ OnNewSceneGraphLoaded;
 
 	//static members, keeping track of all global ExaminerViewers
 	static System::Collections::Hashtable^ ViewersHashtable = gcnew System::Collections::Hashtable();
@@ -59,8 +62,7 @@ public:
 	Material^ getSelectedMaterial();
 	Material^ createMaterialForSelected();
 	void removeMaterialFromScene(Material^ material);
-	//void enableSelection();
-	//void disableSelection();
+	void setSelection(ScenegraphNode^ node);
 
 	//get and set transparency rendering type
 	enum class TransparencyTypes {

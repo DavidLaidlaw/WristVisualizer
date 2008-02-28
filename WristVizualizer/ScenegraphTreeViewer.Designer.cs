@@ -35,10 +35,12 @@ namespace WristVizualizer
             // treeViewScene
             // 
             this.treeViewScene.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewScene.HideSelection = false;
             this.treeViewScene.Location = new System.Drawing.Point(0, 0);
             this.treeViewScene.Name = "treeViewScene";
             this.treeViewScene.Size = new System.Drawing.Size(354, 415);
             this.treeViewScene.TabIndex = 0;
+            this.treeViewScene.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewScene_AfterSelect);
             // 
             // ScenegraphTreeViewer
             // 
@@ -49,6 +51,7 @@ namespace WristVizualizer
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "ScenegraphTreeViewer";
             this.Text = "ScenegraphTreeViewer";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.ScenegraphTreeViewer_FormClosed);
             this.ResumeLayout(false);
 
         }

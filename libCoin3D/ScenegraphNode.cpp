@@ -44,3 +44,8 @@ void libCoin3D::ScenegraphNode::buildLocalData()
 	}
 
 }
+
+SoNode* libCoin3D::ScenegraphNode::getNode()
+{
+	return _node;
+}
