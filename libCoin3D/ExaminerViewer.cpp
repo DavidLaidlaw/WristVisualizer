@@ -562,7 +562,8 @@ static void event_selected_cb( void * userdata, SoPath * path )
 	//While not 100% accurate, this fixes a problem. Really, the event is only trying to say when there
 	//is 1 object selected (so we can edit it). If we have more, then we actually want to say that there
 	//is nothing selected, to prevent trying to edit the material of multiple objects :)
-	if (realViewer->_selection->getNumSelected() != 1)
+	//if (realViewer->_selection->getNumSelected() != 1)
+	if (path->getTail()->isOfType(SoGroup::getClassTypeId()))
 		realViewer->fireChangeObjectSelection(false);
 
 	lock = FALSE;
