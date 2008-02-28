@@ -252,6 +252,10 @@
 				</FileConfiguration>
 			</File>
 			<File
+				RelativePath=".\Switch.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Transform.cpp"
 				>
 			</File>
@@ -307,6 +311,10 @@
 			</File>
 			<File
 				RelativePath=".\Stdafx.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Switch.h"
 				>
 			</File>
 			<File

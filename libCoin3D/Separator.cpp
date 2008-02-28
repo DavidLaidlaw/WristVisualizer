@@ -74,3 +74,8 @@ void libCoin3D::Separator::removeTransform()
 		_numTransforms--;
 	}
 }
+
+SoNode* libCoin3D::Separator::getNode()
+{
+	return _separator;
+}

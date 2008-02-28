@@ -57,6 +57,7 @@
     <Compile Include="PointSelection.Designer.cs">
       <DependentUpon>PointSelection.cs</DependentUpon>
     </Compile>
+    <Compile Include="PosViewController.cs" />
     <Compile Include="ScenegraphTreeViewer.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -52,6 +52,7 @@ namespace WristVizualizer
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showAxesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.showScenegraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.transparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.screenDoorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -125,10 +126,19 @@ namespace WristVizualizer
             this.label16 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.showScenegraphToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelPosView = new System.Windows.Forms.Panel();
+            this.buttonPosViewPlay = new System.Windows.Forms.Button();
+            this.buttonPosViewStop = new System.Windows.Forms.Button();
+            this.numericUpDownPosViewFPS = new System.Windows.Forms.NumericUpDown();
+            this.label19 = new System.Windows.Forms.Label();
+            this.trackBarPosViewCurrentFrame = new System.Windows.Forms.TrackBar();
+            this.openPosViewFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.panelPosView.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPosViewFPS)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPosViewCurrentFrame)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -151,6 +161,7 @@ namespace WristVizualizer
             this.newToolStripMenuItem,
             this.openToolStripMenuItem,
             this.openFullWristToolStripMenuItem,
+            this.openPosViewFileToolStripMenuItem,
             this.importToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator6,
@@ -167,7 +178,7 @@ namespace WristVizualizer
             // 
             this.newToolStripMenuItem.Name = "newToolStripMenuItem";
             this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.newToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.newToolStripMenuItem.Text = "&New";
             this.newToolStripMenuItem.Click += new System.EventHandler(this.newToolStripMenuItem_Click);
             // 
@@ -175,14 +186,14 @@ namespace WristVizualizer
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
             this.openToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.openToolStripMenuItem.Text = "&Open...";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // openFullWristToolStripMenuItem
             // 
             this.openFullWristToolStripMenuItem.Name = "openFullWristToolStripMenuItem";
-            this.openFullWristToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.openFullWristToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.openFullWristToolStripMenuItem.Text = "Open Full Wrist...";
             this.openFullWristToolStripMenuItem.Click += new System.EventHandler(this.openFullWristToolStripMenuItem_Click);
             // 
@@ -190,7 +201,7 @@ namespace WristVizualizer
             // 
             this.importToolStripMenuItem.Enabled = false;
             this.importToolStripMenuItem.Name = "importToolStripMenuItem";
-            this.importToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.importToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.importToolStripMenuItem.Text = "&Import...";
             this.importToolStripMenuItem.Click += new System.EventHandler(this.importToolStripMenuItem_Click);
             // 
@@ -198,46 +209,46 @@ namespace WristVizualizer
             // 
             this.saveAsToolStripMenuItem.Enabled = false;
             this.saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.saveAsToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.saveAsToolStripMenuItem.Text = "Save &As...";
             this.saveAsToolStripMenuItem.Click += new System.EventHandler(this.saveAsToolStripMenuItem_Click);
             // 
             // toolStripSeparator6
             // 
             this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator6.Size = new System.Drawing.Size(181, 6);
             // 
             // viewSourceToolStripMenuItem
             // 
             this.viewSourceToolStripMenuItem.Enabled = false;
             this.viewSourceToolStripMenuItem.Name = "viewSourceToolStripMenuItem";
-            this.viewSourceToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.viewSourceToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.viewSourceToolStripMenuItem.Text = "&View source";
             this.viewSourceToolStripMenuItem.Click += new System.EventHandler(this.viewSourceToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(181, 6);
             // 
             // saveFrameToolStripMenuItem
             // 
             this.saveFrameToolStripMenuItem.Enabled = false;
             this.saveFrameToolStripMenuItem.Name = "saveFrameToolStripMenuItem";
-            this.saveFrameToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.saveFrameToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.saveFrameToolStripMenuItem.Text = "&Save Frame...";
             this.saveFrameToolStripMenuItem.Click += new System.EventHandler(this.saveFrameToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(167, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(181, 6);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
             this.exitToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(170, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.exitToolStripMenuItem.Text = "E&xit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -335,6 +346,14 @@ namespace WristVizualizer
             this.showAxesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.showAxesToolStripMenuItem.Text = "Show Axes";
             this.showAxesToolStripMenuItem.Click += new System.EventHandler(this.showAxesToolStripMenuItem_Click);
+            // 
+            // showScenegraphToolStripMenuItem
+            // 
+            this.showScenegraphToolStripMenuItem.Enabled = false;
+            this.showScenegraphToolStripMenuItem.Name = "showScenegraphToolStripMenuItem";
+            this.showScenegraphToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.showScenegraphToolStripMenuItem.Text = "Show Scenegraph...";
+            this.showScenegraphToolStripMenuItem.Click += new System.EventHandler(this.showScenegraphToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -1109,13 +1128,73 @@ namespace WristVizualizer
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
-            // showScenegraphToolStripMenuItem
+            // panelPosView
             // 
-            this.showScenegraphToolStripMenuItem.Enabled = false;
-            this.showScenegraphToolStripMenuItem.Name = "showScenegraphToolStripMenuItem";
-            this.showScenegraphToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.showScenegraphToolStripMenuItem.Text = "Show Scenegraph...";
-            this.showScenegraphToolStripMenuItem.Click += new System.EventHandler(this.showScenegraphToolStripMenuItem_Click);
+            this.panelPosView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPosView.Controls.Add(this.trackBarPosViewCurrentFrame);
+            this.panelPosView.Controls.Add(this.label19);
+            this.panelPosView.Controls.Add(this.numericUpDownPosViewFPS);
+            this.panelPosView.Controls.Add(this.buttonPosViewStop);
+            this.panelPosView.Controls.Add(this.buttonPosViewPlay);
+            this.panelPosView.Location = new System.Drawing.Point(435, 37);
+            this.panelPosView.Name = "panelPosView";
+            this.panelPosView.Size = new System.Drawing.Size(230, 359);
+            this.panelPosView.TabIndex = 34;
+            this.panelPosView.Visible = false;
+            // 
+            // buttonPosViewPlay
+            // 
+            this.buttonPosViewPlay.Location = new System.Drawing.Point(14, 147);
+            this.buttonPosViewPlay.Name = "buttonPosViewPlay";
+            this.buttonPosViewPlay.Size = new System.Drawing.Size(52, 23);
+            this.buttonPosViewPlay.TabIndex = 0;
+            this.buttonPosViewPlay.Text = "Play";
+            this.buttonPosViewPlay.UseVisualStyleBackColor = true;
+            // 
+            // buttonPosViewStop
+            // 
+            this.buttonPosViewStop.Location = new System.Drawing.Point(72, 147);
+            this.buttonPosViewStop.Name = "buttonPosViewStop";
+            this.buttonPosViewStop.Size = new System.Drawing.Size(52, 23);
+            this.buttonPosViewStop.TabIndex = 1;
+            this.buttonPosViewStop.Text = "Stop";
+            this.buttonPosViewStop.UseVisualStyleBackColor = true;
+            // 
+            // numericUpDownPosViewFPS
+            // 
+            this.numericUpDownPosViewFPS.Location = new System.Drawing.Point(133, 150);
+            this.numericUpDownPosViewFPS.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.numericUpDownPosViewFPS.Name = "numericUpDownPosViewFPS";
+            this.numericUpDownPosViewFPS.Size = new System.Drawing.Size(41, 20);
+            this.numericUpDownPosViewFPS.TabIndex = 2;
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(181, 153);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(27, 13);
+            this.label19.TabIndex = 3;
+            this.label19.Text = "FPS";
+            // 
+            // trackBarPosViewCurrentFrame
+            // 
+            this.trackBarPosViewCurrentFrame.Location = new System.Drawing.Point(11, 97);
+            this.trackBarPosViewCurrentFrame.Maximum = 50;
+            this.trackBarPosViewCurrentFrame.Name = "trackBarPosViewCurrentFrame";
+            this.trackBarPosViewCurrentFrame.Size = new System.Drawing.Size(205, 45);
+            this.trackBarPosViewCurrentFrame.TabIndex = 4;
+            // 
+            // openPosViewFileToolStripMenuItem
+            // 
+            this.openPosViewFileToolStripMenuItem.Name = "openPosViewFileToolStripMenuItem";
+            this.openPosViewFileToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.openPosViewFileToolStripMenuItem.Text = "Open PosView File...";
+            this.openPosViewFileToolStripMenuItem.Click += new System.EventHandler(this.openPosViewFileToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -1123,6 +1202,7 @@ namespace WristVizualizer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 408);
+            this.Controls.Add(this.panelPosView);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panelControl);
             this.Controls.Add(this.panelCoin);
@@ -1141,6 +1221,10 @@ namespace WristVizualizer
             this.panelControl.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.panelPosView.ResumeLayout(false);
+            this.panelPosView.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPosViewFPS)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.trackBarPosViewCurrentFrame)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1250,6 +1334,13 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showScenegraphToolStripMenuItem;
+        private System.Windows.Forms.Panel panelPosView;
+        private System.Windows.Forms.NumericUpDown numericUpDownPosViewFPS;
+        private System.Windows.Forms.Button buttonPosViewStop;
+        private System.Windows.Forms.Button buttonPosViewPlay;
+        private System.Windows.Forms.TrackBar trackBarPosViewCurrentFrame;
+        private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.ToolStripMenuItem openPosViewFileToolStripMenuItem;
     }
 }
 

@@ -207,6 +207,18 @@ namespace libWrist
             return transforms;
         }
 
+        public static Transform[] parsePosViewRTFileToTransforms(string filename)
+        {
+            TransformMatrix[] tfm = parsePosViewRTFile(filename);
+            Transform[] transforms = new Transform[tfm.Length];
+            for (int i = 0; i < tfm.Length; i++)
+            {
+                transforms[i] = new Transform();
+                addRTtoTransform(tfm[i], transforms[i]);
+            }
+            return transforms;
+        }
+
         public static double[][] parsePosViewHAMFile(string filename)
         {
             double[][] dat = parseDatFile(filename);

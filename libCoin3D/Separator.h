@@ -7,7 +7,7 @@
 
 
 namespace libCoin3D {
-public ref class Separator
+public ref class Separator : Node
 {
 public:
 	Separator(void);
@@ -20,6 +20,8 @@ public:
 	void removeTransform();
 	void removeChild(Separator^ child);
 	bool hasTransform() { return (_numTransforms>0); }
+
+	virtual SoNode* getNode() override;
 
 	void hide();
 	void show();

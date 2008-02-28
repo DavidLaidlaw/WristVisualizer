@@ -25,6 +25,9 @@ namespace WristVizualizer
         private Transform[][] _transforms;
         private int _currentPositionIndex;
         private int _fixedBoneIndex;
+        private Modes _mode = Modes.NONE;
+
+        private PosViewController _posViewController;
 
         private PointSelection _pointSelection;
         private MaterialEditor _materialEditor;
@@ -33,6 +36,14 @@ namespace WristVizualizer
 
         private FileSystemWatcher _fileSysWatcher;
         private string _fileNameOfChangedFile;
+
+        private enum Modes
+        {
+            NONE,
+            SCENEVIEWER,
+            FULL_WRIST,
+            POSVIEW
+        }
 
         public WristVizualizer(string[] fileArgs)
         {
@@ -59,6 +70,7 @@ namespace WristVizualizer
             }
         }
 
+        #region Control Visibility
         private void hideControlBox()
         {
             if (panelControl.Visible)
@@ -74,6 +86,34 @@ namespace WristVizualizer
             {
                 panelCoin.Width = panelCoin.Width - panelControl.Width - 15;
                 panelControl.Visible = true;
+            }
+        }
+
+        private void setPosViewPanelVisible(bool visible)
+        {
+            if (panelPosView.Visible == visible)
+                return;
+
+            if (visible)
+                panelCoin.Width = panelCoin.Width - panelControl.Width - 15;
+            else
+                panelCoin.Width = panelCoin.Width + panelControl.Width + 15;
+            panelPosView.Visible = visible;
+        }
+        #endregion
+
+        private void setFormForCurrentMode()
+        {
+            setFormForMode(_mode);
+        }
+        private void setFormForMode(Modes mode)
+        {
+            switch (mode)
+            {
+                case Modes.POSVIEW:
+                    setPosViewPanelVisible(true);
+                    importToolStripMenuItem.Enabled = false;
+                    break;
             }
         }
 
@@ -127,6 +167,8 @@ namespace WristVizualizer
         private void resetForm()
         {
             this.Text = Application.ProductName;
+            setPosViewPanelVisible(false);
+
             importToolStripMenuItem.Enabled = true;
             backgroundColorToolStripMenuItem.Enabled = true;
             decoratorToolStripMenuItem.Enabled = true;
@@ -249,11 +291,13 @@ namespace WristVizualizer
 
             if (loadFull)
             {
+                _mode = Modes.FULL_WRIST;
                 showControlBox();
                 loadFullWrist(filenames[0], _root);
             }
             else
             {
+                _mode = Modes.SCENEVIEWER;
                 hideControlBox();
                 foreach (string filename in filenames)
                     _root.addFile(filename);
@@ -387,6 +431,27 @@ namespace WristVizualizer
         }
 
         #endregion
+
+
+        #region PosView
+
+        private void loadPosView(string posViewFilename)
+        {
+            if (_viewer == null) setupExaminerWindow();
+            resetForm();
+            _mode = Modes.POSVIEW;
+            setFormForCurrentMode();
+            _posViewController = new PosViewController(posViewFilename);
+            _viewer.setSceneGraph(_posViewController.Root);
+
+            _posViewController.Control_CurrentFrame = trackBarPosViewCurrentFrame;
+            _posViewController.Control_PlayButton = buttonPosViewPlay;
+            _posViewController.Control_StopButton = buttonPosViewStop;
+            _posViewController.Control_NumericFPS = numericUpDownPosViewFPS;
+        }
+
+        #endregion
+
 
         private void loadSampleWristToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -981,9 +1046,17 @@ namespace WristVizualizer
 
         #endregion
 
+        private void openPosViewFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "PosView Files (*.pos)|*.pos|All Files (*.*)|*.*";
+            open.Multiselect = false;
+            if (DialogResult.OK != open.ShowDialog())
+                return;
 
-
-
+            string fname = open.FileName;
+            loadPosView(fname);
+        }
 
     }
 }
