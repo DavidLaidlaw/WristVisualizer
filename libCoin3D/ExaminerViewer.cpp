@@ -24,6 +24,7 @@
 //for selecting and material editing
 #include <Inventor/actions/SoSearchAction.h>
 #include <Inventor/actions/SoCallbackAction.h>
+#include <Inventor/nodes/SoIndexedFaceSet.h>
 
 
 #include "MyViewport.h"
@@ -434,7 +435,17 @@ SoNode* libCoin3D::ExaminerViewer::getSelectedNode()
 	if (_selection->getNumSelected()!=1) //only want to deal with one
 		return NULL;
 
-	return _selection->getPath(0)->getTail();
+	SoNode* selectedNode = _selection->getPath(0)->getTail();
+	return selectedNode;
+
+	//check for the special case where the node is an SoIndexedFaceSet,
+	//which is what gets selected when loading an IV file, and move up to the 
+	//parent, this way we are hopefully editing above both. The real solution might be to simply insert
+	//the material one level above.....don't think so though
+	if (selectedNode->isOfType(SoIndexedFaceSet::getClassTypeId()))
+		return _selection->getPath(0)->getNodeFromTail(1);
+	else
+		return selectedNode;
 }
 
 SoGroup* libCoin3D::ExaminerViewer::getParentOfNode(SoNode* child)
@@ -444,14 +455,15 @@ SoGroup* libCoin3D::ExaminerViewer::getParentOfNode(SoNode* child)
 	sa.setInterest(SoSearchAction::ALL);
 	sa.apply(_root);
 	SoPathList pl = sa.getPaths();
-	if (pl.getLength()!=1) {
-		fprintf(stderr,"Problem!\n"); //TODO: More errors!
-		return NULL;
-	}
+	if (pl.getLength() == 0)
+		throw gcnew System::FieldAccessException("Can not find child node, let alone parent node");
+
+	if (pl.getLength() > 1) 
+		throw gcnew System::FieldAccessException("There is more then one path to the selected node! Help!");
+	
 	SoPath* myPath = pl[0];
 	if (myPath->getLength() < 2) {
-		fprintf(stderr,"Problem, no parrent!\n"); //TODO: More errors!
-		return NULL;
+		throw gcnew System::FieldAccessException("Node has no parent, can't get parrent!");
 	}
 	SoGroup* parent = (SoGroup*)myPath->getNodeFromTail(1);
 	return parent;
@@ -459,9 +471,8 @@ SoGroup* libCoin3D::ExaminerViewer::getParentOfNode(SoNode* child)
 
 SoGroup* libCoin3D::ExaminerViewer::getParentOfSelectedNode()
 {
-	if (_selection->getPath(0)->getLength() < 2) {
-		fprintf(stderr,"Problem, no parrent!\n"); //TODO: More errors!
-		return NULL;
+	if (_selection->getPath(0)->getLength() < 2) {  //error
+		throw gcnew System::FieldAccessException("Selected Node has no parent!");
 	}
 	return (SoGroup*)_selection->getPath(0)->getNodeFromTail(1);
 }
@@ -471,9 +482,15 @@ SoMaterial* libCoin3D::ExaminerViewer::getMaterialForSelectedNode()
 	SoNode* selectedNode = getSelectedNode();
 	SoGroup* parentNode = getParentOfSelectedNode();
 	if (selectedNode==NULL || parentNode==NULL)
-		return NULL; //error TODO: something
+		return NULL; //can't find either child or parent
+
+	//check for cases where selected node moved up
+	if (selectedNode==parentNode)
+		parentNode = getParentOfNode(selectedNode);
 
 	int childIndex = parentNode->findChild(selectedNode);
+	if (childIndex==-1)
+		throw gcnew System::ArgumentException("selected node is somehow not a child of the identified parent node, error somewhere");
 	if (childIndex==0) //child is first, can't have a material
 		return NULL;
 
@@ -490,7 +507,11 @@ SoMaterial* libCoin3D::ExaminerViewer::createMaterialForSelectedNode()
 	SoNode* selectedNode = getSelectedNode();
 	SoGroup* parentNode = getParentOfSelectedNode();
 	if (selectedNode==NULL || parentNode==NULL)
-		return NULL; //error TODO: somethingng
+		return NULL; //error TODO: something
+
+	//check for cases where selected node moved up
+	if (selectedNode==parentNode)
+		parentNode = getParentOfNode(selectedNode);
 
 	int childIndex = parentNode->findChild(selectedNode);
 	//inherit existing color properties
