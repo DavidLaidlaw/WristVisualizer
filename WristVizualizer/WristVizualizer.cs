@@ -142,6 +142,7 @@ namespace WristVizualizer
             transparencyToolStripMenuItem.Enabled = true;
             viewSourceToolStripMenuItem.Enabled = true;
             saveAsToolStripMenuItem.Enabled = true;
+            showScenegraphToolStripMenuItem.Enabled = true;
             seriesListBox.Items.Clear();
             if (_pointSelection != null)
             {

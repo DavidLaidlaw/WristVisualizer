@@ -1111,6 +1111,7 @@ namespace WristVizualizer
             // 
             // showScenegraphToolStripMenuItem
             // 
+            this.showScenegraphToolStripMenuItem.Enabled = false;
             this.showScenegraphToolStripMenuItem.Name = "showScenegraphToolStripMenuItem";
             this.showScenegraphToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
             this.showScenegraphToolStripMenuItem.Text = "Show Scenegraph...";
