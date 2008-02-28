@@ -258,7 +258,8 @@ namespace WristVizualizer
                     _root.addFile(filename);
 
                 //save first filename for recording sake
-                _firstFileName = filenames[0];
+                if (filenames.Length >= 1)
+                    _firstFileName = filenames[0];
                 _numberFilesLoaded = filenames.Length;
 
                 //setup watching
@@ -650,6 +651,14 @@ namespace WristVizualizer
             _viewer.setBackgroundColor(col);
         }
 
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            openFile(new string[0], false);
+            importToolStripMenuItem.Enabled = false; //disable importing
+            _firstFileName = "";
+            this.Text = Application.ProductName;
+        }
+
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
@@ -962,6 +971,8 @@ namespace WristVizualizer
         }
 
         #endregion
+
+
 
     }
 }

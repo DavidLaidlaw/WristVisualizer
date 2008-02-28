@@ -237,6 +237,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_CA7FD9D6CA4B4EF0BA8533DEDB7AE60D"
+        "OwnerKey" = "8:_F066B22D23384F90B08CD3404C51AC22"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_CCEDF3FEF3B555F1FFD998AF2108CD6E"
         "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
         "MsmSig" = "8:_UNDEFINED"
@@ -267,12 +273,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_D8678F7878DB47E7A05DD16DEF840CC9"
-        "OwnerKey" = "8:_EF76B695446343059A86B3D1CEECCC6B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E607CDC6D7D24C1C9A9418A9495E0DAF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -285,7 +285,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_EF76B695446343059A86B3D1CEECCC6B"
+        "MsmKey" = "8:_F066B22D23384F90B08CD3404C51AC22"
         "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -440,7 +440,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.2978.25421, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.2980.21436, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_0953C32CAF12873EE464628E361E704F"
@@ -1356,14 +1356,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{FA65A11B-0D1D-4692-A6B0-9EC19FD6A6E2}"
-        "PackageCode" = "8:{9250603A-C514-41AD-A07E-4E0CBD655814}"
+        "ProductCode" = "8:{DF26C822-13CA-43A6-BF64-D9A92A287DBF}"
+        "PackageCode" = "8:{B545B943-3A62-45CB-972A-41548DD9DEAC}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.1.1"
+        "ProductVersion" = "8:1.1.2"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2142,7 +2142,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D8678F7878DB47E7A05DD16DEF840CC9"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_CA7FD9D6CA4B4EF0BA8533DEDB7AE60D"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2156,7 +2156,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_EF76B695446343059A86B3D1CEECCC6B"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_F066B22D23384F90B08CD3404C51AC22"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
