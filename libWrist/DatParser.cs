@@ -159,6 +159,66 @@ namespace libWrist
             return transforms;
         }
 
+        public static double[][] parsePosViewRTFileToDouble(string filename)
+        {
+            if (!File.Exists(filename))
+                throw new ArgumentException("File does not exist. (" + filename + ")");
+
+            int numTransforms;
+            double[][] data;
+            try
+            {
+                using (StreamReader r = new StreamReader(filename))
+                {
+                    numTransforms = Int32.Parse(r.ReadLine().Trim());
+                    data = parseDatFile(r);
+                }
+                //check size of array
+                if (data.Length != numTransforms*4)
+                    throw new InvalidDataException(String.Format("RT file ({0}) is in an invalid format! Header says {1} transforms, but found {2}!",
+                        filename,numTransforms,data.Length/4));
+
+                for (int i = 0; i < data.Length; i++)
+                {
+                    if (data[i].Length != 3)
+                        throw new ArgumentException("Each row of the RT files should have 3 elements. (Line: " + (i+1).ToString() + ")");
+                }
+
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidDataException(String.Format("RT file ({0}) is in an invalid format!", filename), ex);
+            }
+        }
+
+        public static TransformMatrix[] parsePosViewRTFile(string filename)
+        {
+            double[][] dat = parsePosViewRTFileToDouble(filename);
+            int numTransforms = (int)dat.Length/4;
+            TransformMatrix[] transforms = new TransformMatrix[numTransforms];
+            for (int i = 0; i < numTransforms; i++)
+            {
+                transforms[i] = new TransformMatrix();
+                double[][] tempR = { dat[i * 4], dat[i * 4 + 1], dat[i * 4 + 2] };
+                transforms[i].R = new GeneralMatrix(tempR, 3, 3);
+                transforms[i].T = new GeneralMatrix(dat[i * 4 + 3], 1);
+            }
+            return transforms;
+        }
+
+        public static double[][] parsePosViewHAMFile(string filename)
+        {
+            double[][] dat = parseDatFile(filename);
+
+            for (int i = 0; i < dat.Length; i++)
+            {
+                if (dat[i].Length != 8)
+                    throw new ArgumentException("Each row of the PosView HAM files should have 8 elements. (Line: " + i.ToString() + ")");
+            }
+            return dat;
+        }
+
         public static void addRTtoTransform(TransformMatrix tfm, Transform transform)
         {
             transform.setTransform(tfm.R.Array[0][0], tfm.R.Array[0][1], tfm.R.Array[0][2],

@@ -22,6 +22,8 @@ namespace libWrist
         private string _fiberName;
         private int _numFibers;
 
+        private int _numPositions;
+
         private string[] _labels;
 
         public PosViewReader(string posFilename)
@@ -29,8 +31,99 @@ namespace libWrist
             parsePosFile(posFilename);
             string iniFile = Path.Combine(Path.GetDirectoryName(posFilename),Path.GetFileNameWithoutExtension(posFilename)+".ini");
             parsePosViewINIFiles(iniFile);
+            testLoad();
         }
 
+        private void testLoad()
+        {
+            TransformMatrix[] m;
+            foreach (string fname in this.RTFileNames)
+            {
+                m = DatParser.parsePosViewRTFile(fname);
+                Console.WriteLine(String.Format("Parsed {0} with {1} transforms",fname,m.Length));
+            }
+
+            double[][] m2;
+            foreach (string fname in this.HAMFileNames )
+            {
+                m2 = DatParser.parsePosViewHAMFile(fname);
+                Console.WriteLine(String.Format("Parsed {0} with {1} hams",fname, m2.Length));
+            }
+
+            foreach(string fname in this.IvFileNames)
+                if (File.Exists(fname))
+                    Console.WriteLine(String.Format("IV files exists: {0}",fname));
+                else
+                    Console.WriteLine(String.Format("IV files DOES NOT exists: {0}", fname));
+        }
+
+        #region Public Interfaces
+        public string[] IvFileNames
+        {
+            get
+            {
+                string[] names = new string[_numBones];
+                for (int i = 0; i < _numBones; i++)
+                    names[i] = Path.Combine(Path.Combine(_basePath, _ivFilePath), _ivFileNames[i]);
+                return names;
+            }
+        }
+
+        public int NumBones
+        {
+            get { return _numBones; }
+        }
+
+        public bool ShowHams
+        {
+            get { return _showHams; }
+        }
+
+        public bool SetColor
+        {
+            get { return _setColor; }
+        }
+
+        public bool LoadLigaments
+        {
+            get { return _loadLigaments; }
+        }
+
+        public int NumberLigamentFibers
+        {
+            get { return _numFibers; }
+        }
+
+        public string[] LigamentFiberFilenames
+        {
+            get { return new string[0]; }  //TODO: Fix, need Mikes help with ligament file format
+        }
+
+        public string[] RTFileNames
+        {
+            get
+            {
+                string[] names = new string[_numBones];
+                for (int i = 0; i < _numBones; i++)
+                    names[i] = _kinematicFileNames[i] + ".RTp";
+                return names;
+            }
+        }
+
+        public string[] HAMFileNames
+        {
+            get
+            {
+                string[] names = new string[_numBones];
+                for (int i = 0; i < _numBones; i++)
+                    names[i] = _kinematicFileNames[i] + ".HAMp";
+                return names;
+            }
+        }
+
+        #endregion
+
+        #region Parse Config Files
         private void parsePosFile(string fname)
         {
             try
@@ -156,6 +249,7 @@ namespace libWrist
                     return ParseSection.none;
             }
         }
+        #endregion
 
     }
 }
