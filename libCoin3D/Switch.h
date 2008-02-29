@@ -12,6 +12,7 @@ public:
 	virtual SoNode* getNode() override;
 	void addChild(Node^ node);
 	void whichChild(int childIndex);
+	void hideAll();
 private: 
 	SoSwitch* _switch;
 };

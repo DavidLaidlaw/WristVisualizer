@@ -452,6 +452,8 @@ namespace WristVizualizer
             _posViewController.Control_PlayButton = buttonPosViewPlay;
             _posViewController.Control_StopButton = buttonPosViewStop;
             _posViewController.Control_NumericFPS = numericUpDownPosViewFPS;
+            _posViewController.Control_ShowHAMS = checkBoxPosViewShowAxes;
+            _posViewController.Control_OverrideMaterial = checkBoxPosViewOverrideMaterial;
         }
 
         #endregion

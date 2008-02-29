@@ -134,6 +134,8 @@ namespace WristVizualizer
             this.buttonPosViewStop = new System.Windows.Forms.Button();
             this.buttonPosViewPlay = new System.Windows.Forms.Button();
             this.saveMovieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.checkBoxPosViewShowAxes = new System.Windows.Forms.CheckBox();
+            this.checkBoxPosViewOverrideMaterial = new System.Windows.Forms.CheckBox();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -1140,6 +1142,8 @@ namespace WristVizualizer
             // panelPosView
             // 
             this.panelPosView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPosView.Controls.Add(this.checkBoxPosViewOverrideMaterial);
+            this.panelPosView.Controls.Add(this.checkBoxPosViewShowAxes);
             this.panelPosView.Controls.Add(this.trackBarPosViewCurrentFrame);
             this.panelPosView.Controls.Add(this.label19);
             this.panelPosView.Controls.Add(this.numericUpDownPosViewFPS);
@@ -1205,6 +1209,26 @@ namespace WristVizualizer
             this.saveMovieToolStripMenuItem.Text = "Save &Movie...";
             this.saveMovieToolStripMenuItem.Visible = false;
             this.saveMovieToolStripMenuItem.Click += new System.EventHandler(this.saveMovieToolStripMenuItem_Click);
+            // 
+            // checkBoxPosViewShowAxes
+            // 
+            this.checkBoxPosViewShowAxes.AutoSize = true;
+            this.checkBoxPosViewShowAxes.Location = new System.Drawing.Point(95, 185);
+            this.checkBoxPosViewShowAxes.Name = "checkBoxPosViewShowAxes";
+            this.checkBoxPosViewShowAxes.Size = new System.Drawing.Size(106, 17);
+            this.checkBoxPosViewShowAxes.TabIndex = 5;
+            this.checkBoxPosViewShowAxes.Text = "Show HAM Axes";
+            this.checkBoxPosViewShowAxes.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxPosViewOverrideMaterial
+            // 
+            this.checkBoxPosViewOverrideMaterial.AutoSize = true;
+            this.checkBoxPosViewOverrideMaterial.Location = new System.Drawing.Point(95, 208);
+            this.checkBoxPosViewOverrideMaterial.Name = "checkBoxPosViewOverrideMaterial";
+            this.checkBoxPosViewOverrideMaterial.Size = new System.Drawing.Size(132, 17);
+            this.checkBoxPosViewOverrideMaterial.TabIndex = 6;
+            this.checkBoxPosViewOverrideMaterial.Text = "Override bone material";
+            this.checkBoxPosViewOverrideMaterial.UseVisualStyleBackColor = true;
             // 
             // WristVizualizer
             // 
@@ -1352,6 +1376,8 @@ namespace WristVizualizer
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ToolStripMenuItem openPosViewFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveMovieToolStripMenuItem;
+        private System.Windows.Forms.CheckBox checkBoxPosViewOverrideMaterial;
+        private System.Windows.Forms.CheckBox checkBoxPosViewShowAxes;
     }
 }
 

@@ -35,6 +35,11 @@ int libCoin3D::Material::getColor()
 	return _material->diffuseColor.getValues(0)->getPackedValue();
 }
 
+void libCoin3D::Material::setOverride(bool forceOverride)
+{
+	_material->setOverride(forceOverride);
+}
+
 SoNode* libCoin3D::Material::getNode()
 {
 	return _material;

@@ -14,6 +14,7 @@ public:
 	virtual void setTransparency(float transparency);
 	virtual float getTransparency();
 	virtual int getColor();
+	virtual void setOverride(bool forceOverride);
 	virtual SoNode* getNode() override;
 private: 
 	SoMaterial* _material;

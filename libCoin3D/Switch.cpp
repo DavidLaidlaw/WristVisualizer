@@ -21,3 +21,8 @@ void libCoin3D::Switch::whichChild(int childIndex)
 {
 	_switch->whichChild.setValue(childIndex);
 }
+
+void libCoin3D::Switch::hideAll()
+{
+	_switch->whichChild.setValue(SO_SWITCH_NONE);
+}
