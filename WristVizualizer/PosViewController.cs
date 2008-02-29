@@ -15,6 +15,7 @@ namespace WristVizualizer
         Switch[] _hamsSwitch;
         Separator[] _bones;
         Material[] _boneMaterials;
+        Switch _labels;
 
         Separator _root;
         int _numPositions;
@@ -30,6 +31,7 @@ namespace WristVizualizer
         NumericUpDown numericUpDownPosViewFPS;
         CheckBox checkBoxShowHams;
         CheckBox checkBoxOverrideMaterial;
+        CheckBox checkBoxShowLabels;
 
         Timer _timer;
 
@@ -127,8 +129,31 @@ namespace WristVizualizer
                 checkBoxOverrideMaterial.CheckedChanged += new EventHandler(checkBoxOverrideMaterial_CheckedChanged);
             }
         }
+        public CheckBox Control_ShowLabels
+        {
+            set
+            {
+                checkBoxShowLabels = value;
+                checkBoxShowLabels.Enabled = _reader.HasLables;
+                checkBoxShowLabels.Checked = _reader.HasLables;
+                checkBoxShowLabels.CheckedChanged += new EventHandler(checkBoxShowLabels_CheckedChanged);
+            }
+        }
         #endregion
 
+        void checkBoxShowLabels_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxShowLabels.Checked)
+            {
+                //then we need to show them
+                _labels.whichChild(_currentFrame);
+            }
+            else
+            {
+                //lets hide it
+                _labels.hideAll();
+            }
+        }
 
         void checkBoxOverrideMaterial_CheckedChanged(object sender, EventArgs e)
         {
@@ -252,6 +277,8 @@ namespace WristVizualizer
             if (checkBoxShowHams.Checked) //only update hams if we are showing them
                 for (int i = 0; i < _hamsSwitch.Length; i++)
                     _hamsSwitch[i].whichChild(_currentFrame);
+            if (checkBoxShowLabels.Checked) //only update label if we are showing
+                _labels.whichChild(_currentFrame);
 
             if (trackBarPosViewCurrentFrame.Value != _currentFrame)
                 trackBarPosViewCurrentFrame.Value = _currentFrame;
@@ -272,6 +299,24 @@ namespace WristVizualizer
             numericUpDownPosViewFPS.ValueChanged -= new EventHandler(numericUpDownPosViewFPS_ValueChanged);
             checkBoxShowHams.CheckedChanged -= new EventHandler(checkBoxShowHams_CheckedChanged);
             checkBoxOverrideMaterial.CheckedChanged -= new EventHandler(checkBoxOverrideMaterial_CheckedChanged);
+            checkBoxShowLabels.CheckedChanged -= new EventHandler(checkBoxShowLabels_CheckedChanged);
+        }
+
+        private Switch setupPosViewLables(PosViewReader pos)
+        {
+            _labels = new Switch();
+            if (!pos.HasLables)
+                return _labels;
+
+            for (int i = 0; i < pos.Labels.Length; i++)
+            {
+                Label2D l = new Label2D();
+                l.setText(pos.Labels[i]);
+                l.setLocation(-0.9f, 0.9f);
+                l.setFontSize(20);
+                _labels.addChild(l);
+            }
+            return _labels;
         }
 
         private Switch setupPosViewHAMs(PosViewReader pos, int boneIndex)
@@ -341,6 +386,11 @@ namespace WristVizualizer
                     _hamsSwitch[i] = setupPosViewHAMs(_reader, i);
                     _root.addNode(_bonesSwitch[i]);
                     _root.addNode(_hamsSwitch[i]);
+                }
+                if (_reader.HasLables)
+                {
+                    setupPosViewLables(_reader);
+                    _root.addNode(_labels);
                 }
             }
             catch (Exception ex)

@@ -22,7 +22,7 @@ namespace libWrist
         private string _fiberName;
         private int _numFibers;
 
-        private string[] _labels;
+        private string[] _labels = null;
 
         public PosViewReader(string posFilename)
         {
@@ -93,6 +93,16 @@ namespace libWrist
                     names[i] = _kinematicFileNames[i] + ".HAMp";
                 return names;
             }
+        }
+
+        public string[] Labels
+        {
+            get { return _labels; }
+        }
+
+        public bool HasLables
+        {
+            get { return (_labels != null && _labels.Length > 0); }
         }
 
         #endregion

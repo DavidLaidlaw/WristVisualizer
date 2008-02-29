@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Label2D.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\libCoin3D.cpp"
 				>
 			</File>
@@ -283,6 +287,10 @@
 			</File>
 			<File
 				RelativePath=".\HamAxis.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Label2D.h"
 				>
 			</File>
 			<File

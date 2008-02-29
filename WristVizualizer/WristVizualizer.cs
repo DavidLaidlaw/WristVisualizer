@@ -460,6 +460,7 @@ namespace WristVizualizer
             _posViewController.Control_NumericFPS = numericUpDownPosViewFPS;
             _posViewController.Control_ShowHAMS = checkBoxPosViewShowAxes;
             _posViewController.Control_OverrideMaterial = checkBoxPosViewOverrideMaterial;
+            _posViewController.Control_ShowLabels = checkBoxPosViewLabels;
         }
 
         #endregion
