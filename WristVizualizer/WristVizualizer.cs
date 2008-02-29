@@ -113,6 +113,8 @@ namespace WristVizualizer
                 case Modes.POSVIEW:
                     setPosViewPanelVisible(true);
                     importToolStripMenuItem.Enabled = false;
+                    saveMovieToolStripMenuItem.Visible = true;
+                    saveMovieToolStripMenuItem.Enabled = true;
                     break;
             }
         }
@@ -185,6 +187,7 @@ namespace WristVizualizer
             viewSourceToolStripMenuItem.Enabled = true;
             saveAsToolStripMenuItem.Enabled = true;
             showScenegraphToolStripMenuItem.Enabled = true;
+            saveMovieToolStripMenuItem.Visible = false;
             seriesListBox.Items.Clear();
             if (_pointSelection != null)
             {
@@ -441,7 +444,7 @@ namespace WristVizualizer
             resetForm();
             _mode = Modes.POSVIEW;
             setFormForCurrentMode();
-            _posViewController = new PosViewController(posViewFilename);
+            _posViewController = new PosViewController(posViewFilename, _viewer);
             _viewer.setSceneGraph(_posViewController.Root);
 
             _posViewController.Control_CurrentFrame = trackBarPosViewCurrentFrame;
@@ -761,6 +764,23 @@ namespace WristVizualizer
             viewer.Show();
         }
 
+        private void openPosViewFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+            open.Filter = "PosView Files (*.pos)|*.pos|All Files (*.*)|*.*";
+            open.Multiselect = false;
+            if (DialogResult.OK != open.ShowDialog())
+                return;
+
+            string fname = open.FileName;
+            loadPosView(fname);
+        }
+
+        private void saveMovieToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _posViewController.saveToMovie();
+        }
+
         #region Saving/Output
         private void saveFrameToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -837,7 +857,7 @@ namespace WristVizualizer
         {
             new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
             string[] filenames = e.Data.GetData("FileDrop") as string[];
-            openFile(filenames);
+            openFile(filenames);  //TODO: Add error checking
             System.Security.CodeAccessPermission.RevertAssert();
         }
 
@@ -868,7 +888,7 @@ namespace WristVizualizer
             string[] filenames = e.Data.GetData("FileDrop") as string[];
             if (importToolStripMenuItem.Enabled && _viewer != null && _root != null)
             {
-                importFile(filenames);
+                importFile(filenames);  //TODO: add error checking here :)
             }
             else
                 openFile(filenames);
@@ -1046,17 +1066,9 @@ namespace WristVizualizer
 
         #endregion
 
-        private void openPosViewFileToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            OpenFileDialog open = new OpenFileDialog();
-            open.Filter = "PosView Files (*.pos)|*.pos|All Files (*.*)|*.*";
-            open.Multiselect = false;
-            if (DialogResult.OK != open.ShowDialog())
-                return;
 
-            string fname = open.FileName;
-            loadPosView(fname);
-        }
+
+
 
     }
 }

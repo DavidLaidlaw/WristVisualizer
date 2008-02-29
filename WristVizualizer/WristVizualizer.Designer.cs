@@ -34,6 +34,7 @@ namespace WristVizualizer
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFullWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openPosViewFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveAsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
@@ -127,18 +128,18 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.panelPosView = new System.Windows.Forms.Panel();
-            this.buttonPosViewPlay = new System.Windows.Forms.Button();
-            this.buttonPosViewStop = new System.Windows.Forms.Button();
-            this.numericUpDownPosViewFPS = new System.Windows.Forms.NumericUpDown();
-            this.label19 = new System.Windows.Forms.Label();
             this.trackBarPosViewCurrentFrame = new System.Windows.Forms.TrackBar();
-            this.openPosViewFileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.label19 = new System.Windows.Forms.Label();
+            this.numericUpDownPosViewFPS = new System.Windows.Forms.NumericUpDown();
+            this.buttonPosViewStop = new System.Windows.Forms.Button();
+            this.buttonPosViewPlay = new System.Windows.Forms.Button();
+            this.saveMovieToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.panelPosView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPosViewFPS)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosViewCurrentFrame)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPosViewFPS)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -168,6 +169,7 @@ namespace WristVizualizer
             this.viewSourceToolStripMenuItem,
             this.toolStripSeparator2,
             this.saveFrameToolStripMenuItem,
+            this.saveMovieToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -196,6 +198,13 @@ namespace WristVizualizer
             this.openFullWristToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
             this.openFullWristToolStripMenuItem.Text = "Open Full Wrist...";
             this.openFullWristToolStripMenuItem.Click += new System.EventHandler(this.openFullWristToolStripMenuItem_Click);
+            // 
+            // openPosViewFileToolStripMenuItem
+            // 
+            this.openPosViewFileToolStripMenuItem.Name = "openPosViewFileToolStripMenuItem";
+            this.openPosViewFileToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.openPosViewFileToolStripMenuItem.Text = "Open PosView File...";
+            this.openPosViewFileToolStripMenuItem.Click += new System.EventHandler(this.openPosViewFileToolStripMenuItem_Click);
             // 
             // importToolStripMenuItem
             // 
@@ -1142,23 +1151,22 @@ namespace WristVizualizer
             this.panelPosView.TabIndex = 34;
             this.panelPosView.Visible = false;
             // 
-            // buttonPosViewPlay
+            // trackBarPosViewCurrentFrame
             // 
-            this.buttonPosViewPlay.Location = new System.Drawing.Point(14, 147);
-            this.buttonPosViewPlay.Name = "buttonPosViewPlay";
-            this.buttonPosViewPlay.Size = new System.Drawing.Size(52, 23);
-            this.buttonPosViewPlay.TabIndex = 0;
-            this.buttonPosViewPlay.Text = "Play";
-            this.buttonPosViewPlay.UseVisualStyleBackColor = true;
+            this.trackBarPosViewCurrentFrame.Location = new System.Drawing.Point(11, 97);
+            this.trackBarPosViewCurrentFrame.Maximum = 50;
+            this.trackBarPosViewCurrentFrame.Name = "trackBarPosViewCurrentFrame";
+            this.trackBarPosViewCurrentFrame.Size = new System.Drawing.Size(205, 45);
+            this.trackBarPosViewCurrentFrame.TabIndex = 4;
             // 
-            // buttonPosViewStop
+            // label19
             // 
-            this.buttonPosViewStop.Location = new System.Drawing.Point(72, 147);
-            this.buttonPosViewStop.Name = "buttonPosViewStop";
-            this.buttonPosViewStop.Size = new System.Drawing.Size(52, 23);
-            this.buttonPosViewStop.TabIndex = 1;
-            this.buttonPosViewStop.Text = "Stop";
-            this.buttonPosViewStop.UseVisualStyleBackColor = true;
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(181, 153);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(27, 13);
+            this.label19.TabIndex = 3;
+            this.label19.Text = "FPS";
             // 
             // numericUpDownPosViewFPS
             // 
@@ -1172,29 +1180,31 @@ namespace WristVizualizer
             this.numericUpDownPosViewFPS.Size = new System.Drawing.Size(41, 20);
             this.numericUpDownPosViewFPS.TabIndex = 2;
             // 
-            // label19
+            // buttonPosViewStop
             // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(181, 153);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(27, 13);
-            this.label19.TabIndex = 3;
-            this.label19.Text = "FPS";
+            this.buttonPosViewStop.Location = new System.Drawing.Point(72, 147);
+            this.buttonPosViewStop.Name = "buttonPosViewStop";
+            this.buttonPosViewStop.Size = new System.Drawing.Size(52, 23);
+            this.buttonPosViewStop.TabIndex = 1;
+            this.buttonPosViewStop.Text = "Stop";
+            this.buttonPosViewStop.UseVisualStyleBackColor = true;
             // 
-            // trackBarPosViewCurrentFrame
+            // buttonPosViewPlay
             // 
-            this.trackBarPosViewCurrentFrame.Location = new System.Drawing.Point(11, 97);
-            this.trackBarPosViewCurrentFrame.Maximum = 50;
-            this.trackBarPosViewCurrentFrame.Name = "trackBarPosViewCurrentFrame";
-            this.trackBarPosViewCurrentFrame.Size = new System.Drawing.Size(205, 45);
-            this.trackBarPosViewCurrentFrame.TabIndex = 4;
+            this.buttonPosViewPlay.Location = new System.Drawing.Point(14, 147);
+            this.buttonPosViewPlay.Name = "buttonPosViewPlay";
+            this.buttonPosViewPlay.Size = new System.Drawing.Size(52, 23);
+            this.buttonPosViewPlay.TabIndex = 0;
+            this.buttonPosViewPlay.Text = "Play";
+            this.buttonPosViewPlay.UseVisualStyleBackColor = true;
             // 
-            // openPosViewFileToolStripMenuItem
+            // saveMovieToolStripMenuItem
             // 
-            this.openPosViewFileToolStripMenuItem.Name = "openPosViewFileToolStripMenuItem";
-            this.openPosViewFileToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
-            this.openPosViewFileToolStripMenuItem.Text = "Open PosView File...";
-            this.openPosViewFileToolStripMenuItem.Click += new System.EventHandler(this.openPosViewFileToolStripMenuItem_Click);
+            this.saveMovieToolStripMenuItem.Name = "saveMovieToolStripMenuItem";
+            this.saveMovieToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.saveMovieToolStripMenuItem.Text = "Save &Movie...";
+            this.saveMovieToolStripMenuItem.Visible = false;
+            this.saveMovieToolStripMenuItem.Click += new System.EventHandler(this.saveMovieToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -1223,8 +1233,8 @@ namespace WristVizualizer
             this.statusStrip1.PerformLayout();
             this.panelPosView.ResumeLayout(false);
             this.panelPosView.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPosViewFPS)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.trackBarPosViewCurrentFrame)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPosViewFPS)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1341,6 +1351,7 @@ namespace WristVizualizer
         private System.Windows.Forms.TrackBar trackBarPosViewCurrentFrame;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.ToolStripMenuItem openPosViewFileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveMovieToolStripMenuItem;
     }
 }
 

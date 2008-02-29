@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using System.IO;
 using libWrist;
 using libCoin3D;
 
@@ -9,12 +10,13 @@ namespace WristVizualizer
 {
     class PosViewController
     {
+        ExaminerViewer _viewer;
         Switch[] _bones;
         Separator _root;
         int _numPositions;
         int _currentFrame;
 
-        int _fps;
+        string _posFileName;
 
         //controls
         TrackBar trackBarPosViewCurrentFrame;
@@ -24,8 +26,10 @@ namespace WristVizualizer
 
         Timer _timer;
 
-        public PosViewController(string posViewFilename)
+        public PosViewController(string posViewFilename, ExaminerViewer viewer)
         {
+            _posFileName = posViewFilename;
+            _viewer = viewer;
             loadPosView(posViewFilename);
             _timer = new Timer();
             _timer.Tick += new EventHandler(_timer_Tick);
@@ -128,6 +132,39 @@ namespace WristVizualizer
         {
             //need to convert from FPS -> Miliseconds/frame
             _timer.Interval = (int)(1000 / (double)numericUpDownPosViewFPS.Value);
+        }
+
+        public void saveToMovie()
+        {
+            FolderBrowserDialog fb = new FolderBrowserDialog();
+            fb.SelectedPath = System.IO.Path.GetDirectoryName(_posFileName);
+#if DEBUG
+            fb.SelectedPath = @"C:\Temp\testMovie";
+#endif
+            fb.ShowNewFolderButton = true;
+            fb.Description = "Choose directory to output movie frames to";
+            if (DialogResult.OK != fb.ShowDialog())
+                return;
+
+            //save starting state
+            bool startPlaying = _timer.Enabled;
+            int startFrame = _currentFrame;
+            _timer.Enabled = false;
+            //TODO: Disable buttons....
+
+            string outputDir = fb.SelectedPath;
+            //save it to a movie
+            for (int i = 0; i < NumPositions; i++)
+            {
+                CurrentFrame = i;  //change to current frame
+                string fname = Path.Combine(outputDir,String.Format("outfile{0:d3}.jpg",i));
+                _viewer.saveToJPEG(fname);
+            }
+
+            //wrap us up
+            CurrentFrame = startFrame;
+            _timer.Enabled = startPlaying;
+
         }
 
         #region FrameControl
