@@ -11,8 +11,9 @@ namespace WristVizualizer
     class PosViewController
     {
         ExaminerViewer _viewer;
-        Switch[] _bones;
-        Switch[] _hams;
+        Switch[] _bonesSwitch;
+        Switch[] _hamsSwitch;
+        Separator[] _bones;
 
         Separator _root;
         int _numPositions;
@@ -83,6 +84,7 @@ namespace WristVizualizer
             set
             {
                 buttonPosViewPlay = value;
+                buttonPosViewPlay.Enabled = true;
                 buttonPosViewPlay.Click += new EventHandler(buttonPosViewPlay_Click);
             }
         }
@@ -91,6 +93,7 @@ namespace WristVizualizer
             set
             {
                 buttonPosViewStop = value;
+                buttonPosViewStop.Enabled = false;
                 buttonPosViewStop.Click += new EventHandler(buttonPosViewStop_Click);
             }
         }
@@ -136,12 +139,12 @@ namespace WristVizualizer
             if (checkBoxShowHams.Checked)
             {
                 //lets show them all
-                foreach (Switch ham in _hams)
+                foreach (Switch ham in _hamsSwitch)
                     ham.whichChild(_currentFrame);
             }
             else
             {
-                foreach (Switch ham in _hams)
+                foreach (Switch ham in _hamsSwitch)
                     ham.hideAll();
             }
         }
@@ -232,16 +235,22 @@ namespace WristVizualizer
 
         private void updateFrame()
         {
-            for (int i = 0; i < _bones.Length; i++)
-                _bones[i].whichChild(_currentFrame);
+            for (int i = 0; i < _bonesSwitch.Length; i++)
+                _bonesSwitch[i].whichChild(_currentFrame);
             if (checkBoxShowHams.Checked) //only update hams if we are showing them
-                for (int i = 0; i < _hams.Length; i++)
-                    _hams[i].whichChild(_currentFrame);
+                for (int i = 0; i < _hamsSwitch.Length; i++)
+                    _hamsSwitch[i].whichChild(_currentFrame);
 
             if (trackBarPosViewCurrentFrame.Value != _currentFrame)
                 trackBarPosViewCurrentFrame.Value = _currentFrame;
         }
         #endregion
+
+        public void Close()
+        {
+            _timer.Enabled = false;
+            removeCallBacks();
+        }
 
         private void removeCallBacks()
         {
@@ -260,10 +269,17 @@ namespace WristVizualizer
                 return s; //this SHOULD work...
 
             double[][] HAMdata = DatParser.parsePosViewHAMFile(pos.HAMFileNames[boneIndex]);
+            float[][] hamColors = PosViewSettings.hamColors;
             for (int i = 0; i < HAMdata.Length; i++)
             {
                 Separator sepPosition = new Separator();
-                sepPosition.addNode(new HamAxis(HAMdata[i][1], HAMdata[i][2], HAMdata[i][3], HAMdata[i][5], HAMdata[i][6], HAMdata[i][7]));
+                Material color = new Material();
+                color.setColor(hamColors[boneIndex][0], hamColors[boneIndex][1], hamColors[boneIndex][2]);
+                color.setOverride(true);
+                sepPosition.addNode(color);
+                HamAxis axis = new HamAxis(HAMdata[i][1], HAMdata[i][2], HAMdata[i][3], HAMdata[i][5], HAMdata[i][6], HAMdata[i][7]);
+                //axis.setColor(hamColors[boneIndex][0], hamColors[boneIndex][1], hamColors[boneIndex][2]);
+                sepPosition.addNode(axis);
                 s.addChild(sepPosition);
             }
             s.whichChild(0); //set it to start at the first frame
@@ -273,8 +289,8 @@ namespace WristVizualizer
         private Switch setupPosViewBone(PosViewReader pos, int boneIndex)
         {
             Switch s = new Switch();
-            Separator bone = new Separator();
-            bone.addFile(pos.IvFileNames[boneIndex], false);  //load bone file once, it will referenced multiple times
+            _bones[boneIndex] = new Separator();
+            _bones[boneIndex].addFile(pos.IvFileNames[boneIndex], false);  //load bone file once, it will referenced multiple times
 
             Transform[] transforms = DatParser.parsePosViewRTFileToTransforms(pos.RTFileNames[boneIndex]);
             _numPositions = transforms.Length;
@@ -282,7 +298,7 @@ namespace WristVizualizer
             {
                 Separator sepPosition = new Separator();
                 sepPosition.addNode(transforms[i]);
-                sepPosition.addChild(bone);
+                sepPosition.addChild(_bones[boneIndex]);
                 s.addChild(sepPosition);
             }
             s.whichChild(0); //set it to start at the first frame
@@ -296,15 +312,16 @@ namespace WristVizualizer
             try
             {
                 _reader = new PosViewReader(posViewFilename);
-                _bones = new Switch[_reader.NumBones];
-                _hams = new Switch[_reader.NumBones];
+                _bonesSwitch = new Switch[_reader.NumBones];
+                _hamsSwitch = new Switch[_reader.NumBones];
+                _bones = new Separator[_reader.NumBones];
                 _root = new Separator();
                 for (int i = 0; i < _reader.NumBones; i++)
                 {
-                    _bones[i] = setupPosViewBone(_reader, i);
-                    _hams[i] = setupPosViewHAMs(_reader, i);
-                    _root.addNode(_bones[i]);
-                    _root.addNode(_hams[i]);
+                    _bonesSwitch[i] = setupPosViewBone(_reader, i);
+                    _hamsSwitch[i] = setupPosViewHAMs(_reader, i);
+                    _root.addNode(_bonesSwitch[i]);
+                    _root.addNode(_hamsSwitch[i]);
                 }
             }
             catch (Exception ex)

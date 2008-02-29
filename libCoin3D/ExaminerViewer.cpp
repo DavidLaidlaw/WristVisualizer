@@ -62,6 +62,12 @@ void libCoin3D::ExaminerViewer::setDecorator(bool decorate)
 	}
 }
 
+void libCoin3D::ExaminerViewer::setDrawStyle()
+{
+	_viewer->setDrawStyle(SoWinViewer::STILL, SoWinViewer::VIEW_LOW_COMPLEXITY);
+	_viewer->setDrawStyle(SoWinViewer::STILL, SoWinViewer::VIEW_AS_IS);
+}
+
 void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
 {
 	_root = root->getSoSeparator();

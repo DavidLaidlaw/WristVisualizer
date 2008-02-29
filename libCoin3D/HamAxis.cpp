@@ -6,15 +6,20 @@
 
 libCoin3D::HamAxis::HamAxis(float Nx, float Ny, float Nz, float Qx, float Qy, float Qz)
 {
-	makeHam(Nx, Ny, Nz, Qx, Qy, Qz);
+	makeHam(Nx, Ny, Nz, Qx, Qy, Qz, NULL);
 }
 
 libCoin3D::HamAxis::HamAxis(double Nx, double Ny, double Nz, double Qx, double Qy, double Qz)
 {
-	makeHam((float)Nx, (float)Ny, (float)Nz, (float)Qx, (float)Qy, (float)Qz);
+	makeHam((float)Nx, (float)Ny, (float)Nz, (float)Qx, (float)Qy, (float)Qz, NULL);
 }
 
-void libCoin3D::HamAxis::makeHam(float Nx, float Ny, float Nz, float Qx, float Qy, float Qz)
+libCoin3D::HamAxis::HamAxis(Material^ m, double Nx, double Ny, double Nz, double Qx, double Qy, double Qz)
+{
+	makeHam((float)Nx, (float)Ny, (float)Nz, (float)Qx, (float)Qy, (float)Qz, (SoMaterial*)m->getNode());
+}
+
+void libCoin3D::HamAxis::makeHam(float Nx, float Ny, float Nz, float Qx, float Qy, float Qz, SoMaterial* m)
 {
 	float N[3] = {Nx, Ny, Nz};
 	float Q[3] = {Qx, Qy, Qz};
@@ -55,11 +60,23 @@ void libCoin3D::HamAxis::makeHam(float Nx, float Ny, float Nz, float Qx, float Q
 
     // make axis separator
     SoSeparator *hamAxis = new SoSeparator;
-    //hamAxis->addChild(axesMaterial);		// Color appropriately
+	if (m != NULL)
+		hamAxis->addChild(m);	// Color appropriately
     hamAxis->addChild(axes_transform);		// move so Q is center
 	hamAxis->addChild(segment);				// add cylinder of arbitrary length    
 	hamAxis->addChild(coneTransform);
 	hamAxis->addChild(myCone);
     
     _node = hamAxis; //save it as the local node :)
+}
+
+void libCoin3D::HamAxis::setColor(float r, float g, float b)
+{
+	if (_node==NULL) return;
+	SoMaterial* axesMaterial = new SoMaterial();
+	SbVec3f Col; 
+	Col.setValue(r,g,b);
+	axesMaterial->diffuseColor.setValue(Col);
+	SoSeparator* realNode = (SoSeparator*)_node;
+	realNode->insertChild(axesMaterial,0);
 }

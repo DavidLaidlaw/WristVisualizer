@@ -194,6 +194,11 @@ namespace WristVizualizer
                 _pointSelection.stopSelecting();
                 _pointSelection = null;
             }
+            if (_posViewController != null)
+            {
+                _posViewController.Close();
+                _posViewController = null;
+            }
             hideStatusStrip();
             toolStripStatusLabel1.Text = "";
             _bones = new Separator[15];
@@ -447,6 +452,7 @@ namespace WristVizualizer
             _posViewController = new PosViewController(posViewFilename, _viewer);
             _viewer.setSceneGraph(_posViewController.Root);
             _root = _posViewController.Root; //save local copy also
+            //_viewer.setDrawStyle();
 
             _posViewController.Control_CurrentFrame = trackBarPosViewCurrentFrame;
             _posViewController.Control_PlayButton = buttonPosViewPlay;

@@ -76,6 +76,8 @@ public:
 	TransparencyTypes getTransparencyType();
 	void setTransparencyType(TransparencyTypes type);
 
+	void setDrawStyle();
+
 private:
 	bool saveToImage(System::String^ filename,char* ext);
 	SoWinExaminerViewer* _viewer;
