@@ -19,6 +19,7 @@ public:
 	void addTransform(Transform^ transform);
 	void removeTransform();
 	void removeChild(Separator^ child);
+	void removeChild(Node^ node);
 	bool hasTransform() { return (_numTransforms>0); }
 
 	virtual SoNode* getNode() override;

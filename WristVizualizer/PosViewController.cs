@@ -198,12 +198,18 @@ namespace WristVizualizer
         {
             Switch s = new Switch();
             Separator bone = new Separator();
-            bone.addFile(pos.IvFileNames[boneIndex], false);
+            bone.addFile(pos.IvFileNames[boneIndex], false);  //load bone file once, it will referenced multiple times
+
             Transform[] transforms = DatParser.parsePosViewRTFileToTransforms(pos.RTFileNames[boneIndex]);
+            double[][] HAMdata=null;
+            if (pos.ShowHams)
+                HAMdata = DatParser.parsePosViewHAMFile(pos.HAMFileNames[boneIndex]);
             _numPositions = transforms.Length;
             for (int i = 0; i < transforms.Length; i++)
             {
                 Separator sepPosition = new Separator();
+                if (pos.ShowHams) //add HAM data
+                    sepPosition.addNode(new HamAxis(HAMdata[i][1], HAMdata[i][2], HAMdata[i][3], HAMdata[i][5], HAMdata[i][6], HAMdata[i][7]));
                 sepPosition.addNode(transforms[i]);
                 sepPosition.addChild(bone);
                 s.addChild(sepPosition);

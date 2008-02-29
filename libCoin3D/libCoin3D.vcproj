@@ -204,6 +204,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HamAxis.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\libCoin3D.cpp"
 				>
 			</File>
@@ -275,6 +279,10 @@
 			</File>
 			<File
 				RelativePath=".\ExaminerViewer.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HamAxis.h"
 				>
 			</File>
 			<File

@@ -37,12 +37,17 @@ void libCoin3D::Separator::addFile(System::String^ filename, bool canhide)
 
 void libCoin3D::Separator::addNode(Node^ node)
 {
-	_separator->addChild(node->getNode());
+	if (node != nullptr && node->getNode() != NULL)
+		_separator->addChild(node->getNode());
 }
 
 void libCoin3D::Separator::removeChild(Separator^ child)
 {
 	_separator->removeChild(child->getSoSeparator());
+}
+void libCoin3D::Separator::removeChild(Node^ child)
+{
+	_separator->removeChild(child->getNode());
 }
 
 void libCoin3D::Separator::hide()
