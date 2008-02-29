@@ -43,6 +43,9 @@ namespace WristVizualizer
             _timer = new Timer();
             _timer.Tick += new EventHandler(_timer_Tick);
             _timer.Enabled = false;
+
+            _viewer.setSceneGraph(_root);
+            _viewer.viewAll();
         }
 
         void _timer_Tick(object sender, EventArgs e)
@@ -371,6 +374,12 @@ namespace WristVizualizer
         private void loadPosView(string posViewFilename)
         {
             _root = new Separator();
+            Separator sec1 = new Separator();
+            Separator sec2 = new Separator();
+            _root.addNode(sec1);
+            _root.addNode(sec2);
+            sec1.addNode(new Camera());
+            sec2.addNode(new Camera());
             _currentFrame = 0;
             try
             {
@@ -379,18 +388,18 @@ namespace WristVizualizer
                 _hamsSwitch = new Switch[_reader.NumBones];
                 _bones = new Separator[_reader.NumBones];
                 _boneMaterials = new Material[_reader.NumBones];
-                _root = new Separator();
+                //_root = new Separator();
                 for (int i = 0; i < _reader.NumBones; i++)
                 {
                     _bonesSwitch[i] = setupPosViewBone(_reader, i);
                     _hamsSwitch[i] = setupPosViewHAMs(_reader, i);
-                    _root.addNode(_bonesSwitch[i]);
-                    _root.addNode(_hamsSwitch[i]);
+                    sec1.addNode(_bonesSwitch[i]);
+                    sec1.addNode(_hamsSwitch[i]);
                 }
                 if (_reader.HasLables)
                 {
                     setupPosViewLables(_reader);
-                    _root.addNode(_labels);
+                    sec2.addNode(_labels);
                 }
             }
             catch (Exception ex)

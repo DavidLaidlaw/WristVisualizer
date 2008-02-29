@@ -12,10 +12,11 @@ libCoin3D::Label2D::Label2D()
 	_text = new SoText2;
 	_translation->translation.setValue(-0.90f, 0.90f, 0.);
 	_font = new SoFont;
-	_font->size = 200;
+	_font->size.setValue(200);
 
-	_node->addChild(_font);
+	
 	_node->addChild(_translation);
+	_node->addChild(_font);
 	_node->addChild(_text);
 }
 
@@ -26,7 +27,7 @@ libCoin3D::Label2D::~Label2D()
 
 void libCoin3D::Label2D::setFontSize(int size)
 {
-	_font->size = 200;
+	_font->size.setValue(200);
 }
 
 void libCoin3D::Label2D::setLocation(float x, float y) 
@@ -37,6 +38,6 @@ void libCoin3D::Label2D::setLocation(float x, float y)
 void libCoin3D::Label2D::setText(System::String ^text) 
 {
 	char* label = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(text).ToPointer();
-	_text->string = label;
+	_text->string.setValue(label);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)label);
 }

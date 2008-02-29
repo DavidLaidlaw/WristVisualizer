@@ -77,6 +77,7 @@ public:
 	void setTransparencyType(TransparencyTypes type);
 
 	void setDrawStyle();
+	void viewAll();
 
 private:
 	bool saveToImage(System::String^ filename,char* ext);

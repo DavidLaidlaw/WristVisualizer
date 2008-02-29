@@ -450,7 +450,6 @@ namespace WristVizualizer
             _mode = Modes.POSVIEW;
             setFormForCurrentMode();
             _posViewController = new PosViewController(posViewFilename, _viewer);
-            _viewer.setSceneGraph(_posViewController.Root);
             _root = _posViewController.Root; //save local copy also
             //_viewer.setDrawStyle();
 
