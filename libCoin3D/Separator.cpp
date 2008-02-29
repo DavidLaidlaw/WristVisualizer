@@ -27,6 +27,8 @@ void libCoin3D::Separator::addFile(System::String^ filename, bool canhide)
 	SoInput in;
 	if ( in.openFile(test) ) {
 		SoSeparator *bone = SoDB::readAll( &in );
+		if (bone==NULL) //small error checking
+			throw gcnew System::ArgumentException("Error parsing IV file: "+filename);
 		_separator->addChild(_style);
 		_separator->addChild(bone);
 	}
