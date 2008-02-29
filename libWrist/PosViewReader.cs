@@ -22,8 +22,6 @@ namespace libWrist
         private string _fiberName;
         private int _numFibers;
 
-        private int _numPositions;
-
         private string[] _labels;
 
         public PosViewReader(string posFilename)
@@ -31,30 +29,6 @@ namespace libWrist
             parsePosFile(posFilename);
             string iniFile = Path.Combine(Path.GetDirectoryName(posFilename),Path.GetFileNameWithoutExtension(posFilename)+".ini");
             parsePosViewINIFiles(iniFile);
-            testLoad();
-        }
-
-        private void testLoad()
-        {
-            TransformMatrix[] m;
-            foreach (string fname in this.RTFileNames)
-            {
-                m = DatParser.parsePosViewRTFile(fname);
-                Console.WriteLine(String.Format("Parsed {0} with {1} transforms",fname,m.Length));
-            }
-
-            double[][] m2;
-            foreach (string fname in this.HAMFileNames )
-            {
-                m2 = DatParser.parsePosViewHAMFile(fname);
-                Console.WriteLine(String.Format("Parsed {0} with {1} hams",fname, m2.Length));
-            }
-
-            foreach(string fname in this.IvFileNames)
-                if (File.Exists(fname))
-                    Console.WriteLine(String.Format("IV files exists: {0}",fname));
-                else
-                    Console.WriteLine(String.Format("IV files DOES NOT exists: {0}", fname));
         }
 
         #region Public Interfaces
