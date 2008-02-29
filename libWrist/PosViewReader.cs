@@ -144,7 +144,7 @@ namespace libWrist
                 return;
 
             string headingRegex = "^\\[(\\S+)\\]$";
-            string keyRegex = "(?<key>[\\S^=]+)=(?<value>.*)$";
+            string keyRegex = "(?<key>[\\w]+)=(?<value>.*)$";
 
             Regex heading = new Regex(headingRegex);
             Regex key = new Regex(keyRegex);
