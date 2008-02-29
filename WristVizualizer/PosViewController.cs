@@ -105,6 +105,7 @@ namespace WristVizualizer
         {
             buttonPosViewPlay.Enabled = false;
             buttonPosViewStop.Enabled = true;
+            trackBarPosViewCurrentFrame.Enabled = false;
 
             _timer.Enabled = true;
         }
@@ -113,6 +114,7 @@ namespace WristVizualizer
         {
             buttonPosViewPlay.Enabled = true;
             buttonPosViewStop.Enabled = false;
+            trackBarPosViewCurrentFrame.Enabled = true;
 
             _timer.Enabled = false;
         }
