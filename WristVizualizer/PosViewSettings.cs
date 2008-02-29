@@ -6,7 +6,7 @@ namespace WristVizualizer
 {
     class PosViewSettings
     {
-        public static float[][] hamColors = {
+        public static float[][] PosViewColors = {
             new float[] { 0.8f, 0.2f, 0.2f},
             new float[] { 0.2f, 0.8f, 0.2f},
             new float[] { 0.2f, 0.7f, 0.8f},

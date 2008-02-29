@@ -4,6 +4,12 @@
 libCoin3D::Material::Material()
 {
 	_material = new SoMaterial();
+	_material->ref();
+}
+
+libCoin3D::Material::~Material()
+{
+	_material->unref();
 }
 
 libCoin3D::Material::Material(SoMaterial* material)

@@ -14,6 +14,7 @@ namespace WristVizualizer
         Switch[] _bonesSwitch;
         Switch[] _hamsSwitch;
         Separator[] _bones;
+        Material[] _boneMaterials;
 
         Separator _root;
         int _numPositions;
@@ -131,7 +132,18 @@ namespace WristVizualizer
 
         void checkBoxOverrideMaterial_CheckedChanged(object sender, EventArgs e)
         {
-
+            if (checkBoxOverrideMaterial.Checked)
+            {
+                //then lets insert that material!
+                for (int i = 0; i < _bones.Length; i++)
+                    _bones[i].insertNode(_boneMaterials[i], 0);
+            }
+            else
+            {
+                //need to go and remove all the material nodes!
+                for (int i = 0; i < _bones.Length; i++)
+                    _bones[i].removeChild(_boneMaterials[i]);
+            }
         }
 
         void checkBoxShowHams_CheckedChanged(object sender, EventArgs e)
@@ -266,10 +278,10 @@ namespace WristVizualizer
         {
             Switch s = new Switch();
             if (!pos.ShowHams)
-                return s; //this SHOULD work...
+                return s;
 
             double[][] HAMdata = DatParser.parsePosViewHAMFile(pos.HAMFileNames[boneIndex]);
-            float[][] hamColors = PosViewSettings.hamColors;
+            float[][] hamColors = PosViewSettings.PosViewColors;
             for (int i = 0; i < HAMdata.Length; i++)
             {
                 Separator sepPosition = new Separator();
@@ -278,7 +290,6 @@ namespace WristVizualizer
                 color.setOverride(true);
                 sepPosition.addNode(color);
                 HamAxis axis = new HamAxis(HAMdata[i][1], HAMdata[i][2], HAMdata[i][3], HAMdata[i][5], HAMdata[i][6], HAMdata[i][7]);
-                //axis.setColor(hamColors[boneIndex][0], hamColors[boneIndex][1], hamColors[boneIndex][2]);
                 sepPosition.addNode(axis);
                 s.addChild(sepPosition);
             }
@@ -290,7 +301,14 @@ namespace WristVizualizer
         {
             Switch s = new Switch();
             _bones[boneIndex] = new Separator();
+            //create a material for that bone!
+            _boneMaterials[boneIndex] = new Material();
+            float[][] hamColors = PosViewSettings.PosViewColors;
+            _boneMaterials[boneIndex].setColor(hamColors[boneIndex][0], hamColors[boneIndex][1], hamColors[boneIndex][2]);
+            _boneMaterials[boneIndex].setOverride(true); //for this material to apply to everything below it.
+
             _bones[boneIndex].addFile(pos.IvFileNames[boneIndex], false);  //load bone file once, it will referenced multiple times
+            _bones[boneIndex].insertNode(_boneMaterials[boneIndex], 0);
 
             Transform[] transforms = DatParser.parsePosViewRTFileToTransforms(pos.RTFileNames[boneIndex]);
             _numPositions = transforms.Length;
@@ -315,6 +333,7 @@ namespace WristVizualizer
                 _bonesSwitch = new Switch[_reader.NumBones];
                 _hamsSwitch = new Switch[_reader.NumBones];
                 _bones = new Separator[_reader.NumBones];
+                _boneMaterials = new Material[_reader.NumBones];
                 _root = new Separator();
                 for (int i = 0; i < _reader.NumBones; i++)
                 {

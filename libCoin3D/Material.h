@@ -9,6 +9,7 @@ public ref class Material : Node
 {
 public:
 	Material();
+	~Material();
 	Material(SoMaterial* material);
 	virtual void setColor(float r, float g, float b);
 	virtual void setTransparency(float transparency);

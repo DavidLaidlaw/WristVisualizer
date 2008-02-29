@@ -18,6 +18,7 @@ public:
 	SoSeparator* getSoSeparator(void);
 	void addTransform(Transform^ transform);
 	void removeTransform();
+	void insertNode(Node^ node, int position);
 	void removeChild(Separator^ child);
 	void removeChild(Node^ node);
 	bool hasTransform() { return (_numTransforms>0); }

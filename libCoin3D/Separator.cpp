@@ -41,6 +41,11 @@ void libCoin3D::Separator::addNode(Node^ node)
 		_separator->addChild(node->getNode());
 }
 
+void libCoin3D::Separator::insertNode(Node^ node, int position)
+{
+	_separator->insertChild(node->getNode(), position);
+}
+
 void libCoin3D::Separator::removeChild(Separator^ child)
 {
 	_separator->removeChild(child->getSoSeparator());
