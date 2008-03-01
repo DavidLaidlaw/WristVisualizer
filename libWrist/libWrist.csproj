@@ -35,8 +35,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Class1.cs" />
     <Compile Include="DatParser.cs" />
+    <Compile Include="InertialProperties.cs" />
     <Compile Include="IniFileParser.cs" />
     <Compile Include="PosViewReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
