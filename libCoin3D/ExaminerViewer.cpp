@@ -154,6 +154,80 @@ bool libCoin3D::ExaminerViewer::saveToBMP(System::String ^filename)
 	return saveToImage(filename,"bmp");
 }
 
+System::Drawing::Image^ libCoin3D::ExaminerViewer::getImage()
+{
+	const SbViewportRegion &vp  = _viewer->getViewportRegion();
+	const SbVec2s &imagePixSize = vp.getViewportSizePixels();
+	SbVec2f imageInches;
+	float pixPerInch;
+	float quality = 1;
+	int screenDPI = 400;
+  
+	pixPerInch = 300;
+	imageInches.setValue((float)imagePixSize[0] / pixPerInch,
+		       (float)imagePixSize[1] / pixPerInch);
+  
+    // The resolution to render the scene for the printer
+	// is equal to the size of the image in inches times
+	// the printer DPI;
+	SbVec2s postScriptRes;
+    postScriptRes.setValue((short)(imageInches[0]*screenDPI),
+                          (short)(imageInches[1]*screenDPI));
+
+    // Create a viewport to render the scene into.
+    SbViewportRegion myViewport;
+    myViewport.setWindowSize(postScriptRes);
+    myViewport.setPixelsPerInch((float)screenDPI);
+
+	// Render the scene
+	//SoGLRenderAction *newRA = new SoGLRenderAction(myViewport);
+	//newRA->setTransparencyType(SoGLRenderAction::BLEND);    
+	SoOffscreenRenderer *myRenderer = new SoOffscreenRenderer(myViewport);
+
+
+    if (!myRenderer->render(_viewer->getSceneManager()->getSceneGraph())) {  //render root?
+		delete myRenderer;
+		System::Console::WriteLine("Couldn't capture root of tree");
+		return nullptr;
+    }
+	unsigned char* buffer = myRenderer->getBuffer();
+	short x, y;
+	myViewport.getViewportSizePixels().getValue(x,y);
+
+	//array<unsigned char>^ data = gcnew array<unsigned char>(x*y*3);
+	//for (int i=0; i<x*y*3; i++) {
+	//	data[i] = (int)buffer[i];
+	//}
+	System::Drawing::Bitmap^ im = gcnew System::Drawing::Bitmap(x,y,
+		System::Drawing::Imaging::PixelFormat::Format24bppRgb);
+	//need to initialize the graphic, don't know why
+	System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(im);
+	g->FillRectangle(System::Drawing::Brushes::Black,0,0,x,y);
+
+	System::Drawing::Imaging::BitmapData^ bitdata;
+	System::Drawing::Rectangle rect = System::Drawing::Rectangle(0,0,x,y);
+	bitdata = im->LockBits(rect,
+		System::Drawing::Imaging::ImageLockMode::ReadWrite,
+		im->PixelFormat);
+
+	int bytes = bitdata->Stride*im->Height;
+
+	//memcpy(bitdata->Scan0.ToPointer(),buffer,bytes);
+	//Somehow, the following 3 lines of code are faster then a simple memcpy
+	//I have no fsking Idea how, but it is.... go figure
+	array<System::Byte>^ rgbValues = gcnew array<System::Byte>(bytes);
+	System::Runtime::InteropServices::Marshal::Copy((System::IntPtr)buffer,rgbValues,0,bytes);
+	System::Runtime::InteropServices::Marshal::Copy(rgbValues,0,bitdata->Scan0,bytes);
+
+	im->UnlockBits(bitdata);
+
+	//flip us over
+	im->RotateFlip(System::Drawing::RotateFlipType::RotateNoneFlipY);
+
+    delete myRenderer;
+	return im;
+}
+
 bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext) 
 {
 	char* fname = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename).ToPointer();

@@ -76,6 +76,8 @@ public:
 	TransparencyTypes getTransparencyType();
 	void setTransparencyType(TransparencyTypes type);
 
+	System::Drawing::Image^ getImage();
+
 	void setDrawStyle();
 	void viewAll();
 
