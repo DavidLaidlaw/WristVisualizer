@@ -272,6 +272,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\TessellatedSurface.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Transform.cpp"
 				>
 			</File>
@@ -343,6 +347,10 @@
 			</File>
 			<File
 				RelativePath=".\Switch.h"
+				>
+			</File>
+			<File
+				RelativePath=".\TessellatedSurface.h"
 				>
 			</File>
 			<File

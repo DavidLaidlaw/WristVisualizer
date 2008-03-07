@@ -1,4 +1,9 @@
 #include "StdAfx.h"
+
+#include <Inventor/actions/SoSearchAction.h>
+#include <Inventor/nodes/SoCoordinate3.h>
+#include <Inventor/nodes/SoIndexedFaceSet.h>
+
 #include "Separator.h"
 
 libCoin3D::Separator::Separator(void)
@@ -90,4 +95,43 @@ void libCoin3D::Separator::removeTransform()
 SoNode* libCoin3D::Separator::getNode()
 {
 	return _separator;
+}
+
+libCoin3D::TessellatedSurface^ libCoin3D::Separator::findTeselatedSurface()
+{
+	SoSearchAction sa;
+	sa.setType(SoCoordinate3::getClassTypeId(),false);
+	//by default only gets the first path
+	//sa.setInterest(SoSearchAction::ALL);
+	sa.apply(_separator);
+	SoPath* myPath = sa.getPath();
+	if (myPath==NULL)
+		return nullptr; //no teselated surfaces found
+
+	if (myPath->getLength() < 2) {
+		fprintf(stderr,"Problem, no parrent!\n"); //TODO: How did we reach here, can we even?
+		return nullptr;
+	}
+
+	SoCoordinate3* coords = (SoCoordinate3*)myPath->getTail();
+	SoGroup* parent = (SoGroup*)myPath->getNodeFromTail(1);
+	//now I need to go find the faceSet (connections)
+	SoIndexedFaceSet* conn = NULL;
+	int coordIndex = parent->findChild(coords);
+	assert(coordIndex >= 0); //it must be greater, we know its the parent
+	//now to start at index+1, its after the node we know
+	for (int i=coordIndex + 1; i < parent->getNumChildren(); i++) {
+		//look for an IndexedFaceSet && NOT another Coordinate3 node
+		if (parent->getChild(i)->isOfType(SoIndexedFaceSet::getClassTypeId())) {
+			conn = (SoIndexedFaceSet*)parent->getChild(i);
+			break;
+		}
+
+		if (parent->getChild(i)->isOfType(SoCoordinate3::getClassTypeId()))
+			return nullptr;
+	}
+
+	//at this point we should have both the Index and Coordinates
+	TessellatedSurface^ ts = gcnew TessellatedSurface(coords,conn);
+	return ts;
 }

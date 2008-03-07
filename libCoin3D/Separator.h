@@ -1,9 +1,10 @@
 #pragma once
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/nodes/SoDrawStyle.h>
+
+#include "TessellatedSurface.h"
 #include "Transform.h"
 #include "Node.h"
-
 
 
 namespace libCoin3D {
@@ -28,10 +29,13 @@ public:
 	void hide();
 	void show();
 
+	TessellatedSurface^ findTeselatedSurface();
+
 private:
 	SoSeparator* _separator;
 	SoDrawStyle* _style;
 	int _numTransforms;
+
 	
 };
 }
