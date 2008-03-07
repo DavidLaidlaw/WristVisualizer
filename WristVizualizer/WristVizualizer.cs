@@ -187,7 +187,7 @@ namespace WristVizualizer
             viewSourceToolStripMenuItem.Enabled = true;
             saveAsToolStripMenuItem.Enabled = true;
             showScenegraphToolStripMenuItem.Enabled = true;
-            saveMovieToolStripMenuItem.Visible = false;
+            saveMovieToolStripMenuItem.Enabled = false;
             seriesListBox.Items.Clear();
             if (_pointSelection != null)
             {
