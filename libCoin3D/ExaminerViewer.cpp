@@ -202,7 +202,7 @@ System::Drawing::Image^ libCoin3D::ExaminerViewer::getImage()
 		System::Drawing::Imaging::PixelFormat::Format24bppRgb);
 	//need to initialize the graphic, don't know why
 	System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(im);
-	g->FillRectangle(System::Drawing::Brushes::Black,0,0,x,y);
+	g->FillRectangle(System::Drawing::Brushes::Green,0,0,x,y);
 
 	System::Drawing::Imaging::BitmapData^ bitdata;
 	System::Drawing::Rectangle rect = System::Drawing::Rectangle(0,0,x,y);
@@ -210,14 +210,35 @@ System::Drawing::Image^ libCoin3D::ExaminerViewer::getImage()
 		System::Drawing::Imaging::ImageLockMode::ReadWrite,
 		im->PixelFormat);
 
-	int bytes = bitdata->Stride*im->Height;
+	//need to fix the rgb data
+	int bytesInBuffer = im->Width*im->Height*3;
+	array<System::Byte>^ rgbValues = gcnew array<System::Byte>(bytesInBuffer);
+	//copy all the buffer data into the array
+	System::Runtime::InteropServices::Marshal::Copy((System::IntPtr)buffer,rgbValues,0,bytesInBuffer);
 
-	//memcpy(bitdata->Scan0.ToPointer(),buffer,bytes);
-	//Somehow, the following 3 lines of code are faster then a simple memcpy
-	//I have no fsking Idea how, but it is.... go figure
-	array<System::Byte>^ rgbValues = gcnew array<System::Byte>(bytes);
-	System::Runtime::InteropServices::Marshal::Copy((System::IntPtr)buffer,rgbValues,0,bytes);
-	System::Runtime::InteropServices::Marshal::Copy(rgbValues,0,bitdata->Scan0,bytes);
+	//for some reason, 24bppRgb actually returns (and therefore requires) BGR data, not RGB, so we need to flip a lot....fuck
+	System::Byte tempByte;
+	for (int i=0; i<bytesInBuffer; i += 3) {
+		tempByte = rgbValues[i];
+		rgbValues[i] = rgbValues[i+2];
+		rgbValues[i+2] = tempByte;
+	}
+	
+	//check that the stride length is what we think
+	if (bitdata->Stride == im->Width*3) {
+		//if its exact, then we can copy in one go
+		int bytes = bitdata->Stride*im->Height;
+		System::Runtime::InteropServices::Marshal::Copy(rgbValues,0,bitdata->Scan0,bytes);
+	}
+	else {
+		//the stride is wrong, so we need to copy each line by itself
+		int bytesPerLine = im->Width*3;
+		for (int i=0; i<im->Height; i++) {
+			//copy to the right location, need to make our offset based on the stride size
+			System::IntPtr destination = System::IntPtr(bitdata->Scan0.ToInt64() + i*bitdata->Stride);
+			System::Runtime::InteropServices::Marshal::Copy(rgbValues,i*bytesPerLine,destination,bytesPerLine); 
+		}
+	}
 
 	im->UnlockBits(bitdata);
 
