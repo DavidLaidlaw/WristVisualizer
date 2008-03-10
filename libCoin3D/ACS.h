@@ -12,7 +12,7 @@ namespace libCoin3D {
 		ACS();
 		virtual SoNode* getNode() override;
 	private: 
-		virtual void makeACS(int length);
+		void makeACS(int length);
 		SoSeparator* _acs;
 	};
 }

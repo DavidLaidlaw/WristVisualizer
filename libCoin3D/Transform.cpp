@@ -95,7 +95,7 @@ void libCoin3D::Transform::invert()
 bool libCoin3D::Transform::isIdentity()
 {
 	SbMatrix ident = SbMatrix::identity();
-	return ident.equals(_rotMatrix[0],0.001f);
+	return ident.equals(_rotMatrix[0],0.001f) != 0;
 }
 
 SoNode* libCoin3D::Transform::getNode()

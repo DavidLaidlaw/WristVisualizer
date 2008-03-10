@@ -280,7 +280,7 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 
     // Generate PostScript and write it to the given file
     //myRenderer->writeToRGB(postfile->getFilePointer());
-	bool result = myRenderer->writeToFile(fname,ext);
+	bool result = (myRenderer->writeToFile(fname,ext) != 0);
 	//myRenderer->writeToJPEG(postfile->getFilePointer(), quality);
 
     delete myRenderer;
@@ -323,7 +323,7 @@ void libCoin3D::ExaminerViewer::setBackgroundColor(int rgb)
 void libCoin3D::ExaminerViewer::setFeedbackVisibility(bool visible)
 {
 	//only change, if its different
-	if (_viewer->isFeedbackVisible() != visible)
+	if ((_viewer->isFeedbackVisible()!=0) != visible)
 		_viewer->setFeedbackVisibility(visible);
 
 }

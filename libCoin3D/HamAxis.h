@@ -14,7 +14,7 @@ public:
 	void setColor(float r, float g, float b);
 	virtual SoNode* getNode() override { return _node; }
 private:
-	virtual void makeHam(float Nx, float Ny, float Nz, float Qx, float Qy, float Qz, SoMaterial* m);
+	void makeHam(float Nx, float Ny, float Nz, float Qx, float Qy, float Qz, SoMaterial* m);
 	SoNode* _node;
 };
 }
