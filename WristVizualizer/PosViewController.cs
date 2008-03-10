@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using libWrist;
 using libCoin3D;
+using AviFile;
 
 namespace WristVizualizer
 {
@@ -225,35 +226,65 @@ namespace WristVizualizer
 
         public void saveToMovie()
         {
-            FolderBrowserDialog fb = new FolderBrowserDialog();
-            fb.SelectedPath = System.IO.Path.GetDirectoryName(_posFileName);
-#if DEBUG
-            fb.SelectedPath = @"C:\Temp\testMovie";
-#endif
-            fb.ShowNewFolderButton = true;
-            fb.Description = "Choose directory to output movie frames to";
-            if (DialogResult.OK != fb.ShowDialog())
-                return;
-
-            //save starting state
+            //save starting state & stop playback
             bool startPlaying = _timer.Enabled;
             int startFrame = _currentFrame;
             _timer.Enabled = false;
             //TODO: Disable buttons....
 
-            string outputDir = fb.SelectedPath;
-            //save it to a movie
-            for (int i = 0; i < NumPositions; i++)
+            //CurrentFrame = 0;
+            //_viewer.saveToJPEG(@"C:\Temp\testMovie\test1.jpg");
+            //System.Drawing.Image im = _viewer.getImage();
+            //im.Save(@"C:\Temp\testMovie\test2.jpg", System.Drawing.Imaging.ImageFormat.Jpeg);
+            ////debug.
+            //return;
+
+            //show save dialogue
+            MovieExportOptions dialog = new MovieExportOptions(_posFileName, numericUpDownPosViewFPS.Value);
+            dialog.ShowDialog();
+
+            //okay, now lets figure out what we are doing here
+            switch (dialog.results)
             {
-                CurrentFrame = i;  //change to current frame
-                string fname = Path.Combine(outputDir,String.Format("outfile{0:d3}.jpg",i));
-                _viewer.saveToJPEG(fname);
+                case MovieExportOptions.SaveType.CANCEL:
+                    //nothing to do, we were canceled
+                    break;
+                case MovieExportOptions.SaveType.IMAGES:
+                    //save images
+                    string outputDir = dialog.OutputFileName;
+                    //save it to a movie
+                    for (int i = 0; i < NumPositions; i++)
+                    {
+                        CurrentFrame = i;  //change to current frame
+                        string fname = Path.Combine(outputDir, String.Format("outfile{0:d3}.jpg", i));
+                        _viewer.saveToJPEG(fname);
+                    }
+                    break;
+                case MovieExportOptions.SaveType.MOVIE:
+                    //save movie
+                    try
+                    {
+                        AviManager aviManager = new AviManager(dialog.OutputFileName, false);
+                        CurrentFrame = 0; //set to first frame, so we can grab it.
+                        System.Drawing.Bitmap frame = (System.Drawing.Bitmap)_viewer.getImage();
+                        VideoStream vStream = aviManager.AddVideoStream(dialog.MovieCompress, (double)dialog.MovieFPS, frame);
+                        for (int i = 1; i < NumPositions; i++) //start from frame 1, frame 0 was added when we began
+                        {
+                            CurrentFrame = i;  //change to current frame
+                            vStream.AddFrame((System.Drawing.Bitmap)_viewer.getImage());
+                        }
+                        aviManager.Close();  //close out and save
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error saving to movie file.\n\n" + ex.Message);
+                    }
+                    break;
             }
 
-            //wrap us up
+            //wrap us up, resume frame and playing status
             CurrentFrame = startFrame;
             _timer.Enabled = startPlaying;
-
         }
 
         #region FrameControl
