@@ -790,6 +790,31 @@ namespace WristVizualizer
             _posViewController.saveToMovie();
         }
 
+        private void calculateInertiasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Separator s = _viewer.getSeparatorForSelection();
+            if (s == null)
+                return;
+
+            TessellatedSurface ts = s.findTeselatedSurface();
+            if (ts == null)
+                return;
+
+            InertialProperties ip = new InertialProperties(ts.Points, ts.Connections);
+            TransformMatrix tfrmMatrix = new TransformMatrix();
+            tfrmMatrix.R = ip.EigenVectors;
+            tfrmMatrix.T = new DotNetMatrix.GeneralMatrix(ip.Centroid, 1);
+
+            //create separator for inertial axes
+            Separator axesSeparator = new Separator();
+            Transform tfrm = new Transform();
+            DatParser.addRTtoTransform(tfrmMatrix, tfrm);
+            axesSeparator.addNode(tfrm);
+            axesSeparator.addNode(new ACS());
+
+            s.insertNode(axesSeparator, 0);
+        }
+
         #region Saving/Output
         private void saveFrameToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -1077,30 +1102,7 @@ namespace WristVizualizer
 
         #endregion
 
-        private void calculateInertiasToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Separator s = _viewer.getSeparatorForSelection();
-            if (s == null)
-                return;
 
-            TessellatedSurface ts = s.findTeselatedSurface();
-            if (ts == null)
-                return;
-
-            InertialProperties ip = new InertialProperties(ts.Points, ts.Connections);
-            TransformMatrix tfrmMatrix = new TransformMatrix();
-            tfrmMatrix.R = ip.EigenVectors;
-            tfrmMatrix.T = new DotNetMatrix.GeneralMatrix(ip.Centroid, 1);
-
-            //create separator for inertial axes
-            Separator axesSeparator = new Separator();
-            Transform tfrm = new Transform();
-            DatParser.addRTtoTransform(tfrmMatrix, tfrm);
-            axesSeparator.addNode(tfrm);
-            axesSeparator.addNode(new ACS());
-
-            s.insertNode(axesSeparator, 0);
-        }
 
 
 
