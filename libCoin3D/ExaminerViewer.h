@@ -63,6 +63,7 @@ public:
 	Material^ createMaterialForSelected();
 	void removeMaterialFromScene(Material^ material);
 	void setSelection(ScenegraphNode^ node);
+	Separator^ getSeparatorForSelection();
 
 	//get and set transparency rendering type
 	enum class TransparencyTypes {

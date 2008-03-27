@@ -12,6 +12,12 @@ libCoin3D::Separator::Separator(void)
 	_style = NULL;
 }
 
+libCoin3D::Separator::Separator(SoSeparator* node)
+{
+	_separator = node;
+	_style = NULL;
+}
+
 
 void libCoin3D::Separator::addChild(Separator^ child)
 {

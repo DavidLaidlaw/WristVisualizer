@@ -137,6 +137,7 @@ namespace WristVizualizer
             this.numericUpDownPosViewFPS = new System.Windows.Forms.NumericUpDown();
             this.buttonPosViewStop = new System.Windows.Forms.Button();
             this.buttonPosViewPlay = new System.Windows.Forms.Button();
+            this.calculateInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -300,7 +301,8 @@ namespace WristVizualizer
             // advancedToolStripMenuItem
             // 
             this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pointIntersectionToolStripMenuItem});
+            this.pointIntersectionToolStripMenuItem,
+            this.calculateInertiasToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.advancedToolStripMenuItem.Text = "&Advanced";
@@ -1242,6 +1244,14 @@ namespace WristVizualizer
             this.buttonPosViewPlay.Text = "Play";
             this.buttonPosViewPlay.UseVisualStyleBackColor = true;
             // 
+            // calculateInertiasToolStripMenuItem
+            // 
+            this.calculateInertiasToolStripMenuItem.Enabled = false;
+            this.calculateInertiasToolStripMenuItem.Name = "calculateInertiasToolStripMenuItem";
+            this.calculateInertiasToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.calculateInertiasToolStripMenuItem.Text = "Calculate Inertias";
+            this.calculateInertiasToolStripMenuItem.Click += new System.EventHandler(this.calculateInertiasToolStripMenuItem_Click);
+            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -1391,6 +1401,7 @@ namespace WristVizualizer
         private System.Windows.Forms.CheckBox checkBoxPosViewOverrideMaterial;
         private System.Windows.Forms.CheckBox checkBoxPosViewShowAxes;
         private System.Windows.Forms.CheckBox checkBoxPosViewLabels;
+        private System.Windows.Forms.ToolStripMenuItem calculateInertiasToolStripMenuItem;
     }
 }
 

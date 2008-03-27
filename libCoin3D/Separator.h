@@ -12,6 +12,7 @@ public ref class Separator : Node
 {
 public:
 	Separator(void);
+	Separator(SoSeparator* node);
 	void addChild(Separator^ child);
 	void addFile(System::String^ filename);
 	void addFile(System::String^ filename, bool canhide);

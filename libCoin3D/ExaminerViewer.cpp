@@ -534,6 +534,35 @@ SoMaterial* libCoin3D::ExaminerViewer::getMaterialPropertiesAtNode(SoNode* node)
 	return data.resultingMaterial;
 }
 
+libCoin3D::Separator^ libCoin3D::ExaminerViewer::getSeparatorForSelection()
+{
+	if (_selection==NULL || _selection->getNumSelected()!=1)
+		return nullptr;
+
+	//try and get an SoSeparator 2 above, if not, 1 above....I think
+	if (_selection->getPath(0)->getLength() >= 3
+		&& _selection->getPath(0)->getNodeFromTail(2)->isOfType(SoSeparator::getClassTypeId())) {
+			//found one two up :)
+			return gcnew Separator((SoSeparator*)_selection->getPath(0)->getNodeFromTail(2));
+	}
+
+	//okay, lets try 1 above
+	if (_selection->getPath(0)->getLength() >= 2
+		&& _selection->getPath(0)->getNodeFromTail(1)->isOfType(SoSeparator::getClassTypeId())) {
+			//found one two up :)
+			return gcnew Separator((SoSeparator*)_selection->getPath(0)->getNodeFromTail(1));
+	}
+
+	//okay, no luck still, lets work our way up the tree
+	for (int i=3; i< _selection->getPath(0)->getLength() - 1; i++) {
+		if (_selection->getPath(0)->getNodeFromTail(i)->isOfType(SoSeparator::getClassTypeId()))
+			return gcnew Separator((SoSeparator*)_selection->getPath(0)->getNodeFromTail(i));
+	}
+
+	//no luck at all, oh well
+	return nullptr;
+}
+
 
 SoNode* libCoin3D::ExaminerViewer::getSelectedNode()
 {

@@ -992,6 +992,7 @@ namespace WristVizualizer
         void _viewer_OnObjectDeselected()
         {
             colorTransparencyToolStripMenuItem.Enabled = false;
+            calculateInertiasToolStripMenuItem.Enabled = false;
 
             //if the material is being edited, then we need to shut it down.
             if (_materialEditor != null && _materialEditor.Visible)
@@ -1003,6 +1004,7 @@ namespace WristVizualizer
         void _viewer_OnObjectSelected()
         {
             colorTransparencyToolStripMenuItem.Enabled = true;
+            calculateInertiasToolStripMenuItem.Enabled = true;
         }
 
         private void colorTransparencyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1074,6 +1076,31 @@ namespace WristVizualizer
         }
 
         #endregion
+
+        private void calculateInertiasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Separator s = _viewer.getSeparatorForSelection();
+            if (s == null)
+                return;
+
+            TessellatedSurface ts = s.findTeselatedSurface();
+            if (ts == null)
+                return;
+
+            InertialProperties ip = new InertialProperties(ts.Points, ts.Connections);
+            TransformMatrix tfrmMatrix = new TransformMatrix();
+            tfrmMatrix.R = ip.EigenVectors;
+            tfrmMatrix.T = new DotNetMatrix.GeneralMatrix(ip.Centroid, 1);
+
+            //create separator for inertial axes
+            Separator axesSeparator = new Separator();
+            Transform tfrm = new Transform();
+            DatParser.addRTtoTransform(tfrmMatrix, tfrm);
+            axesSeparator.addNode(tfrm);
+            axesSeparator.addNode(new ACS());
+
+            s.insertNode(axesSeparator, 0);
+        }
 
 
 

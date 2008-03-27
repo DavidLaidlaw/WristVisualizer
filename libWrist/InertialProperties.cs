@@ -323,6 +323,9 @@ namespace libWrist
             EigenvalueDecomposition eig = i_CoM.Eigen();
             _eigenvalues = eig.D;
             _eigenvectors = eig.GetV();
+            //make sure this is a right handed matrix
+            if (_eigenvectors.Determinant() < 0)
+                _eigenvectors = _eigenvectors.Multiply(-1);
         }
         #endregion
     }
