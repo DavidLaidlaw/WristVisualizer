@@ -585,7 +585,7 @@ namespace WristVizualizer
                 try
                 {
                     //If its checked, then we need to add it
-                    TransformMatrix[] inert = DatParser.parseInertiaFile2(_wrist.inertiaFile);
+                    TransformRT[] inert = DatParser.parseInertiaFile2(_wrist.inertiaFile);
                     for (int i = 2; i < 10; i++) //skip the long bones
                     {
                         if (_bones[i] == null)
@@ -626,7 +626,7 @@ namespace WristVizualizer
                 try
                 {
                     //If its checked, then we need to add it
-                    TransformMatrix[] inert = DatParser.parseACSFile2(_wrist.acsFile);
+                    TransformRT[] inert = DatParser.parseACSFile2(_wrist.acsFile);
 
                     //only for radius, check if it exists
                     if (_bones[0] == null)
@@ -801,7 +801,7 @@ namespace WristVizualizer
                 return;
 
             InertialProperties ip = new InertialProperties(ts.Points, ts.Connections);
-            TransformMatrix tfrmMatrix = new TransformMatrix();
+            TransformRT tfrmMatrix = new TransformRT();
             tfrmMatrix.R = ip.EigenVectors;
             tfrmMatrix.T = new DotNetMatrix.GeneralMatrix(ip.Centroid, 1);
 

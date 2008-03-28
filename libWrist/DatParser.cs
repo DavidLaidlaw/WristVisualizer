@@ -9,7 +9,7 @@ using libCoin3D;
 
 namespace libWrist
 {
-    public struct TransformMatrix
+    public struct TransformRT
     {
         public GeneralMatrix R;
         public GeneralMatrix T;
@@ -28,7 +28,7 @@ namespace libWrist
             for (int i = 0; i < motionFiles.Length; i++)
             {
                 transforms[i] = new Transform[numBones];
-                TransformMatrix[] tfm = parseMotionFile2(motionFiles[i]);
+                TransformRT[] tfm = parseMotionFile2(motionFiles[i]);
                 for (int j = 0; j < numBones; j++)
                 {
                     transforms[i][j] = new Transform();
@@ -104,13 +104,13 @@ namespace libWrist
             return dat;
         }
 
-        public static TransformMatrix[] parseInertiaFile2(string filename)
+        public static TransformRT[] parseInertiaFile2(string filename)
         {
             double[][] dat = parseInertiaFile(filename);
-            TransformMatrix[] inertias = new TransformMatrix[15];
+            TransformRT[] inertias = new TransformRT[15];
             for (int i = 0; i < 15; i++)
             {
-                inertias[i] = new TransformMatrix();
+                inertias[i] = new TransformRT();
                 double[][] tempR = { dat[i * 5 + 2], dat[i * 5 + 3], dat[i * 5 + 4] };
                 inertias[i].R = new GeneralMatrix(tempR, 3, 3);
                 inertias[i].T = new GeneralMatrix(dat[i * 5], 1);
@@ -132,12 +132,12 @@ namespace libWrist
             return dat;
         }
 
-        public static TransformMatrix[] parseACSFile2(string filename)
+        public static TransformRT[] parseACSFile2(string filename)
         {
             double[][] dat = parseACSFile(filename);
-            TransformMatrix[] ACS = new TransformMatrix[1];
+            TransformRT[] ACS = new TransformRT[1];
 
-            ACS[0] = new TransformMatrix();
+            ACS[0] = new TransformRT();
             double[][] tempR = { dat[0], dat[1], dat[2] };
             ACS[0].R = new GeneralMatrix(tempR, 3, 3);
             ACS[0].T = new GeneralMatrix(dat[3], 1);
@@ -145,13 +145,13 @@ namespace libWrist
             return ACS;
         }
 
-        public static TransformMatrix[] parseMotionFile2(string filename)
+        public static TransformRT[] parseMotionFile2(string filename)
         {
             double[][] dat = parseMotionFile(filename);
-            TransformMatrix[] transforms = new TransformMatrix[15];
+            TransformRT[] transforms = new TransformRT[15];
             for (int i = 0; i < 15; i++)
             {
-                transforms[i] = new TransformMatrix();
+                transforms[i] = new TransformRT();
                 double[][] tempR = { dat[i * 4], dat[i * 4 + 1], dat[i * 4 + 2] };
                 transforms[i].R = new GeneralMatrix(tempR, 3, 3);
                 transforms[i].T = new GeneralMatrix(dat[i * 4 + 3], 1);
@@ -192,14 +192,14 @@ namespace libWrist
             }
         }
 
-        public static TransformMatrix[] parsePosViewRTFile(string filename)
+        public static TransformRT[] parsePosViewRTFile(string filename)
         {
             double[][] dat = parsePosViewRTFileToDouble(filename);
             int numTransforms = (int)dat.Length/4;
-            TransformMatrix[] transforms = new TransformMatrix[numTransforms];
+            TransformRT[] transforms = new TransformRT[numTransforms];
             for (int i = 0; i < numTransforms; i++)
             {
-                transforms[i] = new TransformMatrix();
+                transforms[i] = new TransformRT();
                 double[][] tempR = { dat[i * 4], dat[i * 4 + 1], dat[i * 4 + 2] };
                 transforms[i].R = new GeneralMatrix(tempR, 3, 3);
                 transforms[i].T = new GeneralMatrix(dat[i * 4 + 3], 1);
@@ -209,7 +209,7 @@ namespace libWrist
 
         public static Transform[] parsePosViewRTFileToTransforms(string filename)
         {
-            TransformMatrix[] tfm = parsePosViewRTFile(filename);
+            TransformRT[] tfm = parsePosViewRTFile(filename);
             Transform[] transforms = new Transform[tfm.Length];
             for (int i = 0; i < tfm.Length; i++)
             {
@@ -231,7 +231,7 @@ namespace libWrist
             return dat;
         }
 
-        public static void addRTtoTransform(TransformMatrix tfm, Transform transform)
+        public static void addRTtoTransform(TransformRT tfm, Transform transform)
         {
             transform.setTransform(tfm.R.Array[0][0], tfm.R.Array[0][1], tfm.R.Array[0][2],
                 tfm.R.Array[1][0], tfm.R.Array[1][1], tfm.R.Array[1][2],
