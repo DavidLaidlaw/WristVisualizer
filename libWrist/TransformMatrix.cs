@@ -189,35 +189,20 @@ namespace libWrist
             Array[2][2] = nz2 + c * (1 - nz2);
         }
 
-        public void rotate_around_com(double[] angles, double[] center)
+        /// <summary>
+        /// Sets the rotation and transformation matrix so that it is 3 roations about
+        /// the given center point. Rotation angles are applied in the order Z, Y, X
+        /// </summary>
+        /// <param name="angles">Amount of rotation (in radians) for rotating about the X, Y, and Z axis</param>
+        /// <param name="center">The center point about which to rotate</param>
+        /// <exception cref="System.ArgumentException">Invalid parameters</exception>
+        public void rotateAboutCenter(double[] angles, double[] center)
         {
-            //int i;
-            //TransfMatr rotMat, retMatr;
-            //TransfMatr rotX, rotY, rotZ;
-            //TransfMatr trans_com, trans_com_inverse;
+            if (angles.Length != 3)
+                throw new ArgumentException("Must pass 3 angles");
 
-            //rotX.rotate(0, angles[0]);
-            //rotY.rotate(1, angles[1]);
-            //rotZ.rotate(2, angles[2]);
-
-            //rotMat = rotX * rotY * rotZ;
-            //cout << "Rotation x,y,z" << endl;
-            //rotMat.print();
-
-            //trans_com.identity();
-            //trans_com_inverse.identity();
-
-            //trans_com.set_translate(com);
-            //for (i = 0; i < 3; i++)
-            //    com[i] = -com[i];
-            //trans_com_inverse.set_translate(com);
-            //cout << "Transl com " << endl;
-            //trans_com.print();
-            //cout << "Transl com inverse " << endl;
-            //trans_com_inverse.print();
-            //retMatr = trans_com * rotMat * trans_com_inverse;
-
-            //return retMatr;
+            if (center.Length != 3)
+                throw new ArgumentException("Center point must have 3 values");
 
             TM rotMat;
             TM transMat = new TM();
@@ -232,16 +217,31 @@ namespace libWrist
 
             rotMat = rotX * rotY * rotZ;
             Console.WriteLine("Rotation x,y,z");
-            TransformParser.printMat(rotMat);
+            printToConsole(rotMat);
 
             transMat.setTranslation(center);
             Console.WriteLine("Trans com");
-            TransformParser.printMat(transMat);
+            printToConsole(transMat);
             transMatInverse.setTranslation(-center[0], -center[1], -center[2]);
             Console.WriteLine("Trans inverse");
-            TransformParser.printMat(transMatInverse);
+            printToConsole(transMatInverse);
             TM final = transMat * rotMat * transMatInverse;
             SetMatrix(final);
+        }
+
+
+        public void printToConsole()
+        {
+            printToConsole(this);
+        }
+
+        public static void printToConsole(TM m)
+        {
+            //Console.WriteLine("TM Matrix:");
+            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[0][0], m.Array[0][1], m.Array[0][2], m.Array[0][3]);
+            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[1][0], m.Array[1][1], m.Array[1][2], m.Array[1][3]);
+            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[2][0], m.Array[2][1], m.Array[2][2], m.Array[2][3]);
+            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[3][0], m.Array[3][1], m.Array[3][2], m.Array[3][3]);
         }
     }
 }

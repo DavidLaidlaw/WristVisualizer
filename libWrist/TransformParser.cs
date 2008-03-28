@@ -13,28 +13,6 @@ namespace libWrist
 
         public static void TestParse(string filename)
         {
-            ////libCoin3D.ExaminerViewer view = new libCoin3D.ExaminerViewer(0);
-            //GeneralMatrix test = GeneralMatrix.Identity(4, 4);
-            //test.Array[3][0]=-32.0626;
-            //test.Array[3][1]=-37.2332;
-            //test.Array[3][2]=-44.1462;
-            //printMat(test);
-            TM test = new TM();
-            test.rotate_around_com(new double[] { 0.0, 0.0, 0.0255791 }, new double[] { -32.0626, -37.2332, -44.1462 });
-            printMat(test);
-
-            
-            ////now rotation
-            ////ret->center.setValue(32.1731, 32.1069, 1.46673);
-            ////print_transform(ret);
-            //GeneralMatrix rot1 = rotationMatrixZ(0.0255791);
-            //ret->rotation.setValue(SbVec3f(0, 0, 1), 0.0255791);
-            //print_transform(ret);
-            //rotationMatrixZ(1);
-
-
-            //libCoin3D.Transform t = new libCoin3D.Transform();
-            //t.testStuff();
             if (!File.Exists(filename))
                 throw new ArgumentException("File does not exist. (" + filename + ")");
 
@@ -44,32 +22,7 @@ namespace libWrist
             }  
         }
 
-        public static void test1()
-        {
 
-        }
-
-        public static GeneralMatrix rotationMatrixZ(int angle)
-        {
-            GeneralMatrix m = GeneralMatrix.Identity(4, 4);
-            double cosa = Math.Cos(angle);
-            double sina = Math.Sin(angle);
-            m.Array[0][0] = cosa;
-            m.Array[0][1] = -sina;
-            m.Array[1][0] = sina;
-            m.Array[1][1] = cosa;
-            printMat(m);
-            return m;
-        }
-
-        public static void printMat(GeneralMatrix m)
-        {
-            Console.WriteLine("C# Matrix:");
-            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[0][0], m.Array[0][1], m.Array[0][2], m.Array[0][3]);
-            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[1][0], m.Array[1][1], m.Array[1][2], m.Array[1][3]);
-            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[2][0], m.Array[2][1], m.Array[2][2], m.Array[2][3]);
-            Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[3][0], m.Array[3][1], m.Array[3][2], m.Array[3][3]);
-        }
 
 
         public static void parseDatFile(StreamReader filestream, string boneName)
@@ -88,7 +41,7 @@ namespace libWrist
                 }
             }
             Console.WriteLine("final result");
-            printMat(final);
+            final.printToConsole();
         }
 
         public static TM dispatch(StreamReader filestream, string boneName)
@@ -120,7 +73,7 @@ namespace libWrist
                     rotationAngles[1] = Double.Parse(m.Groups[2].Value);
                     rotationAngles[2] = Double.Parse(m.Groups[3].Value);
                     //TODO: something with these values
-                    rt.rotate_around_com(rotationAngles, centerRotation);
+                    rt.rotateAboutCenter(rotationAngles, centerRotation);
                     break;
                 case "default translation":
                     double[] translation = new double[3];
@@ -157,7 +110,7 @@ namespace libWrist
                     translation[2] = Double.Parse(m.Groups[3].Value);
                     TM rot = new TM();
                     TM t = new TM();
-                    rot.rotate_around_com(rotationAngles, centerRotation);
+                    rot.rotateAboutCenter(rotationAngles, centerRotation);
                     t.setTranslation(translation);
                     rt = t * rot;
                     //TODO: Something with these values
@@ -167,7 +120,7 @@ namespace libWrist
                     throw new FormatException("Invalid format for transform file. Unknown transform type: " + transformType);
             }
             Console.WriteLine("Bone_trsf_step");
-            printMat(rt);
+            rt.printToConsole();
             return rt;
         }
 
