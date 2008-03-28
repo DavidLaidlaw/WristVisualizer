@@ -35,6 +35,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CTmri.cs" />
     <Compile Include="DatParser.cs" />
     <Compile Include="InertialProperties.cs" />
     <Compile Include="IniFileParser.cs" />
