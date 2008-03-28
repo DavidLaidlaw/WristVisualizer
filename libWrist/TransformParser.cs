@@ -10,19 +10,18 @@ namespace libWrist
 {
     public class TransformParser
     {
-
-        public static void TestParse(string filename)
+        public static void ParseTranform(string filename)
         {
             if (!File.Exists(filename))
                 throw new ArgumentException("File does not exist. (" + filename + ")");
 
             using (StreamReader r = new StreamReader(filename))
             {
-                parseDatFile(r);
+                ParseTranform(r);
             }  
         }
 
-        public static void parseDatFile(StreamReader filestream)
+        public static void ParseTranform(StreamReader filestream)
         {
             const string boneLineRegex = @"^Bone\ name\:\ (\w+)\s*$";
             Hashtable transforms = new Hashtable(15);
@@ -40,13 +39,13 @@ namespace libWrist
                     if (!transforms.ContainsKey(boneName))
                         transforms[boneName] = new TM();
 
-                    TM next_tm = dispatch(filestream);
+                    TM next_tm = readSingleTransform(filestream);
                     transforms[boneName] = next_tm * (TM)transforms[boneName]; //add to list
                 }
             }
         }
 
-        public static TM dispatch(StreamReader filestream)
+        private static TM readSingleTransform(StreamReader filestream)
         {
             const string centerRotationRegex = @"^\s*center\ of\ rotation\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
             const string rotationAnglesRegex = @"^\s*rotation\ angles\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
