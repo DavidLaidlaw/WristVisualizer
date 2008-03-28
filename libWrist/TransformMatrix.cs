@@ -216,15 +216,8 @@ namespace libWrist
             rotZ.rotate(Axes.Z,angles[2]);
 
             rotMat = rotX * rotY * rotZ;
-            Console.WriteLine("Rotation x,y,z");
-            printToConsole(rotMat);
-
             transMat.setTranslation(center);
-            Console.WriteLine("Trans com");
-            printToConsole(transMat);
             transMatInverse.setTranslation(-center[0], -center[1], -center[2]);
-            Console.WriteLine("Trans inverse");
-            printToConsole(transMatInverse);
             TM final = transMat * rotMat * transMatInverse;
             SetMatrix(final);
         }

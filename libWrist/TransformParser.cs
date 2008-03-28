@@ -44,8 +44,6 @@ namespace libWrist
                     transforms[boneName] = next_tm * (TM)transforms[boneName]; //add to list
                 }
             }
-            Console.WriteLine("final result");
-            ((TM)transforms["ulna"]).printToConsole();
         }
 
         public static TM dispatch(StreamReader filestream)
@@ -120,8 +118,6 @@ namespace libWrist
                     //error, there should be no other type
                     throw new FormatException("Invalid format for transform file. Unknown transform type: " + transformType);
             }
-            Console.WriteLine("Bone_trsf_step");
-            rt.printToConsole();
             return rt;
         }
     }
