@@ -18,33 +18,37 @@ namespace libWrist
 
             using (StreamReader r = new StreamReader(filename))
             {
-                parseDatFile(r,"ulna");
+                parseDatFile(r);
             }  
         }
 
-
-
-
-        public static void parseDatFile(StreamReader filestream, string boneName)
+        public static void parseDatFile(StreamReader filestream)
         {
+            const string boneLineRegex = @"^Bone\ name\:\ (\w+)\s*$";
+            Hashtable transforms = new Hashtable(15);
             TM final = new TM();
             while (!filestream.EndOfStream)
             {
                 string line = filestream.ReadLine();
-                //check if it matches the boneName
-                if (line.Contains(boneName) && line.StartsWith("Bone name: "))
-                {
-                    TM next_tm = dispatch(filestream, boneName);
-                    final = next_tm * final;
-                    //TODO: add tm to front of list of transforms....
 
+                //check if it is a line for a bone
+                Match m = Regex.Match(line, boneLineRegex);
+                if (m.Success)
+                {
+                    string boneName = m.Groups[1].Value.Trim();
+                    //make sure that there is an identity transform if this is the first encounter
+                    if (!transforms.ContainsKey(boneName))
+                        transforms[boneName] = new TM();
+
+                    TM next_tm = dispatch(filestream);
+                    transforms[boneName] = next_tm * (TM)transforms[boneName]; //add to list
                 }
             }
             Console.WriteLine("final result");
-            final.printToConsole();
+            ((TM)transforms["ulna"]).printToConsole();
         }
 
-        public static TM dispatch(StreamReader filestream, string boneName)
+        public static TM dispatch(StreamReader filestream)
         {
             const string centerRotationRegex = @"^\s*center\ of\ rotation\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
             const string rotationAnglesRegex = @"^\s*rotation\ angles\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
@@ -72,7 +76,6 @@ namespace libWrist
                     rotationAngles[0] = Double.Parse(m.Groups[1].Value);
                     rotationAngles[1] = Double.Parse(m.Groups[2].Value);
                     rotationAngles[2] = Double.Parse(m.Groups[3].Value);
-                    //TODO: something with these values
                     rt.rotateAboutCenter(rotationAngles, centerRotation);
                     break;
                 case "default translation":
@@ -83,7 +86,6 @@ namespace libWrist
                     translation[0] = Double.Parse(m.Groups[1].Value);
                     translation[1] = Double.Parse(m.Groups[2].Value);
                     translation[2] = Double.Parse(m.Groups[3].Value);
-                    //TODO: Something with these values
                     rt.setTranslation(translation);
                     break;
                 case "optimized both":
@@ -113,7 +115,6 @@ namespace libWrist
                     rot.rotateAboutCenter(rotationAngles, centerRotation);
                     t.setTranslation(translation);
                     rt = t * rot;
-                    //TODO: Something with these values
                     break;
                 default:
                     //error, there should be no other type
@@ -123,27 +124,5 @@ namespace libWrist
             rt.printToConsole();
             return rt;
         }
-
-        //public static double[][] parseDatFile(StreamReader filestream)
-        //{
-        //    //char[] div = { ' ', '\t', ',' };
-        //    System.Collections.ArrayList dat = new System.Collections.ArrayList(100);
-
-        //    Regex reg = new Regex(@"([-\d\.e+]+)");
-        //    while (!filestream.EndOfStream)
-        //    {
-        //        string line = filestream.ReadLine().Trim();
-        //        if (line.Length == 0) continue;
-
-        //        MatchCollection m = reg.Matches(line);
-        //        double[] values = new double[m.Count];
-        //        for (int i = 0; i < m.Count; i++)
-        //        {
-        //            values[i] = Double.Parse(m[i].Value);
-        //        }
-        //        dat.Add(values);
-        //    }
-        //    return (double[][])dat.ToArray(typeof(double[]));
-        //}
     }
 }
