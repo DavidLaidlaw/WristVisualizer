@@ -25,7 +25,7 @@ namespace libWrist
         {
             const string boneLineRegex = @"^Bone\ name\:\ (\w+)\s*$";
             Hashtable transforms = new Hashtable(15);
-            TM final = new TM();
+            TransformMatrix final = new TransformMatrix();
             while (!filestream.EndOfStream)
             {
                 string line = filestream.ReadLine();
@@ -37,15 +37,15 @@ namespace libWrist
                     string boneName = m.Groups[1].Value.Trim();
                     //make sure that there is an identity transform if this is the first encounter
                     if (!transforms.ContainsKey(boneName))
-                        transforms[boneName] = new TM();
+                        transforms[boneName] = new TransformMatrix();
 
-                    TM next_tm = readSingleTransform(filestream);
-                    transforms[boneName] = next_tm * (TM)transforms[boneName]; //add to list
+                    TransformMatrix next_tm = readSingleTransform(filestream);
+                    transforms[boneName] = next_tm * (TransformMatrix)transforms[boneName]; //add to list
                 }
             }
         }
 
-        private static TM readSingleTransform(StreamReader filestream)
+        private static TransformMatrix readSingleTransform(StreamReader filestream)
         {
             const string centerRotationRegex = @"^\s*center\ of\ rotation\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
             const string rotationAnglesRegex = @"^\s*rotation\ angles\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
@@ -53,7 +53,7 @@ namespace libWrist
             const string translationBothRegex = @"^\s*translation\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
 
             //lets figure out the transform type
-            TM rt = new TM();
+            TransformMatrix rt = new TransformMatrix();
             string transformLine = filestream.ReadLine();
             string transformType = Regex.Match(transformLine, @"^Transform\ type\:\ (.*)$").Groups[1].Value.Trim();
             switch (transformType)
@@ -107,8 +107,8 @@ namespace libWrist
                     translation[0] = Double.Parse(m.Groups[1].Value);
                     translation[1] = Double.Parse(m.Groups[2].Value);
                     translation[2] = Double.Parse(m.Groups[3].Value);
-                    TM rot = new TM();
-                    TM t = new TM();
+                    TransformMatrix rot = new TransformMatrix();
+                    TransformMatrix t = new TransformMatrix();
                     rot.rotateAboutCenter(rotationAngles, centerRotation);
                     t.setTranslation(translation);
                     rt = t * rot;

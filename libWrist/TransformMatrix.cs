@@ -5,19 +5,19 @@ using DotNetMatrix;
 
 namespace libWrist
 {
-    public class TM : GeneralMatrix
+    public class TransformMatrix : GeneralMatrix
     {
         public enum Axes
         {
             X, Y, Z
         }
 
-        public TM() : base(4, 4)
+        public TransformMatrix() : base(4, 4)
         {
             setToIdentity();
         }
 
-        public TM(GeneralMatrix gm) : base(4, 4)
+        public TransformMatrix(GeneralMatrix gm) : base(4, 4)
         {
             this.SetMatrix(gm);
         }
@@ -137,9 +137,9 @@ namespace libWrist
         /// </returns>
         /// <exception cref="System.ArgumentException">  Matrix inner dimensions must agree.
         /// </exception>
-        public virtual TM Multiply(TM B)
+        public virtual TransformMatrix Multiply(TransformMatrix B)
         {
-            return new TM(base.Multiply(B));
+            return new TransformMatrix(base.Multiply(B));
         }
 
         /// <summary>
@@ -148,7 +148,7 @@ namespace libWrist
         /// <param name="m1"></param>
         /// <param name="m2"></param>
         /// <returns></returns>
-        public static TM operator *(TM m1, TM m2)
+        public static TransformMatrix operator *(TransformMatrix m1, TransformMatrix m2)
         {
             return m1.Multiply(m2);
         } 
@@ -204,12 +204,12 @@ namespace libWrist
             if (center.Length != 3)
                 throw new ArgumentException("Center point must have 3 values");
 
-            TM rotMat;
-            TM transMat = new TM();
-            TM transMatInverse = new TM();
-            TM rotX = new TM();
-            TM rotY = new TM();
-            TM rotZ = new TM();
+            TransformMatrix rotMat;
+            TransformMatrix transMat = new TransformMatrix();
+            TransformMatrix transMatInverse = new TransformMatrix();
+            TransformMatrix rotX = new TransformMatrix();
+            TransformMatrix rotY = new TransformMatrix();
+            TransformMatrix rotZ = new TransformMatrix();
 
             rotX.rotate(Axes.X,angles[0]);
             rotY.rotate(Axes.Y,angles[1]);
@@ -218,7 +218,7 @@ namespace libWrist
             rotMat = rotX * rotY * rotZ;
             transMat.setTranslation(center);
             transMatInverse.setTranslation(-center[0], -center[1], -center[2]);
-            TM final = transMat * rotMat * transMatInverse;
+            TransformMatrix final = transMat * rotMat * transMatInverse;
             SetMatrix(final);
         }
 
@@ -228,7 +228,7 @@ namespace libWrist
             printToConsole(this);
         }
 
-        public static void printToConsole(TM m)
+        public static void printToConsole(TransformMatrix m)
         {
             //Console.WriteLine("TM Matrix:");
             Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[0][0], m.Array[0][1], m.Array[0][2], m.Array[0][3]);
