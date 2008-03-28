@@ -39,6 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="LoadTextureDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadTextureDialog.Designer.cs">
+      <DependentUpon>LoadTextureDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="MovieExportOptions.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +92,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="LoadTextureDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LoadTextureDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MovieExportOptions.resx">
       <DependentUpon>MovieExportOptions.cs</DependentUpon>
       <SubType>Designer</SubType>

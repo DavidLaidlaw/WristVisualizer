@@ -1102,6 +1102,12 @@ namespace WristVizualizer
 
         #endregion
 
+        private void openTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadTextureDialog texture = new LoadTextureDialog();
+            texture.ShowDialog();
+        }
+
 
 
 

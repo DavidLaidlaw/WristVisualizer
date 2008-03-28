@@ -49,6 +49,7 @@ namespace WristVizualizer
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointIntersectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.calculateInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -137,7 +138,7 @@ namespace WristVizualizer
             this.numericUpDownPosViewFPS = new System.Windows.Forms.NumericUpDown();
             this.buttonPosViewStop = new System.Windows.Forms.Button();
             this.buttonPosViewPlay = new System.Windows.Forms.Button();
-            this.calculateInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openTextureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -167,6 +168,7 @@ namespace WristVizualizer
             this.openToolStripMenuItem,
             this.openFullWristToolStripMenuItem,
             this.openPosViewFileToolStripMenuItem,
+            this.openTextureToolStripMenuItem,
             this.importToolStripMenuItem,
             this.saveAsToolStripMenuItem,
             this.toolStripSeparator6,
@@ -314,6 +316,14 @@ namespace WristVizualizer
             this.pointIntersectionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.pointIntersectionToolStripMenuItem.Text = "Point &Intersection...";
             this.pointIntersectionToolStripMenuItem.Click += new System.EventHandler(this.pointIntersectionToolStripMenuItem_Click);
+            // 
+            // calculateInertiasToolStripMenuItem
+            // 
+            this.calculateInertiasToolStripMenuItem.Enabled = false;
+            this.calculateInertiasToolStripMenuItem.Name = "calculateInertiasToolStripMenuItem";
+            this.calculateInertiasToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.calculateInertiasToolStripMenuItem.Text = "Calculate Inertias";
+            this.calculateInertiasToolStripMenuItem.Click += new System.EventHandler(this.calculateInertiasToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -1244,13 +1254,12 @@ namespace WristVizualizer
             this.buttonPosViewPlay.Text = "Play";
             this.buttonPosViewPlay.UseVisualStyleBackColor = true;
             // 
-            // calculateInertiasToolStripMenuItem
+            // openTextureToolStripMenuItem
             // 
-            this.calculateInertiasToolStripMenuItem.Enabled = false;
-            this.calculateInertiasToolStripMenuItem.Name = "calculateInertiasToolStripMenuItem";
-            this.calculateInertiasToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.calculateInertiasToolStripMenuItem.Text = "Calculate Inertias";
-            this.calculateInertiasToolStripMenuItem.Click += new System.EventHandler(this.calculateInertiasToolStripMenuItem_Click);
+            this.openTextureToolStripMenuItem.Name = "openTextureToolStripMenuItem";
+            this.openTextureToolStripMenuItem.Size = new System.Drawing.Size(184, 22);
+            this.openTextureToolStripMenuItem.Text = "Open &Texture...";
+            this.openTextureToolStripMenuItem.Click += new System.EventHandler(this.openTextureToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -1402,6 +1411,7 @@ namespace WristVizualizer
         private System.Windows.Forms.CheckBox checkBoxPosViewShowAxes;
         private System.Windows.Forms.CheckBox checkBoxPosViewLabels;
         private System.Windows.Forms.ToolStripMenuItem calculateInertiasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem openTextureToolStripMenuItem;
     }
 }
 
