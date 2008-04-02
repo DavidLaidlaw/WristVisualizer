@@ -104,13 +104,14 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 }
 
 struct TextureCBData {
-  int axis;
   libCoin3D::Texture::Planes plane;
   SoTexture2 * texture; 
   unsigned char** buffer;  
   int sizeX;
   int sizeY;
   int sizeZ;
+  double sliceThickness;
+  SoTranslate1Dragger* dragger;
 };	
 
 void updateTextureCB( void * data, SoSensor * )
@@ -126,17 +127,12 @@ void updateTextureCB( void * data, SoSensor * )
 
 	libCoin3D::Texture::Planes plane = textureCBdata -> plane;
 
-	// Make the counter change the vtxProperty RGB colours
-	// Find out which transformation we should display colours for
-	//if (axis == 2) 
-		xf = ((SoSFInt32*) (SoDB::getGlobalField("test1")))->getValue();
-	//else xf = ((SoSFInt32*) (SoDB::getGlobalField("offbeX")))->getValue();
+	SoTranslate1Dragger* dragger = textureCBdata->dragger;
+	xf = (int)fabs(fmod((float)(6*dragger->translation.getValue()[0]),(float)textureCBdata->sizeZ));
 	switch( plane )
 	{
 	case libCoin3D::Texture::Planes::XY_PLANE:
-		//init_tmp_buf( tmp_buf, buffer[xf]);
 		texture -> image.setValue(SbVec2s(textureCBdata->sizeX, textureCBdata->sizeY),1, (const unsigned char*) buffer[xf] );   
-
 		break;
 	case libCoin3D::Texture::Planes::YZ_PLANE:
 		//init_tmp_buf_x( tmp_buf_x, buffer[xf]);		
@@ -230,7 +226,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	case Planes::XY_PLANE:
 		myCalc -> a.setValue( (float)_sizeZ ); 
 		myCalc->b.setValue( (float)_voxelZ );
-		myCalc -> expression = "oA = vec3f(0,0,(6*fabs(A[0])*b) % a);  oa = fabs(6*A[0] % a)";
+		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))*b) % a);  oa = fabs(6*A[0] % a)";  //TODO: Fix this crap!!!!
 		break;
 	case Planes::YZ_PLANE:
 		myCalc -> a.setValue( (float)_sizeX );
@@ -258,25 +254,22 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	separatorCT -> addChild( drawStyleMRI );
 	separatorCT -> addChild( texture );
 
-	char* field_name = "test1";
-	SoDB::createGlobalField( field_name, SoSFInt32::getClassTypeId() ); 
-
-	// hook this field to the counter.
-	( SoDB::getGlobalField(field_name) )->connectFrom( & myCalc->oa );
 
 	TextureCBData * textureCBdata = new TextureCBData;
-	//textureCBdata -> axis = axis;
 	textureCBdata->plane = plane;
 	textureCBdata -> texture = texture;
 	textureCBdata -> buffer = buffer;
 	textureCBdata->sizeX = _sizeX;
 	textureCBdata->sizeY = _sizeY;
 	textureCBdata->sizeZ = _sizeZ;
+	textureCBdata->sliceThickness = _voxelZ;
+	textureCBdata->dragger = myDragger;
+	
 
+	//create a sensor, and attach it to the output from our translation,
+	//so that we know when our dragger is moved
 	SoFieldSensor* dragger_sensor = new SoFieldSensor( updateTextureCB, textureCBdata );
-
-	dragger_sensor -> attach( SoDB::getGlobalField( field_name ) ); 
-
+	dragger_sensor -> attach(&myTranslation->translation);
 
 	separatorCT -> addChild( myTranslation );
 
