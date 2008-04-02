@@ -22,7 +22,7 @@ namespace libWrist
         {
             string Subject;
             int PositionNumber;
-            Wrist.Side side;
+            Wrist.Sides side;
         }
 
         public CropValuesParser(string cropValuesFilename)

@@ -10,13 +10,13 @@ namespace libWrist
 
     public class Wrist
     {
-        public enum Side
+        public enum Sides
         {
             LEFT,
             RIGHT,
         }
 
-        public enum Database
+        public enum Databases
         {
             DATA,
             DATABASE,
@@ -41,7 +41,7 @@ namespace libWrist
         private string _radius;
         private string _inertiaFile;
         private string _acsFile;
-        private Database _db;
+        private Databases _db;
         private SeriesInfo[] _info;
 
         //this is precompiled crap
@@ -198,7 +198,7 @@ namespace libWrist
 
         private void findAllSeries()
         {
-            if (_db == Database.DATA)
+            if (_db == Databases.DATA)
                 findAllSeries_Data();
             else
                 findAllSeries_Database();
@@ -282,7 +282,7 @@ namespace libWrist
 
             string fname = Path.GetFileNameWithoutExtension(pathRadiusIV);
             string ext = Path.GetExtension(pathRadiusIV);
-            _db = Database.DATABASE;
+            _db = Databases.DATABASE;
 
             _ivFolderPath = Path.GetDirectoryName(pathRadiusIV);
             _neutralSeriesNum = "0";
@@ -320,7 +320,7 @@ namespace libWrist
             if (!isDataStructure(pathRadiusIV))
                 throw new ArgumentException("Bone provided is not a radius for a data");
 
-            _db = Database.DATA;
+            _db = Databases.DATA;
 
             string fname = Path.GetFileNameWithoutExtension(pathRadiusIV);
             string ext = Path.GetExtension(pathRadiusIV);
