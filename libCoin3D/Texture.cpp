@@ -21,8 +21,9 @@
 #include <Inventor/nodes/SoDrawStyle.h>
 
 
-libCoin3D::Texture::Texture(int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ)
+libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ)
 {
+	_side = side;
 	_sizeX = sizeX;
 	_sizeY = sizeY;
 	_sizeZ = sizeZ;
@@ -40,6 +41,12 @@ libCoin3D::Texture::~Texture()
 		for (int i=0; i<_sizeZ; i++)
 			delete _all_slice_data1[i];
 		delete _all_slice_data1;
+	}
+
+	if (_all_slice_data2 != NULL) {
+		for (int i=0; i<_sizeX; i++)
+			delete _all_slice_data2[i];
+		delete _all_slice_data2;
 	}
 
 	if (_verticesRectangle1 != NULL) {
@@ -98,12 +105,13 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 
 struct TextureCBData {
   int axis;
+  libCoin3D::Texture::Planes plane;
   SoTexture2 * texture; 
   unsigned char** buffer;  
   int sizeX;
   int sizeY;
   int sizeZ;
-};
+};	
 
 void updateTextureCB( void * data, SoSensor * )
 {
@@ -113,43 +121,76 @@ void updateTextureCB( void * data, SoSensor * )
 	SoTexture2  * texture = textureCBdata->texture;
 	unsigned char** buffer = textureCBdata->buffer;
 
-	int axis = textureCBdata -> axis;
-	if ( texture == 0 ) {
+	if ( texture == NULL )
 		return;
-	}
+
+	libCoin3D::Texture::Planes plane = textureCBdata -> plane;
 
 	// Make the counter change the vtxProperty RGB colours
 	// Find out which transformation we should display colours for
 	//if (axis == 2) 
 		xf = ((SoSFInt32*) (SoDB::getGlobalField("test1")))->getValue();
 	//else xf = ((SoSFInt32*) (SoDB::getGlobalField("offbeX")))->getValue();
-	switch( axis )
+	switch( plane )
 	{
-	case 2:
+	case libCoin3D::Texture::Planes::XY_PLANE:
 		//init_tmp_buf( tmp_buf, buffer[xf]);
 		texture -> image.setValue(SbVec2s(textureCBdata->sizeX, textureCBdata->sizeY),1, (const unsigned char*) buffer[xf] );   
 
 		break;
-	case 0:
+	case libCoin3D::Texture::Planes::YZ_PLANE:
 		//init_tmp_buf_x( tmp_buf_x, buffer[xf]);		
 		//texture -> image.setValue(SbVec2s(MRI_Y_SIZE_vert, MRI_Z_SIZE_vert),1, (const unsigned char*) tmp_buf_x );   
 		break;
 	}
 }
 
-
-libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, int axis)
+unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>^ data, Planes plane)
 {
-
-	double RES_DEPTH = 1;
-	//copy data into local buffer :)
-	_all_slice_data1 = new unsigned char*[_sizeZ];
-	for (int i=0; i<_sizeZ; i++) {
-		_all_slice_data1[i] = new unsigned char[_sizeX*_sizeY];
-		for (int j=0; j<_sizeX*_sizeY; j++) {
-			unsigned char temp = (unsigned char)data[i][j];
-			_all_slice_data1[i][j] = temp;
+	unsigned char** buffer;
+	switch (plane) 
+	{
+	case Planes::XY_PLANE:
+		buffer = new unsigned char*[_sizeZ];
+		for (int i=0; i<_sizeZ; i++) {
+			buffer[i] = new unsigned char[_sizeX*_sizeY];
+			for (int j=0; j<_sizeX*_sizeY; j++) {
+				buffer[i][j] = (unsigned char)data[i][j];
+			}
 		}
+		break;
+	case Planes::YZ_PLANE:
+		buffer = new unsigned char*[_sizeX];
+		for (int i=0; i<_sizeX; i++) {    //loop through X
+			buffer[i] = new unsigned char[_sizeY*_sizeZ];
+			for (int j=0; j<_sizeZ; j++) {  //loop through Z
+				for (int k=0; k<_sizeY; k++) {  //loop through Y
+					buffer[i][j*_sizeZ + k] = (unsigned char)data[j][k*_sizeY + i];
+				}
+			}
+		}
+		break;
+	default:
+		throw gcnew System::ArgumentException("Invalid plane", "plane");
+	}
+	return buffer;
+}
+
+
+libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, Planes plane)
+{
+	//copy data into local buffer :)
+	//Planes plane = Planes::XY_PLANE;
+	switch (plane) 
+	{
+	case Planes::XY_PLANE:
+		_all_slice_data1 = setupLocalBuffer(data, plane);
+		break;
+	case Planes::YZ_PLANE:
+
+		break;
+	default:
+		throw gcnew System::ArgumentException("Invalid plane", "plane");
 	}
 	
 	SoSeparator* separator = new SoSeparator;
@@ -179,22 +220,16 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	SoCalculator *myCalc = new SoCalculator;
 	myCalc->ref();
 	myCalc->A.connectFrom(&myDragger->translation);
-
-	SoCalculator *myCalcTexture = new SoCalculator;
-	myCalcTexture->ref();
-	myCalcTexture->A.connectFrom(&myDragger -> translation);
 	myCalc -> b.setValue( (float)_voxelZ );
 	//myCalc -> c.setValue( ACCESS_INDEX_SIGN_I );
 
 
-	switch ( axis ) 
+	switch ( plane ) 
 	{
-	case 2:
+	case Planes::XY_PLANE:
 		myCalc -> a.setValue( (float)_sizeZ ); 
-		myCalcTexture -> a.setValue( (float)_sizeZ );
 		myCalc->b.setValue( (float)_voxelZ );
-		myCalc -> expression = "oA = vec3f(0,0,(6*fabs(A[0])*b) % a)";
-		myCalcTexture->expression = "oa = fabs(6*A[0] % a)";
+		myCalc -> expression = "oA = vec3f(0,0,(6*fabs(A[0])*b) % a);  oa = fabs(6*A[0] % a)";
 		break;
 	default:
 	   throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
@@ -220,10 +255,11 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	SoDB::createGlobalField( field_name, SoSFInt32::getClassTypeId() ); 
 
 	// hook this field to the counter.
-	( SoDB::getGlobalField(field_name) )->connectFrom( & myCalcTexture->oa );
+	( SoDB::getGlobalField(field_name) )->connectFrom( & myCalc->oa );
 
 	TextureCBData * textureCBdata = new TextureCBData;
-	textureCBdata -> axis = axis;
+	//textureCBdata -> axis = axis;
+	textureCBdata->plane = plane;
 	textureCBdata -> texture = texture;
 	textureCBdata -> buffer = _all_slice_data1;
 	textureCBdata->sizeX = _sizeX;
@@ -238,17 +274,18 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	separatorCT -> addChild( myTranslation );
 
 	// Make a  rectangle
-	separatorCT -> addChild( makeRectangle( axis ));
+	separatorCT -> addChild( makeRectangle( plane ));
 
-   switch( axis ){
-   case 2: 
-	   //setup the first frame
-	   texture->image.setValue(SbVec2s(_sizeX, _sizeY),1, (const unsigned char*) _all_slice_data1[0]);
-	   break;
-   case 0:
-	   //setTextureXplane( texture, _all_slice_data1);
-	   break;
-   }
+	switch( plane )
+	{
+	case Planes::XY_PLANE:
+		//setup the first frame
+		texture->image.setValue(SbVec2s(_sizeX, _sizeY),1, (const unsigned char*) _all_slice_data1[0]);
+		break;
+	case Planes::YZ_PLANE:
+		//setTextureXplane( texture, _all_slice_data1);
+		break;
+	}
 	return gcnew Separator(separator);
 }
 
@@ -269,7 +306,7 @@ float** libCoin3D::Texture::makeRectangleVertices()
 	return _verticesRectangle1;
 }
 
-SoSeparator* libCoin3D::Texture::makeRectangle(int axis)
+SoSeparator* libCoin3D::Texture::makeRectangle(Planes plane)
 {
 	SoSeparator *rectangle = new SoSeparator();
 	rectangle->ref();
@@ -283,16 +320,16 @@ SoSeparator* libCoin3D::Texture::makeRectangle(int axis)
 	// Define coordinates for vertices
 	// vertices is an array of pts of length 4 (each pt has 3 floats; total 12 pts)
 	// these vertices define the corner of the texture plane that the CT slices are shown on
-	switch( axis ) 
+	switch( plane ) 
 	{
-	case 0:  //X
-		//myVertexProperty->vertex.setValues(0, 4, vertices_x);
-		break;
-	case 2:  //Z
+	case Planes::XY_PLANE:  //Z
 		myVertexProperty->vertex.set1Value(0, _verticesRectangle1[0]);
 		myVertexProperty->vertex.set1Value(1, _verticesRectangle1[1]);
 		myVertexProperty->vertex.set1Value(2, _verticesRectangle1[2]);
 		myVertexProperty->vertex.set1Value(3, _verticesRectangle1[3]);
+		break;
+	case Planes::YZ_PLANE:  //X
+		//myVertexProperty->vertex.setValues(0, 4, vertices_x);
 		break;
 	}
 
