@@ -37,16 +37,16 @@ libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double 
 
 libCoin3D::Texture::~Texture()
 {
-	if (_all_slice_data1 != NULL) {
+	if (_all_slice_dataXY != NULL) {
 		for (int i=0; i<_sizeZ; i++)
-			delete _all_slice_data1[i];
-		delete _all_slice_data1;
+			delete _all_slice_dataXY[i];
+		delete _all_slice_dataXY;
 	}
 
-	if (_all_slice_data2 != NULL) {
+	if (_all_slice_dataYZ != NULL) {
 		for (int i=0; i<_sizeX; i++)
-			delete _all_slice_data2[i];
-		delete _all_slice_data2;
+			delete _all_slice_dataYZ[i];
+		delete _all_slice_dataYZ;
 	}
 
 	if (_verticesRectangle1 != NULL) {
@@ -180,14 +180,15 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, Planes plane)
 {
 	//copy data into local buffer :)
-	//Planes plane = Planes::XY_PLANE;
+	unsigned char** buffer = setupLocalBuffer(data, plane);
+	//save local buffer
 	switch (plane) 
 	{
 	case Planes::XY_PLANE:
-		_all_slice_data1 = setupLocalBuffer(data, plane);
+		_all_slice_dataXY = buffer;
 		break;
 	case Planes::YZ_PLANE:
-
+		_all_slice_dataYZ = buffer;
 		break;
 	default:
 		throw gcnew System::ArgumentException("Invalid plane", "plane");
@@ -261,7 +262,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	//textureCBdata -> axis = axis;
 	textureCBdata->plane = plane;
 	textureCBdata -> texture = texture;
-	textureCBdata -> buffer = _all_slice_data1;
+	textureCBdata -> buffer = buffer;
 	textureCBdata->sizeX = _sizeX;
 	textureCBdata->sizeY = _sizeY;
 	textureCBdata->sizeZ = _sizeZ;
@@ -280,7 +281,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	{
 	case Planes::XY_PLANE:
 		//setup the first frame
-		texture->image.setValue(SbVec2s(_sizeX, _sizeY),1, (const unsigned char*) _all_slice_data1[0]);
+		texture->image.setValue(SbVec2s(_sizeX, _sizeY),1, (const unsigned char*) _all_slice_dataXY[0]);
 		break;
 	case Planes::YZ_PLANE:
 		//setTextureXplane( texture, _all_slice_data1);

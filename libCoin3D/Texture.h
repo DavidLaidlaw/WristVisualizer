@@ -28,8 +28,8 @@ private:
 	double _voxelX, _voxelY, _voxelZ;
 	float** _verticesRectangle1;
 	short* _data;
-	unsigned char** _all_slice_data1;
-	unsigned char** _all_slice_data2;
+	unsigned char** _all_slice_dataXY;
+	unsigned char** _all_slice_dataYZ;
 	
 };
 }
