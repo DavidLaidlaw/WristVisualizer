@@ -30,8 +30,6 @@ libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double 
 	_voxelX = voxelX;
 	_voxelY = voxelY;
 	_voxelZ = voxelZ;
-	//allocate data
-	//_all_slice_data1 = allocateSliceStack(_sizeX,_sizeY,_sizeZ);
 }
 
 libCoin3D::Texture::~Texture()
@@ -104,6 +102,9 @@ struct TextureCBData {
   int sizeY;
   int sizeZ;
   double sliceThickness;
+  int planeHeight;
+  int planeWidth;
+  int numSlices;
   SoTranslate1Dragger* dragger;
 };	
 
@@ -120,16 +121,23 @@ void updateTextureCB( void * data, SoSensor * )
 
 	libCoin3D::Texture::Planes plane = textureCBdata -> plane;
 	SoTranslate1Dragger* dragger = textureCBdata->dragger;
-
-	
+	float dragPos = dragger->translation.getValue()[0];
+	float sliceThickness;
+	float numSlices;
 	switch( plane )
 	{
 	case libCoin3D::Texture::Planes::XY_PLANE:
-		xf = (int)fabs(fmod((float)(6*dragger->translation.getValue()[0]),(float)textureCBdata->sizeZ));
+		numSlices = (float)textureCBdata->sizeZ;
+		sliceThickness = textureCBdata->sliceThickness;
+		xf = (int)fabs(fmod(floor(6*dragPos/sliceThickness),numSlices));
 		texture -> image.setValue(SbVec2s(textureCBdata->sizeX, textureCBdata->sizeY),1, (const unsigned char*) buffer[xf] );
 		break;
 	case libCoin3D::Texture::Planes::YZ_PLANE:
-		xf = (int)fabs(fmod((float)(6*dragger->translation.getValue()[0]),(float)textureCBdata->sizeX));
+		numSlices = (float)textureCBdata->numSlices;
+		sliceThickness = textureCBdata->sliceThickness;
+		xf = (int)fabs(fmod(floor(6*dragPos/sliceThickness),numSlices));
+
+		//xf = (int)fabs(fmod((float)(6*dragPos),(float)textureCBdata->sizeX));
 		texture -> image.setValue(SbVec2s(textureCBdata->sizeY, textureCBdata->sizeZ),1, (const unsigned char*) buffer[xf] );
 		break;
 	}
@@ -203,10 +211,20 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 
 	SoTransform *myTransform = new SoTransform;
 	separator->addChild(myTransform);
-	separator->addChild(scaleSeparator);
+	//separator->addChild(scaleSeparator);
 	scaleSeparator->addChild(myDragger);
    
-  
+	SoTexture2 *texture = new SoTexture2;
+
+	TextureCBData * textureCBdata = new TextureCBData;
+	textureCBdata->plane = plane;
+	textureCBdata->texture = texture;
+	textureCBdata->buffer = buffer;
+	textureCBdata->sizeX = _sizeX;
+	textureCBdata->sizeY = _sizeY;
+	textureCBdata->sizeZ = _sizeZ;
+	
+	textureCBdata->dragger = myDragger;
 
 	SoCalculator *myCalc = new SoCalculator;
 	myCalc->ref();
@@ -214,19 +232,24 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	myCalc -> b.setValue( (float)_voxelZ );
 	//myCalc -> c.setValue( ACCESS_INDEX_SIGN_I );
 
-
 	switch ( plane ) 
 	{
 	case Planes::XY_PLANE:
 		myCalc -> a.setValue( (float)_sizeZ ); 
-		myCalc->b.setValue( (float)_voxelZ );
-		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))*b) % a)";
+		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))) % a)";
+		textureCBdata->sliceThickness = _voxelZ;
+		textureCBdata->numSlices = _sizeZ;
+		textureCBdata->planeHeight = _sizeY;
+		textureCBdata->planeWidth = _sizeX;
 		break;
 	case Planes::YZ_PLANE:
 		myCalc -> a.setValue( (float)_sizeX );
-		myCalc -> b.setValue( (float)_voxelX );
 		myCalc -> c.setValue( 1.0f ); //TODO: Fix?
-		myCalc -> expression = "oA = vec3f(( c * 6*fabs(A[0])*b) % a , 0,0)";
+		myCalc -> expression = "oA = vec3f((floor(c*6*fabs(A[0]))) % a , 0,0)";
+		textureCBdata->sliceThickness = _voxelX;
+		textureCBdata->numSlices = _sizeX;
+		textureCBdata->planeHeight = _sizeZ;
+		textureCBdata->planeWidth = _sizeY;
 		break;
 	default:
 	   throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
@@ -241,7 +264,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	SoDrawStyle *drawStyleMRI  = new SoDrawStyle;
 	drawStyleMRI -> style=SoDrawStyle::FILLED;
 
-	SoTexture2 *texture = new SoTexture2;
+	
 
 	SoSeparator* separatorCT = new SoSeparator;
 	separator -> addChild( separatorCT );
@@ -249,15 +272,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	separatorCT -> addChild( texture );
 
 
-	TextureCBData * textureCBdata = new TextureCBData;
-	textureCBdata->plane = plane;
-	textureCBdata -> texture = texture;
-	textureCBdata -> buffer = buffer;
-	textureCBdata->sizeX = _sizeX;
-	textureCBdata->sizeY = _sizeY;
-	textureCBdata->sizeZ = _sizeZ;
-	textureCBdata->sliceThickness = _voxelZ;
-	textureCBdata->dragger = myDragger;
+	
 	
 
 	//create a sensor, and attach it to the output from our translation,
