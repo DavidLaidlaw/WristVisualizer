@@ -32,8 +32,8 @@ namespace WristVizualizer
             this.buttonOK = new System.Windows.Forms.Button();
             this.textBoxImageDirectory = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label19 = new System.Windows.Forms.Label();
             this.buttonBrowseImage = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -57,6 +57,7 @@ namespace WristVizualizer
             this.buttonOK.TabIndex = 3;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
+            this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
             // textBoxImageDirectory
             // 
@@ -77,15 +78,6 @@ namespace WristVizualizer
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Texture";
             // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 30);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(84, 13);
-            this.label19.TabIndex = 5;
-            this.label19.Text = "Image Directory:";
-            // 
             // buttonBrowseImage
             // 
             this.buttonBrowseImage.Location = new System.Drawing.Point(325, 26);
@@ -95,6 +87,15 @@ namespace WristVizualizer
             this.buttonBrowseImage.Text = "Browse";
             this.buttonBrowseImage.UseVisualStyleBackColor = true;
             this.buttonBrowseImage.Click += new System.EventHandler(this.buttonBrowseImage_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(6, 30);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(84, 13);
+            this.label19.TabIndex = 5;
+            this.label19.Text = "Image Directory:";
             // 
             // LoadTextureDialog
             // 

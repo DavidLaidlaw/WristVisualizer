@@ -15,23 +15,23 @@ namespace libWrist
 		private const string RESOLUTION = "resolution";
 		private const string VSIZE = "vsize";
 
-        private const int IMAGE_OFFSET = 0;
-        private const double IMAGE_SCALE = 8.1568627;
+        private int IMAGE_OFFSET = 0;
+        private double IMAGE_SCALE = 8.1568627;
 
 		private int _intensityOffset=0;
 		private double _intensityScale=0;
 		private int _height;
 		private int _width;
-		private byte _depth;
-		private int _layers;
+		private int _depth;
+		private Byte _layers;
 		private bool _autoScale=false;
 		private double _voxelSizeX;
 		private double _voxelSizeY;
-		private double _sliceThickness;
+		private double _voxelSizeZ;
 		private short[] _data;
-        //private Bitmap[] _bitmaps;
 		private Format _format;
 		public enum Format { Sign16, USign16, Sign8, USign8 };
+        private short _minIntensity, _maxIntensity;
 
         //crop settings
         private int _xmin, _xmax, _ymin, _ymax, _zmin, _zmax;
@@ -48,9 +48,15 @@ namespace libWrist
 			readDimensions(mriDirectory);
 
 			if (voxelSize>0) _voxelSizeX=_voxelSizeY=voxelSize;
-			if (sliceThickness>0) _sliceThickness=sliceThickness;
+			if (sliceThickness>0) _voxelSizeZ=sliceThickness;
 
-			
+
+            readDataToShort(mriDirectory);
+
+            IMAGE_OFFSET = _minIntensity;
+            IMAGE_SCALE = ((double)_maxIntensity - _minIntensity) / 255;
+
+            //Console.WriteLine("Found: Min: {0}, Max: {1}, Offset: {2}, Scale: {3}",_minIntensity,_maxIntensity,IMAGE_OFFSET, IMAGE_SCALE);
 
             //readDataToBitmaps(mriDirectory);
 			//findInensityScale(_data);
@@ -62,7 +68,7 @@ namespace libWrist
 			if (!File.Exists(vsizeFile)) 
 			{
 				//no vsize File, so assume size of 1
-				_voxelSizeX = _voxelSizeY = _sliceThickness = 1;
+				_voxelSizeX = _voxelSizeY = _voxelSizeZ = 1;
 				return;
 			}
 			StreamReader r = new StreamReader(vsizeFile);
@@ -71,7 +77,7 @@ namespace libWrist
 			if (parts.Length<3) throw new ArgumentException("Error: unable to determine resolution of scan");
 			_voxelSizeX = Double.Parse(parts[0].Trim());
 			_voxelSizeY = Double.Parse(parts[1].Trim());
-			_sliceThickness = Double.Parse(parts[2].Trim());
+			_voxelSizeZ = Double.Parse(parts[2].Trim());
 			r.Close();
 		}
 
@@ -84,54 +90,16 @@ namespace libWrist
 			if (parts.Length<4) throw new ArgumentException("Error: unable to determine dimensions of scan");
 			_width = Int32.Parse(parts[0].Trim());
 			_height = Int32.Parse(parts[1].Trim());
-			_depth = Byte.Parse(parts[2].Trim());
-			_layers = Int32.Parse(parts[3].Trim());
+			_depth = Int32.Parse(parts[2].Trim());
+			_layers = Byte.Parse(parts[3].Trim());
 			r.Close();
 		}
-
-        //private void readDataToBitmaps(string mriDirectory)
-        //{
-        //    _bitmaps = new Bitmap[_depth];
-        //    for (int i = 0; i < _depth; i++)
-        //    {
-        //        string sliceFilename = Path.Combine(mriDirectory, "i." + ((int)i + 1).ToString("D3"));
-        //        StreamReader s = new StreamReader(sliceFilename);
-        //        BinaryReader r = new BinaryReader(s.BaseStream);
-        //        _bitmaps[i] = new Bitmap(_width, _height, PixelFormat.Format32bppArgb);
-        //        Bitmap im = _bitmaps[i];
-        //        Graphics g = Graphics.FromImage(im);
-        //        g.FillRectangle(Brushes.Black, 0, 0, _width, _height);
-                
-        //        BitmapData imdata = im.LockBits(new Rectangle(0, 0, _width, _height), ImageLockMode.ReadWrite, im.PixelFormat);
-
-        //        unsafe
-        //        {
-        //            //for (int i=0; i<_depth; i++)
-        //            for (int j = _height - 1; j >= 0; j--) //special, so we can flip about y 
-        //            {
-        //                byte* row = (byte*)imdata.Scan0 + (j * imdata.Stride);
-        //                for (int k = 0; k < _width; k++)
-        //                {
-        //                    int intensity = (int)(ShortSwap((short)r.ReadUInt16()) / 16.1569);
-        //                    row[k * 4] = (byte)intensity;
-        //                    row[k * 4 + 1] = (byte)intensity;
-        //                    row[k * 4 + 2] = (byte)intensity;
-        //                    //_bitmaps[i].SetPixel(k, j, Color.FromArgb(intensity, intensity, intensity));
-
-        //                }
-        //            }
-        //        }
-
-        //        r.Close();
-        //        s.Close();
-        //        im.UnlockBits(imdata);
-        //    }
-        //    Console.WriteLine("Done reading");
-        //}
 
         private void readDataToShort(string mriDirectory)
         {
             _data = new short[_height * _width * _depth];
+            _minIntensity = 255;
+            _maxIntensity = 0;
 
             for (int i = 0; i < _depth; i++)
             {
@@ -140,19 +108,25 @@ namespace libWrist
                 BinaryReader r = new BinaryReader(s.BaseStream);
 
                 //TODO: Handle different data types....
-                for (int j = 0; j < _height * _width; j++)
-                    _data[_depth * i + j] = ShortSwap((short)r.ReadUInt16());
+                for (int j = 0; j < _height; j++)
+                {
+                    for (int k = 0; k < _width; k++)
+                    {
+                        _data[(i * _width * _height) + (j * _width) + k] = ShortSwap((short)r.ReadUInt16());
+                        //_data[(i * _width * _height) + j] = ShortSwap((short)r.ReadUInt16());
+                        //save min and max
+                        if (_data[(i * _width * _height) + (j * _width) + k] < _minIntensity)
+                            _minIntensity = _data[(i * _width * _height) + (j * _width) + k];
+                        if (_data[(i * _width * _height) + (j * _width) + k] > _maxIntensity)
+                            _maxIntensity = _data[(i * _width * _height) + (j * _width) + k];
+                    }
+                }
 
                 r.Close();
                 s.Close();
             }
             Console.WriteLine("Done reading");
         }
-
-        //public Bitmap getFrame(int frame)
-        //{
-        //    return _bitmaps[frame];
-        //}
 
         //public void deleteFrames()
         //{
@@ -287,7 +261,7 @@ namespace libWrist
 		{
 			get
 			{
-				return _sliceThickness;
+				return _voxelSizeZ;
 			}
 		}
 

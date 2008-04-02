@@ -276,6 +276,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Texture.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Transform.cpp"
 				>
 			</File>
@@ -351,6 +355,10 @@
 			</File>
 			<File
 				RelativePath=".\TessellatedSurface.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Texture.h"
 				>
 			</File>
 			<File

@@ -42,7 +42,8 @@ namespace WristVizualizer
             NONE,
             SCENEVIEWER,
             FULL_WRIST,
-            POSVIEW
+            POSVIEW,
+            TEXTURE
         }
 
         public WristVizualizer(string[] fileArgs)
@@ -1105,14 +1106,18 @@ namespace WristVizualizer
         private void openTextureToolStripMenuItem_Click(object sender, EventArgs e)
         {
             LoadTextureDialog texture = new LoadTextureDialog();
-            texture.ShowDialog();
+            DialogResult r = texture.ShowDialog();
+            if (r == DialogResult.Cancel)
+                return;
+
+            if (_viewer == null) setupExaminerWindow();
+            resetForm();
+            _mode = Modes.TEXTURE;
+            setFormForCurrentMode();
+
+            _root = texture.setup(_viewer);
+            _viewer.setBackgroundColor(0.8f, 0.8f, 0.8f);
+
         }
-
-
-
-
-
-
-
     }
 }
