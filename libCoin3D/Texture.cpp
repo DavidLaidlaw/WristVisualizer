@@ -226,7 +226,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	case Planes::XY_PLANE:
 		myCalc -> a.setValue( (float)_sizeZ ); 
 		myCalc->b.setValue( (float)_voxelZ );
-		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))*b) % a);  oa = fabs(6*A[0] % a)";  //TODO: Fix this crap!!!!
+		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))*b) % a)";  //TODO: Fix this crap!!!!
 		break;
 	case Planes::YZ_PLANE:
 		myCalc -> a.setValue( (float)_sizeX );
