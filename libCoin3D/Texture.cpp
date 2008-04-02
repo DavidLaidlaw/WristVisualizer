@@ -19,7 +19,9 @@
 #include <Inventor/nodes/SoFaceSet.h>
 #include <Inventor/nodes/SoBaseColor.h>
 #include <Inventor/nodes/SoDrawStyle.h>
-
+#include <Inventor/events/SoKeyboardEvent.h>
+#include <Inventor/events/SoEvent.h>
+#include <Inventor/nodes/SoEventCallback.h>
 
 libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ)
 {
@@ -30,6 +32,8 @@ libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double 
 	_voxelX = voxelX;
 	_voxelY = voxelY;
 	_voxelZ = voxelZ;
+	_draggerXY = NULL;
+	_draggerYZ = NULL;
 }
 
 libCoin3D::Texture::~Texture()
@@ -238,6 +242,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		textureCBdata->numSlices = _sizeZ;
 		textureCBdata->planeHeight = _sizeY;
 		textureCBdata->planeWidth = _sizeX;
+		_draggerXY = myDragger; //save reference to this
 		break;
 	case Planes::YZ_PLANE:
 		myCalc -> a.setValue( (float)_sizeX );
@@ -247,6 +252,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		textureCBdata->numSlices = _sizeX;
 		textureCBdata->planeHeight = _sizeZ;
 		textureCBdata->planeWidth = _sizeY;
+		_draggerYZ = myDragger;
 		break;
 	default:
 	   throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
@@ -332,4 +338,72 @@ SoSeparator* libCoin3D::Texture::makeRectangle(Planes plane)
 	
 	rectangle->unrefNoDelete();
 	return rectangle;
+}
+
+void myKeyPressCB( void * userData, SoEventCallback * eventCB )
+{
+	int HWND = (int)userData;
+	libCoin3D::Texture^ texture = libCoin3D::Texture::getTextureByParentWidget(HWND);
+	if (texture==nullptr) //help
+		return; 
+	const SoEvent * event = eventCB->getEvent();
+	
+
+	if (SO_KEY_PRESS_EVENT(event, UP_ARROW)) { //Move through the slices in the Z coord
+		texture->moveDragger(libCoin3D::Texture::Planes::XY_PLANE,1);
+	}
+	if (SO_KEY_PRESS_EVENT(event, DOWN_ARROW)) { //Move through the slices in the Z coord
+		texture->moveDragger(libCoin3D::Texture::Planes::XY_PLANE,-1);
+	}
+    if (SO_KEY_PRESS_EVENT(event, LEFT_ARROW)) { //Move through the slices in the Y coord
+		texture->moveDragger(libCoin3D::Texture::Planes::YZ_PLANE,-1);
+		eventCB->setHandled();
+	}
+	if (SO_KEY_PRESS_EVENT(event, RIGHT_ARROW)) { //Move through the slices in the Y coord
+		texture->moveDragger(libCoin3D::Texture::Planes::YZ_PLANE,1);
+		//System::Console::WriteLine("RIGHT");
+		eventCB->setHandled();
+	}
+}
+
+
+libCoin3D::Separator^ libCoin3D::Texture::createKeyboardCallbackObject(int viewerParrentHWND)
+{
+	TexturesHashtable->Add(viewerParrentHWND, this);
+
+	SoEventCallback * myEventCB = new SoEventCallback;
+	myEventCB->addEventCallback( SoKeyboardEvent::getClassTypeId(),
+		myKeyPressCB, (void*)viewerParrentHWND);
+	SoSeparator* sep = new SoSeparator();
+	Separator^ wrapper = gcnew Separator(sep);
+	sep->addChild(myEventCB);
+	return wrapper;
+}
+
+void libCoin3D::Texture::moveDragger(Planes plane,int howFar) {
+	SoTranslate1Dragger* dragger;
+	switch (plane) 
+	{
+	case Planes::XY_PLANE:
+		dragger = _draggerXY;
+		break;
+	case Planes::YZ_PLANE:
+		dragger = _draggerYZ;
+		break;
+	default:
+		throw gcnew System::ArgumentException("What the fuck");
+	}
+	
+	if (!dragger) return;  //ignore if we are not set yet
+    
+	float x,y,z;
+	dragger->translation.getValue().getValue(x,y,z);
+	dragger->translation.setValue(x+(howFar/6.),0,0);
+}
+
+libCoin3D::Texture^ libCoin3D::Texture::getTextureByParentWidget(int HWND)
+{
+	if (TexturesHashtable == nullptr)
+		return nullptr; //this should never happen, but just in case
+	return (Texture^)TexturesHashtable[HWND]; //return it
 }

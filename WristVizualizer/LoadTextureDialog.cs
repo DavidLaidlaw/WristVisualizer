@@ -88,6 +88,7 @@ namespace WristVizualizer
             Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
             _root.addChild(plane1);
             _root.addChild(plane2);
+            _root.addChild(_texture.createKeyboardCallbackObject(0));
         }
 
         /// <summary>
