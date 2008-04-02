@@ -32,7 +32,6 @@ libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double 
 	_voxelZ = voxelZ;
 	//allocate data
 	//_all_slice_data1 = allocateSliceStack(_sizeX,_sizeY,_sizeZ);
-	_verticesRectangle1 = NULL;
 }
 
 libCoin3D::Texture::~Texture()
@@ -47,12 +46,6 @@ libCoin3D::Texture::~Texture()
 		for (int i=0; i<_sizeX; i++)
 			delete _all_slice_dataYZ[i];
 		delete _all_slice_dataYZ;
-	}
-
-	if (_verticesRectangle1 != NULL) {
-		for (int i=0; i<4; i++)
-			delete _verticesRectangle1[i];
-		delete _verticesRectangle1;
 	}
 }
 
@@ -226,13 +219,13 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	case Planes::XY_PLANE:
 		myCalc -> a.setValue( (float)_sizeZ ); 
 		myCalc->b.setValue( (float)_voxelZ );
-		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))*b) % a)";  //TODO: Fix this crap!!!!
+		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))*b) % a)";
 		break;
 	case Planes::YZ_PLANE:
 		myCalc -> a.setValue( (float)_sizeX );
 		myCalc -> b.setValue( (float)_voxelX );
-		myCalc -> c.setValue( 1.1f ); //TODO: Fix?
-		myCalc -> expression = "oA = vec3f(( c * 6*fabs(A[0])*b) % a , 0,0); oa = fabs(6*A[0] % a)";
+		myCalc -> c.setValue( 1.0f ); //TODO: Fix?
+		myCalc -> expression = "oA = vec3f(( c * 6*fabs(A[0])*b) % a , 0,0)";
 		break;
 	default:
 	   throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
@@ -289,23 +282,6 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	return gcnew Separator(separator);
 }
 
-float** libCoin3D::Texture::makeRectangleVertices()
-{
-	//allocate and set to 0
-	_verticesRectangle1 = new float*[4];
-	for (int i=0; i<4; i++) {
-		_verticesRectangle1[i] = new float[3];
-		for (int j=0; j<3; j++)
-			_verticesRectangle1[i][j] = 0.0;
-	}
-
-	_verticesRectangle1[2][1] = (float)(_sizeY * _voxelY);
-	_verticesRectangle1[1][0] = (float)(_sizeX * _voxelX);
-	_verticesRectangle1[3][1] = (float)(_sizeY * _voxelY);
-	_verticesRectangle1[2][0] = (float)(_sizeX * _voxelX);
-	return _verticesRectangle1;
-}
-
 SoSeparator* libCoin3D::Texture::makeRectangle(Planes plane)
 {
 	SoSeparator *rectangle = new SoSeparator();
@@ -315,21 +291,19 @@ SoSeparator* libCoin3D::Texture::makeRectangle(Planes plane)
 	// Using the new SoVertexProperty node is more efficient
 	SoVertexProperty *myVertexProperty = new SoVertexProperty;
 
-	makeRectangleVertices();
-
 	// Define coordinates for vertices
 	// vertices is an array of pts of length 4 (each pt has 3 floats; total 12 pts)
 	// these vertices define the corner of the texture plane that the CT slices are shown on
 	switch( plane ) 
 	{
 	case Planes::XY_PLANE:  //Z
-		myVertexProperty->vertex.set1Value(0, _verticesRectangle1[0]);
-		myVertexProperty->vertex.set1Value(1, _verticesRectangle1[1]);
-		myVertexProperty->vertex.set1Value(2, _verticesRectangle1[2]);
-		myVertexProperty->vertex.set1Value(3, _verticesRectangle1[3]);
+		myVertexProperty->vertex.set1Value(0, 0.0f, 0.0f, 0.0f);
+		myVertexProperty->vertex.set1Value(1, (float)(_sizeX*_voxelX),0.0f,0.0f);
+		myVertexProperty->vertex.set1Value(2, (float)(_sizeX*_voxelX), (float)(_sizeY*_voxelY), 0.0f);
+		myVertexProperty->vertex.set1Value(3, 0.0f, (float)(_sizeY*_voxelY), 0.0f);
 		break;
 	case Planes::YZ_PLANE:  //X
-		//myVertexProperty->vertex.setValues(0, 4, vertices_x);
+		//myVertexProperty->vertex.set1Value(0,);
 		break;
 	}
 
