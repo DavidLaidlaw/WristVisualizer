@@ -112,13 +112,13 @@ namespace libWrist
                 {
                     for (int k = 0; k < _width; k++)
                     {
-                        _data[(i * _width * _height) + (j * _width) + k] = ShortSwap((short)r.ReadUInt16());
+                        _data[(i * _width * _height) + (k * _width) + j] = ShortSwap((short)r.ReadUInt16());
                         //_data[(i * _width * _height) + j] = ShortSwap((short)r.ReadUInt16());
                         //save min and max
-                        if (_data[(i * _width * _height) + (j * _width) + k] < _minIntensity)
-                            _minIntensity = _data[(i * _width * _height) + (j * _width) + k];
-                        if (_data[(i * _width * _height) + (j * _width) + k] > _maxIntensity)
-                            _maxIntensity = _data[(i * _width * _height) + (j * _width) + k];
+                        if (_data[(i * _width * _height) + (k * _width) + j] < _minIntensity)
+                            _minIntensity = _data[(i * _width * _height) + (k * _width) + j];
+                        if (_data[(i * _width * _height) + (k * _width) + j] > _maxIntensity)
+                            _maxIntensity = _data[(i * _width * _height) + (k * _width) + j];
                     }
                 }
 
