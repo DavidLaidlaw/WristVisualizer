@@ -120,5 +120,26 @@ namespace WristVizualizer
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        private void textBoxSubjectDirectory_TextChanged(object sender, EventArgs e)
+        {
+            if (!Directory.Exists(textBoxSubjectDirectory.Text))
+            {
+                //error, report
+                labelErrorSubject.Text = "Not a valid directory";
+                return;
+            }
+            string subjectDirectory = textBoxSubjectDirectory.Text.Trim();
+            Match m = Regex.Match(subjectDirectory, @"(E\d{5})\\?\s*$");
+            if (!m.Success)
+            {
+                //failure, lets report it
+                labelErrorSubject.Text = "Unable to determine subject from directory";
+                return;
+            }
+
+            string subject = m.Groups[1].Value;
+            textBoxCropValuesFilename.Text = Path.Combine(subjectDirectory, "crop_values.txt");
+        }
     }
 }
