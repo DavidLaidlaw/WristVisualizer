@@ -122,25 +122,13 @@ void updateTextureCB( void * data, SoSensor * )
 	libCoin3D::Texture::Planes plane = textureCBdata -> plane;
 	SoTranslate1Dragger* dragger = textureCBdata->dragger;
 	float dragPos = dragger->translation.getValue()[0];
-	float sliceThickness;
-	float numSlices;
-	switch( plane )
-	{
-	case libCoin3D::Texture::Planes::XY_PLANE:
-		numSlices = (float)textureCBdata->sizeZ;
-		sliceThickness = textureCBdata->sliceThickness;
-		xf = (int)fabs(fmod(floor(6*dragPos/sliceThickness),numSlices));
-		texture -> image.setValue(SbVec2s(textureCBdata->sizeX, textureCBdata->sizeY),1, (const unsigned char*) buffer[xf] );
-		break;
-	case libCoin3D::Texture::Planes::YZ_PLANE:
-		numSlices = (float)textureCBdata->numSlices;
-		sliceThickness = textureCBdata->sliceThickness;
-		xf = (int)fabs(fmod(floor(6*dragPos/sliceThickness),numSlices));
+	float sliceThickness = textureCBdata->sliceThickness;
+	float numSlices = (float)textureCBdata->numSlices;
 
-		//xf = (int)fabs(fmod((float)(6*dragPos),(float)textureCBdata->sizeX));
-		texture -> image.setValue(SbVec2s(textureCBdata->sizeY, textureCBdata->sizeZ),1, (const unsigned char*) buffer[xf] );
-		break;
-	}
+	//determine the index of the image data that we need (in the full buffer)
+	xf = (int)fabs(fmod(floor(6*dragPos/sliceThickness),numSlices));
+	//set the image to the texture
+	texture -> image.setValue(SbVec2s(textureCBdata->planeWidth, textureCBdata->planeHeight),1, (const unsigned char*) buffer[xf] );
 }
 
 unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>^ data, Planes plane)
