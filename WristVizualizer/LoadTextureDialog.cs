@@ -19,6 +19,7 @@ namespace WristVizualizer
         public LoadTextureDialog()
         {
             InitializeComponent();
+            
         }
 
         private void buttonBrowseImage_Click(object sender, EventArgs e)
@@ -40,6 +41,7 @@ namespace WristVizualizer
             string kinematicFile = @"C:\fake.shit.dat";
             //crop values
             double[][] pts = DatParser.parseDatFile(ulnaStackFile);
+            CropValuesParser p = new CropValuesParser(@"C:\Functional\E01424\crop_values.txt");
 
             Separator s = Texture.createPointsFileObject(pts);
 
@@ -56,26 +58,16 @@ namespace WristVizualizer
 
             Random r = new Random();
 
-            //short max=0;
-            //short min=255;
-
             //lets build an array of bytes (unsigned 8bit data structure)
             Byte[][] voxels = new Byte[sizeZ][];
             for (int i = 0; i < sizeZ; i++)
             {
-                //min = 255;
-                //max = -32;
                 voxels[i] = new Byte[sizeX * sizeY];
                 for (int j = 0; j < sizeY; j++)
                     for (int k = 0; k < sizeX; k++)
                     {
                         voxels[i][(j * sizeX) + k] = (Byte)mri.getCroppedVoxel(k, j, i);
-                        //if (mri.getVoxel(k,j,i) > max)
-                        //    max = (short)mri.getVoxel(k, j, i);
-                        //if (voxels[i][(j * sizeX) + k] < min)
-                        //    min = voxels[i][(j * sizeX) + k];
                     }
-                //Console.WriteLine("For line {0}, min: {1}, max: {2}",i,min,max);
             }
 
                         
