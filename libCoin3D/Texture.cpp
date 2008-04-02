@@ -119,17 +119,18 @@ void updateTextureCB( void * data, SoSensor * )
 		return;
 
 	libCoin3D::Texture::Planes plane = textureCBdata -> plane;
-
 	SoTranslate1Dragger* dragger = textureCBdata->dragger;
-	xf = (int)fabs(fmod((float)(6*dragger->translation.getValue()[0]),(float)textureCBdata->sizeZ));
+
+	
 	switch( plane )
 	{
 	case libCoin3D::Texture::Planes::XY_PLANE:
-		texture -> image.setValue(SbVec2s(textureCBdata->sizeX, textureCBdata->sizeY),1, (const unsigned char*) buffer[xf] );   
+		xf = (int)fabs(fmod((float)(6*dragger->translation.getValue()[0]),(float)textureCBdata->sizeZ));
+		texture -> image.setValue(SbVec2s(textureCBdata->sizeX, textureCBdata->sizeY),1, (const unsigned char*) buffer[xf] );
 		break;
 	case libCoin3D::Texture::Planes::YZ_PLANE:
-		//init_tmp_buf_x( tmp_buf_x, buffer[xf]);		
-		//texture -> image.setValue(SbVec2s(MRI_Y_SIZE_vert, MRI_Z_SIZE_vert),1, (const unsigned char*) tmp_buf_x );   
+		xf = (int)fabs(fmod((float)(6*dragger->translation.getValue()[0]),(float)textureCBdata->sizeX));
+		texture -> image.setValue(SbVec2s(textureCBdata->sizeY, textureCBdata->sizeZ),1, (const unsigned char*) buffer[xf] );
 		break;
 	}
 }
@@ -154,7 +155,7 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 			buffer[i] = new unsigned char[_sizeY*_sizeZ];
 			for (int j=0; j<_sizeZ; j++) {  //loop through Z
 				for (int k=0; k<_sizeY; k++) {  //loop through Y
-					buffer[i][j*_sizeY + k] = (unsigned char)data[j][k*_sizeX + i];
+					buffer[i][j*_sizeY + k] = (unsigned char)data[j][i*_sizeY + k];
 				}
 			}
 		}
@@ -188,7 +189,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	SoScale* myScale = new SoScale();
 	SoSeparator* scaleSeparator = new SoSeparator();
 	scaleSeparator->ref();
-	//separator->addChild(scaleSeparator);
+	separator->addChild(scaleSeparator); //hu
 	scaleSeparator->addChild(myScale);
 	myScale->scaleFactor.setValue(6,6,6);
 	SoDrawStyle *drawStyle  = new SoDrawStyle;
@@ -276,7 +277,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		texture->image.setValue(SbVec2s(_sizeX, _sizeY),1, (const unsigned char*) _all_slice_dataXY[0]);
 		break;
 	case Planes::YZ_PLANE:
-		//setTextureXplane( texture, _all_slice_data1);
+		texture->image.setValue(SbVec2s(_sizeY, _sizeZ),1, (const unsigned char*) _all_slice_dataYZ[0]);
 		break;
 	}
 	return gcnew Separator(separator);
@@ -303,7 +304,10 @@ SoSeparator* libCoin3D::Texture::makeRectangle(Planes plane)
 		myVertexProperty->vertex.set1Value(3, 0.0f, (float)(_sizeY*_voxelY), 0.0f);
 		break;
 	case Planes::YZ_PLANE:  //X
-		//myVertexProperty->vertex.set1Value(0,);
+		myVertexProperty->vertex.set1Value(0, 0.0f, 0.0f, 0.0f);
+		myVertexProperty->vertex.set1Value(1, 0.0f, (float)(_sizeY*_voxelY), 0.0f);
+		myVertexProperty->vertex.set1Value(2, 0.0f, (float)(_sizeY*_voxelY), (float)(_sizeZ*_voxelZ));
+		myVertexProperty->vertex.set1Value(3, 0.0f, 0.0f, (float)(_sizeZ*_voxelZ));
 		break;
 	}
 
