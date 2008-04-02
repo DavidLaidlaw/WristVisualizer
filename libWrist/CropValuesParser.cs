@@ -46,6 +46,9 @@ namespace libWrist
             public int MaxY;
             public int MinZ;
             public int MaxZ;
+            public int SizeX;
+            public int SizeY;
+            public int SizeZ;
             public double VoxelX;
             public double VoxelY;
             public double VoxelZ;
@@ -94,6 +97,9 @@ namespace libWrist
                 cv.MaxY = Int32.Parse(m.Groups[7].Value);
                 cv.MinZ = Int32.Parse(m.Groups[8].Value);
                 cv.MaxZ = Int32.Parse(m.Groups[9].Value);
+                cv.SizeX = cv.MaxX - cv.MinX + 1; //need to add 1 because we include end pixels
+                cv.SizeY = cv.MaxY - cv.MinY + 1;
+                cv.SizeZ = cv.MaxZ - cv.MinZ + 1;
                 cv.VoxelX = Double.Parse(m.Groups[10].Value);
                 cv.VoxelY = cv.VoxelX;
                 cv.VoxelZ = Double.Parse(m.Groups[11].Value);

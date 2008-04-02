@@ -21,19 +21,17 @@
 #include <Inventor/nodes/SoDrawStyle.h>
 
 
-libCoin3D::Texture::Texture(void)
+libCoin3D::Texture::Texture(int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ)
 {
-	_sizeX = 512;
-	_sizeY = 512;
-	_sizeZ = 187;
-	_voxelX = 0.273438;
-	_voxelY = 0.273438;
-	_voxelZ = 0.625000;
+	_sizeX = sizeX;
+	_sizeY = sizeY;
+	_sizeZ = sizeZ;
+	_voxelX = voxelX;
+	_voxelY = voxelY;
+	_voxelZ = voxelZ;
 	//allocate data
 	//_all_slice_data1 = allocateSliceStack(_sizeX,_sizeY,_sizeZ);
-	_current_slice1 = new unsigned char[_sizeX*_sizeY];
 	_verticesRectangle1 = NULL;
-
 }
 
 libCoin3D::Texture::~Texture()
@@ -43,9 +41,6 @@ libCoin3D::Texture::~Texture()
 			delete _all_slice_data1[i];
 		delete _all_slice_data1;
 	}
-
-	if (_current_slice1 != NULL)
-		delete _current_slice1;
 
 	if (_verticesRectangle1 != NULL) {
 		for (int i=0; i<4; i++)
@@ -143,21 +138,6 @@ void updateTextureCB( void * data, SoSensor * )
 }
 
 
-
-void libCoin3D::Texture::setTextureZplane(SoTexture2* texture, unsigned char** all_slice_data)
-{
-	/*
-	init_tmp_buf( tmp_buf, all_slice_data[0]);
-    if(MRI_Y_SIZE_vert > MRI_Y_SIZE)
-		memset(tmp_bufThird, MRI_X_SIZE*MRI_Y_SIZE*sizeof(unsigned char),0);
-
-	texture->image.setValue(SbVec2s(MRI_X_SIZE, MRI_Y_SIZE),1, (const unsigned char*) tmp_buf );
-	*/
-	texture->image.setValue(SbVec2s(_sizeX, _sizeY),1, (const unsigned char*) all_slice_data[0] );
-}
-
-
-
 libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, int axis)
 {
 
@@ -176,7 +156,8 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 
 	SoScale* myScale = new SoScale();
 	SoSeparator* scaleSeparator = new SoSeparator();
-	separator->addChild(scaleSeparator);
+	scaleSeparator->ref();
+	//separator->addChild(scaleSeparator);
 	scaleSeparator->addChild(myScale);
 	myScale->scaleFactor.setValue(6,6,6);
 	SoDrawStyle *drawStyle  = new SoDrawStyle;

@@ -46,7 +46,8 @@ namespace WristVizualizer
 
             //crop values
             double[][] pts = DatParser.parseDatFile(ulnaStackFile);
-            CropValuesParser p = new CropValuesParser(@"C:\Functional\E01424\crop_values.txt");
+            CropValuesParser cvp = new CropValuesParser(@"C:\Functional\E01424\crop_values.txt");
+            CropValuesParser.CropValues cv = cvp.getCropData("15R");
 
             Separator s = Texture.createPointsFileObject(pts);
 
@@ -82,7 +83,7 @@ namespace WristVizualizer
             _root.addChild(ulna);
             _root.addChild(rad);
 
-            _texture = new Texture();
+            _texture = new Texture(cv.SizeX, cv.SizeY, cv.SizeZ, cv.VoxelX, cv.VoxelY, cv.VoxelZ);
             Separator plane1 = _texture.makeDragerAndTexture(voxels, 2);
             _root.addChild(plane1);
         }
