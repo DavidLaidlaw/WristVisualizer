@@ -25,28 +25,27 @@ namespace WristVizualizer
         private void buttonBrowseImage_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
-            folder.SelectedPath = textBoxImageDirectory.Text;
+            folder.SelectedPath = textBoxSubjectDirectory.Text;
             if (folder.ShowDialog() == DialogResult.Cancel)
                 return;
 
-            textBoxImageDirectory.Text = folder.SelectedPath;
+            textBoxSubjectDirectory.Text = folder.SelectedPath;
         }
 
         private string getBoneFileName(string shortBoneName, Wrist.Sides side)
         {
-            string form = @"C:\Functional\E01424\S15R\Stack.files\{0}15{1}.stack";
+            string form = @"C:\Ortho\E01424\S15R\Stack.files\{0}15{1}.stack";
             return String.Format(form, shortBoneName.ToLower(), side == Wrist.Sides.LEFT ? "L" : "R");
         }
 
         private void run()
         {
-            string image = @"C:\Functional\E01424\CTScans\E01424_15";
+            string image = @"C:\Ortho\E01424\CTScans\E01424_15";
             string ulnaStackFile = getBoneFileName("uln", Wrist.Sides.RIGHT);
-            string shit1 = @"C:\Functional\E01424\S15R\IV.files\rad15R.iv";
 
             //crop values
-            
-            CropValuesParser cvp = new CropValuesParser(@"C:\Functional\E01424\crop_values.txt");
+
+            CropValuesParser cvp = new CropValuesParser(@"C:\Ortho\E01424\crop_values.txt");
             CropValuesParser.CropValues cv = cvp.getCropData("15R");
 
             CTmri mri = new CTmri(image);

@@ -30,9 +30,9 @@ namespace WristVizualizer
         {
             this.buttonCancel = new System.Windows.Forms.Button();
             this.buttonOK = new System.Windows.Forms.Button();
-            this.textBoxImageDirectory = new System.Windows.Forms.TextBox();
+            this.textBoxSubjectDirectory = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.buttonBrowseImage = new System.Windows.Forms.Button();
+            this.buttonBrowseSubject = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -59,18 +59,18 @@ namespace WristVizualizer
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 
-            // textBoxImageDirectory
+            // textBoxSubjectDirectory
             // 
-            this.textBoxImageDirectory.Location = new System.Drawing.Point(93, 27);
-            this.textBoxImageDirectory.Name = "textBoxImageDirectory";
-            this.textBoxImageDirectory.Size = new System.Drawing.Size(215, 20);
-            this.textBoxImageDirectory.TabIndex = 5;
+            this.textBoxSubjectDirectory.Location = new System.Drawing.Point(99, 27);
+            this.textBoxSubjectDirectory.Name = "textBoxSubjectDirectory";
+            this.textBoxSubjectDirectory.Size = new System.Drawing.Size(215, 20);
+            this.textBoxSubjectDirectory.TabIndex = 5;
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.buttonBrowseImage);
+            this.groupBox1.Controls.Add(this.buttonBrowseSubject);
             this.groupBox1.Controls.Add(this.label19);
-            this.groupBox1.Controls.Add(this.textBoxImageDirectory);
+            this.groupBox1.Controls.Add(this.textBoxSubjectDirectory);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(496, 192);
@@ -78,24 +78,24 @@ namespace WristVizualizer
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Texture";
             // 
-            // buttonBrowseImage
+            // buttonBrowseSubject
             // 
-            this.buttonBrowseImage.Location = new System.Drawing.Point(325, 26);
-            this.buttonBrowseImage.Name = "buttonBrowseImage";
-            this.buttonBrowseImage.Size = new System.Drawing.Size(95, 21);
-            this.buttonBrowseImage.TabIndex = 6;
-            this.buttonBrowseImage.Text = "Browse";
-            this.buttonBrowseImage.UseVisualStyleBackColor = true;
-            this.buttonBrowseImage.Click += new System.EventHandler(this.buttonBrowseImage_Click);
+            this.buttonBrowseSubject.Location = new System.Drawing.Point(325, 26);
+            this.buttonBrowseSubject.Name = "buttonBrowseSubject";
+            this.buttonBrowseSubject.Size = new System.Drawing.Size(95, 21);
+            this.buttonBrowseSubject.TabIndex = 6;
+            this.buttonBrowseSubject.Text = "Browse";
+            this.buttonBrowseSubject.UseVisualStyleBackColor = true;
+            this.buttonBrowseSubject.Click += new System.EventHandler(this.buttonBrowseImage_Click);
             // 
             // label19
             // 
             this.label19.AutoSize = true;
             this.label19.Location = new System.Drawing.Point(6, 30);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(84, 13);
+            this.label19.Size = new System.Drawing.Size(91, 13);
             this.label19.TabIndex = 5;
-            this.label19.Text = "Image Directory:";
+            this.label19.Text = "Subject Directory:";
             // 
             // LoadTextureDialog
             // 
@@ -124,9 +124,9 @@ namespace WristVizualizer
 
         private System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Button buttonOK;
-        private System.Windows.Forms.TextBox textBoxImageDirectory;
+        private System.Windows.Forms.TextBox textBoxSubjectDirectory;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button buttonBrowseImage;
+        private System.Windows.Forms.Button buttonBrowseSubject;
         private System.Windows.Forms.Label label19;
     }
 }
