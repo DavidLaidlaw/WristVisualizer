@@ -13,6 +13,9 @@ public:
 
 	Texture(Sides side, int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ);
 	virtual ~Texture();
+
+	static Separator^ createPointsFileObject(array<array<double>^>^ points, array<float>^ color);
+	static Separator^ createPointsFileObject(array<array<double>^>^ points, float colorR, float colorG, float colorB);
 	static Separator^ createPointsFileObject(array<array<double>^>^ points);
 
 	virtual Separator^ makeDragerAndTexture(array<array<System::Byte>^>^ data, Planes plane);

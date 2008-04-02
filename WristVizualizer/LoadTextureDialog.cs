@@ -45,22 +45,20 @@ namespace WristVizualizer
             string shit1 = @"C:\Functional\E01424\S15R\IV.files\rad15R.iv";
 
             //crop values
-            double[][] pts = DatParser.parseDatFile(ulnaStackFile);
+            
             CropValuesParser cvp = new CropValuesParser(@"C:\Functional\E01424\crop_values.txt");
             CropValuesParser.CropValues cv = cvp.getCropData("15R");
 
-            Separator s = Texture.createPointsFileObject(pts);
-
             CTmri mri = new CTmri(image);
-            mri.setCrop(0, 511, 0, 511, 0, 186);
+            mri.setCrop(cv.MinX, cv.MaxX, cv.MinY, cv.MaxY, cv.MinZ, cv.MaxZ);
 
             double LO_RES_HEIGHT = mri.voxelSizeX;
             double LO_RES_WIDTH = mri.voxelSizeX;
             double RES_DEPTH = mri.voxelSizeZ;
 
-            int sizeX = 512;
-            int sizeY = 512;
-            int sizeZ = 187;
+            int sizeX = cv.SizeX;
+            int sizeY = cv.SizeY;
+            int sizeZ = cv.SizeZ;
 
             Random r = new Random();
 
@@ -76,12 +74,13 @@ namespace WristVizualizer
                     }
             }
 
-                        
-            Separator ulna = Texture.createPointsFileObject(pts);
-            Separator rad = new Separator();
-            rad.addFile(shit1);
-            _root.addChild(ulna);
-            _root.addChild(rad);
+            //lets load each bone
+            for (int i = 0; i < TextureSettings.ShortBNames.Length; i++)
+            {
+                double[][] pts = DatParser.parseDatFile(getBoneFileName(TextureSettings.ShortBNames[i], Wrist.Sides.RIGHT));
+                Separator bone = Texture.createPointsFileObject(pts, TextureSettings.BoneColors[i]);
+                _root.addChild(bone);
+            }
 
             _texture = new Texture(cv.Side== Wrist.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
                 cv.SizeX, cv.SizeY, cv.SizeZ, cv.VoxelX, cv.VoxelY, cv.VoxelZ);

@@ -56,7 +56,16 @@ unsigned char** libCoin3D::Texture::allocateSliceStack(int numPixelsX, int numPi
 	return allStacks;
 }
 
+libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(array<array<double>^>^ points, array<float>^ color)
+{
+	return createPointsFileObject(points, color[0], color[1], color[2]);
+}
 libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli::array<double >^,1> ^points)
+{
+	return createPointsFileObject(points, 1.0f, 1.0f, 1.0f);
+}
+
+libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli::array<double >^,1> ^points, float colorR, float colorG, float colorB)
 {
 	SoSeparator* bone = new SoSeparator();
 	bone->ref();
@@ -70,7 +79,7 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 	drawStyle->pointSize = 1;
 	drawStyle->setOverride(TRUE);
 
-	clr->rgb.setValue(SbColor(1.0f, 0.0f, 0.1f));
+	clr->rgb.setValue(SbColor(colorR, colorG, colorB));
 
 	SoCoordinate3* coord = new SoCoordinate3;
 	SoPointSet* pts = new SoPointSet;

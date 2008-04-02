@@ -83,6 +83,7 @@
     <Compile Include="SideSelector.Designer.cs">
       <DependentUpon>SideSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextureSettings.cs" />
     <Compile Include="VersionManager.cs" />
     <Compile Include="WristVizualizer.cs">
       <SubType>Form</SubType>
