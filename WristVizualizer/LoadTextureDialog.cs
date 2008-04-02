@@ -5,6 +5,8 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using System.Text.RegularExpressions;
+using System.IO;
 using libWrist;
 using libCoin3D;
 
@@ -40,13 +42,22 @@ namespace WristVizualizer
 
         private void run()
         {
-            string image = @"C:\Ortho\E01424\CTScans\E01424_15";
+            string subjectPath = @"C:\Ortho\E01424";
+            string subject = System.Text.RegularExpressions.Regex.Match(subjectPath,@"(E\d{5})\\?\s*$").Groups[1].Value;
+            int series = 15;
+            Wrist.Sides side = Wrist.Sides.RIGHT;
+
+            string seriesKey = "15R";
+
+            string cropValuesFilename = Path.Combine(subjectPath, "crop_values.txt");
+            string image = Path.Combine(Path.Combine(subjectPath, "CTScans"), String.Format("{0}_{1:00}", subject, series));
+
             string ulnaStackFile = getBoneFileName("uln", Wrist.Sides.RIGHT);
 
             //crop values
 
-            CropValuesParser cvp = new CropValuesParser(@"C:\Ortho\E01424\crop_values.txt");
-            CropValuesParser.CropValues cv = cvp.getCropData("15R");
+            CropValuesParser cvp = new CropValuesParser(cropValuesFilename);
+            CropValuesParser.CropValues cv = cvp.getCropData(seriesKey);
 
             CTmri mri = new CTmri(image);
             mri.setCrop(cv.MinX, cv.MaxX, cv.MinY, cv.MaxY, cv.MinZ, cv.MaxZ);
