@@ -165,7 +165,7 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 			buffer[i] = new unsigned char[_sizeY*_sizeZ];
 			for (int j=0; j<_sizeZ; j++) {  //loop through Z
 				for (int k=0; k<_sizeY; k++) {  //loop through Y
-					buffer[i][j*_sizeZ + k] = (unsigned char)data[j][k*_sizeY + i];
+					buffer[i][j*_sizeY + k] = (unsigned char)data[j][k*_sizeX + i];
 				}
 			}
 		}
@@ -231,6 +231,12 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		myCalc -> a.setValue( (float)_sizeZ ); 
 		myCalc->b.setValue( (float)_voxelZ );
 		myCalc -> expression = "oA = vec3f(0,0,(6*fabs(A[0])*b) % a);  oa = fabs(6*A[0] % a)";
+		break;
+	case Planes::YZ_PLANE:
+		myCalc -> a.setValue( (float)_sizeX );
+		myCalc -> b.setValue( (float)_voxelX );
+		myCalc -> c.setValue( 1.1f ); //TODO: Fix?
+		myCalc -> expression = "oA = vec3f(( c * 6*fabs(A[0])*b) % a , 0,0); oa = fabs(6*A[0] % a)";
 		break;
 	default:
 	   throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");

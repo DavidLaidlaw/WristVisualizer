@@ -86,7 +86,9 @@ namespace WristVizualizer
             _texture = new Texture(cv.Side== Wrist.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
                 cv.SizeX, cv.SizeY, cv.SizeZ, cv.VoxelX, cv.VoxelY, cv.VoxelZ);
             Separator plane1 = _texture.makeDragerAndTexture(voxels, Texture.Planes.XY_PLANE);
+            //Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
             _root.addChild(plane1);
+            //_root.addChild(plane2);
         }
 
         /// <summary>
