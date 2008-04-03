@@ -369,7 +369,7 @@ void myKeyPressCB( void * userData, SoEventCallback * eventCB )
 
 libCoin3D::Separator^ libCoin3D::Texture::createKeyboardCallbackObject(int viewerParrentHWND)
 {
-	TexturesHashtable->Add(viewerParrentHWND, this);
+	TexturesHashtable[viewerParrentHWND] = this;
 
 	SoEventCallback * myEventCB = new SoEventCallback;
 	myEventCB->addEventCallback( SoKeyboardEvent::getClassTypeId(),
