@@ -202,7 +202,7 @@ namespace WristVizualizer
                 double[][] pts = DatParser.parseDatFile(getBoneFileName(TextureSettings.ShortBNames[i]));
                 Separator bone = Texture.createPointsFileObject(pts, TextureSettings.BoneColors[i]);
                 //try and load transforms
-                if (transforms.ContainsKey(TextureSettings.TransformBNames[i]))
+                if (transforms != null && transforms.ContainsKey(TextureSettings.TransformBNames[i]))
                 {
                     Transform tfrm = new Transform();
                     TransformParser.addTfmMatrixtoTransform((TransformMatrix)transforms[TextureSettings.TransformBNames[i]], tfrm);

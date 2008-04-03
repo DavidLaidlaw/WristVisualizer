@@ -122,10 +122,10 @@ namespace libWrist
 
         public static void addTfmMatrixtoTransform(TransformMatrix tfm, libCoin3D.Transform transform)
         {
-            transform.setTransform(tfm.Array[0][0], tfm.Array[1][0], tfm.Array[2][0],
-                tfm.Array[0][1], tfm.Array[1][1], tfm.Array[2][1],
-                tfm.Array[0][2], tfm.Array[1][2], tfm.Array[2][2],
-                tfm.Array[3][0], tfm.Array[3][1], tfm.Array[3][2]);
+            transform.setTransform(tfm.Array[0][0], tfm.Array[0][1], tfm.Array[0][2],
+                tfm.Array[1][0], tfm.Array[1][1], tfm.Array[1][2],
+                tfm.Array[2][0], tfm.Array[2][1], tfm.Array[2][2],
+                tfm.Array[0][3], tfm.Array[1][3], tfm.Array[2][3]);
         }
     }
 }
