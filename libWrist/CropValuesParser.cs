@@ -27,8 +27,9 @@ namespace libWrist
 (\d{1,3})\s+	# MaxY
 (\d{1,3})\s+	# MinZ
 (\d{1,3})\s+	# MaxZ
-([\d\.]+)\s+	# Voxel X & Y
-([\d\.]+)		# Voxel Z";
+([\d\.]+)\s*	# Voxel X & Y
+(.*)\s*$		# Remainder of line";
+        const string _endLineRegex = @"([\d\.]+)";
 
         public struct CropValues
         {
@@ -79,6 +80,8 @@ namespace libWrist
         private void parseFile(StreamReader filestream)
         {
             Regex r = new Regex(_lineRegex, RegexOptions.IgnorePatternWhitespace | RegexOptions.Multiline);
+            Regex rEOL = new Regex(_endLineRegex);
+
             string line;
             while (!filestream.EndOfStream)
             {
@@ -102,8 +105,20 @@ namespace libWrist
                 cv.SizeZ = cv.MaxZ - cv.MinZ + 1;
                 cv.VoxelX = Double.Parse(m.Groups[10].Value);
                 cv.VoxelY = cv.VoxelX;
-                cv.VoxelZ = Double.Parse(m.Groups[11].Value);
-                cv.RadialStyloid = -1; //not used yet
+
+                //rest of line, optional parameters
+                string lineEnd = m.Groups[11].Value;
+                MatchCollection m2 = rEOL.Matches(lineEnd);
+                if (m2.Count >= 1)
+                    cv.VoxelZ = Double.Parse(m2[0].Value);
+                else
+                    cv.VoxelZ = 1.0; //default voxel size is 1 if undefined
+
+                if (m2.Count >= 2)
+                    cv.RadialStyloid = Int32.Parse(m2[1].Value);
+                else
+                    cv.RadialStyloid = -1; //not used yet
+
                 cv.Key = generatePositionKey(cv.PositionNumber, cv.Side);
 
                 //if this is the first, then we can just save
@@ -186,7 +201,17 @@ namespace libWrist
             {
                 keys.Add(e.Key);
             }
-            //keys.Sort();  //Sort the list?
+            keys.Sort();  //Sort the list?
+            if (keys.Contains("15R"))
+            {
+                keys.Remove("15R");
+                keys.Insert(0, "15R");
+            }
+            if (keys.Contains("15L"))
+            {
+                keys.Remove("15L");
+                keys.Insert(0, "15L");
+            }
             return (string[])keys.ToArray(typeof(string));
         }
     }
