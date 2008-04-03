@@ -51,6 +51,21 @@ namespace WristVizualizer
             this.panel1 = new System.Windows.Forms.Panel();
             this.radioButtonManual = new System.Windows.Forms.RadioButton();
             this.radioButtonAutomatic = new System.Windows.Forms.RadioButton();
+            this.maskedTextBoxMinX = new System.Windows.Forms.MaskedTextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.maskedTextBoxMaxX = new System.Windows.Forms.MaskedTextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.maskedTextBoxMinY = new System.Windows.Forms.MaskedTextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.maskedTextBoxMaxY = new System.Windows.Forms.MaskedTextBox();
+            this.label10 = new System.Windows.Forms.Label();
+            this.maskedTextBoxMinZ = new System.Windows.Forms.MaskedTextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.maskedTextBoxMaxZ = new System.Windows.Forms.MaskedTextBox();
+            this.labelErrorStackFileDir = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBoxStackFileDirectory = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -87,6 +102,21 @@ namespace WristVizualizer
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.labelErrorStackFileDir);
+            this.groupBox1.Controls.Add(this.label13);
+            this.groupBox1.Controls.Add(this.textBoxStackFileDirectory);
+            this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.maskedTextBoxMaxZ);
+            this.groupBox1.Controls.Add(this.label10);
+            this.groupBox1.Controls.Add(this.maskedTextBoxMinZ);
+            this.groupBox1.Controls.Add(this.label9);
+            this.groupBox1.Controls.Add(this.maskedTextBoxMaxY);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.maskedTextBoxMinY);
+            this.groupBox1.Controls.Add(this.label7);
+            this.groupBox1.Controls.Add(this.maskedTextBoxMaxX);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.maskedTextBoxMinX);
             this.groupBox1.Controls.Add(this.labelErrorKinematicFile);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.textBoxKinematicFilename);
@@ -107,7 +137,7 @@ namespace WristVizualizer
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(746, 370);
+            this.groupBox1.Size = new System.Drawing.Size(746, 388);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Texture";
@@ -116,7 +146,7 @@ namespace WristVizualizer
             // 
             this.labelErrorKinematicFile.AutoSize = true;
             this.labelErrorKinematicFile.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorKinematicFile.Location = new System.Drawing.Point(332, 294);
+            this.labelErrorKinematicFile.Location = new System.Drawing.Point(404, 320);
             this.labelErrorKinematicFile.Name = "labelErrorKinematicFile";
             this.labelErrorKinematicFile.Size = new System.Drawing.Size(78, 13);
             this.labelErrorKinematicFile.TabIndex = 23;
@@ -125,7 +155,7 @@ namespace WristVizualizer
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 294);
+            this.label6.Location = new System.Drawing.Point(6, 320);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(75, 13);
             this.label6.TabIndex = 22;
@@ -133,10 +163,10 @@ namespace WristVizualizer
             // 
             // textBoxKinematicFilename
             // 
-            this.textBoxKinematicFilename.Location = new System.Drawing.Point(111, 291);
+            this.textBoxKinematicFilename.Location = new System.Drawing.Point(111, 317);
             this.textBoxKinematicFilename.Name = "textBoxKinematicFilename";
             this.textBoxKinematicFilename.ReadOnly = true;
-            this.textBoxKinematicFilename.Size = new System.Drawing.Size(215, 20);
+            this.textBoxKinematicFilename.Size = new System.Drawing.Size(287, 20);
             this.textBoxKinematicFilename.TabIndex = 21;
             this.textBoxKinematicFilename.TextChanged += new System.EventHandler(this.textBoxKinematicFilename_TextChanged);
             // 
@@ -188,7 +218,7 @@ namespace WristVizualizer
             // 
             this.labelErrorCropValues.AutoSize = true;
             this.labelErrorCropValues.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorCropValues.Location = new System.Drawing.Point(332, 79);
+            this.labelErrorCropValues.Location = new System.Drawing.Point(404, 79);
             this.labelErrorCropValues.Name = "labelErrorCropValues";
             this.labelErrorCropValues.Size = new System.Drawing.Size(86, 13);
             this.labelErrorCropValues.TabIndex = 16;
@@ -236,7 +266,7 @@ namespace WristVizualizer
             this.textBoxCropValuesFilename.Location = new System.Drawing.Point(111, 76);
             this.textBoxCropValuesFilename.Name = "textBoxCropValuesFilename";
             this.textBoxCropValuesFilename.ReadOnly = true;
-            this.textBoxCropValuesFilename.Size = new System.Drawing.Size(215, 20);
+            this.textBoxCropValuesFilename.Size = new System.Drawing.Size(287, 20);
             this.textBoxCropValuesFilename.TabIndex = 10;
             this.textBoxCropValuesFilename.TextChanged += new System.EventHandler(this.textBoxCropValuesFilename_TextChanged);
             // 
@@ -272,7 +302,7 @@ namespace WristVizualizer
             // 
             this.panel1.Controls.Add(this.radioButtonManual);
             this.panel1.Controls.Add(this.radioButtonAutomatic);
-            this.panel1.Location = new System.Drawing.Point(101, 41);
+            this.panel1.Location = new System.Drawing.Point(101, 42);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(270, 31);
             this.panel1.TabIndex = 24;
@@ -299,6 +329,142 @@ namespace WristVizualizer
             this.radioButtonAutomatic.Text = "Automatic";
             this.radioButtonAutomatic.UseVisualStyleBackColor = true;
             this.radioButtonAutomatic.CheckedChanged += new System.EventHandler(this.radioButtonMode_CheckedChanged);
+            // 
+            // maskedTextBoxMinX
+            // 
+            this.maskedTextBoxMinX.Location = new System.Drawing.Point(149, 343);
+            this.maskedTextBoxMinX.Mask = "999";
+            this.maskedTextBoxMinX.Name = "maskedTextBoxMinX";
+            this.maskedTextBoxMinX.ReadOnly = true;
+            this.maskedTextBoxMinX.Size = new System.Drawing.Size(29, 20);
+            this.maskedTextBoxMinX.TabIndex = 25;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(109, 346);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 26;
+            this.label5.Text = "MinX:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(190, 346);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(37, 13);
+            this.label7.TabIndex = 28;
+            this.label7.Text = "MaxX:";
+            // 
+            // maskedTextBoxMaxX
+            // 
+            this.maskedTextBoxMaxX.Location = new System.Drawing.Point(233, 343);
+            this.maskedTextBoxMaxX.Mask = "999";
+            this.maskedTextBoxMaxX.Name = "maskedTextBoxMaxX";
+            this.maskedTextBoxMaxX.ReadOnly = true;
+            this.maskedTextBoxMaxX.Size = new System.Drawing.Size(29, 20);
+            this.maskedTextBoxMaxX.TabIndex = 27;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(274, 346);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.TabIndex = 30;
+            this.label8.Text = "MinY:";
+            // 
+            // maskedTextBoxMinY
+            // 
+            this.maskedTextBoxMinY.Location = new System.Drawing.Point(314, 343);
+            this.maskedTextBoxMinY.Mask = "999";
+            this.maskedTextBoxMinY.Name = "maskedTextBoxMinY";
+            this.maskedTextBoxMinY.ReadOnly = true;
+            this.maskedTextBoxMinY.Size = new System.Drawing.Size(29, 20);
+            this.maskedTextBoxMinY.TabIndex = 29;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(355, 346);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(37, 13);
+            this.label9.TabIndex = 32;
+            this.label9.Text = "MaxY:";
+            // 
+            // maskedTextBoxMaxY
+            // 
+            this.maskedTextBoxMaxY.Location = new System.Drawing.Point(398, 343);
+            this.maskedTextBoxMaxY.Mask = "999";
+            this.maskedTextBoxMaxY.Name = "maskedTextBoxMaxY";
+            this.maskedTextBoxMaxY.ReadOnly = true;
+            this.maskedTextBoxMaxY.Size = new System.Drawing.Size(29, 20);
+            this.maskedTextBoxMaxY.TabIndex = 31;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(439, 346);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(34, 13);
+            this.label10.TabIndex = 34;
+            this.label10.Text = "MinZ:";
+            // 
+            // maskedTextBoxMinZ
+            // 
+            this.maskedTextBoxMinZ.Location = new System.Drawing.Point(479, 343);
+            this.maskedTextBoxMinZ.Mask = "999";
+            this.maskedTextBoxMinZ.Name = "maskedTextBoxMinZ";
+            this.maskedTextBoxMinZ.ReadOnly = true;
+            this.maskedTextBoxMinZ.Size = new System.Drawing.Size(29, 20);
+            this.maskedTextBoxMinZ.TabIndex = 33;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(520, 346);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(37, 13);
+            this.label11.TabIndex = 36;
+            this.label11.Text = "MaxZ:";
+            // 
+            // maskedTextBoxMaxZ
+            // 
+            this.maskedTextBoxMaxZ.Location = new System.Drawing.Point(563, 343);
+            this.maskedTextBoxMaxZ.Mask = "999";
+            this.maskedTextBoxMaxZ.Name = "maskedTextBoxMaxZ";
+            this.maskedTextBoxMaxZ.ReadOnly = true;
+            this.maskedTextBoxMaxZ.Size = new System.Drawing.Size(29, 20);
+            this.maskedTextBoxMaxZ.TabIndex = 35;
+            // 
+            // labelErrorStackFileDir
+            // 
+            this.labelErrorStackFileDir.AutoSize = true;
+            this.labelErrorStackFileDir.ForeColor = System.Drawing.Color.Red;
+            this.labelErrorStackFileDir.Location = new System.Drawing.Point(404, 294);
+            this.labelErrorStackFileDir.Name = "labelErrorStackFileDir";
+            this.labelErrorStackFileDir.Size = new System.Drawing.Size(92, 13);
+            this.labelErrorStackFileDir.TabIndex = 39;
+            this.labelErrorStackFileDir.Text = "Error StackFile Dir";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(6, 294);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(102, 13);
+            this.label13.TabIndex = 38;
+            this.label13.Text = "Stack File Directory:";
+            // 
+            // textBoxStackFileDirectory
+            // 
+            this.textBoxStackFileDirectory.Location = new System.Drawing.Point(111, 291);
+            this.textBoxStackFileDirectory.Name = "textBoxStackFileDirectory";
+            this.textBoxStackFileDirectory.ReadOnly = true;
+            this.textBoxStackFileDirectory.Size = new System.Drawing.Size(287, 20);
+            this.textBoxStackFileDirectory.TabIndex = 37;
+            this.textBoxStackFileDirectory.TextChanged += new System.EventHandler(this.textBoxStackFileDirectory_TextChanged);
             // 
             // LoadTextureDialog
             // 
@@ -350,5 +516,20 @@ namespace WristVizualizer
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox textBoxKinematicFilename;
         private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxMinX;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxMaxZ;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxMinZ;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxMaxY;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxMinY;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.MaskedTextBox maskedTextBoxMaxX;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label labelErrorStackFileDir;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox textBoxStackFileDirectory;
     }
 }

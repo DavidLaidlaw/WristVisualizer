@@ -45,6 +45,7 @@ namespace WristVizualizer
             labelErrorCropValues.Text = "";
             labelErrorSubject.Text = "";
             labelErrorKinematicFile.Text = "";
+            labelErrorStackFileDir.Text = "";
         }
 
         private void buttonBrowseImage_Click(object sender, EventArgs e)
@@ -222,6 +223,7 @@ namespace WristVizualizer
                 {
                     labelErrorCropValues.Text = "Error reading file: " + ex.Message;
                     valid = false;
+                    _cvParser = null;
                 }
             }
 
@@ -263,6 +265,26 @@ namespace WristVizualizer
             }
         }
 
+        private void clearCropValueFields()
+        {
+            maskedTextBoxMinX.Text = "";
+            maskedTextBoxMaxX.Text = "";
+            maskedTextBoxMinY.Text = "";
+            maskedTextBoxMaxY.Text = "";
+            maskedTextBoxMinZ.Text = "";
+            maskedTextBoxMaxZ.Text = "";
+        }
+
+        private void setCropValueFields(CropValuesParser.CropValues cv)
+        {
+            maskedTextBoxMinX.Text = cv.MinX.ToString();
+            maskedTextBoxMaxX.Text = cv.MaxX.ToString();
+            maskedTextBoxMinY.Text = cv.MinY.ToString();
+            maskedTextBoxMaxY.Text = cv.MaxY.ToString();
+            maskedTextBoxMinZ.Text = cv.MinZ.ToString();
+            maskedTextBoxMaxZ.Text = cv.MaxZ.ToString();
+        }
+
         private void listBoxSeries_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (listBoxSeries.SelectedItems.Count == 0)
@@ -274,12 +296,30 @@ namespace WristVizualizer
                 return;
             }
 
+            if (_mode == Modes.MANUAL)
+                return; //all automatic below
+
             _seriesKey = (string)listBoxSeries.SelectedItem;
             _seriesNumber = Int32.Parse(_seriesKey.Substring(0, 2));
             _side = (_seriesKey.Substring(2, 1).ToUpper().Equals("L")) ? Wrist.Sides.LEFT : Wrist.Sides.RIGHT;
 
             //update kinematics file
             textBoxKinematicFilename.Text = generateKinematicsFileName(textBoxSubjectDirectory.Text, _seriesKey, _kinematicFileType);
+            //set crop values:
+            if (_cvParser != null)
+                setCropValueFields(_cvParser.getCropData(_seriesKey));
+            else
+                clearCropValueFields();
+            //try and find stackFile Directory
+            string neutralSeriesDir = String.Format("S15{0}",_seriesKey.Substring(2,1));
+            string stackPath1 = Path.Combine(textBoxSubjectDirectory.Text, neutralSeriesDir);
+            string stackPath2 = Path.Combine(stackPath1,"Stack.files");
+            if (canLocateRadiusStackFile(stackPath2)) //try Stack.files directory first
+                textBoxStackFileDirectory.Text = stackPath2;
+            else if (canLocateRadiusStackFile(stackPath1))
+                textBoxStackFileDirectory.Text = stackPath1;
+            else //error, can't locate, lets just default to Stack.files path
+                textBoxStackFileDirectory.Text = stackPath2;
         }
 
         private void radioButtonKinematics_CheckedChanged(object sender, EventArgs e)
@@ -290,14 +330,17 @@ namespace WristVizualizer
                 _kinematicFileType = KinematicFileTypes.OUT_RT;
             else if (radioButtonKinematicMotion.Checked)
                 _kinematicFileType = KinematicFileTypes.MOTION;
+
+            listBoxSeries_SelectedIndexChanged(this, null);
         }
 
         private void textBoxKinematicFilename_TextChanged(object sender, EventArgs e)
         {
+            labelErrorKinematicFile.Text = "";
             if (textBoxKinematicFilename.Text.Trim().Length == 0)
             {
                 //special case, nothing
-                labelErrorKinematicFile.Text = "";
+                return;
             }
 
             if (!File.Exists(textBoxKinematicFilename.Text))
@@ -310,6 +353,35 @@ namespace WristVizualizer
         private void radioButtonMode_CheckedChanged(object sender, EventArgs e)
         {
             _mode = (radioButtonAutomatic.Checked) ? Modes.AUTOMATIC : Modes.MANUAL;
+        }
+
+        private bool canLocateRadiusStackFile(string stackFileDir)
+        {
+            string radName = String.Format("rad15{0}.stack", _seriesKey.Substring(2, 1));
+            string fullRadName = Path.Combine(stackFileDir, radName);
+            return (File.Exists(fullRadName));
+        }
+
+        private void textBoxStackFileDirectory_TextChanged(object sender, EventArgs e)
+        {
+            labelErrorStackFileDir.Text = "";
+            bool valid = true;
+            if (textBoxStackFileDirectory.Text.Trim().Length == 0)
+            {
+                valid = false;
+            }
+
+            if (!Directory.Exists(textBoxStackFileDirectory.Text))
+            {
+                labelErrorStackFileDir.Text = "Directory does not exist";
+                valid = false;
+            }
+
+            if (valid && !canLocateRadiusStackFile(textBoxStackFileDirectory.Text))
+            {
+                labelErrorStackFileDir.Text = "Unable to locate radius stack file in dir.";
+                valid = false;
+            }
         }
     }
 }
