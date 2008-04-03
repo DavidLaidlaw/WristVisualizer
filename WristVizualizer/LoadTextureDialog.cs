@@ -18,10 +18,33 @@ namespace WristVizualizer
         private Separator _root;
         private Texture _texture;
 
+        CropValuesParser _cvParser;
+        string _subject;
+        string _seriesKey;
+        int _seriesNumber;
+        Wrist.Sides _side;
+        KinematicFileTypes _kinematicFileType = KinematicFileTypes.AUTO_REGISTR;
+        Modes _mode = Modes.AUTOMATIC;
+
+        private enum KinematicFileTypes
+        {
+            AUTO_REGISTR,
+            OUT_RT,
+            MOTION
+        }
+
+        private enum Modes
+        {
+            AUTOMATIC,
+            MANUAL
+        }
+
         public LoadTextureDialog()
         {
             InitializeComponent();
-            
+            labelErrorCropValues.Text = "";
+            labelErrorSubject.Text = "";
+            labelErrorKinematicFile.Text = "";
         }
 
         private void buttonBrowseImage_Click(object sender, EventArgs e)
@@ -123,23 +146,170 @@ namespace WristVizualizer
 
         private void textBoxSubjectDirectory_TextChanged(object sender, EventArgs e)
         {
-            if (!Directory.Exists(textBoxSubjectDirectory.Text))
+            bool valid = true;
+            labelErrorSubject.Text = "";
+
+            if (textBoxSubjectDirectory.Text.Trim().Length == 0)
+            {
+                //special case for nothing...?
+                labelErrorSubject.Text = "";
+                valid = false;
+            }
+
+            if (valid && !Directory.Exists(textBoxSubjectDirectory.Text))
             {
                 //error, report
                 labelErrorSubject.Text = "Not a valid directory";
-                return;
+                valid = false;
             }
             string subjectDirectory = textBoxSubjectDirectory.Text.Trim();
             Match m = Regex.Match(subjectDirectory, @"(E\d{5})\\?\s*$");
-            if (!m.Success)
+            if (valid && !m.Success)  //only go here if already valid
             {
                 //failure, lets report it
                 labelErrorSubject.Text = "Unable to determine subject from directory";
+                valid = false;
+            }
+
+            //got this far, then things are okay
+            if (_mode == Modes.MANUAL)
+                return; //below this is all the auto stuff :)
+
+            if (valid)
+            {
+                _subject = m.Groups[1].Value;
+                textBoxCropValuesFilename.Text = Path.Combine(subjectDirectory, "crop_values.txt");
+            }
+            else
+            {
+                _subject = "";
+                textBoxCropValuesFilename.Text = "";
+            }
+        }
+
+        private void textBoxCropValuesFilename_TextChanged(object sender, EventArgs e)
+        {
+            bool valid = true;
+            labelErrorCropValues.Text = "";
+            if (textBoxCropValuesFilename.Text.Trim().Length == 0)
+            {
+                labelErrorCropValues.Text = "";
+                //special case for nothing...?
+                valid = false;
+            }
+
+            //check that it exists
+            if (valid && !File.Exists(textBoxCropValuesFilename.Text))
+            {
+                labelErrorCropValues.Text = "No crop values file found";
+                valid = false;
+            }
+
+            
+            if (_mode == Modes.MANUAL)
+                return; //below is automatic
+
+            if (valid) //still valid so far....
+            {
+                //got this far, we should load it....yes?
+                //check that the file is a CV file
+                try
+                {
+                   CropValuesParser parser = new CropValuesParser(textBoxCropValuesFilename.Text);
+                    _cvParser = parser;
+                }
+                catch (Exception ex)
+                {
+                    labelErrorCropValues.Text = "Error reading file: " + ex.Message;
+                    valid = false;
+                }
+            }
+
+            if (valid)
+            {
+                //looks okay, next step            
+                loadSeriesList();
+            }
+            else
+            {
+                listBoxSeries.DataSource = null;
+            }
+        }
+
+        private void loadSeriesList()
+        {
+            listBoxSeries.DataSource = _cvParser.getAllSeries();
+        }
+
+        private string generateKinematicsFileName(string subjectPath, string seriesKey, KinematicFileTypes kinType)
+        {
+            string folder, filename;
+            switch (kinType)
+            {
+                case KinematicFileTypes.AUTO_REGISTR:
+                    folder = Path.Combine(subjectPath, "auto_registr_results");
+                    filename = String.Format("test{0}.txt", seriesKey);
+                    return Path.Combine(folder, filename);
+                case KinematicFileTypes.OUT_RT:
+                    folder = Path.Combine(subjectPath, "collected_results");
+                    filename = String.Format("outRT_{0}.txt", seriesKey);
+                    return Path.Combine(folder, filename);
+                case KinematicFileTypes.MOTION:
+                    folder = Path.Combine(subjectPath, String.Format("S{0}", seriesKey));
+                    filename = String.Format("Motion15{0}{1}.dat", seriesKey.Substring(2, 1), seriesKey);
+                    return Path.Combine(folder, filename);
+                default:
+                    return "";
+            }
+        }
+
+        private void listBoxSeries_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxSeries.SelectedItems.Count == 0)
+            {
+                if (_mode == Modes.AUTOMATIC)
+                {
+                    textBoxKinematicFilename.Text = "";
+                }
                 return;
             }
 
-            string subject = m.Groups[1].Value;
-            textBoxCropValuesFilename.Text = Path.Combine(subjectDirectory, "crop_values.txt");
+            _seriesKey = (string)listBoxSeries.SelectedItem;
+            _seriesNumber = Int32.Parse(_seriesKey.Substring(0, 2));
+            _side = (_seriesKey.Substring(2, 1).ToUpper().Equals("L")) ? Wrist.Sides.LEFT : Wrist.Sides.RIGHT;
+
+            //update kinematics file
+            textBoxKinematicFilename.Text = generateKinematicsFileName(textBoxSubjectDirectory.Text, _seriesKey, _kinematicFileType);
+        }
+
+        private void radioButtonKinematics_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonKinematicAutoRegistr.Checked)
+                _kinematicFileType = KinematicFileTypes.AUTO_REGISTR;
+            else if (radioButtonKinematicRT.Checked)
+                _kinematicFileType = KinematicFileTypes.OUT_RT;
+            else if (radioButtonKinematicMotion.Checked)
+                _kinematicFileType = KinematicFileTypes.MOTION;
+        }
+
+        private void textBoxKinematicFilename_TextChanged(object sender, EventArgs e)
+        {
+            if (textBoxKinematicFilename.Text.Trim().Length == 0)
+            {
+                //special case, nothing
+                labelErrorKinematicFile.Text = "";
+            }
+
+            if (!File.Exists(textBoxKinematicFilename.Text))
+            {
+                labelErrorKinematicFile.Text = "Kinematic file does not exist, defaulting to global position";
+                return;
+            }
+        }
+
+        private void radioButtonMode_CheckedChanged(object sender, EventArgs e)
+        {
+            _mode = (radioButtonAutomatic.Checked) ? Modes.AUTOMATIC : Modes.MANUAL;
         }
     }
 }
