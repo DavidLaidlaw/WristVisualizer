@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Text.RegularExpressions;
 using System.IO;
+using System.Collections;
 using libWrist;
 using libCoin3D;
 
@@ -46,6 +47,8 @@ namespace WristVizualizer
             labelErrorSubject.Text = "";
             labelErrorKinematicFile.Text = "";
             labelErrorStackFileDir.Text = "";
+            labelErrorSeries.Text = "";
+            labelErrorImageFile.Text = "";
         }
 
         private void buttonBrowseImage_Click(object sender, EventArgs e)
@@ -180,11 +183,13 @@ namespace WristVizualizer
             {
                 _subject = m.Groups[1].Value;
                 textBoxCropValuesFilename.Text = Path.Combine(subjectDirectory, "crop_values.txt");
+                loadSeriesList();
             }
             else
             {
                 _subject = "";
                 textBoxCropValuesFilename.Text = "";
+                clearSeriesList();
             }
         }
 
@@ -226,21 +231,62 @@ namespace WristVizualizer
                     _cvParser = null;
                 }
             }
+        }
 
-            if (valid)
-            {
-                //looks okay, next step            
-                loadSeriesList();
-            }
-            else
-            {
-                listBoxSeries.DataSource = null;
-            }
+        private void clearSeriesList()
+        {
+            listBoxSeries.DataSource = null;
         }
 
         private void loadSeriesList()
         {
-            listBoxSeries.DataSource = _cvParser.getAllSeries();
+            string imDir = Path.Combine(textBoxSubjectDirectory.Text, "CTScans");
+            DirectoryInfo dir = new DirectoryInfo(imDir);
+            if (!dir.Exists)
+            {
+                clearSeriesList();
+                labelErrorSeries.Text = "Unable to locate any imges";
+                return;
+            }
+            bool hasLeft = canLocateStackfileDirectory(Wrist.Sides.LEFT);
+            bool hasRight = canLocateStackfileDirectory(Wrist.Sides.RIGHT);
+
+            ArrayList list = new ArrayList();
+            foreach (DirectoryInfo d in dir.GetDirectories(String.Format("{0}_??", _subject)))
+            {
+                Match m = Regex.Match(d.Name, @"E\d{5}_(\d{2})");
+                if (m.Success)
+                {
+                    if (hasLeft)
+                        list.Add(m.Groups[1].Value + "L");
+                    if (hasRight)
+                        list.Add(m.Groups[1].Value + "R");
+                }
+            }
+            foreach (FileInfo f in dir.GetFiles(String.Format("{0}_??", _subject)))
+            {
+                Match m = Regex.Match(f.Name, @"E\d{5}_(\d{2})");
+                if (m.Success)
+                {
+                    if (hasLeft)
+                        list.Add(m.Groups[1].Value + "L");
+                    if (hasRight)
+                        list.Add(m.Groups[1].Value + "R");
+                }
+            }
+
+            list.Sort();  //Sort the list?
+            if (list.Contains("15R"))
+            {
+                list.Remove("15R");
+                list.Insert(0, "15R");
+            }
+            if (list.Contains("15L"))
+            {
+                list.Remove("15L");
+                list.Insert(0, "15L");
+            }
+            listBoxSeries.DataSource = (string[])list.ToArray(typeof(string));
         }
 
         private string generateKinematicsFileName(string subjectPath, string seriesKey, KinematicFileTypes kinType)
@@ -292,6 +338,7 @@ namespace WristVizualizer
                 if (_mode == Modes.AUTOMATIC)
                 {
                     textBoxKinematicFilename.Text = "";
+                    textBoxImageFile.Text = "";
                 }
                 return;
             }
@@ -306,20 +353,38 @@ namespace WristVizualizer
             //update kinematics file
             textBoxKinematicFilename.Text = generateKinematicsFileName(textBoxSubjectDirectory.Text, _seriesKey, _kinematicFileType);
             //set crop values:
-            if (_cvParser != null)
+            if (_cvParser != null && _cvParser.hasPosition(_seriesKey))
                 setCropValueFields(_cvParser.getCropData(_seriesKey));
             else
                 clearCropValueFields();
+
+            //update image file
+            textBoxImageFile.Text = Path.Combine(Path.Combine(textBoxSubjectDirectory.Text, "CTScans"), String.Format("{0}_{1:00}", _subject, _seriesNumber));
+
             //try and find stackFile Directory
             string neutralSeriesDir = String.Format("S15{0}",_seriesKey.Substring(2,1));
             string stackPath1 = Path.Combine(textBoxSubjectDirectory.Text, neutralSeriesDir);
             string stackPath2 = Path.Combine(stackPath1,"Stack.files");
-            if (canLocateRadiusStackFile(stackPath2)) //try Stack.files directory first
+            if (canLocateRadiusStackFileInDirectory(stackPath2)) //try Stack.files directory first
                 textBoxStackFileDirectory.Text = stackPath2;
-            else if (canLocateRadiusStackFile(stackPath1))
+            else if (canLocateRadiusStackFileInDirectory(stackPath1))
                 textBoxStackFileDirectory.Text = stackPath1;
             else //error, can't locate, lets just default to Stack.files path
                 textBoxStackFileDirectory.Text = stackPath2;
+        }
+
+        private bool canLocateStackfileDirectory(Wrist.Sides side)
+        {
+            string s = (side == Wrist.Sides.LEFT) ? "L" : "R";
+            string neutralSeriesDir = "S15" + s;
+            string stackPath1 = Path.Combine(textBoxSubjectDirectory.Text, neutralSeriesDir);
+            string stackPath2 = Path.Combine(stackPath1, "Stack.files");
+            if (canLocateRadiusStackFileInDirectory(stackPath2, s)) //try Stack.files directory first
+                return true;
+            else if (canLocateRadiusStackFileInDirectory(stackPath1, s))
+                return true;
+            else
+                return false;
         }
 
         private void radioButtonKinematics_CheckedChanged(object sender, EventArgs e)
@@ -355,9 +420,13 @@ namespace WristVizualizer
             _mode = (radioButtonAutomatic.Checked) ? Modes.AUTOMATIC : Modes.MANUAL;
         }
 
-        private bool canLocateRadiusStackFile(string stackFileDir)
+        private bool canLocateRadiusStackFileInDirectory(string stackFileDir)
         {
-            string radName = String.Format("rad15{0}.stack", _seriesKey.Substring(2, 1));
+            return canLocateRadiusStackFileInDirectory(stackFileDir, _seriesKey.Substring(2, 1));
+        }
+        private bool canLocateRadiusStackFileInDirectory(string stackFileDir, string side)
+        {
+            string radName = String.Format("rad15{0}.stack", side);
             string fullRadName = Path.Combine(stackFileDir, radName);
             return (File.Exists(fullRadName));
         }
@@ -377,10 +446,26 @@ namespace WristVizualizer
                 valid = false;
             }
 
-            if (valid && !canLocateRadiusStackFile(textBoxStackFileDirectory.Text))
+            if (valid && !canLocateRadiusStackFileInDirectory(textBoxStackFileDirectory.Text))
             {
                 labelErrorStackFileDir.Text = "Unable to locate radius stack file in dir.";
                 valid = false;
+            }
+        }
+
+        private void textBoxImageFile_TextChanged(object sender, EventArgs e)
+        {
+            labelErrorImageFile.Text = "";
+            bool valid = true;
+
+            if (textBoxImageFile.Text.Trim().Length == 0)
+            {
+                valid = false;
+            }
+
+            if (valid && !File.Exists(textBoxImageFile.Text) && !Directory.Exists(textBoxImageFile.Text))
+            {
+                labelErrorImageFile.Text = "No image found";
             }
         }
     }
