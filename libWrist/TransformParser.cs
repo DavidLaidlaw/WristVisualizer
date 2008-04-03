@@ -10,22 +10,21 @@ namespace libWrist
 {
     public class TransformParser
     {
-        public static void ParseTranform(string filename)
+        public static Hashtable ParseTranform(string filename)
         {
             if (!File.Exists(filename))
                 throw new ArgumentException("File does not exist. (" + filename + ")");
 
             using (StreamReader r = new StreamReader(filename))
             {
-                ParseTranform(r);
+                return ParseTranform(r);
             }  
         }
 
-        public static void ParseTranform(StreamReader filestream)
+        public static Hashtable ParseTranform(StreamReader filestream)
         {
             const string boneLineRegex = @"^Bone\ name\:\ (\w+)\s*$";
             Hashtable transforms = new Hashtable(15);
-            TransformMatrix final = new TransformMatrix();
             while (!filestream.EndOfStream)
             {
                 string line = filestream.ReadLine();
@@ -43,6 +42,7 @@ namespace libWrist
                     transforms[boneName] = next_tm * (TransformMatrix)transforms[boneName]; //add to list
                 }
             }
+            return transforms;
         }
 
         private static TransformMatrix readSingleTransform(StreamReader filestream)
@@ -118,6 +118,14 @@ namespace libWrist
                     throw new FormatException("Invalid format for transform file. Unknown transform type: " + transformType);
             }
             return rt;
+        }
+
+        public static void addTfmMatrixtoTransform(TransformMatrix tfm, libCoin3D.Transform transform)
+        {
+            transform.setTransform(tfm.Array[0][0], tfm.Array[1][0], tfm.Array[2][0],
+                tfm.Array[0][1], tfm.Array[1][1], tfm.Array[2][1],
+                tfm.Array[0][2], tfm.Array[1][2], tfm.Array[2][2],
+                tfm.Array[3][0], tfm.Array[3][1], tfm.Array[3][2]);
         }
     }
 }

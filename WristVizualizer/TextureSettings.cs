@@ -27,5 +27,6 @@ namespace WristVizualizer
 
         public static string[] ShortBNames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
         public static string[] LongBNames = { "radius", "ulna", "scaphoid", "lunate", "triquetrum", "pisiform", "trapezoid", "trapezium", "capitate", "hamate", "metacarpal1", "metacarpal2", "metacarpal3", "metacarpal4", "metacarpal5" };
+        public static string[] TransformBNames = { "radius", "ulna", "scaphoid", "lunate", "triquetrum", "pisiform", "trapezoid", "trapezium", "capitate", "hamate", "metacarpal1", "metacarpal2", "metacarpal3", "metacarpal4", "metacarpal5" };
     }
 }

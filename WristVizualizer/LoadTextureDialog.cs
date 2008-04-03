@@ -181,11 +181,33 @@ namespace WristVizualizer
                     }
             }
 
+            Hashtable transforms = null;
+            if (File.Exists(textBoxKinematicFilename.Text))
+            {
+                switch (_kinematicFileType)
+                {
+                    case KinematicFileTypes.AUTO_REGISTR:
+                        transforms = TransformParser.ParseTranform(textBoxKinematicFilename.Text);
+                        break;
+                    case KinematicFileTypes.OUT_RT:
+                        throw new NotImplementedException("Can't yet read OutRT files");
+                    case KinematicFileTypes.MOTION:
+                        throw new NotImplementedException("Can't yet read Motion files");
+                }
+            }
+
             //lets load each bone
             for (int i = 0; i < TextureSettings.ShortBNames.Length; i++)
             {
                 double[][] pts = DatParser.parseDatFile(getBoneFileName(TextureSettings.ShortBNames[i]));
                 Separator bone = Texture.createPointsFileObject(pts, TextureSettings.BoneColors[i]);
+                //try and load transforms
+                if (transforms.ContainsKey(TextureSettings.TransformBNames[i]))
+                {
+                    Transform tfrm = new Transform();
+                    TransformParser.addTfmMatrixtoTransform((TransformMatrix)transforms[TextureSettings.TransformBNames[i]], tfrm);
+                    bone.addTransform(tfrm);
+                }
                 _root.addChild(bone);
             }
 
