@@ -171,13 +171,13 @@ namespace WristVizualizer
 
             //lets build an array of bytes (unsigned 8bit data structure)
             Byte[][] voxels = new Byte[sizeZ][];
-            for (int i = 0; i < sizeZ; i++)
+            for (int i = 0; i < sizeZ; i++)  // Z coordinate
             {
                 voxels[i] = new Byte[sizeX * sizeY];
                 for (int j = 0; j < sizeY; j++)
                     for (int k = 0; k < sizeX; k++)
                     {
-                        voxels[i][(j * sizeX) + k] = (Byte)mri.getCroppedVoxel(k, j, i);
+                        voxels[i][(k * sizeY) + j] = (Byte)mri.getCroppedVoxel(k, j, i);
                     }
             }
 

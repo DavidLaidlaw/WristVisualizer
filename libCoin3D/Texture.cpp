@@ -141,7 +141,7 @@ void updateTextureCB( void * data, SoSensor * )
 	//determine the index of the image data that we need (in the full buffer)
 	xf = (int)fabs(fmod(floor(6*dragPos/sliceThickness),numSlices));
 	//set the image to the texture
-	texture -> image.setValue(SbVec2s(textureCBdata->planeWidth, textureCBdata->planeHeight),1, (const unsigned char*) buffer[xf] );
+	texture -> image.setValue(SbVec2s(textureCBdata->planeHeight, textureCBdata->planeWidth),1, (const unsigned char*) buffer[xf] );
 }
 
 unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>^ data, Planes plane)
@@ -292,10 +292,10 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	{
 	case Planes::XY_PLANE:
 		//setup the first frame
-		texture->image.setValue(SbVec2s(_sizeX, _sizeY),1, (const unsigned char*) _all_slice_dataXY[0]);
+		texture->image.setValue(SbVec2s(_sizeY, _sizeX),1, (const unsigned char*) _all_slice_dataXY[0]);
 		break;
 	case Planes::YZ_PLANE:
-		texture->image.setValue(SbVec2s(_sizeY, _sizeZ),1, (const unsigned char*) _all_slice_dataYZ[0]);
+		texture->image.setValue(SbVec2s(_sizeZ, _sizeY),1, (const unsigned char*) _all_slice_dataYZ[0]);
 		break;
 	}
 	return gcnew Separator(separator);

@@ -108,18 +108,24 @@ namespace libWrist
                 BinaryReader r = new BinaryReader(s.BaseStream);
 
                 //TODO: Handle different data types....
-                for (int j = 0; j < _height; j++)
+                //want to read in sequentially!!!!
+                for (int j = 0; j < _width * _height; j++)
                 {
-                    for (int k = 0; k < _width; k++)
-                    {
-                        _data[(i * _width * _height) + (k * _width) + j] = ShortSwap((short)r.ReadUInt16());
-                        //_data[(i * _width * _height) + j] = ShortSwap((short)r.ReadUInt16());
-                        //save min and max
-                        if (_data[(i * _width * _height) + (k * _width) + j] < _minIntensity)
-                            _minIntensity = _data[(i * _width * _height) + (k * _width) + j];
-                        if (_data[(i * _width * _height) + (k * _width) + j] > _maxIntensity)
-                            _maxIntensity = _data[(i * _width * _height) + (k * _width) + j];
-                    }
+                    _data[(i * _width * _height) + j] = ShortSwap((short)r.ReadUInt16());
+                    if (_data[(i * _width * _height) + j] < _minIntensity)
+                        _minIntensity = _data[(i * _width * _height) + j];
+                    if (_data[(i * _width * _height) + j] > _maxIntensity)
+                        _maxIntensity = _data[(i * _width * _height) + j];
+
+                    /*
+                    _data[(i * _width * _height) + (k * _width) + j] = ShortSwap((short)r.ReadUInt16());
+                    //save min and max
+                    if (_data[(i * _width * _height) + (k * _width) + j] < _minIntensity)
+                        _minIntensity = _data[(i * _width * _height) + (k * _width) + j];
+                    if (_data[(i * _width * _height) + (k * _width) + j] > _maxIntensity)
+                        _maxIntensity = _data[(i * _width * _height) + (k * _width) + j];
+                     */
+
                 }
 
                 r.Close();
@@ -204,21 +210,23 @@ namespace libWrist
 			return Math.Min(temp,255);
 		}
 
-        public short getCroppedVoxel(int x, int y, int slice)
+        public short getCroppedVoxel(int x, int y, int z)
         {
             if (_data == null) return 0;
             int temp = x;
             //x = _ydim - y - _ymin;
             //y = temp + _xmin;
-            x = x + _xmin;
-            y = y + _ymin;
+            x += _xmin;
+            y += _ymin;
+            z += _zmin;
 
             //x += _xmin;
             //y += _ymin;
             //y = _ydim - _ymin - y;
-            slice += _zmin;
-            if (x < 0 || y < 0 || slice < 0 || x >= _width || y >= _height || slice >= _depth) return 0;
-            return (short)((_data[slice * _width * _height + y * _width + x] - IMAGE_OFFSET) / IMAGE_SCALE); //scale to correct range
+            
+            if (x < 0 || y < 0 || z < 0 || x >= _width || y >= _height || z >= _depth) 
+                return 0;
+            return (short)((_data[z * _width * _height + y * _width + x] - IMAGE_OFFSET) / IMAGE_SCALE); //scale to correct range
         }
 
 		#endregion
