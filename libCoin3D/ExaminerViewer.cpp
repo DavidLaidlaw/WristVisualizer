@@ -38,6 +38,7 @@ libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 	_ecb = NULL;
 	_decorated = TRUE;
 	_viewer = new SoWinExaminerViewer((HWND)parrent);
+	Parent_HWND = parrent;
 
 	_root = new SoSeparator; // remove me later
     //root->addChild(new SoCone);          // remove me later

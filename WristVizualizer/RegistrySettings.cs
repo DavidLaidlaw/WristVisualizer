@@ -11,7 +11,7 @@ namespace WristVizualizer
         //static RegistryKey a = Registry.CurrentUser.OpenSubKey(
         public static string getSettingString(string name)
         {
-            RegistryKey root = Registry.CurrentUser.OpenSubKey(String.Format("{0}\\{1}", Application.CompanyName, Application.ProductName));
+            RegistryKey root = Registry.CurrentUser.OpenSubKey(String.Format("Software\\{0}\\{1}", Application.CompanyName, Application.ProductName));
             if (root == null)
                 return "";
             return (string)root.GetValue(name, "");
@@ -19,7 +19,7 @@ namespace WristVizualizer
 
         public static void saveSetting(string name, string value)
         {
-            RegistryKey root = Registry.CurrentUser.CreateSubKey(String.Format("{0}\\{1}", Application.CompanyName, Application.ProductName));
+            RegistryKey root = Registry.CurrentUser.CreateSubKey(String.Format("Software\\{0}\\{1}", Application.CompanyName, Application.ProductName));
             root.SetValue(name, value, RegistryValueKind.String);
         }
     }

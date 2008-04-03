@@ -21,12 +21,15 @@ namespace WristVizualizer
 
         CropValuesParser _cvParser;
         string _subject;
+        string _subjectPath;
         string _seriesKey;
         string _stackSeriesKey;
         int _seriesNumber;
         Wrist.Sides _side;
         KinematicFileTypes _kinematicFileType = KinematicFileTypes.AUTO_REGISTR;
         Modes _mode = Modes.AUTOMATIC;
+
+        int _minX, _maxX, _minY, _maxY, _minZ, _maxZ;
 
         private enum KinematicFileTypes
         {
@@ -67,10 +70,10 @@ namespace WristVizualizer
             textBoxSubjectDirectory.Text = folder.SelectedPath;
         }
 
-        private string getBoneFileName(string shortBoneName, Wrist.Sides side)
+        private string getBoneFileName(string shortBoneName)
         {
-            string form = @"C:\Ortho\E01424\S15R\Stack.files\{0}15{1}.stack";
-            return String.Format(form, shortBoneName.ToLower(), side == Wrist.Sides.LEFT ? "L" : "R");
+            string bFileName = String.Format("{0}{1}.stack", shortBoneName.ToLower(), _stackSeriesKey);
+            return Path.Combine(textBoxStackFileDirectory.Text, bFileName);
         }
 
         private string getRadiusSeries(string stackFileDiretory)
@@ -99,6 +102,10 @@ namespace WristVizualizer
 
         private void validate()
         {
+            //TODO: Get manual mode working, at all :)
+            if (_mode == Modes.MANUAL)
+                throw new NotImplementedException("Can not yet load in manual mode");
+
             //check image file
             if (!Directory.Exists(textBoxImageFile.Text) && !File.Exists(textBoxImageFile.Text))
                 throw new ArgumentException("No image file found");
@@ -115,8 +122,8 @@ namespace WristVizualizer
                     box.Text = "0";
                 else if (Int32.Parse(box.Text) < 0)
                     maskedTextBoxMinX.Text = "0";
-                else if (Int32.Parse(box.Text) > 255)
-                    maskedTextBoxMinX.Text = "255";
+                else if (Int32.Parse(box.Text) > 512)
+                    maskedTextBoxMinX.Text = "512";
             }
 
             if (Int32.Parse(maskedTextBoxMinZ.Text) < 0)
@@ -137,35 +144,28 @@ namespace WristVizualizer
             //TODO: Check image files, etc.
         }
 
+        private void parseCropValues()
+        {
+            _minX = Int32.Parse(maskedTextBoxMinX.Text);
+            _maxX = Int32.Parse(maskedTextBoxMaxX.Text);
+            _minY = Int32.Parse(maskedTextBoxMinY.Text);
+            _maxY = Int32.Parse(maskedTextBoxMaxY.Text);
+            _minZ = Int32.Parse(maskedTextBoxMinZ.Text);
+            _maxZ = Int32.Parse(maskedTextBoxMaxZ.Text);
+        }
+
         private void run()
         {
-            string subjectPath = @"C:\Ortho\E01424";
-            string subject = System.Text.RegularExpressions.Regex.Match(subjectPath,@"(E\d{5})\\?\s*$").Groups[1].Value;
-            int series = 15;
-            Wrist.Sides side = Wrist.Sides.RIGHT;
+            _subjectPath = textBoxSubjectDirectory.Text.Trim();
+            
+            //TODO: Figure out the image type....
+            CTmri mri = new CTmri(textBoxImageFile.Text);
+            parseCropValues();
+            mri.setCrop(_minX, _maxX, _minY, _maxY, _minZ, _maxZ);
 
-            string seriesKey = "15R";
-
-            string cropValuesFilename = Path.Combine(subjectPath, "crop_values.txt");
-            string image = Path.Combine(Path.Combine(subjectPath, "CTScans"), String.Format("{0}_{1:00}", subject, series));
-
-            string ulnaStackFile = getBoneFileName("uln", Wrist.Sides.RIGHT);
-
-            //crop values
-
-            CropValuesParser cvp = new CropValuesParser(cropValuesFilename);
-            CropValuesParser.CropValues cv = cvp.getCropData(seriesKey);
-
-            CTmri mri = new CTmri(image);
-            mri.setCrop(cv.MinX, cv.MaxX, cv.MinY, cv.MaxY, cv.MinZ, cv.MaxZ);
-
-            double LO_RES_HEIGHT = mri.voxelSizeX;
-            double LO_RES_WIDTH = mri.voxelSizeX;
-            double RES_DEPTH = mri.voxelSizeZ;
-
-            int sizeX = cv.SizeX;
-            int sizeY = cv.SizeY;
-            int sizeZ = cv.SizeZ;
+            int sizeX = _maxX - _minX + 1;
+            int sizeY = _maxY - _minY + 1;
+            int sizeZ = _maxZ - _minZ + 1;
 
             Random r = new Random();
 
@@ -184,18 +184,18 @@ namespace WristVizualizer
             //lets load each bone
             for (int i = 0; i < TextureSettings.ShortBNames.Length; i++)
             {
-                double[][] pts = DatParser.parseDatFile(getBoneFileName(TextureSettings.ShortBNames[i], Wrist.Sides.RIGHT));
+                double[][] pts = DatParser.parseDatFile(getBoneFileName(TextureSettings.ShortBNames[i]));
                 Separator bone = Texture.createPointsFileObject(pts, TextureSettings.BoneColors[i]);
                 _root.addChild(bone);
             }
 
-            _texture = new Texture(cv.Side== Wrist.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
-                cv.SizeX, cv.SizeY, cv.SizeZ, cv.VoxelX, cv.VoxelY, cv.VoxelZ);
+            _texture = new Texture(_side == Wrist.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
+                sizeX, sizeY, sizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ);
             Separator plane1 = _texture.makeDragerAndTexture(voxels, Texture.Planes.XY_PLANE);
             Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
             _root.addChild(plane1);
             _root.addChild(plane2);
-            _root.addChild(_texture.createKeyboardCallbackObject(0));
+            _root.addChild(_texture.createKeyboardCallbackObject(_viewer.Parent_HWND));
         }
 
         /// <summary>

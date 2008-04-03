@@ -81,7 +81,7 @@ namespace WristVizualizer
             this.buttonCancel.Location = new System.Drawing.Point(677, 457);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(98, 29);
-            this.buttonCancel.TabIndex = 4;
+            this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
@@ -91,7 +91,7 @@ namespace WristVizualizer
             this.buttonOK.Location = new System.Drawing.Point(573, 457);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(98, 29);
-            this.buttonOK.TabIndex = 3;
+            this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
@@ -101,7 +101,7 @@ namespace WristVizualizer
             this.textBoxSubjectDirectory.Location = new System.Drawing.Point(111, 27);
             this.textBoxSubjectDirectory.Name = "textBoxSubjectDirectory";
             this.textBoxSubjectDirectory.Size = new System.Drawing.Size(215, 20);
-            this.textBoxSubjectDirectory.TabIndex = 5;
+            this.textBoxSubjectDirectory.TabIndex = 0;
             this.textBoxSubjectDirectory.TextChanged += new System.EventHandler(this.textBoxSubjectDirectory_TextChanged);
             // 
             // groupBox1
@@ -175,7 +175,7 @@ namespace WristVizualizer
             this.textBoxKinematicFilename.Name = "textBoxKinematicFilename";
             this.textBoxKinematicFilename.ReadOnly = true;
             this.textBoxKinematicFilename.Size = new System.Drawing.Size(287, 20);
-            this.textBoxKinematicFilename.TabIndex = 21;
+            this.textBoxKinematicFilename.TabIndex = 9;
             this.textBoxKinematicFilename.TextChanged += new System.EventHandler(this.textBoxKinematicFilename_TextChanged);
             // 
             // radioButtonKinematicMotion
@@ -184,7 +184,7 @@ namespace WristVizualizer
             this.radioButtonKinematicMotion.Location = new System.Drawing.Point(290, 320);
             this.radioButtonKinematicMotion.Name = "radioButtonKinematicMotion";
             this.radioButtonKinematicMotion.Size = new System.Drawing.Size(76, 17);
-            this.radioButtonKinematicMotion.TabIndex = 20;
+            this.radioButtonKinematicMotion.TabIndex = 8;
             this.radioButtonKinematicMotion.Text = "Motion File";
             this.radioButtonKinematicMotion.UseVisualStyleBackColor = true;
             this.radioButtonKinematicMotion.CheckedChanged += new System.EventHandler(this.radioButtonKinematics_CheckedChanged);
@@ -195,7 +195,7 @@ namespace WristVizualizer
             this.radioButtonKinematicRT.Location = new System.Drawing.Point(197, 320);
             this.radioButtonKinematicRT.Name = "radioButtonKinematicRT";
             this.radioButtonKinematicRT.Size = new System.Drawing.Size(87, 17);
-            this.radioButtonKinematicRT.TabIndex = 19;
+            this.radioButtonKinematicRT.TabIndex = 7;
             this.radioButtonKinematicRT.Text = "Collected RT";
             this.radioButtonKinematicRT.UseVisualStyleBackColor = true;
             this.radioButtonKinematicRT.CheckedChanged += new System.EventHandler(this.radioButtonKinematics_CheckedChanged);
@@ -216,7 +216,7 @@ namespace WristVizualizer
             this.radioButtonKinematicAutoRegistr.Location = new System.Drawing.Point(111, 320);
             this.radioButtonKinematicAutoRegistr.Name = "radioButtonKinematicAutoRegistr";
             this.radioButtonKinematicAutoRegistr.Size = new System.Drawing.Size(80, 17);
-            this.radioButtonKinematicAutoRegistr.TabIndex = 17;
+            this.radioButtonKinematicAutoRegistr.TabIndex = 6;
             this.radioButtonKinematicAutoRegistr.TabStop = true;
             this.radioButtonKinematicAutoRegistr.Text = "auto_registr";
             this.radioButtonKinematicAutoRegistr.UseVisualStyleBackColor = true;
@@ -247,7 +247,7 @@ namespace WristVizualizer
             this.listBoxSeries.Location = new System.Drawing.Point(111, 102);
             this.listBoxSeries.Name = "listBoxSeries";
             this.listBoxSeries.Size = new System.Drawing.Size(103, 160);
-            this.listBoxSeries.TabIndex = 13;
+            this.listBoxSeries.TabIndex = 3;
             this.listBoxSeries.SelectedIndexChanged += new System.EventHandler(this.listBoxSeries_SelectedIndexChanged);
             // 
             // labelErrorSubject
@@ -275,7 +275,7 @@ namespace WristVizualizer
             this.textBoxCropValuesFilename.Name = "textBoxCropValuesFilename";
             this.textBoxCropValuesFilename.ReadOnly = true;
             this.textBoxCropValuesFilename.Size = new System.Drawing.Size(287, 20);
-            this.textBoxCropValuesFilename.TabIndex = 10;
+            this.textBoxCropValuesFilename.TabIndex = 2;
             this.textBoxCropValuesFilename.TextChanged += new System.EventHandler(this.textBoxCropValuesFilename_TextChanged);
             // 
             // label1
@@ -292,7 +292,7 @@ namespace WristVizualizer
             this.buttonBrowseSubject.Location = new System.Drawing.Point(337, 26);
             this.buttonBrowseSubject.Name = "buttonBrowseSubject";
             this.buttonBrowseSubject.Size = new System.Drawing.Size(95, 21);
-            this.buttonBrowseSubject.TabIndex = 6;
+            this.buttonBrowseSubject.TabIndex = 1;
             this.buttonBrowseSubject.Text = "Browse";
             this.buttonBrowseSubject.UseVisualStyleBackColor = true;
             this.buttonBrowseSubject.Click += new System.EventHandler(this.buttonBrowseImage_Click);
@@ -321,7 +321,7 @@ namespace WristVizualizer
             this.radioButtonManual.Location = new System.Drawing.Point(89, 10);
             this.radioButtonManual.Name = "radioButtonManual";
             this.radioButtonManual.Size = new System.Drawing.Size(60, 17);
-            this.radioButtonManual.TabIndex = 9;
+            this.radioButtonManual.TabIndex = 1;
             this.radioButtonManual.Text = "Manual";
             this.radioButtonManual.UseVisualStyleBackColor = true;
             // 
@@ -332,7 +332,7 @@ namespace WristVizualizer
             this.radioButtonAutomatic.Location = new System.Drawing.Point(11, 10);
             this.radioButtonAutomatic.Name = "radioButtonAutomatic";
             this.radioButtonAutomatic.Size = new System.Drawing.Size(72, 17);
-            this.radioButtonAutomatic.TabIndex = 7;
+            this.radioButtonAutomatic.TabIndex = 0;
             this.radioButtonAutomatic.TabStop = true;
             this.radioButtonAutomatic.Text = "Automatic";
             this.radioButtonAutomatic.UseVisualStyleBackColor = true;
@@ -345,7 +345,7 @@ namespace WristVizualizer
             this.maskedTextBoxMinX.Name = "maskedTextBoxMinX";
             this.maskedTextBoxMinX.ReadOnly = true;
             this.maskedTextBoxMinX.Size = new System.Drawing.Size(29, 20);
-            this.maskedTextBoxMinX.TabIndex = 25;
+            this.maskedTextBoxMinX.TabIndex = 10;
             // 
             // label5
             // 
@@ -372,7 +372,7 @@ namespace WristVizualizer
             this.maskedTextBoxMaxX.Name = "maskedTextBoxMaxX";
             this.maskedTextBoxMaxX.ReadOnly = true;
             this.maskedTextBoxMaxX.Size = new System.Drawing.Size(29, 20);
-            this.maskedTextBoxMaxX.TabIndex = 27;
+            this.maskedTextBoxMaxX.TabIndex = 11;
             // 
             // label8
             // 
@@ -390,7 +390,7 @@ namespace WristVizualizer
             this.maskedTextBoxMinY.Name = "maskedTextBoxMinY";
             this.maskedTextBoxMinY.ReadOnly = true;
             this.maskedTextBoxMinY.Size = new System.Drawing.Size(29, 20);
-            this.maskedTextBoxMinY.TabIndex = 29;
+            this.maskedTextBoxMinY.TabIndex = 12;
             // 
             // label9
             // 
@@ -408,7 +408,7 @@ namespace WristVizualizer
             this.maskedTextBoxMaxY.Name = "maskedTextBoxMaxY";
             this.maskedTextBoxMaxY.ReadOnly = true;
             this.maskedTextBoxMaxY.Size = new System.Drawing.Size(29, 20);
-            this.maskedTextBoxMaxY.TabIndex = 31;
+            this.maskedTextBoxMaxY.TabIndex = 13;
             // 
             // label10
             // 
@@ -426,7 +426,7 @@ namespace WristVizualizer
             this.maskedTextBoxMinZ.Name = "maskedTextBoxMinZ";
             this.maskedTextBoxMinZ.ReadOnly = true;
             this.maskedTextBoxMinZ.Size = new System.Drawing.Size(29, 20);
-            this.maskedTextBoxMinZ.TabIndex = 33;
+            this.maskedTextBoxMinZ.TabIndex = 14;
             // 
             // label11
             // 
@@ -444,7 +444,7 @@ namespace WristVizualizer
             this.maskedTextBoxMaxZ.Name = "maskedTextBoxMaxZ";
             this.maskedTextBoxMaxZ.ReadOnly = true;
             this.maskedTextBoxMaxZ.Size = new System.Drawing.Size(29, 20);
-            this.maskedTextBoxMaxZ.TabIndex = 35;
+            this.maskedTextBoxMaxZ.TabIndex = 15;
             // 
             // labelErrorStackFileDir
             // 
@@ -471,7 +471,7 @@ namespace WristVizualizer
             this.textBoxStackFileDirectory.Name = "textBoxStackFileDirectory";
             this.textBoxStackFileDirectory.ReadOnly = true;
             this.textBoxStackFileDirectory.Size = new System.Drawing.Size(287, 20);
-            this.textBoxStackFileDirectory.TabIndex = 37;
+            this.textBoxStackFileDirectory.TabIndex = 5;
             this.textBoxStackFileDirectory.TextChanged += new System.EventHandler(this.textBoxStackFileDirectory_TextChanged);
             // 
             // labelErrorSeries
@@ -509,7 +509,7 @@ namespace WristVizualizer
             this.textBoxImageFile.Name = "textBoxImageFile";
             this.textBoxImageFile.ReadOnly = true;
             this.textBoxImageFile.Size = new System.Drawing.Size(287, 20);
-            this.textBoxImageFile.TabIndex = 41;
+            this.textBoxImageFile.TabIndex = 4;
             this.textBoxImageFile.TextChanged += new System.EventHandler(this.textBoxImageFile_TextChanged);
             // 
             // LoadTextureDialog

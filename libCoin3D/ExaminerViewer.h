@@ -81,6 +81,7 @@ public:
 
 	void setDrawStyle();
 	void viewAll();
+	int Parent_HWND;
 
 private:
 	bool saveToImage(System::String^ filename,char* ext);
