@@ -22,6 +22,7 @@ namespace WristVizualizer
         CropValuesParser _cvParser;
         string _subject;
         string _seriesKey;
+        string _stackSeriesKey;
         int _seriesNumber;
         Wrist.Sides _side;
         KinematicFileTypes _kinematicFileType = KinematicFileTypes.AUTO_REGISTR;
@@ -43,12 +44,17 @@ namespace WristVizualizer
         public LoadTextureDialog()
         {
             InitializeComponent();
+
             labelErrorCropValues.Text = "";
             labelErrorSubject.Text = "";
             labelErrorKinematicFile.Text = "";
             labelErrorStackFileDir.Text = "";
             labelErrorSeries.Text = "";
             labelErrorImageFile.Text = "";
+
+            string lastSubject = RegistrySettings.getSettingString("TextureLastSubjectDirectory");
+            if (lastSubject.Length > 0)
+                textBoxSubjectDirectory.Text = lastSubject;
         }
 
         private void buttonBrowseImage_Click(object sender, EventArgs e)
@@ -65,6 +71,70 @@ namespace WristVizualizer
         {
             string form = @"C:\Ortho\E01424\S15R\Stack.files\{0}15{1}.stack";
             return String.Format(form, shortBoneName.ToLower(), side == Wrist.Sides.LEFT ? "L" : "R");
+        }
+
+        private string getRadiusSeries(string stackFileDiretory)
+        {
+            //First try and find it by looking at the directory
+            Match m = Regex.Match(stackFileDiretory, @"[\\\/]S(\d{2}[LR])([\\\/]|$)");
+            if (m.Success)
+            {
+                return m.Groups[1].Value;
+            }
+
+            //now try by looking for a file with the right name
+            DirectoryInfo dir = new DirectoryInfo(stackFileDiretory);
+            if (!dir.Exists)
+                throw new ArgumentException("Invalid stack file directory");
+
+            foreach (FileInfo file in dir.GetFiles("rad???.stack"))
+            {
+                Match m2 = Regex.Match(file.Name, @"^rad(\d{2}[LR])\.stack$", RegexOptions.IgnoreCase);
+                if (m2.Success)
+                    return m2.Groups[1].Value;
+            }
+
+            throw new ArgumentException("Unable to find radius stack file in directory. (" + stackFileDiretory + ")");
+        }
+
+        private void validate()
+        {
+            //check image file
+            if (!Directory.Exists(textBoxImageFile.Text) && !File.Exists(textBoxImageFile.Text))
+                throw new ArgumentException("No image file found");
+
+            //check min/max crop data
+            MaskedTextBox[] boxes = new MaskedTextBox[4];
+            boxes[0] = maskedTextBoxMinX;
+            boxes[1] = maskedTextBoxMaxX;
+            boxes[2] = maskedTextBoxMinY;
+            boxes[3] = maskedTextBoxMaxY;
+            foreach (MaskedTextBox box in boxes)
+            {
+                if (box.Text.Trim().Length == 0)
+                    box.Text = "0";
+                else if (Int32.Parse(box.Text) < 0)
+                    maskedTextBoxMinX.Text = "0";
+                else if (Int32.Parse(box.Text) > 255)
+                    maskedTextBoxMinX.Text = "255";
+            }
+
+            if (Int32.Parse(maskedTextBoxMinZ.Text) < 0)
+                maskedTextBoxMinZ.Text = "0";
+            
+            //are we a left or right?
+            if (_mode == Modes.MANUAL)
+            {
+                _stackSeriesKey = getRadiusSeries(textBoxStackFileDirectory.Text);
+            }
+            else
+            {
+                //check that we have a radius
+                if (!File.Exists(Path.Combine(textBoxStackFileDirectory.Text,String.Format("rad{0}.stack",_stackSeriesKey))))
+                    throw new ArgumentException("Unable to find radius stack file in directory. (" + textBoxStackFileDirectory.Text + ")");
+            }
+
+            //TODO: Check image files, etc.
         }
 
         private void run()
@@ -144,6 +214,18 @@ namespace WristVizualizer
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
+            try
+            {
+                validate();
+            }
+            catch (Exception ex)
+            {
+                string msg = "Error loading texture.\n" + ex.Message;
+                DialogResult r = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            //save last Path
+            RegistrySettings.saveSetting("TextureLastSubjectDirectory", textBoxSubjectDirectory.Text.Trim());
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -363,6 +445,7 @@ namespace WristVizualizer
 
             //try and find stackFile Directory
             string neutralSeriesDir = String.Format("S15{0}",_seriesKey.Substring(2,1));
+            _stackSeriesKey = neutralSeriesDir.Substring(1, 3);
             string stackPath1 = Path.Combine(textBoxSubjectDirectory.Text, neutralSeriesDir);
             string stackPath2 = Path.Combine(stackPath1,"Stack.files");
             if (canLocateRadiusStackFileInDirectory(stackPath2)) //try Stack.files directory first
