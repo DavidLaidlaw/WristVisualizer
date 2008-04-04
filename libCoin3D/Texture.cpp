@@ -265,18 +265,13 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 
 	// Make  the  MRI group: drawing style + texture + rectangle 
 	SoDrawStyle *drawStyleMRI  = new SoDrawStyle;
-	drawStyleMRI -> style=SoDrawStyle::FILLED;
-
-	
+	drawStyleMRI -> style=SoDrawStyle::FILLED;	
 
 	SoSeparator* separatorCT = new SoSeparator;
 	separator -> addChild( separatorCT );
 	separatorCT -> addChild( drawStyleMRI );
 	separatorCT -> addChild( texture );
 
-
-	
-	
 
 	//create a sensor, and attach it to the output from our translation,
 	//so that we know when our dragger is moved
@@ -288,16 +283,9 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	// Make a  rectangle
 	separatorCT -> addChild( makeRectangle( plane ));
 
-	switch( plane )
-	{
-	case Planes::XY_PLANE:
-		//setup the first frame
-		texture->image.setValue(SbVec2s(_sizeY, _sizeX),1, (const unsigned char*) _all_slice_dataXY[0]);
-		break;
-	case Planes::YZ_PLANE:
-		texture->image.setValue(SbVec2s(_sizeZ, _sizeY),1, (const unsigned char*) _all_slice_dataYZ[0]);
-		break;
-	}
+	//show the image for the first slice
+	updateTextureCB((void*)textureCBdata,NULL);
+
 	return gcnew Separator(separator);
 }
 
