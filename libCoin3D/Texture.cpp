@@ -155,10 +155,6 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 			buffer[i] = new unsigned char[_sizeX*_sizeY];
 			if (_sizeY >= _sizeX) {
 				System::Runtime::InteropServices::Marshal::Copy((array<unsigned char>^)data[i],0,(System::IntPtr)buffer[i],_sizeX*_sizeY);
-				//for (int j=0; j<_sizeX*_sizeY; j++) {
-				//	buffer[i][j] = (unsigned char)data[i][j];
-				//	array<unsigned char>^ test2 = (array<unsigned char>^)data[0];
-				//}
 			}
 			else {
 				for (int j=0; j<_sizeY; j++) {
