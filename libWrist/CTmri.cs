@@ -104,12 +104,19 @@ namespace libWrist
 
             int startSlice = 0;
             int endSlicePlusOne = _depth; //its a normal for loop, so its 1 more because we don't read the last one
+            int startIndex = 0;
+            int endIndexPlusOne = _width*_height;
 
             //check for cropping in Z, so we can read it faster
             if (_xmin > 0 || (_zmax > 0 && _zmax + 1 < _depth))
             {
                 startSlice = _zmin;
                 endSlicePlusOne = _zmax + 1;
+            }
+            if (_ymin > 0 || _ymax > 0)
+            {
+                startIndex = _width * _ymin;
+                endIndexPlusOne = _width * (_ymax + 1);
             }
 
             for (int i = startSlice; i < endSlicePlusOne; i++)
@@ -120,7 +127,14 @@ namespace libWrist
 
                 //TODO: Handle different data types....
                 //want to read in sequentially!!!!
-                for (int j = 0; j < _width * _height; j++)
+
+                //read faster by skipping rows that we don't need, don't know if thats width or height though....
+                if (startIndex > 0)
+                {
+                    r.BaseStream.Seek(startIndex * 2, SeekOrigin.Begin);
+                }
+
+                for (int j = startIndex; j < endIndexPlusOne; j++)
                 {
                     _data[(i * _width * _height) + j] = ShortSwap((short)r.ReadUInt16());
                     if (_data[(i * _width * _height) + j] < _minIntensity)
