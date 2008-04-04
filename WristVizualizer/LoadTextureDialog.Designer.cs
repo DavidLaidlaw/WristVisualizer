@@ -240,7 +240,6 @@ namespace WristVizualizer
             0,
             0});
             this.numericUpDownMaxZ.Name = "numericUpDownMaxZ";
-            this.numericUpDownMaxZ.ReadOnly = true;
             this.numericUpDownMaxZ.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMaxZ.TabIndex = 15;
             // 
@@ -262,7 +261,6 @@ namespace WristVizualizer
             0,
             0});
             this.numericUpDownMinZ.Name = "numericUpDownMinZ";
-            this.numericUpDownMinZ.ReadOnly = true;
             this.numericUpDownMinZ.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMinZ.TabIndex = 14;
             // 
@@ -284,7 +282,6 @@ namespace WristVizualizer
             0,
             0});
             this.numericUpDownMaxY.Name = "numericUpDownMaxY";
-            this.numericUpDownMaxY.ReadOnly = true;
             this.numericUpDownMaxY.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMaxY.TabIndex = 13;
             // 
@@ -306,7 +303,6 @@ namespace WristVizualizer
             0,
             0});
             this.numericUpDownMinY.Name = "numericUpDownMinY";
-            this.numericUpDownMinY.ReadOnly = true;
             this.numericUpDownMinY.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMinY.TabIndex = 12;
             // 
@@ -328,7 +324,6 @@ namespace WristVizualizer
             0,
             0});
             this.numericUpDownMaxX.Name = "numericUpDownMaxX";
-            this.numericUpDownMaxX.ReadOnly = true;
             this.numericUpDownMaxX.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMaxX.TabIndex = 11;
             // 
@@ -350,7 +345,6 @@ namespace WristVizualizer
             0,
             0});
             this.numericUpDownMinX.Name = "numericUpDownMinX";
-            this.numericUpDownMinX.ReadOnly = true;
             this.numericUpDownMinX.Size = new System.Drawing.Size(42, 20);
             this.numericUpDownMinX.TabIndex = 10;
             // 
