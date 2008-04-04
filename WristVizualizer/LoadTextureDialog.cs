@@ -114,23 +114,23 @@ namespace WristVizualizer
                 throw new ArgumentException("No image file found");
 
             //check min/max crop data
-            MaskedTextBox[] boxes = new MaskedTextBox[4];
-            boxes[0] = maskedTextBoxMinX;
-            boxes[1] = maskedTextBoxMaxX;
-            boxes[2] = maskedTextBoxMinY;
-            boxes[3] = maskedTextBoxMaxY;
-            foreach (MaskedTextBox box in boxes)
+            NumericUpDown[] boxes = new NumericUpDown[4];
+            boxes[0] = numericUpDownMinX;
+            boxes[1] = numericUpDownMaxX;
+            boxes[2] = numericUpDownMinY;
+            boxes[3] = numericUpDownMaxY;
+            foreach (NumericUpDown box in boxes)
             {
                 if (box.Text.Trim().Length == 0)
                     box.Text = "0";
                 else if (Int32.Parse(box.Text) < 0)
-                    maskedTextBoxMinX.Text = "0";
+                    numericUpDownMinX.Text = "0";
                 else if (Int32.Parse(box.Text) > 512)
-                    maskedTextBoxMinX.Text = "512";
+                    numericUpDownMinX.Text = "512";
             }
 
-            if (Int32.Parse(maskedTextBoxMinZ.Text) < 0)
-                maskedTextBoxMinZ.Text = "0";
+            if (Int32.Parse(numericUpDownMinZ.Text) < 0)
+                numericUpDownMinZ.Text = "0";
             
             //are we a left or right?
             if (_mode == Modes.MANUAL)
@@ -149,12 +149,12 @@ namespace WristVizualizer
 
         private void parseCropValues()
         {
-            _minX = Int32.Parse(maskedTextBoxMinX.Text);
-            _maxX = Int32.Parse(maskedTextBoxMaxX.Text);
-            _minY = Int32.Parse(maskedTextBoxMinY.Text);
-            _maxY = Int32.Parse(maskedTextBoxMaxY.Text);
-            _minZ = Int32.Parse(maskedTextBoxMinZ.Text);
-            _maxZ = Int32.Parse(maskedTextBoxMaxZ.Text);
+            _minX = Int32.Parse(numericUpDownMinX.Text);
+            _maxX = Int32.Parse(numericUpDownMaxX.Text);
+            _minY = Int32.Parse(numericUpDownMinY.Text);
+            _maxY = Int32.Parse(numericUpDownMaxY.Text);
+            _minZ = Int32.Parse(numericUpDownMinZ.Text);
+            _maxZ = Int32.Parse(numericUpDownMaxZ.Text);
         }
 
         private void run()
@@ -419,22 +419,22 @@ namespace WristVizualizer
 
         private void clearCropValueFields()
         {
-            maskedTextBoxMinX.Text = "";
-            maskedTextBoxMaxX.Text = "";
-            maskedTextBoxMinY.Text = "";
-            maskedTextBoxMaxY.Text = "";
-            maskedTextBoxMinZ.Text = "";
-            maskedTextBoxMaxZ.Text = "";
+            numericUpDownMinX.Text = "";
+            numericUpDownMaxX.Text = "";
+            numericUpDownMinY.Text = "";
+            numericUpDownMaxY.Text = "";
+            numericUpDownMinZ.Text = "";
+            numericUpDownMaxZ.Text = "";
         }
 
         private void setCropValueFields(CropValuesParser.CropValues cv)
         {
-            maskedTextBoxMinX.Text = cv.MinX.ToString();
-            maskedTextBoxMaxX.Text = cv.MaxX.ToString();
-            maskedTextBoxMinY.Text = cv.MinY.ToString();
-            maskedTextBoxMaxY.Text = cv.MaxY.ToString();
-            maskedTextBoxMinZ.Text = cv.MinZ.ToString();
-            maskedTextBoxMaxZ.Text = cv.MaxZ.ToString();
+            numericUpDownMinX.Text = cv.MinX.ToString();
+            numericUpDownMaxX.Text = cv.MaxX.ToString();
+            numericUpDownMinY.Text = cv.MinY.ToString();
+            numericUpDownMaxY.Text = cv.MaxY.ToString();
+            numericUpDownMinZ.Text = cv.MinZ.ToString();
+            numericUpDownMaxZ.Text = cv.MaxZ.ToString();
         }
 
         private void listBoxSeries_SelectedIndexChanged(object sender, EventArgs e)
