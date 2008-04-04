@@ -153,8 +153,18 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 		buffer = new unsigned char*[_sizeZ];
 		for (int i=0; i<_sizeZ; i++) {
 			buffer[i] = new unsigned char[_sizeX*_sizeY];
-			for (int j=0; j<_sizeX*_sizeY; j++) {
-				buffer[i][j] = (unsigned char)data[i][j];
+			if (_sizeY >= _sizeX) {
+				System::Runtime::InteropServices::Marshal::Copy((array<unsigned char>^)data[i],0,(System::IntPtr)buffer[i],_sizeX*_sizeY);
+				//for (int j=0; j<_sizeX*_sizeY; j++) {
+				//	buffer[i][j] = (unsigned char)data[i][j];
+				//	array<unsigned char>^ test2 = (array<unsigned char>^)data[0];
+				//}
+			}
+			else {
+				for (int j=0; j<_sizeY; j++) {
+					for (int k=0; k<_sizeX; k++)
+						buffer[i][j*_sizeX + k] = (unsigned char)data[i][k*_sizeY + j];
+				}
 			}
 		}
 		break;
@@ -230,6 +240,10 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		textureCBdata->numSlices = _sizeZ;
 		textureCBdata->planeHeight = _sizeY;
 		textureCBdata->planeWidth = _sizeX;
+		if (_sizeY < _sizeX) {
+			textureCBdata->planeHeight = _sizeX;
+			textureCBdata->planeWidth = _sizeY;
+		}
 		_draggerXY = myDragger; //save reference to this
 		break;
 	case Planes::YZ_PLANE:
