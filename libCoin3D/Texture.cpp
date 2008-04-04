@@ -180,18 +180,6 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 {
 	//copy data into local buffer :)
 	unsigned char** buffer = setupLocalBuffer(data, plane);
-	//save local buffer
-	switch (plane) 
-	{
-	case Planes::XY_PLANE:
-		_all_slice_dataXY = buffer;
-		break;
-	case Planes::YZ_PLANE:
-		_all_slice_dataYZ = buffer;
-		break;
-	default:
-		throw gcnew System::ArgumentException("Invalid plane", "plane");
-	}
 	
 	SoSeparator* separator = new SoSeparator;
 
@@ -207,7 +195,6 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 
 
 	SoTranslate1Dragger *myDragger = new SoTranslate1Dragger;
-	//draggers[axis]=myDragger;	//save a reference to the dragger
 	myDragger->translation.setValue(0,0,0);
 
 	SoTransform *myTransform = new SoTransform;
@@ -236,6 +223,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	switch ( plane ) 
 	{
 	case Planes::XY_PLANE:
+		_all_slice_dataXY = buffer;
 		myCalc -> a.setValue( (float)_sizeZ ); 
 		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))) % a)";
 		textureCBdata->sliceThickness = _voxelZ;
@@ -245,13 +233,14 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		_draggerXY = myDragger; //save reference to this
 		break;
 	case Planes::YZ_PLANE:
+		_all_slice_dataYZ = buffer;
 		myCalc -> a.setValue( (float)_sizeX );
 		myCalc -> c.setValue( 1.0f ); //TODO: Fix?
 		myCalc -> expression = "oA = vec3f((floor(c*6*fabs(A[0]))) % a , 0,0)";
 		textureCBdata->sliceThickness = _voxelX;
 		textureCBdata->numSlices = _sizeX;
-		textureCBdata->planeHeight = _sizeZ;
-		textureCBdata->planeWidth = _sizeY;
+		textureCBdata->planeHeight = _sizeY;
+		textureCBdata->planeWidth = _sizeZ;
 		_draggerYZ = myDragger;
 		break;
 	default:
