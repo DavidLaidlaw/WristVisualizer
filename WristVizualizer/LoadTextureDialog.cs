@@ -15,6 +15,9 @@ namespace WristVizualizer
 {
     public partial class LoadTextureDialog : Form
     {
+        private static string _LastImagePath = "";
+        private static CTmri _LastMRI = null;
+
         private ExaminerViewer _viewer;
         private Separator _root;
         private Texture _texture;
@@ -160,8 +163,19 @@ namespace WristVizualizer
             
             //TODO: Figure out the image type....
             parseCropValues();
-            //pass crop values now, for faster read :)
-            CTmri mri = new CTmri(textBoxImageFile.Text,_minX, _maxX, _minY, _maxY, _minZ, _maxZ);
+            
+            CTmri mri;
+            //check if we have this MRI saved!!!, dirty cache
+            //TODO: Check if the crop values are compatable!!!
+            if (_LastImagePath.ToLower().Equals(textBoxImageFile.Text.Trim().ToLower()))
+                mri = _LastMRI;
+            else
+            {
+                //pass crop values now, for faster read :)
+                mri = new CTmri(textBoxImageFile.Text, _minX, _maxX, _minY, _maxY, _minZ, _maxZ);
+                _LastMRI = mri;
+                _LastImagePath = textBoxImageFile.Text.Trim(); //save filename, to use in cache
+            }
 
             int sizeX = _maxX - _minX + 1;
             int sizeY = _maxY - _minY + 1;
