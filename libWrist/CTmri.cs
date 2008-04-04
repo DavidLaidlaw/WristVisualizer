@@ -36,30 +36,31 @@ namespace libWrist
         //crop settings
         private int _xmin, _xmax, _ymin, _ymax, _zmin, _zmax;
 
-
-		public CTmri(string mriDirectory):this(mriDirectory,0,0) {}
-
-		public CTmri(string mriDirectory, double voxelSize):this(mriDirectory,voxelSize,0) {}
-
-		public CTmri(string mriDirectory, double voxelSize, double sliceThickness)
+        public CTmri(string mriDirectory) : this(mriDirectory, 0, 0, 0, 0, 0, 0, 0, 0) { }
+        public CTmri(string mriDirectory, double voxelSize) : this(mriDirectory, voxelSize, 0, 0, 0, 0, 0, 0, 0) { }
+        public CTmri(string mriDirectory, int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
+            : this(mriDirectory, 0, 0, xmin, xmax, ymin, ymax, zmin, zmax) { }
+        public CTmri(string mriDirectory, double voxelSize, double sliceThickness, int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
 		{
-			_format = Format.USign16;
+			_format = Format.USign16;  //default value for now
+
 			readScale(mriDirectory);
 			readDimensions(mriDirectory);
 
 			if (voxelSize>0) _voxelSizeX=_voxelSizeY=voxelSize;
 			if (sliceThickness>0) _voxelSizeZ=sliceThickness;
 
+            _xmin = xmin;
+            _xmax = xmax;
+            _ymin = ymin;
+            _ymax = ymax;
+            _zmin = zmin;
+            _zmax = zmax;
 
             readDataToShort(mriDirectory);
 
             IMAGE_OFFSET = _minIntensity;
             IMAGE_SCALE = ((double)_maxIntensity - _minIntensity) / 255;
-
-            //Console.WriteLine("Found: Min: {0}, Max: {1}, Offset: {2}, Scale: {3}",_minIntensity,_maxIntensity,IMAGE_OFFSET, IMAGE_SCALE);
-
-            //readDataToBitmaps(mriDirectory);
-			//findInensityScale(_data);
 		}
 
 		private void readScale(string mriDirectory)
@@ -101,7 +102,17 @@ namespace libWrist
             _minIntensity = 255;
             _maxIntensity = 0;
 
-            for (int i = 0; i < _depth; i++)
+            int startSlice = 0;
+            int endSlicePlusOne = _depth; //its a normal for loop, so its 1 more because we don't read the last one
+
+            //check for cropping in Z, so we can read it faster
+            if (_xmin > 0 || (_zmax > 0 && _zmax + 1 < _depth))
+            {
+                startSlice = _zmin;
+                endSlicePlusOne = _zmax + 1;
+            }
+
+            for (int i = startSlice; i < endSlicePlusOne; i++)
             {
                 string sliceFilename = Path.Combine(mriDirectory, "i." + ((int)i + 1).ToString("D3"));
                 StreamReader s = new StreamReader(sliceFilename);
@@ -116,16 +127,6 @@ namespace libWrist
                         _minIntensity = _data[(i * _width * _height) + j];
                     if (_data[(i * _width * _height) + j] > _maxIntensity)
                         _maxIntensity = _data[(i * _width * _height) + j];
-
-                    /*
-                    _data[(i * _width * _height) + (k * _width) + j] = ShortSwap((short)r.ReadUInt16());
-                    //save min and max
-                    if (_data[(i * _width * _height) + (k * _width) + j] < _minIntensity)
-                        _minIntensity = _data[(i * _width * _height) + (k * _width) + j];
-                    if (_data[(i * _width * _height) + (k * _width) + j] > _maxIntensity)
-                        _maxIntensity = _data[(i * _width * _height) + (k * _width) + j];
-                     */
-
                 }
 
                 r.Close();

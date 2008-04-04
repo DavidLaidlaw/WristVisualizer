@@ -159,9 +159,9 @@ namespace WristVizualizer
             _subjectPath = textBoxSubjectDirectory.Text.Trim();
             
             //TODO: Figure out the image type....
-            CTmri mri = new CTmri(textBoxImageFile.Text);
             parseCropValues();
-            mri.setCrop(_minX, _maxX, _minY, _maxY, _minZ, _maxZ);
+            //pass crop values now, for faster read :)
+            CTmri mri = new CTmri(textBoxImageFile.Text,_minX, _maxX, _minY, _maxY, _minZ, _maxZ);
 
             int sizeX = _maxX - _minX + 1;
             int sizeY = _maxY - _minY + 1;
