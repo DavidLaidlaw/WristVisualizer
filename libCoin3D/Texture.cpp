@@ -154,9 +154,17 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 		for (int i=0; i<_sizeZ; i++) {
 			buffer[i] = new unsigned char[_sizeX*_sizeY];
 			if (_sizeY >= _sizeX) {
+				/* Need to check the dimensions. For some reason, the SoTexture2 object maps 
+				 * itself differently onto the plane depending upon its aspect ratio. It seems
+				 * to try and always be oriented in a portrait mode (or square). So we check 
+				 * for that case here.
+				 */
 				System::Runtime::InteropServices::Marshal::Copy((array<unsigned char>^)data[i],0,(System::IntPtr)buffer[i],_sizeX*_sizeY);
 			}
 			else {
+				/* This is the case for landscape, so when creating the buffer, we need to go 
+				 * and flip the X & Y coordinates of the image, so it displays correctly
+				 */
 				for (int j=0; j<_sizeY; j++) {
 					for (int k=0; k<_sizeX; k++)
 						buffer[i][j*_sizeX + k] = (unsigned char)data[i][k*_sizeY + j];
@@ -246,6 +254,10 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		textureCBdata->planeHeight = _sizeY;
 		textureCBdata->planeWidth = _sizeX;
 		if (_sizeY < _sizeX) {
+			/* Need to check for cases where we are wider then taller
+			 * Due to a problem with SoTexture2, images are always display in
+			 * portrain mode. For more info, see comments in function setupLocalBuffer()
+			 */
 			textureCBdata->planeHeight = _sizeX;
 			textureCBdata->planeWidth = _sizeY;
 		}
