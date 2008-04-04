@@ -167,19 +167,21 @@ namespace WristVizualizer
             int sizeY = _maxY - _minY + 1;
             int sizeZ = _maxZ - _minZ + 1;
 
-            Random r = new Random();
+            //if (sizeY < sizeX) sizeY = sizeX;
 
             //lets build an array of bytes (unsigned 8bit data structure)
-            Byte[][] voxels = new Byte[sizeZ][];
-            for (int i = 0; i < sizeZ; i++)  // Z coordinate
-            {
-                voxels[i] = new Byte[sizeX * sizeY];
-                for (int j = 0; j < sizeY; j++)
-                    for (int k = 0; k < sizeX; k++)
-                    {
-                        voxels[i][(k * sizeY) + j] = (Byte)mri.getCroppedVoxel(k, j, i);
-                    }
-            }
+            //Byte[][] voxels = new Byte[sizeZ][];
+            //for (int i = 0; i < sizeZ; i++)  // Z coordinate
+            //{
+            //    voxels[i] = new Byte[sizeX * sizeY];
+            //    for (int j = 0; j < sizeY; j++)
+            //        for (int k = 0; k < sizeX; k++)
+            //        {
+            //            voxels[i][(k * sizeY) + j] = (Byte)mri.getCroppedVoxel(k, j, i);
+            //            //voxels[i][(j * sizeX) + k] = (Byte)mri.getCroppedVoxel(k, j, i);
+            //        }
+            //}
+            Byte[][] voxels = mri.getCroppedRegionScaledToBytes();
 
             Hashtable transforms = null;
             if (File.Exists(textBoxKinematicFilename.Text))

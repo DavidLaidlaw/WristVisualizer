@@ -180,6 +180,25 @@ namespace libWrist
 
 		#region Accessors for Volume Data
 
+        public Byte[][] getCroppedRegionScaledToBytes()
+        {
+            int sizeX = _xmax - _xmin + 1;
+            int sizeY = _ymax - _ymin + 1;
+            int sizeZ = _zmax - _zmin + 1;
+            //lets build an array of bytes (unsigned 8bit data structure)
+            Byte[][] voxels = new Byte[sizeZ][];
+            for (int z = 0; z < sizeZ; z++)  // Z coordinate
+            {
+                voxels[z] = new Byte[sizeX * sizeY];
+                for (int y = 0; y < sizeY; y++)
+                    for (int x = 0; x < sizeX; x++)
+                    {
+                        voxels[z][(x * sizeY) + y] = (Byte)((_data[(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - IMAGE_OFFSET) / IMAGE_SCALE); //scale to correct range
+                    }
+            }
+            return voxels;
+        }
+
 		public int getVoxel_a(int x, int y, int z)
 		{
 			if (_autoScale) return getVoxel_s(x,y,z);
