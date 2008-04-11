@@ -412,9 +412,17 @@ libCoin3D::Material^ libCoin3D::ExaminerViewer::createMaterialForSelected()
 //{
 //}
 //
-//void libCoin3D::ExaminerViewer::disableSelection()
-//{
-//}
+void libCoin3D::ExaminerViewer::disableSelection()
+{
+	if (_selection==NULL)
+		return;
+
+	_selection->ref();
+	_viewer->setSceneGraph(_root);
+	_selection->removeChild(_root);
+	_selection->unref();
+	_selection=NULL; //remove reference
+}
 
 libCoin3D::ExaminerViewer::TransparencyTypes libCoin3D::ExaminerViewer::getTransparencyType()
 {
@@ -648,6 +656,9 @@ void libCoin3D::ExaminerViewer::removeMaterialFromScene(Material^ material)
 
 void libCoin3D::ExaminerViewer::setSelection(ScenegraphNode^ node)
 {
+	if (_selection == NULL)
+		return;
+
 	_selection->deselectAll();
 	_selection->select(node->getNode());
 	_selection->touch();

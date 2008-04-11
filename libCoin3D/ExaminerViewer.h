@@ -62,6 +62,7 @@ public:
 	Material^ getSelectedMaterial();
 	Material^ createMaterialForSelected();
 	void removeMaterialFromScene(Material^ material);
+	void disableSelection();
 	void setSelection(ScenegraphNode^ node);
 	Separator^ getSeparatorForSelection();
 

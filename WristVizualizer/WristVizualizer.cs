@@ -1116,6 +1116,7 @@ namespace WristVizualizer
             setFormForCurrentMode();
 
             _root = texture.setup(_viewer);
+            _viewer.disableSelection();
             _viewer.setBackgroundColor(0.8f, 0.8f, 0.8f);
             this.Text = Application.ProductName + " - " + texture.DisplayTitle;
         }
