@@ -575,5 +575,12 @@ namespace WristVizualizer
                 labelErrorImageFile.Text = "No image found";
             }
         }
+
+        #region Public Accessors
+        public string DisplayTitle
+        {
+            get { return _subject + "_" + _seriesKey + " - " + _subjectPath; }
+        }
+        #endregion
     }
 }
