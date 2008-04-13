@@ -50,13 +50,7 @@ namespace libWrist
 			if (voxelSize>0) _voxelSizeX=_voxelSizeY=voxelSize;
 			if (sliceThickness>0) _voxelSizeZ=sliceThickness;
 
-            _xmin = xmin;
-            _xmax = xmax;
-            _ymin = ymin;
-            _ymax = ymax;
-            _zmin = zmin;
-            _zmax = zmax;
-
+            setCrop(xmin, xmax, ymin, ymax, zmin, zmax);
             readDataToShort(mriDirectory);
 
             IMAGE_OFFSET = _minIntensity;
@@ -124,15 +118,19 @@ namespace libWrist
                 string sliceFilename = Path.Combine(mriDirectory, "i." + ((int)i + 1).ToString("D3"));
                 StreamReader s = new StreamReader(sliceFilename);
                 BinaryReader r = new BinaryReader(s.BaseStream);
-
+                                
                 //TODO: Handle different data types....
                 //want to read in sequentially!!!!
 
+                //need to handle the case when there is some kind of header on the file, offset to then end of the file
+                FileInfo info = new FileInfo(sliceFilename);
+                long seekOffset = info.Length - (_width * _height * 2);
+
                 //read faster by skipping rows that we don't need, don't know if thats width or height though....
                 if (startIndex > 0)
-                {
-                    r.BaseStream.Seek(startIndex * 2, SeekOrigin.Begin);
-                }
+                    seekOffset += startIndex * 2;
+                
+                r.BaseStream.Seek(seekOffset, SeekOrigin.Begin);
 
                 for (int j = startIndex; j < endIndexPlusOne; j++)
                 {
@@ -185,12 +183,16 @@ namespace libWrist
 
         public void setCrop(int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
         {
+            //check for an already cropped image
+            if ((_width == xmax - xmin + 1) && (_height == ymax - ymin + 1) && (_depth == zmax - zmin + 1))
+                return; //then return, we don't actually want to crop
+
             _xmin = xmin;
             _xmax = xmax;
             _ymin = ymin;
             _ymax = ymax;
             _zmin = zmin;
-            _zmax = zmax;
+            _zmax = zmax;            
         }
 
 		#region Accessors for Volume Data
@@ -200,6 +202,12 @@ namespace libWrist
             int sizeX = _xmax - _xmin + 1;
             int sizeY = _ymax - _ymin + 1;
             int sizeZ = _zmax - _zmin + 1;
+            if (_xmax == 0 && _xmin == 0) //If crop value not set, I don't think I need to check them all...
+            {
+                sizeX = _width;
+                sizeY = _height;
+                sizeZ = _depth;
+            }
             //lets build an array of bytes (unsigned 8bit data structure)
             Byte[][] voxels = new Byte[sizeZ][];
             for (int z = 0; z < sizeZ; z++)  // Z coordinate

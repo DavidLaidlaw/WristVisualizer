@@ -344,6 +344,39 @@ namespace WristVizualizer
             listBoxSeries.DataSource = null;
         }
 
+        /// <summary>
+        /// Given a filename for an image, determine the series number and add it to the list
+        /// It is added as a left and/or right depending on if a left or right wrist is present
+        /// </summary>
+        /// <param name="list"></param>
+        /// <param name="FileName"></param>
+        /// <param name="hasLeft"></param>
+        /// <param name="hasRight"></param>
+        private void loadSeriesListHelper(ArrayList list, string FileName, bool hasLeft, bool hasRight)
+        {
+            Match m = Regex.Match(FileName, @"E\d{5}_(\d{2})$");
+            if (m.Success)
+            {
+                if (hasLeft && !list.Contains(m.Groups[1].Value + "L"))
+                    list.Add(m.Groups[1].Value + "L");
+                if (hasRight && !list.Contains(m.Groups[1].Value + "R"))
+                    list.Add(m.Groups[1].Value + "R");
+                return; 
+            }
+
+            //check for cropped file...
+            m = Regex.Match(FileName, @"E\d{5}_(\d{2}[RL])", RegexOptions.IgnoreCase);
+            if (m.Success)
+            {
+                string series = m.Groups[1].Value;
+                if (hasLeft && series.ToLower().EndsWith("l") && !list.Contains(series))
+                    list.Add(series);
+                if (hasRight && series.ToLower().EndsWith("r") && !list.Contains(series))
+                    list.Add(series);
+                return;
+            }
+        }
+
         private void loadSeriesList()
         {
             string imDir = Path.Combine(textBoxSubjectDirectory.Text, "CTScans");
@@ -358,27 +391,13 @@ namespace WristVizualizer
             bool hasRight = canLocateStackfileDirectory(Wrist.Sides.RIGHT);
 
             ArrayList list = new ArrayList();
-            foreach (DirectoryInfo d in dir.GetDirectories(String.Format("{0}_??", _subject)))
+            foreach (DirectoryInfo d in dir.GetDirectories(String.Format("{0}_???", _subject)))
             {
-                Match m = Regex.Match(d.Name, @"E\d{5}_(\d{2})");
-                if (m.Success)
-                {
-                    if (hasLeft)
-                        list.Add(m.Groups[1].Value + "L");
-                    if (hasRight)
-                        list.Add(m.Groups[1].Value + "R");
-                }
+                loadSeriesListHelper(list, d.Name, hasLeft, hasRight);
             }
-            foreach (FileInfo f in dir.GetFiles(String.Format("{0}_??", _subject)))
+            foreach (FileInfo f in dir.GetFiles(String.Format("{0}_???", _subject)))
             {
-                Match m = Regex.Match(f.Name, @"E\d{5}_(\d{2})");
-                if (m.Success)
-                {
-                    if (hasLeft)
-                        list.Add(m.Groups[1].Value + "L");
-                    if (hasRight)
-                        list.Add(m.Groups[1].Value + "R");
-                }
+                loadSeriesListHelper(list, f.Name, hasLeft, hasRight);
             }
 
             list.Sort();  //Sort the list?
@@ -466,6 +485,8 @@ namespace WristVizualizer
 
             //update image file
             textBoxImageFile.Text = Path.Combine(Path.Combine(textBoxSubjectDirectory.Text, "CTScans"), String.Format("{0}_{1:00}", _subject, _seriesNumber));
+            if (!File.Exists(textBoxImageFile.Text) && !Directory.Exists(textBoxImageFile.Text))
+                textBoxImageFile.Text = textBoxImageFile.Text + (_side == Wrist.Sides.LEFT ? "L" : "R");
 
             //try and find stackFile Directory
             string neutralSeriesDir = String.Format("S15{0}",_seriesKey.Substring(2,1));
