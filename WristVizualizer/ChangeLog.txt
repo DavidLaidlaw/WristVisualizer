@@ -1,0 +1,2 @@
+Version 1.2.0
+- New: Added Texture functionality. Ability to load the stack file (based on the original neutral scan) onto the CT image from various sources.
