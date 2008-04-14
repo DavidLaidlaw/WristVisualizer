@@ -36,7 +36,7 @@ libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double 
 	_draggerYZ = NULL;
 }
 
-libCoin3D::Texture::~Texture()
+libCoin3D::Texture::!Texture()
 {
 	if (_all_slice_dataXY != NULL) {
 		for (int i=0; i<_sizeZ; i++)

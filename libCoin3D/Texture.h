@@ -13,7 +13,7 @@ public:
 	enum struct Planes { XY_PLANE, YZ_PLANE };
 
 	Texture(Sides side, int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ);
-	virtual ~Texture();
+	!Texture();
 
 	virtual Separator^ makeDragerAndTexture(array<array<System::Byte>^>^ data, Planes plane);
 
