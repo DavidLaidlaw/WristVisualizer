@@ -1109,16 +1109,23 @@ namespace WristVizualizer
             DialogResult r = texture.ShowDialog();
             if (r == DialogResult.Cancel)
                 return;
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                if (_viewer == null) setupExaminerWindow();
+                resetForm();
+                _mode = Modes.TEXTURE;
+                setFormForCurrentMode();
 
-            if (_viewer == null) setupExaminerWindow();
-            resetForm();
-            _mode = Modes.TEXTURE;
-            setFormForCurrentMode();
-
-            _root = texture.setup(_viewer);
-            _viewer.disableSelection();
-            _viewer.setBackgroundColor(0.8f, 0.8f, 0.8f);
-            this.Text = Application.ProductName + " - " + texture.DisplayTitle;
+                _root = texture.setup(_viewer);
+                _viewer.disableSelection();
+                _viewer.setBackgroundColor(0.8f, 0.8f, 0.8f);
+                this.Text = Application.ProductName + " - " + texture.DisplayTitle;
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
         }
     }
 }
