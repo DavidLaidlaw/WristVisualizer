@@ -17,6 +17,8 @@ public:
 	property System::String^ Name  { System::String^ get() { return _name; } }
 	property System::String^ TypeName  { System::String^ get() { return _typeName; } }
 
+	virtual bool isEqualSeparator(Separator^ separator);
+
 	SoNode* getNode();
 
 private:

@@ -45,6 +45,15 @@ void libCoin3D::ScenegraphNode::buildLocalData()
 
 }
 
+bool libCoin3D::ScenegraphNode::isEqualSeparator(Separator^ separator)
+{
+	if (separator==nullptr || _node == NULL)
+		return false;
+	if (separator->getNode() == NULL)
+		return false;
+	return (separator->getNode() == _node);
+}
+
 SoNode* libCoin3D::ScenegraphNode::getNode()
 {
 	return _node;
