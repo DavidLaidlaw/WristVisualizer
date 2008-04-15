@@ -31,8 +31,12 @@ void libCoin3D::Separator::addFile(System::String^ filename)
 }
 void libCoin3D::Separator::addFile(System::String^ filename, bool canhide)
 {
-	
+	System::String^ shortFilename = System::IO::Path::GetFileName(filename);
+	//make shortFilename safe for coin3d
+	shortFilename = shortFilename->Replace('.', '_');
 	char* test = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename).ToPointer();
+	char* charShortFilename = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(shortFilename).ToPointer();
+
 	_style = new SoDrawStyle;
 
 	SoInput in;
@@ -42,8 +46,11 @@ void libCoin3D::Separator::addFile(System::String^ filename, bool canhide)
 			throw gcnew System::ArgumentException("Error parsing IV file: "+filename);
 		_separator->addChild(_style);
 		_separator->addChild(bone);
+		bone->setName(charShortFilename);
 	}
-	//System::Runtime::InteropServices::Marshal::FreeHGlobal(test);
+
+	System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)test);
+	System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)charShortFilename);
 }
 
 void libCoin3D::Separator::addNode(Node^ node)
