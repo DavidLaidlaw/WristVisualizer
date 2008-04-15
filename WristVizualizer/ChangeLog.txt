@@ -1,4 +1,7 @@
-Version 1.2.0
+Version 1.2.2
+- Fixed bug, so that when showing the scenegraph it tries to find the separator directly above, not starting with the second node
+
+Version 1.2.1
 - When loading an IV file, the filename is saved for the node name
 - When viewing scenegraph, it will try and highlight the separator for the currently selected node, instead of defaulting to the root node
 

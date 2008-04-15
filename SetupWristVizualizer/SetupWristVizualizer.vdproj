@@ -991,7 +991,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3027.16935, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3027.18000, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_905C4787D34F5BF898DD81B699033EE3"
@@ -1425,14 +1425,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{C8C8F875-48E5-4719-9612-E101270D3B70}"
-        "PackageCode" = "8:{57704BAC-F7C6-4F5D-84EE-B6C108FFA2C6}"
+        "ProductCode" = "8:{4840DFF4-C749-421A-8237-DDC6E80A2E97}"
+        "PackageCode" = "8:{4C94625E-FF80-435D-82A4-0D95820B542C}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.2.1"
+        "ProductVersion" = "8:1.2.2"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
