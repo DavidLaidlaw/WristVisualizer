@@ -356,7 +356,7 @@ namespace WristVizualizer
             this.decoratorToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.decoratorToolStripMenuItem.Enabled = false;
             this.decoratorToolStripMenuItem.Name = "decoratorToolStripMenuItem";
-            this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.decoratorToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.decoratorToolStripMenuItem.Text = "&Decorator";
             this.decoratorToolStripMenuItem.CheckedChanged += new System.EventHandler(this.decoratorToolStripMenuItem_CheckedChanged);
             // 
@@ -365,7 +365,7 @@ namespace WristVizualizer
             this.showInertiasToolStripMenuItem.CheckOnClick = true;
             this.showInertiasToolStripMenuItem.Enabled = false;
             this.showInertiasToolStripMenuItem.Name = "showInertiasToolStripMenuItem";
-            this.showInertiasToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.showInertiasToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.showInertiasToolStripMenuItem.Text = "Show Inertias";
             this.showInertiasToolStripMenuItem.Click += new System.EventHandler(this.showInertiasToolStripMenuItem_Click);
             // 
@@ -374,7 +374,7 @@ namespace WristVizualizer
             this.showACSToolStripMenuItem.CheckOnClick = true;
             this.showACSToolStripMenuItem.Enabled = false;
             this.showACSToolStripMenuItem.Name = "showACSToolStripMenuItem";
-            this.showACSToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.showACSToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.showACSToolStripMenuItem.Text = "Show ACS";
             this.showACSToolStripMenuItem.Click += new System.EventHandler(this.showACSToolStripMenuItem_Click);
             // 
@@ -383,7 +383,7 @@ namespace WristVizualizer
             this.showAxesToolStripMenuItem.CheckOnClick = true;
             this.showAxesToolStripMenuItem.Enabled = false;
             this.showAxesToolStripMenuItem.Name = "showAxesToolStripMenuItem";
-            this.showAxesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.showAxesToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.showAxesToolStripMenuItem.Text = "Show Axes";
             this.showAxesToolStripMenuItem.Click += new System.EventHandler(this.showAxesToolStripMenuItem_Click);
             // 
@@ -391,14 +391,15 @@ namespace WristVizualizer
             // 
             this.showScenegraphToolStripMenuItem.Enabled = false;
             this.showScenegraphToolStripMenuItem.Name = "showScenegraphToolStripMenuItem";
-            this.showScenegraphToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
-            this.showScenegraphToolStripMenuItem.Text = "Show Scenegraph...";
+            this.showScenegraphToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.G)));
+            this.showScenegraphToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.showScenegraphToolStripMenuItem.Text = "Show Scene&graph...";
             this.showScenegraphToolStripMenuItem.Click += new System.EventHandler(this.showScenegraphToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(180, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(219, 6);
             // 
             // transparencyToolStripMenuItem
             // 
@@ -414,7 +415,7 @@ namespace WristVizualizer
             this.sortedObjectSortedTriangleBlendToolStripMenuItem});
             this.transparencyToolStripMenuItem.Enabled = false;
             this.transparencyToolStripMenuItem.Name = "transparencyToolStripMenuItem";
-            this.transparencyToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.transparencyToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.transparencyToolStripMenuItem.Text = "Transparency Type";
             this.transparencyToolStripMenuItem.DropDownOpening += new System.EventHandler(this.transparencyToolStripMenuItem_DropDownOpening);
             // 
@@ -484,7 +485,7 @@ namespace WristVizualizer
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(180, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(219, 6);
             // 
             // hideErrorMessagesToolStripMenuItem
             // 
@@ -492,7 +493,7 @@ namespace WristVizualizer
             this.hideErrorMessagesToolStripMenuItem.CheckOnClick = true;
             this.hideErrorMessagesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.hideErrorMessagesToolStripMenuItem.Name = "hideErrorMessagesToolStripMenuItem";
-            this.hideErrorMessagesToolStripMenuItem.Size = new System.Drawing.Size(183, 22);
+            this.hideErrorMessagesToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.hideErrorMessagesToolStripMenuItem.Text = "Hide Error Messages";
             // 
             // helpToolStripMenuItem

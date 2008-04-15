@@ -59,8 +59,18 @@ namespace WristVizualizer
             labelErrorImageFile.Text = "";
 
             string lastSubject = RegistrySettings.getSettingString("TextureLastSubjectDirectory");
+            string lastSeries = RegistrySettings.getSettingString("TextureLastSeriesKey");
             if (lastSubject.Length > 0)
                 textBoxSubjectDirectory.Text = lastSubject;
+            //hopefully everything is loaded here, so lets check
+            if (listBoxSeries.Items.Count > 0)
+            {
+                listBoxSeries.Select();  //make this the active control
+                //highlight the last series
+                int index = listBoxSeries.Items.IndexOf(lastSeries);
+                if (index >= 0)
+                    listBoxSeries.SelectedIndex = index;
+            }
         }
 
         private void buttonBrowseImage_Click(object sender, EventArgs e)
@@ -250,6 +260,8 @@ namespace WristVizualizer
             }
             //save last Path
             RegistrySettings.saveSetting("TextureLastSubjectDirectory", textBoxSubjectDirectory.Text.Trim());
+            if (_seriesKey.Length>0)
+                RegistrySettings.saveSetting("TextureLastSeriesKey", _seriesKey);
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
@@ -603,5 +615,12 @@ namespace WristVizualizer
             get { return _subject + "_" + _seriesKey + " - " + _subjectPath; }
         }
         #endregion
+
+
+        private void listBoxSeries_DoubleClick(object sender, EventArgs e)
+        {
+            //make it so double clicking a series loads that series
+            this.buttonOK_Click(sender, null);
+        }
     }
 }

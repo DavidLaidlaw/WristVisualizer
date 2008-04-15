@@ -446,6 +446,7 @@ namespace WristVizualizer
             this.listBoxSeries.Name = "listBoxSeries";
             this.listBoxSeries.Size = new System.Drawing.Size(103, 160);
             this.listBoxSeries.TabIndex = 3;
+            this.listBoxSeries.DoubleClick += new System.EventHandler(this.listBoxSeries_DoubleClick);
             this.listBoxSeries.SelectedIndexChanged += new System.EventHandler(this.listBoxSeries_SelectedIndexChanged);
             // 
             // labelErrorSubject
