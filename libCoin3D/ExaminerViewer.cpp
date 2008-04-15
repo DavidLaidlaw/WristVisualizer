@@ -548,6 +548,21 @@ libCoin3D::Separator^ libCoin3D::ExaminerViewer::getSeparatorForSelection()
 	if (_selection==NULL || _selection->getNumSelected()!=1)
 		return nullptr;
 
+	//try and get an SoSeparator 1 above, if not, then work our way up the path
+	for (int i=0; i< _selection->getPath(0)->getLength() - 1; i++) {
+		if (_selection->getPath(0)->getNodeFromTail(i)->isOfType(SoSeparator::getClassTypeId()))
+			return gcnew Separator((SoSeparator*)_selection->getPath(0)->getNodeFromTail(i));
+	}
+
+	//no luck at all, oh well
+	return nullptr;
+}
+
+libCoin3D::Separator^ libCoin3D::ExaminerViewer::getSecondSeparatorForSelection()
+{
+	if (_selection==NULL || _selection->getNumSelected()!=1)
+		return nullptr;
+
 	//try and get an SoSeparator 2 above, if not, 1 above....I think
 	if (_selection->getPath(0)->getLength() >= 3
 		&& _selection->getPath(0)->getNodeFromTail(2)->isOfType(SoSeparator::getClassTypeId())) {

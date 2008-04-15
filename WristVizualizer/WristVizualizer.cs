@@ -793,7 +793,7 @@ namespace WristVizualizer
 
         private void calculateInertiasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Separator s = _viewer.getSeparatorForSelection();
+            Separator s = _viewer.getSecondSeparatorForSelection();
             if (s == null)
                 return;
 

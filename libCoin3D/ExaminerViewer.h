@@ -64,6 +64,7 @@ public:
 	void removeMaterialFromScene(Material^ material);
 	void disableSelection();
 	void setSelection(ScenegraphNode^ node);
+	Separator^ getSecondSeparatorForSelection();
 	Separator^ getSeparatorForSelection();
 
 	//get and set transparency rendering type
