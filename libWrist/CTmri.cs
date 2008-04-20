@@ -18,19 +18,21 @@ namespace libWrist
         private int IMAGE_OFFSET = 0;
         private double IMAGE_SCALE = 8.1568627;
 
+        private string _mriDirectory;
+
 		private int _intensityOffset=0;
 		private double _intensityScale=0;
 		private int _height;
 		private int _width;
 		private int _depth;
-		private Byte _layers;
+		private int _layers;
 		private bool _autoScale=false;
 		private double _voxelSizeX;
 		private double _voxelSizeY;
 		private double _voxelSizeZ;
 		private short[] _data;
-		private Format _format;
-		public enum Format { Sign16, USign16, Sign8, USign8 };
+		private Formats _format;
+		public enum Formats { Sign16, USign16, Sign8, USign8 };
         private short _minIntensity, _maxIntensity;
 
         //crop settings
@@ -42,7 +44,8 @@ namespace libWrist
             : this(mriDirectory, 0, 0, xmin, xmax, ymin, ymax, zmin, zmax) { }
         public CTmri(string mriDirectory, double voxelSize, double sliceThickness, int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
 		{
-			_format = Format.USign16;  //default value for now
+			_format = Formats.USign16;  //default value for now
+            _mriDirectory = mriDirectory;
 
 			readScale(mriDirectory);
 			readDimensions(mriDirectory);
@@ -51,11 +54,17 @@ namespace libWrist
 			if (sliceThickness>0) _voxelSizeZ=sliceThickness;
 
             setCrop(xmin, xmax, ymin, ymax, zmin, zmax);
-            readDataToShort(mriDirectory);
+            
+		}
+
+        public void loadImageData() { loadImageData(0); }
+        public void loadImageData(int layer)
+        {
+            readDataToShort(_mriDirectory, layer);
 
             IMAGE_OFFSET = _minIntensity;
-            IMAGE_SCALE = ((double)_maxIntensity - _minIntensity) / 255;
-		}
+            IMAGE_SCALE = 255.0 / ((double)_maxIntensity - _minIntensity);
+        }
 
 		private void readScale(string mriDirectory)
 		{
@@ -86,15 +95,16 @@ namespace libWrist
 			_width = Int32.Parse(parts[0].Trim());
 			_height = Int32.Parse(parts[1].Trim());
 			_depth = Int32.Parse(parts[2].Trim());
-			_layers = Byte.Parse(parts[3].Trim());
+			_layers = Int32.Parse(parts[3].Trim());
 			r.Close();
 		}
 
-        private void readDataToShort(string mriDirectory)
+        private void readDataToShort(string mriDirectory) { readDataToShort(mriDirectory, 0); }
+        private void readDataToShort(string mriDirectory, int echo)
         {
             _data = new short[_height * _width * _depth];
-            _minIntensity = 255;
-            _maxIntensity = 0;
+            _minIntensity = short.MaxValue;
+            _maxIntensity = short.MinValue;
 
             int startSlice = 0;
             int endSlicePlusOne = _depth; //its a normal for loop, so its 1 more because we don't read the last one
@@ -115,7 +125,8 @@ namespace libWrist
 
             for (int i = startSlice; i < endSlicePlusOne; i++)
             {
-                string sliceFilename = Path.Combine(mriDirectory, "i." + ((int)i + 1).ToString("D3"));
+                int fileNumber = i * _layers + echo + 1;
+                string sliceFilename = Path.Combine(mriDirectory, "i." + fileNumber.ToString("D3"));
                 StreamReader s = new StreamReader(sliceFilename);
                 BinaryReader r = new BinaryReader(s.BaseStream);
                                 
@@ -184,7 +195,7 @@ namespace libWrist
         public void setCrop(int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
         {
             //check for an already cropped image
-            if ((_width == xmax - xmin + 1) && (_height == ymax - ymin + 1) && (_depth == zmax - zmin + 1))
+            if ((_width <= xmax - xmin + 1) && (_height <= ymax - ymin + 1) && (_depth <= zmax - zmin + 1))
                 return; //then return, we don't actually want to crop
 
             _xmin = xmin;
@@ -216,7 +227,7 @@ namespace libWrist
                 for (int y = 0; y < sizeY; y++)
                     for (int x = 0; x < sizeX; x++)
                     {
-                        voxels[z][(x * sizeY) + y] = (Byte)((_data[(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - IMAGE_OFFSET) / IMAGE_SCALE); //scale to correct range
+                        voxels[z][(x * sizeY) + y] = (Byte)((_data[(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - IMAGE_OFFSET) * IMAGE_SCALE); //scale to correct range
                     }
             }
             return voxels;
@@ -244,7 +255,7 @@ namespace libWrist
 		public int getVoxel_s(int x, int y, int z)
 		{
 			//if 8bit
-			if (_format==Format.Sign8 || _format==Format.USign8) return _data[z*_width*_height + y*_width + x];
+			if (_format==Formats.Sign8 || _format==Formats.USign8) return _data[z*_width*_height + y*_width + x];
 
 			//if (x>= _width || y>=_height || z>=_depth) return 0;
 			//int temp = (int)((_data[z*_width*_height + y*_width + x]+1040)/8.1568627);
@@ -268,12 +279,45 @@ namespace libWrist
             
             if (x < 0 || y < 0 || z < 0 || x >= _width || y >= _height || z >= _depth) 
                 return 0;
-            return (short)((_data[z * _width * _height + y * _width + x] - IMAGE_OFFSET) / IMAGE_SCALE); //scale to correct range
+            return (short)((_data[z * _width * _height + y * _width + x] - IMAGE_OFFSET) * IMAGE_SCALE); //scale to correct range
         }
 
 		#endregion
 
 		#region Static Accessors
+
+        public int Cropped_SizeX
+        {
+            get
+            {
+                if (_xmax == 0 && _xmin == 0) //If crop value not set, I don't think I need to check them all...
+                    return _width;
+                else
+                    return _xmax - _xmin + 1;
+            }
+        }
+
+        public int Cropped_SizeY
+        {
+            get
+            {
+                if (_xmax == 0 && _xmin == 0) //If crop value not set, I don't think I need to check them all...
+                    return _height;
+                else
+                    return _ymax - _ymin + 1;
+            }
+        }
+
+        public int Cropped_SizeZ
+        {
+            get
+            {
+                if (_xmax == 0 && _xmin == 0) //If crop value not set, I don't think I need to check them all...
+                    return _depth;
+                else
+                    return _zmax - _zmin + 1;
+            }
+        }
 
 		public int width 
 		{
@@ -299,7 +343,12 @@ namespace libWrist
 			}
 		}
 
-		public Format fileFormat 
+        public int Layers
+        {
+            get { return _layers; }
+        }
+
+		public Formats fileFormat 
 		{
 			get 
 			{

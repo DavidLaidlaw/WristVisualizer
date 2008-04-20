@@ -183,15 +183,22 @@ namespace WristVizualizer
             {
                 //pass crop values now, for faster read :)
                 mri = new CTmri(textBoxImageFile.Text, _minX, _maxX, _minY, _maxY, _minZ, _maxZ);
+                if (mri.Layers == 1)  //the default case, we want to load the only layer, echo 0
+                    mri.loadImageData();
+                else //for other cases, we should try and load layer 5, the layer used by the Wrist Registration Code.
+                    mri.loadImageData(5); //TODO: Option for loading different image layers, check for at least 6, etc.
                 _LastMRI = mri;
                 _LastImagePath = textBoxImageFile.Text.Trim(); //save filename, to use in cache
             }
 
-            int sizeX = _maxX - _minX + 1;
-            int sizeY = _maxY - _minY + 1;
-            int sizeZ = _maxZ - _minZ + 1;
-
             Byte[][] voxels = mri.getCroppedRegionScaledToBytes();
+            int min = 1000;
+            int max = -10;
+            for (int i = 0; i < voxels[0].Length; i++)
+            {
+                if (voxels[0][i] < min) min = voxels[0][i];
+                if (voxels[0][i] > max) max = voxels[0][i];
+            }
 
             Hashtable transforms = null;
             if (File.Exists(textBoxKinematicFilename.Text))
@@ -224,7 +231,7 @@ namespace WristVizualizer
             }
 
             _texture = new Texture(_side == Wrist.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
-                sizeX, sizeY, sizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ);
+                mri.Cropped_SizeX, mri.Cropped_SizeY, mri.Cropped_SizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ);
             Separator plane1 = _texture.makeDragerAndTexture(voxels, Texture.Planes.XY_PLANE);
             Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
             _root.addChild(plane1);
