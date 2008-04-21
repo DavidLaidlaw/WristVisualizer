@@ -63,6 +63,12 @@
     <Compile Include="MaterialEditor.Designer.cs">
       <DependentUpon>MaterialEditor.cs</DependentUpon>
     </Compile>
+    <Compile Include="MRIViewer\MRIViewerMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MRIViewer\MRIViewerMainForm.Designer.cs">
+      <DependentUpon>MRIViewerMainForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="PointSelection.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -109,6 +115,10 @@
     <EmbeddedResource Include="MaterialEditor.resx">
       <SubType>Designer</SubType>
       <DependentUpon>MaterialEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MRIViewer\MRIViewerMainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MRIViewerMainForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PointSelection.resx">
       <SubType>Designer</SubType>

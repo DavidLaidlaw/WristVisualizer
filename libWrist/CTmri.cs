@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Text;
-//using System.Drawing;
+using System.Drawing;
 //using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 
@@ -31,6 +31,7 @@ namespace libWrist
 		private double _voxelSizeY;
 		private double _voxelSizeZ;
 		private short[] _data;
+        private Bitmap[][] _bitmaps;
 		private Formats _format;
 		public enum Formats { Sign16, USign16, Sign8, USign8 };
         private short _minIntensity, _maxIntensity;
@@ -158,16 +159,20 @@ namespace libWrist
             Console.WriteLine("Done reading");
         }
 
-        //public void deleteFrames()
-        //{
-        //    if (_bitmaps == null) return;
-        //    for (int i = 0; i < _bitmaps.Length; i++)
-        //    {
-        //        if (_bitmaps[i] != null)
-        //            _bitmaps[i].Dispose();
-        //    }
-        //    _bitmaps = null;
-        //}
+        public void deleteFrames()
+        {
+            if (_bitmaps == null) return;
+            for (int i = 0; i < _bitmaps.Length; i++)
+            {
+                for (int j = 0; j < _bitmaps[i].Length; j++)
+                {
+                    if (_bitmaps[i][j] != null)
+                        _bitmaps[i][j].Dispose();
+                }
+                _bitmaps[i] = null;
+            }
+            _bitmaps = null;
+        }
 
         private short ShortSwap(short x)
 		{
@@ -280,6 +285,12 @@ namespace libWrist
             if (x < 0 || y < 0 || z < 0 || x >= _width || y >= _height || z >= _depth) 
                 return 0;
             return (short)((_data[z * _width * _height + y * _width + x] - IMAGE_OFFSET) * IMAGE_SCALE); //scale to correct range
+        }
+
+        public Bitmap getFrame(int frame) { return getFrame(frame, 0); }
+        public Bitmap getFrame(int frame, int layer)
+        {
+            return _bitmaps[layer][frame];
         }
 
 		#endregion

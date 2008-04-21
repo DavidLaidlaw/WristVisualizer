@@ -139,6 +139,7 @@ namespace WristVizualizer
             this.numericUpDownPosViewFPS = new System.Windows.Forms.NumericUpDown();
             this.buttonPosViewStop = new System.Windows.Forms.Button();
             this.buttonPosViewPlay = new System.Windows.Forms.Button();
+            this.launchMRIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -312,7 +313,8 @@ namespace WristVizualizer
             // 
             this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pointIntersectionToolStripMenuItem,
-            this.calculateInertiasToolStripMenuItem});
+            this.calculateInertiasToolStripMenuItem,
+            this.launchMRIViewerToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.advancedToolStripMenuItem.Text = "&Advanced";
@@ -1263,6 +1265,13 @@ namespace WristVizualizer
             this.buttonPosViewPlay.Text = "Play";
             this.buttonPosViewPlay.UseVisualStyleBackColor = true;
             // 
+            // launchMRIViewerToolStripMenuItem
+            // 
+            this.launchMRIViewerToolStripMenuItem.Name = "launchMRIViewerToolStripMenuItem";
+            this.launchMRIViewerToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.launchMRIViewerToolStripMenuItem.Text = "Launch MRIViewer";
+            this.launchMRIViewerToolStripMenuItem.Click += new System.EventHandler(this.launchMRIViewerToolStripMenuItem_Click);
+            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -1279,8 +1288,8 @@ namespace WristVizualizer
             this.MinimumSize = new System.Drawing.Size(500, 429);
             this.Name = "WristVizualizer";
             this.Text = "Wrist Vizualizer";
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.Activated += new System.EventHandler(this.WristVizualizer_Activated);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -1414,6 +1423,7 @@ namespace WristVizualizer
         private System.Windows.Forms.CheckBox checkBoxPosViewLabels;
         private System.Windows.Forms.ToolStripMenuItem calculateInertiasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openTextureToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem launchMRIViewerToolStripMenuItem;
     }
 }
 

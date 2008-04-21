@@ -1127,5 +1127,11 @@ namespace WristVizualizer
                 this.Cursor = Cursors.Default;
             }
         }
+
+        private void launchMRIViewerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MRIViewer.MRIViewerMainForm viewer = new MRIViewer.MRIViewerMainForm();
+            viewer.Show();
+        }
     }
 }
