@@ -2,7 +2,7 @@ using System;
 using System.IO;
 using System.Text;
 using System.Drawing;
-//using System.Drawing.Imaging;
+using System.Drawing.Imaging;
 using System.Text.RegularExpressions;
 
 namespace libWrist
@@ -157,6 +157,45 @@ namespace libWrist
                 s.Close();
             }
             Console.WriteLine("Done reading");
+        }
+
+        private void readDataToBitmaps(string mriDirectory, int echo)
+        {
+            if (_bitmaps==null) _bitmaps = new Bitmap[_layers][];
+            _bitmaps[echo] = new Bitmap[_depth];            
+            for (int i = 0; i < _depth; i++)
+            {
+                int fileNumber = i * _layers + echo + 1;
+                string sliceFilename = Path.Combine(mriDirectory, "i." + fileNumber.ToString("D3"));
+                StreamReader s = new StreamReader(sliceFilename);
+                BinaryReader r = new BinaryReader(s.BaseStream);
+                _bitmaps[echo][i] = new Bitmap(_width, _height, PixelFormat.Format32bppArgb);
+                Bitmap im = _bitmaps[echo][i];
+                Graphics g = Graphics.FromImage(im);
+                g.FillRectangle(Brushes.Black, 0, 0, _width, _height);
+
+                BitmapData imdata = im.LockBits(new Rectangle(0, 0, _width, _height), ImageLockMode.ReadWrite, im.PixelFormat);
+
+                unsafe
+                {
+                    //for (int i=0; i<_depth; i++)
+                    for (int j = _height - 1; j >= 0; j--) //special, so we can flip about y 
+                    {
+                        byte* row = (byte*)imdata.Scan0 + (j * imdata.Stride);
+                        for (int k = 0; k < _width; k++)
+                        {
+                            int intensity = (int)(ShortSwap((short)r.ReadUInt16()) / 16.1569);
+                            row[k * 4] = (byte)intensity;
+                            row[k * 4 + 1] = (byte)intensity;
+                            row[k * 4 + 2] = (byte)intensity;
+                        }
+                    }
+                }
+
+                r.Close();
+                s.Close();
+                im.UnlockBits(imdata);
+            }
         }
 
         public void deleteFrames()
