@@ -76,10 +76,13 @@ namespace WristVizualizer.MRIViewer
              * And the rest of the code will not get run
              */
             CTmri newMri = new CTmri(filename);
+            newMri.loadBitmapData(0);
             if (_mri != null) //save memory. TODO: use dispose instead
                 _mri.deleteFrames();
             _mri = newMri; //save it, now that we know it works
             _path = filename;
+
+
             textBoxZLow.Text = "0";
             textBoxZHigh.Text = ((int)(_mri.depth - 1)).ToString();
             //updateTextDisplay();
@@ -88,6 +91,7 @@ namespace WristVizualizer.MRIViewer
             textBoxZVoxel.Text = _mri.voxelSizeZ.ToString();
 
             trackBar1.Value = 0;
+            trackBar1.Maximum = _mri.depth - 1;
             loadFrame(0);
         }
 

@@ -28,6 +28,7 @@ namespace WristVizualizer.MRIViewer
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MRIViewerMainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.textBoxXLow = new System.Windows.Forms.TextBox();
@@ -323,6 +324,7 @@ namespace WristVizualizer.MRIViewer
             this.Controls.Add(this.label8);
             this.Controls.Add(this.textBoxMRIPath);
             this.Controls.Add(this.panel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MRIViewerMainForm";
             this.Text = "MRIViewer";
             this.panel1.ResumeLayout(false);

@@ -53,6 +53,19 @@ namespace libWrist
             _imageScale = new double[_layers];
 		}
 
+        public void loadBitmapData() { loadBitmapData(0); }
+        public void loadBitmapData(int echo)
+        {
+            //this should only work for now when there are NO crop values set
+            if (_xmin != 0 || _xmax != 0 || _ymin != 0 || _ymax != 0)
+                throw new NotImplementedException("Can not yet load Bitmaps for cropped images....sorry");
+
+            //because we want to scale the data, we first need to get the min/max, etc.
+            loadImageData(echo);
+            copyDataFromShortToBitmaps(echo);
+
+        }
+
         public void loadImageData() { loadImageData(0); }
         public void loadImageData(int layer)
         {
@@ -161,7 +174,7 @@ namespace libWrist
             Console.WriteLine("Done reading");
         }
 
-        private void readDataToBitmaps(string mriDirectory, int echo)
+        private void readDataToBitmap(string mriDirectory, int echo)
         {
             _bitmaps[echo] = new Bitmap[_depth];            
             for (int i = 0; i < _depth; i++)
@@ -195,6 +208,39 @@ namespace libWrist
 
                 r.Close();
                 s.Close();
+                im.UnlockBits(imdata);
+            }
+        }
+
+        private void copyDataFromShortToBitmaps(int echo)
+        {
+            if (echo >= _layers || _data[echo] == null)
+                throw new ArgumentException("Can not copy image from non existant data later");
+
+            _bitmaps[echo] = new Bitmap[_depth];
+            for (int i = 0; i < _depth; i++)
+            {
+                _bitmaps[echo][i] = new Bitmap(_width, _height, PixelFormat.Format32bppArgb);
+                Bitmap im = _bitmaps[echo][i];
+                Graphics g = Graphics.FromImage(im);
+                g.FillRectangle(Brushes.Black, 0, 0, _width, _height);
+
+                BitmapData imdata = im.LockBits(new Rectangle(0, 0, _width, _height), ImageLockMode.ReadWrite, im.PixelFormat);
+                unsafe
+                {
+                    //for (int j = _height - 1; j >= 0; j--) //special, so we can flip about y 
+                    for (int j = 0; j < _height; j++) //special, so we can flip about y 
+                    {
+                        byte* row = (byte*)imdata.Scan0 + ((_height-j-1) * imdata.Stride);
+                        for (int k = 0; k < _width; k++)
+                        {
+                            byte intensity = (byte)((_data[echo][i * _width * _height + j * _width + k] - _imageOffset[echo]) * _imageScale[echo]);
+                            row[k * 4] = intensity;
+                            row[k * 4 + 1] = intensity;
+                            row[k * 4 + 2] = intensity;
+                        }
+                    }
+                }
                 im.UnlockBits(imdata);
             }
         }
