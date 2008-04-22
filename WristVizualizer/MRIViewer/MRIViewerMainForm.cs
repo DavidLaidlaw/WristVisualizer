@@ -19,6 +19,9 @@ namespace WristVizualizer.MRIViewer
         {
             InitializeComponent();
 
+            //load last saved image
+            textBoxMRIPath.Text = RegistrySettings.getSettingString("TextureLastMRIImage");
+
             Bitmap bmp = new Bitmap(512, 512);
             Graphics g = Graphics.FromImage(bmp);
             g.FillRectangle(Brushes.Black, 0, 0, 512, 512);
@@ -83,7 +86,7 @@ namespace WristVizualizer.MRIViewer
                 _mri.deleteFrames();
             _mri = newMri; //save it, now that we know it works
             _path = filename;
-
+            RegistrySettings.saveSetting("TextureLastMRIImage", filename);
 
             textBoxXSize.Text = _mri.width.ToString();
             textBoxYSize.Text = _mri.height.ToString();
@@ -117,10 +120,30 @@ namespace WristVizualizer.MRIViewer
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             int z = trackBar1.Value;
-
+            int x = 0, y = 0;
             //lets convert x & y to their real pixel value....
-            int x = (int)((double)e.X * _mri.width / pictureBox1.Width);
-            int y = _mri.height - (int)((double)e.Y * _mri.height / pictureBox1.Height) - 1; //need to flip Y coordinate
+            if (radioButtonNoZoom.Checked)
+            {
+                //check if we are outside the picture
+                if (e.X >= _mri.width || e.Y >= _mri.height)
+                {
+                    pictureBox1_MouseLeave(this, null);
+                    return;
+                }
+                x = e.X;
+                y = _mri.height - e.Y - 1; //flip y coord
+            }
+            else if (radioButtonZoomStrech.Checked)
+            {
+                x = (int)((double)e.X * _mri.width / pictureBox1.Width);
+                y = _mri.height - (int)((double)e.Y * _mri.height / pictureBox1.Height) - 1; //need to flip Y coordinate
+            }
+            else if (radioButtonZoomZoom.Checked)
+            {
+                //TODO: don't know how to figure out the margin for the....so nothing to do
+                throw new NotImplementedException("Can't yet have a scaled zoom for images");
+            }
+            
             textBoxX.Text = x.ToString();
             textBoxY.Text = y.ToString();
             textBoxZ.Text = z.ToString();
@@ -136,6 +159,16 @@ namespace WristVizualizer.MRIViewer
             textBoxIntensity.Clear();
             textBoxIntensityScaled.Clear();
             textBoxIntensitySigned.Clear();
+        }
+
+        private void radioButtonZoom_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButtonNoZoom.Checked)
+                pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
+            else if (radioButtonZoomStrech.Checked)
+                pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
+            else if (radioButtonZoomZoom.Checked)
+                pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
         }
     }
 }
