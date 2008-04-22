@@ -15,8 +15,8 @@ namespace libWrist
 		private const string RESOLUTION = "resolution";
 		private const string VSIZE = "vsize";
 
-        private int IMAGE_OFFSET = 0;
-        private double IMAGE_SCALE = 8.1568627;
+        private int _imageOffset = 0;
+        private double _imageScale = 8.1568627;
 
         private string _mriDirectory;
 
@@ -39,35 +39,32 @@ namespace libWrist
         //crop settings
         private int _xmin, _xmax, _ymin, _ymax, _zmin, _zmax;
 
-        public CTmri(string mriDirectory) : this(mriDirectory, 0, 0, 0, 0, 0, 0, 0, 0) { }
-        public CTmri(string mriDirectory, double voxelSize) : this(mriDirectory, voxelSize, 0, 0, 0, 0, 0, 0, 0) { }
-        public CTmri(string mriDirectory, int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
-            : this(mriDirectory, 0, 0, xmin, xmax, ymin, ymax, zmin, zmax) { }
-        public CTmri(string mriDirectory, double voxelSize, double sliceThickness, int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
+        public CTmri(string mriDirectory)
 		{
-			_format = Formats.USign16;  //default value for now
+			_format = Formats.USign16;  //default value for now. According to dhl, that is the only format that MRI images come in....
             _mriDirectory = mriDirectory;
 
-			readScale(mriDirectory);
+			readVoxelSize(mriDirectory);
 			readDimensions(mriDirectory);
-
-			if (voxelSize>0) _voxelSizeX=_voxelSizeY=voxelSize;
-			if (sliceThickness>0) _voxelSizeZ=sliceThickness;
-
-            setCrop(xmin, xmax, ymin, ymax, zmin, zmax);
-            
 		}
 
         public void loadImageData() { loadImageData(0); }
         public void loadImageData(int layer)
         {
             readDataToShort(_mriDirectory, layer);
-
-            IMAGE_OFFSET = _minIntensity;
-            IMAGE_SCALE = 255.0 / ((double)_maxIntensity - _minIntensity);
+            calculateOffsetAndScaleFromMinMax();
         }
 
-		private void readScale(string mriDirectory)
+        private void calculateOffsetAndScaleFromMinMax()
+        {
+            _imageOffset = _minIntensity;
+            _imageScale = 255.0 / ((double)_maxIntensity - _minIntensity);
+        }
+
+        [Obsolete("Replaced by readVoxelSize(string mriDirectory) for clarity in function name")]
+        private void readScale(string mriDirectory) { readVoxelSize(mriDirectory); }
+
+		private void readVoxelSize(string mriDirectory)
 		{
 			string vsizeFile = Path.Combine(mriDirectory,VSIZE);
 			if (!File.Exists(vsizeFile)) 
@@ -271,7 +268,7 @@ namespace libWrist
                 for (int y = 0; y < sizeY; y++)
                     for (int x = 0; x < sizeX; x++)
                     {
-                        voxels[z][(x * sizeY) + y] = (Byte)((_data[(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - IMAGE_OFFSET) * IMAGE_SCALE); //scale to correct range
+                        voxels[z][(x * sizeY) + y] = (Byte)((_data[(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - _imageOffset) * _imageScale); //scale to correct range
                     }
             }
             return voxels;
@@ -290,7 +287,7 @@ namespace libWrist
 		/// <param name="y"></param>
 		/// <param name="z"></param>
 		/// <returns></returns>
-		public int getVoxel(int x, int y, int z) 
+		public short getVoxel(int x, int y, int z) 
 		{
 			//y = _height - 1 - y; //flip about the y axis - lets do it when we load
 			return _data[z*_width*_height + y*_width + x];
@@ -323,7 +320,7 @@ namespace libWrist
             
             if (x < 0 || y < 0 || z < 0 || x >= _width || y >= _height || z >= _depth) 
                 return 0;
-            return (short)((_data[z * _width * _height + y * _width + x] - IMAGE_OFFSET) * IMAGE_SCALE); //scale to correct range
+            return (short)((_data[z * _width * _height + y * _width + x] - _imageOffset) * _imageScale); //scale to correct range
         }
 
         public Bitmap getFrame(int frame) { return getFrame(frame, 0); }

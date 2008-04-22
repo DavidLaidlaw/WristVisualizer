@@ -182,7 +182,8 @@ namespace WristVizualizer
             else
             {
                 //pass crop values now, for faster read :)
-                mri = new CTmri(textBoxImageFile.Text, _minX, _maxX, _minY, _maxY, _minZ, _maxZ);
+                mri = new CTmri(textBoxImageFile.Text);
+                mri.setCrop(_minX, _maxX, _minY, _maxY, _minZ, _maxZ);
                 if (mri.Layers == 1)  //the default case, we want to load the only layer, echo 0
                     mri.loadImageData();
                 else //for other cases, we should try and load layer 5, the layer used by the Wrist Registration Code.
