@@ -33,11 +33,6 @@ namespace libWrist
                 {
                     transforms[i][j] = new Transform();
                     addRTtoTransform(tfm[j], transforms[i][j]);
-                    /*
-                    transforms[i][j].setTransform(tfm[j].R.Array[0][0], tfm[j].R.Array[0][1], tfm[j].R.Array[0][2],
-                        tfm[j].R.Array[1][0], tfm[j].R.Array[1][1], tfm[j].R.Array[1][2],
-                        tfm[j].R.Array[2][0], tfm[j].R.Array[2][1], tfm[j].R.Array[2][2],
-                        tfm[j].T.Array[0][0], tfm[j].T.Array[0][1], tfm[j].T.Array[0][2]); */
                 }
             }
             return transforms;
@@ -227,6 +222,65 @@ namespace libWrist
             {
                 if (dat[i].Length != 8)
                     throw new ArgumentException("Each row of the PosView HAM files should have 8 elements. (Line: " + i.ToString() + ")");
+            }
+            return dat;
+        }
+
+        public static TransformRT[] parseRTFileWithHeaderToRT(string filename)
+        {
+            double[][] dat = parseRTFileWithHeaderToDouble(filename);
+            int numTransforms = (int)dat.Length / 4;
+            TransformRT[] transforms = new TransformRT[numTransforms];
+            for (int i = 0; i < numTransforms; i++)
+            {
+                transforms[i] = new TransformRT();
+                double[][] tempR = { dat[i * 4], dat[i * 4 + 1], dat[i * 4 + 2] };
+                transforms[i].R = new GeneralMatrix(tempR, 3, 3);
+                transforms[i].T = new GeneralMatrix(dat[i * 4 + 3], 1);
+            }
+            return transforms;
+        }
+
+        public static double[][] parseRTFileWithHeaderToDouble(string filename)
+        {
+            if (!File.Exists(filename))
+                throw new ArgumentException("File does not exist. (" + filename + ")");
+
+            double[][] dat;
+            int positions;
+
+            using (StreamReader r = new StreamReader(filename))
+            {
+                string header = r.ReadLine();
+                positions = Int32.Parse(header);
+                dat = parseDatFile(r);
+            } 
+            //now lets validate the dat size.
+            if (dat.Length != positions * 4)
+                throw new ArgumentException(String.Format("Invalid RT file with header. Positions defined in header ({0}) does not correlate with lines in file ({1})", positions, dat.Length));
+            for (int i = 0; i < dat.Length; i++)
+            {
+                if (dat[i].Length != 3)
+                    throw new ArgumentException("Each row of the RT file w/header should have 3 elements. (Line: " + i.ToString() + ")");
+            }
+            return dat;
+        }
+
+        public static uint[][] parseDistvColorFile(string filename, int numPositions, int numVertices)
+        {
+            if (!File.Exists(filename))
+                throw new ArgumentException("File does not exist. (" + filename + ")");
+            uint[][] dat = new uint[numPositions][];
+
+            using (StreamReader sr = new StreamReader(filename))
+            {
+                BinaryReader r = new BinaryReader(sr.BaseStream);
+                for (int i = 0; i < numPositions; i++)
+                {
+                    dat[i] = new uint[numVertices];
+                    for (int j=0; j<numVertices; j++)
+                        dat[i][j] = r.ReadUInt32();
+                }
             }
             return dat;
         }
