@@ -31,6 +31,7 @@ namespace WristVizualizer.MRIViewer
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MRIViewerMainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.numericUpDownZoomFactor = new System.Windows.Forms.NumericUpDown();
             this.radioButtonZoomStrech = new System.Windows.Forms.RadioButton();
             this.radioButtonZoomZoom = new System.Windows.Forms.RadioButton();
             this.radioButtonNoZoom = new System.Windows.Forms.RadioButton();
@@ -73,8 +74,10 @@ namespace WristVizualizer.MRIViewer
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxMRIPath = new System.Windows.Forms.TextBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoomFactor)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLayer)).BeginInit();
             this.groupBox2.SuspendLayout();
@@ -104,6 +107,8 @@ namespace WristVizualizer.MRIViewer
             // groupBox3
             // 
             this.groupBox3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox3.Controls.Add(this.label16);
+            this.groupBox3.Controls.Add(this.numericUpDownZoomFactor);
             this.groupBox3.Controls.Add(this.radioButtonZoomStrech);
             this.groupBox3.Controls.Add(this.radioButtonZoomZoom);
             this.groupBox3.Controls.Add(this.radioButtonNoZoom);
@@ -113,6 +118,30 @@ namespace WristVizualizer.MRIViewer
             this.groupBox3.TabIndex = 25;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "View Mode";
+            // 
+            // numericUpDownZoomFactor
+            // 
+            this.numericUpDownZoomFactor.Enabled = false;
+            this.numericUpDownZoomFactor.Location = new System.Drawing.Point(111, 16);
+            this.numericUpDownZoomFactor.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownZoomFactor.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownZoomFactor.Name = "numericUpDownZoomFactor";
+            this.numericUpDownZoomFactor.Size = new System.Drawing.Size(35, 20);
+            this.numericUpDownZoomFactor.TabIndex = 27;
+            this.numericUpDownZoomFactor.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownZoomFactor.ValueChanged += new System.EventHandler(this.numericUpDownZoomFactor_ValueChanged);
             // 
             // radioButtonZoomStrech
             // 
@@ -531,6 +560,15 @@ namespace WristVizualizer.MRIViewer
             this.textBoxMRIPath.Size = new System.Drawing.Size(452, 20);
             this.textBoxMRIPath.TabIndex = 5;
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(147, 20);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(14, 13);
+            this.label16.TabIndex = 27;
+            this.label16.Text = "X";
+            // 
             // MRIViewerMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -548,6 +586,7 @@ namespace WristVizualizer.MRIViewer
             this.panel1.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoomFactor)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownLayer)).EndInit();
@@ -606,5 +645,7 @@ namespace WristVizualizer.MRIViewer
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.RadioButton radioButtonZoomStrech;
         private System.Windows.Forms.RadioButton radioButtonZoomZoom;
+        private System.Windows.Forms.NumericUpDown numericUpDownZoomFactor;
+        private System.Windows.Forms.Label label16;
     }
 }

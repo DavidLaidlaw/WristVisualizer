@@ -26,7 +26,6 @@ namespace WristVizualizer.MRIViewer
             Graphics g = Graphics.FromImage(bmp);
             g.FillRectangle(Brushes.Black, 0, 0, 512, 512);
             pictureBox1.Image = bmp;
-            //pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
@@ -67,7 +66,7 @@ namespace WristVizualizer.MRIViewer
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             textBoxSlice.Text = trackBar1.Value.ToString();
-            loadFrame(trackBar1.Value);
+            loadFrame();
         }
 
         /// <summary>
@@ -102,19 +101,32 @@ namespace WristVizualizer.MRIViewer
 
             trackBar1.Value = 0;
             trackBar1.Maximum = _mri.depth - 1;
-            loadFrame(0);
+            loadFrame();
         }
 
-        private void loadFrame(int slice)
+        private void loadFrame()
         {
+            int slice = trackBar1.Value;
             int echo = (int)numericUpDownLayer.Value;
             _frame = (Bitmap)_mri.getFrame(slice,echo).Clone();
+
+            //check for scaling....
+            if (radioButtonNoZoom.Checked && numericUpDownZoomFactor.Value > 1)
+            {
+                int scale = (int)numericUpDownZoomFactor.Value;
+                Bitmap scaledImage = new Bitmap(_frame.Width * scale, _frame.Height * scale);
+                Graphics gr = Graphics.FromImage(scaledImage);
+                gr.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                gr.DrawImage(_frame, 0, 0, scaledImage.Width, scaledImage.Height);
+                //Do I need to dispose of the graphics object...? not certain
+                _frame = scaledImage; 
+            }
             pictureBox1.Image = _frame;
         }
 
         private void numericUpDownLayer_ValueChanged(object sender, EventArgs e)
         {
-            loadFrame(trackBar1.Value);
+            loadFrame();
         }
 
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
@@ -124,14 +136,15 @@ namespace WristVizualizer.MRIViewer
             //lets convert x & y to their real pixel value....
             if (radioButtonNoZoom.Checked)
             {
+                int scale = (int)numericUpDownZoomFactor.Value;
                 //check if we are outside the picture
-                if (e.X >= _mri.width || e.Y >= _mri.height)
+                if (e.X >= _mri.width*scale || e.Y >= _mri.height*scale)
                 {
                     pictureBox1_MouseLeave(this, null);
                     return;
                 }
-                x = e.X;
-                y = _mri.height - e.Y - 1; //flip y coord
+                x = e.X/scale;
+                y = _mri.height - (e.Y/scale) - 1; //flip y coord
             }
             else if (radioButtonZoomStrech.Checked)
             {
@@ -163,12 +176,23 @@ namespace WristVizualizer.MRIViewer
 
         private void radioButtonZoom_CheckedChanged(object sender, EventArgs e)
         {
+            numericUpDownZoomFactor.Enabled = false;
             if (radioButtonNoZoom.Checked)
+            {
                 pictureBox1.SizeMode = PictureBoxSizeMode.Normal;
+                numericUpDownZoomFactor.Enabled = true;
+            }
             else if (radioButtonZoomStrech.Checked)
                 pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             else if (radioButtonZoomZoom.Checked)
                 pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+
+            loadFrame(); //refresh on screen
+        }
+
+        private void numericUpDownZoomFactor_ValueChanged(object sender, EventArgs e)
+        {
+            loadFrame();
         }
     }
 }
