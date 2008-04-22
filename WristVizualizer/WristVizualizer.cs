@@ -167,6 +167,11 @@ namespace WristVizualizer
         }
         #endregion
 
+        private void resetExaminerViewer()
+        {
+            _viewer.setBackgroundColor(0f, 0f, 0f);
+        }
+
         private void resetForm()
         {
             this.Text = Application.ProductName;
@@ -211,6 +216,8 @@ namespace WristVizualizer
                 _fixRadios[i].Enabled = true;
             }
             radioButtonFixedRad.Checked = true;
+
+            resetExaminerViewer();
         }
 
 

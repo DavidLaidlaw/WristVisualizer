@@ -1,3 +1,8 @@
+Version 1.2.3
+- Fixed bug. When loading new scene, force background to black.
+- Fixed bug. Removed warning when loading filename with space in it.
+- New Feature: MRIViewer. Pretty cool I say.
+
 Version 1.2.2
 - Fixed bug, so that when showing the scenegraph it tries to find the separator directly above, not starting with the second node
 
