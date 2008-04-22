@@ -14,27 +14,24 @@ namespace libWrist
 	{
 		private const string RESOLUTION = "resolution";
 		private const string VSIZE = "vsize";
-
-        private int _imageOffset = 0;
-        private double _imageScale = 8.1568627;
-
+        
         private string _mriDirectory;
 
-		private int _intensityOffset=0;
-		private double _intensityScale=0;
+        private short[] _minIntensity, _maxIntensity;
+        private int[] _imageOffset;
+        private double[] _imageScale;
+
 		private int _height;
 		private int _width;
 		private int _depth;
 		private int _layers;
-		private bool _autoScale=false;
 		private double _voxelSizeX;
 		private double _voxelSizeY;
 		private double _voxelSizeZ;
-		private short[] _data;
+		private short[][] _data;
         private Bitmap[][] _bitmaps;
 		private Formats _format;
 		public enum Formats { Sign16, USign16, Sign8, USign8 };
-        private short _minIntensity, _maxIntensity;
 
         //crop settings
         private int _xmin, _xmax, _ymin, _ymax, _zmin, _zmax;
@@ -46,19 +43,27 @@ namespace libWrist
 
 			readVoxelSize(mriDirectory);
 			readDimensions(mriDirectory);
+
+            //setup the data storage locations
+            _data = new short[_layers][];
+            _bitmaps = new Bitmap[_layers][];
+            _minIntensity = new short[_layers];
+            _maxIntensity = new short[_layers];
+            _imageOffset = new int[_layers];
+            _imageScale = new double[_layers];
 		}
 
         public void loadImageData() { loadImageData(0); }
         public void loadImageData(int layer)
         {
             readDataToShort(_mriDirectory, layer);
-            calculateOffsetAndScaleFromMinMax();
+            calculateOffsetAndScaleFromMinMax(layer);
         }
 
-        private void calculateOffsetAndScaleFromMinMax()
+        private void calculateOffsetAndScaleFromMinMax(int echo)
         {
-            _imageOffset = _minIntensity;
-            _imageScale = 255.0 / ((double)_maxIntensity - _minIntensity);
+            _imageOffset[echo] = _minIntensity[echo];
+            _imageScale[echo] = 255.0 / ((double)_maxIntensity[echo] - _minIntensity[echo]);
         }
 
         [Obsolete("Replaced by readVoxelSize(string mriDirectory) for clarity in function name")]
@@ -100,9 +105,9 @@ namespace libWrist
         private void readDataToShort(string mriDirectory) { readDataToShort(mriDirectory, 0); }
         private void readDataToShort(string mriDirectory, int echo)
         {
-            _data = new short[_height * _width * _depth];
-            _minIntensity = short.MaxValue;
-            _maxIntensity = short.MinValue;
+            _data[echo] = new short[_height * _width * _depth];
+            _minIntensity[echo] = short.MaxValue;
+            _maxIntensity[echo] = short.MinValue;
 
             int startSlice = 0;
             int endSlicePlusOne = _depth; //its a normal for loop, so its 1 more because we don't read the last one
@@ -143,11 +148,11 @@ namespace libWrist
 
                 for (int j = startIndex; j < endIndexPlusOne; j++)
                 {
-                    _data[(i * _width * _height) + j] = ShortSwap((short)r.ReadUInt16());
-                    if (_data[(i * _width * _height) + j] < _minIntensity)
-                        _minIntensity = _data[(i * _width * _height) + j];
-                    if (_data[(i * _width * _height) + j] > _maxIntensity)
-                        _maxIntensity = _data[(i * _width * _height) + j];
+                    _data[echo][(i * _width * _height) + j] = ShortSwap((short)r.ReadUInt16());
+                    if (_data[echo][(i * _width * _height) + j] < _minIntensity[echo])
+                        _minIntensity[echo] = _data[echo][(i * _width * _height) + j];
+                    if (_data[echo][(i * _width * _height) + j] > _maxIntensity[echo])
+                        _maxIntensity[echo] = _data[echo][(i * _width * _height) + j];
                 }
 
                 r.Close();
@@ -158,7 +163,6 @@ namespace libWrist
 
         private void readDataToBitmaps(string mriDirectory, int echo)
         {
-            if (_bitmaps==null) _bitmaps = new Bitmap[_layers][];
             _bitmaps[echo] = new Bitmap[_depth];            
             for (int i = 0; i < _depth; i++)
             {
@@ -200,6 +204,7 @@ namespace libWrist
             if (_bitmaps == null) return;
             for (int i = 0; i < _bitmaps.Length; i++)
             {
+                if (_bitmaps[i] == null) continue;
                 for (int j = 0; j < _bitmaps[i].Length; j++)
                 {
                     if (_bitmaps[i][j] != null)
@@ -219,20 +224,6 @@ namespace libWrist
 			return d;
 		}
 
-		private void findInensityScale(short[] data) 
-		{
-			int min=0, max=0;
-			for (int i=0; i<data.Length; i++) 
-			{
-				if (data[i]<min) min=data[i];
-				if (data[i]>max) max=data[i];
-			}
-			System.Console.WriteLine("Min: "+min.ToString());
-			System.Console.WriteLine("Max: "+max.ToString());
-			_intensityOffset=-min;
-			_intensityScale = (max-min)/255.0;
-		}
-
         public void setCrop(int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
         {
             //check for an already cropped image
@@ -249,7 +240,8 @@ namespace libWrist
 
 		#region Accessors for Volume Data
 
-        public Byte[][] getCroppedRegionScaledToBytes()
+        public Byte[][] getCroppedRegionScaledToBytes() { return getCroppedRegionScaledToBytes(0); }
+        public Byte[][] getCroppedRegionScaledToBytes(int echo)
         {
             int sizeX = _xmax - _xmin + 1;
             int sizeY = _ymax - _ymin + 1;
@@ -260,6 +252,8 @@ namespace libWrist
                 sizeY = _height;
                 sizeZ = _depth;
             }
+            int offset = _imageOffset[echo];
+            double scale = _imageScale[echo];
             //lets build an array of bytes (unsigned 8bit data structure)
             Byte[][] voxels = new Byte[sizeZ][];
             for (int z = 0; z < sizeZ; z++)  // Z coordinate
@@ -268,17 +262,11 @@ namespace libWrist
                 for (int y = 0; y < sizeY; y++)
                     for (int x = 0; x < sizeX; x++)
                     {
-                        voxels[z][(x * sizeY) + y] = (Byte)((_data[(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - _imageOffset) * _imageScale); //scale to correct range
+                        voxels[z][(x * sizeY) + y] = (Byte)((_data[echo][(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - offset) * scale); //scale to correct range
                     }
             }
             return voxels;
         }
-
-		public int getVoxel_a(int x, int y, int z)
-		{
-			if (_autoScale) return getVoxel_s(x,y,z);
-			else return getVoxel(x,y,z);
-		}
 
 		/// <summary>
 		/// returns the raw data, no checks, nothing
@@ -287,46 +275,38 @@ namespace libWrist
 		/// <param name="y"></param>
 		/// <param name="z"></param>
 		/// <returns></returns>
-		public short getVoxel(int x, int y, int z) 
+		public short getVoxel(int x, int y, int z, int echo) 
 		{
 			//y = _height - 1 - y; //flip about the y axis - lets do it when we load
-			return _data[z*_width*_height + y*_width + x];
+			return _data[echo][z*_width*_height + y*_width + x];
 		}
 
-		public int getVoxel_s(int x, int y, int z)
+		public int getVoxel_s(int x, int y, int z, int echo)
 		{
 			//if 8bit
-			if (_format==Formats.Sign8 || _format==Formats.USign8) return _data[z*_width*_height + y*_width + x];
+			if (_format==Formats.Sign8 || _format==Formats.USign8) return _data[echo][z*_width*_height + y*_width + x];
 
 			//if (x>= _width || y>=_height || z>=_depth) return 0;
 			//int temp = (int)((_data[z*_width*_height + y*_width + x]+1040)/8.1568627);
-			int temp = (int)((_data[z*_width*_height + y*_width + x]+_intensityOffset)/_intensityScale);
+            int temp = (int)((_data[echo][z * _width * _height + y * _width + x] - _imageOffset[echo]) * _imageScale[echo]);
 			return Math.Min(temp,255);
 		}
 
-        public short getCroppedVoxel(int x, int y, int z)
+        public short getCroppedVoxel(int x, int y, int z, int echo)
         {
             if (_data == null) return 0;
-            int temp = x;
-            //x = _ydim - y - _ymin;
-            //y = temp + _xmin;
             x += _xmin;
             y += _ymin;
             z += _zmin;
-
-            //x += _xmin;
-            //y += _ymin;
-            //y = _ydim - _ymin - y;
-            
             if (x < 0 || y < 0 || z < 0 || x >= _width || y >= _height || z >= _depth) 
                 return 0;
-            return (short)((_data[z * _width * _height + y * _width + x] - _imageOffset) * _imageScale); //scale to correct range
+            return (short)((_data[echo][z * _width * _height + y * _width + x] - _imageOffset[echo]) * _imageScale[echo]); //scale to correct range
         }
 
         public Bitmap getFrame(int frame) { return getFrame(frame, 0); }
-        public Bitmap getFrame(int frame, int layer)
+        public Bitmap getFrame(int frame, int echo)
         {
-            return _bitmaps[layer][frame];
+            return _bitmaps[echo][frame];
         }
 
 		#endregion
@@ -420,19 +400,6 @@ namespace libWrist
         {
             get { return _voxelSizeY; }
         }
-
-		public bool autoScale
-		{
-			get 
-			{
-				return _autoScale;
-			}
-			set
-			{
-				_autoScale = value;
-			}
-		}
-
 		#endregion
 	}
 }
