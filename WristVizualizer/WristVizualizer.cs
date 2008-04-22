@@ -65,7 +65,13 @@ namespace WristVizualizer
             manager.checkForUpdatesAsynch(); //check for updates in the backround
 
             //if we were passed something
-            if (fileArgs != null && fileArgs.Length >= 1)
+            if (fileArgs != null && fileArgs.Length == 1 &&
+                Path.GetExtension(fileArgs[0]).ToLower().Equals("pos"))
+            {
+                //check for being passed a single pos view file
+                loadPosView(fileArgs[0]);
+            }
+            else if (fileArgs != null && fileArgs.Length >= 1)
             {
                 openFile(fileArgs);
             }
