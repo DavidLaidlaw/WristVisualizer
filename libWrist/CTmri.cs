@@ -53,6 +53,12 @@ namespace libWrist
             _imageScale = new double[_layers];
 		}
 
+        public void loadBitmapDataAllLayers()
+        {
+            for (int i = 0; i < _layers; i++)
+                loadBitmapData(i);
+        }
+
         public void loadBitmapData() { loadBitmapData(0); }
         public void loadBitmapData(int echo)
         {

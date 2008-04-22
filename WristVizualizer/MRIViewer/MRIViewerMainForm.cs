@@ -23,6 +23,8 @@ namespace WristVizualizer.MRIViewer
             Graphics g = Graphics.FromImage(bmp);
             g.FillRectangle(Brushes.Black, 0, 0, 512, 512);
             pictureBox1.Image = bmp;
+            //pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
         }
 
         private void buttonBrowse_Click(object sender, EventArgs e)
@@ -76,19 +78,24 @@ namespace WristVizualizer.MRIViewer
              * And the rest of the code will not get run
              */
             CTmri newMri = new CTmri(filename);
-            newMri.loadBitmapData(0);
+            newMri.loadBitmapDataAllLayers();
             if (_mri != null) //save memory. TODO: use dispose instead
                 _mri.deleteFrames();
             _mri = newMri; //save it, now that we know it works
             _path = filename;
 
 
-            textBoxZLow.Text = "0";
-            textBoxZHigh.Text = ((int)(_mri.depth - 1)).ToString();
-            //updateTextDisplay();
+            textBoxXSize.Text = _mri.width.ToString();
+            textBoxYSize.Text = _mri.height.ToString();
+            textBoxZSize.Text = _mri.depth.ToString();
             textBoxXVoxel.Text = _mri.voxelSizeX.ToString();
             textBoxYVoxel.Text = _mri.voxelSizeY.ToString();
             textBoxZVoxel.Text = _mri.voxelSizeZ.ToString();
+            textBoxLayersSize.Text = _mri.Layers.ToString();
+
+            numericUpDownLayer.Minimum = 0;
+            numericUpDownLayer.Maximum = _mri.Layers - 1;
+            numericUpDownLayer.Value = 0;
 
             trackBar1.Value = 0;
             trackBar1.Maximum = _mri.depth - 1;
@@ -97,8 +104,38 @@ namespace WristVizualizer.MRIViewer
 
         private void loadFrame(int slice)
         {
-            _frame = (Bitmap)_mri.getFrame(slice).Clone();
+            int echo = (int)numericUpDownLayer.Value;
+            _frame = (Bitmap)_mri.getFrame(slice,echo).Clone();
             pictureBox1.Image = _frame;
+        }
+
+        private void numericUpDownLayer_ValueChanged(object sender, EventArgs e)
+        {
+            loadFrame(trackBar1.Value);
+        }
+
+        private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
+        {
+            int z = trackBar1.Value;
+
+            //lets convert x & y to their real pixel value....
+            int x = (int)((double)e.X * _mri.width / pictureBox1.Width);
+            int y = _mri.height - (int)((double)e.Y * _mri.height / pictureBox1.Height) - 1; //need to flip Y coordinate
+            textBoxX.Text = x.ToString();
+            textBoxY.Text = y.ToString();
+            textBoxZ.Text = z.ToString();
+            textBoxIntensity.Text = _mri.getVoxel(x, y, z, (int)numericUpDownLayer.Value).ToString();
+            textBoxIntensityScaled.Text = _mri.getVoxel_s(x, y, z, (int)numericUpDownLayer.Value).ToString();
+        }
+
+        private void pictureBox1_MouseLeave(object sender, EventArgs e)
+        {
+            textBoxX.Clear();
+            textBoxY.Clear();
+            textBoxZ.Clear();
+            textBoxIntensity.Clear();
+            textBoxIntensityScaled.Clear();
+            textBoxIntensitySigned.Clear();
         }
     }
 }
