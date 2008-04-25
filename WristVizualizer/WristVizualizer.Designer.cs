@@ -51,6 +51,7 @@ namespace WristVizualizer
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointIntersectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.launchMRIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -130,22 +131,10 @@ namespace WristVizualizer
             this.label16 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panelPosView = new System.Windows.Forms.Panel();
-            this.checkBoxPosViewLabels = new System.Windows.Forms.CheckBox();
-            this.checkBoxPosViewOverrideMaterial = new System.Windows.Forms.CheckBox();
-            this.checkBoxPosViewShowAxes = new System.Windows.Forms.CheckBox();
-            this.trackBarPosViewCurrentFrame = new System.Windows.Forms.TrackBar();
-            this.label19 = new System.Windows.Forms.Label();
-            this.numericUpDownPosViewFPS = new System.Windows.Forms.NumericUpDown();
-            this.buttonPosViewStop = new System.Windows.Forms.Button();
-            this.buttonPosViewPlay = new System.Windows.Forms.Button();
-            this.launchMRIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelPosView = new PosViewControl();
             this.menuStrip1.SuspendLayout();
             this.panelControl.SuspendLayout();
             this.statusStrip1.SuspendLayout();
-            this.panelPosView.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPosViewCurrentFrame)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPosViewFPS)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -334,6 +323,13 @@ namespace WristVizualizer
             this.calculateInertiasToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.calculateInertiasToolStripMenuItem.Text = "Calculate Inertias";
             this.calculateInertiasToolStripMenuItem.Click += new System.EventHandler(this.calculateInertiasToolStripMenuItem_Click);
+            // 
+            // launchMRIViewerToolStripMenuItem
+            // 
+            this.launchMRIViewerToolStripMenuItem.Name = "launchMRIViewerToolStripMenuItem";
+            this.launchMRIViewerToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.launchMRIViewerToolStripMenuItem.Text = "Launch MRIViewer";
+            this.launchMRIViewerToolStripMenuItem.Click += new System.EventHandler(this.launchMRIViewerToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -1174,103 +1170,11 @@ namespace WristVizualizer
             // panelPosView
             // 
             this.panelPosView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPosView.Controls.Add(this.checkBoxPosViewLabels);
-            this.panelPosView.Controls.Add(this.checkBoxPosViewOverrideMaterial);
-            this.panelPosView.Controls.Add(this.checkBoxPosViewShowAxes);
-            this.panelPosView.Controls.Add(this.trackBarPosViewCurrentFrame);
-            this.panelPosView.Controls.Add(this.label19);
-            this.panelPosView.Controls.Add(this.numericUpDownPosViewFPS);
-            this.panelPosView.Controls.Add(this.buttonPosViewStop);
-            this.panelPosView.Controls.Add(this.buttonPosViewPlay);
             this.panelPosView.Location = new System.Drawing.Point(435, 37);
             this.panelPosView.Name = "panelPosView";
             this.panelPosView.Size = new System.Drawing.Size(230, 359);
             this.panelPosView.TabIndex = 34;
             this.panelPosView.Visible = false;
-            // 
-            // checkBoxPosViewLabels
-            // 
-            this.checkBoxPosViewLabels.AutoSize = true;
-            this.checkBoxPosViewLabels.Location = new System.Drawing.Point(95, 231);
-            this.checkBoxPosViewLabels.Name = "checkBoxPosViewLabels";
-            this.checkBoxPosViewLabels.Size = new System.Drawing.Size(127, 17);
-            this.checkBoxPosViewLabels.TabIndex = 7;
-            this.checkBoxPosViewLabels.Text = "Show Position Labels";
-            this.checkBoxPosViewLabels.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxPosViewOverrideMaterial
-            // 
-            this.checkBoxPosViewOverrideMaterial.AutoSize = true;
-            this.checkBoxPosViewOverrideMaterial.Location = new System.Drawing.Point(95, 208);
-            this.checkBoxPosViewOverrideMaterial.Name = "checkBoxPosViewOverrideMaterial";
-            this.checkBoxPosViewOverrideMaterial.Size = new System.Drawing.Size(132, 17);
-            this.checkBoxPosViewOverrideMaterial.TabIndex = 6;
-            this.checkBoxPosViewOverrideMaterial.Text = "Override bone material";
-            this.checkBoxPosViewOverrideMaterial.UseVisualStyleBackColor = true;
-            // 
-            // checkBoxPosViewShowAxes
-            // 
-            this.checkBoxPosViewShowAxes.AutoSize = true;
-            this.checkBoxPosViewShowAxes.Location = new System.Drawing.Point(95, 185);
-            this.checkBoxPosViewShowAxes.Name = "checkBoxPosViewShowAxes";
-            this.checkBoxPosViewShowAxes.Size = new System.Drawing.Size(106, 17);
-            this.checkBoxPosViewShowAxes.TabIndex = 5;
-            this.checkBoxPosViewShowAxes.Text = "Show HAM Axes";
-            this.checkBoxPosViewShowAxes.UseVisualStyleBackColor = true;
-            // 
-            // trackBarPosViewCurrentFrame
-            // 
-            this.trackBarPosViewCurrentFrame.Location = new System.Drawing.Point(11, 97);
-            this.trackBarPosViewCurrentFrame.Maximum = 50;
-            this.trackBarPosViewCurrentFrame.Name = "trackBarPosViewCurrentFrame";
-            this.trackBarPosViewCurrentFrame.Size = new System.Drawing.Size(205, 45);
-            this.trackBarPosViewCurrentFrame.TabIndex = 4;
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(181, 153);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(27, 13);
-            this.label19.TabIndex = 3;
-            this.label19.Text = "FPS";
-            // 
-            // numericUpDownPosViewFPS
-            // 
-            this.numericUpDownPosViewFPS.Location = new System.Drawing.Point(133, 150);
-            this.numericUpDownPosViewFPS.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.numericUpDownPosViewFPS.Name = "numericUpDownPosViewFPS";
-            this.numericUpDownPosViewFPS.Size = new System.Drawing.Size(41, 20);
-            this.numericUpDownPosViewFPS.TabIndex = 2;
-            // 
-            // buttonPosViewStop
-            // 
-            this.buttonPosViewStop.Location = new System.Drawing.Point(72, 147);
-            this.buttonPosViewStop.Name = "buttonPosViewStop";
-            this.buttonPosViewStop.Size = new System.Drawing.Size(52, 23);
-            this.buttonPosViewStop.TabIndex = 1;
-            this.buttonPosViewStop.Text = "Stop";
-            this.buttonPosViewStop.UseVisualStyleBackColor = true;
-            // 
-            // buttonPosViewPlay
-            // 
-            this.buttonPosViewPlay.Location = new System.Drawing.Point(14, 147);
-            this.buttonPosViewPlay.Name = "buttonPosViewPlay";
-            this.buttonPosViewPlay.Size = new System.Drawing.Size(52, 23);
-            this.buttonPosViewPlay.TabIndex = 0;
-            this.buttonPosViewPlay.Text = "Play";
-            this.buttonPosViewPlay.UseVisualStyleBackColor = true;
-            // 
-            // launchMRIViewerToolStripMenuItem
-            // 
-            this.launchMRIViewerToolStripMenuItem.Name = "launchMRIViewerToolStripMenuItem";
-            this.launchMRIViewerToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
-            this.launchMRIViewerToolStripMenuItem.Text = "Launch MRIViewer";
-            this.launchMRIViewerToolStripMenuItem.Click += new System.EventHandler(this.launchMRIViewerToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -1297,10 +1201,6 @@ namespace WristVizualizer
             this.panelControl.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
-            this.panelPosView.ResumeLayout(false);
-            this.panelPosView.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.trackBarPosViewCurrentFrame)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownPosViewFPS)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1410,17 +1310,9 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showScenegraphToolStripMenuItem;
-        private System.Windows.Forms.Panel panelPosView;
-        private System.Windows.Forms.NumericUpDown numericUpDownPosViewFPS;
-        private System.Windows.Forms.Button buttonPosViewStop;
-        private System.Windows.Forms.Button buttonPosViewPlay;
-        private System.Windows.Forms.TrackBar trackBarPosViewCurrentFrame;
-        private System.Windows.Forms.Label label19;
+        private PosViewControl panelPosView;
         private System.Windows.Forms.ToolStripMenuItem openPosViewFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveMovieToolStripMenuItem;
-        private System.Windows.Forms.CheckBox checkBoxPosViewOverrideMaterial;
-        private System.Windows.Forms.CheckBox checkBoxPosViewShowAxes;
-        private System.Windows.Forms.CheckBox checkBoxPosViewLabels;
         private System.Windows.Forms.ToolStripMenuItem calculateInertiasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openTextureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem launchMRIViewerToolStripMenuItem;

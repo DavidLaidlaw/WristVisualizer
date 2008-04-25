@@ -109,12 +109,14 @@ namespace WristVizualizer
         }
         #endregion
 
+        [Obsolete("use setFormForMode(Modes mode) which will both save the mode, and then apply the settings")]
         private void setFormForCurrentMode()
         {
             setFormForMode(_mode);
         }
         private void setFormForMode(Modes mode)
         {
+            _mode = mode; //update current mode
             switch (mode)
             {
                 case Modes.POSVIEW:
@@ -180,6 +182,9 @@ namespace WristVizualizer
 
         private void resetForm()
         {
+            if (_viewer == null)
+                setupExaminerWindow();
+
             this.Text = Application.ProductName;
             setPosViewPanelVisible(false);
 
@@ -459,21 +464,11 @@ namespace WristVizualizer
 
         private void loadPosView(string posViewFilename)
         {
-            if (_viewer == null) setupExaminerWindow();
             resetForm();
-            _mode = Modes.POSVIEW;
-            setFormForCurrentMode();
-            _posViewController = new PosViewController(posViewFilename, _viewer);
+            setFormForMode(Modes.POSVIEW);
+            _posViewController = new PosViewController(posViewFilename, _viewer, panelPosView);
             _root = _posViewController.Root; //save local copy also
-            //_viewer.setDrawStyle();
-
-            _posViewController.Control_CurrentFrame = trackBarPosViewCurrentFrame;
-            _posViewController.Control_PlayButton = buttonPosViewPlay;
-            _posViewController.Control_StopButton = buttonPosViewStop;
-            _posViewController.Control_NumericFPS = numericUpDownPosViewFPS;
-            _posViewController.Control_ShowHAMS = checkBoxPosViewShowAxes;
-            _posViewController.Control_OverrideMaterial = checkBoxPosViewOverrideMaterial;
-            _posViewController.Control_ShowLabels = checkBoxPosViewLabels;
+            //_viewer.setDrawStyle(); //attempt to fix rendering problem....fuck
         }
 
         #endregion

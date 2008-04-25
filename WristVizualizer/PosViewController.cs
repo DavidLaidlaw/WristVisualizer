@@ -26,27 +26,35 @@ namespace WristVizualizer
         string _posFileName;
 
         //controls
-        TrackBar trackBarPosViewCurrentFrame;
-        Button buttonPosViewPlay;
-        Button buttonPosViewStop;
-        NumericUpDown numericUpDownPosViewFPS;
-        CheckBox checkBoxShowHams;
-        CheckBox checkBoxOverrideMaterial;
-        CheckBox checkBoxShowLabels;
+        PosViewControl _control;
 
         Timer _timer;
 
-        public PosViewController(string posViewFilename, ExaminerViewer viewer)
+        public PosViewController(string posViewFilename, ExaminerViewer viewer, PosViewControl control)
         {
             _posFileName = posViewFilename;
             _viewer = viewer;
+            _control = control;
+
+            //do the hardwork and read everything
             loadPosView(posViewFilename);
+
+            //setup the control
+            _control.setupController(_numPositions, _reader.ShowHams, _reader.HasLables);
+            _control.ShowHam = _reader.ShowHams;
+            _control.ShowLabels = _reader.HasLables;
+            _control.OverrideMaterial = _reader.SetColor;
+            _control.PlayButtonEnabled = false; //we are going to start playing now
+            _control.FPS = 10; //default FPS
+            setupEventListeners(); 
+
+            //setup the timer
             _timer = new Timer();
             _timer.Tick += new EventHandler(_timer_Tick);
-            _timer.Enabled = false;
+            _timer.Enabled = true;
 
             _viewer.setSceneGraph(_root);
-            _viewer.viewAll();
+            _viewer.viewAll(); //move camera so the whole scene can be viewed
         }
 
         void _timer_Tick(object sender, EventArgs e)
@@ -74,154 +82,12 @@ namespace WristVizualizer
                 updateFrame();
             }
         }
-
-        public TrackBar Control_CurrentFrame
-        {
-            set
-            {
-                trackBarPosViewCurrentFrame = value;
-                trackBarPosViewCurrentFrame.Scroll += new EventHandler(trackBarPosViewCurrentFrame_Scroll);
-                trackBarPosViewCurrentFrame.Maximum = _numPositions - 1;
-                trackBarPosViewCurrentFrame.Minimum = 0;
-                trackBarPosViewCurrentFrame.Value = 0;
-            }
-        }
-        public Button Control_PlayButton
-        {
-            set
-            {
-                buttonPosViewPlay = value;
-                buttonPosViewPlay.Enabled = true;
-                buttonPosViewPlay.Click += new EventHandler(buttonPosViewPlay_Click);
-            }
-        }
-        public Button Control_StopButton
-        {
-            set
-            {
-                buttonPosViewStop = value;
-                buttonPosViewStop.Enabled = false;
-                buttonPosViewStop.Click += new EventHandler(buttonPosViewStop_Click);
-            }
-        }
-        public NumericUpDown Control_NumericFPS
-        {
-            set
-            {
-                numericUpDownPosViewFPS = value;
-                numericUpDownPosViewFPS.Value = 10;
-                numericUpDownPosViewFPS.ValueChanged += new EventHandler(numericUpDownPosViewFPS_ValueChanged);
-            }
-        }
-        public CheckBox Control_ShowHAMS
-        {
-            set
-            {
-                checkBoxShowHams = value;
-                checkBoxShowHams.Enabled = _reader.ShowHams;
-                checkBoxShowHams.Checked = _reader.ShowHams;
-                checkBoxShowHams.CheckedChanged += new EventHandler(checkBoxShowHams_CheckedChanged);
-            }
-        }
-        public CheckBox Control_OverrideMaterial
-        {
-            set
-            {
-                checkBoxOverrideMaterial = value;
-                checkBoxOverrideMaterial.Enabled = true;
-                checkBoxOverrideMaterial.Checked = _reader.SetColor;
-                checkBoxOverrideMaterial.CheckedChanged += new EventHandler(checkBoxOverrideMaterial_CheckedChanged);
-            }
-        }
-        public CheckBox Control_ShowLabels
-        {
-            set
-            {
-                checkBoxShowLabels = value;
-                checkBoxShowLabels.Enabled = _reader.HasLables;
-                checkBoxShowLabels.Checked = _reader.HasLables;
-                checkBoxShowLabels.CheckedChanged += new EventHandler(checkBoxShowLabels_CheckedChanged);
-            }
-        }
         #endregion
 
-        void checkBoxShowLabels_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxShowLabels.Checked)
-            {
-                //then we need to show them
-                _labels.whichChild(_currentFrame);
-            }
-            else
-            {
-                //lets hide it
-                _labels.hideAll();
-            }
-        }
-
-        void checkBoxOverrideMaterial_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxOverrideMaterial.Checked)
-            {
-                //then lets insert that material!
-                for (int i = 0; i < _bones.Length; i++)
-                    _bones[i].insertNode(_boneMaterials[i], 0);
-            }
-            else
-            {
-                //need to go and remove all the material nodes!
-                for (int i = 0; i < _bones.Length; i++)
-                    _bones[i].removeChild(_boneMaterials[i]);
-            }
-        }
-
-        void checkBoxShowHams_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBoxShowHams.Checked)
-            {
-                //lets show them all
-                foreach (Switch ham in _hamsSwitch)
-                    ham.whichChild(_currentFrame);
-            }
-            else
-            {
-                foreach (Switch ham in _hamsSwitch)
-                    ham.hideAll();
-            }
-        }
-
-        void trackBarPosViewCurrentFrame_Scroll(object sender, EventArgs e)
-        {
-            CurrentFrame = trackBarPosViewCurrentFrame.Value;
-        }
-
-        void buttonPosViewPlay_Click(object sender, EventArgs e)
-        {
-            buttonPosViewPlay.Enabled = false;
-            buttonPosViewStop.Enabled = true;
-            trackBarPosViewCurrentFrame.Enabled = false;
-
-            _timer.Enabled = true;
-        }
-
-        void buttonPosViewStop_Click(object sender, EventArgs e)
-        {
-            buttonPosViewPlay.Enabled = true;
-            buttonPosViewStop.Enabled = false;
-            trackBarPosViewCurrentFrame.Enabled = true;
-
-            _timer.Enabled = false;
-        }
-
-        void numericUpDownPosViewFPS_ValueChanged(object sender, EventArgs e)
-        {
-            setTimeToFPS();
-        }
-
-        private void setTimeToFPS()
+        private void setTimeToFPS(decimal FPS)
         {
             //need to convert from FPS -> Miliseconds/frame
-            _timer.Interval = (int)(1000 / (double)numericUpDownPosViewFPS.Value);
+            _timer.Interval = (int)(1000 / (double)FPS);
         }
 
         public void saveToMovie()
@@ -240,7 +106,7 @@ namespace WristVizualizer
             //return;
 
             //show save dialogue
-            MovieExportOptions dialog = new MovieExportOptions(_posFileName, numericUpDownPosViewFPS.Value);
+            MovieExportOptions dialog = new MovieExportOptions(_posFileName, _control.FPS);
             dialog.ShowDialog();
 
             //okay, now lets figure out what we are doing here
@@ -308,14 +174,14 @@ namespace WristVizualizer
         {
             for (int i = 0; i < _bonesSwitch.Length; i++)
                 _bonesSwitch[i].whichChild(_currentFrame);
-            if (checkBoxShowHams.Checked) //only update hams if we are showing them
+            if (_control.ShowHam) //only update hams if we are showing them
                 for (int i = 0; i < _hamsSwitch.Length; i++)
                     _hamsSwitch[i].whichChild(_currentFrame);
-            if (checkBoxShowLabels.Checked) //only update label if we are showing
+            if (_control.ShowLabels) //only update label if we are showing
                 _labels.whichChild(_currentFrame);
 
-            if (trackBarPosViewCurrentFrame.Value != _currentFrame)
-                trackBarPosViewCurrentFrame.Value = _currentFrame;
+            if (_control.currentFrame != _currentFrame)
+                _control.currentFrame = _currentFrame;
         }
         #endregion
 
@@ -325,15 +191,98 @@ namespace WristVizualizer
             removeCallBacks();
         }
 
+        private void setupEventListeners()
+        {
+            _control.TrackbarScroll += new PosViewControl.TrackbarScrollHandler(_control_TrackbarScroll);
+            _control.PlayClicked += new PosViewControl.PlayClickedHandler(_control_PlayClicked);
+            _control.StopClicked += new PosViewControl.StopClickedHandler(_control_StopClicked);
+            _control.FPSChanged += new PosViewControl.FPSChangedHandler(_control_FPSChanged);
+            _control.ShowHamClicked += new PosViewControl.ShowHamClickedHandler(_control_ShowHamClicked);
+            _control.ShowPositionLabelClicked += new PosViewControl.ShowPositionLabelClickedHandler(_control_ShowPositionLabelClicked);
+            _control.OverrideMaterialClicked += new PosViewControl.OverrideMaterialClickedHandler(_control_OverrideMaterialClicked);
+        }
+
+        void _control_OverrideMaterialClicked()
+        {
+            if (_control.OverrideMaterial)
+            {
+                //then lets insert that material!
+                for (int i = 0; i < _bones.Length; i++)
+                    _bones[i].insertNode(_boneMaterials[i], 0);
+            }
+            else
+            {
+                //need to go and remove all the material nodes!
+                for (int i = 0; i < _bones.Length; i++)
+                    _bones[i].removeChild(_boneMaterials[i]);
+            }
+        }
+
+        void _control_ShowPositionLabelClicked()
+        {
+            if (_control.ShowLabels)
+            {
+                //then we need to show them
+                _labels.whichChild(_currentFrame);
+            }
+            else
+            {
+                //lets hide it
+                _labels.hideAll();
+            }
+        }
+
+        void _control_ShowHamClicked()
+        {
+            if (_control.ShowHam)
+            {
+                //lets show them all
+                foreach (Switch ham in _hamsSwitch)
+                    ham.whichChild(_currentFrame);
+            }
+            else
+            {
+                foreach (Switch ham in _hamsSwitch)
+                    ham.hideAll();
+            }
+        }
+
+        void _control_FPSChanged()
+        {
+            setTimeToFPS(_control.FPS);
+        }
+
+        void _control_StopClicked()
+        {
+            _control.PlayButtonEnabled = true;
+            _control.StopButtonEnabled = false;
+            _control.TrackBarEnabled = true;
+
+            _timer.Enabled = false;
+        }
+
+        void _control_PlayClicked()
+        {
+            _control.PlayButtonEnabled = false;
+            _control.StopButtonEnabled = true;
+            _control.TrackBarEnabled = false; 
+            _timer.Enabled = true;
+        }
+
+        void _control_TrackbarScroll()
+        {
+            CurrentFrame = _control.currentFrame;
+        }
+
         private void removeCallBacks()
         {
-            trackBarPosViewCurrentFrame.Scroll -= new EventHandler(trackBarPosViewCurrentFrame_Scroll);
-            buttonPosViewPlay.Click -= new EventHandler(buttonPosViewPlay_Click);
-            buttonPosViewStop.Click -= new EventHandler(buttonPosViewStop_Click);
-            numericUpDownPosViewFPS.ValueChanged -= new EventHandler(numericUpDownPosViewFPS_ValueChanged);
-            checkBoxShowHams.CheckedChanged -= new EventHandler(checkBoxShowHams_CheckedChanged);
-            checkBoxOverrideMaterial.CheckedChanged -= new EventHandler(checkBoxOverrideMaterial_CheckedChanged);
-            checkBoxShowLabels.CheckedChanged -= new EventHandler(checkBoxShowLabels_CheckedChanged);
+            _control.TrackbarScroll -= new PosViewControl.TrackbarScrollHandler(_control_TrackbarScroll);
+            _control.PlayClicked -= new PosViewControl.PlayClickedHandler(_control_PlayClicked);
+            _control.StopClicked -= new PosViewControl.StopClickedHandler(_control_StopClicked);
+            _control.FPSChanged -= new PosViewControl.FPSChangedHandler(_control_FPSChanged);
+            _control.ShowHamClicked -= new PosViewControl.ShowHamClickedHandler(_control_ShowHamClicked);
+            _control.ShowPositionLabelClicked -= new PosViewControl.ShowPositionLabelClickedHandler(_control_ShowPositionLabelClicked);
+            _control.OverrideMaterialClicked -= new PosViewControl.OverrideMaterialClickedHandler(_control_OverrideMaterialClicked);
         }
 
         private Switch setupPosViewLables(PosViewReader pos)
@@ -433,7 +382,7 @@ namespace WristVizualizer
                     sec2.addNode(_labels);
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 throw;
             }

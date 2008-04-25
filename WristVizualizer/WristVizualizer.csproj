@@ -39,6 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FullWristControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FullWristControl.Designer.cs">
+      <DependentUpon>FullWristControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="LoadTextureDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -74,6 +80,12 @@
     </Compile>
     <Compile Include="PointSelection.Designer.cs">
       <DependentUpon>PointSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PosViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PosViewControl.Designer.cs">
+      <DependentUpon>PosViewControl.cs</DependentUpon>
     </Compile>
     <Compile Include="PosViewController.cs" />
     <Compile Include="PosViewSettings.cs" />
@@ -123,6 +135,10 @@
     <EmbeddedResource Include="PointSelection.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PointSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PosViewControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PosViewControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ScenegraphTreeViewer.resx">
       <SubType>Designer</SubType>
