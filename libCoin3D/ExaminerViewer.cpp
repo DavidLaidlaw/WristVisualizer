@@ -71,7 +71,7 @@ void libCoin3D::ExaminerViewer::setDrawStyle()
 
 void libCoin3D::ExaminerViewer::viewAll()
 {
-	_viewer->viewAll();
+	_viewer->viewAll(); //move the camera so the whole scene can be viewed
 }
 
 void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
