@@ -32,7 +32,9 @@ namespace WristVizualizer
             this.seriesListBox = new System.Windows.Forms.ListBox();
             this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelSeries = new System.Windows.Forms.Label();
+            this.linkLabelHideAll = new System.Windows.Forms.LinkLabel();
+            this.linkLabelShowAll = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,16 +46,20 @@ namespace WristVizualizer
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.linkLabelHideAll, 1, 3);
             this.tableLayoutPanel1.Controls.Add(this.seriesListBox, 3, 1);
+            this.tableLayoutPanel1.Controls.Add(this.linkLabelShowAll, 1, 2);
             this.tableLayoutPanel1.Controls.Add(this.label18, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.label16, 1, 0);
-            this.tableLayoutPanel1.Controls.Add(this.label1, 3, 0);
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 12);
+            this.tableLayoutPanel1.Controls.Add(this.labelSeries, 3, 0);
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 2;
+            this.tableLayoutPanel1.RowCount = 4;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(157, 40);
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(157, 80);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // seriesListBox
@@ -94,19 +100,49 @@ namespace WristVizualizer
             this.label16.Text = "Hide";
             this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // label1
+            // labelSeries
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            this.labelSeries.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(61, 0);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 20);
-            this.label1.TabIndex = 55;
-            this.label1.Text = "Series";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelSeries.AutoSize = true;
+            this.labelSeries.Location = new System.Drawing.Point(61, 0);
+            this.labelSeries.Margin = new System.Windows.Forms.Padding(0);
+            this.labelSeries.Name = "labelSeries";
+            this.labelSeries.Size = new System.Drawing.Size(96, 20);
+            this.labelSeries.TabIndex = 55;
+            this.labelSeries.Text = "Series";
+            this.labelSeries.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // linkLabelHideAll
+            // 
+            this.linkLabelHideAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabelHideAll.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.linkLabelHideAll, 2);
+            this.linkLabelHideAll.Location = new System.Drawing.Point(0, 60);
+            this.linkLabelHideAll.Margin = new System.Windows.Forms.Padding(0);
+            this.linkLabelHideAll.Name = "linkLabelHideAll";
+            this.linkLabelHideAll.Size = new System.Drawing.Size(61, 20);
+            this.linkLabelHideAll.TabIndex = 38;
+            this.linkLabelHideAll.TabStop = true;
+            this.linkLabelHideAll.Text = "hide all";
+            // 
+            // linkLabelShowAll
+            // 
+            this.linkLabelShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabelShowAll.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.linkLabelShowAll, 2);
+            this.linkLabelShowAll.Location = new System.Drawing.Point(0, 40);
+            this.linkLabelShowAll.Margin = new System.Windows.Forms.Padding(0);
+            this.linkLabelShowAll.Name = "linkLabelShowAll";
+            this.linkLabelShowAll.Size = new System.Drawing.Size(61, 20);
+            this.linkLabelShowAll.TabIndex = 37;
+            this.linkLabelShowAll.TabStop = true;
+            this.linkLabelShowAll.Text = "show all";
             // 
             // FullWristControl
             // 
@@ -129,6 +165,8 @@ namespace WristVizualizer
         private System.Windows.Forms.Label label18;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.ListBox seriesListBox;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelSeries;
+        private System.Windows.Forms.LinkLabel linkLabelHideAll;
+        private System.Windows.Forms.LinkLabel linkLabelShowAll;
     }
 }

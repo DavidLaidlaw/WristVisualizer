@@ -35,16 +35,30 @@ namespace WristVizualizer
             int numBones = _boneNames.Length;
 
             this.SuspendLayout();
+            //remove the hide/show all
+            tableLayoutPanel1.Controls.Remove(linkLabelHideAll);
+            tableLayoutPanel1.Controls.Remove(linkLabelShowAll);
+
             _labels = new Label[numBones];
             _checkBoxesHide = new CheckBox[numBones];
             _radioButtonsFixed = new RadioButton[numBones];
-            tableLayoutPanel1.RowCount = numBones + 1;
+            tableLayoutPanel1.RowCount = numBones + 3;
             tableLayoutPanel1.RowStyles.Clear();
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             for (int i = 0; i < numBones; i++)
                 setupForm_generateRow(i);
-            //seriesListBox.Visible = false;
+
+            if (!showSeriesList)
+            {
+                seriesListBox.Visible = false;
+                labelSeries.Visible = false;
+            }
             tableLayoutPanel1.SetRowSpan(seriesListBox, numBones);
+
+            //add in the hideall/showall links
+            tableLayoutPanel1.Controls.Add(linkLabelShowAll, 1, numBones + 1);
+            tableLayoutPanel1.Controls.Add(linkLabelHideAll, 1, numBones + 2);
+
 
             this.ResumeLayout();
         }
