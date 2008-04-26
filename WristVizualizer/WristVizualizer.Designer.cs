@@ -1170,10 +1170,22 @@ namespace WristVizualizer
             // panelPosView
             // 
             this.panelPosView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.panelPosView.currentFrame = 0;
+            this.panelPosView.FPS = new decimal(new int[] {
+            0,
+            0,
+            0,
+            0});
             this.panelPosView.Location = new System.Drawing.Point(435, 37);
             this.panelPosView.Name = "panelPosView";
+            this.panelPosView.OverrideMaterial = false;
+            this.panelPosView.PlayButtonEnabled = true;
+            this.panelPosView.ShowHam = false;
+            this.panelPosView.ShowLabels = false;
             this.panelPosView.Size = new System.Drawing.Size(230, 359);
+            this.panelPosView.StopButtonEnabled = true;
             this.panelPosView.TabIndex = 34;
+            this.panelPosView.TrackBarEnabled = true;
             this.panelPosView.Visible = false;
             // 
             // WristVizualizer
@@ -1182,9 +1194,9 @@ namespace WristVizualizer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 408);
+            this.Controls.Add(this.panelControl);
             this.Controls.Add(this.panelPosView);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.panelControl);
             this.Controls.Add(this.panelCoin);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
