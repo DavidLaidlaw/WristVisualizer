@@ -45,6 +45,7 @@
     <Compile Include="FullWristControl.Designer.cs">
       <DependentUpon>FullWristControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="FullWristController.cs" />
     <Compile Include="LoadTextureDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -112,6 +113,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FullWristControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FullWristControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoadTextureDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LoadTextureDialog.cs</DependentUpon>
