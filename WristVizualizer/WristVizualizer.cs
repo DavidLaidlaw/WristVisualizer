@@ -231,10 +231,6 @@ namespace WristVizualizer
             resetExaminerViewer();
         }
 
-
-
-
-
         #region File Open
 
         /// <summary>
@@ -1120,10 +1116,8 @@ namespace WristVizualizer
             try
             {
                 this.Cursor = Cursors.WaitCursor;
-                if (_viewer == null) setupExaminerWindow();
                 resetForm();
-                _mode = Modes.TEXTURE;
-                setFormForCurrentMode();
+                setFormForMode(Modes.TEXTURE);
 
                 _root = texture.setup(_viewer);
                 _viewer.disableSelection();
