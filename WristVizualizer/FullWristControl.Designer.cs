@@ -29,12 +29,12 @@ namespace WristVizualizer
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.linkLabelHideAll = new System.Windows.Forms.LinkLabel();
             this.seriesListBox = new System.Windows.Forms.ListBox();
+            this.linkLabelShowAll = new System.Windows.Forms.LinkLabel();
             this.label18 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.labelSeries = new System.Windows.Forms.Label();
-            this.linkLabelHideAll = new System.Windows.Forms.LinkLabel();
-            this.linkLabelShowAll = new System.Windows.Forms.LinkLabel();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,6 +62,22 @@ namespace WristVizualizer
             this.tableLayoutPanel1.Size = new System.Drawing.Size(157, 80);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
+            // linkLabelHideAll
+            // 
+            this.linkLabelHideAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabelHideAll.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.linkLabelHideAll, 2);
+            this.linkLabelHideAll.Location = new System.Drawing.Point(0, 60);
+            this.linkLabelHideAll.Margin = new System.Windows.Forms.Padding(0);
+            this.linkLabelHideAll.Name = "linkLabelHideAll";
+            this.linkLabelHideAll.Size = new System.Drawing.Size(61, 20);
+            this.linkLabelHideAll.TabIndex = 38;
+            this.linkLabelHideAll.TabStop = true;
+            this.linkLabelHideAll.Text = "hide all";
+            this.linkLabelHideAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHideAll_LinkClicked);
+            // 
             // seriesListBox
             // 
             this.seriesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
@@ -73,6 +89,23 @@ namespace WristVizualizer
             this.seriesListBox.Name = "seriesListBox";
             this.seriesListBox.Size = new System.Drawing.Size(96, 17);
             this.seriesListBox.TabIndex = 34;
+            this.seriesListBox.SelectedIndexChanged += new System.EventHandler(this.seriesListBox_SelectedIndexChanged);
+            // 
+            // linkLabelShowAll
+            // 
+            this.linkLabelShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.linkLabelShowAll.AutoSize = true;
+            this.tableLayoutPanel1.SetColumnSpan(this.linkLabelShowAll, 2);
+            this.linkLabelShowAll.Location = new System.Drawing.Point(0, 40);
+            this.linkLabelShowAll.Margin = new System.Windows.Forms.Padding(0);
+            this.linkLabelShowAll.Name = "linkLabelShowAll";
+            this.linkLabelShowAll.Size = new System.Drawing.Size(61, 20);
+            this.linkLabelShowAll.TabIndex = 37;
+            this.linkLabelShowAll.TabStop = true;
+            this.linkLabelShowAll.Text = "show all";
+            this.linkLabelShowAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelShowAll_LinkClicked);
             // 
             // label18
             // 
@@ -113,36 +146,6 @@ namespace WristVizualizer
             this.labelSeries.TabIndex = 55;
             this.labelSeries.Text = "Series";
             this.labelSeries.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // linkLabelHideAll
-            // 
-            this.linkLabelHideAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabelHideAll.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.linkLabelHideAll, 2);
-            this.linkLabelHideAll.Location = new System.Drawing.Point(0, 60);
-            this.linkLabelHideAll.Margin = new System.Windows.Forms.Padding(0);
-            this.linkLabelHideAll.Name = "linkLabelHideAll";
-            this.linkLabelHideAll.Size = new System.Drawing.Size(61, 20);
-            this.linkLabelHideAll.TabIndex = 38;
-            this.linkLabelHideAll.TabStop = true;
-            this.linkLabelHideAll.Text = "hide all";
-            // 
-            // linkLabelShowAll
-            // 
-            this.linkLabelShowAll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabelShowAll.AutoSize = true;
-            this.tableLayoutPanel1.SetColumnSpan(this.linkLabelShowAll, 2);
-            this.linkLabelShowAll.Location = new System.Drawing.Point(0, 40);
-            this.linkLabelShowAll.Margin = new System.Windows.Forms.Padding(0);
-            this.linkLabelShowAll.Name = "linkLabelShowAll";
-            this.linkLabelShowAll.Size = new System.Drawing.Size(61, 20);
-            this.linkLabelShowAll.TabIndex = 37;
-            this.linkLabelShowAll.TabStop = true;
-            this.linkLabelShowAll.Text = "show all";
             // 
             // FullWristControl
             // 

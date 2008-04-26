@@ -8,8 +8,17 @@ using System.Windows.Forms;
 
 namespace WristVizualizer
 {
+    public delegate void SelectedSeriesChangedHandler(object sender, SelectedSeriesChangedEventArgs e);
+    public delegate void FixedBoneChangedHandler(object sender, FixedBoneChangeEventArgs e);
+    public delegate void BoneHideChangedHandler(object sender, BoneHideChangeEventArgs e);
+
+
     public partial class FullWristControl : UserControl
     {
+        public event SelectedSeriesChangedHandler SelectedSeriesChanged;
+        public event FixedBoneChangedHandler FixedBoneChanged;
+        public event BoneHideChangedHandler BoneHideChanged;
+
         private Label[] _labels;
         private CheckBox[] _checkBoxesHide;
         private RadioButton[] _radioButtonsFixed;
@@ -26,12 +35,55 @@ namespace WristVizualizer
             setupControl(bnames, true);
         }
 
-        private void setupControl(string[] boneNames, bool showSeriesList)
+        #region Public Interfaces
+        public void clearSeriesList()
         {
+            seriesListBox.Items.Clear();
+        }
+
+        public void addToSeriesList(object item)
+        {
+            seriesListBox.Items.Add(item);
+        }
+        public void addToSeriesList(object[] items)
+        {
+            seriesListBox.Items.AddRange(items);
+        }
+
+        public void disableBone(int boneIndex)
+        {
+            _checkBoxesHide[boneIndex].Enabled = false;
+            _radioButtonsFixed[boneIndex].Enabled = false;
+        }
+
+        public void disableFixedBone(int boneIndex)
+        {
+            _radioButtonsFixed[boneIndex].Enabled = false;
+        }
+
+        public int selectedSeriesIndex
+        {
+            get { return seriesListBox.SelectedIndex; }
+            set { seriesListBox.SelectedIndex = value; }
+        }
+
+        #endregion
+
+        #region GUI Control Setup
+        public void setupControl(string[] boneNames, bool showSeriesList)
+        {
+            if (boneNames.Length == 0)
+                throw new ArgumentException("Can't create Control for 0 bones");
             _boneNames = boneNames;
-            //_boneNames = new string[] { "Radius" };
-            //_boneNames = new string[0];
             _showSeriesList = showSeriesList;
+            setupControlLayout();
+
+            //set the first bone to be fixed
+            _radioButtonsFixed[0].Checked = true;
+        }
+
+        private void setupControlLayout()
+        {
             int numBones = _boneNames.Length;
 
             this.SuspendLayout();
@@ -48,7 +100,7 @@ namespace WristVizualizer
             for (int i = 0; i < numBones; i++)
                 setupForm_generateRow(i);
 
-            if (!showSeriesList)
+            if (!_showSeriesList)
             {
                 seriesListBox.Visible = false;
                 labelSeries.Visible = false;
@@ -58,7 +110,6 @@ namespace WristVizualizer
             //add in the hideall/showall links
             tableLayoutPanel1.Controls.Add(linkLabelShowAll, 1, numBones + 1);
             tableLayoutPanel1.Controls.Add(linkLabelHideAll, 1, numBones + 2);
-
 
             this.ResumeLayout();
         }
@@ -93,10 +144,68 @@ namespace WristVizualizer
             tableLayoutPanel1.Controls.Add(cb, 1, rowIndex+1);
             tableLayoutPanel1.Controls.Add(rb, 2, rowIndex+1);
 
+            //add event callbacks
+            cb.CheckedChanged += new EventHandler(checkBox_CheckedChanged);
+            rb.CheckedChanged += new EventHandler(radioButton_CheckedChanged);
+
             //save these
             _labels[rowIndex] = l;
             _checkBoxesHide[rowIndex] = cb;
             _radioButtonsFixed[rowIndex] = rb;
         }
+        #endregion
+
+        #region Event Listeners
+        void radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            if (FixedBoneChanged == null) return;
+            /* This method will get called twice on a change, once when checked, 
+             * and once when unchecked. To prevent problems, we will ignore 
+             * events for the button that was unchecked, and deal only with
+             * events for the check event
+             */
+            if (!((RadioButton)sender).Checked) return;
+
+            for (int i = 0; i < _radioButtonsFixed.Length; i++)
+            {
+                if (sender == _radioButtonsFixed[i])
+                {
+                    FixedBoneChanged(sender, new FixedBoneChangeEventArgs(i));
+                }
+            }
+        }
+
+        void checkBox_CheckedChanged(object sender, EventArgs e)
+        {
+            if (BoneHideChanged == null) return;
+            for (int i = 0; i < _checkBoxesHide.Length; i++)
+            {
+                if (sender == _checkBoxesHide[i])
+                {
+                    bool hidden = ((CheckBox)sender).Checked;
+                    BoneHideChanged(sender, new BoneHideChangeEventArgs(i, hidden));
+                }
+            }
+        }
+
+        private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (SelectedSeriesChanged == null) return;
+            //TODO: Figure out what ars we actually want to pass....
+            SelectedSeriesChanged(sender, new SelectedSeriesChangedEventArgs());
+        }
+
+        private void linkLabelShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            for (int i = 0; i < _checkBoxesHide.Length; i++)
+                _checkBoxesHide[i].Checked = false;
+        }
+
+        private void linkLabelHideAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            for (int i = 0; i < _checkBoxesHide.Length; i++)
+                _checkBoxesHide[i].Checked = true;
+        }
+        #endregion
     }
 }
