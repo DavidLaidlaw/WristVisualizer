@@ -56,9 +56,19 @@ namespace WristVizualizer
             _radioButtonsFixed[boneIndex].Enabled = false;
         }
 
-        public void disableFixedBone(int boneIndex)
+        public void disableFixingBone(int boneIndex)
         {
             _radioButtonsFixed[boneIndex].Enabled = false;
+        }
+
+        public void setBoneHiddenStatus(int boneIndex, bool hidden)
+        {
+            _checkBoxesHide[boneIndex].Checked = hidden;
+        }
+
+        public void hideBone(int boneIndex)
+        {
+            setBoneHiddenStatus(boneIndex, true);
         }
 
         public int selectedSeriesIndex
@@ -191,8 +201,8 @@ namespace WristVizualizer
         private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (SelectedSeriesChanged == null) return;
-            //TODO: Figure out what ars we actually want to pass....
-            SelectedSeriesChanged(sender, new SelectedSeriesChangedEventArgs());
+            int index = seriesListBox.SelectedIndex;
+            SelectedSeriesChanged(sender, new SelectedSeriesChangedEventArgs(index));
         }
 
         private void linkLabelShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)

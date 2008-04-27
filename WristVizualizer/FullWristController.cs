@@ -10,6 +10,7 @@ namespace WristVizualizer
 {    
     class FullWristController
     {
+        private bool _showErrors = false;
         private Separator[] _bones;
         private Separator[] _inertias;
         private string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
@@ -46,14 +47,14 @@ namespace WristVizualizer
             }
             catch (ArgumentException ex)
             {
-                if (!hideErrorMessagesToolStripMenuItem.Checked)
+                if (_showErrors)
                 {
                     string msg = "Error loading wrist kinematics.\n\n" + ex.Message;
                     //TODO: Change to abort,retry, and find way of cancelling load
                     MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 for (int i = 0; i < _bnames.Length; i++)
-                    _control.disableFixedBone(i);
+                    _control.disableFixingBone(i);
             }
 
             for (int i = 0; i < _bnames.Length; i++)
@@ -73,6 +74,12 @@ namespace WristVizualizer
             }
         }
 
+        public bool ShowErrors
+        {
+            get { return _showErrors; }
+            set { _showErrors = value; }
+        }
+
         private void populateSeriesList()
         {
             _currentPositionIndex = 0;
@@ -90,6 +97,167 @@ namespace WristVizualizer
         public string getFilenameOfFirstFile()
         {
             return Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
+        }
+
+        private void setupControlEventListeners()
+        {
+            _control.BoneHideChanged += new BoneHideChangedHandler(_control_BoneHideChanged);
+            _control.FixedBoneChanged += new FixedBoneChangedHandler(_control_FixedBoneChanged);
+            _control.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
+        }
+
+        private void removeControlEventListeners()
+        {
+            _control.BoneHideChanged -= new BoneHideChangedHandler(_control_BoneHideChanged);
+            _control.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);
+            _control.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
+        }
+
+        void _control_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
+        {
+            if (_currentPositionIndex == e.SelectedIndex)
+                return;
+
+            //check if neutral
+            if (e.SelectedIndex == 0)
+            {
+                _currentPositionIndex = 0;
+                //do the neutral thing....
+                if (_root.hasTransform())
+                    _root.removeTransform();
+                for (int i = 0; i < _bones.Length; i++)
+                {
+                    if (_bones[i] == null) continue; //skip missing bone
+
+                    if (_bones[i].hasTransform())
+                        _bones[i].removeTransform();
+                }
+            }
+            else
+            {
+                //int seriesIndex = _wrist.getSeriesIndexFromName((string)seriesListBox.SelectedItem);
+                _currentPositionIndex = e.SelectedIndex;
+                if (_root.hasTransform())
+                    _root.removeTransform();
+                Transform t = new Transform();
+                //TODO: Fix so this doesn't have to re-parse the motion file from disk each time...
+                DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex - 1))[_fixedBoneIndex], t);
+                t.invert();
+                //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
+                _root.addTransform(t);
+                for (int i = 0; i < _bones.Length; i++)
+                {
+                    //skip missing bones
+                    if (_bones[i] == null) continue;
+
+                    //remove the old
+                    if (_bones[i].hasTransform())
+                        _bones[i].removeTransform();
+
+                    _bones[i].addTransform(_transforms[_currentPositionIndex - 1][i]);
+                    if (_transforms[_currentPositionIndex - 1][i].isIdentity())
+                        _control.hideBone(i);
+                }
+            }
+        }
+
+        void _control_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
+        {
+            _fixedBoneIndex = e.BoneIndex;
+
+            //do nothing for neutral
+            if (_currentPositionIndex == 0) return;
+
+            //so now change the top level
+            //do the neutral thing....
+            if (_root.hasTransform())
+                _root.removeTransform();
+
+            Transform t = new Transform();
+            DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex - 1))[e.BoneIndex], t);
+            t.invert();
+            //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
+            _root.addTransform(t);
+        }
+
+        void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
+        {
+            if (e.BoneHidden)
+                _bones[e.BoneIndex].hide();
+            else
+                _bones[e.BoneIndex].show();
+        }
+
+        public void setInertiaVisibility(bool visible)
+        {
+            if (visible)
+            {
+                try
+                {
+                    //If its checked, then we need to add it
+                    TransformRT[] inert = DatParser.parseInertiaFile2(_wrist.inertiaFile);
+                    for (int i = 2; i < 10; i++) //skip the long bones
+                    {
+                        if (_bones[i] == null)
+                            continue;
+
+                        _inertias[i] = new Separator();
+                        Transform t = new Transform();
+                        DatParser.addRTtoTransform(inert[i], t);
+                        _inertias[i].addNode(new ACS());
+                        _inertias[i].addTransform(t);
+                        _bones[i].addChild(_inertias[i]);
+                    }
+                }
+                catch (ArgumentException ex)
+                {
+                    string msg = "Error loading inertia file.\n\n" + ex.Message;
+                    throw new WristVizualizerException(msg, ex);
+                }
+            }
+            else
+            {
+                //so we want to remove the inertia files
+                for (int i = 2; i < 10; i++)
+                {
+                    _bones[i].removeChild(_inertias[i]);
+                    _inertias[i] = null;
+                }
+
+            }
+        }
+
+        public void setACSVisibility(bool visible)
+        {
+            if (visible)
+            {
+                try
+                {
+                    //If its checked, then we need to add it
+                    TransformRT[] inert = DatParser.parseACSFile2(_wrist.acsFile);
+
+                    //only for radius, check if it exists
+                    if (_bones[0] == null)
+                        return;
+
+                    _inertias[0] = new Separator();
+                    Transform t = new Transform();
+                    DatParser.addRTtoTransform(inert[0], t);
+                    _inertias[0].addNode(new ACS(45)); //longer axes for the radius/ACS
+                    _inertias[0].addTransform(t);
+                    _bones[0].addChild(_inertias[0]);
+                }
+                catch (ArgumentException ex)
+                {
+                    string msg = "Error loading ACS file.\n\n" + ex.Message;
+                    throw new WristVizualizerException(msg, ex);
+                }
+            }
+            else
+            {
+                _bones[0].removeChild(_inertias[0]);
+                _inertias[0] = null;
+            }
         }
     }
 }

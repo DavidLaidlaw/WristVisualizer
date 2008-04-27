@@ -6,8 +6,15 @@ namespace WristVizualizer
 {
     public class SelectedSeriesChangedEventArgs : EventArgs
     {
-        public SelectedSeriesChangedEventArgs()
+        private int _selectedIndex;
+        public SelectedSeriesChangedEventArgs(int selectedIndex)
         {
+            _selectedIndex = selectedIndex;
+        }
+
+        public int SelectedIndex
+        {
+            get { return _selectedIndex; }
         }
     }
 }

@@ -39,6 +39,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoneHideChangeEventArgs.cs" />
+    <Compile Include="FixedBoneChangeEventArgs.cs" />
     <Compile Include="FullWristControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -97,6 +99,7 @@
     <Compile Include="ScenegraphTreeViewer.Designer.cs">
       <DependentUpon>ScenegraphTreeViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="SelectedSeriesChangedEventArgs.cs" />
     <Compile Include="SideSelector.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -176,6 +179,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="WristVizualizerException.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AviFile\AviFile.csproj">
