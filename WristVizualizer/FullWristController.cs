@@ -13,7 +13,6 @@ namespace WristVizualizer
         private bool _showErrors = false;
         private Separator[] _bones;
         private Separator[] _inertias;
-        private string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
         private Wrist _wrist;
         private Transform[][] _transforms;
         private int _currentPositionIndex;
@@ -25,6 +24,10 @@ namespace WristVizualizer
 
         public FullWristController()
         {
+            setupControl();
+            _root = new Separator();
+            _bones = new Separator[Wrist.NumBones];
+            _inertias = new Separator[Wrist.NumBones];
         }
 
         private void loadFullWrist(string radiusFilename)
@@ -34,15 +37,13 @@ namespace WristVizualizer
             //TODO: Block viewSource
             //TODO: Enable ShowInertia
             //TODO: Enable ShowACS
-            _root = new Separator();
-
 
             //First Try and load the wrist data
             _wrist = new Wrist();
             try
             {
                 _wrist.setupWrist(radiusFilename);
-                _transforms = DatParser.makeAllTransforms(_wrist.motionFiles, _bnames.Length);
+                _transforms = DatParser.makeAllTransforms(_wrist.motionFiles, Wrist.NumBones);
                 populateSeriesList();
             }
             catch (ArgumentException ex)
@@ -53,11 +54,11 @@ namespace WristVizualizer
                     //TODO: Change to abort,retry, and find way of cancelling load
                     MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
-                for (int i = 0; i < _bnames.Length; i++)
+                for (int i = 0; i < Wrist.NumBones; i++)
                     _control.disableFixingBone(i);
             }
 
-            for (int i = 0; i < _bnames.Length; i++)
+            for (int i = 0; i < Wrist.NumBones; i++)
             {
                 string fname = _wrist.bpaths[i];
                 if (File.Exists(fname))
@@ -80,6 +81,11 @@ namespace WristVizualizer
             set { _showErrors = value; }
         }
 
+        public FullWristControl Control
+        {
+            get { return _control; }
+        }
+
         private void populateSeriesList()
         {
             _currentPositionIndex = 0;
@@ -97,6 +103,12 @@ namespace WristVizualizer
         public string getFilenameOfFirstFile()
         {
             return Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
+        }
+
+        private void setupControl()
+        {
+            _control = new FullWristControl();
+            _control.setupControl(Wrist.LongBoneNames, true);
         }
 
         private void setupControlEventListeners()

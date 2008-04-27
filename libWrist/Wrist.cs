@@ -29,7 +29,8 @@ namespace libWrist
             public string motionFile;
         }
 
-        private string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
+        private static string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
+        private static string[] _longBnames = { "Radius", "Ulna", "Scaphoid", "Lunate", "Triquetrum", "Pisiform", "Trapezoid", "Trapezium", "Capitate", "Hamate", "MC1", "MC2", "MC3", "MC4", "MC5" };
         private string[] _bpaths;
 
         private string _subjectPath;
@@ -66,7 +67,8 @@ namespace libWrist
             setupPaths();
             findAllSeries();
         }
-#region Public Accessors
+
+        #region Public Accessors
 
         /// <summary>
         /// The wrist's subject (ie. E02366 (data) or 12345 (database))
@@ -152,7 +154,22 @@ namespace libWrist
             }
         }
 
-#endregion
+        public static string[] ShortBoneNames
+        {
+            get { return _bnames; }
+        }
+
+        public static string[] LongBoneNames
+        {
+            get { return _longBnames; }
+        }
+
+        public static int NumBones
+        {
+            get { return _bnames.Length; }
+        }
+
+        #endregion
 
         #region Public Get Methods
         /// <summary>
