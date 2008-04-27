@@ -30,7 +30,7 @@ namespace WristVizualizer
             _inertias = new Separator[Wrist.NumBones];
         }
 
-        private void loadFullWrist(string radiusFilename)
+        public void loadFullWrist(string radiusFilename)
         {
             //TODO: ShowFullWristControlBox
             //TODO: Block importing a file

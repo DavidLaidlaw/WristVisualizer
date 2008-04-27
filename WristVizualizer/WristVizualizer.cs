@@ -16,17 +16,10 @@ namespace WristVizualizer
         private Coin3DBase _base;
         private ExaminerViewer _viewer;
         private Separator _root;
-        private Separator[] _bones;
-        private Separator[] _inertias;
-        private string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
-        private CheckBox[] _hideBoxes;
-        private RadioButton[] _fixRadios;
-        private Wrist _wrist;
-        private Transform[][] _transforms;
-        private int _currentPositionIndex;
-        private int _fixedBoneIndex;
+        
         private Modes _mode = Modes.NONE;
 
+        private FullWristController _fullWristController;
         private PosViewController _posViewController;
 
         private PointSelection _pointSelection;
@@ -53,14 +46,7 @@ namespace WristVizualizer
             _base = new Coin3DBase();
             _viewer = null;
             _root = null;
-            _wrist = null;
-            _bones = new Separator[15];
-            _inertias = new Separator[15];
-            _currentPositionIndex = 0;
-            _fixedBoneIndex = 0;
-            setupControlBox();
-            //showControlBox();            
-
+            
             VersionManager manager = new VersionManager();
             manager.checkForUpdatesAsynch(); //check for updates in the backround
 
@@ -129,44 +115,6 @@ namespace WristVizualizer
         }
 
         #region setupMethods
-
-        private void setupControlBox()
-        {
-            _hideBoxes = new CheckBox[15];
-            _hideBoxes[0] = checkBoxRad;
-            _hideBoxes[1] = checkBoxUln;
-            _hideBoxes[2] = checkBoxSca;
-            _hideBoxes[3] = checkBoxLun;
-            _hideBoxes[4] = checkBoxTrq;
-            _hideBoxes[5] = checkBoxPis;
-            _hideBoxes[6] = checkBoxTpd;
-            _hideBoxes[7] = checkBoxTpm;
-            _hideBoxes[8] = checkBoxCap;
-            _hideBoxes[9] = checkBoxHam;
-            _hideBoxes[10] = checkBoxMC1;
-            _hideBoxes[11] = checkBoxMC2;
-            _hideBoxes[12] = checkBoxMC3;
-            _hideBoxes[13] = checkBoxMC4;
-            _hideBoxes[14] = checkBoxMC5;
-
-            _fixRadios = new RadioButton[15];
-            _fixRadios[0] = radioButtonFixedRad;
-            _fixRadios[1] = radioButtonFixedUln;
-            _fixRadios[2] = radioButtonFixedSca;
-            _fixRadios[3] = radioButtonFixedLun;
-            _fixRadios[4] = radioButtonFixedTrq;
-            _fixRadios[5] = radioButtonFixedPis;
-            _fixRadios[6] = radioButtonFixedTpd;
-            _fixRadios[7] = radioButtonFixedTpm;
-            _fixRadios[8] = radioButtonFixedCap;
-            _fixRadios[9] = radioButtonFixedHam;
-            _fixRadios[10] = radioButtonFixedMC1;
-            _fixRadios[11] = radioButtonFixedMC2;
-            _fixRadios[12] = radioButtonFixedMC3;
-            _fixRadios[13] = radioButtonFixedMC4;
-            _fixRadios[14] = radioButtonFixedMC5;
-        }
-
         private void setupExaminerWindow()
         {
             _viewer = new ExaminerViewer((int)panelCoin.Handle);
@@ -205,7 +153,6 @@ namespace WristVizualizer
             saveAsToolStripMenuItem.Enabled = true;
             showScenegraphToolStripMenuItem.Enabled = true;
             saveMovieToolStripMenuItem.Enabled = false;
-            seriesListBox.Items.Clear();
             if (_pointSelection != null)
             {
                 _pointSelection.stopSelecting();
@@ -218,15 +165,6 @@ namespace WristVizualizer
             }
             hideStatusStrip();
             toolStripStatusLabel1.Text = "";
-            _bones = new Separator[15];
-            for (int i = 0; i < _bnames.Length; i++)
-            {
-                _bones[i] = null;
-                _hideBoxes[i].Checked = false;
-                _hideBoxes[i].Enabled = true;
-                _fixRadios[i].Enabled = true;
-            }
-            radioButtonFixedRad.Checked = true;
 
             resetExaminerViewer();
         }
@@ -399,11 +337,7 @@ namespace WristVizualizer
         }
 
         private void loadFullWrist(string radius, Separator root)
-        {
-            string basepath = Path.GetDirectoryName(radius);
-            string extension = Path.GetExtension(radius);
-            string series = Path.GetFileNameWithoutExtension(radius).Substring(3, 3);
-
+        {            
             //block importing a file
             importToolStripMenuItem.Enabled = false;
             viewSourceToolStripMenuItem.Enabled = false;
@@ -411,46 +345,12 @@ namespace WristVizualizer
             showACSToolStripMenuItem.Enabled = true;
 
             //Setup motion files, etc
-            _wrist = new Wrist();
-            try
-            {
-                _wrist.setupWrist(radius);
-                _transforms = DatParser.makeAllTransforms(_wrist.motionFiles, _bnames.Length);
-                populateSeriesList();
-            }
-            catch (ArgumentException ex)
-            {
-                if (!hideErrorMessagesToolStripMenuItem.Checked)
-                {
-                    string msg = "Error loading wrist kinematics.\n\n" + ex.Message;
-                    //TODO: Change to abort,retry, and find way of cancelling load
-                    MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                }
-                for (int i = 0; i < _bnames.Length; i++)
-                    _fixRadios[i].Enabled = false;
-            }
-            
-
-            for (int i = 0; i < _bnames.Length; i++)
-            {
-                string fname = _wrist.bpaths[i];
-                if (File.Exists(fname))
-                {
-                    _bones[i] = new Separator();
-                    _bones[i].addFile(fname, true);
-                    root.addChild(_bones[i]);
-                }
-                else
-                {
-                    _bones[i] = null;
-                    _hideBoxes[i].Enabled = false;
-                    _fixRadios[i].Enabled = false;
-                }
-            }
+            _fullWristController = new FullWristController();
+            _fullWristController.loadFullWrist(radius);
 
             //set title bar now
-            this.Text = Application.ProductName + " - " + _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
-            _firstFileName = Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
+            this.Text = Application.ProductName + " - " + _fullWristController.getTitleCaption();
+            _firstFileName = _fullWristController.getFilenameOfFirstFile();
         }
 
         #endregion
@@ -486,216 +386,6 @@ namespace WristVizualizer
             files[0] = radFile;
             openFile(files, true);
         }
-
-        #region Special Code for manipulating FullWrists
-        private void populateSeriesList()
-        {
-            if (_wrist != null)
-            {
-                _currentPositionIndex = 0;
-                seriesListBox.Items.Clear();
-                //add neutral
-                seriesListBox.Items.Add(_wrist.neutralSeries);
-                seriesListBox.Items.AddRange(_wrist.series);
-                seriesListBox.SelectedIndex = 0;
-            }
-        }
-
-        void checkBox_CheckedChanged(object sender, System.EventArgs e)
-        {
-            //figure out what check box this is...
-            for (int i = 0; i < _bnames.Length; i++)
-            {
-                if (sender == _hideBoxes[i] && _bones[i]!=null)
-                {
-                    //now hide that bone
-                    if (_hideBoxes[i].Checked)
-                        _bones[i].hide();
-                    else
-                        _bones[i].show();
-                }
-
-            }
-        }
-
-        private void linkLabelShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < _hideBoxes.Length; i++)
-                _hideBoxes[i].Checked = false;
-        }
-
-        private void linkLabelHideAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            for (int i = 0; i < _hideBoxes.Length; i++)
-                _hideBoxes[i].Checked = true;
-        }
-
-
-
-        private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (_currentPositionIndex == seriesListBox.SelectedIndex)
-                return;
-
-            //check if neutral
-            if (seriesListBox.SelectedIndex == 0)
-            {
-                _currentPositionIndex = 0;
-                //do the neutral thing....
-                if (_root.hasTransform())
-                    _root.removeTransform();
-                for (int i = 0; i < _bones.Length; i++)
-                {
-                    if (_bones[i] == null) continue; //skip missing bone
-
-                    if (_bones[i].hasTransform())
-                        _bones[i].removeTransform();
-                }
-            }
-            else
-            {
-                //int seriesIndex = _wrist.getSeriesIndexFromName((string)seriesListBox.SelectedItem);
-                _currentPositionIndex = seriesListBox.SelectedIndex;
-                if (_root.hasTransform())
-                    _root.removeTransform();
-                Transform t = new Transform();
-                //TODO: Fix so this doesn't have to re-parse the motion file from disk each time...
-                DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex - 1))[_fixedBoneIndex], t);
-                t.invert();
-                //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
-                _root.addTransform(t);
-                for (int i = 0; i < _bones.Length; i++)
-                {
-                    //skip missing bones
-                    if (_bones[i] == null) continue;
-
-                    //remove the old
-                    if (_bones[i].hasTransform())
-                        _bones[i].removeTransform();
-
-                    _bones[i].addTransform(_transforms[_currentPositionIndex-1][i]);
-                    if (_transforms[_currentPositionIndex - 1][i].isIdentity())
-                        _hideBoxes[i].Checked = true;
-                }
-            }
-        }
-
-
-
-
-        private void showInertiasToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (showInertiasToolStripMenuItem.Checked)
-            {
-                try
-                {
-                    //If its checked, then we need to add it
-                    TransformRT[] inert = DatParser.parseInertiaFile2(_wrist.inertiaFile);
-                    for (int i = 2; i < 10; i++) //skip the long bones
-                    {
-                        if (_bones[i] == null)
-                            continue;
-
-                        _inertias[i] = new Separator();
-                        Transform t = new Transform();
-                        DatParser.addRTtoTransform(inert[i], t);
-                        _inertias[i].addNode(new ACS());
-                        _inertias[i].addTransform(t);
-                        _bones[i].addChild(_inertias[i]);
-                    }
-                }
-                catch (ArgumentException ex)
-                {
-                    string msg = "Error loading inertia file.\n\n" + ex.Message;
-                    MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    showInertiasToolStripMenuItem.Checked = false;
-                }
-            }
-            else
-            {
-                //so we want to remove the inertia files
-                for (int i = 2; i < 10; i++)
-                {
-                    _bones[i].removeChild(_inertias[i]);
-                    _inertias[i] = null;
-                }
-
-            }
-           
-        }
-
-        private void showACSToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (showACSToolStripMenuItem.Checked)
-            {
-                try
-                {
-                    //If its checked, then we need to add it
-                    TransformRT[] inert = DatParser.parseACSFile2(_wrist.acsFile);
-
-                    //only for radius, check if it exists
-                    if (_bones[0] == null)
-                        return;
-
-                    _inertias[0] = new Separator();
-                    Transform t = new Transform();
-                    DatParser.addRTtoTransform(inert[0], t);
-                    _inertias[0].addNode(new ACS(45)); //longer axes for the radius/ACS
-                    _inertias[0].addTransform(t);
-                    _bones[0].addChild(_inertias[0]);
-                }
-                catch (ArgumentException ex)
-                {
-                    string msg = "Error loading ACS file.\n\n" + ex.Message;
-                    MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    showACSToolStripMenuItem.Checked = false;
-                }
-            }
-            else
-            {
-                //so we want to remove the inertia files
-                _bones[0].removeChild(_inertias[0]);
-                _inertias[0] = null;
-            }
-        }
-
-
-
-        private void radioButtonFixed_CheckedChanged(object sender, EventArgs e)
-        {
-            /* This method will get called twice on a change, once when checked, 
-             * and once when unchecked. To prevent problems, we will ignore 
-             * events for the button that was unchecked, and deal only with
-             * events for the check event
-             */
-            RadioButton b = (RadioButton)sender;
-            if (!b.Checked) return; //only want to deal with the checked button
-
-            //figure out what box this is
-            for (int i = 0; i < _bones.Length; i++)
-            {
-                if (_fixRadios[i] == sender && _bones[i] != null)
-                {
-                    _fixedBoneIndex = i;
-
-                    //do nothing for neutral
-                    if (_currentPositionIndex == 0) return;
-
-                    //so now change the top level
-                    //do the neutral thing....
-                    if (_root.hasTransform())
-                        _root.removeTransform();
-                    
-                    Transform t = new Transform();
-                    DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex - 1))[i], t);
-                    t.invert();
-                    //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
-                    _root.addTransform(t);
-
-                }
-            }
-        }
-        #endregion
 
         /// <summary>
         /// Get the Root Seperator node
