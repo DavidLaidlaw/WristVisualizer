@@ -35,6 +35,8 @@ void libCoin3D::Separator::addFile(System::String^ filename, bool canhide)
 	//make shortFilename safe for coin3d
 	shortFilename = shortFilename->Replace('.', '_');
 	shortFilename = shortFilename->Replace(' ', '_');
+	if (shortFilename->IndexOfAny(((System::String^)"0123456789")->ToCharArray(),0,1)==0) //test if it start with a number
+		shortFilename = "_" + shortFilename;
 	char* test = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename).ToPointer();
 	char* charShortFilename = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(shortFilename).ToPointer();
 
