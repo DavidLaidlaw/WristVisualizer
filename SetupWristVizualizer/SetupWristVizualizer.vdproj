@@ -81,12 +81,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2061027887C34F5D9F1861768D94C7DB"
-        "OwnerKey" = "8:_F243622C778347438998E9D147026D09"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_2193950E00E14838868D4D39E7963D80"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -101,6 +95,12 @@
         {
         "MsmKey" = "8:_22930E4141BE4885A65BD019AA851ADF"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_3789B9C3C8194FD8BCEB6A179D8E00AE"
+        "OwnerKey" = "8:_730E674981774848AC4ED4BC39EFCBC1"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -155,6 +155,12 @@
         {
         "MsmKey" = "8:_71CED6CE67034C1F88905CB7157CCE5C"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_730E674981774848AC4ED4BC39EFCBC1"
+        "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -297,14 +303,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F243622C778347438998E9D147026D09"
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_9F2CFD7931694C24BE82A001B0B71397"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_B34AD8BEC18F4965A24CC94C07D11C88"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_9F2CFD7931694C24BE82A001B0B71397"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -329,24 +347,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_1A266CA7217EC8B01A63DA8D554A0929"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_B34AD8BEC18F4965A24CC94C07D11C88"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_906239E61E9C44B7A48DD8179ACF0FE7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -458,7 +458,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3034.23631, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3040.22513, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_0953C32CAF12873EE464628E361E704F"
@@ -1425,14 +1425,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{14B0CC3D-6D66-4059-BB36-EF3E8D19142E}"
-        "PackageCode" = "8:{35DBFCAA-418F-4ED2-8987-16E7BB250538}"
+        "ProductCode" = "8:{51E4ECF5-FE86-4AB9-98A6-16A19A778D39}"
+        "PackageCode" = "8:{FC5BD8BC-5574-434F-AB87-66BB9D426886}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.2.3"
+        "ProductVersion" = "8:1.3.0"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2211,7 +2211,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2061027887C34F5D9F1861768D94C7DB"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_3789B9C3C8194FD8BCEB6A179D8E00AE"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2225,7 +2225,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_F243622C778347438998E9D147026D09"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_730E674981774848AC4ED4BC39EFCBC1"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
