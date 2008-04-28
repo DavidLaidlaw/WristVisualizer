@@ -143,13 +143,20 @@ namespace WristVizualizer.MRIViewer
                     pictureBox1_MouseLeave(this, null);
                     return;
                 }
-                x = e.X/scale;
-                y = _mri.height - (e.Y/scale) - 1; //flip y coord
+                /* The interpolation algorithm chopps off the top half of the top row, and the 
+                 * left half of the left column; so we need to correct for that in order to
+                 * identify the correct pixel
+                 */
+                int offset = scale / 2;
+                x = (e.X+offset)/scale;
+                y = _mri.height - ((e.Y+offset)/scale) - 1; //flip y coord
             }
             else if (radioButtonZoomStrech.Checked)
             {
-                x = (int)((double)e.X * _mri.width / pictureBox1.Width);
-                y = _mri.height - (int)((double)e.Y * _mri.height / pictureBox1.Height) - 1; //need to flip Y coordinate
+                int offsetX = (int)Math.Ceiling(pictureBox1.Width/_mri.width / 2.0);
+                int offsetY = (int)Math.Ceiling(pictureBox1.Height / _mri.height / 2.0);
+                x = (int)((double)(e.X+offsetX) * _mri.width / pictureBox1.Width);
+                y = _mri.height - (int)((double)(e.Y+offsetY) * _mri.height / pictureBox1.Height) - 1; //need to flip Y coordinate
             }
             else if (radioButtonZoomZoom.Checked)
             {

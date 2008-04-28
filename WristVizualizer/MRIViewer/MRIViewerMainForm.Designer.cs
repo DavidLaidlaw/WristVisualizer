@@ -31,6 +31,7 @@ namespace WristVizualizer.MRIViewer
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MRIViewerMainForm));
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.numericUpDownZoomFactor = new System.Windows.Forms.NumericUpDown();
             this.radioButtonZoomStrech = new System.Windows.Forms.RadioButton();
             this.radioButtonZoomZoom = new System.Windows.Forms.RadioButton();
@@ -74,7 +75,6 @@ namespace WristVizualizer.MRIViewer
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxMRIPath = new System.Windows.Forms.TextBox();
-            this.label16 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoomFactor)).BeginInit();
@@ -119,12 +119,21 @@ namespace WristVizualizer.MRIViewer
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "View Mode";
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(147, 20);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(14, 13);
+            this.label16.TabIndex = 27;
+            this.label16.Text = "X";
+            // 
             // numericUpDownZoomFactor
             // 
             this.numericUpDownZoomFactor.Enabled = false;
             this.numericUpDownZoomFactor.Location = new System.Drawing.Point(111, 16);
             this.numericUpDownZoomFactor.Maximum = new decimal(new int[] {
-            10,
+            20,
             0,
             0,
             0});
@@ -162,9 +171,9 @@ namespace WristVizualizer.MRIViewer
             this.radioButtonZoomZoom.Enabled = false;
             this.radioButtonZoomZoom.Location = new System.Drawing.Point(11, 42);
             this.radioButtonZoomZoom.Name = "radioButtonZoomZoom";
-            this.radioButtonZoomZoom.Size = new System.Drawing.Size(52, 17);
+            this.radioButtonZoomZoom.Size = new System.Drawing.Size(88, 17);
             this.radioButtonZoomZoom.TabIndex = 25;
-            this.radioButtonZoomZoom.Text = "Zoom";
+            this.radioButtonZoomZoom.Text = "Scaled Zoom";
             this.radioButtonZoomZoom.UseVisualStyleBackColor = true;
             this.radioButtonZoomZoom.CheckedChanged += new System.EventHandler(this.radioButtonZoom_CheckedChanged);
             // 
@@ -173,9 +182,9 @@ namespace WristVizualizer.MRIViewer
             this.radioButtonNoZoom.AutoSize = true;
             this.radioButtonNoZoom.Location = new System.Drawing.Point(11, 19);
             this.radioButtonNoZoom.Name = "radioButtonNoZoom";
-            this.radioButtonNoZoom.Size = new System.Drawing.Size(69, 17);
+            this.radioButtonNoZoom.Size = new System.Drawing.Size(100, 17);
             this.radioButtonNoZoom.TabIndex = 24;
-            this.radioButtonNoZoom.Text = "No Zoom";
+            this.radioButtonNoZoom.Text = "No Interpolation";
             this.radioButtonNoZoom.UseVisualStyleBackColor = true;
             this.radioButtonNoZoom.CheckedChanged += new System.EventHandler(this.radioButtonZoom_CheckedChanged);
             // 
@@ -559,15 +568,6 @@ namespace WristVizualizer.MRIViewer
             this.textBoxMRIPath.Name = "textBoxMRIPath";
             this.textBoxMRIPath.Size = new System.Drawing.Size(452, 20);
             this.textBoxMRIPath.TabIndex = 5;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(147, 20);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(14, 13);
-            this.label16.TabIndex = 27;
-            this.label16.Text = "X";
             // 
             // MRIViewerMainForm
             // 
