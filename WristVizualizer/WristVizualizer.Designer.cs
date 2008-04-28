@@ -77,12 +77,12 @@ namespace WristVizualizer
             this.checkForupdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCoin = new System.Windows.Forms.Panel();
-            this.panelControl = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.panelPosView = new PosViewControl();
+            this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
+            this.mainLayoutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -313,6 +313,7 @@ namespace WristVizualizer
             this.showInertiasToolStripMenuItem.Name = "showInertiasToolStripMenuItem";
             this.showInertiasToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.showInertiasToolStripMenuItem.Text = "Show Inertias";
+            this.showInertiasToolStripMenuItem.Click += new System.EventHandler(this.showInertiasToolStripMenuItem_Click);
             // 
             // showACSToolStripMenuItem
             // 
@@ -321,6 +322,7 @@ namespace WristVizualizer
             this.showACSToolStripMenuItem.Name = "showACSToolStripMenuItem";
             this.showACSToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
             this.showACSToolStripMenuItem.Text = "Show ACS";
+            this.showACSToolStripMenuItem.Click += new System.EventHandler(this.showACSToolStripMenuItem_Click);
             // 
             // showAxesToolStripMenuItem
             // 
@@ -480,25 +482,14 @@ namespace WristVizualizer
             // panelCoin
             // 
             this.panelCoin.AllowDrop = true;
-            this.panelCoin.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-                        | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
             this.panelCoin.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panelCoin.Location = new System.Drawing.Point(15, 37);
+            this.panelCoin.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panelCoin.Location = new System.Drawing.Point(3, 3);
             this.panelCoin.Name = "panelCoin";
-            this.panelCoin.Size = new System.Drawing.Size(653, 359);
+            this.panelCoin.Size = new System.Drawing.Size(647, 353);
             this.panelCoin.TabIndex = 1;
             this.panelCoin.DragDrop += new System.Windows.Forms.DragEventHandler(this.panelCoin_DragDrop);
             this.panelCoin.DragEnter += new System.Windows.Forms.DragEventHandler(this.panelCoin_DragEnter);
-            // 
-            // panelControl
-            // 
-            this.panelControl.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelControl.Location = new System.Drawing.Point(435, 37);
-            this.panelControl.Name = "panelControl";
-            this.panelControl.Size = new System.Drawing.Size(230, 359);
-            this.panelControl.TabIndex = 32;
-            this.panelControl.Visible = false;
             // 
             // statusStrip1
             // 
@@ -516,26 +507,21 @@ namespace WristVizualizer
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
             this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
             // 
-            // panelPosView
+            // mainLayoutPanel
             // 
-            this.panelPosView.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.panelPosView.currentFrame = 0;
-            this.panelPosView.FPS = new decimal(new int[] {
-            0,
-            0,
-            0,
-            0});
-            this.panelPosView.Location = new System.Drawing.Point(435, 37);
-            this.panelPosView.Name = "panelPosView";
-            this.panelPosView.OverrideMaterial = false;
-            this.panelPosView.PlayButtonEnabled = true;
-            this.panelPosView.ShowHam = false;
-            this.panelPosView.ShowLabels = false;
-            this.panelPosView.Size = new System.Drawing.Size(230, 359);
-            this.panelPosView.StopButtonEnabled = true;
-            this.panelPosView.TabIndex = 34;
-            this.panelPosView.TrackBarEnabled = true;
-            this.panelPosView.Visible = false;
+            this.mainLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.mainLayoutPanel.ColumnCount = 2;
+            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mainLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.mainLayoutPanel.Controls.Add(this.panelCoin, 0, 0);
+            this.mainLayoutPanel.Location = new System.Drawing.Point(15, 37);
+            this.mainLayoutPanel.Name = "mainLayoutPanel";
+            this.mainLayoutPanel.RowCount = 1;
+            this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
+            this.mainLayoutPanel.TabIndex = 34;
             // 
             // WristVizualizer
             // 
@@ -543,23 +529,22 @@ namespace WristVizualizer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(680, 408);
-            this.Controls.Add(this.panelControl);
-            this.Controls.Add(this.panelPosView);
+            this.Controls.Add(this.mainLayoutPanel);
             this.Controls.Add(this.statusStrip1);
-            this.Controls.Add(this.panelCoin);
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MinimumSize = new System.Drawing.Size(500, 429);
             this.Name = "WristVizualizer";
             this.Text = "Wrist Vizualizer";
-            this.Activated += new System.EventHandler(this.WristVizualizer_Activated);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
+            this.Activated += new System.EventHandler(this.WristVizualizer_Activated);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
+            this.mainLayoutPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -581,7 +566,6 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem;
-        private System.Windows.Forms.Panel panelControl;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem saveFrameToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
@@ -618,12 +602,12 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem saveAsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem showScenegraphToolStripMenuItem;
-        private PosViewControl panelPosView;
         private System.Windows.Forms.ToolStripMenuItem openPosViewFileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveMovieToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem calculateInertiasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openTextureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem launchMRIViewerToolStripMenuItem;
+        private System.Windows.Forms.TableLayoutPanel mainLayoutPanel;
     }
 }
 

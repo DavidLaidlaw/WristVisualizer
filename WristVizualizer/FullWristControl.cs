@@ -31,8 +31,8 @@ namespace WristVizualizer
             InitializeComponent();
 
             //TODO: TEMP STUFF - REMOVE
-            string[] bnames = { "Radius", "uln", "sca", "lun", "Triquetrum", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
-            setupControl(bnames, true);
+            //string[] bnames = { "Radius", "uln", "sca", "lun", "Triquetrum", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
+            //setupControl(bnames, true);
         }
 
         #region Public Interfaces

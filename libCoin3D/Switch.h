@@ -13,6 +13,9 @@ public:
 	void addChild(Node^ node);
 	void whichChild(int childIndex);
 	void hideAll();
+	virtual void reference();
+	virtual void unref();
+	virtual void unrefNoDelete();
 private: 
 	SoSwitch* _switch;
 };

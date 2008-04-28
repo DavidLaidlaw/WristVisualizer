@@ -9,7 +9,7 @@ using AviFile;
 
 namespace WristVizualizer
 {
-    class PosViewController
+    class PosViewController : Controller
     {
         ExaminerViewer _viewer;
         Switch[] _bonesSwitch;
@@ -26,15 +26,16 @@ namespace WristVizualizer
         string _posFileName;
 
         //controls
-        PosViewControl _control;
+        private PosViewControl _control;
 
         Timer _timer;
 
-        public PosViewController(string posViewFilename, ExaminerViewer viewer, PosViewControl control)
+        public PosViewController(string posViewFilename, ExaminerViewer viewer)
         {
             _posFileName = posViewFilename;
             _viewer = viewer;
-            _control = control;
+
+            _control = new PosViewControl();
 
             //do the hardwork and read everything
             loadPosView(posViewFilename);
@@ -46,12 +47,12 @@ namespace WristVizualizer
             _control.OverrideMaterial = _reader.SetColor;
             _control.PlayButtonEnabled = false; //we are going to start playing now
             _control.FPS = 10; //default FPS
-            setupEventListeners(); 
+            setupEventListeners();
 
             //setup the timer
             _timer = new Timer();
             _timer.Tick += new EventHandler(_timer_Tick);
-            _timer.Enabled = true;
+            _timer.Enabled = false;
 
             _viewer.setSceneGraph(_root);
             _viewer.viewAll(); //move camera so the whole scene can be viewed
@@ -63,9 +64,14 @@ namespace WristVizualizer
         }
 
         #region Interfaces
-        public Separator Root
+        public override Separator Root
         {
             get { return _root; }
+        }
+
+        public override UserControl Control
+        {
+            get { return _control; }
         }
 
         public int NumPositions
@@ -185,7 +191,7 @@ namespace WristVizualizer
         }
         #endregion
 
-        public void Close()
+        public new void CleanUp()
         {
             _timer.Enabled = false;
             removeCallBacks();
@@ -308,6 +314,7 @@ namespace WristVizualizer
             if (!pos.ShowHams)
                 return s;
 
+            s.reference();
             double[][] HAMdata = DatParser.parsePosViewHAMFile(pos.HAMFileNames[boneIndex]);
             float[][] hamColors = PosViewSettings.PosViewColors;
             for (int i = 0; i < HAMdata.Length; i++)
@@ -322,12 +329,14 @@ namespace WristVizualizer
                 s.addChild(sepPosition);
             }
             s.whichChild(0); //set it to start at the first frame
+            s.unrefNoDelete();
             return s;
         }
 
         private Switch setupPosViewBone(PosViewReader pos, int boneIndex)
         {
             Switch s = new Switch();
+            s.reference();
             _bones[boneIndex] = new Separator();
             //create a material for that bone!
             _boneMaterials[boneIndex] = new Material();
@@ -348,6 +357,7 @@ namespace WristVizualizer
                 s.addChild(sepPosition);
             }
             s.whichChild(0); //set it to start at the first frame
+            s.unrefNoDelete();
             return s;
         }
 

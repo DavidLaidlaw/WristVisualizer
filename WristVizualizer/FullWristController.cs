@@ -8,7 +8,7 @@ using libCoin3D;
 
 namespace WristVizualizer
 {    
-    class FullWristController
+    class FullWristController : Controller
     {
         private bool _showErrors = false;
         private Separator[] _bones;
@@ -25,9 +25,15 @@ namespace WristVizualizer
         public FullWristController()
         {
             setupControl();
+            setupControlEventListeners();
             _root = new Separator();
             _bones = new Separator[Wrist.NumBones];
             _inertias = new Separator[Wrist.NumBones];
+        }
+
+        public new void CleanUp()
+        {
+            removeControlEventListeners();
         }
 
         public void loadFullWrist(string radiusFilename)
@@ -81,9 +87,14 @@ namespace WristVizualizer
             set { _showErrors = value; }
         }
 
-        public FullWristControl Control
+        public override UserControl Control
         {
             get { return _control; }
+        }
+
+        public override Separator Root
+        {
+            get { return _root; }
         }
 
         private void populateSeriesList()

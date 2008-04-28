@@ -12,6 +12,21 @@ SoNode* libCoin3D::Switch::getNode()
 	return _switch;
 }
 
+void libCoin3D::Switch::reference()
+{
+	_switch->ref();
+}
+
+void libCoin3D::Switch::unref()
+{
+	_switch->unref();
+}
+
+void libCoin3D::Switch::unrefNoDelete()
+{
+	_switch->unrefNoDelete();
+}
+
 void libCoin3D::Switch::addChild(libCoin3D::Node ^node) 
 {
 	_switch->addChild(node->getNode());

@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoneHideChangeEventArgs.cs" />
+    <Compile Include="Controller.cs" />
     <Compile Include="FixedBoneChangeEventArgs.cs" />
     <Compile Include="FullWristControl.cs">
       <SubType>UserControl</SubType>
@@ -47,7 +48,8 @@
     <Compile Include="FullWristControl.Designer.cs">
       <DependentUpon>FullWristControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="FullWristController.cs" />
+    <Compile Include="FullWristController.cs">
+    </Compile>
     <Compile Include="LoadTextureDialog.cs">
       <SubType>Form</SubType>
     </Compile>

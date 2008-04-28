@@ -19,8 +19,10 @@ namespace WristVizualizer
         
         private Modes _mode = Modes.NONE;
 
-        private FullWristController _fullWristController;
+        private Controller _currentController;
+
         private PosViewController _posViewController;
+        private FullWristController _fullWristController;
 
         private PointSelection _pointSelection;
         private MaterialEditor _materialEditor;
@@ -64,34 +66,16 @@ namespace WristVizualizer
         }
 
         #region Control Visibility
-        private void hideControlBox()
+        private void addControlBox(UserControl Control)
         {
-            if (panelControl.Visible)
-            {
-                panelCoin.Width = panelCoin.Width + panelControl.Width + 15;
-                panelControl.Visible = false;
-            }
+            //do I need to check for an existing control first... hopefully not
+            mainLayoutPanel.Controls.Add(Control, 1, 0);
         }
 
-        private void showControlBox()
+        private void removeControlBox(UserControl Control)
         {
-            if (!panelControl.Visible)
-            {
-                panelCoin.Width = panelCoin.Width - panelControl.Width - 15;
-                panelControl.Visible = true;
-            }
-        }
-
-        private void setPosViewPanelVisible(bool visible)
-        {
-            if (panelPosView.Visible == visible)
-                return;
-
-            if (visible)
-                panelCoin.Width = panelCoin.Width - panelControl.Width - 15;
-            else
-                panelCoin.Width = panelCoin.Width + panelControl.Width + 15;
-            panelPosView.Visible = visible;
+            if (mainLayoutPanel.Contains(Control))
+                mainLayoutPanel.Controls.Remove(Control);
         }
         #endregion
 
@@ -103,10 +87,13 @@ namespace WristVizualizer
         private void setFormForMode(Modes mode)
         {
             _mode = mode; //update current mode
+
+            if (_currentController.Control != null)
+                addControlBox(_currentController.Control);
+
             switch (mode)
             {
                 case Modes.POSVIEW:
-                    setPosViewPanelVisible(true);
                     importToolStripMenuItem.Enabled = false;
                     saveMovieToolStripMenuItem.Visible = true;
                     saveMovieToolStripMenuItem.Enabled = true;
@@ -134,7 +121,19 @@ namespace WristVizualizer
                 setupExaminerWindow();
 
             this.Text = Application.ProductName;
-            setPosViewPanelVisible(false);
+            if (_currentController != null)
+            {
+                //first remove the control, if it exists
+                if (_currentController.Control != null)
+                {
+                    removeControlBox(_currentController.Control);
+                }
+                _currentController.CleanUp();
+                _currentController = null;
+            }
+
+            _posViewController = null;
+            _fullWristController = null;
 
             importToolStripMenuItem.Enabled = true;
             backgroundColorToolStripMenuItem.Enabled = true;
@@ -158,11 +157,7 @@ namespace WristVizualizer
                 _pointSelection.stopSelecting();
                 _pointSelection = null;
             }
-            if (_posViewController != null)
-            {
-                _posViewController.Close();
-                _posViewController = null;
-            }
+
             hideStatusStrip();
             toolStripStatusLabel1.Text = "";
 
@@ -252,14 +247,11 @@ namespace WristVizualizer
 
             if (loadFull)
             {
-                _mode = Modes.FULL_WRIST;
-                showControlBox();
                 loadFullWrist(filenames[0], _root);
             }
             else
             {
                 _mode = Modes.SCENEVIEWER;
-                hideControlBox();
                 foreach (string filename in filenames)
                     _root.addFile(filename);
 
@@ -347,12 +339,16 @@ namespace WristVizualizer
             //Setup motion files, etc
             _fullWristController = new FullWristController();
             _fullWristController.loadFullWrist(radius);
+            _currentController = _fullWristController;
+            _root = _fullWristController.Root;
+            _viewer.setSceneGraph(_root);
+
+            setFormForMode(Modes.FULL_WRIST);
 
             //set title bar now
             this.Text = Application.ProductName + " - " + _fullWristController.getTitleCaption();
             _firstFileName = _fullWristController.getFilenameOfFirstFile();
         }
-
         #endregion
 
 
@@ -361,9 +357,10 @@ namespace WristVizualizer
         private void loadPosView(string posViewFilename)
         {
             resetForm();
-            setFormForMode(Modes.POSVIEW);
-            _posViewController = new PosViewController(posViewFilename, _viewer, panelPosView);
+            _posViewController = new PosViewController(posViewFilename, _viewer);
+            _currentController = _posViewController;
             _root = _posViewController.Root; //save local copy also
+            setFormForMode(Modes.POSVIEW);
             //_viewer.setDrawStyle(); //attempt to fix rendering problem....fuck
         }
 
@@ -824,6 +821,16 @@ namespace WristVizualizer
         {
             MRIViewer.MRIViewerMainForm viewer = new MRIViewer.MRIViewerMainForm();
             viewer.Show();
+        }
+
+        private void showInertiasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void showACSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
