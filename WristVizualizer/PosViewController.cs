@@ -45,14 +45,15 @@ namespace WristVizualizer
             _control.ShowHam = _reader.ShowHams;
             _control.ShowLabels = _reader.HasLables;
             _control.OverrideMaterial = _reader.SetColor;
-            _control.PlayButtonEnabled = false; //we are going to start playing now
+            _control.PlayButtonEnabled = true; //we are going to start stopped
+            _control.StopButtonEnabled = false;
             _control.FPS = 10; //default FPS
             setupEventListeners();
 
             //setup the timer
             _timer = new Timer();
             _timer.Tick += new EventHandler(_timer_Tick);
-            _timer.Enabled = false;
+            _timer.Enabled = false;  //don't start playing
 
             _viewer.setSceneGraph(_root);
             _viewer.viewAll(); //move camera so the whole scene can be viewed
