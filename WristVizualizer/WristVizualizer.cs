@@ -372,6 +372,15 @@ namespace WristVizualizer
             string baseFolder = Path.GetDirectoryName(Application.ExecutablePath);
             string location = Path.Combine(Path.Combine(Path.Combine("Example", "66582"), "LeftIV"), "66582_rad_L.iv");
             string radFile = Path.Combine(baseFolder, location);
+#if DEBUG
+            if (!File.Exists(radFile))
+            {
+                //second try here for the setup path
+                // start in Vizualizer\WristVizualizer\bin\Deubg, so move up to Vizualizer
+                string vizPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(baseFolder)));
+                radFile = Path.Combine(vizPath, @"SetupWristVizualizer\Sample Wrist\66582\LeftIV\66582_rad_L.iv");
+            }
+#endif
             if (!File.Exists(radFile))
             {
                 string msg = "Unable to find the sample wrist:\n" + radFile + "\n\n";
@@ -825,12 +834,12 @@ namespace WristVizualizer
 
         private void showInertiasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            _fullWristController.setInertiaVisibility(showInertiasToolStripMenuItem.Checked);
         }
 
         private void showACSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            _fullWristController.setACSVisibility(showACSToolStripMenuItem.Checked);
         }
     }
 }
