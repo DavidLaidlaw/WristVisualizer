@@ -169,7 +169,9 @@ namespace WristVizualizer.MRIViewer
             textBoxY.Text = y.ToString();
             textBoxZ.Text = z.ToString();
             textBoxIntensity.Text = _mri.getVoxel(x, y, z, (int)numericUpDownLayer.Value).ToString();
+            textBoxIntensitySigned.Text = ((short)_mri.getVoxel(x,y,z, (int)numericUpDownLayer.Value)).ToString();
             textBoxIntensityScaled.Text = _mri.getVoxel_s(x, y, z, (int)numericUpDownLayer.Value).ToString();
+            textBoxAutoScale.Text = _mri.getVoxel_as(x, y, z, (int)numericUpDownLayer.Value).ToString();
         }
 
         private void pictureBox1_MouseLeave(object sender, EventArgs e)

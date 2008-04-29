@@ -75,6 +75,8 @@ namespace WristVizualizer.MRIViewer
             this.buttonBrowse = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
             this.textBoxMRIPath = new System.Windows.Forms.TextBox();
+            this.textBoxAutoScale = new System.Windows.Forms.TextBox();
+            this.label17 = new System.Windows.Forms.Label();
             this.panel1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownZoomFactor)).BeginInit();
@@ -112,7 +114,7 @@ namespace WristVizualizer.MRIViewer
             this.groupBox3.Controls.Add(this.radioButtonZoomStrech);
             this.groupBox3.Controls.Add(this.radioButtonZoomZoom);
             this.groupBox3.Controls.Add(this.radioButtonNoZoom);
-            this.groupBox3.Location = new System.Drawing.Point(544, 399);
+            this.groupBox3.Location = new System.Drawing.Point(544, 416);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(189, 93);
             this.groupBox3.TabIndex = 25;
@@ -191,6 +193,8 @@ namespace WristVizualizer.MRIViewer
             // groupBox1
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.textBoxAutoScale);
+            this.groupBox1.Controls.Add(this.label17);
             this.groupBox1.Controls.Add(this.textBoxIntensitySigned);
             this.groupBox1.Controls.Add(this.label15);
             this.groupBox1.Controls.Add(this.textBoxIntensityScaled);
@@ -208,14 +212,14 @@ namespace WristVizualizer.MRIViewer
             this.groupBox1.Controls.Add(this.label11);
             this.groupBox1.Location = new System.Drawing.Point(544, 174);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(190, 219);
+            this.groupBox1.Size = new System.Drawing.Size(190, 236);
             this.groupBox1.TabIndex = 23;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Itensity";
             // 
             // textBoxIntensitySigned
             // 
-            this.textBoxIntensitySigned.Location = new System.Drawing.Point(86, 153);
+            this.textBoxIntensitySigned.Location = new System.Drawing.Point(108, 128);
             this.textBoxIntensitySigned.Name = "textBoxIntensitySigned";
             this.textBoxIntensitySigned.ReadOnly = true;
             this.textBoxIntensitySigned.Size = new System.Drawing.Size(60, 20);
@@ -224,15 +228,15 @@ namespace WristVizualizer.MRIViewer
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(6, 157);
+            this.label15.Location = new System.Drawing.Point(3, 132);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(82, 13);
+            this.label15.Size = new System.Drawing.Size(107, 13);
             this.label15.TabIndex = 26;
-            this.label15.Text = "Signed Intensity";
+            this.label15.Text = "Raw Intensity Signed";
             // 
             // textBoxIntensityScaled
             // 
-            this.textBoxIntensityScaled.Location = new System.Drawing.Point(87, 129);
+            this.textBoxIntensityScaled.Location = new System.Drawing.Point(108, 151);
             this.textBoxIntensityScaled.Name = "textBoxIntensityScaled";
             this.textBoxIntensityScaled.ReadOnly = true;
             this.textBoxIntensityScaled.Size = new System.Drawing.Size(60, 20);
@@ -241,7 +245,7 @@ namespace WristVizualizer.MRIViewer
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 133);
+            this.label14.Location = new System.Drawing.Point(27, 155);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(82, 13);
             this.label14.TabIndex = 24;
@@ -250,7 +254,7 @@ namespace WristVizualizer.MRIViewer
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(53, 188);
+            this.label13.Location = new System.Drawing.Point(74, 208);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(33, 13);
             this.label13.TabIndex = 22;
@@ -258,7 +262,7 @@ namespace WristVizualizer.MRIViewer
             // 
             // numericUpDownLayer
             // 
-            this.numericUpDownLayer.Location = new System.Drawing.Point(100, 185);
+            this.numericUpDownLayer.Location = new System.Drawing.Point(121, 205);
             this.numericUpDownLayer.Name = "numericUpDownLayer";
             this.numericUpDownLayer.Size = new System.Drawing.Size(47, 20);
             this.numericUpDownLayer.TabIndex = 21;
@@ -266,7 +270,7 @@ namespace WristVizualizer.MRIViewer
             // 
             // textBoxIntensity
             // 
-            this.textBoxIntensity.Location = new System.Drawing.Point(87, 105);
+            this.textBoxIntensity.Location = new System.Drawing.Point(108, 105);
             this.textBoxIntensity.Name = "textBoxIntensity";
             this.textBoxIntensity.ReadOnly = true;
             this.textBoxIntensity.Size = new System.Drawing.Size(60, 20);
@@ -275,7 +279,7 @@ namespace WristVizualizer.MRIViewer
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(17, 109);
+            this.label9.Location = new System.Drawing.Point(38, 109);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(71, 13);
             this.label9.TabIndex = 20;
@@ -283,7 +287,7 @@ namespace WristVizualizer.MRIViewer
             // 
             // textBoxX
             // 
-            this.textBoxX.Location = new System.Drawing.Point(87, 36);
+            this.textBoxX.Location = new System.Drawing.Point(108, 36);
             this.textBoxX.Name = "textBoxX";
             this.textBoxX.ReadOnly = true;
             this.textBoxX.Size = new System.Drawing.Size(60, 20);
@@ -291,7 +295,7 @@ namespace WristVizualizer.MRIViewer
             // 
             // textBoxY
             // 
-            this.textBoxY.Location = new System.Drawing.Point(87, 59);
+            this.textBoxY.Location = new System.Drawing.Point(108, 59);
             this.textBoxY.Name = "textBoxY";
             this.textBoxY.ReadOnly = true;
             this.textBoxY.Size = new System.Drawing.Size(60, 20);
@@ -299,7 +303,7 @@ namespace WristVizualizer.MRIViewer
             // 
             // textBoxZ
             // 
-            this.textBoxZ.Location = new System.Drawing.Point(87, 82);
+            this.textBoxZ.Location = new System.Drawing.Point(108, 82);
             this.textBoxZ.Name = "textBoxZ";
             this.textBoxZ.ReadOnly = true;
             this.textBoxZ.Size = new System.Drawing.Size(60, 20);
@@ -308,7 +312,7 @@ namespace WristVizualizer.MRIViewer
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(86, 20);
+            this.label2.Location = new System.Drawing.Point(107, 20);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(44, 13);
             this.label2.TabIndex = 14;
@@ -317,7 +321,7 @@ namespace WristVizualizer.MRIViewer
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(72, 40);
+            this.label7.Location = new System.Drawing.Point(93, 40);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(14, 13);
             this.label7.TabIndex = 16;
@@ -326,7 +330,7 @@ namespace WristVizualizer.MRIViewer
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(72, 86);
+            this.label10.Location = new System.Drawing.Point(93, 86);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(14, 13);
             this.label10.TabIndex = 17;
@@ -335,7 +339,7 @@ namespace WristVizualizer.MRIViewer
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(72, 63);
+            this.label11.Location = new System.Drawing.Point(93, 63);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(14, 13);
             this.label11.TabIndex = 18;
@@ -569,6 +573,23 @@ namespace WristVizualizer.MRIViewer
             this.textBoxMRIPath.Size = new System.Drawing.Size(452, 20);
             this.textBoxMRIPath.TabIndex = 5;
             // 
+            // textBoxAutoScale
+            // 
+            this.textBoxAutoScale.Location = new System.Drawing.Point(108, 175);
+            this.textBoxAutoScale.Name = "textBoxAutoScale";
+            this.textBoxAutoScale.ReadOnly = true;
+            this.textBoxAutoScale.Size = new System.Drawing.Size(60, 20);
+            this.textBoxAutoScale.TabIndex = 27;
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(8, 179);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(101, 13);
+            this.label17.TabIndex = 28;
+            this.label17.Text = "Intensity Auto Scale";
+            // 
             // MRIViewerMainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -647,5 +668,7 @@ namespace WristVizualizer.MRIViewer
         private System.Windows.Forms.RadioButton radioButtonZoomZoom;
         private System.Windows.Forms.NumericUpDown numericUpDownZoomFactor;
         private System.Windows.Forms.Label label16;
+        private System.Windows.Forms.TextBox textBoxAutoScale;
+        private System.Windows.Forms.Label label17;
     }
 }
