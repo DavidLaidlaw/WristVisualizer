@@ -1,3 +1,6 @@
+Version 1.3.1
+- Fixed bug: MRIViewer can crash when trying to read pixels on bottom edge. Also, added additional text outputs for mouseover events.
+
 Version 1.3.0
 - Major re-write of main class, to move lots of ugly code into their own controller classes. There SHOULD be no major change to the end user.
 - Fixed bug: Removed warning when loading filename that starts with a number
