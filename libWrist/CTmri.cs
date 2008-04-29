@@ -17,7 +17,7 @@ namespace libWrist
         
         private string _mriDirectory;
 
-        private short[] _minIntensity, _maxIntensity;
+        private ushort[] _minIntensity, _maxIntensity;
         private int[] _imageOffset;
         private double[] _imageScale;
 
@@ -28,7 +28,7 @@ namespace libWrist
 		private double _voxelSizeX;
 		private double _voxelSizeY;
 		private double _voxelSizeZ;
-		private short[][] _data;
+		private ushort[][] _data;
         private Bitmap[][] _bitmaps;
 		private Formats _format;
 		public enum Formats { Sign16, USign16, Sign8, USign8 };
@@ -45,10 +45,10 @@ namespace libWrist
 			readDimensions(mriDirectory);
 
             //setup the data storage locations
-            _data = new short[_layers][];
+            _data = new ushort[_layers][];
             _bitmaps = new Bitmap[_layers][];
-            _minIntensity = new short[_layers];
-            _maxIntensity = new short[_layers];
+            _minIntensity = new ushort[_layers];
+            _maxIntensity = new ushort[_layers];
             _imageOffset = new int[_layers];
             _imageScale = new double[_layers];
 		}
@@ -124,9 +124,9 @@ namespace libWrist
         private void readDataToShort(string mriDirectory) { readDataToShort(mriDirectory, 0); }
         private void readDataToShort(string mriDirectory, int echo)
         {
-            _data[echo] = new short[_height * _width * _depth];
-            _minIntensity[echo] = short.MaxValue;
-            _maxIntensity[echo] = short.MinValue;
+            _data[echo] = new ushort[_height * _width * _depth];
+            _minIntensity[echo] = ushort.MaxValue;
+            _maxIntensity[echo] = ushort.MinValue;
 
             int startSlice = 0;
             int endSlicePlusOne = _depth; //its a normal for loop, so its 1 more because we don't read the last one
@@ -167,7 +167,7 @@ namespace libWrist
 
                 for (int j = startIndex; j < endIndexPlusOne; j++)
                 {
-                    _data[echo][(i * _width * _height) + j] = ShortSwap((short)r.ReadUInt16());
+                    _data[echo][(i * _width * _height) + j] = ShortSwap((ushort)r.ReadUInt16());
                     if (_data[echo][(i * _width * _height) + j] < _minIntensity[echo])
                         _minIntensity[echo] = _data[echo][(i * _width * _height) + j];
                     if (_data[echo][(i * _width * _height) + j] > _maxIntensity[echo])
@@ -267,6 +267,15 @@ namespace libWrist
             _bitmaps = null;
         }
 
+        private ushort ShortSwap(ushort x)
+        {
+            int b1, b2;
+            b1 = x & 255;
+            b2 = (x >> 8) & 255;
+            ushort d = (ushort)((b1 << 8) + b2);
+            return d;
+        }
+
         private short ShortSwap(short x)
 		{
 			int b1, b2;
@@ -327,7 +336,7 @@ namespace libWrist
 		/// <param name="y"></param>
 		/// <param name="z"></param>
 		/// <returns></returns>
-		public short getVoxel(int x, int y, int z, int echo) 
+		public ushort getVoxel(int x, int y, int z, int echo) 
 		{
 			//y = _height - 1 - y; //flip about the y axis - lets do it when we load
 			return _data[echo][z*_width*_height + y*_width + x];

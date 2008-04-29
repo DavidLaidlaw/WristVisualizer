@@ -137,12 +137,6 @@ namespace WristVizualizer.MRIViewer
             if (radioButtonNoZoom.Checked)
             {
                 int scale = (int)numericUpDownZoomFactor.Value;
-                //check if we are outside the picture
-                if (e.X >= _mri.width*scale || e.Y >= _mri.height*scale)
-                {
-                    pictureBox1_MouseLeave(this, null);
-                    return;
-                }
                 /* The interpolation algorithm chopps off the top half of the top row, and the 
                  * left half of the left column; so we need to correct for that in order to
                  * identify the correct pixel
@@ -162,6 +156,13 @@ namespace WristVizualizer.MRIViewer
             {
                 //TODO: don't know how to figure out the margin for the....so nothing to do
                 throw new NotImplementedException("Can't yet have a scaled zoom for images");
+            }
+
+            //check if we are outside the picture
+            if (x >= _mri.width || x < 0 || y >= _mri.height || y < 0)
+            {
+                pictureBox1_MouseLeave(this, null);
+                return;
             }
             
             textBoxX.Text = x.ToString();
