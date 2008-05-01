@@ -70,7 +70,14 @@ namespace WristVizualizer
         private void addControlBox(Control Control)
         {
             //do I need to check for an existing control first... hopefully not
+            int startHeight = mainLayoutPanel.Height;
             mainLayoutPanel.Controls.Add(Control, 1, 0);
+
+            if (Control.PreferredSize.Height > startHeight)
+            {
+                //we should expand the size of the main form....
+                this.Height += Control.PreferredSize.Height - startHeight;
+            }
         }
 
         private void removeControlBox(Control Control)
