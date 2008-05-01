@@ -16,7 +16,8 @@ namespace WristVizualizer
         private const string RT_FILE_PATTERN = @"anim\{0}_AVG_anim.RT";
         private const string COLOR_FILE_PATTERN = @"color\{0}color.dat";
 
-        private const int NUM_BONES = 4; //TODO: should be 10 :)
+        private const int DEFAULT_FPS = 10;
+        private const int NUM_BONES = 10;
 
         private int _numPositions;
 
@@ -32,6 +33,7 @@ namespace WristVizualizer
 
         //save state information
         private Switch _currentRelativeBoneInverseSwitch;
+        Timer _timer;
 
         public DistvController()
         {
@@ -39,6 +41,33 @@ namespace WristVizualizer
 
             setupDistv();
             setupControl();
+            setupTimer();
+        }
+
+        private void setupTimer()
+        {
+            //setup the timer
+            _timer = new Timer();
+            _timer.Tick += new EventHandler(_timer_Tick);
+            _timer.Enabled = false;  //don't start playing
+            setTimeToFPS(_animationControl.FPS);
+        }
+
+        void _timer_Tick(object sender, EventArgs e)
+        {
+            advanceOneFrame();
+        }
+
+        private void setTimeToFPS(decimal FPS)
+        {
+            //need to convert from FPS -> Miliseconds/frame
+            _timer.Interval = (int)(1000 / (double)FPS);
+        }
+
+        public void advanceOneFrame()
+        {
+            _animationControl.currentFrame++;  //advance one
+            updateFrame(_animationControl.currentFrame);
         }
 
         private void setupControl()
@@ -54,6 +83,9 @@ namespace WristVizualizer
 
             _animationControl = new AnimationControl();
             _animationControl.setupController(_numPositions);
+            _animationControl.FPS = DEFAULT_FPS;
+            _animationControl.StopButtonEnabled = false;
+
             p.addControl(_animationControl);
 
             //save control
@@ -162,17 +194,23 @@ namespace WristVizualizer
 
         void _animationControl_FPSChanged()
         {
-            throw new Exception("The method or operation is not implemented.");
+            setTimeToFPS(_animationControl.FPS);
         }
 
         void _animationControl_StopClicked()
         {
-            throw new Exception("The method or operation is not implemented.");
+            _timer.Enabled = false;
+            _animationControl.StopButtonEnabled = false;
+            _animationControl.PlayButtonEnabled = true;
+            _animationControl.TrackBarEnabled = true;
         }
 
         void _animationControl_PlayClicked()
         {
-            throw new Exception("The method or operation is not implemented.");
+            _timer.Enabled = true;
+            _animationControl.StopButtonEnabled = true;
+            _animationControl.PlayButtonEnabled = false;
+            _animationControl.TrackBarEnabled = false;
         }
 
         void _wristControl_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
@@ -196,7 +234,7 @@ namespace WristVizualizer
 
         void _wristControl_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
         {
-            throw new Exception("The method or operation is not implemented.");
+            _bones[e.BoneIndex].setHidden(e.BoneHidden);
         }
     }
 }

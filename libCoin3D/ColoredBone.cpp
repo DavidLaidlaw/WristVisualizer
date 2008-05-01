@@ -64,14 +64,14 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
     shapehints->shapeType = SoShapeHints::SOLID;
 
     //drawing style;
-    SoDrawStyle *drawstyle = new SoDrawStyle;
+    _drawstyle = new SoDrawStyle;
 
 	if (pTransform != NULL)
 		_node->addChild(pTransform);
 
     //build scene graph
     _node->addChild(shapehints);
-    _node->addChild(drawstyle);
+    _node->addChild(_drawstyle);
 
     _node->addChild(pBoneIndexedFaceSet);
     _node->unrefNoDelete();
@@ -89,4 +89,14 @@ void libCoin3D::ColoredBone::setColorMap(array<int>^ colors)
 	unsigned int* colorData = new unsigned int[_numColoredVertices]; //TODO: Fix memory leak :)
 	System::Runtime::InteropServices::Marshal::Copy(colors,0,(System::IntPtr)colorData,_numColoredVertices);
 	_vertexProperty->orderedRGBA.setValues(0,_numColoredVertices,colorData);
+}
+
+void libCoin3D::ColoredBone::setHidden(bool hidden)
+{
+	if (hidden) {
+		_drawstyle->style = SoDrawStyle::INVISIBLE;
+	}
+	else {
+		_drawstyle->style = SoDrawStyle::FILLED;
+	}
 }

@@ -10,6 +10,7 @@ public:
 	ColoredBone(System::String^ filename);
 	virtual int getNumberVertices() { return _numColoredVertices; }
 	virtual void setColorMap(array<int>^ colors);
+	virtual void setHidden(bool hidden);
 
 	virtual SoNode* getNode() override { return _node; }
 
@@ -17,6 +18,7 @@ public:
 private:
 	SoSeparator* _node;
 	SoVertexProperty* _vertexProperty;
+	SoDrawStyle* _drawstyle;
 	int _numColoredVertices;
 };
 }

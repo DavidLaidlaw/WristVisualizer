@@ -45,7 +45,14 @@ namespace WristVizualizer
         public int currentFrame
         {
             get { return trackBarCurrentFrame.Value; }
-            set { trackBarCurrentFrame.Value = value; }
+            set
+            {
+                //check for a wrapping case
+                if (value > trackBarCurrentFrame.Maximum)
+                    trackBarCurrentFrame.Value = 0;
+                else
+                    trackBarCurrentFrame.Value = value;
+            }
         }
 
         public bool PlayButtonEnabled
