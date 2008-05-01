@@ -1,3 +1,7 @@
+Version 1.3.2
+- Feature: Distv has been ported, now runs.
+- Fixed bug: In fullwrist mode, hitting hide-all or show-all would check bones that were disabled.
+
 Version 1.3.1
 - Fixed bug: MRIViewer can crash when trying to read pixels on bottom edge. Also, added additional text outputs for mouseover events.
 
