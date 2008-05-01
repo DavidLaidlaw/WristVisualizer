@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.IO;
+using System.Windows.Forms;
 using libCoin3D;
 using libWrist;
 
@@ -26,7 +27,27 @@ namespace WristVizualizer
         public DistvController()
         {
             _root = new Separator();
+
             setupDistv();
+            setupControl();
+        }
+
+        private void setupControl()
+        {
+            FullWristControl control = new FullWristControl();
+            control.setupControl(Wrist.LongBoneNames, false);
+            //disable long bones
+            for (int i = 10; i < Wrist.NumBones; i++)
+                control.disableBone(i);
+
+            WristPanelLayoutControl p = new WristPanelLayoutControl();
+            p.addControl(control);
+
+            Button testB = new Button();
+            testB.Text = "Click ME";
+            testB.Size = new System.Drawing.Size(80, 62);
+            p.addControl(testB);
+            _control = p;
         }
 
         public override Separator Root

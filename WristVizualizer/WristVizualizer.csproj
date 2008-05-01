@@ -111,6 +111,12 @@
     </Compile>
     <Compile Include="TextureSettings.cs" />
     <Compile Include="VersionManager.cs" />
+    <Compile Include="WristPanelLayoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WristPanelLayoutControl.Designer.cs">
+      <DependentUpon>WristPanelLayoutControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="WristVizualizer.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -158,6 +164,10 @@
     <EmbeddedResource Include="SideSelector.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SideSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WristPanelLayoutControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WristPanelLayoutControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WristVizualizer.resx">
       <SubType>Designer</SubType>
