@@ -31,7 +31,7 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
 
 	//now lets try and find the parts that we need
 	SoCoordinate3* pCoordinate3 = NULL;
-	//SoNormal* pNormal = NULL;
+	SoTransform* pTransform = NULL;
     SoIndexedFaceSet* pBoneIndexedFaceSet = NULL;
 
 	int numChildren = bone->getNumChildren();
@@ -43,6 +43,10 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
 		else if (bone->getChild(i)->getTypeId()==SoIndexedFaceSet::getClassTypeId())
 		{
 			pBoneIndexedFaceSet = (SoIndexedFaceSet*)bone->getChild(i);
+		}
+		else if (bone->getChild(i)->getTypeId()==SoTransform::getClassTypeId())
+		{
+			pTransform = (SoTransform*)bone->getChild(i);
 		}
 	}
 
@@ -62,7 +66,8 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
     //drawing style;
     SoDrawStyle *drawstyle = new SoDrawStyle;
 
-    //_node->addChild(pTransform);
+	if (pTransform != NULL)
+		_node->addChild(pTransform);
 
     //build scene graph
     _node->addChild(shapehints);
