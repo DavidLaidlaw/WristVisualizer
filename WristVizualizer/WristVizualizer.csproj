@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="BoneHideChangeEventArgs.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="DistvController.cs" />
     <Compile Include="FixedBoneChangeEventArgs.cs" />
     <Compile Include="FullWristControl.cs">
       <SubType>UserControl</SubType>

@@ -208,6 +208,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\ColoredBone.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ExaminerViewer.cpp"
 				>
 			</File>
@@ -299,6 +303,10 @@
 			</File>
 			<File
 				RelativePath=".\Coin3DBase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\ColoredBone.h"
 				>
 			</File>
 			<File

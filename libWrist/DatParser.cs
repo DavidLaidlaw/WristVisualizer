@@ -266,20 +266,20 @@ namespace libWrist
             return dat;
         }
 
-        public static uint[][] parseDistvColorFile(string filename, int numPositions, int numVertices)
+        public static int[][] parseDistvColorFile(string filename, int numPositions, int numVertices)
         {
             if (!File.Exists(filename))
                 throw new ArgumentException("File does not exist. (" + filename + ")");
-            uint[][] dat = new uint[numPositions][];
+            int[][] dat = new int[numPositions][];
 
             using (StreamReader sr = new StreamReader(filename))
             {
                 BinaryReader r = new BinaryReader(sr.BaseStream);
                 for (int i = 0; i < numPositions; i++)
                 {
-                    dat[i] = new uint[numVertices];
+                    dat[i] = new int[numVertices];
                     for (int j=0; j<numVertices; j++)
-                        dat[i][j] = r.ReadUInt32();
+                        dat[i][j] = (int)r.ReadUInt32();
                 }
             }
             return dat;

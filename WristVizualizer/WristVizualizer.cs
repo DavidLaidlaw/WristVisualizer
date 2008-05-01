@@ -38,7 +38,8 @@ namespace WristVizualizer
             SCENEVIEWER,
             FULL_WRIST,
             POSVIEW,
-            TEXTURE
+            TEXTURE,
+            DISTV
         }
 
         public WristVizualizer(string[] fileArgs)
@@ -840,6 +841,16 @@ namespace WristVizualizer
         private void showACSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _fullWristController.setACSVisibility(showACSToolStripMenuItem.Checked);
+        }
+
+        private void loadDistvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            resetForm();
+            DistvController distv = new DistvController();
+            _currentController = distv;
+            _root = distv.Root; //save local copy also
+            _viewer.setSceneGraph(_root);
+            setFormForMode(Modes.DISTV);
         }
     }
 }

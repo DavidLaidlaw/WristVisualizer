@@ -80,6 +80,7 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.loadDistvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -446,6 +447,7 @@ namespace WristVizualizer
             // 
             this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadSampleWristToolStripMenuItem,
+            this.loadDistvToolStripMenuItem,
             this.toolStripSeparator3,
             this.checkForupdatesToolStripMenuItem,
             this.aboutToolStripMenuItem});
@@ -522,6 +524,13 @@ namespace WristVizualizer
             this.mainLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
+            // 
+            // loadDistvToolStripMenuItem
+            // 
+            this.loadDistvToolStripMenuItem.Name = "loadDistvToolStripMenuItem";
+            this.loadDistvToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.loadDistvToolStripMenuItem.Text = "Load Distv";
+            this.loadDistvToolStripMenuItem.Click += new System.EventHandler(this.loadDistvToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -608,6 +617,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem openTextureToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem launchMRIViewerToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel mainLayoutPanel;
+        private System.Windows.Forms.ToolStripMenuItem loadDistvToolStripMenuItem;
     }
 }
 
