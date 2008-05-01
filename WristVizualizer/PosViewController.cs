@@ -26,7 +26,7 @@ namespace WristVizualizer
         string _posFileName;
 
         //controls
-        private PosViewControl _control;
+        private PosViewControl _posViewControl;
 
         Timer _timer;
 
@@ -35,19 +35,19 @@ namespace WristVizualizer
             _posFileName = posViewFilename;
             _viewer = viewer;
 
-            _control = new PosViewControl();
+            _posViewControl = new PosViewControl();
 
             //do the hardwork and read everything
             loadPosView(posViewFilename);
 
             //setup the control
-            _control.setupController(_numPositions, _reader.ShowHams, _reader.HasLables);
-            _control.ShowHam = _reader.ShowHams;
-            _control.ShowLabels = _reader.HasLables;
-            _control.OverrideMaterial = _reader.SetColor;
-            _control.PlayButtonEnabled = true; //we are going to start stopped
-            _control.StopButtonEnabled = false;
-            _control.FPS = 10; //default FPS
+            _posViewControl.setupController(_numPositions, _reader.ShowHams, _reader.HasLables);
+            _posViewControl.ShowHam = _reader.ShowHams;
+            _posViewControl.ShowLabels = _reader.HasLables;
+            _posViewControl.OverrideMaterial = _reader.SetColor;
+            _posViewControl.PlayButtonEnabled = true; //we are going to start stopped
+            _posViewControl.StopButtonEnabled = false;
+            _posViewControl.FPS = 10; //default FPS
             setupEventListeners();
 
             //setup the timer
@@ -70,9 +70,9 @@ namespace WristVizualizer
             get { return _root; }
         }
 
-        public override UserControl Control
+        public override Control Control
         {
-            get { return _control; }
+            get { return _posViewControl; }
         }
 
         public int NumPositions
@@ -113,7 +113,7 @@ namespace WristVizualizer
             //return;
 
             //show save dialogue
-            MovieExportOptions dialog = new MovieExportOptions(_posFileName, _control.FPS);
+            MovieExportOptions dialog = new MovieExportOptions(_posFileName, _posViewControl.FPS);
             dialog.ShowDialog();
 
             //okay, now lets figure out what we are doing here
@@ -181,14 +181,14 @@ namespace WristVizualizer
         {
             for (int i = 0; i < _bonesSwitch.Length; i++)
                 _bonesSwitch[i].whichChild(_currentFrame);
-            if (_control.ShowHam) //only update hams if we are showing them
+            if (_posViewControl.ShowHam) //only update hams if we are showing them
                 for (int i = 0; i < _hamsSwitch.Length; i++)
                     _hamsSwitch[i].whichChild(_currentFrame);
-            if (_control.ShowLabels) //only update label if we are showing
+            if (_posViewControl.ShowLabels) //only update label if we are showing
                 _labels.whichChild(_currentFrame);
 
-            if (_control.currentFrame != _currentFrame)
-                _control.currentFrame = _currentFrame;
+            if (_posViewControl.currentFrame != _currentFrame)
+                _posViewControl.currentFrame = _currentFrame;
         }
         #endregion
 
@@ -200,18 +200,18 @@ namespace WristVizualizer
 
         private void setupEventListeners()
         {
-            _control.TrackbarScroll += new PosViewControl.TrackbarScrollHandler(_control_TrackbarScroll);
-            _control.PlayClicked += new PosViewControl.PlayClickedHandler(_control_PlayClicked);
-            _control.StopClicked += new PosViewControl.StopClickedHandler(_control_StopClicked);
-            _control.FPSChanged += new PosViewControl.FPSChangedHandler(_control_FPSChanged);
-            _control.ShowHamClicked += new PosViewControl.ShowHamClickedHandler(_control_ShowHamClicked);
-            _control.ShowPositionLabelClicked += new PosViewControl.ShowPositionLabelClickedHandler(_control_ShowPositionLabelClicked);
-            _control.OverrideMaterialClicked += new PosViewControl.OverrideMaterialClickedHandler(_control_OverrideMaterialClicked);
+            _posViewControl.TrackbarScroll += new PosViewControl.TrackbarScrollHandler(_control_TrackbarScroll);
+            _posViewControl.PlayClicked += new PosViewControl.PlayClickedHandler(_control_PlayClicked);
+            _posViewControl.StopClicked += new PosViewControl.StopClickedHandler(_control_StopClicked);
+            _posViewControl.FPSChanged += new PosViewControl.FPSChangedHandler(_control_FPSChanged);
+            _posViewControl.ShowHamClicked += new PosViewControl.ShowHamClickedHandler(_control_ShowHamClicked);
+            _posViewControl.ShowPositionLabelClicked += new PosViewControl.ShowPositionLabelClickedHandler(_control_ShowPositionLabelClicked);
+            _posViewControl.OverrideMaterialClicked += new PosViewControl.OverrideMaterialClickedHandler(_control_OverrideMaterialClicked);
         }
 
         void _control_OverrideMaterialClicked()
         {
-            if (_control.OverrideMaterial)
+            if (_posViewControl.OverrideMaterial)
             {
                 //then lets insert that material!
                 for (int i = 0; i < _bones.Length; i++)
@@ -227,7 +227,7 @@ namespace WristVizualizer
 
         void _control_ShowPositionLabelClicked()
         {
-            if (_control.ShowLabels)
+            if (_posViewControl.ShowLabels)
             {
                 //then we need to show them
                 _labels.whichChild(_currentFrame);
@@ -241,7 +241,7 @@ namespace WristVizualizer
 
         void _control_ShowHamClicked()
         {
-            if (_control.ShowHam)
+            if (_posViewControl.ShowHam)
             {
                 //lets show them all
                 foreach (Switch ham in _hamsSwitch)
@@ -256,40 +256,40 @@ namespace WristVizualizer
 
         void _control_FPSChanged()
         {
-            setTimeToFPS(_control.FPS);
+            setTimeToFPS(_posViewControl.FPS);
         }
 
         void _control_StopClicked()
         {
-            _control.PlayButtonEnabled = true;
-            _control.StopButtonEnabled = false;
-            _control.TrackBarEnabled = true;
+            _posViewControl.PlayButtonEnabled = true;
+            _posViewControl.StopButtonEnabled = false;
+            _posViewControl.TrackBarEnabled = true;
 
             _timer.Enabled = false;
         }
 
         void _control_PlayClicked()
         {
-            _control.PlayButtonEnabled = false;
-            _control.StopButtonEnabled = true;
-            _control.TrackBarEnabled = false; 
+            _posViewControl.PlayButtonEnabled = false;
+            _posViewControl.StopButtonEnabled = true;
+            _posViewControl.TrackBarEnabled = false; 
             _timer.Enabled = true;
         }
 
         void _control_TrackbarScroll()
         {
-            CurrentFrame = _control.currentFrame;
+            CurrentFrame = _posViewControl.currentFrame;
         }
 
         private void removeCallBacks()
         {
-            _control.TrackbarScroll -= new PosViewControl.TrackbarScrollHandler(_control_TrackbarScroll);
-            _control.PlayClicked -= new PosViewControl.PlayClickedHandler(_control_PlayClicked);
-            _control.StopClicked -= new PosViewControl.StopClickedHandler(_control_StopClicked);
-            _control.FPSChanged -= new PosViewControl.FPSChangedHandler(_control_FPSChanged);
-            _control.ShowHamClicked -= new PosViewControl.ShowHamClickedHandler(_control_ShowHamClicked);
-            _control.ShowPositionLabelClicked -= new PosViewControl.ShowPositionLabelClickedHandler(_control_ShowPositionLabelClicked);
-            _control.OverrideMaterialClicked -= new PosViewControl.OverrideMaterialClickedHandler(_control_OverrideMaterialClicked);
+            _posViewControl.TrackbarScroll -= new PosViewControl.TrackbarScrollHandler(_control_TrackbarScroll);
+            _posViewControl.PlayClicked -= new PosViewControl.PlayClickedHandler(_control_PlayClicked);
+            _posViewControl.StopClicked -= new PosViewControl.StopClickedHandler(_control_StopClicked);
+            _posViewControl.FPSChanged -= new PosViewControl.FPSChangedHandler(_control_FPSChanged);
+            _posViewControl.ShowHamClicked -= new PosViewControl.ShowHamClickedHandler(_control_ShowHamClicked);
+            _posViewControl.ShowPositionLabelClicked -= new PosViewControl.ShowPositionLabelClickedHandler(_control_ShowPositionLabelClicked);
+            _posViewControl.OverrideMaterialClicked -= new PosViewControl.OverrideMaterialClickedHandler(_control_OverrideMaterialClicked);
         }
 
         private Switch setupPosViewLables(PosViewReader pos)

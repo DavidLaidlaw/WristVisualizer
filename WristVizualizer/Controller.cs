@@ -8,9 +8,9 @@ namespace WristVizualizer
 {
     abstract class Controller
     {
-        public virtual UserControl Control
+        public virtual Control Control
         {
-            get { return null; }
+            get { return _control; }
         }
 
         public abstract Separator Root
@@ -21,5 +21,7 @@ namespace WristVizualizer
         public virtual void CleanUp()
         {
         }
+
+        protected Control _control = null;
     }
 }

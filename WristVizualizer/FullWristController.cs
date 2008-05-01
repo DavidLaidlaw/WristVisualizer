@@ -20,7 +20,7 @@ namespace WristVizualizer
 
         private Separator _root;
 
-        private FullWristControl _control;
+        private FullWristControl _wristControl;
 
         public FullWristController()
         {
@@ -61,7 +61,7 @@ namespace WristVizualizer
                     MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
                 for (int i = 0; i < Wrist.NumBones; i++)
-                    _control.disableFixingBone(i);
+                    _wristControl.disableFixingBone(i);
             }
 
             for (int i = 0; i < Wrist.NumBones; i++)
@@ -76,7 +76,7 @@ namespace WristVizualizer
                 else
                 {
                     _bones[i] = null;
-                    _control.disableBone(i);
+                    _wristControl.disableBone(i);
                 }
             }
         }
@@ -87,9 +87,9 @@ namespace WristVizualizer
             set { _showErrors = value; }
         }
 
-        public override UserControl Control
+        public override Control Control
         {
-            get { return _control; }
+            get { return _wristControl; }
         }
 
         public override Separator Root
@@ -100,10 +100,10 @@ namespace WristVizualizer
         private void populateSeriesList()
         {
             _currentPositionIndex = 0;
-            _control.clearSeriesList();
-            _control.addToSeriesList(_wrist.neutralSeries);
-            _control.addToSeriesList(_wrist.series);
-            _control.selectedSeriesIndex = 0;
+            _wristControl.clearSeriesList();
+            _wristControl.addToSeriesList(_wrist.neutralSeries);
+            _wristControl.addToSeriesList(_wrist.series);
+            _wristControl.selectedSeriesIndex = 0;
         }
 
         public string getTitleCaption()
@@ -118,22 +118,22 @@ namespace WristVizualizer
 
         private void setupControl()
         {
-            _control = new FullWristControl();
-            _control.setupControl(Wrist.LongBoneNames, true);
+            _wristControl = new FullWristControl();
+            _wristControl.setupControl(Wrist.LongBoneNames, true);
         }
 
         private void setupControlEventListeners()
         {
-            _control.BoneHideChanged += new BoneHideChangedHandler(_control_BoneHideChanged);
-            _control.FixedBoneChanged += new FixedBoneChangedHandler(_control_FixedBoneChanged);
-            _control.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
+            _wristControl.BoneHideChanged += new BoneHideChangedHandler(_control_BoneHideChanged);
+            _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_control_FixedBoneChanged);
+            _wristControl.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
         }
 
         private void removeControlEventListeners()
         {
-            _control.BoneHideChanged -= new BoneHideChangedHandler(_control_BoneHideChanged);
-            _control.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);
-            _control.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
+            _wristControl.BoneHideChanged -= new BoneHideChangedHandler(_control_BoneHideChanged);
+            _wristControl.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);
+            _wristControl.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
         }
 
         void _control_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
@@ -179,7 +179,7 @@ namespace WristVizualizer
 
                     _bones[i].addTransform(_transforms[_currentPositionIndex - 1][i]);
                     if (_transforms[_currentPositionIndex - 1][i].isIdentity())
-                        _control.hideBone(i);
+                        _wristControl.hideBone(i);
                 }
             }
         }

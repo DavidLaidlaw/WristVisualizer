@@ -67,13 +67,13 @@ namespace WristVizualizer
         }
 
         #region Control Visibility
-        private void addControlBox(UserControl Control)
+        private void addControlBox(Control Control)
         {
             //do I need to check for an existing control first... hopefully not
             mainLayoutPanel.Controls.Add(Control, 1, 0);
         }
 
-        private void removeControlBox(UserControl Control)
+        private void removeControlBox(Control Control)
         {
             if (mainLayoutPanel.Contains(Control))
                 mainLayoutPanel.Controls.Remove(Control);
