@@ -204,13 +204,19 @@ namespace WristVizualizer
         private void linkLabelShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             for (int i = 0; i < _checkBoxesHide.Length; i++)
-                _checkBoxesHide[i].Checked = false;
+            {
+                if (_checkBoxesHide[i].Enabled)
+                    _checkBoxesHide[i].Checked = false;
+            }
         }
 
         private void linkLabelHideAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             for (int i = 0; i < _checkBoxesHide.Length; i++)
-                _checkBoxesHide[i].Checked = true;
+            {
+                if (_checkBoxesHide[i].Enabled)
+                    _checkBoxesHide[i].Checked = true;
+            }
         }
         #endregion
     }
