@@ -18,6 +18,7 @@ namespace WristVizualizer
         private const int NUM_BONES = 10;
 
         private Separator _root;
+        private Separator[] _boneSeparators;
         private ColoredBone[] _bones;
         private Switch[] _transforms;
         private int[][][] _colorData;
@@ -50,6 +51,7 @@ namespace WristVizualizer
         private void setupDistv()
         {
             _bones = new ColoredBone[NUM_BONES];
+            _boneSeparators = new Separator[NUM_BONES];
             _transforms = new Switch[NUM_BONES];
             _colorData = new int[NUM_BONES][][];
 
@@ -58,6 +60,7 @@ namespace WristVizualizer
                 string bonePath = Path.Combine(DISTV_ROOT, String.Format(BONE_FILE_PATTERN, Wrist.ShortBoneNames[i]));
                 string transformPath = Path.Combine(DISTV_ROOT, String.Format(RT_FILE_PATTERN, Wrist.ShortBoneNames[i]));
                 string colorPath = Path.Combine(DISTV_ROOT, String.Format(COLOR_FILE_PATTERN, Wrist.ShortBoneNames[i]));
+                _boneSeparators[i] = new Separator();
                 _bones[i] = new ColoredBone(bonePath);
 
                 _transforms[i] = new Switch();
@@ -72,7 +75,9 @@ namespace WristVizualizer
                 _colorData[i] = DatParser.parseDistvColorFile(colorPath, tfrm.Length, _bones[i].getNumberVertices());
 
                 //TODO: Add swich in with transforms....
-                _root.addNode(_bones[i]);
+                _boneSeparators[i].addNode(_transforms[i]);
+                _boneSeparators[i].addNode(_bones[i]);
+                _root.addChild(_boneSeparators[i]);
             }
 
             setAllColorMaps(0);
