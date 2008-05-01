@@ -23,11 +23,15 @@ namespace WristVizualizer
         private Separator _root;
         private Separator[] _boneSeparators;
         private ColoredBone[] _bones;
-        private Switch[] _transforms;
+        private Switch[] _transformsSwitch;
+        private Switch[] _inverseTransformsSwitch;
         private int[][][] _colorData;
 
         private FullWristControl _wristControl;
         private AnimationControl _animationControl;
+
+        //save state information
+        private Switch _currentRelativeBoneInverseSwitch;
 
         public DistvController()
         {
@@ -83,7 +87,8 @@ namespace WristVizualizer
         {
             _bones = new ColoredBone[NUM_BONES];
             _boneSeparators = new Separator[NUM_BONES];
-            _transforms = new Switch[NUM_BONES];
+            _transformsSwitch = new Switch[NUM_BONES];
+            _inverseTransformsSwitch = new Switch[NUM_BONES];
             _colorData = new int[NUM_BONES][][];
 
             for (int i = 0; i < NUM_BONES; i++)
@@ -94,20 +99,27 @@ namespace WristVizualizer
                 _boneSeparators[i] = new Separator();
                 _bones[i] = new ColoredBone(bonePath);
 
-                _transforms[i] = new Switch();
+                _transformsSwitch[i] = new Switch();
+                _inverseTransformsSwitch[i] = new Switch();
                 TransformRT[] tfrm = DatParser.parseRTFileWithHeaderToRT(transformPath);
                 for (int j = 0; j < tfrm.Length; j++)
                 {
                     Transform t1 = new Transform();
                     DatParser.addRTtoTransform(tfrm[j], t1);
-                    _transforms[i].addChild(t1);
+                    _transformsSwitch[i].addChild(t1);
+
+                    //now the inverse to allow us to fix another bone
+                    Transform t2 = new Transform();
+                    DatParser.addRTtoTransform(tfrm[j], t2);
+                    t2.invert();
+                    _inverseTransformsSwitch[i].addChild(t2);
                 }
                 _numPositions = tfrm.Length; //TODO: Check that all are the same...
 
                 _colorData[i] = DatParser.parseDistvColorFile(colorPath, tfrm.Length, _bones[i].getNumberVertices());
 
                 //TODO: Add swich in with transforms....
-                _boneSeparators[i].addNode(_transforms[i]);
+                _boneSeparators[i].addNode(_transformsSwitch[i]);
                 _boneSeparators[i].addNode(_bones[i]);
                 _root.addChild(_boneSeparators[i]);
             }
@@ -118,8 +130,10 @@ namespace WristVizualizer
         private void updateFrame(int frame)
         {
             for (int i = 0; i < _bones.Length; i++)
-                _transforms[i].whichChild(frame);
+                _transformsSwitch[i].whichChild(frame);
             setAllColorMaps(frame);
+            if (_currentRelativeBoneInverseSwitch != null)
+                _currentRelativeBoneInverseSwitch.whichChild(frame);
         }
 
         private void setAllColorMaps(int positionIndex)
@@ -163,7 +177,21 @@ namespace WristVizualizer
 
         void _wristControl_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
-            throw new Exception("The method or operation is not implemented.");
+            //check for existing inverse swtich
+            if (_currentRelativeBoneInverseSwitch != null)
+            {
+                _root.removeChild(_currentRelativeBoneInverseSwitch);
+            }
+
+            //if this is the 0 index bone, then we don't do anything :)
+            if (e.BoneIndex == 0)
+                return;
+
+            //now lets add in the new one.
+            _root.insertNode(_inverseTransformsSwitch[e.BoneIndex],0);
+            _currentRelativeBoneInverseSwitch = _inverseTransformsSwitch[e.BoneIndex];
+            int currentFrame = _animationControl.currentFrame;
+            _currentRelativeBoneInverseSwitch.whichChild(currentFrame);
         }
 
         void _wristControl_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
