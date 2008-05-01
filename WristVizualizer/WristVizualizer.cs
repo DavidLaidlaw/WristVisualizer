@@ -853,7 +853,26 @@ namespace WristVizualizer
         private void loadDistvToolStripMenuItem_Click(object sender, EventArgs e)
         {
             resetForm();
-            DistvController distv = new DistvController();
+            DistvController distv = null;
+            string basePath = @"P:\WORKING_OI_CODE\distv\datta";
+#if DEBUG
+            if (!Directory.Exists(basePath))
+            {
+                string vizPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath))));
+                basePath = Path.Combine(vizPath, @"SetupWristVizualizer\Sample DistV Data\"); //doesn't yet exist :)
+            }
+#endif
+            try
+            {
+                distv = new DistvController(basePath);
+            }
+            catch
+            {
+                string msg = "Unable to load the Distv data.\n\n";
+                msg += "You must be connected to the private network to access these files, sorry.";
+                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
             _currentController = distv;
             _root = distv.Root; //save local copy also
             _viewer.setSceneGraph(_root);

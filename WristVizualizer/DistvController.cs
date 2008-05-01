@@ -35,14 +35,17 @@ namespace WristVizualizer
         private Switch _currentRelativeBoneInverseSwitch;
         Timer _timer;
 
-        public DistvController()
+
+        public DistvController(string dataRootDirectory)
         {
             _root = new Separator();
 
-            setupDistv();
+            setupDistv(dataRootDirectory);
             setupControl();
             setupTimer();
         }
+
+        public DistvController() : this(DISTV_ROOT) { }
 
         private void setupTimer()
         {
@@ -115,7 +118,7 @@ namespace WristVizualizer
             return level1;
         }
 
-        private void setupDistv()
+        private void setupDistv(string rootPath)
         {
             _bones = new ColoredBone[NUM_BONES];
             _boneSeparators = new Separator[NUM_BONES];
@@ -125,9 +128,9 @@ namespace WristVizualizer
 
             for (int i = 0; i < NUM_BONES; i++)
             {
-                string bonePath = Path.Combine(DISTV_ROOT, String.Format(BONE_FILE_PATTERN, Wrist.ShortBoneNames[i]));
-                string transformPath = Path.Combine(DISTV_ROOT, String.Format(RT_FILE_PATTERN, Wrist.ShortBoneNames[i]));
-                string colorPath = Path.Combine(DISTV_ROOT, String.Format(COLOR_FILE_PATTERN, Wrist.ShortBoneNames[i]));
+                string bonePath = Path.Combine(rootPath, String.Format(BONE_FILE_PATTERN, Wrist.ShortBoneNames[i]));
+                string transformPath = Path.Combine(rootPath, String.Format(RT_FILE_PATTERN, Wrist.ShortBoneNames[i]));
+                string colorPath = Path.Combine(rootPath, String.Format(COLOR_FILE_PATTERN, Wrist.ShortBoneNames[i]));
                 _boneSeparators[i] = new Separator();
                 _bones[i] = new ColoredBone(bonePath);
 
