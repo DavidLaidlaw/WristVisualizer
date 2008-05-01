@@ -79,6 +79,21 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
 
     //delete file contents
     bone->unref();
+
+	_fullColormap = NULL;
+	_colorData = new unsigned int[_numColoredVertices]; //TODO: Fix memory leak :)
+}
+
+libCoin3D::ColoredBone::!ColoredBone()
+{
+	if (_fullColormap != NULL) {
+		for (int i=0; i< _numPositions; i++)
+			if (_fullColormap[i] != NULL)
+				delete _fullColormap[i];
+		delete _fullColormap;
+	}
+	if (_colorData != NULL)
+		delete _colorData;
 }
 
 void libCoin3D::ColoredBone::setColorMap(array<int>^ colors)
@@ -86,9 +101,24 @@ void libCoin3D::ColoredBone::setColorMap(array<int>^ colors)
 	if (colors->Length != _numColoredVertices)
 		throw gcnew System::ArgumentException("length of color array does not match the number of vertices");
 
-	unsigned int* colorData = new unsigned int[_numColoredVertices]; //TODO: Fix memory leak :)
-	System::Runtime::InteropServices::Marshal::Copy(colors,0,(System::IntPtr)colorData,_numColoredVertices);
-	_vertexProperty->orderedRGBA.setValues(0,_numColoredVertices,colorData);
+	//unsigned int* colorData = new unsigned int[_numColoredVertices]; //TODO: Fix memory leak :)
+	System::Runtime::InteropServices::Marshal::Copy(colors,0,(System::IntPtr)_colorData,_numColoredVertices);
+	_vertexProperty->orderedRGBA.setValues(0,_numColoredVertices,_colorData);
+}
+
+void libCoin3D::ColoredBone::setColorIndex(int index)
+{
+	_vertexProperty->orderedRGBA.setValues(0,_numColoredVertices,_fullColormap[index]);
+}
+
+void libCoin3D::ColoredBone::setupFullColorMap(array<array<int>^>^ colors)
+{
+	_fullColormap = new unsigned int*[colors->Length];
+	_numPositions = colors->Length;
+	for (int i=0; i<colors->Length; i++) {
+		_fullColormap[i] = new unsigned int[_numColoredVertices];
+		System::Runtime::InteropServices::Marshal::Copy(colors[i],0,(System::IntPtr)_fullColormap[i],_numColoredVertices);
+	}
 }
 
 void libCoin3D::ColoredBone::setHidden(bool hidden)

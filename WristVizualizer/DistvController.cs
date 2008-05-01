@@ -149,6 +149,7 @@ namespace WristVizualizer
                 _numPositions = tfrm.Length; //TODO: Check that all are the same...
 
                 _colorData[i] = DatParser.parseDistvColorFile(colorPath, tfrm.Length, _bones[i].getNumberVertices());
+                _bones[i].setupFullColorMap(_colorData[i]);
 
                 //TODO: Add swich in with transforms....
                 _boneSeparators[i].addNode(_transformsSwitch[i]);
@@ -170,10 +171,15 @@ namespace WristVizualizer
 
         private void setAllColorMaps(int positionIndex)
         {
+            //System.Diagnostics.Stopwatch watch = new System.Diagnostics.Stopwatch();
+            //watch.Start();
             for (int i = 0; i < _bones.Length; i++)
             {
-                _bones[i].setColorMap(_colorData[i][positionIndex]);
+                //_bones[i].setColorMap(_colorData[i][positionIndex]);
+                _bones[i].setColorIndex(positionIndex);
             }
+            //watch.Stop();
+            //Console.WriteLine("Color Update Took: " + watch.ElapsedTicks.ToString());
         }
 
         private void setupEventListeners()
