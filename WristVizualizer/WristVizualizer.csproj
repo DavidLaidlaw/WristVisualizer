@@ -39,6 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AnimationControl.Designer.cs">
+      <DependentUpon>AnimationControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="BoneHideChangeEventArgs.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DistvController.cs" />
@@ -125,6 +131,10 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AnimationControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AnimationControl.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FullWristControl.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FullWristControl.cs</DependentUpon>

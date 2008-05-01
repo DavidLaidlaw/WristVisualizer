@@ -43,10 +43,13 @@ namespace WristVizualizer
             WristPanelLayoutControl p = new WristPanelLayoutControl();
             p.addControl(control);
 
-            Button testB = new Button();
-            testB.Text = "Click ME";
-            testB.Size = new System.Drawing.Size(80, 62);
-            p.addControl(testB);
+            AnimationControl ac = new AnimationControl();
+
+            //Button testB = new Button();
+            //testB.Text = "Click ME";
+            //testB.Size = new System.Drawing.Size(80, 62);
+            //p.addControl(testB);
+            p.addControl(ac);
             _control = p;
         }
 
