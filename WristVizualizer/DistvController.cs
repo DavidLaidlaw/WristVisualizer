@@ -16,13 +16,18 @@ namespace WristVizualizer
         private const string RT_FILE_PATTERN = @"anim\{0}_AVG_anim.RT";
         private const string COLOR_FILE_PATTERN = @"color\{0}color.dat";
 
-        private const int NUM_BONES = 10;
+        private const int NUM_BONES = 4; //TODO: should be 10 :)
+
+        private int _numPositions;
 
         private Separator _root;
         private Separator[] _boneSeparators;
         private ColoredBone[] _bones;
         private Switch[] _transforms;
         private int[][][] _colorData;
+
+        private FullWristControl _wristControl;
+        private AnimationControl _animationControl;
 
         public DistvController()
         {
@@ -34,29 +39,31 @@ namespace WristVizualizer
 
         private void setupControl()
         {
-            FullWristControl control = new FullWristControl();
-            control.setupControl(Wrist.LongBoneNames, false);
+            _wristControl = new FullWristControl();
+            _wristControl.setupControl(Wrist.LongBoneNames, false);
             //disable long bones
             for (int i = 10; i < Wrist.NumBones; i++)
-                control.disableBone(i);
+                _wristControl.disableBone(i);
 
             WristPanelLayoutControl p = new WristPanelLayoutControl();
-            p.addControl(control);
+            p.addControl(_wristControl);
 
-            AnimationControl ac = new AnimationControl();
+            _animationControl = new AnimationControl();
+            _animationControl.setupController(_numPositions);
+            p.addControl(_animationControl);
 
-            //Button testB = new Button();
-            //testB.Text = "Click ME";
-            //testB.Size = new System.Drawing.Size(80, 62);
-            //p.addControl(testB);
-            p.addControl(ac);
+            //save control
             _control = p;
+
+            setupEventListeners();
         }
 
         public override Separator Root
         {
             get { return _root; }
         }
+
+        
 
         public static Separator test()
         {
@@ -95,6 +102,7 @@ namespace WristVizualizer
                     DatParser.addRTtoTransform(tfrm[j], t1);
                     _transforms[i].addChild(t1);
                 }
+                _numPositions = tfrm.Length; //TODO: Check that all are the same...
 
                 _colorData[i] = DatParser.parseDistvColorFile(colorPath, tfrm.Length, _bones[i].getNumberVertices());
 
@@ -107,12 +115,60 @@ namespace WristVizualizer
             setAllColorMaps(0);
         }
 
+        private void updateFrame(int frame)
+        {
+            for (int i = 0; i < _bones.Length; i++)
+                _transforms[i].whichChild(frame);
+            setAllColorMaps(frame);
+        }
+
         private void setAllColorMaps(int positionIndex)
         {
             for (int i = 0; i < _bones.Length; i++)
             {
                 _bones[i].setColorMap(_colorData[i][positionIndex]);
             }
+        }
+
+        private void setupEventListeners()
+        {
+            _wristControl.BoneHideChanged += new BoneHideChangedHandler(_wristControl_BoneHideChanged);
+            _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_wristControl_FixedBoneChanged);
+            _animationControl.PlayClicked += new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
+            _animationControl.StopClicked += new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
+            _animationControl.FPSChanged += new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
+            _animationControl.TrackbarScroll += new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
+        }
+
+        void _animationControl_TrackbarScroll()
+        {
+            int frame = _animationControl.currentFrame;
+            updateFrame(frame);
+        }
+
+        void _animationControl_FPSChanged()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        void _animationControl_StopClicked()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        void _animationControl_PlayClicked()
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        void _wristControl_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
+        {
+            throw new Exception("The method or operation is not implemented.");
+        }
+
+        void _wristControl_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
     }
 }

@@ -44,6 +44,7 @@ namespace WristVizualizer
             this.trackBarCurrentFrame.Name = "trackBarCurrentFrame";
             this.trackBarCurrentFrame.Size = new System.Drawing.Size(205, 45);
             this.trackBarCurrentFrame.TabIndex = 17;
+            this.trackBarCurrentFrame.Scroll += new System.EventHandler(this.trackBarCurrentFrame_Scroll);
             // 
             // label19
             // 

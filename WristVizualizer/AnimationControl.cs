@@ -25,7 +25,7 @@ namespace WristVizualizer
             InitializeComponent();
         }
 
-        public void setupController(int numberOfFrames, bool hasHAMAxes, bool hasLabels)
+        public void setupController(int numberOfFrames)
         {
             trackBarCurrentFrame.Minimum = 0;
             trackBarCurrentFrame.Maximum = numberOfFrames - 1;
