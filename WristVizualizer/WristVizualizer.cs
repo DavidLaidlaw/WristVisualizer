@@ -854,7 +854,7 @@ namespace WristVizualizer
         {
             resetForm();
             DistvController distv = null;
-            string basePath = @"P:\WORKING_OI_CODE\distv\datta";
+            string basePath = @"P:\WORKING_OI_CODE\distv\data";
 #if DEBUG
             if (!Directory.Exists(basePath))
             {
