@@ -9,6 +9,7 @@ public ref class Switch : Node
 {
 public:
 	Switch();
+	!Switch();
 	virtual SoNode* getNode() override;
 	void addChild(Node^ node);
 	void whichChild(int childIndex);

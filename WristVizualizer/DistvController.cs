@@ -228,6 +228,7 @@ namespace WristVizualizer
             if (_currentRelativeBoneInverseSwitch != null)
             {
                 _root.removeChild(_currentRelativeBoneInverseSwitch);
+                _currentRelativeBoneInverseSwitch = null;
             }
 
             //if this is the 0 index bone, then we don't do anything :)

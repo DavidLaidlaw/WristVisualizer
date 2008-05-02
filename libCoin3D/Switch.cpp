@@ -4,6 +4,12 @@
 libCoin3D::Switch::Switch()
 {
 	_switch = new SoSwitch();
+	_switch->ref();
+}
+
+libCoin3D::Switch::!Switch()
+{
+	_switch->unref();
 }
 
 
