@@ -139,7 +139,8 @@ void updateTextureCB( void * data, SoSensor * )
 	float numSlices = (float)textureCBdata->numSlices;
 
 	//determine the index of the image data that we need (in the full buffer)
-	xf = (int)fabs(fmod(floor(6*dragPos/sliceThickness),numSlices));
+	xf = (int)fabs(fmod(floor((6*dragPos/sliceThickness)+0.5f),numSlices));
+	System::Console::WriteLine("Updating plane to slice: {0} for dragger position {1} (voxels)",xf,(6*dragPos/sliceThickness));
 	//set the image to the texture
 	texture -> image.setValue(SbVec2s(textureCBdata->planeHeight, textureCBdata->planeWidth),1, (const unsigned char*) buffer[xf] );
 }
@@ -240,7 +241,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	SoCalculator *myCalc = new SoCalculator;
 	myCalc->ref();
 	myCalc->A.connectFrom(&myDragger->translation);
-	myCalc -> b.setValue( (float)_voxelZ );
+	//myCalc -> b.setValue( (float)_voxelZ );
 	//myCalc -> c.setValue( ACCESS_INDEX_SIGN_I );
 
 	switch ( plane ) 
@@ -248,7 +249,9 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	case Planes::XY_PLANE:
 		_all_slice_dataXY = buffer;
 		myCalc -> a.setValue( (float)_sizeZ ); 
-		myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))) % a)";
+		//myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))) % a)";
+		myCalc -> c.setValue( _voxelZ );
+		myCalc -> expression = "oA = vec3f(0,0,(floor((6*fabs(A[0])/c)+0.5) % a) * c + c/2)";
 		textureCBdata->sliceThickness = _voxelZ;
 		textureCBdata->numSlices = _sizeZ;
 		textureCBdata->planeHeight = _sizeY;
@@ -266,8 +269,8 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	case Planes::YZ_PLANE:
 		_all_slice_dataYZ = buffer;
 		myCalc -> a.setValue( (float)_sizeX );
-		myCalc -> c.setValue( 1.0f ); //TODO: Fix?
-		myCalc -> expression = "oA = vec3f((floor(c*6*fabs(A[0]))) % a , 0,0)";
+		myCalc -> c.setValue( _voxelX ); //TODO: Fix?
+		myCalc -> expression = "oA = vec3f((floor((6*fabs(A[0])/c)+0.5) % a)*c +c/2, 0,0)";
 		textureCBdata->sliceThickness = _voxelX;
 		textureCBdata->numSlices = _sizeX;
 		textureCBdata->planeHeight = _sizeZ;
