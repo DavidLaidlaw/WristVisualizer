@@ -182,6 +182,7 @@ namespace WristVizualizer.MRIViewer
             textBoxIntensity.Clear();
             textBoxIntensityScaled.Clear();
             textBoxIntensitySigned.Clear();
+            textBoxAutoScale.Clear();
         }
 
         private void radioButtonZoom_CheckedChanged(object sender, EventArgs e)
