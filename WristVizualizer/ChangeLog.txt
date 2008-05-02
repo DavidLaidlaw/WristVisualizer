@@ -1,3 +1,9 @@
+Version 1.3.4
+- Fixed bug: No longer crashes when trying to load texture (texture does't have a controller, so but was introduced in version 1.3.0)
+- Fixed bug: No longer crashes in texture when reading a classified scan
+- Fixed bug: Vertical plane loads correctly in texture for all images
+- Fixed bug: In MRIViewer, cleared auto-scale text box when not over a pixel
+
 Version 1.3.3
 - Fixed bug: in distv mode, would crash after the the relative bone was changed into non-radius for the second time (ie. radius-> non-radius -> radius -> non-radius).
 

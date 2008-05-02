@@ -618,7 +618,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3043.29372, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3044.16781, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_377499BA5A878F1C5B39589E0CC507C7"
@@ -649,7 +649,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3043.29371, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3044.16780, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3899C63856BDB26FB75EF215A67A6688"
@@ -991,7 +991,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3043.29375, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3044.16784, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_905C4787D34F5BF898DD81B699033EE3"
@@ -1425,14 +1425,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{687136BB-E90C-4FC2-9FF9-56CABEC14A68}"
-        "PackageCode" = "8:{266879E7-38C5-4066-888F-8B99BBF343B7}"
+        "ProductCode" = "8:{27D5629C-23AE-4641-B1B0-2016310AE688}"
+        "PackageCode" = "8:{82B70DBF-53A0-4F61-8F86-3FFE831ABB72}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.3.3"
+        "ProductVersion" = "8:1.3.4"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2244,7 +2244,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_80C0E60655A94B188B3AEA53719E7AC3"
             {
-            "SourcePath" = "8:..\\WristVizualizer\\obj\\Debug\\WristVizualizer.exe"
+            "SourcePath" = "8:..\\WristVizualizer\\obj\\Release\\WristVizualizer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
@@ -2272,7 +2272,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_906239E61E9C44B7A48DD8179ACF0FE7"
             {
-            "SourcePath" = "8:..\\debug\\libCoin3D.dll"
+            "SourcePath" = "8:..\\release\\libCoin3D.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
@@ -2300,7 +2300,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_9F2CFD7931694C24BE82A001B0B71397"
             {
-            "SourcePath" = "8:..\\GeneralMatrix\\obj\\Debug\\GeneralMatrix.dll"
+            "SourcePath" = "8:..\\GeneralMatrix\\obj\\Release\\GeneralMatrix.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
@@ -2328,7 +2328,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_B34AD8BEC18F4965A24CC94C07D11C88"
             {
-            "SourcePath" = "8:..\\libWrist\\obj\\Debug\\libWrist.dll"
+            "SourcePath" = "8:..\\libWrist\\obj\\Release\\libWrist.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
