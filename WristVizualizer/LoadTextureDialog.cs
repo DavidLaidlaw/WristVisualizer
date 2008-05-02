@@ -192,7 +192,7 @@ namespace WristVizualizer
                 _LastImagePath = textBoxImageFile.Text.Trim(); //save filename, to use in cache
             }
 
-            Byte[][] voxels = mri.getCroppedRegionScaledToBytes();
+            Byte[][] voxels = mri.getCroppedRegionScaledToBytes((mri.Layers==1) ? 0 : 5);
             int min = 1000;
             int max = -10;
             for (int i = 0; i < voxels[0].Length; i++)
