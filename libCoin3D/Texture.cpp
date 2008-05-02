@@ -176,17 +176,17 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 		buffer = new unsigned char*[_sizeX];
 		for (int i=0; i<_sizeX; i++) {    //loop through X
 			buffer[i] = new unsigned char[_sizeY*_sizeZ];
-			if (_sizeZ >= _sizeY) {
+			if (_sizeZ*_voxelZ >= _sizeY*_voxelY) {
 				for (int j=0; j<_sizeZ; j++) {  //loop through Z
 					for (int k=0; k<_sizeY; k++) {  //loop through Y
-						buffer[i][j*_sizeY + k] = (unsigned char)data[j][i*_sizeY + k];
+						buffer[i][k*_sizeZ + j] = (unsigned char)data[j][i*_sizeY + k];
 					}
-				}
+				}				
 			}
 			else {
 				for (int j=0; j<_sizeZ; j++) {  //loop through Z
 					for (int k=0; k<_sizeY; k++) {  //loop through Y
-						buffer[i][k*_sizeZ + j] = (unsigned char)data[j][i*_sizeY + k];
+						buffer[i][j*_sizeY + k] = (unsigned char)data[j][i*_sizeY + k];
 					}
 				}
 			}
@@ -270,11 +270,11 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		myCalc -> expression = "oA = vec3f((floor(c*6*fabs(A[0]))) % a , 0,0)";
 		textureCBdata->sliceThickness = _voxelX;
 		textureCBdata->numSlices = _sizeX;
-		textureCBdata->planeHeight = _sizeY;
-		textureCBdata->planeWidth = _sizeZ;
-		if (_sizeZ < _sizeY) {
-			textureCBdata->planeHeight = _sizeZ;
-			textureCBdata->planeWidth = _sizeY;
+		textureCBdata->planeHeight = _sizeZ;
+		textureCBdata->planeWidth = _sizeY;
+		if (_sizeZ*_voxelZ < _sizeY*_voxelY) {
+			textureCBdata->planeHeight = _sizeY;
+			textureCBdata->planeWidth = _sizeZ;
 		}
 		_draggerYZ = myDragger;
 		break;
