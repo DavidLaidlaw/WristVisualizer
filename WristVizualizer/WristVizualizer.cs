@@ -96,7 +96,7 @@ namespace WristVizualizer
         {
             _mode = mode; //update current mode
 
-            if (_currentController.Control != null)
+            if (_currentController != null && _currentController.Control != null)
                 addControlBox(_currentController.Control);
 
             switch (mode)
