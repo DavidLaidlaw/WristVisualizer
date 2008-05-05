@@ -459,7 +459,7 @@ namespace libWrist
         #region Advanced Methods from libmri
         public double sample_s_InterpCubit(double x, double y, double z)
         {
-            return sample_InterpCubit(x, y, z) * _scaleIntensity - _offsetIntensity;
+            return sample_InterpCubit(x, y, z) * _scaleIntensity + _offsetIntensity;
         }
         public double sample_InterpCubit(double x, double y, double z)
         {
