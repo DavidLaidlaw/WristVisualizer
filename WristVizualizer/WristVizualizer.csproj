@@ -115,6 +115,13 @@
     <Compile Include="SideSelector.Designer.cs">
       <DependentUpon>SideSelector.cs</DependentUpon>
     </Compile>
+    <Compile Include="TextureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextureControl.Designer.cs">
+      <DependentUpon>TextureControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextureController.cs" />
     <Compile Include="TextureSettings.cs" />
     <Compile Include="VersionManager.cs" />
     <Compile Include="WristPanelLayoutControl.cs">
@@ -174,6 +181,10 @@
     <EmbeddedResource Include="SideSelector.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SideSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextureControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TextureControl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WristPanelLayoutControl.resx">
       <SubType>Designer</SubType>

@@ -10,21 +10,59 @@ namespace libWrist
 {
     public class TransformParser
     {
-        public static Hashtable ParseTranform(string filename)
+        private Hashtable _transforms;
+        private bool _lastTransformWasOptimizedBoth;
+        private string _lastOptimizedBone="";
+
+        private ArrayList _listOfAlignments;
+        private ArrayList _listOfTransformHashtables;
+
+        public TransformParser(string filename)
+        {
+            _listOfAlignments = new ArrayList();
+            _listOfTransformHashtables = new ArrayList();
+
+            ParseTransform(filename);
+        }
+
+        public Hashtable getFinalTransforms()
+        {
+            return _transforms;
+        }
+
+        public string[] getArrayOfAllignmentSteps()
+        {
+            return (string[])_listOfAlignments.ToArray(typeof(string));
+        }
+
+        public Hashtable[] getArrayOfTransformHashtables()
+        {
+            return (Hashtable[])_listOfTransformHashtables.ToArray(typeof(Hashtable));
+        }
+
+        public static Hashtable ParseAllTransforms(string filename)
+        {
+            TransformParser tp = new TransformParser(filename);
+            return tp.getFinalTransforms();
+        }
+
+
+        private void ParseTransform(string filename)
         {
             if (!File.Exists(filename))
                 throw new ArgumentException("File does not exist. (" + filename + ")");
 
             using (StreamReader r = new StreamReader(filename))
             {
-                return ParseTranform(r);
+                ParseTransform(r);
             }  
         }
 
-        public static Hashtable ParseTranform(StreamReader filestream)
+        private void ParseTransform(StreamReader filestream)
         {
             const string boneLineRegex = @"^Bone\ name\:\ (\w+)\s*$";
-            Hashtable transforms = new Hashtable(15);
+            _transforms = new Hashtable(15);
+            saveCurrentState("Neutral Wrist");
             while (!filestream.EndOfStream)
             {
                 string line = filestream.ReadLine();
@@ -35,17 +73,39 @@ namespace libWrist
                 {
                     string boneName = m.Groups[1].Value.Trim();
                     //make sure that there is an identity transform if this is the first encounter
-                    if (!transforms.ContainsKey(boneName))
-                        transforms[boneName] = new TransformMatrix();
+                    if (!_transforms.ContainsKey(boneName))
+                        _transforms[boneName] = new TransformMatrix();
 
                     TransformMatrix next_tm = readSingleTransform(filestream);
-                    transforms[boneName] = next_tm * (TransformMatrix)transforms[boneName]; //add to list
+                    if (_lastTransformWasOptimizedBoth)
+                    {
+                        //at this point, we are going to save the previous optimization
+                        string label;
+                        if (_lastOptimizedBone.Length > 0)
+                            label = "Align " + _lastOptimizedBone;
+                        else
+                            label = "DRUJ Alignment";
+                        saveCurrentState(label);
+                        _lastOptimizedBone = boneName;
+                    }
+                    _transforms[boneName] = next_tm * (TransformMatrix)_transforms[boneName]; //add to list
                 }
             }
-            return transforms;
+            //at the end, see if we need to save again, for this state
+            if (_lastTransformWasOptimizedBoth)
+            {
+                saveCurrentState("Align " + _lastOptimizedBone);
+            }
         }
 
-        private static TransformMatrix readSingleTransform(StreamReader filestream)
+        private void saveCurrentState(string label)
+        {
+            _listOfAlignments.Add(label);
+            Hashtable htCopy = (Hashtable)_transforms.Clone();
+            _listOfTransformHashtables.Add(htCopy);
+        }
+
+        private TransformMatrix readSingleTransform(StreamReader filestream)
         {
             const string centerRotationRegex = @"^\s*center\ of\ rotation\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
             const string rotationAnglesRegex = @"^\s*rotation\ angles\:\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s+([-\d\.e+]+)\s*$";
@@ -59,6 +119,7 @@ namespace libWrist
             switch (transformType)
             {
                 case "default rotation":
+                    _lastTransformWasOptimizedBoth = false;
                     double[] centerRotation = new double[3];
                     double[] rotationAngles = new double[3];
 
@@ -76,6 +137,7 @@ namespace libWrist
                     rt.rotateAboutCenter(rotationAngles, centerRotation);
                     break;
                 case "default translation":
+                    _lastTransformWasOptimizedBoth = false;
                     double[] translation = new double[3];
 
                     string translationLine = filestream.ReadLine();
@@ -86,6 +148,7 @@ namespace libWrist
                     rt.setTranslation(translation);
                     break;
                 case "optimized both":
+                    _lastTransformWasOptimizedBoth = true;
                     centerRotation = new double[3];
                     rotationAngles = new double[3];
                     translation = new double[3];

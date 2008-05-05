@@ -269,7 +269,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	case Planes::YZ_PLANE:
 		_all_slice_dataYZ = buffer;
 		myCalc -> a.setValue( (float)_sizeX );
-		myCalc -> c.setValue( _voxelX ); //TODO: Fix?
+		myCalc -> c.setValue( _voxelX ); 
 		myCalc -> expression = "oA = vec3f((floor((6*fabs(A[0])/c)+0.5) % a)*c +c/2, 0,0)";
 		textureCBdata->sliceThickness = _voxelX;
 		textureCBdata->numSlices = _sizeX;

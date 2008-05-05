@@ -821,9 +821,12 @@ namespace WristVizualizer
             {
                 this.Cursor = Cursors.WaitCursor;
                 resetForm();
+
+                TextureController controller = texture.setup(_viewer);
+                _currentController = controller;
+                _root = controller.Root;  //save root;
                 setFormForMode(Modes.TEXTURE);
 
-                _root = texture.setup(_viewer);
                 _viewer.disableSelection();
                 _viewer.setBackgroundColor(0.8f, 0.8f, 0.8f);
                 this.Text = Application.ProductName + " - " + texture.DisplayTitle;

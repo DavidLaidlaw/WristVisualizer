@@ -13,14 +13,17 @@ using libCoin3D;
 
 namespace WristVizualizer
 {
-    public partial class LoadTextureDialog : Form
+    partial class LoadTextureDialog : Form
     {
         private static string _LastImagePath = "";
         private static CTmri _LastMRI = null;
 
         private ExaminerViewer _viewer;
         private Separator _root;
+        private Separator[] _bones;
         private Texture _texture;
+        private TransformParser _transformParser;
+        private TextureController _controller;
 
         CropValuesParser _cvParser;
         string _subject;
@@ -169,6 +172,7 @@ namespace WristVizualizer
 
         private void run()
         {
+            _bones = new Separator[TextureSettings.ShortBNames.Length];
             _subjectPath = textBoxSubjectDirectory.Text.Trim();
             
             //TODO: Figure out the image type....
@@ -202,12 +206,14 @@ namespace WristVizualizer
             }
 
             Hashtable transforms = null;
+            _transformParser = null;
             if (File.Exists(textBoxKinematicFilename.Text))
             {
                 switch (_kinematicFileType)
                 {
                     case KinematicFileTypes.AUTO_REGISTR:
-                        transforms = TransformParser.ParseTranform(textBoxKinematicFilename.Text);
+                        _transformParser = new TransformParser(textBoxKinematicFilename.Text);
+                        transforms = _transformParser.getFinalTransforms();
                         break;
                     case KinematicFileTypes.OUT_RT:
                         throw new NotImplementedException("Can't yet read OutRT files");
@@ -220,15 +226,15 @@ namespace WristVizualizer
             for (int i = 0; i < TextureSettings.ShortBNames.Length; i++)
             {
                 double[][] pts = DatParser.parseDatFile(getBoneFileName(TextureSettings.ShortBNames[i]));
-                Separator bone = Texture.createPointsFileObject(pts, TextureSettings.BoneColors[i]);
+                _bones[i] = Texture.createPointsFileObject(pts, TextureSettings.BoneColors[i]);
                 //try and load transforms
                 if (transforms != null && transforms.ContainsKey(TextureSettings.TransformBNames[i]))
                 {
                     Transform tfrm = new Transform();
                     TransformParser.addTfmMatrixtoTransform((TransformMatrix)transforms[TextureSettings.TransformBNames[i]], tfrm);
-                    bone.addTransform(tfrm);
+                    _bones[i].addTransform(tfrm);
                 }
-                _root.addChild(bone);
+                _root.addChild(_bones[i]);
             }
 
             _texture = new Texture(_side == Wrist.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
@@ -244,14 +250,15 @@ namespace WristVizualizer
         /// Sets up the scene
         /// </summary>
         /// <param name="viewer">The examiner viewer to display everything in</param>
-        /// <returns>a reference to the new root Separator node</returns>
-        public Separator setup(ExaminerViewer viewer)
+        /// <returns>a reference to the new Texture Conroller</returns>
+        public TextureController setup(ExaminerViewer viewer)
         {
             _viewer = viewer;
             _root = new Separator();
             run();
             _viewer.setSceneGraph(_root);
-            return _root;
+            _controller = new TextureController(_root, _bones, _transformParser);
+            return _controller;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -621,6 +628,11 @@ namespace WristVizualizer
         public string DisplayTitle
         {
             get { return _subject + "_" + _seriesKey + " - " + _subjectPath; }
+        }
+
+        public TextureController Controller
+        {
+            get { return _controller; }
         }
         #endregion
 
