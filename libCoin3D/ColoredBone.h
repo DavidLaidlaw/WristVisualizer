@@ -18,6 +18,8 @@ public:
 
 	virtual SoNode* getNode() override { return _node; }
 
+	virtual array<float,2>^ getVertices();
+
 	
 private:
 	SoSeparator* _node;

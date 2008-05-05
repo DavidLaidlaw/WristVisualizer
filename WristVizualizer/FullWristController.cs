@@ -82,6 +82,123 @@ namespace WristVizualizer
                     _wristControl.disableBone(i);
                 }
             }
+
+            //loadDistanceMaps();
+        }
+
+        public void loadDistanceMaps()
+        {
+            CTmri[] mri = new CTmri[Wrist.NumBones];
+
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                string basefolder = Path.Combine(Path.Combine(_wrist.subjectPath,_wrist.neutralSeries),"DistanceFields");
+                string folder = String.Format("{0}{1}_mri",Wrist.ShortBoneNames[i],_wrist.neutralSeries.Substring(1,3));
+                if (Directory.Exists(Path.Combine(basefolder, folder)))
+                {
+                    mri[i] = new CTmri(Path.Combine(basefolder, folder));
+                    mri[i].loadImageData();
+                }
+                else
+                    mri[i] = null;
+            }
+
+            //try and create color scheme....
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                int[] colors = createColormap(mri, i);
+                
+                //now set that color
+                _colorBones[i].setColorMap(colors);
+            }
+        }
+
+        private int[] createColormap(CTmri[] mri, int boneIndex)
+        {
+            double dDist = Double.MaxValue;
+            float[,] pts = _colorBones[boneIndex].getVertices();
+            int dim0 = pts.GetLength(0);
+            int dim1 = pts.GetLength(1);
+            double[] dDistances = new double[Wrist.NumBones - 1];
+
+            int[] colors = new int[dim0];
+
+            //for each vertex           
+            for (int i = 0; i < dim0; i++)
+            {
+                int m = 0; 
+                for (int j = 0; j < Wrist.NumBones; j++)
+                {
+                    if (j == boneIndex) continue;
+
+                    double dX = (pts[i, 0] - mri[j].CoordinateOffset[0]) / mri[j].voxelSizeX;
+                    double dY = (pts[i, 1] - mri[j].CoordinateOffset[1]) / mri[j].voxelSizeY;
+                    double dZ = (pts[i, 2] - mri[j].CoordinateOffset[2]) / mri[j].voxelSizeZ;
+
+                    double xBound = 96.9; //get the boundaries of the distance cube
+                    double yBound = 96.9;//
+                    double zBound = 96.9; //
+
+                    ////////////////////////////////////////////////////////
+                    //is surface point picked inside of the cube?
+
+                    if (dX >= 3.1 && dX <= xBound && dY >= 3.1
+                        && dY <= yBound && dZ >= 3.1 && dZ <= zBound)
+                    {
+
+                        //dDist = distMRI[j]->sample(MRI_INTERP_CUBIC, dX, dY, dZ, 0, 0, 0, 0);
+                        dDist = mri[j].sample_s_InterpCubit(dX, dY, dZ);
+                        //dDist = mri[j].getVoxel_s((int)Math.Floor(dX), (int)Math.Floor(dY), (int)Math.Floor(dZ), 0);
+                        //if (cubicdDist - dDist > 2)
+                        //{
+                        //    Console.WriteLine("Difference of {0}", cubicdDist - dDist);
+                        //}
+                    }
+                    else
+                        dDist = Double.MaxValue;
+
+                    dDistances[m] = dDist;
+                    m++;
+                }
+
+                //find smallest
+                double min = Double.MaxValue;
+                for (int im = 0; im < m; im++)
+                {
+                    if (dDistances[im] < min) min = dDistances[im];
+                }
+                dDist = min;
+
+                double sat;
+                int GB;
+
+                // a parameter could be used instead of plain 3
+                if (dDist < 0 || dDist > 17)
+                {
+                    sat = 0;
+                    GB = 255; //make us white :)
+                }
+                else
+                {
+                    sat = (1 - (dDist / 3));
+                    GB = (int)(dDist * 255.0/17.0);
+                    //Console.WriteLine("{0}",GB);
+                }
+
+
+                //convert to packed RGB color....how?
+                int packedColor;
+                int col = System.Drawing.Color.FromArgb(255, GB, GB).ToArgb();
+
+                //bit correction needed to move from 0xAARRGGBB -> 0xRRGGBBAA
+                col = (col << 8) | 0x000000FF;
+                packedColor = col;
+
+                colors[i] = packedColor;
+            }
+
+
+            return colors;
         }
 
         public bool ShowErrors

@@ -28,7 +28,7 @@ namespace libWrist
 
 
         private double _scaleIntensity;
-        private int _offsetIntensity;
+        private double _offsetIntensity;
         private int _signedIntensity;
 
         private double[] _coordOffset;
@@ -65,7 +65,6 @@ namespace libWrist
             _maxIntensity = new ushort[_layers];
             _imageAutoOffset = new int[_layers];
             _imageAutoScale = new double[_layers];
-            _coordOffset = new double[3];
 		}
 
         public void loadBitmapDataAllLayers()
@@ -139,6 +138,7 @@ namespace libWrist
         private void readCoordinateOffsetFile(string mriDirectory)
         {
             string coordFile = Path.Combine(mriDirectory, COORD_OFFSET);
+            _coordOffset = new double[3];
             if (!File.Exists(coordFile))
             {
                 //no coordoffset.dat File, so assume offset of 0
@@ -150,7 +150,7 @@ namespace libWrist
             using (StreamReader r = new StreamReader(coordFile))
             {
                 string line = r.ReadLine();
-                string[] parts = line.Split(' ');
+                string[] parts = line.Split(new char[]{' ','\t'});
                 if (parts.Length < 3) throw new ArgumentException("Error: unable to determine coordinate offset of scan");
                 for (int i = 0; i < 3; i++)
                     _coordOffset[i] = Double.Parse(parts[i].Trim());
@@ -185,7 +185,7 @@ namespace libWrist
                             _scaleIntensity = Double.Parse(parts[1]);
                             break;
                         case "offsetintensity":
-                            _offsetIntensity = Int32.Parse(parts[1]);
+                            _offsetIntensity = Double.Parse(parts[1]);
                             break;
                         case "signedIntensity":
                             _signedIntensity = Int32.Parse(parts[1]);
@@ -457,7 +457,11 @@ namespace libWrist
 		#endregion
 
         #region Advanced Methods from libmri
-        public double sample_InterpCubit(int x, int y, int z)
+        public double sample_s_InterpCubit(double x, double y, double z)
+        {
+            return sample_InterpCubit(x, y, z) * _scaleIntensity - _offsetIntensity;
+        }
+        public double sample_InterpCubit(double x, double y, double z)
         {
             //int d = 0;
             double back = 0;
@@ -467,9 +471,9 @@ namespace libWrist
             double xf, yf, zf;
             double[] xx = new double[3];
             double[] tc = new double[3];
-            double[] wx = new double[3]; //w* == weight for interpolation
-            double[] wy = new double[3];
-            double[] wz = new double[3];
+            double[] wx = new double[4]; //w* == weight for interpolation
+            double[] wy = new double[4];
+            double[] wz = new double[4];
 
             //transform x, y, and z into object coordinate space            
             xx[0] = x; xx[1] = y; xx[2] = z;

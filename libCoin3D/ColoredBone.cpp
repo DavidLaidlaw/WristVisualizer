@@ -135,3 +135,15 @@ void libCoin3D::ColoredBone::setHidden(bool hidden)
 		_drawstyle->style = SoDrawStyle::FILLED;
 	}
 }
+
+array<float,2>^ libCoin3D::ColoredBone::getVertices()
+{
+	int numPts = _vertexProperty->vertex.getNum();
+	array<float,2>^ points = gcnew array<float,2>(numPts,3);
+	for (int i=0; i<numPts; i++) {
+		points[i,0] = _vertexProperty->vertex[i][0];
+		points[i,1] = _vertexProperty->vertex[i][1];
+		points[i,2] = _vertexProperty->vertex[i][2];
+	}
+	return points;
+}
