@@ -35,18 +35,23 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
     SoIndexedFaceSet* pBoneIndexedFaceSet = NULL;
 
 	int numChildren = bone->getNumChildren();
+	SoSeparator* innerBone = bone;
+	if (numChildren==1 && bone->getChild(0)->getTypeId()==SoSeparator::getClassTypeId()) {
+		innerBone = (SoSeparator*)bone->getChild(0);
+		numChildren = innerBone->getNumChildren();
+	}
 	for (int i=0; i < numChildren; i++) {
-		if (bone->getChild(i)->getTypeId()==SoCoordinate3::getClassTypeId())
+		if (innerBone->getChild(i)->getTypeId()==SoCoordinate3::getClassTypeId())
 		{
-			pCoordinate3 = (SoCoordinate3*)bone->getChild(i);
+			pCoordinate3 = (SoCoordinate3*)innerBone->getChild(i);
 		}
-		else if (bone->getChild(i)->getTypeId()==SoIndexedFaceSet::getClassTypeId())
+		else if (innerBone->getChild(i)->getTypeId()==SoIndexedFaceSet::getClassTypeId())
 		{
-			pBoneIndexedFaceSet = (SoIndexedFaceSet*)bone->getChild(i);
+			pBoneIndexedFaceSet = (SoIndexedFaceSet*)innerBone->getChild(i);
 		}
-		else if (bone->getChild(i)->getTypeId()==SoTransform::getClassTypeId())
+		else if (innerBone->getChild(i)->getTypeId()==SoTransform::getClassTypeId())
 		{
-			pTransform = (SoTransform*)bone->getChild(i);
+			pTransform = (SoTransform*)innerBone->getChild(i);
 		}
 	}
 

@@ -11,6 +11,7 @@ namespace WristVizualizer
     class FullWristController : Controller
     {
         private bool _showErrors = false;
+        private ColoredBone[] _colorBones;
         private Separator[] _bones;
         private Separator[] _inertias;
         private Wrist _wrist;
@@ -28,6 +29,7 @@ namespace WristVizualizer
             setupControlEventListeners();
             _root = new Separator();
             _bones = new Separator[Wrist.NumBones];
+            _colorBones = new ColoredBone[Wrist.NumBones];
             _inertias = new Separator[Wrist.NumBones];
         }
 
@@ -70,7 +72,8 @@ namespace WristVizualizer
                 if (File.Exists(fname))
                 {
                     _bones[i] = new Separator();
-                    _bones[i].addFile(fname, true);
+                    _colorBones[i] = new ColoredBone(fname);
+                    _bones[i].addNode(_colorBones[i]);
                     _root.addChild(_bones[i]);
                 }
                 else
@@ -205,10 +208,7 @@ namespace WristVizualizer
 
         void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
         {
-            if (e.BoneHidden)
-                _bones[e.BoneIndex].hide();
-            else
-                _bones[e.BoneIndex].show();
+            _colorBones[e.BoneIndex].setHidden(e.BoneHidden);
         }
 
         public void setInertiaVisibility(bool visible)
