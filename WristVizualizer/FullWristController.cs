@@ -83,7 +83,7 @@ namespace WristVizualizer
                 }
             }
 
-            loadDistanceMaps();
+            //loadDistanceMaps();
         }
 
         public void loadDistanceMaps()
