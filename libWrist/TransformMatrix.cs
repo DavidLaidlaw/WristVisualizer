@@ -22,6 +22,171 @@ namespace libWrist
             this.SetMatrix(gm);
         }
 
+        public TransformMatrix(HelicalTransform ham) : base(4, 4)
+        {
+            setToIdentity();
+            //sourced from Helical_To_RT.m
+            //original source: Kinzel et al., JOB 5:93-105, 1972
+
+            double phi_r = ham.Phi * Math.PI / 180; //convert phi to radians
+            double vers = 1 - Math.Cos(phi_r);
+            this.Array[0][0] = ham.N[0] * ham.N[0] * vers + Math.Cos(phi_r);
+            this.Array[0][1] = ham.N[0] * ham.N[1] * vers - ham.N[2] * Math.Sin(phi_r);
+            this.Array[0][2] = ham.N[0] * ham.N[2] * vers + ham.N[1] * Math.Sin(phi_r);
+            this.Array[1][0] = ham.N[0] * ham.N[1] * vers + ham.N[2] * Math.Sin(phi_r);
+            this.Array[1][1] = ham.N[1] * ham.N[1] * vers + Math.Cos(phi_r);
+            this.Array[1][2] = ham.N[1] * ham.N[2] * vers - ham.N[0] * Math.Sin(phi_r);
+            this.Array[2][0] = ham.N[2] * ham.N[0] * vers - ham.N[1] * Math.Sin(phi_r);
+            this.Array[2][1] = ham.N[1] * ham.N[2] * vers + ham.N[0] * Math.Sin(phi_r);
+            this.Array[2][2] = ham.N[2] * ham.N[2] * vers + Math.Cos(phi_r);
+
+            //Translation
+            GeneralMatrix R = this.GetMatrix(0,2,0,2);
+            GeneralMatrix q = new GeneralMatrix(ham.Q, 3);
+            GeneralMatrix Rq = R*q;
+
+            this.Array[0][3] = ham.Q[0] + (ham.N[0] * ham.Trans) - Rq.Array[0][0];
+            this.Array[1][3] = ham.Q[1] + (ham.N[1] * ham.Trans) - Rq.Array[1][0];
+            this.Array[2][3] = ham.Q[2] + (ham.N[2] * ham.Trans) - Rq.Array[2][0];
+        }
+
+        public TransformMatrix(TransformRT rt) : base(4, 4)
+        {
+            this.setToIdentity();
+            this.SetMatrix(0, 2, 0, 2, rt.R);// set R
+            this.SetMatrix(0, 2, 3, 3, rt.T.Transpose()); //set T, do I need to transpose first?
+        }
+
+        public HelicalTransform ToHelical()
+        {
+            //ported from RT_to_helical.m
+            /* This procedure calculates the helical axis of the mapping
+             * R (3x3) and T (1x3). Returns the angle in phi degrees, unit Ham in n (1x3), 
+             * translation along HAM,and a point Q (1x3).
+             * 
+             * Modified 9/02 SS
+             * Different formulas were used for situation where 1 or 2 components of n are zero. 
+             * as described in page 454 of Panjabi's paper (using R11 and R12 instead of R13 and R33)
+             * the situation for n = [0 0 0] returns NaN as of now, can add in a specific situation for 
+             * that.
+             */
+            
+
+            bool flag = false;
+            double[] n = new double[3];
+
+            double[][] R = this.Array; //for clarity
+            double cos_phi = 0, sin_phi = 0;
+            double c = (R[0][0] - 1) * (R[1][1] - 1) - R[0][1] * R[1][0]; //c value defined using rows 1 and 2 of R
+            if (c != 0) //TODO: add error...?
+            {
+                double a, b;
+                if (Math.Abs(c) < 2.5e-17) //cutoff for z=0, where c approaches zero
+                {
+                    c = R[1][0] * R[2][1] - (R[1][1] - 1) * R[2][0]; //c value defined using rows 1 and 2 of R
+                    a = ((R[1][1] - 1) * (R[2][2] - 1) - R[2][1] * R[1][2]) / c;
+                    b = (R[1][2] * R[2][0] - R[2][0] * (R[2][2] - 1)) / c;
+                }
+                else //z not zero
+                {
+                    a = (R[0][1] * R[1][2] - R[0][2] * (R[1][1] - 1)) / c;
+                    b = (R[0][2] * R[1][0] - R[1][2] * (R[0][0] - 1)) / c;
+                }
+                n[2] = Math.Sqrt(1 / (1 + a * a + b * b));
+                n[0] = a * n[2];
+                n[1] = b * n[2];
+
+
+                if (Math.Abs(n[2]) < 10e-15) //if y=0, n2 approaches zero, so use different equations without n2
+                {
+                    //in denominator
+                    cos_phi = (R[0][0] - n[0] * n[0]) / (1 - n[0] * n[0]); //R11 = M11
+                    sin_phi = -R[0][1] / n[2]; // R12 = M12
+                }
+                else
+                {
+                    cos_phi = (R[2][2] - n[2] * n[2]) / (1 - n[2] * n[2]); //R33 = M33
+                    sin_phi = (R[0][2] - n[0] * n[2] * (1 - cos_phi)) / n[1]; //R13 = M13
+                }
+            }
+            else // c==0
+            {
+                n[0] = 0;
+                n[1] = 0;
+                n[2] = 0;
+                if (R[2][2] == 1) //index 9
+                {
+                    n[2] = 1;
+                    cos_phi = R[0][0];
+                    sin_phi = R[0][1];
+                }
+                else if (R[1][1] == 1) //index 5
+                {
+                    n[1] = 1;
+                    cos_phi = R[0][0];
+                    sin_phi = R[2][0];
+                }
+                else if (R[0][0] == 1) //index 1
+                {
+                    n[0] = 1;
+                    cos_phi = R[1][1];
+                    sin_phi = R[1][2];
+                }
+
+                //if R==eye(3)
+                if (R[0][0] == 1 && R[0][1] == 0 && R[0][2] == 0 &&
+                    R[1][0] == 0 && R[1][1] == 1 && R[1][2] == 0 &&
+                    R[2][0] == 0 && R[2][1] == 0 && R[2][2] == 1)
+                {
+                    flag = true;
+                }                
+            }
+
+            double phi_r = Math.Atan2(sin_phi, cos_phi);
+            double phi = phi_r * 180 / Math.PI;
+            //double t_ham = dot(T,n);
+            double t_ham = Array[0][3] * n[0] + Array[1][3] * n[1] + Array[2][3] * n[2];
+
+            //From Panjabi et al., 1981
+            //let vector a = [0,0,0], then rA = T;
+            double[] e = new double[3]; //e =T - n.*t_ham;
+            e[0] = Array[0][3] - n[0]*t_ham;
+            e[1] = Array[1][3] - n[1]*t_ham;
+            e[2] = Array[2][3] - n[2]*t_ham;            
+            if (flag) //ZERO ROTATION
+            { 
+                return new HelicalTransform(); //return empty, or zero
+            }
+
+            //q = e./2 + cross(n,e)./(2*tan(phi*pi/180/2));
+            double[] q = new double[3];
+            double[] crossNxE = new double[3];
+            crossNxE[0] = n[1] * e[2] - n[2] * e[1];
+            crossNxE[1] = n[2] * e[0] - n[0] * e[2];
+            crossNxE[2] = n[0] * e[1] - n[1] * e[0];
+            q[0] = e[0] / 2 + crossNxE[0] / (2 * Math.Tan(phi_r / 2));
+            q[1] = e[1] / 2 + crossNxE[1] / (2 * Math.Tan(phi_r / 2));
+            q[2] = e[2] / 2 + crossNxE[2] / (2 * Math.Tan(phi_r / 2));
+            
+            
+
+            /* Direction Trapping - fix all Phi's to positive
+             * this is needed for error calculations,  Mathematically
+             * equivalent values w/opposite orientations cause
+             * problems... (+5 deg, +5 mm, + x is equal to -5 deg, -5 mm, -x)
+             * R. McGovern 9/22
+             */
+            if (phi < 0)
+            {
+                phi = -phi;
+                n[0] = -n[0];
+                n[1] = -n[1];
+                n[2] = -n[2];
+                t_ham = -t_ham;
+            }
+            return new HelicalTransform(phi, n, t_ham, q);
+        }
+
         /// <summary>
         /// sets the current matrix to the identity matrix
         /// </summary>
