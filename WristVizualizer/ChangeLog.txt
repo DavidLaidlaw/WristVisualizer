@@ -1,3 +1,8 @@
+Version 1.3.5
+- Fixed bug: Texture planes are now located in the center of each voxel
+- New: Texture allows you to step through each bone's registration in the auto_registr txt file from the registration code. There is a known bug with window focus and the arrow keys. They can get stuck on the registration window and stop controlling the texture slices.
+- Changed over to the latest release of Coin (2.5.0), Hopefully this will fix some strange rendering problems without creating new ones :)
+
 Version 1.3.4
 - Fixed bug: No longer crashes when trying to load texture (texture does't have a controller, so but was introduced in version 1.3.0)
 - Fixed bug: No longer crashes in texture when reading a classified scan
