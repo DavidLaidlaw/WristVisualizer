@@ -28,7 +28,7 @@ namespace libWrist
             for (int i = 0; i < motionFiles.Length; i++)
             {
                 transforms[i] = new Transform[numBones];
-                TransformRT[] tfm = parseMotionFile2(motionFiles[i]);
+                TransformRT[] tfm = parseMotionFileToRT(motionFiles[i]);
                 for (int j = 0; j < numBones; j++)
                 {
                     transforms[i][j] = new Transform();
@@ -99,7 +99,7 @@ namespace libWrist
             return dat;
         }
 
-        public static TransformRT[] parseInertiaFile2(string filename)
+        public static TransformRT[] parseInertiaFileToRT(string filename)
         {
             double[][] dat = parseInertiaFile(filename);
             TransformRT[] inertias = new TransformRT[15];
@@ -127,7 +127,7 @@ namespace libWrist
             return dat;
         }
 
-        public static TransformRT[] parseACSFile2(string filename)
+        public static TransformRT[] parseACSFileToRT(string filename)
         {
             double[][] dat = parseACSFile(filename);
             TransformRT[] ACS = new TransformRT[1];
@@ -140,7 +140,7 @@ namespace libWrist
             return ACS;
         }
 
-        public static TransformRT[] parseMotionFile2(string filename)
+        public static TransformRT[] parseMotionFileToRT(string filename)
         {
             double[][] dat = parseMotionFile(filename);
             TransformRT[] transforms = new TransformRT[15];

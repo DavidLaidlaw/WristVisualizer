@@ -16,6 +16,7 @@ namespace WristVizualizer
         private Separator[] _inertias;
         private Wrist _wrist;
         private Transform[][] _transforms;
+        private TransformMatrix[][] _transformMatrices;
         private int _currentPositionIndex;
         private int _fixedBoneIndex;
 
@@ -51,7 +52,7 @@ namespace WristVizualizer
             try
             {
                 _wrist.setupWrist(radiusFilename);
-                _transforms = DatParser.makeAllTransforms(_wrist.motionFiles, Wrist.NumBones);
+                loadTransforms();
                 populateSeriesList();
             }
             catch (ArgumentException ex)
@@ -201,6 +202,28 @@ namespace WristVizualizer
             return colors;
         }
 
+        private void loadTransforms()
+        {
+            int numPos = _wrist.motionFiles.Length;
+            _transformMatrices = new TransformMatrix[numPos][];
+            _transforms = new Transform[numPos][];
+
+            for (int i = 0; i < numPos; i++)
+            {
+                _transformMatrices[i] = new TransformMatrix[Wrist.NumBones];
+                _transforms[i] = new Transform[Wrist.NumBones];
+                TransformRT[] tfm = DatParser.parseMotionFileToRT(_wrist.motionFiles[i]);
+                for (int j = 0; j < Wrist.NumBones; j++)
+                {
+                    //TODO: Clean up this mess....
+                    //_transforms[i][j] = new Transform();
+                    //DatParser.addRTtoTransform(tfm[j], _transforms[i][j]);
+                    _transformMatrices[i][j] = new TransformMatrix(tfm[j]);
+                    _transforms[i][j] = _transformMatrices[i][j].ToTransform();
+                }
+            }
+        }
+
         public bool ShowErrors
         {
             get { return _showErrors; }
@@ -284,7 +307,7 @@ namespace WristVizualizer
                     _root.removeTransform();
                 Transform t = new Transform();
                 //TODO: Fix so this doesn't have to re-parse the motion file from disk each time...
-                DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex - 1))[_fixedBoneIndex], t);
+                DatParser.addRTtoTransform(DatParser.parseMotionFileToRT(_wrist.getMotionFilePath(_currentPositionIndex - 1))[_fixedBoneIndex], t);
                 t.invert();
                 //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
                 _root.addTransform(t);
@@ -317,7 +340,7 @@ namespace WristVizualizer
                 _root.removeTransform();
 
             Transform t = new Transform();
-            DatParser.addRTtoTransform(DatParser.parseMotionFile2(_wrist.getMotionFilePath(_currentPositionIndex - 1))[e.BoneIndex], t);
+            DatParser.addRTtoTransform(DatParser.parseMotionFileToRT(_wrist.getMotionFilePath(_currentPositionIndex - 1))[e.BoneIndex], t);
             t.invert();
             //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
             _root.addTransform(t);
@@ -335,7 +358,7 @@ namespace WristVizualizer
                 try
                 {
                     //If its checked, then we need to add it
-                    TransformRT[] inert = DatParser.parseInertiaFile2(_wrist.inertiaFile);
+                    TransformRT[] inert = DatParser.parseInertiaFileToRT(_wrist.inertiaFile);
                     for (int i = 2; i < 10; i++) //skip the long bones
                     {
                         if (_bones[i] == null)
@@ -374,7 +397,7 @@ namespace WristVizualizer
                 try
                 {
                     //If its checked, then we need to add it
-                    TransformRT[] inert = DatParser.parseACSFile2(_wrist.acsFile);
+                    TransformRT[] inert = DatParser.parseACSFileToRT(_wrist.acsFile);
 
                     //only for radius, check if it exists
                     if (_bones[0] == null)

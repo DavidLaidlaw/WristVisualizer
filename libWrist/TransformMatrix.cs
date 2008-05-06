@@ -57,6 +57,16 @@ namespace libWrist
             this.SetMatrix(0, 2, 3, 3, rt.T.Transpose()); //set T, do I need to transpose first?
         }
 
+        public libCoin3D.Transform ToTransform()
+        {
+            libCoin3D.Transform transform = new libCoin3D.Transform();
+            transform.setTransform(Array[0][0], Array[0][1], Array[0][2],
+                Array[1][0], Array[1][1], Array[1][2],
+                Array[2][0], Array[2][1], Array[2][2],
+                Array[0][3], Array[1][3], Array[2][3]);
+            return transform;
+        }
+
         public HelicalTransform ToHelical()
         {
             //ported from RT_to_helical.m
