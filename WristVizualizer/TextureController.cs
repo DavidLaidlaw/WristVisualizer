@@ -22,6 +22,12 @@ namespace WristVizualizer
             _bones = bones;
             _parser = parser;
 
+            if (parser == null)
+            {
+                _textureControl = null;
+                return;
+            }
+
             _transformHashtables = parser.getArrayOfTransformHashtables();
             _textureControl = new TextureControl(parser.getArrayOfAllignmentSteps());
             setupListeners();
@@ -29,7 +35,8 @@ namespace WristVizualizer
 
         public override void CleanUp()
         {
-            removeListeners();
+            if (_textureControl != null)
+                removeListeners();
         }
 
         private void setupListeners()
