@@ -83,7 +83,7 @@ namespace WristVizualizer
                 }
             }
 
-            //loadDistanceMaps();
+            loadDistanceMaps();
         }
 
         public void loadDistanceMaps()
@@ -173,7 +173,7 @@ namespace WristVizualizer
                 int GB;
 
                 // a parameter could be used instead of plain 3
-                if (dDist < 0 || dDist > 17)
+                if (dDist < 0 || dDist > 3)
                 {
                     sat = 0;
                     GB = 255; //make us white :)
@@ -181,7 +181,7 @@ namespace WristVizualizer
                 else
                 {
                     sat = (1 - (dDist / 3));
-                    GB = (int)(dDist * 255.0/17.0);
+                    GB = (int)(dDist * 255.0/3.0);
                     //Console.WriteLine("{0}",GB);
                 }
 
