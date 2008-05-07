@@ -305,12 +305,10 @@ namespace WristVizualizer
                 _currentPositionIndex = e.SelectedIndex;
                 if (_root.hasTransform())
                     _root.removeTransform();
-                Transform t = new Transform();
-                //TODO: Fix so this doesn't have to re-parse the motion file from disk each time...
-                DatParser.addRTtoTransform(DatParser.parseMotionFileToRT(_wrist.getMotionFilePath(_currentPositionIndex - 1))[_fixedBoneIndex], t);
-                t.invert();
-                //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
-                _root.addTransform(t);
+
+                Transform fixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex].ToTransform();
+                fixedBone.invert();
+                _root.addTransform(fixedBone);
                 for (int i = 0; i < _bones.Length; i++)
                 {
                     //skip missing bones
