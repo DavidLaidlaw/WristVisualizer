@@ -377,21 +377,12 @@ namespace WristVizualizer
                 if (lastRelMotion[i] == null)
                 {
                     htRelMotions[i] = currentRelMotion[i].ToHelical();
-                    if (currentRelMotion[i].isIdentity(0.001))
-                        Console.WriteLine("FUCKYOU");
                 }
                 else
                 {
                     //so we should have both transforms now... though one can be the identity.... hm....
                     TransformMatrix relLastToCurrent = currentRelMotion[i] * lastRelMotion[i].Inverse();
                     htRelMotions[i] = relLastToCurrent.ToHelical();
-
-                    //TransformMatrix final = relLastToCurrent * lastRelMotion[i];
-                    //if (!final.isEqual(currentRelMotion[i]))
-                    //    Console.WriteLine("Boo");
-                    ////final.printToConsole();
-                    //if (relLastToCurrent.isIdentity(0.001))
-                    //    Console.WriteLine("FUCKYOU");
                 }
             }
 
@@ -428,7 +419,6 @@ namespace WristVizualizer
             }
             else
             {
-
                 //first remove the old transforms, if they exist
                 removeCurrentTransforms();
 
