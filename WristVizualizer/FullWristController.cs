@@ -28,7 +28,6 @@ namespace WristVizualizer
         private AnimationController _animationController;
         private int _FPS;
         private double _animateDuration;
-        private TransformMatrix[] _tmCurrentPositionRelativeMotion;
 
         //GUI stuff
         private FullWristControl _wristControl;
@@ -41,7 +40,6 @@ namespace WristVizualizer
             _bones = new Separator[Wrist.NumBones];
             _colorBones = new ColoredBone[Wrist.NumBones];
             _inertias = new Separator[Wrist.NumBones];
-            _tmCurrentPositionRelativeMotion = new TransformMatrix[Wrist.NumBones];
 
             //defaults
             _FPS = 15;
@@ -315,9 +313,6 @@ namespace WristVizualizer
                 //skip missing bones & remove the old
                 if (_bones[i] != null && _bones[i].hasTransform())
                     _bones[i].removeTransform();
-
-                //remove saved relativeMotion
-                _tmCurrentPositionRelativeMotion[i] = null;
             }
         }
 
@@ -346,7 +341,7 @@ namespace WristVizualizer
             return relMotions;
         }
 
-        private void animateChangeBlahBlahBlah()
+        private void animateChangeInPosition()
         {
             //setup animations....
             if (_animationController != null)
@@ -386,13 +381,10 @@ namespace WristVizualizer
                 }
             }
 
-            hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
-
             _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
             _animationController.LoopAnimation = false;
             _animationController.FPS = _FPS;
-            _animationController.Start();
-            
+            _animationController.Start();            
         }
 
         private void hideBonesWithNoKinematicsForPosition(int positionIndex)
@@ -412,31 +404,26 @@ namespace WristVizualizer
 
         private void setTransformsForCurrentPositionAndFixedBone()
         {
+            hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
             if (_animatePositionChanges)
             {
-                animateChangeBlahBlahBlah();
-
+                animateChangeInPosition();
             }
             else
             {
                 //first remove the old transforms, if they exist
                 removeCurrentTransforms();
 
-                //check if neutral, if so, we are done
-                if (_currentPositionIndex == 0)
-                    return;
-
                 //save to current positions, then apply
-                _tmCurrentPositionRelativeMotion = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex);
+                TransformMatrix[] transforms = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex);
                 for (int i = 0; i < _bones.Length; i++)
                 {
                     //skip missing bones, or bones without motion
-                    if (_bones[i] == null || _tmCurrentPositionRelativeMotion[i] == null)
+                    if (_bones[i] == null || transforms[i] == null)
                         continue;
 
-                    _bones[i].addTransform(_tmCurrentPositionRelativeMotion[i].ToTransform());
-                }
-                hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
+                    _bones[i].addTransform(transforms[i].ToTransform());
+                }                
             }
 
             //now that we are done, lets save the last positions
