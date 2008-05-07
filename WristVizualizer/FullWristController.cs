@@ -15,7 +15,6 @@ namespace WristVizualizer
         private Separator[] _bones;
         private Separator[] _inertias;
         private Wrist _wrist;
-        private Transform[][] _transforms;
         private TransformMatrix[][] _transformMatrices;
         private int _currentPositionIndex;
         private int _lastPositionIndex;
@@ -219,20 +218,15 @@ namespace WristVizualizer
         {
             int numPos = _wrist.motionFiles.Length;
             _transformMatrices = new TransformMatrix[numPos][];
-            _transforms = new Transform[numPos][];
 
             for (int i = 0; i < numPos; i++)
             {
                 _transformMatrices[i] = new TransformMatrix[Wrist.NumBones];
-                _transforms[i] = new Transform[Wrist.NumBones];
+                //TODO: create DatParser.parseMotionFileToTM()
                 TransformRT[] tfm = DatParser.parseMotionFileToRT(_wrist.motionFiles[i]);
                 for (int j = 0; j < Wrist.NumBones; j++)
                 {
-                    //TODO: Clean up this mess....
-                    //_transforms[i][j] = new Transform();
-                    //DatParser.addRTtoTransform(tfm[j], _transforms[i][j]);
                     _transformMatrices[i][j] = new TransformMatrix(tfm[j]);
-                    _transforms[i][j] = _transformMatrices[i][j].ToTransform();
                 }
             }
         }
@@ -335,8 +329,6 @@ namespace WristVizualizer
             HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length];
             for (int i = 0; i < _bones.Length; i++)
             {
-                //transforms[i] = new HelicalTransform[numFrames];
-
                 //skip missing bones
                 if (_bones[i] == null || i == _fixedBoneIndex) continue;
 
@@ -344,15 +336,9 @@ namespace WristVizualizer
                 TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
                 htRelMotions[i] = tmRelMotion.ToHelical();
 
-                //transforms[i] = htRelMotion.LinearlyInterpolateMotion(numFrames);
-
-                //_bones[i].addTransform(tmRelMotion.ToTransform());
-                
-
                 if (tmCurrentBone.isIdentity())
                     _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
             }
-            //_animationController.crapSetup_DELETEME(_bones, transforms);
             _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, numFrames);
             _animationController.LoopAnimation = false;
             _animationController.FPS = _FPS;

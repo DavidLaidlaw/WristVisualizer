@@ -38,21 +38,6 @@ namespace WristVizualizer
             setupAnimation(null, Bones, null, BoneTransforms);
         }
 
-        public void crapSetup_DELETEME(Separator[] Bones, HelicalTransform[][] BoneTransforms)
-        {
-            Transform[][] real = new Transform[BoneTransforms.Length][];
-            for (int i = 0; i < BoneTransforms.Length; i++)
-            {
-                real[i] = new Transform[BoneTransforms[i].Length];
-                for (int j = 0; j < BoneTransforms[i].Length; j++)
-                {
-                    if (BoneTransforms[i][j]!=null)
-                        real[i][j] = BoneTransforms[i][j].ToTransformMatrix().ToTransform();
-                }
-            }
-            setupAnimation(Bones, real); //call the real one!
-        }
-
         public void setupAnimationForLinearInterpolation(Separator[] Bones, HelicalTransform[] BoneTransforms, int numSteps)
         {
             if (Bones.Length != BoneTransforms.Length)
