@@ -155,6 +155,7 @@ namespace WristVizualizer
                 foreach(int j in interaction)
                 {
                     if (j == boneIndex) continue;
+                    if (mri[j] == null) continue; //skip missing scans
 
                     double dX = (pts[i, 0] - mri[j].CoordinateOffset[0]) / mri[j].voxelSizeX;
                     double dY = (pts[i, 1] - mri[j].CoordinateOffset[1]) / mri[j].voxelSizeY;
