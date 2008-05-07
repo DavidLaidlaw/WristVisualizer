@@ -38,10 +38,12 @@ namespace WristVizualizer
             setupAnimation(null, Bones, null, BoneTransforms);
         }
 
-        public void setupAnimationForLinearInterpolation(Separator[] Bones, HelicalTransform[] BoneTransforms, int numSteps)
+        public void setupAnimationForLinearInterpolation(Separator[] Bones, HelicalTransform[] BoneTransforms, TransformMatrix[] StartPositionTransforms, int numSteps)
         {
             if (Bones.Length != BoneTransforms.Length)
                 throw new ArgumentException("Number of bones must match the number of transforms");
+            if (StartPositionTransforms!= null && Bones.Length != StartPositionTransforms.Length)
+                throw new ArgumentException("Number of bones must match the number of Starting position transforms if any are passed");
 
             Transform[][] interpedTransforms = new Transform[Bones.Length][];
             for (int i = 0; i < Bones.Length; i++)
@@ -55,7 +57,12 @@ namespace WristVizualizer
                 HelicalTransform[] htTransforms = BoneTransforms[i].LinearlyInterpolateMotion(numSteps);
                 //save interpolated steps as Transform objects for later
                 for (int j = 0; j < numSteps; j++)
-                    interpedTransforms[i][j] = htTransforms[j].ToTransformMatrix().ToTransform();
+                {
+                    TransformMatrix tmMotionStep = htTransforms[j].ToTransformMatrix();
+                    if (StartPositionTransforms != null && StartPositionTransforms[i] != null)
+                        tmMotionStep = tmMotionStep * StartPositionTransforms[i];
+                    interpedTransforms[i][j] = tmMotionStep.ToTransform();
+                }
             }
             setupAnimation(Bones, interpedTransforms);
         }
