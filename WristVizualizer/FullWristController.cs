@@ -383,8 +383,13 @@ namespace WristVizualizer
                 else
                 {
                     //so we should have both transforms now... though one can be the identity.... hm....
-                    TransformMatrix relLastToCurrent = lastRelMotion[i].Inverse() * currentRelMotion[i];
+                    TransformMatrix relLastToCurrent = currentRelMotion[i] * lastRelMotion[i].Inverse();
                     htRelMotions[i] = relLastToCurrent.ToHelical();
+
+                    TransformMatrix final = relLastToCurrent * lastRelMotion[i];
+                    if (!final.isEqual(currentRelMotion[i]))
+                        Console.WriteLine("Boo");
+                    //final.printToConsole();
                     if (relLastToCurrent.isIdentity(0.001))
                         Console.WriteLine("FUCKYOU");
                 }
@@ -397,49 +402,6 @@ namespace WristVizualizer
             _animationController.FPS = _FPS;
             _animationController.Start();
             
-
-
-
-            ////load the transform for the fixed bone of the current index
-            //TransformMatrix tmFixedBone;
-            //if (_currentPositionIndex == 0)
-            //    tmFixedBone = new TransformMatrix();
-            //else
-            //    tmFixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex];
-
-            ////save a copy of the lastRElativeMotions
-            //TransformMatrix[] savedLastPositionRelMotion = _tmCurrentPositionRelativeMotion;
-            //_tmCurrentPositionRelativeMotion = new TransformMatrix[Wrist.NumBones];
-
-            ////HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length];
-            //for (int i = 0; i < _bones.Length; i++)
-            //{
-            //    //skip missing bones & the fixed bone, its not moving
-            //    if (_bones[i] == null || i == _fixedBoneIndex) continue;
-
-            //    //calculate the relative motion for this new position and save it
-            //    TransformMatrix tmCurrentBone = _transformMatrices[_currentPositionIndex - 1][i];
-            //    TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
-            //    _tmCurrentPositionRelativeMotion[i] = tmRelMotion; //save for future
-
-            //    //now lets load the relative motion for the last position, so we can move gracefully from it :)
-            //    TransformMatrix tmLastRelMotion = savedLastPositionRelMotion[i];
-            //    if (tmLastRelMotion == null)
-            //        tmLastRelMotion = new TransformMatrix(); //set to identify if we are missing one
-            //    TransformMatrix rmRelMotionLastPosition = tmLastRelMotion.Inverse() * tmRelMotion;
-
-            //    if (rmRelMotionLastPosition.isIdentity(0.01))  //dirty check to see if we are getting the identity matrix....yar
-            //        Console.WriteLine("SHIT");
-            //    htRelMotions[i] = rmRelMotionLastPosition.ToHelical();
-
-            //    //if there is no kinematics for the current Bone, then hide it :)
-            //    if (tmCurrentBone.isIdentity())
-            //        _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
-            //}
-            //_animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, savedLastPositionRelMotion, numFrames);
-            //_animationController.LoopAnimation = false;
-            //_animationController.FPS = _FPS;
-            //_animationController.Start();
         }
 
         private void hideBonesWithNoKinematicsForPosition(int positionIndex)
@@ -462,27 +424,34 @@ namespace WristVizualizer
             if (_animatePositionChanges)
             {
                 animateChangeBlahBlahBlah();
-                return;
+
             }
-
-            //first remove the old transforms, if they exist
-            removeCurrentTransforms();
-
-            //check if neutral, if so, we are done
-            if (_currentPositionIndex == 0)
-                return;
-
-            //save to current positions, then apply
-            _tmCurrentPositionRelativeMotion = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex);
-            for (int i = 0; i < _bones.Length; i++)
+            else
             {
-                //skip missing bones, or bones without motion
-                if (_bones[i] == null || _tmCurrentPositionRelativeMotion[i] == null)
-                    continue;
 
-                _bones[i].addTransform(_tmCurrentPositionRelativeMotion[i].ToTransform());
+                //first remove the old transforms, if they exist
+                removeCurrentTransforms();
+
+                //check if neutral, if so, we are done
+                if (_currentPositionIndex == 0)
+                    return;
+
+                //save to current positions, then apply
+                _tmCurrentPositionRelativeMotion = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex);
+                for (int i = 0; i < _bones.Length; i++)
+                {
+                    //skip missing bones, or bones without motion
+                    if (_bones[i] == null || _tmCurrentPositionRelativeMotion[i] == null)
+                        continue;
+
+                    _bones[i].addTransform(_tmCurrentPositionRelativeMotion[i].ToTransform());
+                }
+                hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
             }
-            hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
+
+            //now that we are done, lets save the last positions
+            _lastFixedBoneIndex = _fixedBoneIndex;
+            _lastPositionIndex = _currentPositionIndex;
         }
 
         void _control_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
@@ -490,8 +459,6 @@ namespace WristVizualizer
             if (_currentPositionIndex == e.SelectedIndex)
                 return;
 
-            //save current position
-            _lastPositionIndex = _currentPositionIndex;
             _currentPositionIndex = e.SelectedIndex;
 
             setTransformsForCurrentPositionAndFixedBone();
@@ -499,7 +466,6 @@ namespace WristVizualizer
 
         void _control_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
-            _lastFixedBoneIndex = _fixedBoneIndex;
             _fixedBoneIndex = e.BoneIndex;
 
             setTransformsForCurrentPositionAndFixedBone();
