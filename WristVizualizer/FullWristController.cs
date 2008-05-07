@@ -284,44 +284,34 @@ namespace WristVizualizer
             if (_currentPositionIndex == e.SelectedIndex)
                 return;
 
-            //check if neutral
-            if (e.SelectedIndex == 0)
+            //first remove the old transforms, if they exist
+            if (_root.hasTransform())
+                _root.removeTransform();
+            for (int i = 0; i < _bones.Length; i++)
             {
-                _currentPositionIndex = 0;
-                //do the neutral thing....
-                if (_root.hasTransform())
-                    _root.removeTransform();
-                for (int i = 0; i < _bones.Length; i++)
-                {
-                    if (_bones[i] == null) continue; //skip missing bone
-
-                    if (_bones[i].hasTransform())
-                        _bones[i].removeTransform();
-                }
+                //skip missing bones & remove the old
+                if (_bones[i] != null && _bones[i].hasTransform())
+                    _bones[i].removeTransform();
             }
-            else
+
+            //save current position
+            _currentPositionIndex = e.SelectedIndex;
+
+            //check if neutral, if so, we are done
+            if (_currentPositionIndex == 0)
+                return;
+
+            Transform fixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex].ToTransform();
+            fixedBone.invert();
+            _root.addTransform(fixedBone);
+            for (int i = 0; i < _bones.Length; i++)
             {
-                //int seriesIndex = _wrist.getSeriesIndexFromName((string)seriesListBox.SelectedItem);
-                _currentPositionIndex = e.SelectedIndex;
-                if (_root.hasTransform())
-                    _root.removeTransform();
+                //skip missing bones
+                if (_bones[i] == null) continue;
 
-                Transform fixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex].ToTransform();
-                fixedBone.invert();
-                _root.addTransform(fixedBone);
-                for (int i = 0; i < _bones.Length; i++)
-                {
-                    //skip missing bones
-                    if (_bones[i] == null) continue;
-
-                    //remove the old
-                    if (_bones[i].hasTransform())
-                        _bones[i].removeTransform();
-
-                    _bones[i].addTransform(_transforms[_currentPositionIndex - 1][i]);
-                    if (_transforms[_currentPositionIndex - 1][i].isIdentity())
-                        _wristControl.hideBone(i);
-                }
+                _bones[i].addTransform(_transforms[_currentPositionIndex - 1][i]);
+                if (_transforms[_currentPositionIndex - 1][i].isIdentity()) //hide bones with no kinematics...
+                    _wristControl.hideBone(i);
             }
         }
 
