@@ -29,6 +29,9 @@ namespace WristVizualizer
         private int _FPS;
         private double _animateDuration;
 
+        //Distance Fields
+        private CTmri[] _distanceFields;
+
         //GUI stuff
         private FullWristControl _wristControl;
 
@@ -95,31 +98,37 @@ namespace WristVizualizer
                     _wristControl.disableBone(i);
                 }
             }
+        }
 
-            //loadDistanceMaps();
+        private void loadDistanceFieldsIfNotLoaded()
+        {
+            if (_distanceFields != null)
+                return;
+
+            _distanceFields = new CTmri[Wrist.NumBones];
+
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                string basefolder = Path.Combine(Path.Combine(_wrist.subjectPath, _wrist.neutralSeries), "DistanceFields");
+                string folder = String.Format("{0}{1}_mri", Wrist.ShortBoneNames[i], _wrist.neutralSeries.Substring(1, 3));
+                if (Directory.Exists(Path.Combine(basefolder, folder)))
+                {
+                    _distanceFields[i] = new CTmri(Path.Combine(basefolder, folder));
+                    _distanceFields[i].loadImageData();
+                }
+                else
+                    _distanceFields[i] = null;
+            }
         }
 
         public void loadDistanceMaps()
         {
-            CTmri[] mri = new CTmri[Wrist.NumBones];
-
-            for (int i = 0; i < Wrist.NumBones; i++)
-            {
-                string basefolder = Path.Combine(Path.Combine(_wrist.subjectPath,_wrist.neutralSeries),"DistanceFields");
-                string folder = String.Format("{0}{1}_mri",Wrist.ShortBoneNames[i],_wrist.neutralSeries.Substring(1,3));
-                if (Directory.Exists(Path.Combine(basefolder, folder)))
-                {
-                    mri[i] = new CTmri(Path.Combine(basefolder, folder));
-                    mri[i].loadImageData();
-                }
-                else
-                    mri[i] = null;
-            }
+            loadDistanceFieldsIfNotLoaded();
 
             //try and create color scheme....
             for (int i = 0; i < Wrist.NumBones; i++)
             {
-                int[] colors = createColormap(mri, i);
+                int[] colors = createColormap(_distanceFields, i);
                 
                 //now set that color
                 _colorBones[i].setColorMap(colors);
@@ -136,11 +145,14 @@ namespace WristVizualizer
 
             int[] colors = new int[dim0];
 
+            int[] interaction = Wrist.BoneInteractionIndex[boneIndex];
+
             //for each vertex           
             for (int i = 0; i < dim0; i++)
             {
-                int m = 0; 
-                for (int j = 0; j < Wrist.NumBones; j++)
+                int m = 0;
+                //for (int j = 0; j < Wrist.NumBones; j++)
+                foreach(int j in interaction)
                 {
                     if (j == boneIndex) continue;
 
