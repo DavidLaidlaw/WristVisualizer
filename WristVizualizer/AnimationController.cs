@@ -23,12 +23,34 @@ namespace WristVizualizer
         private int _currentFrame;
         private int _numberOfFrames;
 
+        private DateTime _startTime;
+
         public AnimationController()
         {
             _timer = new Timer();
             _timer.Enabled = false;
             _timer.Tick += new EventHandler(_timer_Tick);
             _currentFrame = 0;
+        }
+
+        public void setupAnimation(Separator[] Bones, Transform[][] BoneTransforms)
+        {
+            setupAnimation(null, Bones, null, BoneTransforms);
+        }
+
+        public void crapSetup_DELETEME(Separator[] Bones, HelicalTransform[][] BoneTransforms)
+        {
+            Transform[][] real = new Transform[BoneTransforms.Length][];
+            for (int i = 0; i < BoneTransforms.Length; i++)
+            {
+                real[i] = new Transform[BoneTransforms[i].Length];
+                for (int j = 0; j < BoneTransforms[i].Length; j++)
+                {
+                    if (BoneTransforms[i][j]!=null)
+                        real[i][j] = BoneTransforms[i][j].ToTransformMatrix().ToTransform();
+                }
+            }
+            setupAnimation(Bones, real); //call the real one!
         }
 
         public void setupAnimation(Separator Root, Separator[] Bones, Transform[] RootTransforms, Transform[][] BoneTransforms)
@@ -42,7 +64,7 @@ namespace WristVizualizer
             //now validate
             validateTransforms();
 
-            _numberOfFrames = _boneTransforms.Length; //save the number of frames
+            _numberOfFrames = _boneTransforms[0].Length; //save the number of frames
         }
 
         private void validateTransforms()
@@ -54,16 +76,20 @@ namespace WristVizualizer
             if (_root == null && _rootTransforms != null)
                 throw new ArgumentException("Can not have root transforms when no node was passed for root");
 
-            if (_boneTransforms==null || _boneTransforms.Length < 2)
+            if (_boneTransforms==null || _boneTransforms[0].Length < 2) //check num frames for first bone
                 throw new ArgumentException("Must pass AT LEAST 2 positions to be animated! Can't animate less then that, duh");
 
-            if (_rootTransforms != null && _rootTransforms.Length != _boneTransforms.Length)
+            if (_rootTransforms != null && _rootTransforms.Length != _boneTransforms[0].Length)
                 throw new ArgumentException("There must be the same number of transforms for both Root and the Bones!");
 
-            for (int i = 0; i < _boneTransforms.Length; i++)
+            if (_bones.Length != _boneTransforms.Length)
+                throw new ArgumentException("Must have an array of transforms for each bone!");
+
+            //check each bone has same number of transforms as the first bone
+            for (int i = 1; i < _bones.Length; i++)
             {
-                if (_boneTransforms[i].Length != _bones.Length)
-                    throw new ArgumentException(String.Format("Every frame must specify a transform for every bone. For frame {0}, found only {1} transform (expecting {2})", i, _boneTransforms[i].Length, _bones.Length));
+                if (_boneTransforms[i].Length != _boneTransforms[0].Length)
+                    throw new ArgumentException(String.Format("Every bone must have the same number of transforms. For Bone {0}, found only {1} transform (expecting {2})", i, _boneTransforms[i].Length, _boneTransforms[0].Length));
             }
         }
 
@@ -74,7 +100,7 @@ namespace WristVizualizer
 
         private void removeCurrentTransforms()
         {
-            if (_root.hasTransform())
+            if (_root!=null && _root.hasTransform())
                 _root.removeTransform();
             for (int i = 0; i < _bones.Length; i++)
             {
@@ -99,7 +125,9 @@ namespace WristVizualizer
                 //if here, we want to stop and announce the event
                 _timer.Stop(); //top the timer, so we don't get called again
                 if (EndOfAnimationReached != null) //if anyone is listening, lets announce ourselves!
-                    EndOfAnimationReached(this, new EventArgs()); 
+                    EndOfAnimationReached(this, new EventArgs());
+                //TimeSpan diff = DateTime.Now - _startTime;
+                //MessageBox.Show(String.Format("Animation Took {0}ms",diff.ToString()));
             }
         }
 
@@ -109,16 +137,16 @@ namespace WristVizualizer
             removeCurrentTransforms();
 
             //apply current to root
-            if (_rootTransforms != null & _rootTransforms[_currentFrame]!=null)
+            if (_root!=null && _rootTransforms[_currentFrame]!=null)
                 _root.addTransform(_rootTransforms[_currentFrame]);
 
             //apply transform to other bones
             for (int i = 0; i < _bones.Length; i++)
             {
-                if (_bones[i] == null || _boneTransforms[_currentFrame][i] == null)
+                if (_bones[i] == null || _boneTransforms[i][_currentFrame] == null)
                     continue;
 
-                _bones[i].addTransform(_boneTransforms[_currentFrame][i]);
+                _bones[i].addTransform(_boneTransforms[i][_currentFrame]);
             }
         }
 
@@ -151,7 +179,10 @@ namespace WristVizualizer
 
         public void Start()
         {
+            //when we start, we want the first frame to start NOW, not wait for the timer event
             _timer.Start();
+            _startTime = DateTime.Now;
+            advanceFrame();
         }
 
         public void Stop()

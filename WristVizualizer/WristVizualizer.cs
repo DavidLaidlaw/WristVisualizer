@@ -881,5 +881,16 @@ namespace WristVizualizer
             _viewer.setSceneGraph(_root);
             setFormForMode(Modes.DISTV);
         }
+
+        private void animatePositionTransitionsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //check that we are in FullWristMode
+            if (_mode != Modes.FULL_WRIST || _currentController == null ||
+                !_currentController.GetType().Equals(typeof(FullWristController)))
+                return;
+
+            FullWristController control = (FullWristController)_currentController;
+            control.AnimatePositionTransitions = animatePositionTransitionsToolStripMenuItem.Checked;
+        }
     }
 }

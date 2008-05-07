@@ -73,6 +73,7 @@ namespace WristVizualizer
             this.hideErrorMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadSampleWristToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadDistvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.checkForupdatesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,7 +81,8 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.loadDistvToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.animatePositionTransitionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -252,7 +254,9 @@ namespace WristVizualizer
             this.advancedToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pointIntersectionToolStripMenuItem,
             this.calculateInertiasToolStripMenuItem,
-            this.launchMRIViewerToolStripMenuItem});
+            this.launchMRIViewerToolStripMenuItem,
+            this.toolStripSeparator7,
+            this.animatePositionTransitionsToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.advancedToolStripMenuItem.Text = "&Advanced";
@@ -261,7 +265,7 @@ namespace WristVizualizer
             // 
             this.pointIntersectionToolStripMenuItem.Enabled = false;
             this.pointIntersectionToolStripMenuItem.Name = "pointIntersectionToolStripMenuItem";
-            this.pointIntersectionToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.pointIntersectionToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.pointIntersectionToolStripMenuItem.Text = "Point &Intersection...";
             this.pointIntersectionToolStripMenuItem.Click += new System.EventHandler(this.pointIntersectionToolStripMenuItem_Click);
             // 
@@ -269,14 +273,14 @@ namespace WristVizualizer
             // 
             this.calculateInertiasToolStripMenuItem.Enabled = false;
             this.calculateInertiasToolStripMenuItem.Name = "calculateInertiasToolStripMenuItem";
-            this.calculateInertiasToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.calculateInertiasToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.calculateInertiasToolStripMenuItem.Text = "Calculate Inertias";
             this.calculateInertiasToolStripMenuItem.Click += new System.EventHandler(this.calculateInertiasToolStripMenuItem_Click);
             // 
             // launchMRIViewerToolStripMenuItem
             // 
             this.launchMRIViewerToolStripMenuItem.Name = "launchMRIViewerToolStripMenuItem";
-            this.launchMRIViewerToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
+            this.launchMRIViewerToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.launchMRIViewerToolStripMenuItem.Text = "Launch MRIViewer";
             this.launchMRIViewerToolStripMenuItem.Click += new System.EventHandler(this.launchMRIViewerToolStripMenuItem_Click);
             // 
@@ -462,6 +466,13 @@ namespace WristVizualizer
             this.loadSampleWristToolStripMenuItem.Text = "Load Sample Wrist";
             this.loadSampleWristToolStripMenuItem.Click += new System.EventHandler(this.loadSampleWristToolStripMenuItem_Click);
             // 
+            // loadDistvToolStripMenuItem
+            // 
+            this.loadDistvToolStripMenuItem.Name = "loadDistvToolStripMenuItem";
+            this.loadDistvToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
+            this.loadDistvToolStripMenuItem.Text = "Load Distv";
+            this.loadDistvToolStripMenuItem.Click += new System.EventHandler(this.loadDistvToolStripMenuItem_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -525,12 +536,18 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
-            // loadDistvToolStripMenuItem
+            // animatePositionTransitionsToolStripMenuItem
             // 
-            this.loadDistvToolStripMenuItem.Name = "loadDistvToolStripMenuItem";
-            this.loadDistvToolStripMenuItem.Size = new System.Drawing.Size(185, 22);
-            this.loadDistvToolStripMenuItem.Text = "Load Distv";
-            this.loadDistvToolStripMenuItem.Click += new System.EventHandler(this.loadDistvToolStripMenuItem_Click);
+            this.animatePositionTransitionsToolStripMenuItem.CheckOnClick = true;
+            this.animatePositionTransitionsToolStripMenuItem.Name = "animatePositionTransitionsToolStripMenuItem";
+            this.animatePositionTransitionsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.animatePositionTransitionsToolStripMenuItem.Text = "Animate Position Transitions";
+            this.animatePositionTransitionsToolStripMenuItem.Click += new System.EventHandler(this.animatePositionTransitionsToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(216, 6);
             // 
             // WristVizualizer
             // 
@@ -618,6 +635,8 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem launchMRIViewerToolStripMenuItem;
         private System.Windows.Forms.TableLayoutPanel mainLayoutPanel;
         private System.Windows.Forms.ToolStripMenuItem loadDistvToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
+        private System.Windows.Forms.ToolStripMenuItem animatePositionTransitionsToolStripMenuItem;
     }
 }
 

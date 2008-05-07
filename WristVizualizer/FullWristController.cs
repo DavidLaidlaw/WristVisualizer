@@ -22,6 +22,11 @@ namespace WristVizualizer
 
         private Separator _root;
 
+        //animation stuff
+        private bool _animatePositionChanges;
+        private AnimationController _animationController;
+
+        //GUI stuff
         private FullWristControl _wristControl;
 
         public FullWristController()
@@ -224,6 +229,12 @@ namespace WristVizualizer
             }
         }
 
+        public bool AnimatePositionTransitions
+        {
+            get { return _animatePositionChanges; }
+            set { _animatePositionChanges = value; }
+        }
+
         public bool ShowErrors
         {
             get { return _showErrors; }
@@ -291,8 +302,49 @@ namespace WristVizualizer
             }
         }
 
+        private void animateChangeBlahBlahBlah()
+        {
+            //setup animations....
+            int numFrames = 15;
+            int numSecs = 5;
+
+            _animationController = new AnimationController();
+            HelicalTransform[][] transforms = new HelicalTransform[_bones.Length][];
+
+            TransformMatrix tmFixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex];
+
+            for (int i = 0; i < _bones.Length; i++)
+            {
+                transforms[i] = new HelicalTransform[numFrames];
+
+                //skip missing bones
+                if (_bones[i] == null || i == _fixedBoneIndex) continue;
+
+                TransformMatrix tmCurrentBone = _transformMatrices[_currentPositionIndex - 1][i];
+                TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
+                HelicalTransform htRelMotion = tmRelMotion.ToHelical();
+                transforms[i] = htRelMotion.LinearlyInterpolateMotion(numFrames);
+
+                //_bones[i].addTransform(tmRelMotion.ToTransform());
+                
+
+                if (tmCurrentBone.isIdentity())
+                    _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
+            }
+            _animationController.crapSetup_DELETEME(_bones, transforms);
+            _animationController.LoopAnimation = false;
+            _animationController.FPS = 35;
+            _animationController.Start();
+        }
+
         private void setTransformsForCurrentPositionAndFixedBone()
         {
+            if (_animatePositionChanges)
+            {
+                animateChangeBlahBlahBlah();
+                return;
+            }
+
             //first remove the old transforms, if they exist
             removeCurrentTransforms();
 
@@ -309,6 +361,8 @@ namespace WristVizualizer
                 TransformMatrix tmCurrentBone = _transformMatrices[_currentPositionIndex - 1][i];
                 TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
                 _bones[i].addTransform(tmRelMotion.ToTransform());
+
+                
 
                 if (tmCurrentBone.isIdentity())
                     _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
