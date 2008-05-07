@@ -336,10 +336,9 @@ namespace WristVizualizer
                 if (_bones[i] == null) 
                     continue;
 
+                //do we need to check if we are the fixed bone....?
                 if (i == fixedBoneIndex)
-                {
-                    relMotions[i] = null; //if we are the fixed bone, we don't move, so make us null
-                }
+                    continue;
 
                 TransformMatrix tmCurrentBone = _transformMatrices[positionIndex - 1][i];
                 relMotions[i] = tmFixedBone.Inverse() * tmCurrentBone;
@@ -350,52 +349,97 @@ namespace WristVizualizer
         private void animateChangeBlahBlahBlah()
         {
             //setup animations....
+            if (_animationController != null)
+                _animationController.Stop(); //ugly, but should work
+            _animationController = new AnimationController();
             int numFrames = Math.Max((int)(_FPS * _animateDuration), 1); //want at least one frame
 
-            _animationController = new AnimationController();
+            HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length]; //rel motion from last to current
 
-            HelicalTransform[][] transforms = new HelicalTransform[_bones.Length][];
+            TransformMatrix[] lastRelMotion = calculateRelativeMotionFromNeutral(_lastPositionIndex, _lastFixedBoneIndex); //rel motion from neutral to last
+            TransformMatrix[] currentRelMotion = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex); //rel motion from neutral to current
 
-            //load the transform for the fixed bone of the current index
-            TransformMatrix tmFixedBone;
-            if (_currentPositionIndex == 0)
-                tmFixedBone = new TransformMatrix();
-            else
-                tmFixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex];
-
-            //save a copy of the lastRElativeMotions
-            TransformMatrix[] savedLastPositionRelMotion = _tmCurrentPositionRelativeMotion;
-            _tmCurrentPositionRelativeMotion = new TransformMatrix[Wrist.NumBones];
-
-            HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length];
+            //loop for each bone, and setup
             for (int i = 0; i < _bones.Length; i++)
             {
-                //skip missing bones & the fixed bone, its not moving
-                if (_bones[i] == null || i == _fixedBoneIndex) continue;
+                //skip missing bones
+                if (_bones[i] == null) continue;
 
-                //calculate the relative motion for this new position and save it
-                TransformMatrix tmCurrentBone = _transformMatrices[_currentPositionIndex - 1][i];
-                TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
-                _tmCurrentPositionRelativeMotion[i] = tmRelMotion; //save for future
+                //skip if there is no transform for the current position...
+                if (currentRelMotion[i] == null)
+                    continue;
 
-                //now lets load the relative motion for the last position, so we can move gracefully from it :)
-                TransformMatrix tmLastRelMotion = savedLastPositionRelMotion[i];
-                if (tmLastRelMotion == null)
-                    tmLastRelMotion = new TransformMatrix(); //set to identify if we are missing one
-                TransformMatrix rmRelMotionLastPosition = tmLastRelMotion.Inverse() * tmRelMotion;
+                //skip if no transforms at all
+                if (lastRelMotion[i] == null && currentRelMotion[i] == null)
+                    continue;
 
-                if (rmRelMotionLastPosition.isIdentity(0.01))  //dirty check to see if we are getting the identity matrix....yar
-                    Console.WriteLine("SHIT");
-                htRelMotions[i] = rmRelMotionLastPosition.ToHelical();
-
-                //if there is no kinematics for the current Bone, then hide it :)
-                if (tmCurrentBone.isIdentity())
-                    _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
+                //if the last position was null, then just use the current position. This should happen when moving from neutral
+                if (lastRelMotion[i] == null)
+                {
+                    htRelMotions[i] = currentRelMotion[i].ToHelical();
+                    if (currentRelMotion[i].isIdentity(0.001))
+                        Console.WriteLine("FUCKYOU");
+                }
+                else
+                {
+                    //so we should have both transforms now... though one can be the identity.... hm....
+                    TransformMatrix relLastToCurrent = lastRelMotion[i].Inverse() * currentRelMotion[i];
+                    htRelMotions[i] = relLastToCurrent.ToHelical();
+                    if (relLastToCurrent.isIdentity(0.001))
+                        Console.WriteLine("FUCKYOU");
+                }
             }
-            _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, savedLastPositionRelMotion, numFrames);
+
+            hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
+
+            _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
             _animationController.LoopAnimation = false;
             _animationController.FPS = _FPS;
             _animationController.Start();
+            
+
+
+
+            ////load the transform for the fixed bone of the current index
+            //TransformMatrix tmFixedBone;
+            //if (_currentPositionIndex == 0)
+            //    tmFixedBone = new TransformMatrix();
+            //else
+            //    tmFixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex];
+
+            ////save a copy of the lastRElativeMotions
+            //TransformMatrix[] savedLastPositionRelMotion = _tmCurrentPositionRelativeMotion;
+            //_tmCurrentPositionRelativeMotion = new TransformMatrix[Wrist.NumBones];
+
+            ////HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length];
+            //for (int i = 0; i < _bones.Length; i++)
+            //{
+            //    //skip missing bones & the fixed bone, its not moving
+            //    if (_bones[i] == null || i == _fixedBoneIndex) continue;
+
+            //    //calculate the relative motion for this new position and save it
+            //    TransformMatrix tmCurrentBone = _transformMatrices[_currentPositionIndex - 1][i];
+            //    TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
+            //    _tmCurrentPositionRelativeMotion[i] = tmRelMotion; //save for future
+
+            //    //now lets load the relative motion for the last position, so we can move gracefully from it :)
+            //    TransformMatrix tmLastRelMotion = savedLastPositionRelMotion[i];
+            //    if (tmLastRelMotion == null)
+            //        tmLastRelMotion = new TransformMatrix(); //set to identify if we are missing one
+            //    TransformMatrix rmRelMotionLastPosition = tmLastRelMotion.Inverse() * tmRelMotion;
+
+            //    if (rmRelMotionLastPosition.isIdentity(0.01))  //dirty check to see if we are getting the identity matrix....yar
+            //        Console.WriteLine("SHIT");
+            //    htRelMotions[i] = rmRelMotionLastPosition.ToHelical();
+
+            //    //if there is no kinematics for the current Bone, then hide it :)
+            //    if (tmCurrentBone.isIdentity())
+            //        _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
+            //}
+            //_animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, savedLastPositionRelMotion, numFrames);
+            //_animationController.LoopAnimation = false;
+            //_animationController.FPS = _FPS;
+            //_animationController.Start();
         }
 
         private void hideBonesWithNoKinematicsForPosition(int positionIndex)
@@ -432,26 +476,13 @@ namespace WristVizualizer
             _tmCurrentPositionRelativeMotion = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex);
             for (int i = 0; i < _bones.Length; i++)
             {
+                //skip missing bones, or bones without motion
+                if (_bones[i] == null || _tmCurrentPositionRelativeMotion[i] == null)
+                    continue;
+
                 _bones[i].addTransform(_tmCurrentPositionRelativeMotion[i].ToTransform());
             }
             hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
-            
-
-            //TransformMatrix tmFixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex];
-            //for (int i = 0; i < _bones.Length; i++)
-            //{
-            //    //skip missing bones
-            //    if (_bones[i] == null || i == _fixedBoneIndex) continue;
-
-            //    TransformMatrix tmCurrentBone = _transformMatrices[_currentPositionIndex - 1][i];
-            //    TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
-            //    _bones[i].addTransform(tmRelMotion.ToTransform());
-
-            //    _tmCurrentPositionRelativeMotion[i] = tmRelMotion; //save for later...?
-
-            //    if (tmCurrentBone.isIdentity())
-            //        _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
-            //}
         }
 
         void _control_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
