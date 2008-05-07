@@ -279,12 +279,8 @@ namespace WristVizualizer
             _wristControl.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
         }
 
-        void _control_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
+        private void removeCurrentTransforms()
         {
-            if (_currentPositionIndex == e.SelectedIndex)
-                return;
-
-            //first remove the old transforms, if they exist
             if (_root.hasTransform())
                 _root.removeTransform();
             for (int i = 0; i < _bones.Length; i++)
@@ -293,45 +289,48 @@ namespace WristVizualizer
                 if (_bones[i] != null && _bones[i].hasTransform())
                     _bones[i].removeTransform();
             }
+        }
 
-            //save current position
-            _currentPositionIndex = e.SelectedIndex;
+        private void setTransformsForCurrentPositionAndFixedBone()
+        {
+            //first remove the old transforms, if they exist
+            removeCurrentTransforms();
 
             //check if neutral, if so, we are done
             if (_currentPositionIndex == 0)
                 return;
 
-            Transform fixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex].ToTransform();
-            fixedBone.invert();
-            _root.addTransform(fixedBone);
+            TransformMatrix tmFixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex];
             for (int i = 0; i < _bones.Length; i++)
             {
                 //skip missing bones
-                if (_bones[i] == null) continue;
+                if (_bones[i] == null || i == _fixedBoneIndex) continue;
 
-                _bones[i].addTransform(_transforms[_currentPositionIndex - 1][i]);
-                if (_transforms[_currentPositionIndex - 1][i].isIdentity()) //hide bones with no kinematics...
-                    _wristControl.hideBone(i);
+                TransformMatrix tmCurrentBone = _transformMatrices[_currentPositionIndex - 1][i];
+                TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
+                _bones[i].addTransform(tmRelMotion.ToTransform());
+
+                if (tmCurrentBone.isIdentity())
+                    _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
             }
+        }
+
+        void _control_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
+        {
+            if (_currentPositionIndex == e.SelectedIndex)
+                return;
+
+            //save current position
+            _currentPositionIndex = e.SelectedIndex;
+
+            setTransformsForCurrentPositionAndFixedBone();
         }
 
         void _control_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
             _fixedBoneIndex = e.BoneIndex;
 
-            //do nothing for neutral
-            if (_currentPositionIndex == 0) return;
-
-            //so now change the top level
-            //do the neutral thing....
-            if (_root.hasTransform())
-                _root.removeTransform();
-
-            Transform t = new Transform();
-            DatParser.addRTtoTransform(DatParser.parseMotionFileToRT(_wrist.getMotionFilePath(_currentPositionIndex - 1))[e.BoneIndex], t);
-            t.invert();
-            //_root.addTransform(_transforms[_currentPositionIndex-1][0]); //minus 1 to skip neutral
-            _root.addTransform(t);
+            setTransformsForCurrentPositionAndFixedBone();
         }
 
         void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
