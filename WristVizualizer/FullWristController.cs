@@ -364,14 +364,14 @@ namespace WristVizualizer
             {
                 //skip missing bones
                 if (_bones[i] == null) continue;
-
-                //skip if there is no transform for the current position...
-                if (currentRelMotion[i] == null)
-                    continue;
-
-                //skip if no transforms at all
+                                
+                //skip if no transforms at all, then the bone is not changing places...
                 if (lastRelMotion[i] == null && currentRelMotion[i] == null)
                     continue;
+
+                //if there is no transform for the current position, but there is a reverse
+                if (currentRelMotion[i] == null)
+                    currentRelMotion[i] = new TransformMatrix(); //set to identity....
 
                 //if the last position was null, then just use the current position. This should happen when moving from neutral
                 if (lastRelMotion[i] == null)
@@ -386,12 +386,12 @@ namespace WristVizualizer
                     TransformMatrix relLastToCurrent = currentRelMotion[i] * lastRelMotion[i].Inverse();
                     htRelMotions[i] = relLastToCurrent.ToHelical();
 
-                    TransformMatrix final = relLastToCurrent * lastRelMotion[i];
-                    if (!final.isEqual(currentRelMotion[i]))
-                        Console.WriteLine("Boo");
-                    //final.printToConsole();
-                    if (relLastToCurrent.isIdentity(0.001))
-                        Console.WriteLine("FUCKYOU");
+                    //TransformMatrix final = relLastToCurrent * lastRelMotion[i];
+                    //if (!final.isEqual(currentRelMotion[i]))
+                    //    Console.WriteLine("Boo");
+                    ////final.printToConsole();
+                    //if (relLastToCurrent.isIdentity(0.001))
+                    //    Console.WriteLine("FUCKYOU");
                 }
             }
 
