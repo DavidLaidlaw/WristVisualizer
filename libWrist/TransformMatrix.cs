@@ -422,5 +422,39 @@ namespace libWrist
             Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[2][0], m.Array[2][1], m.Array[2][2], m.Array[2][3]);
             Console.WriteLine("\t{0}\t{1}\t{2}\t{3}", m.Array[3][0], m.Array[3][1], m.Array[3][2], m.Array[3][3]);
         }
+
+        public bool isIdentity()
+        {
+            return this.isEqual(new TransformMatrix());
+        }
+        public bool isIdentity(double tolerance)
+        {
+            return this.isEqual(new TransformMatrix(), tolerance); //check if equal to new matrix, which defaults to identity
+        }
+
+        /// <summary>
+        /// Compares two TransformMatrices to see if they are equal
+        /// </summary>
+        /// <param name="B">Matrix to test against</param>
+        /// <returns></returns>
+        public bool isEqual(TransformMatrix B) { return isEqual(B, 0.0001f); }
+
+        /// <summary>
+        /// Compares two TransformMatrices to see if they are equal
+        /// </summary>
+        /// <param name="B">Matrix to test against</param>
+        /// <param name="tolerance">Precision to use for determining equality</param>
+        /// <returns></returns>
+        public bool isEqual(TransformMatrix B, double tolerance)
+        {
+            for (int i = 0; i < 4; i++)
+                for (int j = 0; j < 4; j++)
+                {
+                    if (Math.Abs(Array[i][j] - B.Array[i][j]) > tolerance)
+                        return false;
+                }
+            return true;
+        }
+
     }
 }
