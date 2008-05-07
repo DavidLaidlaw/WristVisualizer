@@ -305,6 +305,8 @@ namespace libWrist
             rotate(Axes.Z, angle);
         }
 
+        #region Overloaded Methods Redefined to return TransformMatrix
+
         /// <summary>Linear algebraic matrix multiplication, A * B</summary>
         /// <param name="B">   another matrix
         /// </param>
@@ -326,7 +328,16 @@ namespace libWrist
         public static TransformMatrix operator *(TransformMatrix m1, TransformMatrix m2)
         {
             return m1.Multiply(m2);
-        } 
+        }
+
+        /// <summary>Matrix inverse or pseudoinverse</summary>
+        /// <returns>     inverse(A) if A is square, pseudoinverse otherwise.
+        /// </returns>
+        public new TransformMatrix Inverse()
+        {
+            return new TransformMatrix(base.Inverse());
+        }
+        #endregion
 
         /// <summary>
         /// Set Transform to be a rotation matrix a given amount around an
