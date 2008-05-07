@@ -106,6 +106,10 @@ namespace WristVizualizer
                     saveMovieToolStripMenuItem.Visible = true;
                     saveMovieToolStripMenuItem.Enabled = true;
                     break;
+                case Modes.FULL_WRIST:
+                    animatePositionTransitionsToolStripMenuItem.Enabled = true;
+                    animationRateToolStripMenuItem.Enabled = true;
+                    break;
             }
         }
 
@@ -160,6 +164,13 @@ namespace WristVizualizer
             saveAsToolStripMenuItem.Enabled = true;
             showScenegraphToolStripMenuItem.Enabled = true;
             saveMovieToolStripMenuItem.Enabled = false;
+            animatePositionTransitionsToolStripMenuItem.Checked = false; //default value?
+            animatePositionTransitionsToolStripMenuItem.Enabled = false;
+            animationRateToolStripMenuItem.Enabled = false;
+            rate_05sec_15FpsToolStripMenuItem.Checked = true;
+            rate_1sec_15FpsToolStripMenuItem1.Checked = false;
+            rate_2sec_15FpsToolStripMenuItem2.Checked = false;
+            
             if (_pointSelection != null)
             {
                 _pointSelection.stopSelecting();
@@ -891,6 +902,47 @@ namespace WristVizualizer
 
             FullWristController control = (FullWristController)_currentController;
             control.AnimatePositionTransitions = animatePositionTransitionsToolStripMenuItem.Checked;
+        }
+
+        private void animationRateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //check that we are in FullWristMode
+            if (_mode != Modes.FULL_WRIST || _currentController == null ||
+                !_currentController.GetType().Equals(typeof(FullWristController)))
+                return;
+
+            FullWristController control = (FullWristController)_currentController;
+
+            //let go through each one, and proccess
+            if (sender == rate_05sec_15FpsToolStripMenuItem)
+            {
+                control.FPS = 15;
+                control.AnimationDuration = 0.5;
+            }
+            else
+            {
+                rate_05sec_15FpsToolStripMenuItem.Checked = false;
+            }
+
+            if (sender == rate_1sec_15FpsToolStripMenuItem1)
+            {
+                control.FPS = 15;
+                control.AnimationDuration = 1.0;
+            }
+            else
+            {
+                rate_1sec_15FpsToolStripMenuItem1.Checked = false;
+            }
+
+            if (sender == rate_2sec_15FpsToolStripMenuItem2)
+            {
+                control.FPS = 15;
+                control.AnimationDuration = 2.0;
+            }
+            else
+            {
+                rate_2sec_15FpsToolStripMenuItem2.Checked = false;
+            }
         }
     }
 }

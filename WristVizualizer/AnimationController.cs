@@ -53,6 +53,28 @@ namespace WristVizualizer
             setupAnimation(Bones, real); //call the real one!
         }
 
+        public void setupAnimationForLinearInterpolation(Separator[] Bones, HelicalTransform[] BoneTransforms, int numSteps)
+        {
+            if (Bones.Length != BoneTransforms.Length)
+                throw new ArgumentException("Number of bones must match the number of transforms");
+
+            Transform[][] interpedTransforms = new Transform[Bones.Length][];
+            for (int i = 0; i < Bones.Length; i++)
+            {
+                interpedTransforms[i] = new Transform[numSteps];
+
+                if (BoneTransforms[i] == null)  //check if there are no transforms for this bone
+                    continue; 
+
+                //perform interpolation
+                HelicalTransform[] htTransforms = BoneTransforms[i].LinearlyInterpolateMotion(numSteps);
+                //save interpolated steps as Transform objects for later
+                for (int j = 0; j < numSteps; j++)
+                    interpedTransforms[i][j] = htTransforms[j].ToTransformMatrix().ToTransform();
+            }
+            setupAnimation(Bones, interpedTransforms);
+        }
+
         public void setupAnimation(Separator Root, Separator[] Bones, Transform[] RootTransforms, Transform[][] BoneTransforms)
         {
             //first save the variables
@@ -76,8 +98,8 @@ namespace WristVizualizer
             if (_root == null && _rootTransforms != null)
                 throw new ArgumentException("Can not have root transforms when no node was passed for root");
 
-            if (_boneTransforms==null || _boneTransforms[0].Length < 2) //check num frames for first bone
-                throw new ArgumentException("Must pass AT LEAST 2 positions to be animated! Can't animate less then that, duh");
+            if (_boneTransforms==null || _boneTransforms[0].Length < 1) //check num frames for first bone
+                throw new ArgumentException("Must pass AT LEAST 1 positions to be animated! Can't animate less then that, duh");
 
             if (_rootTransforms != null && _rootTransforms.Length != _boneTransforms[0].Length)
                 throw new ArgumentException("There must be the same number of transforms for both Root and the Bones!");

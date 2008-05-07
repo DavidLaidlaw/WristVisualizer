@@ -52,6 +52,12 @@ namespace WristVizualizer
             this.pointIntersectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.launchMRIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.animatePositionTransitionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.animationRateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rate_05sec_15FpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.rate_1sec_15FpsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.rate_2sec_15FpsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,8 +87,6 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.animatePositionTransitionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -256,7 +260,8 @@ namespace WristVizualizer
             this.calculateInertiasToolStripMenuItem,
             this.launchMRIViewerToolStripMenuItem,
             this.toolStripSeparator7,
-            this.animatePositionTransitionsToolStripMenuItem});
+            this.animatePositionTransitionsToolStripMenuItem,
+            this.animationRateToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.advancedToolStripMenuItem.Text = "&Advanced";
@@ -283,6 +288,52 @@ namespace WristVizualizer
             this.launchMRIViewerToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.launchMRIViewerToolStripMenuItem.Text = "Launch MRIViewer";
             this.launchMRIViewerToolStripMenuItem.Click += new System.EventHandler(this.launchMRIViewerToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(216, 6);
+            // 
+            // animatePositionTransitionsToolStripMenuItem
+            // 
+            this.animatePositionTransitionsToolStripMenuItem.CheckOnClick = true;
+            this.animatePositionTransitionsToolStripMenuItem.Enabled = false;
+            this.animatePositionTransitionsToolStripMenuItem.Name = "animatePositionTransitionsToolStripMenuItem";
+            this.animatePositionTransitionsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.animatePositionTransitionsToolStripMenuItem.Text = "Animate Position Transitions";
+            this.animatePositionTransitionsToolStripMenuItem.Click += new System.EventHandler(this.animatePositionTransitionsToolStripMenuItem_Click);
+            // 
+            // animationRateToolStripMenuItem
+            // 
+            this.animationRateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rate_05sec_15FpsToolStripMenuItem,
+            this.rate_1sec_15FpsToolStripMenuItem1,
+            this.rate_2sec_15FpsToolStripMenuItem2});
+            this.animationRateToolStripMenuItem.Enabled = false;
+            this.animationRateToolStripMenuItem.Name = "animationRateToolStripMenuItem";
+            this.animationRateToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.animationRateToolStripMenuItem.Text = "Animation Rate";
+            // 
+            // rate_05sec_15FpsToolStripMenuItem
+            // 
+            this.rate_05sec_15FpsToolStripMenuItem.Name = "rate_05sec_15FpsToolStripMenuItem";
+            this.rate_05sec_15FpsToolStripMenuItem.Size = new System.Drawing.Size(160, 22);
+            this.rate_05sec_15FpsToolStripMenuItem.Text = "0.5 sec / 15 fps";
+            this.rate_05sec_15FpsToolStripMenuItem.Click += new System.EventHandler(this.animationRateToolStripMenuItem_Click);
+            // 
+            // rate_1sec_15FpsToolStripMenuItem1
+            // 
+            this.rate_1sec_15FpsToolStripMenuItem1.Name = "rate_1sec_15FpsToolStripMenuItem1";
+            this.rate_1sec_15FpsToolStripMenuItem1.Size = new System.Drawing.Size(160, 22);
+            this.rate_1sec_15FpsToolStripMenuItem1.Text = "1.0 sec / 15 fps";
+            this.rate_1sec_15FpsToolStripMenuItem1.Click += new System.EventHandler(this.animationRateToolStripMenuItem_Click);
+            // 
+            // rate_2sec_15FpsToolStripMenuItem2
+            // 
+            this.rate_2sec_15FpsToolStripMenuItem2.Name = "rate_2sec_15FpsToolStripMenuItem2";
+            this.rate_2sec_15FpsToolStripMenuItem2.Size = new System.Drawing.Size(160, 22);
+            this.rate_2sec_15FpsToolStripMenuItem2.Text = "2.0 sec / 15 fps";
+            this.rate_2sec_15FpsToolStripMenuItem2.Click += new System.EventHandler(this.animationRateToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -536,19 +587,6 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
-            // animatePositionTransitionsToolStripMenuItem
-            // 
-            this.animatePositionTransitionsToolStripMenuItem.CheckOnClick = true;
-            this.animatePositionTransitionsToolStripMenuItem.Name = "animatePositionTransitionsToolStripMenuItem";
-            this.animatePositionTransitionsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.animatePositionTransitionsToolStripMenuItem.Text = "Animate Position Transitions";
-            this.animatePositionTransitionsToolStripMenuItem.Click += new System.EventHandler(this.animatePositionTransitionsToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(216, 6);
-            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -637,6 +675,10 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem loadDistvToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator7;
         private System.Windows.Forms.ToolStripMenuItem animatePositionTransitionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem animationRateToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rate_05sec_15FpsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem rate_1sec_15FpsToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem rate_2sec_15FpsToolStripMenuItem2;
     }
 }
 

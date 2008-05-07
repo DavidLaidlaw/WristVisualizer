@@ -18,13 +18,17 @@ namespace WristVizualizer
         private Transform[][] _transforms;
         private TransformMatrix[][] _transformMatrices;
         private int _currentPositionIndex;
+        private int _lastPositionIndex;
         private int _fixedBoneIndex;
+        private int _lastFixedBoneIndex;
 
         private Separator _root;
 
         //animation stuff
         private bool _animatePositionChanges;
         private AnimationController _animationController;
+        private int _FPS;
+        private double _animateDuration;
 
         //GUI stuff
         private FullWristControl _wristControl;
@@ -37,6 +41,10 @@ namespace WristVizualizer
             _bones = new Separator[Wrist.NumBones];
             _colorBones = new ColoredBone[Wrist.NumBones];
             _inertias = new Separator[Wrist.NumBones];
+
+            //defaults
+            _FPS = 15;
+            _animateDuration = 0.5;
         }
 
         public new void CleanUp()
@@ -235,6 +243,18 @@ namespace WristVizualizer
             set { _animatePositionChanges = value; }
         }
 
+        public int FPS
+        {
+            get { return _FPS; }
+            set { _FPS = value; }
+        }
+
+        public double AnimationDuration
+        {
+            get { return _animateDuration; }
+            set { _animateDuration = value; }
+        }
+
         public bool ShowErrors
         {
             get { return _showErrors; }
@@ -305,25 +325,26 @@ namespace WristVizualizer
         private void animateChangeBlahBlahBlah()
         {
             //setup animations....
-            int numFrames = 15;
-            int numSecs = 5;
+            int numFrames = Math.Max((int)(_FPS * _animateDuration), 1); //want at least one frame
 
             _animationController = new AnimationController();
             HelicalTransform[][] transforms = new HelicalTransform[_bones.Length][];
 
             TransformMatrix tmFixedBone = _transformMatrices[_currentPositionIndex - 1][_fixedBoneIndex];
 
+            HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length];
             for (int i = 0; i < _bones.Length; i++)
             {
-                transforms[i] = new HelicalTransform[numFrames];
+                //transforms[i] = new HelicalTransform[numFrames];
 
                 //skip missing bones
                 if (_bones[i] == null || i == _fixedBoneIndex) continue;
 
                 TransformMatrix tmCurrentBone = _transformMatrices[_currentPositionIndex - 1][i];
                 TransformMatrix tmRelMotion = tmFixedBone.Inverse() * tmCurrentBone;
-                HelicalTransform htRelMotion = tmRelMotion.ToHelical();
-                transforms[i] = htRelMotion.LinearlyInterpolateMotion(numFrames);
+                htRelMotions[i] = tmRelMotion.ToHelical();
+
+                //transforms[i] = htRelMotion.LinearlyInterpolateMotion(numFrames);
 
                 //_bones[i].addTransform(tmRelMotion.ToTransform());
                 
@@ -331,9 +352,10 @@ namespace WristVizualizer
                 if (tmCurrentBone.isIdentity())
                     _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
             }
-            _animationController.crapSetup_DELETEME(_bones, transforms);
+            //_animationController.crapSetup_DELETEME(_bones, transforms);
+            _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, numFrames);
             _animationController.LoopAnimation = false;
-            _animationController.FPS = 35;
+            _animationController.FPS = _FPS;
             _animationController.Start();
         }
 
