@@ -80,7 +80,9 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
 
     _node->addChild(pBoneIndexedFaceSet);
     _node->unrefNoDelete();
+
 	_vertexProperty = pBoneVertexProperty;
+	_indexedFaceSet = pBoneIndexedFaceSet;
 
     //delete file contents
     bone->unref();
@@ -151,4 +153,17 @@ array<float,2>^ libCoin3D::ColoredBone::getVertices()
 		points[i,2] = _vertexProperty->vertex[i][2];
 	}
 	return points;
+}
+
+array<int,2>^ libCoin3D::ColoredBone::getFaceSetIndices()
+{
+	int numTriangles = _indexedFaceSet->coordIndex.getNum();
+	numTriangles = numTriangles/4;
+	array<int,2>^ connections = gcnew array<int,2>(numTriangles,3);  //yes, only copying the indices, not the -1
+	for (int i=0; i<numTriangles; i++) {
+		connections[i,0] = _indexedFaceSet->coordIndex[i*4];
+		connections[i,1] = _indexedFaceSet->coordIndex[i*4+1];
+		connections[i,2] = _indexedFaceSet->coordIndex[i*4+2];
+	}
+	return connections;
 }

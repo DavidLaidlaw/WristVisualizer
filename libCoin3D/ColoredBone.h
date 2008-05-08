@@ -19,6 +19,7 @@ public:
 	virtual SoNode* getNode() override { return _node; }
 
 	virtual array<float,2>^ getVertices();
+	virtual array<int,2>^ getFaceSetIndices();
 
 	virtual void clearColorMap();
 
@@ -26,6 +27,7 @@ public:
 private:
 	SoSeparator* _node;
 	SoVertexProperty* _vertexProperty;
+	SoIndexedFaceSet* _indexedFaceSet;
 	SoDrawStyle* _drawstyle;
 	int _numColoredVertices;
 	int _numPositions; 
