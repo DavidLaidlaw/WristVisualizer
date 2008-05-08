@@ -41,6 +41,7 @@
     <Compile Include="CropValuesParser.cs" />
     <Compile Include="CTmri.cs" />
     <Compile Include="DatParser.cs" />
+    <Compile Include="DistanceFields.cs" />
     <Compile Include="HelicalTransform.cs" />
     <Compile Include="InertialProperties.cs" />
     <Compile Include="IniFileParser.cs" />
