@@ -106,7 +106,7 @@ namespace WristVizualizer
 
         public void loadDistanceMapsForCurrentPosition()
         {
-            _distMap.loadDistanceMapsForPosition(_currentPositionIndex);
+            _distMap.loadDistanceColorMapsForPosition(_currentPositionIndex);
         }
 
         private void loadTransforms()
@@ -277,7 +277,7 @@ namespace WristVizualizer
             }
 
             //clear the coloring scheme, its not really calculated yet for intermediary positions
-            _distMap.clearDistanceMapsForAllBones();
+            _distMap.clearDistanceColorMapsForAllBones();
 
             _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
             _animationController.LoopAnimation = false;
@@ -311,7 +311,7 @@ namespace WristVizualizer
             else
             {
                 //load in the color maps, if they already exist
-                _distMap.loadDistanceMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
+                _distMap.loadDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
                 
                 //first remove the old transforms, if they exist
                 removeCurrentTransforms();

@@ -45,8 +45,18 @@ namespace libWrist
             }
         }
 
+        private bool hasDistanceMapsForBonePosition(int boneIndex, int positionIndex)
+        {
+            if (_calculatedDistances == null)
+                return false;
 
-        private bool hasDistanceMapsForPosition(int positionIndex)
+            if (_calculatedDistances[boneIndex] == null)
+                return false;
+
+            return (_calculatedDistances[boneIndex][positionIndex] != null);
+        }
+
+        private bool hasDistanceColorMapsForPosition(int positionIndex)
         {
             if (_calculatedColorMaps == null)
                 return false;
@@ -59,15 +69,15 @@ namespace libWrist
         }
 
 
-        public void loadDistanceMapsForPositionIfCalculatedOrClear(int positionIndex)
+        public void loadDistanceColorMapsForPositionIfCalculatedOrClear(int positionIndex)
         {
-            if (hasDistanceMapsForPosition(positionIndex))
-                loadDistanceMapsForPosition(positionIndex);
+            if (hasDistanceColorMapsForPosition(positionIndex))
+                loadDistanceColorMapsForPosition(positionIndex);
             else
-                clearDistanceMapsForAllBones();
+                clearDistanceColorMapsForAllBones();
         }
 
-        public void loadDistanceMapsForPosition(int positionIndex)
+        public void loadDistanceColorMapsForPosition(int positionIndex)
         {
             //setup save space if it doesn't exist
             if (_calculatedColorMaps == null)
@@ -84,14 +94,14 @@ namespace libWrist
 
                 //read in the colors if not yet loaded
                 if (_calculatedColorMaps[i][positionIndex] == null)
-                    _calculatedColorMaps[i][positionIndex] = createColormap(_distanceFields, i, positionIndex);
+                    _calculatedColorMaps[i][positionIndex] = createColormap(i, positionIndex);
 
                 //now set that color
                 _colorBones[i].setColorMap(_calculatedColorMaps[i][positionIndex]);
             }
         }
 
-        public void clearDistanceMapsForAllBones()
+        public void clearDistanceColorMapsForAllBones()
         {
             for (int i = 0; i < Wrist.NumBones; i++)
             {
@@ -129,17 +139,30 @@ namespace libWrist
 
         }
 
-        public int[] createColormap(CTmri[] mri, int boneIndex) { return createColormap(mri, boneIndex, 0); }
-        public int[] createColormap(CTmri[] mri, int boneIndex, int positionIndex)
-        {
-            double dDist = Double.MaxValue;
-            DateTime t2 = DateTime.Now;
-            float[,] pts = _colorBones[boneIndex].getVertices();
-            Console.WriteLine("Getting vertices {0}: {1}", boneIndex, ((TimeSpan)(DateTime.Now - t2)));
-            int numVertices = pts.GetLength(0);
-            double[] dDistances = new double[Wrist.NumBones - 1];
 
-            int[] colors = new int[numVertices];
+        private double[] getOrCalculateDistanceMap(int boneIndex, int positionIndex)
+        {
+            //setup save space if it doesn't exist
+            if (_calculatedDistances == null)
+                _calculatedDistances = new double[Wrist.NumBones][][];
+
+            readInDistanceFieldsIfNotLoaded();
+
+            if (_calculatedDistances[boneIndex]==null)
+                _calculatedDistances[boneIndex] = new double[_transformMatrices.Length+1][]; //add one extra for neutral
+            
+            if (_calculatedDistances[boneIndex][positionIndex]==null)
+                _calculatedDistances[boneIndex][positionIndex] = createDistanceMap(_distanceFields,boneIndex,positionIndex);
+
+            return _calculatedDistances[boneIndex][positionIndex];
+        }
+
+        private double[] createDistanceMap(CTmri[] mri, int boneIndex, int positionIndex)
+        {
+            float[,] pts = _colorBones[boneIndex].getVertices();
+            int numVertices = pts.GetLength(0);
+
+            double[] distances = new double[numVertices];
             int[] interaction = Wrist.BoneInteractionIndex[boneIndex]; //load  bone interactions
 
             TransformMatrix[] tmRelMotions = calculateRelativeMotionForDistanceMaps(boneIndex, positionIndex, interaction);
@@ -147,7 +170,7 @@ namespace libWrist
             //for each vertex           
             for (int i = 0; i < numVertices; i++)
             {
-                int m = 0;
+                distances[i] = Double.MaxValue; //set this vertex to the default
                 //for (int j = 0; j < Wrist.NumBones; j++)
                 foreach (int j in interaction) //only use the bones that we have specified interact
                 {
@@ -187,33 +210,34 @@ namespace libWrist
                     if (dX >= 3.1 && dX <= xBound && dY >= 3.1
                         && dY <= yBound && dZ >= 3.1 && dZ <= zBound)
                     {
-                        dDist = mri[j].sample_s_InterpCubit(dX, dY, dZ);
+                        double localDist = mri[j].sample_s_InterpCubit(dX, dY, dZ);
+                        if (localDist < distances[i]) //check if this is smaller, if so save it
+                            distances[i] = localDist;
                     }
-                    else
-                        dDist = Double.MaxValue;
-
-                    dDistances[m] = dDist;
-                    m++;
                 }
+            }
+            return distances;
+        }
 
-                //find smallest
-                double min = Double.MaxValue;
-                for (int im = 0; im < m; im++)
-                {
-                    if (dDistances[im] < min) min = dDistances[im];
-                }
-                dDist = min;
 
+        private int[] createColormap(int boneIndex, int positionIndex)
+        {
+            double[] distances = getOrCalculateDistanceMap(boneIndex, positionIndex);
+            int numVertices = distances.Length;
+            int[] colors = new int[numVertices];
+
+            for (int i = 0; i < numVertices; i++)
+            {
                 UInt32 packedColor;
 
                 //first check if there is collission
-                if (dDist < 0)
+                if (distances[i] < 0)
                 {
                     //color collision in blue
                     packedColor = 0X0000FFFF;
                 }
                 // a parameter could be used instead of plain 3
-                else if (dDist > 3)  //check if we are too far away
+                else if (distances[i] > 3)  //check if we are too far away
                 {
                     //make us white
                     packedColor = 0xFFFFFFFF;
@@ -229,7 +253,7 @@ namespace libWrist
                      * So we then ahve 0x00GGBB00, we can then bitwise OR with 0xFF0000FF, 
                      * since we want both R and Alpha to be at 255. Then we are set :)
                      */
-                    uint GB = (uint)(dDist * 255.0 / 3.0);
+                    uint GB = (uint)(distances[i] * 255.0 / 3.0);
                     packedColor = (GB << 16) | (GB << 8) | 0xFF0000FF;
                 }
                 colors[i] = (int)packedColor;
