@@ -77,6 +77,31 @@ namespace libWrist
                 clearDistanceColorMapsForAllBones();
         }
 
+        public void readInAllDistanceColorMaps()
+        {
+            //setup save space if it doesn't exist
+            if (_calculatedColorMaps == null)
+                _calculatedColorMaps = new int[Wrist.NumBones][][];
+
+            readInDistanceFieldsIfNotLoaded();
+
+            //try and create color scheme....
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                //setup space if it doesn't exist
+                if (_calculatedColorMaps[i] == null)
+                    _calculatedColorMaps[i] = new int[_transformMatrices.Length + 1][]; //add one extra for neutral :)
+
+                //now read the color map for each position index
+                for (int j = 0; j < _transformMatrices.Length + 1; j++)
+                {
+                    //read in the colors if not yet loaded
+                    if (_calculatedColorMaps[i][j] == null)
+                        _calculatedColorMaps[i][j] = createColormap(i, j);
+                }
+            }
+        }
+
         public void loadDistanceColorMapsForPosition(int positionIndex)
         {
             //setup save space if it doesn't exist

@@ -58,6 +58,7 @@ namespace WristVizualizer
             this.rate_05sec_15FpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rate_1sec_15FpsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rate_2sec_15FpsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.calculateDistanceMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -87,7 +88,7 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.calculateDistanceMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.calculateAllDistanceMapsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -263,7 +264,8 @@ namespace WristVizualizer
             this.toolStripSeparator7,
             this.animatePositionTransitionsToolStripMenuItem,
             this.animationRateToolStripMenuItem,
-            this.calculateDistanceMapToolStripMenuItem});
+            this.calculateDistanceMapToolStripMenuItem,
+            this.calculateAllDistanceMapsToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.advancedToolStripMenuItem.Text = "&Advanced";
@@ -336,6 +338,13 @@ namespace WristVizualizer
             this.rate_2sec_15FpsToolStripMenuItem2.Size = new System.Drawing.Size(160, 22);
             this.rate_2sec_15FpsToolStripMenuItem2.Text = "2.0 sec / 15 fps";
             this.rate_2sec_15FpsToolStripMenuItem2.Click += new System.EventHandler(this.animationRateToolStripMenuItem_Click);
+            // 
+            // calculateDistanceMapToolStripMenuItem
+            // 
+            this.calculateDistanceMapToolStripMenuItem.Name = "calculateDistanceMapToolStripMenuItem";
+            this.calculateDistanceMapToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.calculateDistanceMapToolStripMenuItem.Text = "Calculate Distance Map";
+            this.calculateDistanceMapToolStripMenuItem.Click += new System.EventHandler(this.calculateDistanceMapToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -589,12 +598,12 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
-            // calculateDistanceMapToolStripMenuItem
+            // calculateAllDistanceMapsToolStripMenuItem
             // 
-            this.calculateDistanceMapToolStripMenuItem.Name = "calculateDistanceMapToolStripMenuItem";
-            this.calculateDistanceMapToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.calculateDistanceMapToolStripMenuItem.Text = "Calculate Distance Map";
-            this.calculateDistanceMapToolStripMenuItem.Click += new System.EventHandler(this.calculateDistanceMapToolStripMenuItem_Click);
+            this.calculateAllDistanceMapsToolStripMenuItem.Name = "calculateAllDistanceMapsToolStripMenuItem";
+            this.calculateAllDistanceMapsToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.calculateAllDistanceMapsToolStripMenuItem.Text = "Calculate All Distance Maps";
+            this.calculateAllDistanceMapsToolStripMenuItem.Click += new System.EventHandler(this.calculateAllDistanceMapsToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -610,8 +619,8 @@ namespace WristVizualizer
             this.MinimumSize = new System.Drawing.Size(500, 429);
             this.Name = "WristVizualizer";
             this.Text = "Wrist Vizualizer";
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.Activated += new System.EventHandler(this.WristVizualizer_Activated);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -689,6 +698,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem rate_1sec_15FpsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem rate_2sec_15FpsToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem calculateDistanceMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem calculateAllDistanceMapsToolStripMenuItem;
     }
 }
 

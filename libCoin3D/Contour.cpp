@@ -20,6 +20,8 @@ libCoin3D::Contour::Contour()
 	_lineSet = new SoLineSet();
 	_node->addChild(_pts);
 	_node->addChild(_lineSet);
+	_pts->point.deleteValues(0);
+	_lineSet->numVertices.deleteValues(0);
 
 }
 

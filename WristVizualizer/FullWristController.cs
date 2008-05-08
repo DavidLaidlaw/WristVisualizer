@@ -107,7 +107,15 @@ namespace WristVizualizer
         public void loadDistanceMapsForCurrentPosition()
         {
             _distMap.loadDistanceColorMapsForPosition(_currentPositionIndex);
+            DateTime t = DateTime.Now;
             _bones[0].addNode(_distMap.createContourShit());
+            Console.WriteLine("Contour took: {0}",((TimeSpan)(DateTime.Now - t)));
+        }
+
+        public void loadAllDistanceMaps()
+        {
+            _distMap.readInAllDistanceColorMaps(); //read them all in
+            _distMap.loadDistanceColorMapsForPosition(_currentPositionIndex); //make sure we display the current one...
         }
 
         private void loadTransforms()
@@ -428,5 +436,6 @@ namespace WristVizualizer
                 _inertias[0] = null;
             }
         }
+
     }
 }

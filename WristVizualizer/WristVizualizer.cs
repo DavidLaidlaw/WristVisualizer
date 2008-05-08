@@ -955,5 +955,16 @@ namespace WristVizualizer
             FullWristController control = (FullWristController)_currentController;
             control.loadDistanceMapsForCurrentPosition();
         }
+
+        private void calculateAllDistanceMapsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //check that we are in FullWristMode
+            if (_mode != Modes.FULL_WRIST || _currentController == null ||
+                !_currentController.GetType().Equals(typeof(FullWristController)))
+                return;
+
+            FullWristController control = (FullWristController)_currentController;
+            control.loadAllDistanceMaps();
+        }
     }
 }
