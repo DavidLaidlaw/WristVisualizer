@@ -116,6 +116,11 @@ void libCoin3D::ColoredBone::setColorIndex(int index)
 	_vertexProperty->orderedRGBA.setValues(0,_numColoredVertices,_fullColormap[index]);
 }
 
+void libCoin3D::ColoredBone::clearColorMap()
+{
+	_vertexProperty->orderedRGBA.deleteValues(0);
+}
+
 void libCoin3D::ColoredBone::setupFullColorMap(array<array<int>^>^ colors)
 {
 	_fullColormap = new unsigned int*[colors->Length];

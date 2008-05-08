@@ -20,6 +20,8 @@ public:
 
 	virtual array<float,2>^ getVertices();
 
+	virtual void clearColorMap();
+
 	
 private:
 	SoSeparator* _node;
