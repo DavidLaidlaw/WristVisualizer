@@ -953,7 +953,7 @@ namespace WristVizualizer
                 return;
 
             FullWristController control = (FullWristController)_currentController;
-            control.loadDistanceMaps();
+            control.loadDistanceMapsForCurrentPosition();
         }
     }
 }

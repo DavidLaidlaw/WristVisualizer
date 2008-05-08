@@ -31,7 +31,7 @@ namespace WristVizualizer
 
         //Distance Fields
         private CTmri[] _distanceFields;
-        private int[][] _calculatedDistanceMaps;
+        private int[][][] _calculatedDistanceMaps;
 
         //GUI stuff
         private FullWristControl _wristControl;
@@ -101,7 +101,7 @@ namespace WristVizualizer
             }
         }
 
-        private void loadDistanceFieldsIfNotLoaded()
+        private void readInDistanceFieldsIfNotLoaded()
         {
             if (_distanceFields != null)
                 return;
@@ -122,27 +122,63 @@ namespace WristVizualizer
             }
         }
 
-        public void loadDistanceMaps()
+        public void loadDistanceMapsForCurrentPosition()
         {
+            loadDistanceMapsForPosition(_currentPositionIndex);
+        }
+
+        private void loadDistanceMapsForPosition(int positionIndex)
+        {
+            //setup save space if it doesn't exist
+            if (_calculatedDistanceMaps == null)
+                _calculatedDistanceMaps = new int[Wrist.NumBones][][];
+
             DateTime t1 = DateTime.Now;
-            loadDistanceFieldsIfNotLoaded();
+            readInDistanceFieldsIfNotLoaded();
             Console.WriteLine("Time to read MRI: {0}", ((TimeSpan)(DateTime.Now - t1)));
             t1 = DateTime.Now;
 
             //try and create color scheme....
             for (int i = 0; i < Wrist.NumBones; i++)
             {
-                int[] colors = createColormap(_distanceFields, i, _currentPositionIndex);
-                Console.WriteLine("Created colormap {0}: {1}",i, ((TimeSpan)(DateTime.Now - t1)));
+                //setup space if it doesn't exist
+                if (_calculatedDistanceMaps[i] == null)
+                    _calculatedDistanceMaps[i] = new int[_transformMatrices.Length + 1][]; //add one extra for neutral :)
+
+                //read in the colors if not yet loaded
+                if (_calculatedDistanceMaps[i][positionIndex] == null)
+                    _calculatedDistanceMaps[i][positionIndex] = createColormap(_distanceFields, i, positionIndex);
+                Console.WriteLine("Created colormap {0}: {1}", i, ((TimeSpan)(DateTime.Now - t1)));
 
                 //now set that color
-                _colorBones[i].setColorMap(colors);
-                Console.WriteLine("Applied colormap {0}: {1}",i, ((TimeSpan)(DateTime.Now - t1)));
+                _colorBones[i].setColorMap(_calculatedDistanceMaps[i][positionIndex]);
+                Console.WriteLine("Applied colormap {0}: {1}", i, ((TimeSpan)(DateTime.Now - t1)));
                 t1 = DateTime.Now;
             }
         }
 
-        private TransformMatrix[] calculateRelativeMotionDistanceMaps(int boneIndex, int positionIndex, int[] boneInteraction)
+        private bool hasDistanceMapsForPosition(int positionIndex)
+        {
+            if (_calculatedDistanceMaps == null)
+                return false;
+
+            //only check the radius, it should be a good enough check....
+            if (_calculatedDistanceMaps[0] == null)
+                return false;
+
+            return (_calculatedDistanceMaps[0][positionIndex] != null);
+        }
+
+        private void clearDistanceMapsForAllBones()
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                if (_colorBones[i] != null)
+                    _colorBones[i].clearColorMap();
+            }
+        }
+
+        private TransformMatrix[] calculateRelativeMotionForDistanceMaps(int boneIndex, int positionIndex, int[] boneInteraction)
         {
             TransformMatrix[] tmRelMotions = new TransformMatrix[Wrist.NumBones]; //for each position
             if (positionIndex == 0) //no transforms needed for the neutral position, we are all set :)
@@ -184,7 +220,7 @@ namespace WristVizualizer
             int[] colors = new int[numVertices];
             int[] interaction = Wrist.BoneInteractionIndex[boneIndex]; //load  bone interactions
 
-            TransformMatrix[] tmRelMotions = calculateRelativeMotionDistanceMaps(boneIndex, positionIndex, interaction);
+            TransformMatrix[] tmRelMotions = calculateRelativeMotionForDistanceMaps(boneIndex, positionIndex, interaction);
 
             //for each vertex           
             for (int i = 0; i < numVertices; i++)
@@ -275,12 +311,6 @@ namespace WristVizualizer
                     Console.WriteLine("lbha");
 
                 int packedColor = (int)((GB << 16) | (GB << 8) | (uint)0xFF0000FF);
-                //int col = System.Drawing.Color.FromArgb(255, GB, GB).ToArgb();
-
-                ////bit correction needed to move from 0xAARRGGBB -> 0xRRGGBBAA
-                //col = (col << 8) | 0x000000FF;
-                //packedColor = col;
-
                 colors[i] = packedColor;
             }
 
@@ -455,10 +485,14 @@ namespace WristVizualizer
                 }
             }
 
+            //clear the coloring scheme, its not really calculated yet
+            clearDistanceMapsForAllBones();
+
             _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
             _animationController.LoopAnimation = false;
             _animationController.FPS = _FPS;
-            _animationController.Start();            
+            _animationController.Start();
+            //TODO: add color information back in at the end....how?
         }
 
         private void hideBonesWithNoKinematicsForPosition(int positionIndex)
@@ -485,6 +519,12 @@ namespace WristVizualizer
             }
             else
             {
+                //load in the color maps, if they already exist
+                if (hasDistanceMapsForPosition(_currentPositionIndex))
+                    loadDistanceMapsForCurrentPosition();
+                else
+                    clearDistanceMapsForAllBones(); //we don't have color yet
+                
                 //first remove the old transforms, if they exist
                 removeCurrentTransforms();
 
@@ -497,7 +537,8 @@ namespace WristVizualizer
                         continue;
 
                     _bones[i].addTransform(transforms[i].ToTransform());
-                }                
+                }
+
             }
 
             //now that we are done, lets save the last positions
