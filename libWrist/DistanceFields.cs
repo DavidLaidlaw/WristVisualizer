@@ -14,7 +14,8 @@ namespace libWrist
         private Wrist _wrist;
 
         private CTmri[] _distanceFields;
-        private int[][][] _calculatedDistanceMaps;
+        private int[][][] _calculatedColorMaps;  //stores the packed colors in 32bit INT values.
+        private double[][][] _calculatedDistances;
 
         public DistanceMaps(Wrist wrist, TransformMatrix[][] transformMatrices, ColoredBone[] colorBones)
         {
@@ -47,14 +48,14 @@ namespace libWrist
 
         private bool hasDistanceMapsForPosition(int positionIndex)
         {
-            if (_calculatedDistanceMaps == null)
+            if (_calculatedColorMaps == null)
                 return false;
 
             //only check the radius, it should be a good enough check....
-            if (_calculatedDistanceMaps[0] == null)
+            if (_calculatedColorMaps[0] == null)
                 return false;
 
-            return (_calculatedDistanceMaps[0][positionIndex] != null);
+            return (_calculatedColorMaps[0][positionIndex] != null);
         }
 
 
@@ -69,30 +70,24 @@ namespace libWrist
         public void loadDistanceMapsForPosition(int positionIndex)
         {
             //setup save space if it doesn't exist
-            if (_calculatedDistanceMaps == null)
-                _calculatedDistanceMaps = new int[Wrist.NumBones][][];
+            if (_calculatedColorMaps == null)
+                _calculatedColorMaps = new int[Wrist.NumBones][][];
 
-            DateTime t1 = DateTime.Now;
             readInDistanceFieldsIfNotLoaded();
-            Console.WriteLine("Time to read MRI: {0}", ((TimeSpan)(DateTime.Now - t1)));
-            t1 = DateTime.Now;
 
             //try and create color scheme....
             for (int i = 0; i < Wrist.NumBones; i++)
             {
                 //setup space if it doesn't exist
-                if (_calculatedDistanceMaps[i] == null)
-                    _calculatedDistanceMaps[i] = new int[_transformMatrices.Length + 1][]; //add one extra for neutral :)
+                if (_calculatedColorMaps[i] == null)
+                    _calculatedColorMaps[i] = new int[_transformMatrices.Length + 1][]; //add one extra for neutral :)
 
                 //read in the colors if not yet loaded
-                if (_calculatedDistanceMaps[i][positionIndex] == null)
-                    _calculatedDistanceMaps[i][positionIndex] = createColormap(_distanceFields, i, positionIndex);
-                Console.WriteLine("Created colormap {0}: {1}", i, ((TimeSpan)(DateTime.Now - t1)));
+                if (_calculatedColorMaps[i][positionIndex] == null)
+                    _calculatedColorMaps[i][positionIndex] = createColormap(_distanceFields, i, positionIndex);
 
                 //now set that color
-                _colorBones[i].setColorMap(_calculatedDistanceMaps[i][positionIndex]);
-                Console.WriteLine("Applied colormap {0}: {1}", i, ((TimeSpan)(DateTime.Now - t1)));
-                t1 = DateTime.Now;
+                _colorBones[i].setColorMap(_calculatedColorMaps[i][positionIndex]);
             }
         }
 
