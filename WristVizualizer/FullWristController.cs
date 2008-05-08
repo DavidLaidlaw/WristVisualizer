@@ -31,6 +31,7 @@ namespace WristVizualizer
 
         //Distance Fields
         private CTmri[] _distanceFields;
+        private int[][] _calculatedDistanceMaps;
 
         //GUI stuff
         private FullWristControl _wristControl;
@@ -131,7 +132,7 @@ namespace WristVizualizer
             //try and create color scheme....
             for (int i = 0; i < Wrist.NumBones; i++)
             {
-                int[] colors = createColormap(_distanceFields, i);
+                int[] colors = createColormap(_distanceFields, i, _currentPositionIndex);
                 Console.WriteLine("Created colormap {0}: {1}",i, ((TimeSpan)(DateTime.Now - t1)));
 
                 //now set that color
@@ -141,35 +142,86 @@ namespace WristVizualizer
             }
         }
 
-        private int[] createColormap(CTmri[] mri, int boneIndex)
+        private TransformMatrix[] calculateRelativeMotionDistanceMaps(int boneIndex, int positionIndex, int[] boneInteraction)
+        {
+            TransformMatrix[] tmRelMotions = new TransformMatrix[Wrist.NumBones]; //for each position
+            if (positionIndex == 0) //no transforms needed for the neutral position, we are all set :)
+                return tmRelMotions;
+
+            /* Check if we are missing kinematics for the bone, if so, then we can not
+             * calculate distance maps (we don't know where the bone is, so we just return all null)
+             */
+            if (_transformMatrices[positionIndex - 1][boneIndex] == null ||
+                _transformMatrices[positionIndex - 1][boneIndex].isIdentity())
+                return tmRelMotions;
+
+            TransformMatrix tmBone = _transformMatrices[positionIndex - 1][boneIndex];
+            foreach (int testBoneIndex in boneInteraction)
+            {
+                //Again, check if there is no kinematics for the test bone, again, if none, just move on
+                if (_transformMatrices[positionIndex - 1][testBoneIndex] == null ||
+                _transformMatrices[positionIndex - 1][testBoneIndex].isIdentity())
+                    continue;
+
+                TransformMatrix tmFixedBone = _transformMatrices[positionIndex - 1][testBoneIndex];
+                //so fix the current bone, and move our test bone to that position....yes?
+                tmRelMotions[testBoneIndex] = tmFixedBone.Inverse() * tmBone;
+            }
+            return tmRelMotions;
+
+        }
+
+        private int[] createColormap(CTmri[] mri, int boneIndex) { return createColormap(mri, boneIndex, 0); }
+        private int[] createColormap(CTmri[] mri, int boneIndex, int positionIndex)
         {
             double dDist = Double.MaxValue;
+            DateTime t2 = DateTime.Now;
             float[,] pts = _colorBones[boneIndex].getVertices();
-            int dim0 = pts.GetLength(0);
-            int dim1 = pts.GetLength(1);
+            Console.WriteLine("Getting vertices {0}: {1}", boneIndex, ((TimeSpan)(DateTime.Now - t2)));
+            int numVertices = pts.GetLength(0);
             double[] dDistances = new double[Wrist.NumBones - 1];
 
-            int[] colors = new int[dim0];
+            int[] colors = new int[numVertices];
+            int[] interaction = Wrist.BoneInteractionIndex[boneIndex]; //load  bone interactions
 
-            int[] interaction = Wrist.BoneInteractionIndex[boneIndex];
+            TransformMatrix[] tmRelMotions = calculateRelativeMotionDistanceMaps(boneIndex, positionIndex, interaction);
 
             //for each vertex           
-            for (int i = 0; i < dim0; i++)
+            for (int i = 0; i < numVertices; i++)
             {
                 int m = 0;
                 //for (int j = 0; j < Wrist.NumBones; j++)
-                foreach(int j in interaction)
+                foreach(int j in interaction) //only use the bones that we have specified interact
                 {
                     if (j == boneIndex) continue;
                     if (mri[j] == null) continue; //skip missing scans
 
-                    double dX = (pts[i, 0] - mri[j].CoordinateOffset[0]) / mri[j].voxelSizeX;
-                    double dY = (pts[i, 1] - mri[j].CoordinateOffset[1]) / mri[j].voxelSizeY;
-                    double dZ = (pts[i, 2] - mri[j].CoordinateOffset[2]) / mri[j].voxelSizeZ;
+                    double x = pts[i, 0];
+                    double y = pts[i, 1];
+                    double z = pts[i, 2];
 
-                    double xBound = 96.9; //get the boundaries of the distance cube
-                    double yBound = 96.9;//
-                    double zBound = 96.9; //
+                    //check if we need to move for non neutral position
+                    if (positionIndex != 0)
+                    {
+                        //skip missing kinematic info
+                        if (tmRelMotions[j] == null)
+                            continue;
+
+                        //lets move the bone getting colored, into the space of the other bone...
+                        double[] p0 = new double[] { x, y, z };
+                        double[] p1 = tmRelMotions[j] * p0;
+                        x = p1[0];
+                        y = p1[1];
+                        z = p1[2];
+                    }
+
+                    double dX = (x - mri[j].CoordinateOffset[0]) / mri[j].voxelSizeX;
+                    double dY = (y - mri[j].CoordinateOffset[1]) / mri[j].voxelSizeY;
+                    double dZ = (z - mri[j].CoordinateOffset[2]) / mri[j].voxelSizeZ;
+
+                    const double xBound = 96.9; //get the boundaries of the distance cube
+                    const double yBound = 96.9; //
+                    const double zBound = 96.9; //
 
                     ////////////////////////////////////////////////////////
                     //is surface point picked inside of the cube?
@@ -177,14 +229,7 @@ namespace WristVizualizer
                     if (dX >= 3.1 && dX <= xBound && dY >= 3.1
                         && dY <= yBound && dZ >= 3.1 && dZ <= zBound)
                     {
-
-                        //dDist = distMRI[j]->sample(MRI_INTERP_CUBIC, dX, dY, dZ, 0, 0, 0, 0);
                         dDist = mri[j].sample_s_InterpCubit(dX, dY, dZ);
-                        //dDist = mri[j].getVoxel_s((int)Math.Floor(dX), (int)Math.Floor(dY), (int)Math.Floor(dZ), 0);
-                        //if (cubicdDist - dDist > 2)
-                        //{
-                        //    Console.WriteLine("Difference of {0}", cubicdDist - dDist);
-                        //}
                     }
                     else
                         dDist = Double.MaxValue;
@@ -214,7 +259,6 @@ namespace WristVizualizer
                 {
                     //sat = (1 - (dDist / 3));
                     GB = (uint)(dDist * 255.0/3.0);
-                    //Console.WriteLine("{0}",GB);
                 }
 
 
@@ -227,6 +271,9 @@ namespace WristVizualizer
                  * So we then ahve 0x00GGBB00, we can then bitwise OR with 0xFF0000FF, 
                  * since we want both R and Alpha to be at 255. Then we are set :)
                  */
+                if (GB > 255 || GB < 0)
+                    Console.WriteLine("lbha");
+
                 int packedColor = (int)((GB << 16) | (GB << 8) | (uint)0xFF0000FF);
                 //int col = System.Drawing.Color.FromArgb(255, GB, GB).ToArgb();
 

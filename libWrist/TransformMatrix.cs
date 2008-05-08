@@ -305,6 +305,26 @@ namespace libWrist
             rotate(Axes.Z, angle);
         }
 
+        #region Point Multiplication Operations
+
+        public virtual double[] Multiply(double[] P)
+        {
+            if (P.Length != 3)
+                throw new ArgumentException("Expecting a point with 3 doubles: x,y,z");
+
+            double[] point = new double[3];
+            point[0] = Array[0][0] * P[0] + Array[0][1] * P[1] + Array[0][2] * P[2] + Array[0][3];
+            point[1] = Array[1][0] * P[0] + Array[1][1] * P[1] + Array[1][2] * P[2] + Array[1][3];
+            point[2] = Array[2][0] * P[0] + Array[2][1] * P[1] + Array[2][2] * P[2] + Array[2][3];
+            return point;
+        }
+
+        public static double[] operator *(TransformMatrix m, double[] p)
+        {
+            return m.Multiply(p);
+        }
+        #endregion
+
         #region Overloaded Methods Redefined to return TransformMatrix
 
         /// <summary>Linear algebraic matrix multiplication, A * B</summary>
