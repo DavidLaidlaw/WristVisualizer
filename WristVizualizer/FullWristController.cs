@@ -195,30 +195,38 @@ namespace WristVizualizer
                 }
                 dDist = min;
 
-                double sat;
-                int GB;
+                //double sat;
+                uint GB;
 
                 // a parameter could be used instead of plain 3
                 if (dDist < 0 || dDist > 3)
                 {
-                    sat = 0;
+                    //sat = 0;
                     GB = 255; //make us white :)
                 }
                 else
                 {
-                    sat = (1 - (dDist / 3));
-                    GB = (int)(dDist * 255.0/3.0);
+                    //sat = (1 - (dDist / 3));
+                    GB = (uint)(dDist * 255.0/3.0);
                     //Console.WriteLine("{0}",GB);
                 }
 
 
-                //convert to packed RGB color....how?
-                int packedColor;
-                int col = System.Drawing.Color.FromArgb(255, GB, GB).ToArgb();
+                /* convert to packed RGB color....how?
+                 * packed color for Coin3D/inventor is 0xRRGGBBAA
+                 * So take our GB values (should be from 0-255 or 8 bits), and move from
+                 * Lest significant position (0x000000XX) to the G and B position, then
+                 * combine with a bitwise OR. (0x00XX0000 | 0x0000XX00), which gives us
+                 * the calculated value in both the G & B slots, and 0x00 in R & A.
+                 * So we then ahve 0x00GGBB00, we can then bitwise OR with 0xFF0000FF, 
+                 * since we want both R and Alpha to be at 255. Then we are set :)
+                 */
+                int packedColor = (int)((GB << 16) | (GB << 8) | (uint)0xFF0000FF);
+                //int col = System.Drawing.Color.FromArgb(255, GB, GB).ToArgb();
 
-                //bit correction needed to move from 0xAARRGGBB -> 0xRRGGBBAA
-                col = (col << 8) | 0x000000FF;
-                packedColor = col;
+                ////bit correction needed to move from 0xAARRGGBB -> 0xRRGGBBAA
+                //col = (col << 8) | 0x000000FF;
+                //packedColor = col;
 
                 colors[i] = packedColor;
             }
