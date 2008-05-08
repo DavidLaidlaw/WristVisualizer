@@ -42,7 +42,7 @@ namespace libWrist
             new int[] {2,6,10,11}, //tpm - sca, tpm, mc1, mc2
             new int[] {2,3,9,6,11,12,13}, //cap - sca, lun, ham, tpd, mc2, mc3, mc4
             new int[] {3,4,8,12,13,14}, //ham - lun, trq, cap, mc3, mc4, mc5
-            new int[] {6}, //mc1 - tpd
+            new int[] {7}, //mc1 - tpm
             new int[] {6,7,8,12}, //mc2 - tpd, tpm, cap, mc3
             new int[] {6,8,9,11,13}, //mc3 - tpd, cap, ham, mc2, mc4
             new int[] {8,9,12,14}, //mc4 - cap, ham, mc3, mc5
