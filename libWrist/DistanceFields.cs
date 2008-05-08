@@ -261,11 +261,13 @@ namespace libWrist
             return colors;
         }
 
-        private void createContourShit()
+        public Contour createContourShit()
         {
             double[] dist = _calculatedDistances[0][0];
             float[,] points = _colorBones[0].getVertices();
             int[,] conn = _colorBones[0].getFaceSetIndices();
+
+            Contour cont1 = new Contour();
 
             double contourDistance = 1.0;
 
@@ -285,11 +287,12 @@ namespace libWrist
                     new float[] {points[conn[i, 2], 0], points[conn[i, 2], 1], points[conn[i, 2], 2]}
                 };
 
-                contourSingleTriangle(triDist, triPts);
+                contourSingleTriangle(triDist, triPts, cont1);
             }
+            return cont1;
         }
 
-        private void contourSingleTriangle(double[] dist, float[][] vertices)
+        private void contourSingleTriangle(double[] dist, float[][] vertices, Contour contour)
         {
             //for each contour....
 
@@ -334,7 +337,7 @@ namespace libWrist
                 newPt2 = createGradientPoint(dist[outside[0]], vertices[outside[0]], dist[inside[1]], vertices[inside[1]], cDist);
                 //TODO: calculate area
             }
-
+            contour.addLineSegment(newPt1[0], newPt1[1], newPt1[2], newPt2[0], newPt2[1], newPt2[2]);
         }
 
         private float[] createGradientPoint(double d0, float[] v0, double d1, float[] v1, double cDist)

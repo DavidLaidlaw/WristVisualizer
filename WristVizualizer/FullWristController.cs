@@ -107,6 +107,7 @@ namespace WristVizualizer
         public void loadDistanceMapsForCurrentPosition()
         {
             _distMap.loadDistanceColorMapsForPosition(_currentPositionIndex);
+            _bones[0].addNode(_distMap.createContourShit());
         }
 
         private void loadTransforms()

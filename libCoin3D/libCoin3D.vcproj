@@ -212,6 +212,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Contour.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\ExaminerViewer.cpp"
 				>
 			</File>
@@ -307,6 +311,10 @@
 			</File>
 			<File
 				RelativePath=".\ColoredBone.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Contour.h"
 				>
 			</File>
 			<File
