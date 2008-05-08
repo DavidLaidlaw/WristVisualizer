@@ -260,5 +260,57 @@ namespace libWrist
             }
             return colors;
         }
+
+        private void createContourShit()
+        {
+            double[] dist = _calculatedDistances[0][0];
+            float[,] points = _colorBones[0].getVertices();
+            int[,] conn = _colorBones[0].getFaceSetIndices();
+
+            double contourDistance = 1.0;
+
+            int numTrian = conn.GetLength(0);
+            for (int i=0; i<numTrian; i++)
+            {
+                //check if all the points are out, if so, skip it
+                if (dist[conn[i, 0]] > contourDistance &&
+                    dist[conn[i, 1]] > contourDistance &&
+                    dist[conn[i, 2]] > contourDistance)
+                    continue;
+
+                contourSingleTriangle(dist[conn[i, 0]], points[conn[i, 0], 0], points[conn[i, 0], 1], points[conn[i, 0], 2],
+                    dist[conn[i, 1]], points[conn[i, 1], 0], points[conn[i, 1], 1], points[conn[i, 1], 2],
+                    dist[conn[i, 2]], points[conn[i, 2], 0], points[conn[i, 2], 1], points[conn[i, 2], 2]);
+            }
+        }
+
+        private void contourSingleTriangle(double d0, float v0x, float v0y, float v0z,
+            double d1, float v1x, float v1y, float v1z,
+            double d2, float v2x, float v2y, float v2z)
+        {
+            //for each contour....
+
+            double cDist = 1.0;
+
+            bool v0_in = (d0 < cDist);  //true if the vertex is inside the contour
+            bool v1_in = (d0 < cDist);
+            bool v2_in = (d0 < cDist);
+
+            //skip triangles totally outside
+            if (!v0_in && !v1_in && !v2_in)
+                return;
+
+            //check triangles totally inside
+            if (v0_in && v1_in && v2_in)
+            {
+                //TODO: Add distance to aread
+                return;
+            }
+
+            float[] newPoint1 = new float[3];
+            float[] newPoint2 = new float[3];
+            //so I now have one or two vertices inside, and one or two ouside.....what to do
+
+        }
     }
 }
