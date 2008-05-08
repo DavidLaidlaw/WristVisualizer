@@ -253,7 +253,7 @@ namespace libWrist
                 r.Close();
                 s.Close();
             }
-            Console.WriteLine("Done reading");
+            //Console.WriteLine("Done reading");
         }
 
         private void readDataToBitmap(string mriDirectory, int echo)

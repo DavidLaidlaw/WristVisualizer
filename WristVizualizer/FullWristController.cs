@@ -123,15 +123,21 @@ namespace WristVizualizer
 
         public void loadDistanceMaps()
         {
+            DateTime t1 = DateTime.Now;
             loadDistanceFieldsIfNotLoaded();
+            Console.WriteLine("Time to read MRI: {0}", ((TimeSpan)(DateTime.Now - t1)));
+            t1 = DateTime.Now;
 
             //try and create color scheme....
             for (int i = 0; i < Wrist.NumBones; i++)
             {
                 int[] colors = createColormap(_distanceFields, i);
-                
+                Console.WriteLine("Created colormap {0}: {1}",i, ((TimeSpan)(DateTime.Now - t1)));
+
                 //now set that color
                 _colorBones[i].setColorMap(colors);
+                Console.WriteLine("Applied colormap {0}: {1}",i, ((TimeSpan)(DateTime.Now - t1)));
+                t1 = DateTime.Now;
             }
         }
 
