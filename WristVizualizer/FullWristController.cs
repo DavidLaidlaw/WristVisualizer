@@ -282,39 +282,36 @@ namespace WristVizualizer
                 }
                 dDist = min;
 
-                //double sat;
-                uint GB;
+                UInt32 packedColor;
 
-                // a parameter could be used instead of plain 3
-                if (dDist < 0 || dDist > 3)
+                //first check if there is collission
+                if (dDist < 0)
                 {
-                    //sat = 0;
-                    GB = 255; //make us white :)
+                    //color collision in blue
+                    packedColor = 0X0000FFFF;
+                }
+                // a parameter could be used instead of plain 3
+                else if (dDist > 3)  //check if we are too far away
+                {
+                    //make us white
+                    packedColor = 0xFFFFFFFF;
                 }
                 else
                 {
-                    //sat = (1 - (dDist / 3));
-                    GB = (uint)(dDist * 255.0/3.0);
+                    /* convert to packed RGB color....how?
+                     * packed color for Coin3D/inventor is 0xRRGGBBAA
+                     * So take our GB values (should be from 0-255 or 8 bits), and move from
+                     * Lest significant position (0x000000XX) to the G and B position, then
+                     * combine with a bitwise OR. (0x00XX0000 | 0x0000XX00), which gives us
+                     * the calculated value in both the G & B slots, and 0x00 in R & A.
+                     * So we then ahve 0x00GGBB00, we can then bitwise OR with 0xFF0000FF, 
+                     * since we want both R and Alpha to be at 255. Then we are set :)
+                     */
+                    uint GB = (uint)(dDist * 255.0 / 3.0);
+                    packedColor = (GB << 16) | (GB << 8) | 0xFF0000FF;
                 }
-
-
-                /* convert to packed RGB color....how?
-                 * packed color for Coin3D/inventor is 0xRRGGBBAA
-                 * So take our GB values (should be from 0-255 or 8 bits), and move from
-                 * Lest significant position (0x000000XX) to the G and B position, then
-                 * combine with a bitwise OR. (0x00XX0000 | 0x0000XX00), which gives us
-                 * the calculated value in both the G & B slots, and 0x00 in R & A.
-                 * So we then ahve 0x00GGBB00, we can then bitwise OR with 0xFF0000FF, 
-                 * since we want both R and Alpha to be at 255. Then we are set :)
-                 */
-                if (GB > 255 || GB < 0)
-                    Console.WriteLine("lbha");
-
-                int packedColor = (int)((GB << 16) | (GB << 8) | (uint)0xFF0000FF);
-                colors[i] = packedColor;
+                colors[i] = (int)packedColor;
             }
-
-
             return colors;
         }
 
