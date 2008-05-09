@@ -23,6 +23,7 @@ public:
 	virtual void insertNode(Node^ node, int position);
 	virtual void addContour(Contour^ contour);
 	virtual void setAndReplaceContour(Contour^ contour);
+	virtual void removeContour();
 
 	virtual SoNode* getNode() override { return _node; }
 

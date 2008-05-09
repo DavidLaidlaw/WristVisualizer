@@ -16,6 +16,7 @@ namespace libWrist
         private CTmri[] _distanceFields;
         private int[][][] _calculatedColorMaps;  //stores the packed colors in 32bit INT values.
         private double[][][] _calculatedDistances;
+        private Contour[][] _calculatedContours;
 
         public DistanceMaps(Wrist wrist, TransformMatrix[][] transformMatrices, ColoredBone[] colorBones)
         {
@@ -45,6 +46,17 @@ namespace libWrist
             }
         }
 
+        private bool hasContourForBonePosition(int boneIndex, int positionIndex)
+        {
+            if (_calculatedContours == null)
+                return false;
+
+            if (_calculatedContours[boneIndex] == null)
+                return false;
+
+            return (_calculatedContours[boneIndex][positionIndex] != null);
+        }
+
         private bool hasDistanceMapsForBonePosition(int boneIndex, int positionIndex)
         {
             if (_calculatedDistances == null)
@@ -68,11 +80,21 @@ namespace libWrist
             return (_calculatedColorMaps[0][positionIndex] != null);
         }
 
+        public void showContoursForPositionIfCalculatedOrClear(int positionIndex)
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                if (hasContourForBonePosition(i, positionIndex))
+                    _colorBones[i].setAndReplaceContour(_calculatedContours[i][positionIndex]);
+                else
+                    _colorBones[i].removeContour();
+            }
+        }
 
-        public void loadDistanceColorMapsForPositionIfCalculatedOrClear(int positionIndex)
+        public void showDistanceColorMapsForPositionIfCalculatedOrClear(int positionIndex)
         {
             if (hasDistanceColorMapsForPosition(positionIndex))
-                loadDistanceColorMapsForPosition(positionIndex);
+                showDistanceColorMapsForPosition(positionIndex);
             else
                 clearDistanceColorMapsForAllBones();
         }
@@ -102,7 +124,7 @@ namespace libWrist
             }
         }
 
-        public void loadDistanceColorMapsForPosition(int positionIndex)
+        public void showDistanceColorMapsForPosition(int positionIndex)
         {
             //setup save space if it doesn't exist
             if (_calculatedColorMaps == null)
@@ -177,13 +199,15 @@ namespace libWrist
                 _calculatedDistances[boneIndex] = new double[_transformMatrices.Length+1][]; //add one extra for neutral
             
             if (_calculatedDistances[boneIndex][positionIndex]==null)
-                _calculatedDistances[boneIndex][positionIndex] = createDistanceMap(_distanceFields,boneIndex,positionIndex);
+                _calculatedDistances[boneIndex][positionIndex] = createDistanceMap(boneIndex,positionIndex);
 
             return _calculatedDistances[boneIndex][positionIndex];
         }
 
-        private double[] createDistanceMap(CTmri[] mri, int boneIndex, int positionIndex)
+        private double[] createDistanceMap(int boneIndex, int positionIndex)
         {
+            readInDistanceFieldsIfNotLoaded();
+            CTmri[] mri = _distanceFields;
             float[,] pts = _colorBones[boneIndex].getVertices();
             int numVertices = pts.GetLength(0);
 
@@ -315,7 +339,8 @@ namespace libWrist
 
         private Contour createContourSingleBoneSinglePosition(int boneIndex, int positionIndex, double[] cDistances)
         {
-            double[] dist = _calculatedDistances[boneIndex][positionIndex];
+            //TODO: Check for calculated distances...
+            double[] dist = getOrCalculateDistanceMap(boneIndex, positionIndex);
             float[,] points = _colorBones[boneIndex].getVertices();
             int[,] conn = _colorBones[boneIndex].getFaceSetIndices();
 
@@ -346,6 +371,7 @@ namespace libWrist
             return cont1;
         }
 
+        #region Contour Helper Functions
         private static double distanceBetweenPoints(float[] p0, float[] p1)
         {
             double x = p0[0] - p1[0];
@@ -463,5 +489,6 @@ namespace libWrist
             midpoint[2] = (float)((1 - ratio) * v0[2] + ratio * v1[2]);
             return midpoint;
         }
+        #endregion
     }
 }

@@ -64,6 +64,8 @@ namespace WristVizualizer
             {
                 openFile(fileArgs);
             }
+            DistanceAndContourDialog dd = new DistanceAndContourDialog();
+            dd.ShowDialog();
         }
 
         #region Control Visibility

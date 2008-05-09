@@ -106,7 +106,7 @@ namespace WristVizualizer
 
         public void loadDistanceMapsForCurrentPosition()
         {
-            _distMap.loadDistanceColorMapsForPosition(_currentPositionIndex);
+            _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
             DateTime t = DateTime.Now;
             _distMap.createContourShit();
             Console.WriteLine("Contour took: {0}",((TimeSpan)(DateTime.Now - t)));
@@ -115,7 +115,7 @@ namespace WristVizualizer
         public void loadAllDistanceMaps()
         {
             _distMap.readInAllDistanceColorMaps(); //read them all in
-            _distMap.loadDistanceColorMapsForPosition(_currentPositionIndex); //make sure we display the current one...
+            _distMap.showDistanceColorMapsForPosition(_currentPositionIndex); //make sure we display the current one...
         }
 
         private void loadTransforms()
@@ -320,7 +320,8 @@ namespace WristVizualizer
             else
             {
                 //load in the color maps, if they already exist
-                _distMap.loadDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
+                _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
+                _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
                 
                 //first remove the old transforms, if they exist
                 removeCurrentTransforms();

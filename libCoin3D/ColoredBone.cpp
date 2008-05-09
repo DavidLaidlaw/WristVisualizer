@@ -175,6 +175,13 @@ void libCoin3D::ColoredBone::setAndReplaceContour(Contour^ contour)
 	addContour(contour);
 }
 
+void libCoin3D::ColoredBone::removeContour()
+{
+	if (_contour!=nullptr)
+		removeChild(_contour);
+	_contour = nullptr;
+}
+
 array<float,2>^ libCoin3D::ColoredBone::getVertices()
 {
 	if (_vertices==nullptr) {
