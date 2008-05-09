@@ -31,6 +31,8 @@ namespace WristVizualizer
 
         //Distance Maps
         private DistanceMaps _distMap;
+        private bool _hideMaps;
+        private bool _hideContours;
 
         //GUI stuff
         private FullWristControl _wristControl;
@@ -106,14 +108,22 @@ namespace WristVizualizer
 
         public void loadDistanceMaps(DistanceAndContourDialog.CalculationTypes whatToLoad, double maxDistance)
         {
+            _hideMaps = false; //default
             switch (whatToLoad)
             {
                 case DistanceAndContourDialog.CalculationTypes.None:
+                    //hide all the maps
+                    _hideMaps = true;
+                    _distMap.clearDistanceColorMapsForAllBones();
+                    break;
+                case DistanceAndContourDialog.CalculationTypes.CachedOnly:
                     return;  //don't do shit
                 case DistanceAndContourDialog.CalculationTypes.Current:
+                    _distMap.setMaxColoredDistance(maxDistance);
                     _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
                     break;
                 case DistanceAndContourDialog.CalculationTypes.All:
+                    _distMap.setMaxColoredDistance(maxDistance);
                     _distMap.readInAllDistanceColorMaps(); //read them all in
                     _distMap.showDistanceColorMapsForPosition(_currentPositionIndex); //make sure we display the current one...
                     break;
@@ -122,16 +132,24 @@ namespace WristVizualizer
             }
         }
 
-        public void loadContours(DistanceAndContourDialog.CalculationTypes whatToLoad)
+        public void loadContours(DistanceAndContourDialog.CalculationTypes whatToLoad, double[] contourDistances)
         {
+            _hideContours = false; //default
             switch (whatToLoad)
             {
                 case DistanceAndContourDialog.CalculationTypes.None:
+                    //hide contours....
+                    _hideContours = true;
+                    _distMap.clearContoursForAllBones();
+                    break;
+                case DistanceAndContourDialog.CalculationTypes.CachedOnly:
                     return;  //don't do shit
                 case DistanceAndContourDialog.CalculationTypes.Current:
+                    _distMap.setContourDistances(contourDistances);
                     _distMap.showContoursForPosition(_currentPositionIndex);
                     break;
                 case DistanceAndContourDialog.CalculationTypes.All:
+                    _distMap.setContourDistances(contourDistances);
                     _distMap.calculateAllContours();
                     _distMap.showContoursForPosition(_currentPositionIndex);
                     break;
@@ -364,8 +382,10 @@ namespace WristVizualizer
             else
             {
                 //load in the color maps, if they already exist
-                _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
-                _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
+                if (!_hideMaps)
+                    _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
+                if (!_hideContours)
+                    _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
                 
                 //first remove the old transforms, if they exist
                 removeCurrentTransforms();

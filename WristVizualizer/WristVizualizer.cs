@@ -960,19 +960,10 @@ namespace WristVizualizer
                 return;
 
             //first lets check for color maps
-            if (dialog.CalculateColorMap != DistanceAndContourDialog.CalculationTypes.None)
-            {
-                //set the option
-                control.DistanceMaps.setMaxColoredDistance(dialog.ColorMapMaxDistance);
-                control.loadDistanceMaps(dialog.CalculateColorMap);
-            }
+            control.loadDistanceMaps(dialog.CalculateColorMap, dialog.ColorMapMaxDistance);
 
             //now lets execute contours...
-            if (dialog.CalculateContours != DistanceAndContourDialog.CalculationTypes.None)
-            {
-                control.DistanceMaps.setContourDistances(dialog.getContourDistancesToCalculate());
-                control.loadContours(dialog.CalculateContours);
-            }
+            control.loadContours(dialog.CalculateContours, dialog.getContourDistancesToCalculate());
         }
     }
 }
