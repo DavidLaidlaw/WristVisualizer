@@ -87,6 +87,16 @@ namespace libWrist
             _contourDistances = cDistances; //save new values
         }
 
+        public double[] ContourDistances
+        {
+            get { return _contourDistances; }
+        }
+
+        public double MaxColoredDistance
+        {
+            get { return _maxColoredDistance; }
+        }
+
         private void readInDistanceFieldsIfNotLoaded()
         {
             if (_distanceFields != null)
@@ -108,7 +118,7 @@ namespace libWrist
             }
         }
 
-        private bool hasContourForBonePosition(int boneIndex, int positionIndex)
+        public bool hasContourForBonePosition(int boneIndex, int positionIndex)
         {
             if (_calculatedContours == null)
                 return false;
@@ -130,7 +140,7 @@ namespace libWrist
             return (_calculatedDistances[boneIndex][positionIndex] != null);
         }
 
-        private bool hasDistanceColorMapsForPosition(int positionIndex)
+        public bool hasDistanceColorMapsForPosition(int positionIndex)
         {
             if (_calculatedColorMaps == null)
                 return false;

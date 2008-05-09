@@ -106,6 +106,35 @@ namespace WristVizualizer
         }
 
 
+        public void calculateDistanceMapsToolClickedHandler()
+        {
+            DistanceAndContourDialog dialog = new DistanceAndContourDialog(_distMap.ContourDistances);
+            dialog.ColorMapMaxDistance = _distMap.MaxColoredDistance;
+            if (_hideMaps)
+                dialog.CalculateColorMap = DistanceAndContourDialog.CalculationTypes.None;
+            else if (_distMap.hasDistanceColorMapsForPosition(_currentPositionIndex))
+                dialog.CalculateColorMap = DistanceAndContourDialog.CalculationTypes.CachedOnly;
+            else 
+                dialog.CalculateColorMap = DistanceAndContourDialog.CalculationTypes.Current;
+
+            if (_hideContours)
+                dialog.CalculateContours = DistanceAndContourDialog.CalculationTypes.None;
+            else if (_distMap.hasContourForBonePosition(0, _currentPositionIndex)) //check the radius only
+                dialog.CalculateContours = DistanceAndContourDialog.CalculationTypes.CachedOnly;
+            else
+                dialog.CalculateContours = DistanceAndContourDialog.CalculationTypes.Current;
+
+            DialogResult r = dialog.ShowDialog();
+            if (r != DialogResult.OK)
+                return;
+
+            //first lets check for color maps
+            loadDistanceMaps(dialog.CalculateColorMap, dialog.ColorMapMaxDistance);
+
+            //now lets execute contours...
+            loadContours(dialog.CalculateContours, dialog.getContourDistancesToCalculate());
+        }
+
         public void loadDistanceMaps(DistanceAndContourDialog.CalculationTypes whatToLoad, double maxDistance)
         {
             _hideMaps = false; //default

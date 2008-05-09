@@ -12,6 +12,7 @@ namespace WristVizualizer
     public partial class DistanceAndContourDialog : Form
     {
         private static double[] DEFAULT_DISTANCES = {1.0, 1.5, 2.0};
+        private const int DEFAULT_MAX_NUM_CONTOURS = 5;
 
         private CheckBox[] _contourCheckBoxes;
         private NumericUpDown[] _contourNumericUpDowns;
@@ -25,10 +26,18 @@ namespace WristVizualizer
             None
         }
 
-        public DistanceAndContourDialog() : this(DEFAULT_DISTANCES, 5) { }
+        public DistanceAndContourDialog() : this(DEFAULT_DISTANCES, DEFAULT_MAX_NUM_CONTOURS) { }
+        public DistanceAndContourDialog(double[] defaultContourDistances) : this(defaultContourDistances, DEFAULT_MAX_NUM_CONTOURS) { }
         public DistanceAndContourDialog(double[] defaultContourDistances, int maxNumberContours)
         {
             InitializeComponent();
+            //check for empty defaults
+            if (defaultContourDistances == null)
+                defaultContourDistances = DEFAULT_DISTANCES;
+            if (maxNumberContours < 0)
+                maxNumberContours = DEFAULT_MAX_NUM_CONTOURS;
+
+
             if (maxNumberContours < defaultContourDistances.Length)
                 maxNumberContours = defaultContourDistances.Length;
 
@@ -103,6 +112,24 @@ namespace WristVizualizer
                 if (radioButtonNone.Checked) return CalculationTypes.None;
                 throw new WristVizualizerException("No type of color map specified!");
             }
+            set
+            {
+                switch (value)
+                {
+                    case CalculationTypes.All:
+                        radioButtonAll.Checked = true;
+                        break;
+                    case CalculationTypes.Current:
+                        radioButtonCurrent.Checked = true;
+                        break;
+                    case CalculationTypes.CachedOnly:
+                        radioButtonCalculated.Checked = true;
+                        break;
+                    case CalculationTypes.None:
+                        radioButtonNone.Checked = true;
+                        break;
+                }
+            }
         }
 
         public CalculationTypes CalculateContours
@@ -115,12 +142,34 @@ namespace WristVizualizer
                 if (radioButtonContourNone.Checked) return CalculationTypes.None;
                 throw new WristVizualizerException("No type of contour specified!");
             }
+            set
+            {
+                switch (value)
+                {
+                    case CalculationTypes.All:
+                        radioButtonContourAll.Checked = true;
+                        break;
+                    case CalculationTypes.Current:
+                        radioButtonContourCurrent.Checked = true;
+                        break;
+                    case CalculationTypes.CachedOnly:
+                        radioButtonContourCalculated.Checked = true;
+                        break;
+                    case CalculationTypes.None:
+                        radioButtonContourNone.Checked = true;
+                        break;
+                }
+            }
         }
 
         public double ColorMapMaxDistance
         {
             get { return (double)numericUpDownDistanceMapDist.Value; }
-            set { numericUpDownDistanceMapDist.Value = (decimal)value; }
+            set
+            {
+                if (value <= 0) return; //skip junk values
+                numericUpDownDistanceMapDist.Value = (decimal)value;
+            }
         }
         #endregion
 

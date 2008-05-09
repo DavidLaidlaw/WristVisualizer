@@ -953,17 +953,7 @@ namespace WristVizualizer
                 return;
 
             FullWristController control = (FullWristController)_currentController;
-            //TODO: Load existing settings....
-            DistanceAndContourDialog dialog = new DistanceAndContourDialog();
-            DialogResult r = dialog.ShowDialog();
-            if (r != DialogResult.OK)
-                return;
-
-            //first lets check for color maps
-            control.loadDistanceMaps(dialog.CalculateColorMap, dialog.ColorMapMaxDistance);
-
-            //now lets execute contours...
-            control.loadContours(dialog.CalculateContours, dialog.getContourDistancesToCalculate());
+            control.calculateDistanceMapsToolClickedHandler();
         }
     }
 }
