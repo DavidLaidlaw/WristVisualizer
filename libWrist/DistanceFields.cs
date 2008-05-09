@@ -288,16 +288,45 @@ namespace libWrist
 
         public void createContourShit()
         {
-            double[] dist = _calculatedDistances[0][0];
-            float[,] points = _colorBones[0].getVertices();
-            int[,] conn = _colorBones[0].getFaceSetIndices();
+            double[] cDistances = new double[] { 1.0, 2.0 };
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                Contour cont1 = createContourSingleBoneSinglePosition(i, 0, cDistances);
+                _colorBones[i].setAndReplaceContour(cont1);
+                for (int j=0; j<cDistances.Length; j++)
+                {
+                    double d = cDistances[j];
+                    Console.WriteLine("Bone {0}, contour {1}mm: Area={2}, Centroid=({3}, {4}, {5})",
+                        i, d, cont1.Areas[j], cont1.Centroids[j][0], cont1.Centroids[j][1], cont1.Centroids[j][2]);
+                }
+                Sphere s = new Sphere(0.2f);
+                Separator spher1 = new Separator();
+                Material m = new Material();
+                Transform t = new Transform();
 
-            Contour cont1 = new Contour();
+                spher1.addNode(t);
+                spher1.addNode(m);
+                spher1.addNode(s);
+                t.setTranslation(cont1.Centroids[1][0], cont1.Centroids[1][1], cont1.Centroids[1][2]);
+                m.setColor(0, 1, 0);
+                _colorBones[i].addNode(spher1);
+            }            
+        }
 
-            double maxContourDistance = 2.0;
+        private Contour createContourSingleBoneSinglePosition(int boneIndex, int positionIndex, double[] cDistances)
+        {
+            double[] dist = _calculatedDistances[boneIndex][positionIndex];
+            float[,] points = _colorBones[boneIndex].getVertices();
+            int[,] conn = _colorBones[boneIndex].getFaceSetIndices();
+
+            Contour cont1 = new Contour(cDistances.Length);
+
+            double maxContourDistance = -1;
+            foreach (double cDist in cDistances)
+                maxContourDistance = Math.Max(maxContourDistance, cDist);
 
             int numTrian = conn.GetLength(0);
-            for (int i=0; i<numTrian; i++)
+            for (int i = 0; i < numTrian; i++)
             {
                 //check if all the points are out, if so, skip it
                 if (dist[conn[i, 0]] > maxContourDistance &&
@@ -314,25 +343,67 @@ namespace libWrist
 
                 contourSingleTriangle(triDist, triPts, cont1, new double[] { 1.0, 2.0 });
             }
-            _colorBones[0].addContour(cont1);
+            return cont1;
         }
 
-        private void contourSingleTriangle(double[] dist, float[][] vertices, Contour contour, double[] cDists)
+        private static double distanceBetweenPoints(float[] p0, float[] p1)
         {
-            foreach (double cDist in cDists)
+            double x = p0[0] - p1[0];
+            double y = p0[1] - p1[1];
+            double z = p0[2] - p1[2];
+            return Math.Sqrt(x * x + y * y + z * z);
+        }
+
+        private static double calculateTriangleArea(float[][] vertices)
+        {
+            return calculateTriangleArea(vertices[0], vertices[1], vertices[2]);
+        }
+        private static double calculateTriangleArea(float[] vertex0, float[] vertex1, float[] vertex2)
+        {
+            double a = distanceBetweenPoints(vertex0, vertex1);
+            double b = distanceBetweenPoints(vertex1, vertex2);
+            double c = distanceBetweenPoints(vertex2, vertex0);
+            double s = 0.5 * (a + b + c);
+            double s1 = s - a;
+            double s2 = s - b;
+            double s3 = s - c;
+            return Math.Sqrt(s * s1 * s2 * s3);
+        }
+
+        private static double[] calculateCentroid(float[][] vertices)
+        {
+            double x = 0, y = 0, z = 0;
+            for (int i = 0; i < vertices.Length; i++)
             {
+                x += vertices[i][0];
+                y += vertices[i][1];
+                z += vertices[i][2];
+            }
+            x = x / vertices.Length;
+            y = y / vertices.Length;
+            z = z / vertices.Length;
+            return new double[] { x, y, z };
+        }
+
+        private void contourSingleTriangle(double[] dist, float[][] vertices, Contour contour, double[] cDistances)
+        {
+            double area;
+            double[] centroid;
+            for (int i = 0; i < cDistances.Length; i++)
+            {
+                double cDist = cDistances[i];
                 int[] inside = { 0, 0, 0 };
                 int[] outside = { 0, 0, 0 };
                 int numInside = 0;
                 int numOutside = 0;
 
                 //check if each point is inside or ouside
-                for (int i = 0; i < 3; i++)
+                for (int j = 0; j < 3; j++)
                 {
-                    if (dist[i] < cDist) //is inside
-                        inside[numInside++] = i; //add to array and incriment
+                    if (dist[j] < cDist) //is inside
+                        inside[numInside++] = j; //add to array and incriment
                     else
-                        outside[numOutside++] = i;
+                        outside[numOutside++] = j;
                 }
 
                 //skip triangles totally outside
@@ -342,24 +413,41 @@ namespace libWrist
                 //check triangles totally inside
                 if (numInside == 3)
                 {
-                    //TODO: Add distance to aread
+                    area = calculateTriangleArea(vertices);
+                    contour.Areas[i] += area;
+                    centroid = calculateCentroid(vertices);
+                    contour.CentroidSums[i][0] += area * centroid[0];
+                    contour.CentroidSums[i][1] += area * centroid[1];
+                    contour.CentroidSums[i][2] += area * centroid[2];
+
                     continue;
                 }
 
+                
+                float[][] areaVertices;
                 float[] newPt1, newPt2;
                 //so I now have one or two vertices inside, and one or two ouside.....what to do
                 if (numInside == 1)
                 {
                     newPt1 = createGradientPoint(dist[inside[0]], vertices[inside[0]], dist[outside[0]], vertices[outside[0]], cDist);
                     newPt2 = createGradientPoint(dist[inside[0]], vertices[inside[0]], dist[outside[1]], vertices[outside[1]], cDist);
-                    //TODO: calculate area
+                    area = calculateTriangleArea(newPt1, newPt2, vertices[inside[0]]);
+                    areaVertices = new float[][] { newPt1, newPt2, vertices[inside[0]] };
                 }
                 else //I have 2 inside....yay
                 {
                     newPt1 = createGradientPoint(dist[outside[0]], vertices[outside[0]], dist[inside[0]], vertices[inside[0]], cDist);
                     newPt2 = createGradientPoint(dist[outside[0]], vertices[outside[0]], dist[inside[1]], vertices[inside[1]], cDist);
-                    //TODO: calculate area
+                    area = calculateTriangleArea(newPt1, vertices[inside[1]], vertices[inside[0]]);
+                    area += calculateTriangleArea(newPt1, vertices[inside[1]], newPt2);
+                    areaVertices = new float[][] { newPt1, newPt2, vertices[inside[0]], vertices[inside[1]] };
                 }
+                centroid = calculateCentroid(areaVertices);
+                contour.Areas[i] += area;                
+                contour.CentroidSums[i][0] += area * centroid[0];
+                contour.CentroidSums[i][1] += area * centroid[1];
+                contour.CentroidSums[i][2] += area * centroid[2];
+
                 contour.addLineSegment(newPt1[0], newPt1[1], newPt1[2], newPt2[0], newPt2[1], newPt2[2]);
             }
         }
