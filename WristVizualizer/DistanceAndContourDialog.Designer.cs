@@ -34,17 +34,19 @@ namespace WristVizualizer
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.radioButtonCurrent = new System.Windows.Forms.RadioButton();
-            this.radioButtonNone = new System.Windows.Forms.RadioButton();
-            this.radioButtonAll = new System.Windows.Forms.RadioButton();
             this.numericUpDownDistanceMapDist = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.radioButtonAll = new System.Windows.Forms.RadioButton();
+            this.radioButtonNone = new System.Windows.Forms.RadioButton();
+            this.radioButtonCurrent = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.radioButtonContourAll = new System.Windows.Forms.RadioButton();
-            this.radioButtonContourNone = new System.Windows.Forms.RadioButton();
-            this.radioButtonContourCurrent = new System.Windows.Forms.RadioButton();
             this.label3 = new System.Windows.Forms.Label();
+            this.radioButtonContourAll = new System.Windows.Forms.RadioButton();
+            this.radioButtonContourCurrent = new System.Windows.Forms.RadioButton();
+            this.radioButtonContourNone = new System.Windows.Forms.RadioButton();
+            this.radioButtonCalculated = new System.Windows.Forms.RadioButton();
+            this.radioButtonContourCalculated = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -56,7 +58,7 @@ namespace WristVizualizer
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(273, 231);
+            this.buttonCancel.Location = new System.Drawing.Point(273, 263);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(84, 28);
             this.buttonCancel.TabIndex = 9;
@@ -67,7 +69,7 @@ namespace WristVizualizer
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(183, 231);
+            this.buttonOK.Location = new System.Drawing.Point(183, 263);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(84, 28);
             this.buttonOK.TabIndex = 8;
@@ -122,6 +124,7 @@ namespace WristVizualizer
             // 
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.radioButtonCalculated);
             this.groupBox1.Controls.Add(this.numericUpDownDistanceMapDist);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
@@ -130,42 +133,10 @@ namespace WristVizualizer
             this.groupBox1.Controls.Add(this.radioButtonCurrent);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(347, 100);
+            this.groupBox1.Size = new System.Drawing.Size(347, 115);
             this.groupBox1.TabIndex = 11;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Distance Map";
-            // 
-            // radioButtonCurrent
-            // 
-            this.radioButtonCurrent.AutoSize = true;
-            this.radioButtonCurrent.Checked = true;
-            this.radioButtonCurrent.Location = new System.Drawing.Point(6, 19);
-            this.radioButtonCurrent.Name = "radioButtonCurrent";
-            this.radioButtonCurrent.Size = new System.Drawing.Size(164, 17);
-            this.radioButtonCurrent.TabIndex = 0;
-            this.radioButtonCurrent.TabStop = true;
-            this.radioButtonCurrent.Text = "Calculate For Current Position";
-            this.radioButtonCurrent.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonNone
-            // 
-            this.radioButtonNone.AutoSize = true;
-            this.radioButtonNone.Location = new System.Drawing.Point(6, 65);
-            this.radioButtonNone.Name = "radioButtonNone";
-            this.radioButtonNone.Size = new System.Drawing.Size(89, 17);
-            this.radioButtonNone.TabIndex = 1;
-            this.radioButtonNone.Text = "Do Not Show";
-            this.radioButtonNone.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonAll
-            // 
-            this.radioButtonAll.AutoSize = true;
-            this.radioButtonAll.Location = new System.Drawing.Point(6, 42);
-            this.radioButtonAll.Name = "radioButtonAll";
-            this.radioButtonAll.Size = new System.Drawing.Size(146, 17);
-            this.radioButtonAll.TabIndex = 2;
-            this.radioButtonAll.Text = "Calculate For All Positions";
-            this.radioButtonAll.UseVisualStyleBackColor = true;
             // 
             // numericUpDownDistanceMapDist
             // 
@@ -190,15 +161,6 @@ namespace WristVizualizer
             0,
             0});
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(194, 21);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 13);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Max Distance:";
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -208,23 +170,74 @@ namespace WristVizualizer
             this.label2.TabIndex = 5;
             this.label2.Text = "mm";
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(194, 21);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Max Distance:";
+            // 
+            // radioButtonAll
+            // 
+            this.radioButtonAll.AutoSize = true;
+            this.radioButtonAll.Location = new System.Drawing.Point(6, 42);
+            this.radioButtonAll.Name = "radioButtonAll";
+            this.radioButtonAll.Size = new System.Drawing.Size(146, 17);
+            this.radioButtonAll.TabIndex = 2;
+            this.radioButtonAll.Text = "Calculate For All Positions";
+            this.radioButtonAll.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonNone
+            // 
+            this.radioButtonNone.AutoSize = true;
+            this.radioButtonNone.Location = new System.Drawing.Point(6, 88);
+            this.radioButtonNone.Name = "radioButtonNone";
+            this.radioButtonNone.Size = new System.Drawing.Size(89, 17);
+            this.radioButtonNone.TabIndex = 1;
+            this.radioButtonNone.Text = "Do Not Show";
+            this.radioButtonNone.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonCurrent
+            // 
+            this.radioButtonCurrent.AutoSize = true;
+            this.radioButtonCurrent.Checked = true;
+            this.radioButtonCurrent.Location = new System.Drawing.Point(6, 19);
+            this.radioButtonCurrent.Name = "radioButtonCurrent";
+            this.radioButtonCurrent.Size = new System.Drawing.Size(164, 17);
+            this.radioButtonCurrent.TabIndex = 0;
+            this.radioButtonCurrent.TabStop = true;
+            this.radioButtonCurrent.Text = "Calculate For Current Position";
+            this.radioButtonCurrent.UseVisualStyleBackColor = true;
+            // 
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
                         | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox2.AutoSize = true;
+            this.groupBox2.Controls.Add(this.radioButtonContourCalculated);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Controls.Add(this.radioButtonContourAll);
             this.groupBox2.Controls.Add(this.radioButtonContourCurrent);
             this.groupBox2.Controls.Add(this.tableLayoutPanel);
             this.groupBox2.Controls.Add(this.radioButtonContourNone);
-            this.groupBox2.Location = new System.Drawing.Point(12, 118);
+            this.groupBox2.Location = new System.Drawing.Point(12, 133);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(347, 102);
+            this.groupBox2.Size = new System.Drawing.Size(347, 124);
             this.groupBox2.TabIndex = 12;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Contours";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(202, 16);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(85, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Visible Contours:";
             // 
             // radioButtonContourAll
             // 
@@ -235,16 +248,6 @@ namespace WristVizualizer
             this.radioButtonContourAll.TabIndex = 8;
             this.radioButtonContourAll.Text = "Calculate For All Positions";
             this.radioButtonContourAll.UseVisualStyleBackColor = true;
-            // 
-            // radioButtonContourNone
-            // 
-            this.radioButtonContourNone.AutoSize = true;
-            this.radioButtonContourNone.Location = new System.Drawing.Point(6, 65);
-            this.radioButtonContourNone.Name = "radioButtonContourNone";
-            this.radioButtonContourNone.Size = new System.Drawing.Size(89, 17);
-            this.radioButtonContourNone.TabIndex = 7;
-            this.radioButtonContourNone.Text = "Do Not Show";
-            this.radioButtonContourNone.UseVisualStyleBackColor = true;
             // 
             // radioButtonContourCurrent
             // 
@@ -258,14 +261,35 @@ namespace WristVizualizer
             this.radioButtonContourCurrent.Text = "Calculate For Current Position";
             this.radioButtonContourCurrent.UseVisualStyleBackColor = true;
             // 
-            // label3
+            // radioButtonContourNone
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(202, 16);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(85, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Visible Contours:";
+            this.radioButtonContourNone.AutoSize = true;
+            this.radioButtonContourNone.Location = new System.Drawing.Point(6, 88);
+            this.radioButtonContourNone.Name = "radioButtonContourNone";
+            this.radioButtonContourNone.Size = new System.Drawing.Size(89, 17);
+            this.radioButtonContourNone.TabIndex = 7;
+            this.radioButtonContourNone.Text = "Do Not Show";
+            this.radioButtonContourNone.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonCalculated
+            // 
+            this.radioButtonCalculated.AutoSize = true;
+            this.radioButtonCalculated.Location = new System.Drawing.Point(6, 65);
+            this.radioButtonCalculated.Name = "radioButtonCalculated";
+            this.radioButtonCalculated.Size = new System.Drawing.Size(146, 17);
+            this.radioButtonCalculated.TabIndex = 6;
+            this.radioButtonCalculated.Text = "Only If Already Calculated";
+            this.radioButtonCalculated.UseVisualStyleBackColor = true;
+            // 
+            // radioButtonContourCalculated
+            // 
+            this.radioButtonContourCalculated.AutoSize = true;
+            this.radioButtonContourCalculated.Location = new System.Drawing.Point(6, 65);
+            this.radioButtonContourCalculated.Name = "radioButtonContourCalculated";
+            this.radioButtonContourCalculated.Size = new System.Drawing.Size(146, 17);
+            this.radioButtonContourCalculated.TabIndex = 11;
+            this.radioButtonContourCalculated.Text = "Only If Already Calculated";
+            this.radioButtonContourCalculated.UseVisualStyleBackColor = true;
             // 
             // DistanceAndContourDialog
             // 
@@ -274,7 +298,7 @@ namespace WristVizualizer
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(369, 271);
+            this.ClientSize = new System.Drawing.Size(369, 303);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonCancel);
@@ -314,5 +338,7 @@ namespace WristVizualizer
         private System.Windows.Forms.RadioButton radioButtonContourCurrent;
         private System.Windows.Forms.RadioButton radioButtonContourNone;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.RadioButton radioButtonCalculated;
+        private System.Windows.Forms.RadioButton radioButtonContourCalculated;
     }
 }

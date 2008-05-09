@@ -64,8 +64,6 @@ namespace WristVizualizer
             {
                 openFile(fileArgs);
             }
-            DistanceAndContourDialog dd = new DistanceAndContourDialog();
-            dd.ShowDialog();
         }
 
         #region Control Visibility
@@ -955,18 +953,26 @@ namespace WristVizualizer
                 return;
 
             FullWristController control = (FullWristController)_currentController;
-            control.loadDistanceMapsForCurrentPosition();
-        }
-
-        private void calculateAllDistanceMapsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            //check that we are in FullWristMode
-            if (_mode != Modes.FULL_WRIST || _currentController == null ||
-                !_currentController.GetType().Equals(typeof(FullWristController)))
+            //TODO: Load existing settings....
+            DistanceAndContourDialog dialog = new DistanceAndContourDialog();
+            DialogResult r = dialog.ShowDialog();
+            if (r != DialogResult.OK)
                 return;
 
-            FullWristController control = (FullWristController)_currentController;
-            control.loadAllDistanceMaps();
+            //first lets check for color maps
+            if (dialog.CalculateColorMap != DistanceAndContourDialog.CalculationTypes.None)
+            {
+                //set the option
+                control.DistanceMaps.setMaxColoredDistance(dialog.ColorMapMaxDistance);
+                control.loadDistanceMaps(dialog.CalculateColorMap);
+            }
+
+            //now lets execute contours...
+            if (dialog.CalculateContours != DistanceAndContourDialog.CalculationTypes.None)
+            {
+                control.DistanceMaps.setContourDistances(dialog.getContourDistancesToCalculate());
+                control.loadContours(dialog.CalculateContours);
+            }
         }
     }
 }

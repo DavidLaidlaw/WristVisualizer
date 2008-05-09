@@ -37,6 +37,7 @@ private:
 	SoDrawStyle* _drawstyle;
 	int _numColoredVertices;
 	int _numPositions; 
+	bool _hidden;
 
 	Contour^ _contour;
 

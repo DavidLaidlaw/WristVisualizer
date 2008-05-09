@@ -21,6 +21,7 @@ namespace WristVizualizer
         {
             Current,
             All,
+            CachedOnly,
             None
         }
 
@@ -98,6 +99,7 @@ namespace WristVizualizer
             {
                 if (radioButtonAll.Checked) return CalculationTypes.All;
                 if (radioButtonCurrent.Checked) return CalculationTypes.Current;
+                if (radioButtonCalculated.Checked) return CalculationTypes.CachedOnly;
                 if (radioButtonNone.Checked) return CalculationTypes.None;
                 throw new WristVizualizerException("No type of color map specified!");
             }
@@ -109,6 +111,7 @@ namespace WristVizualizer
             {
                 if (radioButtonContourAll.Checked) return CalculationTypes.All;
                 if (radioButtonContourCurrent.Checked) return CalculationTypes.Current;
+                if (radioButtonContourCalculated.Checked) return CalculationTypes.CachedOnly;
                 if (radioButtonContourNone.Checked) return CalculationTypes.None;
                 throw new WristVizualizerException("No type of contour specified!");
             }

@@ -18,11 +18,73 @@ namespace libWrist
         private double[][][] _calculatedDistances;
         private Contour[][] _calculatedContours;
 
+        private double[] _contourDistances;
+        private double _maxColoredDistance;
+
         public DistanceMaps(Wrist wrist, TransformMatrix[][] transformMatrices, ColoredBone[] colorBones)
         {
             _wrist = wrist;
             _transformMatrices = transformMatrices;
             _colorBones = colorBones;
+        }
+
+        /// <summary>
+        /// Will set the maximum distance to use for applying the color of Distance Maps.
+        /// If this is different then previous, it will clear ALL cached color maps to maintain
+        /// consistancy.
+        /// </summary>
+        /// <param name="maxDistance">maximum distance to color</param>
+        public void setMaxColoredDistance(double maxDistance)
+        {
+            if (_maxColoredDistance == maxDistance) return; //no change
+
+            if (_maxColoredDistance > 0) //check for existing colored distance
+            {
+                //if so, we need to delete the cache and clear all the contours from bones
+                _calculatedContours = null;
+                showDistanceColorMapsForPositionIfCalculatedOrClear(0); //could be any index, they are all empty
+            }
+
+            //now save the result
+            _maxColoredDistance = maxDistance;
+        }
+
+        /// <summary>
+        /// Will set the number of contours to display, and what distances to use for each contour.
+        /// If this is different then previous, it will clear ALL cached contours to maintain
+        /// consistancy.
+        /// </summary>
+        /// <param name="cDistances">Array of contour distances, one value per contour</param>
+        public void setContourDistances(double[] cDistances)
+        {
+            //if it was not set, then set it and get out
+            if (_contourDistances == null)
+            {
+                _contourDistances = cDistances;
+                return;
+            }
+
+            //lets check if it changed
+            bool changed = false;
+            if (_contourDistances.Length == cDistances.Length)
+            {
+                for (int i = 0; i < _contourDistances.Length; i++)
+                {
+                    if (_contourDistances[i] != cDistances[i])
+                        changed = true;
+                }
+            }
+            else 
+                changed = true;
+
+            //if nothing is different, then we are fine
+            if (!changed) return;
+
+            //if here, then something changed, and we need to clear the cache and save the new values
+            _calculatedContours = null;
+            showContoursForPositionIfCalculatedOrClear(0); //could be any index, they are all empty
+
+            _contourDistances = cDistances; //save new values
         }
 
         private void readInDistanceFieldsIfNotLoaded()
@@ -157,6 +219,13 @@ namespace libWrist
             }
         }
 
+        public void clearContoursForAllBones()
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+                if (_colorBones[i] != null)
+                    _colorBones[i].removeContour();
+        }
+
         private TransformMatrix[] calculateRelativeMotionForDistanceMaps(int boneIndex, int positionIndex, int[] boneInteraction)
         {
             TransformMatrix[] tmRelMotions = new TransformMatrix[Wrist.NumBones]; //for each position
@@ -204,6 +273,13 @@ namespace libWrist
             return _calculatedDistances[boneIndex][positionIndex];
         }
 
+        /// <summary>
+        /// Calculates the distanceMaps for a given bone using the precalculated distance fields.
+        /// If a distance field is unavailable, it is assumed to be infinately far away...
+        /// </summary>
+        /// <param name="boneIndex"></param>
+        /// <param name="positionIndex"></param>
+        /// <returns></returns>
         private double[] createDistanceMap(int boneIndex, int positionIndex)
         {
             readInDistanceFieldsIfNotLoaded();
@@ -310,6 +386,52 @@ namespace libWrist
             return colors;
         }
 
+        private Separator createContourCentroidSphere(Contour contour, int contourIndex)
+        {
+            Sphere s = new Sphere(0.3f);
+            Separator spher1 = new Separator();
+            Material m = new Material();
+            Transform t = new Transform();
+
+            spher1.addNode(t);
+            spher1.addNode(m);
+            spher1.addNode(s);
+            t.setTranslation(contour.Centroids[contourIndex][0], contour.Centroids[contourIndex][1], contour.Centroids[contourIndex][2]);
+            m.setColor(0, 1, 0);
+            return spher1;
+        }
+
+        private Contour getContourSingleBoneSinglePosition(int boneIndex, int positionIndex)
+        {
+            if (_calculatedContours == null)
+                _calculatedContours = new Contour[Wrist.NumBones][];
+
+            if (_calculatedContours[boneIndex] == null)
+                _calculatedContours[boneIndex] = new Contour[_transformMatrices.Length + 1];
+
+            if (_calculatedContours[boneIndex][positionIndex] == null)
+                _calculatedContours[boneIndex][positionIndex] = createContourSingleBoneSinglePosition(boneIndex, positionIndex, _contourDistances);
+
+            return _calculatedContours[boneIndex][positionIndex];
+        }
+
+        public void showContoursForPosition(int positionIndex)
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                Contour cont = getContourSingleBoneSinglePosition(i, positionIndex);
+                _colorBones[i].setAndReplaceContour(cont);
+            }
+        }
+
+        public void calculateAllContours()
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+                for (int j = 0; j < _transformMatrices.Length + 1; j++)
+                    getContourSingleBoneSinglePosition(i, j); //this function will cache them, but not show anything...
+        }
+
+        [Obsolete("Don't f'ing use!")]
         public void createContourShit()
         {
             double[] cDistances = new double[] { 1.0, 2.0 };
@@ -323,24 +445,13 @@ namespace libWrist
                     Console.WriteLine("Bone {0}, contour {1}mm: Area={2}, Centroid=({3}, {4}, {5})",
                         i, d, cont1.Areas[j], cont1.Centroids[j][0], cont1.Centroids[j][1], cont1.Centroids[j][2]);
                 }
-                Sphere s = new Sphere(0.2f);
-                Separator spher1 = new Separator();
-                Material m = new Material();
-                Transform t = new Transform();
-
-                spher1.addNode(t);
-                spher1.addNode(m);
-                spher1.addNode(s);
-                t.setTranslation(cont1.Centroids[1][0], cont1.Centroids[1][1], cont1.Centroids[1][2]);
-                m.setColor(0, 1, 0);
-                _colorBones[i].addNode(spher1);
-            }            
+            }
         }
 
         private Contour createContourSingleBoneSinglePosition(int boneIndex, int positionIndex, double[] cDistances)
         {
-            //TODO: Check for calculated distances...
             double[] dist = getOrCalculateDistanceMap(boneIndex, positionIndex);
+            //if distance maps are not available, just returns max distances....should we warn the user?
             float[,] points = _colorBones[boneIndex].getVertices();
             int[,] conn = _colorBones[boneIndex].getFaceSetIndices();
 
@@ -366,7 +477,7 @@ namespace libWrist
                     new float[] {points[conn[i, 2], 0], points[conn[i, 2], 1], points[conn[i, 2], 2]}
                 };
 
-                contourSingleTriangle(triDist, triPts, cont1, new double[] { 1.0, 2.0 });
+                contourSingleTriangle(triDist, triPts, cont1, cDistances);
             }
             return cont1;
         }

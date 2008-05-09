@@ -104,6 +104,43 @@ namespace WristVizualizer
         }
 
 
+        public void loadDistanceMaps(DistanceAndContourDialog.CalculationTypes whatToLoad, double maxDistance)
+        {
+            switch (whatToLoad)
+            {
+                case DistanceAndContourDialog.CalculationTypes.None:
+                    return;  //don't do shit
+                case DistanceAndContourDialog.CalculationTypes.Current:
+                    _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
+                    break;
+                case DistanceAndContourDialog.CalculationTypes.All:
+                    _distMap.readInAllDistanceColorMaps(); //read them all in
+                    _distMap.showDistanceColorMapsForPosition(_currentPositionIndex); //make sure we display the current one...
+                    break;
+                default:
+                    throw new ArgumentException("Unknown type of calculation...");
+            }
+        }
+
+        public void loadContours(DistanceAndContourDialog.CalculationTypes whatToLoad)
+        {
+            switch (whatToLoad)
+            {
+                case DistanceAndContourDialog.CalculationTypes.None:
+                    return;  //don't do shit
+                case DistanceAndContourDialog.CalculationTypes.Current:
+                    _distMap.showContoursForPosition(_currentPositionIndex);
+                    break;
+                case DistanceAndContourDialog.CalculationTypes.All:
+                    _distMap.calculateAllContours();
+                    _distMap.showContoursForPosition(_currentPositionIndex);
+                    break;
+                default:
+                    throw new ArgumentException("Unknown type of calculation...");
+            }
+        }
+
+        [Obsolete("Please use generic loadDistanceMaps(CalculationTypes) instead....")]
         public void loadDistanceMapsForCurrentPosition()
         {
             _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
@@ -112,6 +149,7 @@ namespace WristVizualizer
             Console.WriteLine("Contour took: {0}",((TimeSpan)(DateTime.Now - t)));
         }
 
+        [Obsolete("Please use generic loadDistanceMaps(CalculationTypes) instead....")]
         public void loadAllDistanceMaps()
         {
             _distMap.readInAllDistanceColorMaps(); //read them all in
@@ -151,6 +189,11 @@ namespace WristVizualizer
         {
             get { return _animateDuration; }
             set { _animateDuration = value; }
+        }
+
+        public DistanceMaps DistanceMaps
+        {
+            get { return _distMap; }
         }
 
         public bool ShowErrors
@@ -287,6 +330,7 @@ namespace WristVizualizer
 
             //clear the coloring scheme, its not really calculated yet for intermediary positions
             _distMap.clearDistanceColorMapsForAllBones();
+            _distMap.clearContoursForAllBones();
 
             _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
             _animationController.LoopAnimation = false;
