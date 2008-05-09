@@ -34,6 +34,9 @@ namespace WristVizualizer
         private bool _hideMaps;
         private bool _hideContours;
 
+        //Background worker....
+        private BackgroundWorkerStatusForm _background;
+
         //GUI stuff
         private FullWristControl _wristControl;
 
@@ -108,6 +111,7 @@ namespace WristVizualizer
 
         public void calculateDistanceMapsToolClickedHandler()
         {
+            //setup the dialog window
             DistanceAndContourDialog dialog = new DistanceAndContourDialog(_distMap.ContourDistances);
             dialog.ColorMapMaxDistance = _distMap.MaxColoredDistance;
             if (_hideMaps)
@@ -124,9 +128,17 @@ namespace WristVizualizer
             else
                 dialog.CalculateContours = DistanceAndContourDialog.CalculationTypes.Current;
 
+            //show the dialog window
             DialogResult r = dialog.ShowDialog();
             if (r != DialogResult.OK)
                 return;
+
+            //setup background worker...
+            //bool readAllColors = dialog.CalculateColorMap == DistanceAndContourDialog.CalculationTypes.All;
+            //bool readAllContours = dialog.CalculateContours == DistanceAndContourDialog.CalculationTypes.All;
+            //_background = new BackgroundWorkerStatusForm();
+            //_background.processDistanceFieldCalculations(_distMap, readAllColors, readAllContours);
+            //_background = null;
 
             //first lets check for color maps
             loadDistanceMaps(dialog.CalculateColorMap, dialog.ColorMapMaxDistance);
@@ -146,14 +158,15 @@ namespace WristVizualizer
                     _distMap.clearDistanceColorMapsForAllBones();
                     break;
                 case DistanceAndContourDialog.CalculationTypes.CachedOnly:
-                    return;  //don't do shit
+                    _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
+                    break;  //don't do shit
                 case DistanceAndContourDialog.CalculationTypes.Current:
                     _distMap.setMaxColoredDistance(maxDistance);
                     _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
                     break;
                 case DistanceAndContourDialog.CalculationTypes.All:
                     _distMap.setMaxColoredDistance(maxDistance);
-                    _distMap.readInAllDistanceColorMaps(); //read them all in
+                    _distMap.readInAllDistanceColorMaps(_background); //read them all in
                     _distMap.showDistanceColorMapsForPosition(_currentPositionIndex); //make sure we display the current one...
                     break;
                 default:
@@ -172,35 +185,20 @@ namespace WristVizualizer
                     _distMap.clearContoursForAllBones();
                     break;
                 case DistanceAndContourDialog.CalculationTypes.CachedOnly:
-                    return;  //don't do shit
+                    _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
+                    break;  //don't do shit
                 case DistanceAndContourDialog.CalculationTypes.Current:
                     _distMap.setContourDistances(contourDistances);
                     _distMap.showContoursForPosition(_currentPositionIndex);
                     break;
                 case DistanceAndContourDialog.CalculationTypes.All:
                     _distMap.setContourDistances(contourDistances);
-                    _distMap.calculateAllContours();
+                    _distMap.calculateAllContours(_background);
                     _distMap.showContoursForPosition(_currentPositionIndex);
                     break;
                 default:
                     throw new ArgumentException("Unknown type of calculation...");
             }
-        }
-
-        [Obsolete("Please use generic loadDistanceMaps(CalculationTypes) instead....")]
-        public void loadDistanceMapsForCurrentPosition()
-        {
-            _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
-            DateTime t = DateTime.Now;
-            _distMap.createContourShit();
-            Console.WriteLine("Contour took: {0}",((TimeSpan)(DateTime.Now - t)));
-        }
-
-        [Obsolete("Please use generic loadDistanceMaps(CalculationTypes) instead....")]
-        public void loadAllDistanceMaps()
-        {
-            _distMap.readInAllDistanceColorMaps(); //read them all in
-            _distMap.showDistanceColorMapsForPosition(_currentPositionIndex); //make sure we display the current one...
         }
 
         private void loadTransforms()

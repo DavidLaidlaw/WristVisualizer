@@ -35,9 +35,16 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BackgroundWorkerStatusForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BackgroundWorkerStatusForm.Designer.cs">
+      <DependentUpon>BackgroundWorkerStatusForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="CropValuesParser.cs" />
     <Compile Include="CTmri.cs" />
     <Compile Include="DatParser.cs" />
@@ -63,6 +70,12 @@
       <Project>{34510B6D-EB60-4DBA-952B-49C6729C1367}</Project>
       <Name>libCoin3D</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="BackgroundWorkerStatusForm.resx">
+      <DependentUpon>BackgroundWorkerStatusForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

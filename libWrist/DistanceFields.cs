@@ -171,27 +171,32 @@ namespace libWrist
                 clearDistanceColorMapsForAllBones();
         }
 
-        public void readInAllDistanceColorMaps()
+        public void readInAllDistanceColorMaps(BackgroundWorkerStatusForm background)
         {
             //setup save space if it doesn't exist
             if (_calculatedColorMaps == null)
                 _calculatedColorMaps = new int[Wrist.NumBones][][];
 
             readInDistanceFieldsIfNotLoaded();
+            int numPos = _transformMatrices.Length + 1; //add one extra for neutral :)
 
             //try and create color scheme....
             for (int i = 0; i < Wrist.NumBones; i++)
             {
                 //setup space if it doesn't exist
                 if (_calculatedColorMaps[i] == null)
-                    _calculatedColorMaps[i] = new int[_transformMatrices.Length + 1][]; //add one extra for neutral :)
+                    _calculatedColorMaps[i] = new int[numPos][]; 
 
                 //now read the color map for each position index
-                for (int j = 0; j < _transformMatrices.Length + 1; j++)
+                for (int j = 0; j < numPos; j++)
                 {
                     //read in the colors if not yet loaded
                     if (_calculatedColorMaps[i][j] == null)
                         _calculatedColorMaps[i][j] = createColormap(i, j);
+
+                    //update progress
+                    if (background != null)
+                        background.SafeProgressUpdate((i * numPos + j) / (Wrist.NumBones * numPos));
                 }
             }
         }
@@ -434,11 +439,17 @@ namespace libWrist
             }
         }
 
-        public void calculateAllContours()
+        public void calculateAllContours(BackgroundWorkerStatusForm background)
         {
+            int numPos = _transformMatrices.Length + 1;
             for (int i = 0; i < Wrist.NumBones; i++)
-                for (int j = 0; j < _transformMatrices.Length + 1; j++)
+                for (int j = 0; j < numPos; j++)
+                {
                     getContourSingleBoneSinglePosition(i, j); //this function will cache them, but not show anything...
+
+                    if (background != null)
+                        background.SafeProgressUpdate((i * numPos + j) / (Wrist.NumBones * numPos));
+                }
         }
 
         [Obsolete("Don't f'ing use!")]
