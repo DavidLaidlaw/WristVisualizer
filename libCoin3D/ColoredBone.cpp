@@ -141,29 +141,58 @@ void libCoin3D::ColoredBone::setHidden(bool hidden)
 	else {
 		_drawstyle->style = SoDrawStyle::FILLED;
 	}
+
+	//now the contour, if it exists
+	if (_contour != nullptr) _contour->setHidden(hidden);
+}
+
+void libCoin3D::ColoredBone::addNode(Node^ node)
+{
+	if (node != nullptr && node->getNode() != NULL)
+		_node->addChild(node->getNode());
+}
+
+void libCoin3D::ColoredBone::insertNode(Node^ node, int position)
+{
+	_node->insertChild(node->getNode(), position);
+}
+
+void libCoin3D::ColoredBone::removeChild(Node^ child)
+{
+	_node->removeChild(child->getNode());
+}
+
+void libCoin3D::ColoredBone::addContour(Contour^ contour)
+{
+	_contour = contour;
+	_node->addChild(contour->getNode());
 }
 
 array<float,2>^ libCoin3D::ColoredBone::getVertices()
 {
-	int numPts = _vertexProperty->vertex.getNum();
-	array<float,2>^ points = gcnew array<float,2>(numPts,3);
-	for (int i=0; i<numPts; i++) {
-		points[i,0] = _vertexProperty->vertex[i][0];
-		points[i,1] = _vertexProperty->vertex[i][1];
-		points[i,2] = _vertexProperty->vertex[i][2];
+	if (_vertices==nullptr) {
+		int numPts = _vertexProperty->vertex.getNum();
+		_vertices = gcnew array<float,2>(numPts,3);
+		for (int i=0; i<numPts; i++) {
+			_vertices[i,0] = _vertexProperty->vertex[i][0];
+			_vertices[i,1] = _vertexProperty->vertex[i][1];
+			_vertices[i,2] = _vertexProperty->vertex[i][2];
+		}
 	}
-	return points;
+	return _vertices;
 }
 
 array<int,2>^ libCoin3D::ColoredBone::getFaceSetIndices()
 {
-	int numTriangles = _indexedFaceSet->coordIndex.getNum();
-	numTriangles = numTriangles/4;
-	array<int,2>^ connections = gcnew array<int,2>(numTriangles,3);  //yes, only copying the indices, not the -1
-	for (int i=0; i<numTriangles; i++) {
-		connections[i,0] = _indexedFaceSet->coordIndex[i*4];
-		connections[i,1] = _indexedFaceSet->coordIndex[i*4+1];
-		connections[i,2] = _indexedFaceSet->coordIndex[i*4+2];
+	if (_faceSet==nullptr) {
+		int numTriangles = _indexedFaceSet->coordIndex.getNum();
+		numTriangles = numTriangles/4;
+		_faceSet = gcnew array<int,2>(numTriangles,3);  //yes, only copying the indices, not the -1
+		for (int i=0; i<numTriangles; i++) {
+			_faceSet[i,0] = _indexedFaceSet->coordIndex[i*4];
+			_faceSet[i,1] = _indexedFaceSet->coordIndex[i*4+1];
+			_faceSet[i,2] = _indexedFaceSet->coordIndex[i*4+2];
+		}
 	}
-	return connections;
+	return _faceSet;
 }

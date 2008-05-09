@@ -108,7 +108,7 @@ namespace WristVizualizer
         {
             _distMap.loadDistanceColorMapsForPosition(_currentPositionIndex);
             DateTime t = DateTime.Now;
-            _bones[0].addNode(_distMap.createContourShit());
+            _distMap.createContourShit();
             Console.WriteLine("Contour took: {0}",((TimeSpan)(DateTime.Now - t)));
         }
 

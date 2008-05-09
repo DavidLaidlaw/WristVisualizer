@@ -286,7 +286,7 @@ namespace libWrist
             return colors;
         }
 
-        public Contour createContourShit()
+        public void createContourShit()
         {
             double[] dist = _calculatedDistances[0][0];
             float[,] points = _colorBones[0].getVertices();
@@ -314,7 +314,7 @@ namespace libWrist
 
                 contourSingleTriangle(triDist, triPts, cont1);
             }
-            return cont1;
+            _colorBones[0].addContour(cont1);
         }
 
         private void contourSingleTriangle(double[] dist, float[][] vertices, Contour contour)
