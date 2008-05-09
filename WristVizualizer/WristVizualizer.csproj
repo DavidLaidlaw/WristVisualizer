@@ -48,6 +48,12 @@
     <Compile Include="AnimationController.cs" />
     <Compile Include="BoneHideChangeEventArgs.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="DistanceAndContourDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DistanceAndContourDialog.Designer.cs">
+      <DependentUpon>DistanceAndContourDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="DistvController.cs" />
     <Compile Include="FixedBoneChangeEventArgs.cs" />
     <Compile Include="FullWristControl.cs">
@@ -142,6 +148,10 @@
     <EmbeddedResource Include="AnimationControl.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AnimationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DistanceAndContourDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DistanceAndContourDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FullWristControl.resx">
       <SubType>Designer</SubType>
