@@ -294,15 +294,15 @@ namespace libWrist
 
             Contour cont1 = new Contour();
 
-            double contourDistance = 1.0;
+            double maxContourDistance = 2.0;
 
             int numTrian = conn.GetLength(0);
             for (int i=0; i<numTrian; i++)
             {
                 //check if all the points are out, if so, skip it
-                if (dist[conn[i, 0]] > contourDistance &&
-                    dist[conn[i, 1]] > contourDistance &&
-                    dist[conn[i, 2]] > contourDistance)
+                if (dist[conn[i, 0]] > maxContourDistance &&
+                    dist[conn[i, 1]] > maxContourDistance &&
+                    dist[conn[i, 2]] > maxContourDistance)
                     continue;
 
                 double[] triDist = { dist[conn[i, 0]], dist[conn[i, 1]], dist[conn[i, 2]] };
@@ -312,57 +312,56 @@ namespace libWrist
                     new float[] {points[conn[i, 2], 0], points[conn[i, 2], 1], points[conn[i, 2], 2]}
                 };
 
-                contourSingleTriangle(triDist, triPts, cont1);
+                contourSingleTriangle(triDist, triPts, cont1, new double[] { 1.0, 2.0 });
             }
             _colorBones[0].addContour(cont1);
         }
 
-        private void contourSingleTriangle(double[] dist, float[][] vertices, Contour contour)
+        private void contourSingleTriangle(double[] dist, float[][] vertices, Contour contour, double[] cDists)
         {
-            //for each contour....
-
-            double cDist = 1.0;
-
-            int[] inside = { 0, 0, 0 };
-            int[] outside = { 0, 0, 0 };
-            int numInside = 0;
-            int numOutside = 0;
-
-            //check if each point is inside or ouside
-            for (int i = 0; i < 3; i++)
+            foreach (double cDist in cDists)
             {
-                if (dist[i] < cDist) //is inside
-                    inside[numInside++] = i; //add to array and incriment
-                else
-                    outside[numOutside++] = i;
-            }
+                int[] inside = { 0, 0, 0 };
+                int[] outside = { 0, 0, 0 };
+                int numInside = 0;
+                int numOutside = 0;
 
-            //skip triangles totally outside
-            if (numOutside == 3)
-                return;
+                //check if each point is inside or ouside
+                for (int i = 0; i < 3; i++)
+                {
+                    if (dist[i] < cDist) //is inside
+                        inside[numInside++] = i; //add to array and incriment
+                    else
+                        outside[numOutside++] = i;
+                }
 
-            //check triangles totally inside
-            if (numInside == 3)
-            {
-                //TODO: Add distance to aread
-                return;
-            }
+                //skip triangles totally outside
+                if (numOutside == 3)
+                    continue;
 
-            float[] newPt1, newPt2;
-            //so I now have one or two vertices inside, and one or two ouside.....what to do
-            if (numInside == 1)
-            {
-                newPt1 = createGradientPoint(dist[inside[0]], vertices[inside[0]], dist[outside[0]], vertices[outside[0]], cDist);
-                newPt2 = createGradientPoint(dist[inside[0]], vertices[inside[0]], dist[outside[1]], vertices[outside[1]], cDist);
-                //TODO: calculate area
+                //check triangles totally inside
+                if (numInside == 3)
+                {
+                    //TODO: Add distance to aread
+                    continue;
+                }
+
+                float[] newPt1, newPt2;
+                //so I now have one or two vertices inside, and one or two ouside.....what to do
+                if (numInside == 1)
+                {
+                    newPt1 = createGradientPoint(dist[inside[0]], vertices[inside[0]], dist[outside[0]], vertices[outside[0]], cDist);
+                    newPt2 = createGradientPoint(dist[inside[0]], vertices[inside[0]], dist[outside[1]], vertices[outside[1]], cDist);
+                    //TODO: calculate area
+                }
+                else //I have 2 inside....yay
+                {
+                    newPt1 = createGradientPoint(dist[outside[0]], vertices[outside[0]], dist[inside[0]], vertices[inside[0]], cDist);
+                    newPt2 = createGradientPoint(dist[outside[0]], vertices[outside[0]], dist[inside[1]], vertices[inside[1]], cDist);
+                    //TODO: calculate area
+                }
+                contour.addLineSegment(newPt1[0], newPt1[1], newPt1[2], newPt2[0], newPt2[1], newPt2[2]);
             }
-            else //I have 2 inside....yay
-            {
-                newPt1 = createGradientPoint(dist[outside[0]], vertices[outside[0]], dist[inside[0]], vertices[inside[0]], cDist);
-                newPt2 = createGradientPoint(dist[outside[0]], vertices[outside[0]], dist[inside[1]], vertices[inside[1]], cDist);
-                //TODO: calculate area
-            }
-            contour.addLineSegment(newPt1[0], newPt1[1], newPt1[2], newPt2[0], newPt2[1], newPt2[2]);
         }
 
         private float[] createGradientPoint(double d0, float[] v0, double d1, float[] v1, double cDist)
