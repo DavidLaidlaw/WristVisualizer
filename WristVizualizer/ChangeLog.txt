@@ -1,3 +1,7 @@
+Version 1.3.6
+- Fixed bug: Texture no longer allows adjusting registration by default, to avoid the problem with loosing focus for key presses. 
+- New: Can load distance fields if they exist, and generate distance maps for bones as well as contour information.
+
 Version 1.3.5
 - Fixed bug: Texture planes are now located in the center of each voxel
 - New: Texture allows you to step through each bone's registration in the auto_registr txt file from the registration code. There is a known bug with window focus and the arrow keys. They can get stuck on the registration window and stop controlling the texture slices.

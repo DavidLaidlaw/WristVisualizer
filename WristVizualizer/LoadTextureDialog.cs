@@ -257,7 +257,10 @@ namespace WristVizualizer
             _root = new Separator();
             run();
             _viewer.setSceneGraph(_root);
-            _controller = new TextureController(_root, _bones, _transformParser);
+            if (checkBoxEnableStepping.Checked)
+                _controller = new TextureController(_root, _bones, _transformParser);
+            else
+                _controller = new TextureController(_root, null, null); 
             return _controller;
         }
 
@@ -624,7 +627,7 @@ namespace WristVizualizer
             }
         }
 
-        #region Public Accessors
+        #region Public Properties
         public string DisplayTitle
         {
             get { return _subject + "_" + _seriesKey + " - " + _subjectPath; }
@@ -633,6 +636,11 @@ namespace WristVizualizer
         public TextureController Controller
         {
             get { return _controller; }
+        }
+
+        public bool EnableSteppingRegistration
+        {
+            get { return checkBoxEnableStepping.Checked; }
         }
         #endregion
 

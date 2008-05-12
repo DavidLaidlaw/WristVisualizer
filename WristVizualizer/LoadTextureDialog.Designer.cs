@@ -70,6 +70,7 @@ namespace WristVizualizer
             this.panel1 = new System.Windows.Forms.Panel();
             this.radioButtonManual = new System.Windows.Forms.RadioButton();
             this.radioButtonAutomatic = new System.Windows.Forms.RadioButton();
+            this.checkBoxEnableStepping = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinZ)).BeginInit();
@@ -112,6 +113,7 @@ namespace WristVizualizer
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.checkBoxEnableStepping);
             this.groupBox1.Controls.Add(this.labelErrorImageFile);
             this.groupBox1.Controls.Add(this.label14);
             this.groupBox1.Controls.Add(this.textBoxImageFile);
@@ -537,6 +539,16 @@ namespace WristVizualizer
             this.radioButtonAutomatic.UseVisualStyleBackColor = true;
             this.radioButtonAutomatic.CheckedChanged += new System.EventHandler(this.radioButtonMode_CheckedChanged);
             // 
+            // checkBoxEnableStepping
+            // 
+            this.checkBoxEnableStepping.AutoSize = true;
+            this.checkBoxEnableStepping.Location = new System.Drawing.Point(111, 395);
+            this.checkBoxEnableStepping.Name = "checkBoxEnableStepping";
+            this.checkBoxEnableStepping.Size = new System.Drawing.Size(206, 17);
+            this.checkBoxEnableStepping.TabIndex = 44;
+            this.checkBoxEnableStepping.Text = "Enable Stepping Through Registration";
+            this.checkBoxEnableStepping.UseVisualStyleBackColor = true;
+            // 
             // LoadTextureDialog
             // 
             this.AcceptButton = this.buttonOK;
@@ -612,5 +624,6 @@ namespace WristVizualizer
         private System.Windows.Forms.Label labelErrorImageFile;
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox textBoxImageFile;
+        private System.Windows.Forms.CheckBox checkBoxEnableStepping;
     }
 }
