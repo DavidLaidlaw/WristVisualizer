@@ -48,6 +48,13 @@ namespace libWrist
             _worker.ProgressChanged += new ProgressChangedEventHandler(_worker_ProgressChanged);
         }
 
+        /// <summary>
+        /// Can be used to load All Color maps and/or All Contours in the background. Will take care
+        /// of showing the Process form in Dialog mode, then closing the form when it is completed.
+        /// </summary>
+        /// <param name="distMaps"></param>
+        /// <param name="loadAllColorMaps"></param>
+        /// <param name="loadAllContours"></param>
         public void processDistanceFieldCalculations(DistanceMaps distMaps, bool loadAllColorMaps, bool loadAllContours)
         {
             if (!loadAllColorMaps && !loadAllContours) //check if nothing to do....

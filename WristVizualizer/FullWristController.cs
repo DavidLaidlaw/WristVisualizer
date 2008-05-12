@@ -154,10 +154,7 @@ namespace WristVizualizer
 
 
             _background = new BackgroundWorkerStatusForm();
-            //_background.Show();
             _background.processDistanceFieldCalculations(_distMap, readAllColors, readAllContours);
-            //_background.ShowDialog();
-            //_background = null;
 
             //need to wait here.....how?
             applyDistanceMapsIfRequired();
