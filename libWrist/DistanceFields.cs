@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
 using System.Text;
 using System.IO;
+using System.Threading;
 using libCoin3D;
 
 
@@ -18,6 +21,12 @@ namespace libWrist
         private double[][][] _calculatedDistances;
         private Contour[][] _calculatedContours;
 
+        private Queue _workQueueColorMaps;
+        private Queue _workQueueContours;
+        private Thread[] _workerThreads;
+        private BackgroundWorkerStatusForm _bgStatusForm;
+        private BackgroundWorker _bgWorker;
+
         private double[] _contourDistances;
         private double _maxColoredDistance;
 
@@ -26,6 +35,10 @@ namespace libWrist
             _wrist = wrist;
             _transformMatrices = transformMatrices;
             _colorBones = colorBones;
+
+            //initialize thread-safe queues
+            _workQueueColorMaps = Queue.Synchronized(new Queue());
+            _workQueueContours = Queue.Synchronized(new Queue());
         }
 
         /// <summary>
@@ -171,7 +184,7 @@ namespace libWrist
                 clearDistanceColorMapsForAllBones();
         }
 
-        public void readInAllDistanceColorMaps(BackgroundWorkerStatusForm background)
+        public void readInAllDistanceColorMaps()
         {
             //setup save space if it doesn't exist
             if (_calculatedColorMaps == null)
@@ -193,10 +206,6 @@ namespace libWrist
                     //read in the colors if not yet loaded
                     if (_calculatedColorMaps[i][j] == null)
                         _calculatedColorMaps[i][j] = createColormap(i, j);
-
-                    //update progress
-                    if (background != null)
-                        background.SafeProgressUpdate(100 * ((double)i * numPos + j) / (Wrist.NumBones * numPos));
                 }
             }
         }
@@ -416,14 +425,32 @@ namespace libWrist
             return spher1;
         }
 
+        private int[] getColorMapSingleBoneSinglePosition(int boneIndex, int positionIndex)
+        {
+            lock (this)
+            {
+                if (_calculatedColorMaps == null)
+                    _calculatedColorMaps = new int[Wrist.NumBones][][];
+
+                if (_calculatedColorMaps[boneIndex] == null)
+                    _calculatedColorMaps[boneIndex] = new int[_transformMatrices.Length + 1][];
+            }
+            if (_calculatedColorMaps[boneIndex][positionIndex] == null)
+                _calculatedColorMaps[boneIndex][positionIndex] = createColormap(boneIndex, positionIndex);
+
+            return _calculatedColorMaps[boneIndex][positionIndex];
+        }
+
         private Contour getContourSingleBoneSinglePosition(int boneIndex, int positionIndex)
         {
-            if (_calculatedContours == null)
-                _calculatedContours = new Contour[Wrist.NumBones][];
+            lock (this)
+            {
+                if (_calculatedContours == null)
+                    _calculatedContours = new Contour[Wrist.NumBones][];
 
-            if (_calculatedContours[boneIndex] == null)
-                _calculatedContours[boneIndex] = new Contour[_transformMatrices.Length + 1];
-
+                if (_calculatedContours[boneIndex] == null)
+                    _calculatedContours[boneIndex] = new Contour[_transformMatrices.Length + 1];
+            }
             if (_calculatedContours[boneIndex][positionIndex] == null)
                 _calculatedContours[boneIndex][positionIndex] = createContourSingleBoneSinglePosition(boneIndex, positionIndex, _contourDistances);
 
@@ -439,16 +466,13 @@ namespace libWrist
             }
         }
 
-        public void calculateAllContours(BackgroundWorkerStatusForm background)
+        public void calculateAllContours()
         {
             int numPos = _transformMatrices.Length + 1;
             for (int i = 0; i < Wrist.NumBones; i++)
                 for (int j = 0; j < numPos; j++)
                 {
                     getContourSingleBoneSinglePosition(i, j); //this function will cache them, but not show anything...
-
-                    if (background != null)
-                        background.SafeProgressUpdate(100 * ((double)i * numPos + j) / (Wrist.NumBones * numPos));
                 }
         }
 
@@ -620,6 +644,188 @@ namespace libWrist
             midpoint[1] = (float)((1 - ratio) * v0[1] + ratio * v1[1]);
             midpoint[2] = (float)((1 - ratio) * v0[2] + ratio * v1[2]);
             return midpoint;
+        }
+        #endregion
+
+        #region Multi-Threaded Processing
+        private struct BonePositionInfo
+        {
+            public int PositionIndex;
+            public int BoneIndex;
+        }
+
+        public void addToColorMapQueue(int currentPositionIndex, bool addAll, bool addCurrent)
+        {
+            if (addAll)
+            {
+                for (int i = 0; i < _transformMatrices.Length + 1; i++)
+                    addToColorMapQueue(i);
+            }
+            else if (addCurrent)
+                addToColorMapQueue(currentPositionIndex);
+        }
+        private void addToColorMapQueue(int[] positionIndexs)
+        {
+            foreach (int posIndex in positionIndexs)
+                addToColorMapQueue(posIndex);
+        }
+        private void addToColorMapQueue(int positionIndex)
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+                addToColorMapQueue(positionIndex, i);
+        }
+        private void addToColorMapQueue(int positionIndex, int boneIndex)
+        {
+            //int processors = System.Environment.ProcessorCount;
+            BonePositionInfo info = new BonePositionInfo();
+            info.PositionIndex = positionIndex;
+            info.BoneIndex = boneIndex;
+
+            _workQueueColorMaps.Enqueue(info);
+        }
+
+        public void addToContourQueue(int currentPositionIndex, bool addAll, bool addCurrent)
+        {
+            if (addAll)
+            {
+                for (int i = 0; i < _transformMatrices.Length + 1; i++)
+                    addToContourQueue(i);
+            }
+            else if (addCurrent)
+                addToContourQueue(currentPositionIndex);
+        }
+        private void addToContourQueue(int[] positionIndexs)
+        {
+            foreach (int posIndex in positionIndexs)
+                addToContourQueue(posIndex);
+        }
+        private void addToContourQueue(int positionIndex)
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+                addToContourQueue(positionIndex, i);
+        }
+        private void addToContourQueue(int positionIndex, int boneIndex)
+        {
+            BonePositionInfo info = new BonePositionInfo();
+            info.PositionIndex = positionIndex;
+            info.BoneIndex = boneIndex;
+
+            _workQueueContours.Enqueue(info);
+        }
+
+        public void processAllPendingQueues()
+        {
+            int totalNumberJobs = _workQueueColorMaps.Count + _workQueueContours.Count;
+
+            //check if there is actually work to do
+            if (totalNumberJobs == 0)
+                return;
+
+            //setup gui
+            _bgStatusForm = new BackgroundWorkerStatusForm(totalNumberJobs);
+            
+            //setup background worker
+            _bgWorker = new BackgroundWorker();
+            _bgWorker.WorkerReportsProgress = true;
+            _bgWorker.WorkerSupportsCancellation = false;
+            _bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(_bgWorker_RunWorkerCompleted);
+            _bgWorker.ProgressChanged += new ProgressChangedEventHandler(_bgWorker_ProgressChanged);
+            _bgWorker.DoWork += new DoWorkEventHandler(_bgWorker_DoWork);
+            
+            //start background worker
+            _bgWorker.RunWorkerAsync();
+            _bgStatusForm.ShowDialog(); //show in dialog mode, we will close it elsewhere
+        }
+
+        void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            //load in the distance fields
+            readInDistanceFieldsIfNotLoaded();
+
+            //first process the ColorMap Queue
+            int numThreads = Math.Min(System.Environment.ProcessorCount, _workQueueColorMaps.Count);
+
+            //start all of the worker threads
+            _workerThreads = new Thread[numThreads];
+            for (int i = 0; i < numThreads; i++)
+            {
+                _workerThreads[i] = new Thread(workThreadWork);
+                _workerThreads[i].Start(_workQueueColorMaps);
+            }
+            //wait for worker threads to finish
+            foreach (Thread curThread in _workerThreads)
+                curThread.Join();
+
+
+            //okay, now lets run the Contour queue
+            numThreads = Math.Min(System.Environment.ProcessorCount, _workQueueContours.Count);
+
+            //start all of the worker threads
+            _workerThreads = new Thread[numThreads];
+            for (int i = 0; i < numThreads; i++)
+            {
+                _workerThreads[i] = new Thread(workThreadWork);
+                _workerThreads[i].Start(_workQueueContours);
+            }
+            //wait for worker threads to finish
+            foreach (Thread curThread in _workerThreads)
+                curThread.Join();
+
+            //hmm....we should be done now... so we return
+        }
+
+        void _bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            _bgStatusForm.UnSafeIncrimentCompletedParts();
+        }
+
+        void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //remove callbacks
+            _bgWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(_bgWorker_RunWorkerCompleted);
+            _bgWorker.ProgressChanged -= new ProgressChangedEventHandler(_bgWorker_ProgressChanged);
+            _bgWorker.DoWork -= new DoWorkEventHandler(_bgWorker_DoWork);
+
+            //close status window
+            _bgStatusForm.Close();
+
+            //cleanup
+            _bgStatusForm = null;
+            _bgWorker = null;
+        }
+
+        private void workThreadWork(object queue)
+        {
+            Queue workQueue = (Queue)queue;
+            BonePositionInfo currentJob;
+            bool done = false;
+            while (!done)
+            {
+                //first get the job
+                lock (workQueue)
+                {
+                    if (workQueue.Count > 0)
+                        currentJob = (BonePositionInfo)workQueue.Dequeue();
+                    else
+                    {
+                        done = true;
+                        continue;
+                    }
+                }
+
+                //now lets process this job
+                if (workQueue == _workQueueColorMaps)
+                {
+                    getColorMapSingleBoneSinglePosition(currentJob.BoneIndex, currentJob.PositionIndex); //get and discard is fine
+                }
+                else if (workQueue == _workQueueContours)
+                {
+                    getContourSingleBoneSinglePosition(currentJob.BoneIndex, currentJob.PositionIndex); //get and discard is fine
+                }
+
+                //done with the job, lets report in our progress
+                _bgWorker.ReportProgress(1);
+            }
         }
         #endregion
     }

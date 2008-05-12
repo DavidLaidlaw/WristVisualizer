@@ -152,18 +152,19 @@ namespace WristVizualizer
             bool readAllColors = dialog.CalculateAllColorMaps;
             bool readAllContours = dialog.CalculateAllContours;
 
-
-            _background = new BackgroundWorkerStatusForm();
-            _background.processDistanceFieldCalculations(_distMap, readAllColors, readAllContours);
+            _distMap.addToColorMapQueue(_currentPositionIndex, readAllColors, dialog.CalculateCurrentColorMap);
+            _distMap.addToContourQueue(_currentPositionIndex, readAllContours, dialog.CalculateCurrentContour);
+            _distMap.processAllPendingQueues();
+            
 
             //need to wait here.....how?
             applyDistanceMapsIfRequired();
 
             //ugly hack for now to perform the calculations if its only the current position getting calculated
-            if (!readAllColors && dialog.RequiresCalculatingColorMaps)
-                _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
-            if (!readAllContours && dialog.RequiresCalculatingContours)
-                _distMap.showContoursForPosition(_currentPositionIndex);
+            //if (!readAllColors && dialog.RequiresCalculatingColorMaps)
+            //    _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
+            //if (!readAllContours && dialog.RequiresCalculatingContours)
+            //    _distMap.showContoursForPosition(_currentPositionIndex);
         }
 
         private void loadTransforms()

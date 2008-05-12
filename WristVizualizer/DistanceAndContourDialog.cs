@@ -199,6 +199,15 @@ namespace WristVizualizer
         {
             get { return (radioButtonContourAll.Checked); }
         }
+
+        public bool CalculateCurrentColorMap
+        {
+            get { return this.RequiresCalculatingColorMaps; }
+        }
+        public bool CalculateCurrentContour
+        {
+            get { return this.RequiresCalculatingContours; }
+        }
         #endregion
 
         public double[] getContourDistancesToCalculate()
