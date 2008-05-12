@@ -8,6 +8,9 @@ using System.Windows.Forms;
 
 namespace libWrist
 {
+    /* Added DebuggerDisplay to fix problem when debugging multi-threaded processes in VS.NET 2005.
+     * Fix based on this article: http://blogs.msdn.com/greggm/archive/2005/11/18/494648.aspx
+     */
     [System.Diagnostics.DebuggerDisplay("BackgroundWorkerStatusForm")]
     public partial class BackgroundWorkerStatusForm : Form
     {
