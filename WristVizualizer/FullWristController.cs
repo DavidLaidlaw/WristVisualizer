@@ -133,20 +133,43 @@ namespace WristVizualizer
             if (r != DialogResult.OK)
                 return;
 
-            //setup background worker...
-            //bool readAllColors = dialog.CalculateColorMap == DistanceAndContourDialog.CalculationTypes.All;
-            //bool readAllContours = dialog.CalculateContours == DistanceAndContourDialog.CalculationTypes.All;
-            //_background = new BackgroundWorkerStatusForm();
-            //_background.processDistanceFieldCalculations(_distMap, readAllColors, readAllContours);
-            //_background = null;
-
-            //first lets check for color maps
-            loadDistanceMaps(dialog.CalculateColorMap, dialog.ColorMapMaxDistance);
-
-            //now lets execute contours...
-            loadContours(dialog.CalculateContours, dialog.getContourDistancesToCalculate());
+            calculateDistanceMapsHelper(dialog);
         }
 
+        private void calculateDistanceMapsHelper(DistanceAndContourDialog dialog)
+        {
+            //set hidden variables
+            _hideMaps = dialog.HideColorMap;
+            _hideContours = dialog.HideContour;
+
+            //apply new values if we need to
+            if (dialog.RequiresCalculatingColorMaps)
+                _distMap.setMaxColoredDistance(dialog.ColorMapMaxDistance);
+            if (dialog.RequiresCalculatingContours)
+                _distMap.setContourDistances(dialog.getContourDistancesToCalculate());
+
+            //setup background worker... to process loading....
+            bool readAllColors = dialog.CalculateAllColorMaps;
+            bool readAllContours = dialog.CalculateAllContours;
+
+
+            _background = new BackgroundWorkerStatusForm();
+            //_background.Show();
+            _background.processDistanceFieldCalculations(_distMap, readAllColors, readAllContours);
+            //_background.ShowDialog();
+            //_background = null;
+
+            //need to wait here.....how?
+            applyDistanceMapsIfRequired();
+
+            //first lets check for color maps
+            //loadDistanceMaps(dialog.CalculateColorMap, dialog.ColorMapMaxDistance);
+
+            //now lets execute contours...
+            //loadContours(dialog.CalculateContours, dialog.getContourDistancesToCalculate());
+        }
+
+        /*
         public void loadDistanceMaps(DistanceAndContourDialog.CalculationTypes whatToLoad, double maxDistance)
         {
             _hideMaps = false; //default
@@ -200,6 +223,7 @@ namespace WristVizualizer
                     throw new ArgumentException("Unknown type of calculation...");
             }
         }
+         */
 
         private void loadTransforms()
         {
@@ -399,6 +423,15 @@ namespace WristVizualizer
             }
         }
 
+        private void applyDistanceMapsIfRequired()
+        {
+            //load in the color maps, if they already exist
+            if (!_hideMaps)
+                _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
+            if (!_hideContours)
+                _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
+        }
+
         private void setTransformsForCurrentPositionAndFixedBone()
         {
             hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
@@ -408,11 +441,7 @@ namespace WristVizualizer
             }
             else
             {
-                //load in the color maps, if they already exist
-                if (!_hideMaps)
-                    _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
-                if (!_hideContours)
-                    _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
+                applyDistanceMapsIfRequired();
                 
                 //first remove the old transforms, if they exist
                 removeCurrentTransforms();

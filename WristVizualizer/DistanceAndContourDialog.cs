@@ -171,6 +171,34 @@ namespace WristVizualizer
                 numericUpDownDistanceMapDist.Value = (decimal)value;
             }
         }
+
+        public bool HideColorMap
+        {
+            get { return (radioButtonNone.Checked); }
+        }
+
+        public bool HideContour
+        {
+            get { return (radioButtonContourNone.Checked); }
+        }
+
+        public bool RequiresCalculatingColorMaps
+        {
+            get { return (radioButtonAll.Checked || radioButtonCurrent.Checked); }
+        }
+        public bool RequiresCalculatingContours
+        {
+            get { return (radioButtonContourAll.Checked || radioButtonContourCurrent.Checked); }
+        }
+
+        public bool CalculateAllColorMaps
+        {
+            get { return (radioButtonAll.Checked); }
+        }
+        public bool CalculateAllContours
+        {
+            get { return (radioButtonContourAll.Checked); }
+        }
         #endregion
 
         public double[] getContourDistancesToCalculate()

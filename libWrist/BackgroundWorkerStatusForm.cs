@@ -8,6 +8,7 @@ using System.Windows.Forms;
 
 namespace libWrist
 {
+    [System.Diagnostics.DebuggerDisplay("BackgroundWorkerStatusForm")]
     public partial class BackgroundWorkerStatusForm : Form
     {
         BackgroundWorker _worker;
@@ -64,7 +65,8 @@ namespace libWrist
 
         public void SafeProgressUpdate(double percent)
         {
-            _worker.ReportProgress((int)percent);
+            int totalPercent = (int)((_currentPart * 100 + percent) / _numParts);
+            _worker.ReportProgress(Math.Min(totalPercent,100));
         }
 
         void _worker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -85,9 +87,15 @@ namespace libWrist
                 case Modes.DistanceFieldCalculation:
                     //execute this mode
                     if (_loadColor)
+                    {
                         _distance.readInAllDistanceColorMaps(this);
+                        _currentPart++;
+                    }
                     if (_loadContour)
+                    {
                         _distance.calculateAllContours(this);
+                        _currentPart++;
+                    }
                     break;
                 case Modes.Nothing:
                     break;

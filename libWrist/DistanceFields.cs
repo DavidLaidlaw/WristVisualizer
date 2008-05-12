@@ -196,7 +196,7 @@ namespace libWrist
 
                     //update progress
                     if (background != null)
-                        background.SafeProgressUpdate((i * numPos + j) / (Wrist.NumBones * numPos));
+                        background.SafeProgressUpdate(100 * ((double)i * numPos + j) / (Wrist.NumBones * numPos));
                 }
             }
         }
@@ -448,7 +448,7 @@ namespace libWrist
                     getContourSingleBoneSinglePosition(i, j); //this function will cache them, but not show anything...
 
                     if (background != null)
-                        background.SafeProgressUpdate((i * numPos + j) / (Wrist.NumBones * numPos));
+                        background.SafeProgressUpdate(100 * ((double)i * numPos + j) / (Wrist.NumBones * numPos));
                 }
         }
 
