@@ -159,68 +159,12 @@ namespace WristVizualizer
             //need to wait here.....how?
             applyDistanceMapsIfRequired();
 
-            //first lets check for color maps
-            //loadDistanceMaps(dialog.CalculateColorMap, dialog.ColorMapMaxDistance);
-
-            //now lets execute contours...
-            //loadContours(dialog.CalculateContours, dialog.getContourDistancesToCalculate());
+            //ugly hack for now to perform the calculations if its only the current position getting calculated
+            if (!readAllColors && dialog.RequiresCalculatingColorMaps)
+                _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
+            if (!readAllContours && dialog.RequiresCalculatingContours)
+                _distMap.showContoursForPosition(_currentPositionIndex);
         }
-
-        /*
-        public void loadDistanceMaps(DistanceAndContourDialog.CalculationTypes whatToLoad, double maxDistance)
-        {
-            _hideMaps = false; //default
-            switch (whatToLoad)
-            {
-                case DistanceAndContourDialog.CalculationTypes.None:
-                    //hide all the maps
-                    _hideMaps = true;
-                    _distMap.clearDistanceColorMapsForAllBones();
-                    break;
-                case DistanceAndContourDialog.CalculationTypes.CachedOnly:
-                    _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
-                    break;  //don't do shit
-                case DistanceAndContourDialog.CalculationTypes.Current:
-                    _distMap.setMaxColoredDistance(maxDistance);
-                    _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
-                    break;
-                case DistanceAndContourDialog.CalculationTypes.All:
-                    _distMap.setMaxColoredDistance(maxDistance);
-                    _distMap.readInAllDistanceColorMaps(_background); //read them all in
-                    _distMap.showDistanceColorMapsForPosition(_currentPositionIndex); //make sure we display the current one...
-                    break;
-                default:
-                    throw new ArgumentException("Unknown type of calculation...");
-            }
-        }
-
-        public void loadContours(DistanceAndContourDialog.CalculationTypes whatToLoad, double[] contourDistances)
-        {
-            _hideContours = false; //default
-            switch (whatToLoad)
-            {
-                case DistanceAndContourDialog.CalculationTypes.None:
-                    //hide contours....
-                    _hideContours = true;
-                    _distMap.clearContoursForAllBones();
-                    break;
-                case DistanceAndContourDialog.CalculationTypes.CachedOnly:
-                    _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
-                    break;  //don't do shit
-                case DistanceAndContourDialog.CalculationTypes.Current:
-                    _distMap.setContourDistances(contourDistances);
-                    _distMap.showContoursForPosition(_currentPositionIndex);
-                    break;
-                case DistanceAndContourDialog.CalculationTypes.All:
-                    _distMap.setContourDistances(contourDistances);
-                    _distMap.calculateAllContours(_background);
-                    _distMap.showContoursForPosition(_currentPositionIndex);
-                    break;
-                default:
-                    throw new ArgumentException("Unknown type of calculation...");
-            }
-        }
-         */
 
         private void loadTransforms()
         {
