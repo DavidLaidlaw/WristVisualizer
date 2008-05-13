@@ -109,6 +109,7 @@ namespace WristVizualizer
                 case Modes.FULL_WRIST:
                     animatePositionTransitionsToolStripMenuItem.Enabled = true;
                     animationRateToolStripMenuItem.Enabled = true;
+                    calculateDistanceMapToolStripMenuItem.Enabled = true;
                     break;
             }
         }
@@ -170,6 +171,7 @@ namespace WristVizualizer
             rate_05sec_15FpsToolStripMenuItem.Checked = true;
             rate_1sec_15FpsToolStripMenuItem1.Checked = false;
             rate_2sec_15FpsToolStripMenuItem2.Checked = false;
+            calculateDistanceMapToolStripMenuItem.Enabled = false;
             
             if (_pointSelection != null)
             {

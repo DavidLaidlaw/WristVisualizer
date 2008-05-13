@@ -339,6 +339,7 @@ namespace WristVizualizer
             // 
             // calculateDistanceMapToolStripMenuItem
             // 
+            this.calculateDistanceMapToolStripMenuItem.Enabled = false;
             this.calculateDistanceMapToolStripMenuItem.Name = "calculateDistanceMapToolStripMenuItem";
             this.calculateDistanceMapToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
             this.calculateDistanceMapToolStripMenuItem.Text = "Calculate Distance Maps...";
