@@ -1,3 +1,7 @@
+Version 1.4.2
+ - New: Can edit transforms in texture, and copy those values to the clipboard, for entry into a WristRegistration config file. 
+ - New: Can hide bones in texture. Not as pretty as it should be, but it works.
+
 Version 1.4.1
 - Fixed bug: Fixed problem with installer. Did not install coin3d dll files, so the program would not run.
 
