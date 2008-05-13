@@ -13,6 +13,7 @@ namespace WristVizualizer
         private Separator[] _bones;
         private TransformParser _parser;
         private TextureControl _textureControl;
+        private TransformParser.EuclideanTransform[] _editableTransforms;
 
         private Hashtable[] _transformHashtables;
 
@@ -30,7 +31,11 @@ namespace WristVizualizer
 
             _transformHashtables = parser.getArrayOfTransformHashtables();
             _textureControl = new TextureControl(parser.getArrayOfAllignmentSteps());
+            _editableTransforms = parser.getArrayOfOptimizedBothTransforms();
             setupListeners();
+
+            //set the current editable transform
+            _textureControl_SelectedTransformChanged();
         }
 
         public override void CleanUp()
@@ -42,16 +47,46 @@ namespace WristVizualizer
         private void setupListeners()
         {
             _textureControl.SelectedTransformChanged += new TextureControl.SelectedTransformChangedHandler(_textureControl_SelectedTransformChanged);
+            _textureControl.EditableTransformChanged += new EventHandler(_textureControl_EditableTransformChanged);
         }
+                
 
         private void removeListeners()
         {
             _textureControl.SelectedTransformChanged -= new TextureControl.SelectedTransformChangedHandler(_textureControl_SelectedTransformChanged);
+            _textureControl.EditableTransformChanged -= new EventHandler(_textureControl_EditableTransformChanged);
+        }
+
+        void _textureControl_EditableTransformChanged(object sender, EventArgs e)
+        {
+            int currentIndex = _textureControl.selectedTransformIndex;
+            int boneIndex = _editableTransforms[currentIndex].boneIndex;
+
+            //create new transform... needed edited part, allong with the part that leads up to it from the original parsed file
+            TransformMatrix tm = _textureControl.getEditedTransform() * _editableTransforms[currentIndex].StartingTransform;
+            Transform tfrm = tm.ToTransform();
+            
+            //remove the old one first
+            if (_bones[boneIndex].hasTransform())
+                _bones[boneIndex].removeTransform();
+
+            //add edited
+            _bones[boneIndex].addTransform(tfrm);
         }
 
         void _textureControl_SelectedTransformChanged()
         {
             int newIndex = _textureControl.selectedTransformIndex;
+
+            //setup control for current transform....
+            if (String.IsNullOrEmpty(_editableTransforms[newIndex].boneName))
+            {
+                //...no transform available....
+            }
+            else
+            {
+                _textureControl.setEditableTransform(_editableTransforms[newIndex].CenterRotation, _editableTransforms[newIndex].Rotation, _editableTransforms[newIndex].Translation);
+            }
 
             for (int i = 0; i < TextureSettings.ShortBNames.Length; i++)
             {
@@ -70,6 +105,10 @@ namespace WristVizualizer
                     _bones[i].addTransform(tfrm);
                 }
                 _root.addChild(_bones[i]);
+
+                //check if this is the editable transform
+                if (_editableTransforms[newIndex].boneName ==TextureSettings.TransformBNames[i])
+                    _editableTransforms[newIndex].boneIndex = i;
             }
         }
 

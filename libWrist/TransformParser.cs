@@ -10,17 +10,31 @@ namespace libWrist
 {
     public class TransformParser
     {
+        public struct EuclideanTransform
+        {
+            public string boneName;
+            public int boneIndex;
+            public double[] CenterRotation;
+            public double[] Rotation;
+            public double[] Translation;
+            public TransformMatrix StartingTransform;
+        }
+
         private Hashtable _transforms;
         private bool _lastTransformWasOptimizedBoth;
         private string _lastOptimizedBone="";
+        private EuclideanTransform _currentOptimizedBothTransform;
+        private EuclideanTransform _lastOptimizedBothTransform;
 
         private ArrayList _listOfAlignments;
         private ArrayList _listOfTransformHashtables;
+        private ArrayList _listOfEditableTransforms;
 
         public TransformParser(string filename)
         {
             _listOfAlignments = new ArrayList();
             _listOfTransformHashtables = new ArrayList();
+            _listOfEditableTransforms = new ArrayList();
 
             ParseTransform(filename);
         }
@@ -38,6 +52,11 @@ namespace libWrist
         public Hashtable[] getArrayOfTransformHashtables()
         {
             return (Hashtable[])_listOfTransformHashtables.ToArray(typeof(Hashtable));
+        }
+
+        public EuclideanTransform[] getArrayOfOptimizedBothTransforms()
+        {
+            return (EuclideanTransform[])_listOfEditableTransforms.ToArray(typeof(EuclideanTransform));
         }
 
         public static Hashtable ParseAllTransforms(string filename)
@@ -62,7 +81,7 @@ namespace libWrist
         {
             const string boneLineRegex = @"^Bone\ name\:\ (\w+)\s*$";
             _transforms = new Hashtable(15);
-            saveCurrentState("Neutral Wrist");
+            saveCurrentState("Neutral Wrist",null);
             while (!filestream.EndOfStream)
             {
                 string line = filestream.ReadLine();
@@ -79,14 +98,17 @@ namespace libWrist
                     TransformMatrix next_tm = readSingleTransform(filestream);
                     if (_lastTransformWasOptimizedBoth)
                     {
-                        //at this point, we are going to save the previous optimization
+                        //at this point, we are going to save the previous optimization (the one BEFORE this optimized both that we just found)
                         string label;
                         if (_lastOptimizedBone.Length > 0)
                             label = "Align " + _lastOptimizedBone;
                         else
                             label = "DRUJ Alignment";
-                        saveCurrentState(label);
-                        _lastOptimizedBone = boneName;
+                        saveCurrentState(label, _lastOptimizedBone);
+
+                        _lastOptimizedBone = boneName; //save the bonewe are about to optimize now...
+                        _lastOptimizedBothTransform = _currentOptimizedBothTransform;
+                        _lastOptimizedBothTransform.StartingTransform = (TransformMatrix)_transforms[boneName]; //save starting part
                     }
                     _transforms[boneName] = next_tm * (TransformMatrix)_transforms[boneName]; //add to list
                 }
@@ -94,15 +116,22 @@ namespace libWrist
             //at the end, see if we need to save again, for this state
             if (_lastTransformWasOptimizedBoth)
             {
-                saveCurrentState("Align " + _lastOptimizedBone);
+                saveCurrentState("Align " + _lastOptimizedBone, _lastOptimizedBone);
             }
         }
 
-        private void saveCurrentState(string label)
+        private void saveCurrentState(string label, string boneName)
         {
             _listOfAlignments.Add(label);
             Hashtable htCopy = (Hashtable)_transforms.Clone();
             _listOfTransformHashtables.Add(htCopy);
+            if (boneName == null)
+                _listOfEditableTransforms.Add(new EuclideanTransform());
+            else
+            {
+                _lastOptimizedBothTransform.boneName = boneName;
+                _listOfEditableTransforms.Add(_lastOptimizedBothTransform);
+            }
         }
 
         private TransformMatrix readSingleTransform(StreamReader filestream)
@@ -175,6 +204,10 @@ namespace libWrist
                     rot.rotateAboutCenter(rotationAngles, centerRotation);
                     t.setTranslation(translation);
                     rt = t * rot;
+                    _currentOptimizedBothTransform = new EuclideanTransform();
+                    _currentOptimizedBothTransform.CenterRotation = centerRotation;
+                    _currentOptimizedBothTransform.Rotation = rotationAngles;
+                    _currentOptimizedBothTransform.Translation = translation;
                     break;
                 default:
                     //error, there should be no other type
