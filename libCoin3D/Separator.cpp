@@ -151,3 +151,18 @@ libCoin3D::TessellatedSurface^ libCoin3D::Separator::findTeselatedSurface()
 	TessellatedSurface^ ts = gcnew TessellatedSurface(coords,conn);
 	return ts;
 }
+
+void libCoin3D::Separator::reference()
+{
+	_separator->ref();
+}
+
+void libCoin3D::Separator::unref()
+{
+	_separator->unref();
+}
+
+void libCoin3D::Separator::unrefNoDelete()
+{
+	_separator->unrefNoDelete();
+}

@@ -24,6 +24,9 @@ public:
 	void removeChild(Separator^ child);
 	void removeChild(Node^ node);
 	bool hasTransform() { return (_numTransforms>0); }
+	virtual void reference();
+	virtual void unref();
+	virtual void unrefNoDelete();
 
 	virtual SoNode* getNode() override;
 

@@ -13,6 +13,8 @@ namespace WristVizualizer
         private Separator[] _bones;
         private TransformParser _parser;
         private TextureControl _textureControl;
+        private FullWristControl _fullWristControl;
+        private WristPanelLayoutControl _mainControlPanel;
         private TransformParser.EuclideanTransform[] _editableTransforms;
 
         private Hashtable[] _transformHashtables;
@@ -31,6 +33,12 @@ namespace WristVizualizer
 
             _transformHashtables = parser.getArrayOfTransformHashtables();
             _textureControl = new TextureControl(parser.getArrayOfAllignmentSteps());
+            _fullWristControl = new FullWristControl();
+            _fullWristControl.setupControl(Wrist.LongBoneNames, false);
+            _mainControlPanel = new WristPanelLayoutControl();
+            _mainControlPanel.addControl(_textureControl);
+            _mainControlPanel.addControl(_fullWristControl);
+
             _editableTransforms = parser.getArrayOfOptimizedBothTransforms();
             setupListeners();
 
@@ -48,13 +56,31 @@ namespace WristVizualizer
         {
             _textureControl.SelectedTransformChanged += new TextureControl.SelectedTransformChangedHandler(_textureControl_SelectedTransformChanged);
             _textureControl.EditableTransformChanged += new EventHandler(_textureControl_EditableTransformChanged);
-        }
-                
+            _fullWristControl.BoneHideChanged += new BoneHideChangedHandler(_fullWristControl_BoneHideChanged);
+        }      
 
         private void removeListeners()
         {
             _textureControl.SelectedTransformChanged -= new TextureControl.SelectedTransformChangedHandler(_textureControl_SelectedTransformChanged);
             _textureControl.EditableTransformChanged -= new EventHandler(_textureControl_EditableTransformChanged);
+            _fullWristControl.BoneHideChanged -= new BoneHideChangedHandler(_fullWristControl_BoneHideChanged);
+        }
+
+
+        void _fullWristControl_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
+        {
+            if (_bones[e.BoneIndex] == null) return;
+
+            if (e.BoneHidden)
+            {
+                _bones[e.BoneIndex].reference();
+                _root.removeChild(_bones[e.BoneIndex]);
+            }
+            else
+            {
+                _root.addChild(_bones[e.BoneIndex]);
+                _bones[e.BoneIndex].unref();
+            }
         }
 
         void _textureControl_EditableTransformChanged(object sender, EventArgs e)
@@ -118,7 +144,7 @@ namespace WristVizualizer
 
         public override System.Windows.Forms.Control Control
         {
-            get { return _textureControl; }
+            get { return _mainControlPanel; }
         }
     }
 }
