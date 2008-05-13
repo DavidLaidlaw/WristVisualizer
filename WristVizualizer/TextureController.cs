@@ -104,7 +104,6 @@ namespace WristVizualizer
                     //now add the new one
                     _bones[i].addTransform(tfrm);
                 }
-                _root.addChild(_bones[i]);
 
                 //check if this is the editable transform
                 if (_editableTransforms[newIndex].boneName ==TextureSettings.TransformBNames[i])

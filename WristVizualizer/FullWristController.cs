@@ -34,9 +34,6 @@ namespace WristVizualizer
         private bool _hideMaps;
         private bool _hideContours;
 
-        //Background worker....
-        private BackgroundWorkerStatusForm _background;
-
         //GUI stuff
         private FullWristControl _wristControl;
 
