@@ -107,7 +107,7 @@ namespace WristVizualizer
             //setup control for current transform....
             if (String.IsNullOrEmpty(_editableTransforms[newIndex].boneName))
             {
-                //...no transform available....
+                _textureControl.clearEditableTransform();
             }
             else
             {

@@ -40,6 +40,7 @@ namespace WristVizualizer
             this.numericUpDownTransX = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.buttonCopyToClipboard = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenterX)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenterY)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownCenterZ)).BeginInit();
@@ -294,10 +295,22 @@ namespace WristVizualizer
             this.label2.TabIndex = 12;
             this.label2.Text = "Rotation Center && Radians";
             // 
+            // buttonCopyToClipboard
+            // 
+            this.buttonCopyToClipboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.buttonCopyToClipboard.Location = new System.Drawing.Point(165, 246);
+            this.buttonCopyToClipboard.Name = "buttonCopyToClipboard";
+            this.buttonCopyToClipboard.Size = new System.Drawing.Size(53, 18);
+            this.buttonCopyToClipboard.TabIndex = 13;
+            this.buttonCopyToClipboard.Text = "Copy";
+            this.buttonCopyToClipboard.UseVisualStyleBackColor = true;
+            this.buttonCopyToClipboard.Click += new System.EventHandler(this.buttonCopyToClipboard_Click);
+            // 
             // TextureControl
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.buttonCopyToClipboard);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.numericUpDownTransZ);
@@ -340,6 +353,7 @@ namespace WristVizualizer
         private System.Windows.Forms.NumericUpDown numericUpDownTransX;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button buttonCopyToClipboard;
 
     }
 }

@@ -23,6 +23,7 @@ namespace WristVizualizer
 
             setTransforms(transforms);
             listBoxTransforms.SelectedIndex = (listBoxTransforms.Items.Count - 1);
+            clearEditableTransform();
         }
 
         private void setTransforms(string[] transforms)
@@ -83,10 +84,19 @@ namespace WristVizualizer
         private void setEditableTransformEnabledState(bool enabled)
         {
             numericUpDownCenterX.Enabled = enabled;
+            numericUpDownCenterY.Enabled = enabled;
+            numericUpDownCenterZ.Enabled = enabled;
+            numericUpDownRotX.Enabled = enabled;
+            numericUpDownRotY.Enabled = enabled;
+            numericUpDownRotZ.Enabled = enabled;
+            numericUpDownTransX.Enabled = enabled;
+            numericUpDownTransY.Enabled = enabled;
+            numericUpDownTransZ.Enabled = enabled;
         }
 
-        private void clearEditableTransform()
+        public void clearEditableTransform()
         {
+            setEditableTransformEnabledState(false);
             localEditingInProgress = true;
             numericUpDownCenterX.Value = 0;
             numericUpDownCenterY.Value = 0;
@@ -103,10 +113,7 @@ namespace WristVizualizer
         }
 
         private void listBoxTransforms_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            clearEditableTransform();
-            setEditableTransformEnabledState(false);
-
+        {            
             if (SelectedTransformChanged != null)
                 SelectedTransformChanged();
         }
@@ -117,6 +124,14 @@ namespace WristVizualizer
 
             if (EditableTransformChanged != null)
                 EditableTransformChanged(this, new EventArgs());
+        }
+
+        private void buttonCopyToClipboard_Click(object sender, EventArgs e)
+        {
+            string output = String.Format(";StartRotationCenter={0} {1} {2}\n", numericUpDownCenterX.Value, numericUpDownCenterY.Value, numericUpDownCenterZ.Value);
+            output += String.Format("StartRotation={0} {1} {2}\n", numericUpDownRotX.Value, numericUpDownRotY.Value, numericUpDownRotZ.Value);
+            output += String.Format("StartTranslation={0} {1} {2}\n", numericUpDownTransX.Value, numericUpDownTransY.Value, numericUpDownTransZ.Value);
+            Clipboard.SetText(output);
         }
     }
 }
