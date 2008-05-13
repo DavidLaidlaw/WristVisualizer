@@ -1,6 +1,8 @@
-Version 1.3.6
+Version 1.4.0
 - Fixed bug: Texture no longer allows adjusting registration by default, to avoid the problem with loosing focus for key presses. 
+- New: Can choose to animate between positions, using very basic linear interpolation. "eye candy"
 - New: Can load distance fields if they exist, and generate distance maps for bones as well as contour information.
+- New: Can vizually edit the final optimized both transform that is output from the Wrist Registration Program
 
 Version 1.3.5
 - Fixed bug: Texture planes are now located in the center of each voxel
