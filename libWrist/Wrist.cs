@@ -51,6 +51,7 @@ namespace libWrist
 
 
         private string[] _bpaths;
+        private string[] _distanceFieldPaths;
 
         private string _subjectPath;
         private string _subject;
@@ -71,6 +72,7 @@ namespace libWrist
         {
             _radius = pathRadiusIV;
             _bpaths = new string[_bnames.Length];
+            _distanceFieldPaths = new string[_bnames.Length];
             setupPaths();
             findAllSeries();
         }
@@ -83,6 +85,7 @@ namespace libWrist
         {
             _radius = pathRadiusIV;
             _bpaths = new string[_bnames.Length];
+            _distanceFieldPaths = new string[_bnames.Length];
             setupPaths();
             findAllSeries();
         }
@@ -143,6 +146,15 @@ namespace libWrist
         public string[] bpaths
         {
             get { return _bpaths; }
+        }
+
+        /// <summary>
+        /// An array containingn the full path to the distance fields for each bone
+        /// (ie {"p:\Data\...\E00001\S15R\DistanceFields\cap15R_mri", "p:\Data\...\E00001\S15R\DistanceFields\ham15R_mri",...})
+        /// </summary>
+        public string[] DistanceFieldPaths
+        {
+            get { return _distanceFieldPaths; }
         }
 
         /// <summary>
@@ -410,6 +422,11 @@ namespace libWrist
             _subject = Path.GetFileName(_subjectPath);
             _inertiaFile = Path.Combine(Path.Combine(_subjectPath,_neutralSeries),"inertia"+ _neutralSeriesNum + _side + ".dat");
             _acsFile = Path.Combine(Path.Combine(_subjectPath, _neutralSeries), "AnatCoordSys.dat");
+
+            //setup Distance fields
+            string distanceFieldFolder = Path.Combine(Path.Combine(_subjectPath,_neutralSeries),"DistanceFields");
+            for (int i = 0; i < _bnames.Length; i++)
+                _distanceFieldPaths[i] = Path.Combine(distanceFieldFolder, String.Format("{0}{1}{2}_mri", _bnames[i], _neutralSeriesNum, _side));
 
             //Now verify that this is the subject path
             if (!Regex.Match(Path.GetFileName(_subjectPath), @"E\d{5}").Success)

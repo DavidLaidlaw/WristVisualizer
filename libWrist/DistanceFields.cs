@@ -130,11 +130,9 @@ namespace libWrist
 
             for (int i = 0; i < Wrist.NumBones; i++)
             {
-                string basefolder = Path.Combine(Path.Combine(_wrist.subjectPath, _wrist.neutralSeries), "DistanceFields");
-                string folder = String.Format("{0}{1}_mri", Wrist.ShortBoneNames[i], _wrist.neutralSeries.Substring(1, 3));
-                if (Directory.Exists(Path.Combine(basefolder, folder)))
+                if (Directory.Exists(_wrist.DistanceFieldPaths[i]))
                 {
-                    _distanceFields[i] = new CTmri(Path.Combine(basefolder, folder));
+                    _distanceFields[i] = new CTmri(_wrist.DistanceFieldPaths[i]);
                     _distanceFields[i].loadImageData();
                 }
                 else
