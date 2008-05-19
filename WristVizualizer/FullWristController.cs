@@ -214,12 +214,35 @@ namespace WristVizualizer
             get { return _root; }
         }
 
+        private string[] createSeriesListWithNiceNames()
+        {
+            string[] series = _wrist.series;
+
+            //make niceSeries a complete list of all the current "not-nice" names
+            string[] niceSeries = new string[series.Length + 1];
+            niceSeries[0] = _wrist.neutralSeries;
+            Array.ConstrainedCopy(series, 0, niceSeries, 1, series.Length); //copy the existing value
+
+            //now try and replace ugly names with nice ones :)
+            string configFile = _wrist.SeriesNamesFilename;
+            if (File.Exists(configFile))
+            {
+                Dictionary<string, string> lookupTable = IniFileParser.GetIniFileStrings(configFile, "SeriesNames");
+                for (int i = 0; i < niceSeries.Length; i++)
+                {
+                    if (lookupTable.ContainsKey(niceSeries[i]))
+                        niceSeries[i] = lookupTable[niceSeries[i]];
+                }
+            }            
+            return niceSeries;
+        }
+
         private void populateSeriesList()
         {
             _currentPositionIndex = 0;
             _wristControl.clearSeriesList();
-            _wristControl.addToSeriesList(_wrist.neutralSeries);
-            _wristControl.addToSeriesList(_wrist.series);
+            string[] seriesNames = createSeriesListWithNiceNames();
+            _wristControl.addToSeriesList(seriesNames);
             _wristControl.selectedSeriesIndex = 0;
         }
 

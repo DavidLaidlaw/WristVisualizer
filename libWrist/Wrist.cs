@@ -173,6 +173,17 @@ namespace libWrist
             }
         }
 
+        /// <summary>
+        /// The path to the SeriesNames.ini file (optional) that can give nice names for each series
+        /// </summary>
+        public string SeriesNamesFilename
+        {
+            get
+            {
+                return Path.Combine(_subjectPath, @"SeriesNames.ini");
+            }
+        }
+
         public static string[] ShortBoneNames
         {
             get { return _bnames; }
