@@ -622,7 +622,15 @@ namespace WristVizualizer
         {
             new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
             string[] filenames = e.Data.GetData("FileDrop") as string[];
-            openFile(filenames);  //TODO: Add error checking
+            try
+            {
+                openFile(filenames);
+            }
+            catch (Exception ex)
+            {
+                string msg = "Error loading file(s):\n" + ex.Message;
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             System.Security.CodeAccessPermission.RevertAssert();
         }
 
@@ -651,12 +659,20 @@ namespace WristVizualizer
         {
             new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
             string[] filenames = e.Data.GetData("FileDrop") as string[];
-            if (importToolStripMenuItem.Enabled && _viewer != null && _root != null)
+            try
             {
-                importFile(filenames);  //TODO: add error checking here :)
+                if (importToolStripMenuItem.Enabled && _viewer != null && _root != null)
+                {
+                    importFile(filenames); 
+                }
+                else
+                    openFile(filenames);
             }
-            else
-                openFile(filenames);
+            catch (Exception ex)
+            {
+                string msg = "Error loading file(s):\n" + ex.Message;
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
             System.Security.CodeAccessPermission.RevertAssert();
         }
         #endregion
