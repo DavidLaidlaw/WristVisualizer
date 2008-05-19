@@ -7,12 +7,16 @@ libCoin3D::Contour::Contour(int numberOfDistances)
 	_node = new SoSeparator();
 	_node->ref();
 
-
 	_drawStyle = new SoDrawStyle();
 	_node->addChild(_drawStyle);
 	_drawStyle->style = SoDrawStyle::LINES;
 	_drawStyle->pointSize = 2.0;
 	_drawStyle->lineWidth = 1.5;
+
+	_color = new SoBaseColor();
+	_node->addChild(_color);
+	_color->rgb.setValue(1.0, 1.0, 0.0); //default to white
+	_contourColor = System::Drawing::Color::White;
 
 	_pts = new SoCoordinate3();
 	_lineSet = new SoLineSet();
@@ -77,4 +81,10 @@ array<array<double>^>^ libCoin3D::Contour::Centroids::get()
 		centroids[i][2] = _contourCentroidSums[i][2] / _contourArea[i];
 	}
 	return centroids;
+}
+
+void libCoin3D::Contour::setColor(System::Drawing::Color color)
+{
+	_contourColor = color;
+	_color->rgb.setValue(color.R/255.0f, color.G/255.0f, color.B/255.0f);
 }

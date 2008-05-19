@@ -5,6 +5,7 @@
 #include <Inventor/nodes/SoLineSet.h>
 #include <Inventor/nodes/SoCoordinate3.h>
 #include <Inventor/nodes/SoDrawStyle.h>
+#include <Inventor/nodes/SoBaseColor.h>
 
 namespace libCoin3D {
 public ref class Contour : Node
@@ -26,6 +27,11 @@ public:
 		array<array<double>^>^ get();
 	}
 
+	property System::Drawing::Color Color {
+		System::Drawing::Color get() { return _contourColor; }
+		void set(System::Drawing::Color value) { setColor(value); }
+	}
+
 	virtual SoNode* getNode() override { return _node; }
 private:
 	SoSeparator* _node;
@@ -34,5 +40,10 @@ private:
 	SoDrawStyle* _drawStyle;
 	array<double>^ _contourArea;
 	array<array<double>^>^ _contourCentroidSums;
+
+	SoBaseColor* _color;
+	System::Drawing::Color _contourColor;
+
+	void setColor(System::Drawing::Color color);
 };
 }

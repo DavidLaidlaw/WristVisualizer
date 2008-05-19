@@ -111,6 +111,7 @@ namespace WristVizualizer
             //setup the dialog window
             DistanceAndContourDialog dialog = new DistanceAndContourDialog(_distMap.ContourDistances);
             dialog.ColorMapMaxDistance = _distMap.MaxColoredDistance;
+            dialog.setContourColors(_distMap.ContourColors);
             if (_hideMaps)
                 dialog.CalculateColorMap = DistanceAndContourDialog.CalculationTypes.None;
             else if (_distMap.hasDistanceColorMapsForPosition(_currentPositionIndex))
@@ -143,7 +144,7 @@ namespace WristVizualizer
             if (dialog.RequiresCalculatingColorMaps)
                 _distMap.setMaxColoredDistance(dialog.ColorMapMaxDistance);
             if (dialog.RequiresCalculatingContours)
-                _distMap.setContourDistances(dialog.getContourDistancesToCalculate());
+                _distMap.setContourDistances(dialog.getContourDistancesToCalculate(), dialog.getContourColorsToCalculate());
 
             //setup background worker... to process loading....
             bool readAllColors = dialog.CalculateAllColorMaps;

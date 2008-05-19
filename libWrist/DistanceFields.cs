@@ -28,6 +28,7 @@ namespace libWrist
         private BackgroundWorker _bgWorker;
 
         private double[] _contourDistances;
+        private System.Drawing.Color[] _contourColors;
         private double _maxColoredDistance;
 
         public DistanceMaps(Wrist wrist, TransformMatrix[][] transformMatrices, ColoredBone[] colorBones)
@@ -68,12 +69,14 @@ namespace libWrist
         /// consistancy.
         /// </summary>
         /// <param name="cDistances">Array of contour distances, one value per contour</param>
-        public void setContourDistances(double[] cDistances)
+        /// <param name="colors">Array of colors for the contours, one per contour</param>
+        public void setContourDistances(double[] cDistances, System.Drawing.Color[] colors)
         {
             //if it was not set, then set it and get out
             if (_contourDistances == null)
             {
                 _contourDistances = cDistances;
+                _contourColors = colors;
                 return;
             }
 
@@ -84,6 +87,8 @@ namespace libWrist
                 for (int i = 0; i < _contourDistances.Length; i++)
                 {
                     if (_contourDistances[i] != cDistances[i])
+                        changed = true;
+                    if (_contourColors[i] != colors[i])
                         changed = true;
                 }
             }
@@ -98,6 +103,7 @@ namespace libWrist
             showContoursForPositionIfCalculatedOrClear(0); //could be any index, they are all empty
 
             _contourDistances = cDistances; //save new values
+            _contourColors = colors;
         }
 
         public double[] ContourDistances
@@ -108,6 +114,11 @@ namespace libWrist
         public double MaxColoredDistance
         {
             get { return _maxColoredDistance; }
+        }
+
+        public System.Drawing.Color[] ContourColors
+        {
+            get { return _contourColors; }
         }
 
         private void readInDistanceFieldsIfNotLoaded()
@@ -452,7 +463,7 @@ namespace libWrist
                     _calculatedContours[boneIndex] = new Contour[_transformMatrices.Length + 1];
             }
             if (_calculatedContours[boneIndex][positionIndex] == null)
-                _calculatedContours[boneIndex][positionIndex] = createContourSingleBoneSinglePosition(boneIndex, positionIndex, _contourDistances);
+                _calculatedContours[boneIndex][positionIndex] = createContourSingleBoneSinglePosition(boneIndex, positionIndex, _contourDistances, _contourColors);
 
             return _calculatedContours[boneIndex][positionIndex];
         }
@@ -476,24 +487,24 @@ namespace libWrist
                 }
         }
 
-        [Obsolete("Don't f'ing use!")]
-        public void createContourShit()
-        {
-            double[] cDistances = new double[] { 1.0, 2.0 };
-            for (int i = 0; i < Wrist.NumBones; i++)
-            {
-                Contour cont1 = createContourSingleBoneSinglePosition(i, 0, cDistances);
-                _colorBones[i].setAndReplaceContour(cont1);
-                for (int j=0; j<cDistances.Length; j++)
-                {
-                    double d = cDistances[j];
-                    Console.WriteLine("Bone {0}, contour {1}mm: Area={2}, Centroid=({3}, {4}, {5})",
-                        i, d, cont1.Areas[j], cont1.Centroids[j][0], cont1.Centroids[j][1], cont1.Centroids[j][2]);
-                }
-            }
-        }
+        //[Obsolete("Don't f'ing use!")]
+        //public void createContourShit()
+        //{
+        //    double[] cDistances = new double[] { 1.0, 2.0 };
+        //    for (int i = 0; i < Wrist.NumBones; i++)
+        //    {
+        //        Contour cont1 = createContourSingleBoneSinglePosition(i, 0, cDistances);
+        //        _colorBones[i].setAndReplaceContour(cont1);
+        //        for (int j=0; j<cDistances.Length; j++)
+        //        {
+        //            double d = cDistances[j];
+        //            Console.WriteLine("Bone {0}, contour {1}mm: Area={2}, Centroid=({3}, {4}, {5})",
+        //                i, d, cont1.Areas[j], cont1.Centroids[j][0], cont1.Centroids[j][1], cont1.Centroids[j][2]);
+        //        }
+        //    }
+        //}
 
-        private Contour createContourSingleBoneSinglePosition(int boneIndex, int positionIndex, double[] cDistances)
+        private Contour createContourSingleBoneSinglePosition(int boneIndex, int positionIndex, double[] cDistances, System.Drawing.Color[] colors)
         {
             double[] dist = getOrCalculateDistanceMap(boneIndex, positionIndex);
             //if distance maps are not available, just returns max distances....should we warn the user?
@@ -501,6 +512,7 @@ namespace libWrist
             int[,] conn = _colorBones[boneIndex].getFaceSetIndices();
 
             Contour cont1 = new Contour(cDistances.Length);
+            cont1.Color = colors[0];
 
             double maxContourDistance = -1;
             foreach (double cDist in cDistances)

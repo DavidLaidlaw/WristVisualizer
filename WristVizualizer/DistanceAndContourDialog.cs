@@ -245,6 +245,13 @@ namespace WristVizualizer
             return (Color[])colors.ToArray(typeof(Color));
         }
 
+        public void setContourColors(Color[] colors)
+        {
+            if (colors == null) return; //leave default
+            for (int i = 0; i < _contourColorButtons.Length && i<colors.Length; i++)
+                _contourColorButtons[i].BackColor = colors[i];
+        }
+
         void contourCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             //lets find out which one we are, and change the enabled state of our little friend
