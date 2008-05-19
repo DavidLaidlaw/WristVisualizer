@@ -153,15 +153,8 @@ namespace WristVizualizer
             _distMap.addToContourQueue(_currentPositionIndex, readAllContours, dialog.CalculateCurrentContour);
             _distMap.processAllPendingQueues();
             
-
-            //need to wait here.....how?
+            //they have all been calculated, lets apply them so they are visisble.
             applyDistanceMapsIfRequired();
-
-            //ugly hack for now to perform the calculations if its only the current position getting calculated
-            //if (!readAllColors && dialog.RequiresCalculatingColorMaps)
-            //    _distMap.showDistanceColorMapsForPosition(_currentPositionIndex);
-            //if (!readAllContours && dialog.RequiresCalculatingContours)
-            //    _distMap.showContoursForPosition(_currentPositionIndex);
         }
 
         private void loadTransforms()
