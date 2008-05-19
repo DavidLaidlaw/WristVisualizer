@@ -1,6 +1,7 @@
 Version 1.4.3
 - New: Can set the color of the distance map contours. Currently it is only one color, but this should be fixed in later versions.
 - New: Can supply a config file that can rename the series names into something more human friendly
+- Fixed bug: Added basic error handling when files are open from the command line or using drag & drop.
 
 Version 1.4.2
  - New: Can edit transforms in texture, and copy those values to the clipboard, for entry into a WristRegistration config file. 

@@ -21,12 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_07FF8E5B4E8C47649F267ED87796CFC1"
-        "OwnerKey" = "8:_E4169248367341CDAA1402446131312B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0C9F3FCEDC084FBE8DFDB9C7BD7574C0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -59,6 +53,12 @@
         {
         "MsmKey" = "8:_1DA8D623D9E24F62931A64761A49B2F1"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_2119D52938EB40399DC0C4648F0AFFD6"
+        "OwnerKey" = "8:_5F1AB320C2D34C72A25945B39E8C2B7E"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -125,6 +125,12 @@
         {
         "MsmKey" = "8:_5A54DA63759C46FC8B1B6B933076317A"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_5F1AB320C2D34C72A25945B39E8C2B7E"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -255,12 +261,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_E4169248367341CDAA1402446131312B"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E607CDC6D7D24C1C9A9418A9495E0DAF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -280,13 +280,19 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_64E7C98FB63F1F444AE1D573F7A94658"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_64E7C98FB63F1F444AE1D573F7A94658"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -305,12 +311,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_377499BA5A878F1C5B39589E0CC507C7"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -587,7 +587,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3055.18491, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3055.26555, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_377499BA5A878F1C5B39589E0CC507C7"
@@ -618,7 +618,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3055.18491, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3055.26555, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3899C63856BDB26FB75EF215A67A6688"
@@ -960,7 +960,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3055.18495, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3055.26561, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_905C4787D34F5BF898DD81B699033EE3"
@@ -1394,14 +1394,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{6417E1F2-2943-4584-A385-7784646C9B6E}"
-        "PackageCode" = "8:{76E831AF-8ECF-4D83-8F8E-F7D86E628EF9}"
+        "ProductCode" = "8:{AB8344A4-F2E3-4E6F-A01E-402201AC563C}"
+        "PackageCode" = "8:{E096D9DB-4483-4E25-8CA5-8DF1B57427A8}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.4.2"
+        "ProductVersion" = "8:1.4.3"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2180,7 +2180,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_07FF8E5B4E8C47649F267ED87796CFC1"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2119D52938EB40399DC0C4648F0AFFD6"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2194,7 +2194,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E4169248367341CDAA1402446131312B"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_5F1AB320C2D34C72A25945B39E8C2B7E"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
