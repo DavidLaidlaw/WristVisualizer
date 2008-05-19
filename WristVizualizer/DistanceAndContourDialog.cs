@@ -16,6 +16,7 @@ namespace WristVizualizer
 
         private CheckBox[] _contourCheckBoxes;
         private NumericUpDown[] _contourNumericUpDowns;
+        private Button[] _contourColorButtons;
         private double[] _defaultContourDistances;
 
         public enum CalculationTypes
@@ -45,6 +46,7 @@ namespace WristVizualizer
 
             _contourCheckBoxes = new CheckBox[maxNumberContours];
             _contourNumericUpDowns = new NumericUpDown[maxNumberContours];
+            _contourColorButtons = new Button[maxNumberContours];
             setupContourSelectionGUI();
         }
 
@@ -73,6 +75,7 @@ namespace WristVizualizer
             CheckBox box = new CheckBox();
             NumericUpDown upDown = new NumericUpDown();
             Label label = new Label();
+            Button button = new Button();
 
             box.AutoSize = true;
             box.CheckedChanged += new EventHandler(contourCheckBox_CheckedChanged);
@@ -84,6 +87,11 @@ namespace WristVizualizer
             upDown.Size = new System.Drawing.Size(59, 20);
             upDown.Enabled = false;
 
+            button.AutoSize = true;
+            button.Size = new System.Drawing.Size(22, 22);
+            button.BackColor = Color.White;
+            button.Click += new EventHandler(colorButton_Click);
+
             label.AutoSize = true;
             label.Text = "mm";
             label.Margin = new Padding(0);
@@ -93,12 +101,15 @@ namespace WristVizualizer
             tableLayoutPanel.Controls.Add(box, 0, row);
             tableLayoutPanel.Controls.Add(upDown, 1, row);
             tableLayoutPanel.Controls.Add(label, 2, row);
+            tableLayoutPanel.Controls.Add(button, 3, row);
             tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
 
             _contourCheckBoxes[row] = box;
             _contourNumericUpDowns[row] = upDown;
+            _contourColorButtons[row] = button;
 
         }
+
         #endregion
 
         #region Properties
@@ -222,6 +233,18 @@ namespace WristVizualizer
             return (double[])dists.ToArray(typeof(double));
         }
 
+        public Color[] getContourColorsToCalculate()
+        {
+            ArrayList colors = new ArrayList();
+            for (int i = 0; i < _contourCheckBoxes.Length; i++)
+            {
+                if (!_contourCheckBoxes[i].Checked) continue;
+                if (_contourNumericUpDowns[i].Value == 0) continue;
+                colors.Add(_contourColorButtons[i].BackColor);
+            }
+            return (Color[])colors.ToArray(typeof(Color));
+        }
+
         void contourCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             //lets find out which one we are, and change the enabled state of our little friend
@@ -231,6 +254,25 @@ namespace WristVizualizer
                 {
                     _contourNumericUpDowns[i].Enabled = ((CheckBox)sender).Checked;
                     return;
+                }
+            }
+        }
+
+
+        void colorButton_Click(object sender, EventArgs e)
+        {
+            //lets find out which one we are, and change the enabled state of our little friend
+            for (int i = 0; i < _contourColorButtons.Length; i++)
+            {
+                if (_contourColorButtons[i] == sender) //found us!
+                {
+                    ColorDialog cg = new ColorDialog();
+                    cg.Color = ((Button)sender).BackColor;
+                    DialogResult r= cg.ShowDialog();
+                    if (r == DialogResult.Cancel)
+                        return;
+
+                    ((Button)sender).BackColor = cg.Color;
                 }
             }
         }
