@@ -53,16 +53,25 @@ namespace WristVizualizer
             VersionManager manager = new VersionManager();
             manager.checkForUpdatesAsynch(); //check for updates in the backround
 
-            //if we were passed something
-            if (fileArgs != null && fileArgs.Length == 1 &&
-                Path.GetExtension(fileArgs[0]).ToLower().Equals("pos"))
+            try
             {
-                //check for being passed a single pos view file
-                loadPosView(fileArgs[0]);
+                //if we were passed something
+                if (fileArgs != null && fileArgs.Length == 1 &&
+                    Path.GetExtension(fileArgs[0]).ToLower().Equals("pos"))
+                {
+                    //check for being passed a single pos view file
+                    loadPosView(fileArgs[0]);
+                }
+                else if (fileArgs != null && fileArgs.Length >= 1)
+                {
+                    openFile(fileArgs);
+                }
             }
-            else if (fileArgs != null && fileArgs.Length >= 1)
+            catch (Exception ex)
             {
-                openFile(fileArgs);
+                string msg = "Error loading file:\n" + ex.Message;
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Application.Exit();
             }
         }
 
