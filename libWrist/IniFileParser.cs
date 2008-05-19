@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using System.Text;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
 
 namespace libWrist
@@ -11,61 +13,63 @@ namespace libWrist
     /// </summary>
     public class IniFileParser
     {
-        static private Regex _iniKeyValuePatternRegex;
-        private string _iniFileName;
 
-        static IniFileParser()
+        [DllImport("KERNEL32.DLL", EntryPoint = "GetPrivateProfileStringW",
+            SetLastError = true,
+            CharSet = CharSet.Unicode, ExactSpelling = true,
+            CallingConvention = CallingConvention.StdCall)]
+        private static extern int GetPrivateProfileString(
+          string lpAppName,
+          string lpKeyName,
+          string lpDefault,
+          string lpReturnString,
+          int nSize,
+          string lpFilename);
+
+        [DllImport("KERNEL32.DLL", EntryPoint = "WritePrivateProfileStringW",
+            SetLastError = true,
+            CharSet = CharSet.Unicode, ExactSpelling = true,
+            CallingConvention = CallingConvention.StdCall)]
+        private static extern int WritePrivateProfileString(
+          string lpAppName,
+          string lpKeyName,
+          string lpString,
+          string lpFilename);
+
+
+        private static List<string> GetCategories(string iniFile)
         {
-            _iniKeyValuePatternRegex = new Regex(
-                @"((\s)*(?<Key>([^\=^\s^\n]+))[\s^\n]*
-                # key part (surrounding whitespace stripped)
-                \=
-                (\s)*(?<Value>([^\n^\s]+(\n){0,1})))
-                # value part (surrounding whitespace stripped)
-                ",
-                RegexOptions.IgnorePatternWhitespace |
-                RegexOptions.Compiled |
-                RegexOptions.CultureInvariant);
+            string returnString = new string(' ', 65536);
+            GetPrivateProfileString(null, null, null, returnString, 65536, iniFile);
+            List<string> result = new List<string>(returnString.Split('\0'));
+            result.RemoveRange(result.Count - 2, 2);
+            return result;
         }
-        
-
-        public IniFileParser(string iniFileName)
+        private static List<string> GetKeys(string iniFile, string category)
         {
-            _iniFileName = iniFileName;
+            string returnString = new string(' ', 32768);
+            GetPrivateProfileString(category, null, null, returnString, 32768, iniFile);
+            List<string> result = new List<string>(returnString.Split('\0'));
+            result.RemoveRange(result.Count - 2, 2);
+            return result;
+        }
+        private static string GetIniFileString(string iniFile, string category, string key, string defaultValue)
+        {
+            string returnString = new string(' ', 1024);
+            GetPrivateProfileString(category, key, defaultValue, returnString, 1024, iniFile);
+            return returnString.Split('\0')[0];
         }
 
-        public string ParseFileReadValue(string key)
+        public static Dictionary<string,string> GetIniFileStrings(string iniFile, string category)
         {
-            using (StreamReader reader =
-                  new StreamReader(_iniFileName))
+            Dictionary<string, string> pairs = new Dictionary<string, string>();
+            List<string> keys = GetKeys(iniFile, category);
+            foreach (string key in keys)
             {
-                do
-                {
-                    string line = reader.ReadLine();
-                    Match match =
-                        _iniKeyValuePatternRegex.Match(line);
-                    if (match.Success)
-                    {
-                        string currentKey =
-                                match.Groups["Key"].Value as string;
-                        if (currentKey != null &&
-                       currentKey.Trim().CompareTo(key) == 0)
-                        {
-                            string value =
-                              match.Groups["Value"].Value as string;
-                            return value;
-                        }
-                    }
-
-                }
-                while (reader.Peek() != -1);
+                string value = GetIniFileString(iniFile, category, key, "");
+                pairs.Add(key, value);
             }
-            return null;
-        }
-
-        public string IniFileName
-        {
-            get { return _iniFileName; }
+            return pairs;
         }
     }
 }
