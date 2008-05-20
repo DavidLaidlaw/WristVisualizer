@@ -52,6 +52,7 @@
     <Compile Include="HelicalTransform.cs" />
     <Compile Include="InertialProperties.cs" />
     <Compile Include="IniFileParser.cs" />
+    <Compile Include="PostureCalculator.cs" />
     <Compile Include="PosViewReader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TransformParser.cs" />
