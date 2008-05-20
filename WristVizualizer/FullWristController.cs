@@ -16,6 +16,7 @@ namespace WristVizualizer
         private Separator[] _inertias;
         private Wrist _wrist;
         private TransformMatrix[][] _transformMatrices;
+        private TransformMatrix[] _inertiaMatrices;
         private int _currentPositionIndex;
         private int _lastPositionIndex;
         private int _fixedBoneIndex;
@@ -103,8 +104,46 @@ namespace WristVizualizer
 
             //create empty distance map strucutre
             _distMap = new DistanceMaps(_wrist, _transformMatrices, _colorBones);
+
+            //try and load the inertialInformation
+            loadInertiaAndACSData();
         }
 
+
+        private void loadInertiaAndACSData()
+        {
+            _inertiaMatrices = new TransformMatrix[Wrist.NumBones];
+            if (File.Exists(_wrist.inertiaFile))
+            {
+                try
+                {
+                    TransformRT[] inert = DatParser.parseInertiaFileToRT(_wrist.inertiaFile);
+                    for (int i = 2; i < 10; i++) //skip the long bones
+                    {
+                        if (_bones[i] == null)
+                            continue;
+
+                        _inertiaMatrices[i] = new TransformMatrix(inert[i]);
+                    }
+                }
+                catch { }
+            }
+
+            if (File.Exists(_wrist.acsFile))
+            {
+                try
+                {
+                    //If its checked, then we need to add it
+                    TransformRT[] acs = DatParser.parseACSFileToRT(_wrist.acsFile);
+
+                    //only for radius, check if it exists
+                    if (_bones[0] == null)
+                        return;
+                    _inertiaMatrices[0] = new TransformMatrix(acs[0]);
+                }
+                catch { }
+            }
+        }
 
         public void calculateDistanceMapsToolClickedHandler()
         {
@@ -446,27 +485,23 @@ namespace WristVizualizer
         {
             if (visible)
             {
-                try
+                for (int i = 2; i < 10; i++) //skip the long bones
                 {
-                    //If its checked, then we need to add it
-                    TransformRT[] inert = DatParser.parseInertiaFileToRT(_wrist.inertiaFile);
-                    for (int i = 2; i < 10; i++) //skip the long bones
-                    {
-                        if (_bones[i] == null)
-                            continue;
+                    if (_bones[i] == null)
+                        continue;
 
-                        _inertias[i] = new Separator();
-                        Transform t = new Transform();
-                        DatParser.addRTtoTransform(inert[i], t);
-                        _inertias[i].addNode(new ACS());
-                        _inertias[i].addTransform(t);
-                        _bones[i].addChild(_inertias[i]);
+                    //check that it exists:
+                    if (_inertiaMatrices[i] == null)
+                    {
+                        MessageBox.Show("Unable to show inertial axes. Error reading file.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        return;
                     }
-                }
-                catch (ArgumentException ex)
-                {
-                    string msg = "Error loading inertia file.\n\n" + ex.Message;
-                    throw new WristVizualizerException(msg, ex);
+
+                    _inertias[i] = new Separator();
+                    Transform t = _inertiaMatrices[i].ToTransform();
+                    _inertias[i].addNode(new ACS());
+                    _inertias[i].addTransform(t);
+                    _bones[i].addChild(_inertias[i]);
                 }
             }
             else
@@ -485,27 +520,22 @@ namespace WristVizualizer
         {
             if (visible)
             {
-                try
-                {
-                    //If its checked, then we need to add it
-                    TransformRT[] inert = DatParser.parseACSFileToRT(_wrist.acsFile);
+                //only for radius, check if it exists
+                if (_bones[0] == null)
+                    return;
 
-                    //only for radius, check if it exists
-                    if (_bones[0] == null)
-                        return;
-
-                    _inertias[0] = new Separator();
-                    Transform t = new Transform();
-                    DatParser.addRTtoTransform(inert[0], t);
-                    _inertias[0].addNode(new ACS(45)); //longer axes for the radius/ACS
-                    _inertias[0].addTransform(t);
-                    _bones[0].addChild(_inertias[0]);
-                }
-                catch (ArgumentException ex)
+                //check that it exists:
+                if (_inertiaMatrices[0] == null)
                 {
-                    string msg = "Error loading ACS file.\n\n" + ex.Message;
-                    throw new WristVizualizerException(msg, ex);
+                    MessageBox.Show("Unable to show ACS. Error reading file.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
+
+                _inertias[0] = new Separator();
+                Transform t = _inertiaMatrices[0].ToTransform();
+                _inertias[0].addNode(new ACS(45)); //longer axes for the radius/ACS
+                _inertias[0].addTransform(t);
+                _bones[0].addChild(_inertias[0]);
             }
             else
             {
