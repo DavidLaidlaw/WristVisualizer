@@ -4,6 +4,10 @@ using System.Text;
 
 namespace libWrist
 {
+    /// <summary>
+    /// Primarily static class used for calcuating the posture of various wrist positions.
+    /// Code is based on callPosturesJC.m from TheCollective code.
+    /// </summary>
     public class PostureCalculator
     {
         public struct Posture
@@ -23,10 +27,6 @@ namespace libWrist
         private static int[] PROJ_PLANES_SIGN = { 1, 1, -1 };
         private static int POS_AXIS = 0;
 
-        public PostureCalculator()
-        {
-
-        }
 
         private static CartesianCoordinate cart2spherical(double x, double y, double z)
         {
