@@ -36,7 +36,9 @@ namespace WristVizualizer
         private bool _hideContours;
 
         //GUI stuff
+        private WristPanelLayoutControl _layoutControl;
         private FullWristControl _wristControl;
+        private PositionGraph _positionGraph;
 
         public FullWristController()
         {
@@ -107,8 +109,25 @@ namespace WristVizualizer
 
             //try and load the inertialInformation
             loadInertiaAndACSData();
+            setupPositionGraphIfPossible();
         }
 
+        private bool hasPositionInformation()
+        {
+            //only need to check the ACS and the capitate (index 8)
+            if (_inertiaMatrices[0] == null || _inertiaMatrices[8] == null)
+                return false;
+            else
+                return true;
+        }
+
+        private void setupPositionGraphIfPossible()
+        {
+            if (!hasPositionInformation())
+                return;
+
+
+        }
 
         private void loadInertiaAndACSData()
         {
@@ -245,7 +264,7 @@ namespace WristVizualizer
 
         public override Control Control
         {
-            get { return _wristControl; }
+            get { return _layoutControl; }
         }
 
         public override Separator Root
@@ -297,8 +316,10 @@ namespace WristVizualizer
 
         private void setupControl()
         {
+            _layoutControl = new WristPanelLayoutControl();
             _wristControl = new FullWristControl();
             _wristControl.setupControl(Wrist.LongBoneNames, true);
+            _layoutControl.addControl(_wristControl);
         }
 
         private void setupControlEventListeners()
