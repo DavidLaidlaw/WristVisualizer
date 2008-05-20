@@ -126,7 +126,8 @@ namespace WristVizualizer
             if (!hasPositionInformation())
                 return;
 
-
+            _positionGraph = new PositionGraph();
+            _layoutControl.addControl(_positionGraph);
         }
 
         private void loadInertiaAndACSData()

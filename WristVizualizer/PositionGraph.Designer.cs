@@ -34,9 +34,10 @@ namespace WristVizualizer
             // 
             // pictureBoxGraph
             // 
-            this.pictureBoxGraph.Location = new System.Drawing.Point(15, 3);
+            this.pictureBoxGraph.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pictureBoxGraph.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxGraph.Name = "pictureBoxGraph";
-            this.pictureBoxGraph.Size = new System.Drawing.Size(240, 241);
+            this.pictureBoxGraph.Size = new System.Drawing.Size(230, 247);
             this.pictureBoxGraph.TabIndex = 0;
             this.pictureBoxGraph.TabStop = false;
             this.pictureBoxGraph.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBoxGraph_MouseClick);
@@ -47,7 +48,7 @@ namespace WristVizualizer
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pictureBoxGraph);
             this.Name = "PositionGraph";
-            this.Size = new System.Drawing.Size(270, 247);
+            this.Size = new System.Drawing.Size(230, 247);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGraph)).EndInit();
             this.ResumeLayout(false);
 
