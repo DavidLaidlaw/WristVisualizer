@@ -100,6 +100,12 @@
     <Compile Include="PointSelection.Designer.cs">
       <DependentUpon>PointSelection.cs</DependentUpon>
     </Compile>
+    <Compile Include="PositionGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PositionGraph.Designer.cs">
+      <DependentUpon>PositionGraph.cs</DependentUpon>
+    </Compile>
     <Compile Include="PosViewControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -180,6 +186,10 @@
     <EmbeddedResource Include="PointSelection.resx">
       <SubType>Designer</SubType>
       <DependentUpon>PointSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PositionGraph.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PositionGraph.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PosViewControl.resx">
       <SubType>Designer</SubType>
