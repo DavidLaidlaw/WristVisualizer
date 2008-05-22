@@ -10,6 +10,7 @@ public ref class Camera : Node
 {
 public:
 	Camera();
+	Camera(SoCamera* camera);
 	virtual SoNode* getNode() override { return _node; }
 
 	void rotateCameraInX(const float movement);

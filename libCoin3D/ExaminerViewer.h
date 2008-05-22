@@ -9,6 +9,7 @@
 #include "Separator.h"
 #include "ScenegraphNode.h"
 #include "Material.h"
+#include "Camera.h"
 
 namespace libCoin3D {
 
@@ -40,6 +41,11 @@ public:
 	void setBackgroundColor(int rgb);
 
 	void setFeedbackVisibility(bool visible);
+
+	//camera info
+	property libCoin3D::Camera^ Camera {
+		libCoin3D::Camera^ get(); 
+	}
 
 	//methods for raypicking, used for point selection
 	void setRaypick();

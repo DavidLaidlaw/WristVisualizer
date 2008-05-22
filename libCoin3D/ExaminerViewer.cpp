@@ -110,6 +110,11 @@ void libCoin3D::ExaminerViewer::saveSceneGraph(System::String^ filename)
 	wa.getOutput()->closeFile();
 }
 
+libCoin3D::Camera^ libCoin3D::ExaminerViewer::Camera::get()
+{
+	return gcnew libCoin3D::Camera(_viewer->getCamera());
+}
+
 bool libCoin3D::ExaminerViewer::saveToJPEG(System::String ^filename)
 {
 	return saveToImage(filename,"jpg");
