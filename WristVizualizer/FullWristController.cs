@@ -35,6 +35,9 @@ namespace WristVizualizer
         private bool _hideMaps;
         private bool _hideContours;
 
+        //posture information
+        private double[] _postures;
+
         //GUI stuff
         private WristPanelLayoutControl _layoutControl;
         private FullWristControl _wristControl;
@@ -126,8 +129,15 @@ namespace WristVizualizer
             if (!hasPositionInformation())
                 return;
 
-            _positionGraph = new PositionGraph();
+            _positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices);
             _layoutControl.addControl(_positionGraph);
+            _positionGraph.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
+        }
+
+        void _positionGraph_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
+        {
+            //update the visible control, that will send out another event and make the actual position change :)
+            _wristControl.selectedSeriesIndex = e.SelectedIndex;
         }
 
         private void loadInertiaAndACSData()
@@ -335,6 +345,9 @@ namespace WristVizualizer
             _wristControl.BoneHideChanged -= new BoneHideChangedHandler(_control_BoneHideChanged);
             _wristControl.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);
             _wristControl.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
+
+            if (_positionGraph != null)
+                _positionGraph.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
         }
 
         private void removeCurrentTransforms()
@@ -487,6 +500,8 @@ namespace WristVizualizer
                 return;
 
             _currentPositionIndex = e.SelectedIndex;
+            if (_positionGraph != null)
+                _positionGraph.setCurrentVisisblePosture(_currentPositionIndex);
 
             setTransformsForCurrentPositionAndFixedBone();
         }

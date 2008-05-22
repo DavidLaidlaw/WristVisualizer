@@ -6,11 +6,14 @@ using System.Data;
 using System.Text;
 using System.Windows.Forms;
 using System.Drawing.Imaging;
+using libWrist;
 
 namespace WristVizualizer
 {
     public partial class PositionGraph : UserControl
     {
+        public event SelectedSeriesChangedHandler SelectedSeriesChanged;
+
         private const int MAX_FE = 90;
         private const int MAX_RU = 40;
         private const int DOT_SIZE = 4;
@@ -18,26 +21,40 @@ namespace WristVizualizer
         private double _FE_conversion;
         private double _RU_conversion;
 
+        private double[][] _positions;
+
         private Bitmap _baseImage;
 
-        public PositionGraph()
+        public PositionGraph(TransformMatrix[] Inertias, TransformMatrix[][] transforms)
         {
             InitializeComponent();
 
             _FE_conversion = (double)pictureBoxGraph.Height / (MAX_FE * 2);
             _RU_conversion = (double)pictureBoxGraph.Width / (MAX_RU * 2);
 
-
+            _positions = convertToPositions(Inertias, transforms);
             createGraph();
+            showHighlightedPoint(0);
         }
 
-        private double[][] positions = {
-            new double[] { 15, 15},
-            new double[] { 0, 0},
-            new double[] { 45, 12},
-            new double[] { -13, 22}
-        };
-                                            
+        private double[][] convertToPositions(TransformMatrix[] Inertias, TransformMatrix[][] Transforms)
+        {
+            double[][] postures = new double[Transforms.Length + 1][]; //+1 for the neutral posture
+            //setup neutral
+            postures[0] = new double[2];
+            PostureCalculator.Posture p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[8]);
+            postures[0][0] = p.FE;
+            postures[0][1] = p.RU;
+
+            for (int i = 0; i < Transforms.Length; i++)
+            {
+                postures[i + 1] = new double[2];
+                p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[8], Transforms[i][0], Transforms[i][8]);
+                postures[i + 1][0] = p.FE;
+                postures[i + 1][1] = p.RU;
+            }
+            return postures;
+        }                                           
 
 
         private void createGraph()
@@ -52,17 +69,19 @@ namespace WristVizualizer
             g.DrawLine(black, _baseImage.Width / 2, 0, _baseImage.Width / 2, _baseImage.Height - 1); //vertical line
 
             //draw test point
-            foreach (double[] point in positions)
+            foreach (double[] point in _positions)
                 drawSinglePoint(g, point);
 
             pictureBoxGraph.Image = _baseImage;
         }
 
+        public void setCurrentVisisblePosture(int postureIndex)
+        {
+            showHighlightedPoint(postureIndex);
+        }
+
         private void drawSinglePoint(Graphics g, double[] point)
         {
-            //max height & width
-
-
             //first convert location to image coordinates
             // (0,0) is the top left pixel of the image....
             // pixels/degree for FE
@@ -75,18 +94,22 @@ namespace WristVizualizer
 
         private void pictureBoxGraph_MouseClick(object sender, MouseEventArgs e)
         {
-            Console.WriteLine("Mouse Click: ({0}, {1})",e.X,e.Y);
+            //Console.WriteLine("Mouse Click: ({0}, {1})",e.X,e.Y);
 
-            showHighlightedPoint(e.X, e.Y);
+            int index = findClosestPoint(e.X, e.Y);
+            showHighlightedPoint(index); //update display
+
+            //send the event
+            if (SelectedSeriesChanged == null) return;
+            SelectedSeriesChanged(this, new SelectedSeriesChangedEventArgs(index));
         }
 
-        private void showHighlightedPoint(int imageX, int imageY)
-        {
-            int index = findClosestPoint(imageX, imageY);
+        private void showHighlightedPoint(int index)
+        {            
             Bitmap highlightedImage = (Bitmap)_baseImage.Clone();
             Graphics g = Graphics.FromImage(highlightedImage);
-            drawCircleAroundPoint(g, positions[index]);
-            pictureBoxGraph.Image = highlightedImage;
+            drawCircleAroundPoint(g, _positions[index]);
+            pictureBoxGraph.Image = highlightedImage;            
         }
 
         private void drawCircleAroundPoint(Graphics g, double[] point)
@@ -112,9 +135,9 @@ namespace WristVizualizer
             //return the index to the closest
             int closestIndex = 0;
             double minDist = Double.MaxValue;
-            for (int i = 0; i < positions.Length; i++)
+            for (int i = 0; i < _positions.Length; i++)
             {
-                double dist = Math.Sqrt((positions[i][0] - FE) * (positions[i][0] - FE) + (positions[i][1] - RU) * (positions[i][1] - RU));
+                double dist = Math.Sqrt((_positions[i][0] - FE) * (_positions[i][0] - FE) + (_positions[i][1] - RU) * (_positions[i][1] - RU));
                 if (dist < minDist)
                 {
                     minDist = dist;
