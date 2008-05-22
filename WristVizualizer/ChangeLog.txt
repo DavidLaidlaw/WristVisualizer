@@ -1,3 +1,6 @@
+Version 1.4.4
+- New: Can show all of the wrist positions on a plot of FE & RU. Also, clicking on the point will take you to that position.
+
 Version 1.4.3
 - New: Can set the color of the distance map contours. Currently it is only one color, but this should be fixed in later versions.
 - New: Can supply a config file that can rename the series names into something more human friendly

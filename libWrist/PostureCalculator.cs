@@ -14,6 +14,8 @@ namespace libWrist
         {
             public double FE;
             public double RU;
+            public double FE_Raw;
+            public double RU_Raw;
         }
 
         private struct CartesianCoordinate
@@ -26,6 +28,9 @@ namespace libWrist
         private static int[] PROJ_PLANES = { 0, 2, 1 };
         private static int[] PROJ_PLANES_SIGN = { 1, 1, -1 };
         private static int POS_AXIS = 0;
+
+        private static double NEUTRAL_FE_POSITION = -43.107;
+        private static double NEUTRAL_RU_POSITION = -10.26;
 
 
         private static CartesianCoordinate cart2spherical(double x, double y, double z)
@@ -81,8 +86,11 @@ namespace libWrist
             theta = (theta / Math.Abs(theta)) * Math.PI - theta;
             //endif
 
-            post.FE = theta * 180 / Math.PI;
-            post.RU = phi * 180 / Math.PI;
+            post.FE_Raw = theta * 180 / Math.PI;
+            post.RU_Raw = phi * 180 / Math.PI;
+
+            post.FE = post.FE_Raw - NEUTRAL_FE_POSITION;
+            post.RU = post.RU_Raw - NEUTRAL_RU_POSITION;
             return post;
         }
     }
