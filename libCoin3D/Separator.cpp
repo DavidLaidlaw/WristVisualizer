@@ -76,6 +76,13 @@ void libCoin3D::Separator::removeChild(Node^ child)
 	_separator->removeChild(child->getNode());
 }
 
+void libCoin3D::Separator::makeHideable()
+{
+	if (_style != NULL) return;
+	_style = new SoDrawStyle;
+	_separator->addChild(_style);
+}
+
 void libCoin3D::Separator::hide()
 {
 	if (_style != NULL) 

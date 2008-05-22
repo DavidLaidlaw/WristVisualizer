@@ -1,3 +1,6 @@
+Version 1.4.5
+- Fixed bug: Inertial axes are now hidden with the bones.  Bug must have been introducted when I switched over to using ColoredBone type for displaying colors with Distv mode.
+
 Version 1.4.4
 - New: Can show all of the wrist positions on a plot of FE & RU. Also, clicking on the point will take you to that position.
 

@@ -96,6 +96,7 @@ namespace WristVizualizer
                 if (File.Exists(fname))
                 {
                     _bones[i] = new Separator();
+                    _bones[i].makeHideable();
                     _colorBones[i] = new ColoredBone(fname);
                     _bones[i].addNode(_colorBones[i]);
                     _root.addChild(_bones[i]);
@@ -516,6 +517,10 @@ namespace WristVizualizer
         void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
         {
             _colorBones[e.BoneIndex].setHidden(e.BoneHidden);
+            if (e.BoneHidden)
+                _bones[e.BoneIndex].hide();
+            else
+                _bones[e.BoneIndex].show();
         }
 
         public void setInertiaVisibility(bool visible)

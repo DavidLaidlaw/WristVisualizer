@@ -30,6 +30,7 @@ public:
 
 	virtual SoNode* getNode() override;
 
+	void makeHideable();
 	void hide();
 	void show();
 
