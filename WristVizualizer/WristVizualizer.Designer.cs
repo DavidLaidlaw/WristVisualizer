@@ -88,6 +88,8 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.startHeadtrackingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -263,7 +265,9 @@ namespace WristVizualizer
             this.toolStripSeparator7,
             this.animatePositionTransitionsToolStripMenuItem,
             this.animationRateToolStripMenuItem,
-            this.calculateDistanceMapToolStripMenuItem});
+            this.calculateDistanceMapToolStripMenuItem,
+            this.toolStripSeparator8,
+            this.startHeadtrackingToolStripMenuItem});
             this.advancedToolStripMenuItem.Name = "advancedToolStripMenuItem";
             this.advancedToolStripMenuItem.Size = new System.Drawing.Size(67, 20);
             this.advancedToolStripMenuItem.Text = "&Advanced";
@@ -597,6 +601,18 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
+            // startHeadtrackingToolStripMenuItem
+            // 
+            this.startHeadtrackingToolStripMenuItem.Name = "startHeadtrackingToolStripMenuItem";
+            this.startHeadtrackingToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.startHeadtrackingToolStripMenuItem.Text = "Start Headtracking";
+            this.startHeadtrackingToolStripMenuItem.Click += new System.EventHandler(this.startHeadtrackingToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(216, 6);
+            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -611,8 +627,8 @@ namespace WristVizualizer
             this.MinimumSize = new System.Drawing.Size(500, 429);
             this.Name = "WristVizualizer";
             this.Text = "Wrist Vizualizer";
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.Activated += new System.EventHandler(this.WristVizualizer_Activated);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -690,6 +706,8 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem rate_1sec_15FpsToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem rate_2sec_15FpsToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem calculateDistanceMapToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
+        private System.Windows.Forms.ToolStripMenuItem startHeadtrackingToolStripMenuItem;
     }
 }
 

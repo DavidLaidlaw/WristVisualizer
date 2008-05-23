@@ -253,6 +253,10 @@
       <Project>{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}</Project>
       <Name>libWrist</Name>
     </ProjectReference>
+    <ProjectReference Include="..\WiimoteLib\WiimoteLib.csproj">
+      <Project>{37A555DF-7012-4B99-8A47-1C922A361E52}</Project>
+      <Name>WiimoteLib</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="logo.gif" />
