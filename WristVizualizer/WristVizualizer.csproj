@@ -137,6 +137,7 @@
     <Compile Include="TextureController.cs" />
     <Compile Include="TextureSettings.cs" />
     <Compile Include="VersionManager.cs" />
+    <Compile Include="WiiTracking.cs" />
     <Compile Include="WristPanelLayoutControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
