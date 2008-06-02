@@ -56,7 +56,7 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
 	}
 
 	if (pCoordinate3==NULL || pBoneIndexedFaceSet==NULL)
-		throw gcnew System::ArgumentException("Error parsing file: "+filename + ", not enough information to build the model");
+		throw gcnew System::ArgumentException("Error parsing file: "+filename + ", need to have both an Coordinate3  and IndexedFaceSet section. Not enough information to build the model");
 
 	SoVertexProperty* pBoneVertexProperty = new SoVertexProperty;
 	pBoneVertexProperty->materialBinding = SoMaterialBinding::PER_VERTEX_INDEXED;

@@ -97,8 +97,18 @@ namespace WristVizualizer
                 {
                     _bones[i] = new Separator();
                     _bones[i].makeHideable();
-                    _colorBones[i] = new ColoredBone(fname);
-                    _bones[i].addNode(_colorBones[i]);
+                    try
+                    {
+                        _colorBones[i] = new ColoredBone(fname);
+                        _bones[i].addNode(_colorBones[i]);
+                    }
+                    catch (System.ArgumentException)
+                    {
+                        //try and load non-standard bones here.... shit. This needs to be fixed
+                        //TODO: Better error handling...
+                        _colorBones[i] = null;
+                        _bones[i].addFile(fname);
+                    }
                     _root.addChild(_bones[i]);
                 }
                 else
@@ -516,7 +526,8 @@ namespace WristVizualizer
 
         void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
         {
-            _colorBones[e.BoneIndex].setHidden(e.BoneHidden);
+            if (_colorBones[e.BoneIndex] != null)
+                _colorBones[e.BoneIndex].setHidden(e.BoneHidden);
             if (e.BoneHidden)
                 _bones[e.BoneIndex].hide();
             else

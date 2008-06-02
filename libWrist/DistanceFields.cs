@@ -178,6 +178,7 @@ namespace libWrist
         {
             for (int i = 0; i < Wrist.NumBones; i++)
             {
+                if (_colorBones[i] == null) continue;
                 if (hasContourForBonePosition(i, positionIndex))
                     _colorBones[i].setAndReplaceContour(_calculatedContours[i][positionIndex]);
                 else
