@@ -1,3 +1,7 @@
+Version 1.4.6
+- Fixed bug: Can load linked iv files in full wrist mode.
+- New: Some really basic head tracking using a wiimote and led head bar. Very experimental, but a kind of fun toy.
+
 Version 1.4.5
 - Fixed bug: Inertial axes are now hidden with the bones.  Bug must have been introducted when I switched over to using ColoredBone type for displaying colors with Distv mode.
 
