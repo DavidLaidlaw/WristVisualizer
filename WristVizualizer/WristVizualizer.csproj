@@ -46,6 +46,12 @@
       <DependentUpon>AnimationControl.cs</DependentUpon>
     </Compile>
     <Compile Include="AnimationController.cs" />
+    <Compile Include="AnimationCreatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AnimationCreatorForm.Designer.cs">
+      <DependentUpon>AnimationCreatorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="BoneHideChangeEventArgs.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DistanceAndContourDialog.cs">
@@ -155,6 +161,10 @@
     <EmbeddedResource Include="AnimationControl.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AnimationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnimationCreatorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AnimationCreatorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="DistanceAndContourDialog.resx">
       <SubType>Designer</SubType>
