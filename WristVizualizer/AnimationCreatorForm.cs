@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,9 +11,13 @@ namespace WristVizualizer
 {
     public partial class AnimationCreatorForm : Form
     {
+        List<int> _animationOrder; //used make sure we keep track of indexes and are not reliant on the string comparison
+
         public AnimationCreatorForm()
         {
+
             InitializeComponent();
+            _animationOrder = new List<int>();
             testSetupTestData();
             updateButtonsEnabledState();
         }
@@ -27,6 +32,17 @@ namespace WristVizualizer
             listBoxAllPositions.Items.Add("Junk5");
         }
 
+        public int[] getAnimationOrder()
+        {
+            return _animationOrder.ToArray();
+        }
+
+        public int NumberStepsPerPositionChange
+        {
+            get { return (int)numericUpDownSteps.Value; }
+        }
+
+        #region Selecting Positions and Order
         private void updateButtonsEnabledState()
         {
             buttonAdd.Enabled = (listBoxAllPositions.SelectedIndices.Count > 0);
@@ -67,6 +83,7 @@ namespace WristVizualizer
             {
                 int newIndex = selectedAnimationSequenceIndex + 1 + i;
                 listBoxAnimationSequence.Items.Insert(newIndex, listBoxAllPositions.SelectedItems[i]);
+                _animationOrder.Insert(newIndex, listBoxAllPositions.SelectedIndices[i]);
                 //now select the newest item...
                 listBoxAnimationSequence.SelectedIndex = newIndex;
             }
@@ -84,6 +101,8 @@ namespace WristVizualizer
             }
 
             listBoxAnimationSequence.Items.RemoveAt(oldIndex);
+            _animationOrder.RemoveAt(oldIndex);
+
             //check if there are any items left
             if (listBoxAnimationSequence.Items.Count > 0)
             {
@@ -112,8 +131,11 @@ namespace WristVizualizer
 
             //actualy move us up: 1) Save 2) remove at old positoin, 3) insert into new
             object selectedObject = listBoxAnimationSequence.Items[oldIndex];
+            int selectedObjectKey = _animationOrder[oldIndex];
             listBoxAnimationSequence.Items.RemoveAt(oldIndex);
+            _animationOrder.RemoveAt(oldIndex);
             listBoxAnimationSequence.Items.Insert(oldIndex - 1, selectedObject);
+            _animationOrder.Insert(oldIndex - 1, selectedObjectKey);
 
             //need to keep this one selected, yes...?
             listBoxAnimationSequence.SelectedIndex = oldIndex - 1; //this should then call the selected index change to update the buttons
@@ -131,11 +153,38 @@ namespace WristVizualizer
 
             //actualy move us up: 1) Save 2) remove at old positoin, 3) insert into new
             object selectedObject = listBoxAnimationSequence.Items[oldIndex];
+            int selectedObjectKey = _animationOrder[oldIndex];
             listBoxAnimationSequence.Items.RemoveAt(oldIndex);
+            _animationOrder.RemoveAt(oldIndex);
             listBoxAnimationSequence.Items.Insert(oldIndex + 1, selectedObject);
+            _animationOrder.Insert(oldIndex + 1, selectedObjectKey);
 
             //need to keep this one selected, yes...?
             listBoxAnimationSequence.SelectedIndex = oldIndex + 1; //this should then call the selected index change to update the buttons
         }
+        #endregion
+
+        private bool validateForm()
+        {
+            //TODO!
+            return true;
+        }
+
+        private void buttonOK_Click(object sender, EventArgs e)
+        {
+            validateForm();
+
+            //TODO: Check validation output
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            //Do we want to check before we cancel?
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+        }
+
     }
 }
