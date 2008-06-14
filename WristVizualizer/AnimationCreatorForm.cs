@@ -13,11 +13,22 @@ namespace WristVizualizer
     {
         List<int> _animationOrder; //used make sure we keep track of indexes and are not reliant on the string comparison
 
+        private static double[] DEFAULT_DISTANCES = { 1.0, 1.5, 2.0 };
+        private const int DEFAULT_MAX_NUM_CONTOURS = 5;
+
+        private CheckBox[] _contourCheckBoxes;
+        private NumericUpDown[] _contourNumericUpDowns;
+        private Button[] _contourColorButtons;
+        private double[] _defaultContourDistances;
+
         public AnimationCreatorForm()
         {
 
             InitializeComponent();
             _animationOrder = new List<int>();
+            _defaultContourDistances = DEFAULT_DISTANCES;
+
+            setupContourSelectionGUI();
             testSetupTestData();
             updateButtonsEnabledState();
         }
@@ -40,6 +51,18 @@ namespace WristVizualizer
         public int NumberStepsPerPositionChange
         {
             get { return (int)numericUpDownSteps.Value; }
+        }
+
+        public bool ShowDistanceMap
+        {
+            get { return checkBoxDistanceMap.Checked; }
+            set { checkBoxDistanceMap.Checked = value; }
+        }
+
+        public decimal DistanceMapMaximumValue
+        {
+            get { return numericUpDownDistanceMapDist.Value; }
+            set { numericUpDownDistanceMapDist.Value = value; }
         }
 
         #region Selecting Positions and Order
@@ -164,15 +187,128 @@ namespace WristVizualizer
         }
         #endregion
 
+        #region GUI Setup
+        private void setupContourSelectionGUI()
+        {
+            int maxNumberContours = Math.Max(_defaultContourDistances.Length, DEFAULT_MAX_NUM_CONTOURS);
+            _contourCheckBoxes = new CheckBox[maxNumberContours];
+            _contourNumericUpDowns = new NumericUpDown[maxNumberContours];
+            _contourColorButtons = new Button[maxNumberContours];
+
+            this.SuspendLayout();
+            tableLayoutPanel.Controls.Clear();
+            tableLayoutPanel.RowStyles.Clear();
+
+            for (int i = 0; i < _contourCheckBoxes.Length; i++)
+            {
+                setupContourRow(i);
+                if (_defaultContourDistances.Length > i) //check if we have a default value...
+                {
+                    _contourCheckBoxes[i].Checked = true;
+                    _contourNumericUpDowns[i].Enabled = true;
+                    _contourNumericUpDowns[i].Value = (decimal)_defaultContourDistances[i];
+                    _contourColorButtons[i].Enabled = true;
+                }
+            }
+            this.ResumeLayout();
+        }
+
+        private void setupContourRow(int row)
+        {
+            CheckBox box = new CheckBox();
+            NumericUpDown upDown = new NumericUpDown();
+            Label label = new Label();
+            Button button = new Button();
+
+            box.AutoSize = true;
+            box.CheckedChanged += new EventHandler(contourCheckBox_CheckedChanged);
+
+            upDown.Minimum = 0;
+            upDown.Maximum = 5;
+            upDown.DecimalPlaces = 2;
+            upDown.Increment = 0.1M;
+            upDown.Size = new System.Drawing.Size(59, 20);
+            upDown.Enabled = false;
+
+            button.AutoSize = true;
+            button.Size = new System.Drawing.Size(22, 22);
+            button.BackColor = Color.White;
+            button.Click += new EventHandler(colorButton_Click);
+            button.Enabled = false;
+
+            label.AutoSize = true;
+            label.Text = "mm";
+            label.Margin = new Padding(0);
+            label.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            label.TextAlign = ContentAlignment.TopLeft;
+
+            tableLayoutPanel.Controls.Add(box, 0, row);
+            tableLayoutPanel.Controls.Add(upDown, 1, row);
+            tableLayoutPanel.Controls.Add(label, 2, row);
+            tableLayoutPanel.Controls.Add(button, 3, row);
+            tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+
+            _contourCheckBoxes[row] = box;
+            _contourNumericUpDowns[row] = upDown;
+            _contourColorButtons[row] = button;
+
+        }
+
+        #endregion
+
+        #region Distance Map Stuff
+        void contourCheckBox_CheckedChanged(object sender, EventArgs e)
+        {
+            //lets find out which one we are, and change the enabled state of our little friend
+            for (int i = 0; i < _contourCheckBoxes.Length; i++)
+            {
+                if (_contourCheckBoxes[i] == sender) //found us!
+                {
+                    _contourNumericUpDowns[i].Enabled = ((CheckBox)sender).Checked;
+                    _contourColorButtons[i].Enabled = ((CheckBox)sender).Checked;
+                    return;
+                }
+            }
+        }
+
+        void colorButton_Click(object sender, EventArgs e)
+        {
+            //lets find out which one we are, and change the enabled state of our little friend
+            for (int i = 0; i < _contourColorButtons.Length; i++)
+            {
+                if (_contourColorButtons[i] == sender) //found us!
+                {
+                    ColorDialog cg = new ColorDialog();
+                    cg.Color = ((Button)sender).BackColor;
+                    DialogResult r = cg.ShowDialog();
+                    if (r == DialogResult.Cancel)
+                        return;
+
+                    ((Button)sender).BackColor = cg.Color;
+                }
+            }
+        }
+        #endregion
+
         private bool validateForm()
         {
-            //TODO!
+            if (_animationOrder.Count < 2)
+                throw new WristVizualizerException("Need at least two positions in order to animate");
+
             return true;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            validateForm();
+            try
+            {
+                validateForm();
+            }
+            catch (WristVizualizerException ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             //TODO: Check validation output
             this.DialogResult = DialogResult.OK;
@@ -184,6 +320,11 @@ namespace WristVizualizer
             //Do we want to check before we cancel?
             this.DialogResult = DialogResult.Cancel;
             this.Close();
+        }
+
+        private void checkBoxDistanceMap_CheckedChanged(object sender, EventArgs e)
+        {
+            numericUpDownDistanceMapDist.Enabled = checkBoxDistanceMap.Checked;
         }
 
     }

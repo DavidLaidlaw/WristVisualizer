@@ -38,11 +38,21 @@ namespace WristVizualizer
             this.buttonOK = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.numericUpDownSteps = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDownSteps = new System.Windows.Forms.NumericUpDown();
+            this.checkBoxDistanceMap = new System.Windows.Forms.CheckBox();
+            this.numericUpDownDistanceMapDist = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSteps)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDistanceMapDist)).BeginInit();
+            this.tableLayoutPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
             // listBoxAllPositions
@@ -108,7 +118,7 @@ namespace WristVizualizer
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(421, 395);
+            this.buttonCancel.Location = new System.Drawing.Point(421, 450);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(84, 28);
             this.buttonCancel.TabIndex = 11;
@@ -119,7 +129,7 @@ namespace WristVizualizer
             // buttonOK
             // 
             this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(331, 395);
+            this.buttonOK.Location = new System.Drawing.Point(331, 450);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(84, 28);
             this.buttonOK.TabIndex = 10;
@@ -144,14 +154,28 @@ namespace WristVizualizer
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label2);
+            this.groupBox2.Controls.Add(this.tableLayoutPanel);
+            this.groupBox2.Controls.Add(this.numericUpDownDistanceMapDist);
+            this.groupBox2.Controls.Add(this.label3);
+            this.groupBox2.Controls.Add(this.checkBoxDistanceMap);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this.numericUpDownSteps);
             this.groupBox2.Location = new System.Drawing.Point(10, 258);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(485, 107);
+            this.groupBox2.Size = new System.Drawing.Size(485, 186);
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Animation Options";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(169, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Number of Frames/Animation Step";
             // 
             // numericUpDownSteps
             // 
@@ -170,14 +194,102 @@ namespace WristVizualizer
             0,
             0});
             // 
-            // label1
+            // checkBoxDistanceMap
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(169, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Number of Frames/Animation Step";
+            this.checkBoxDistanceMap.AutoSize = true;
+            this.checkBoxDistanceMap.Location = new System.Drawing.Point(9, 43);
+            this.checkBoxDistanceMap.Name = "checkBoxDistanceMap";
+            this.checkBoxDistanceMap.Size = new System.Drawing.Size(97, 17);
+            this.checkBoxDistanceMap.TabIndex = 3;
+            this.checkBoxDistanceMap.Text = "Distance Maps";
+            this.checkBoxDistanceMap.UseVisualStyleBackColor = true;
+            this.checkBoxDistanceMap.CheckedChanged += new System.EventHandler(this.checkBoxDistanceMap_CheckedChanged);
+            // 
+            // numericUpDownDistanceMapDist
+            // 
+            this.numericUpDownDistanceMapDist.DecimalPlaces = 2;
+            this.numericUpDownDistanceMapDist.Enabled = false;
+            this.numericUpDownDistanceMapDist.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDownDistanceMapDist.Location = new System.Drawing.Point(189, 42);
+            this.numericUpDownDistanceMapDist.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownDistanceMapDist.Name = "numericUpDownDistanceMapDist";
+            this.numericUpDownDistanceMapDist.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownDistanceMapDist.TabIndex = 5;
+            this.numericUpDownDistanceMapDist.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(114, 44);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Max Distance:";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(307, 18);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(85, 13);
+            this.label2.TabIndex = 11;
+            this.label2.Text = "Visible Contours:";
+            // 
+            // tableLayoutPanel
+            // 
+            this.tableLayoutPanel.AutoSize = true;
+            this.tableLayoutPanel.ColumnCount = 4;
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel.Controls.Add(this.numericUpDown1, 1, 0);
+            this.tableLayoutPanel.Controls.Add(this.checkBox1, 0, 0);
+            this.tableLayoutPanel.Location = new System.Drawing.Point(311, 35);
+            this.tableLayoutPanel.Name = "tableLayoutPanel";
+            this.tableLayoutPanel.RowCount = 1;
+            this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.tableLayoutPanel.Size = new System.Drawing.Size(95, 26);
+            this.tableLayoutPanel.TabIndex = 12;
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.DecimalPlaces = 2;
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDown1.Location = new System.Drawing.Point(24, 3);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            4,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(59, 20);
+            this.numericUpDown1.TabIndex = 0;
+            // 
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(3, 3);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(15, 14);
+            this.checkBox1.TabIndex = 11;
+            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // AnimationCreatorForm
             // 
@@ -185,18 +297,22 @@ namespace WristVizualizer
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(517, 435);
+            this.ClientSize = new System.Drawing.Size(517, 490);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "AnimationCreatorForm";
-            this.Text = "AnimationCreatorForm";
+            this.Text = "Wrist Vizualizer";
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSteps)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDistanceMapDist)).EndInit();
+            this.tableLayoutPanel.ResumeLayout(false);
+            this.tableLayoutPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -215,5 +331,12 @@ namespace WristVizualizer
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.NumericUpDown numericUpDownSteps;
+        private System.Windows.Forms.CheckBox checkBoxDistanceMap;
+        private System.Windows.Forms.NumericUpDown numericUpDownDistanceMapDist;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }
