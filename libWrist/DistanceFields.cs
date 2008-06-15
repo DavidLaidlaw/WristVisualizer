@@ -578,7 +578,7 @@ namespace libWrist
             return new double[] { x, y, z };
         }
 
-        private void contourSingleTriangle(double[] dist, float[][] vertices, Contour contour, double[] cDistances)
+        private static void contourSingleTriangle(double[] dist, float[][] vertices, Contour contour, double[] cDistances)
         {
             double area;
             double[] centroid;
@@ -645,7 +645,7 @@ namespace libWrist
             }
         }
 
-        private float[] createGradientPoint(double d0, float[] v0, double d1, float[] v1, double cDist)
+        private static float[] createGradientPoint(double d0, float[] v0, double d1, float[] v1, double cDist)
         {
             float[] midpoint = new float[3];
 
