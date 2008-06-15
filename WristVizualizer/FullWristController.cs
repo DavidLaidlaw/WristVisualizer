@@ -246,16 +246,10 @@ namespace WristVizualizer
             for (int i = 0; i < numPos; i++)
             {
                 _transformMatrices[i] = DatParser.parseMotionFileToTransformMatrix(_wrist.motionFiles[i]);
-                //_transformMatrices[i] = new TransformMatrix[Wrist.NumBones];
-                ////TODO: create DatParser.parseMotionFileToTM()
-                //TransformRT[] tfm = DatParser.parseMotionFileToRT(_wrist.motionFiles[i]);
-                //for (int j = 0; j < Wrist.NumBones; j++)
-                //{
-                //    _transformMatrices[i][j] = new TransformMatrix(tfm[j]);
-                //}
             }
         }
 
+        #region public properties
         public bool AnimatePositionTransitions
         {
             get { return _animatePositionChanges; }
@@ -295,6 +289,18 @@ namespace WristVizualizer
             get { return _root; }
         }
 
+        public string getTitleCaption()
+        {
+            return _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
+        }
+
+        public string getFilenameOfFirstFile()
+        {
+            return Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
+        }
+        #endregion
+
+        #region GUI & Control Setup
         private string[] createSeriesListWithNiceNames()
         {
             string[] series = _wrist.series;
@@ -327,15 +333,6 @@ namespace WristVizualizer
             _wristControl.selectedSeriesIndex = 0;
         }
 
-        public string getTitleCaption()
-        {
-            return _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
-        }
-
-        public string getFilenameOfFirstFile()
-        {
-            return Path.Combine(_wrist.subjectPath, _wrist.subject + _wrist.side);
-        }
 
         private void setupControl()
         {
@@ -361,6 +358,7 @@ namespace WristVizualizer
             if (_positionGraph != null)
                 _positionGraph.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
         }
+        #endregion
 
         private void removeCurrentTransforms()
         {
