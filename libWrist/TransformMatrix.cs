@@ -57,6 +57,29 @@ namespace libWrist
             this.SetMatrix(0, 2, 3, 3, rt.T.Transpose()); //set T, do I need to transpose first?
         }
 
+        /// <summary>
+        /// Create a transform matrix from a 3x3 rotational matrix, and a 1x3 translation vector
+        /// </summary>
+        /// <param name="r"></param>
+        /// <param name="t"></param>
+        public TransformMatrix(double[][] r, double[] t) : base(4,4)
+        {
+            this.setToIdentity();
+            //set r values
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    this.Array[i][j] = r[i][j];
+                }
+            }
+
+            //set t
+            for (int i = 0; i < 3; i++)
+                this.Array[i][3] = t[i];
+        }
+
+
         public libCoin3D.Transform ToTransform()
         {
             libCoin3D.Transform transform = new libCoin3D.Transform();

@@ -154,6 +154,19 @@ namespace libWrist
             return transforms;
         }
 
+        public static TransformMatrix[] parseMotionFileToTransformMatrix(string filename)
+        {
+            double[][] dat = parseMotionFile(filename);
+            TransformMatrix[] transforms = new TransformMatrix[Wrist.NumBones];
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                double[][] tempR = { dat[i * 4], dat[i * 4 + 1], dat[i * 4 + 2] };
+                transforms[i] = new TransformMatrix(tempR, dat[i * 4 + 3]);
+            }
+
+            return transforms;
+        }
+
         public static double[][] parsePosViewRTFileToDouble(string filename)
         {
             if (!File.Exists(filename))

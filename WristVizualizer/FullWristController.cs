@@ -245,13 +245,14 @@ namespace WristVizualizer
 
             for (int i = 0; i < numPos; i++)
             {
-                _transformMatrices[i] = new TransformMatrix[Wrist.NumBones];
-                //TODO: create DatParser.parseMotionFileToTM()
-                TransformRT[] tfm = DatParser.parseMotionFileToRT(_wrist.motionFiles[i]);
-                for (int j = 0; j < Wrist.NumBones; j++)
-                {
-                    _transformMatrices[i][j] = new TransformMatrix(tfm[j]);
-                }
+                _transformMatrices[i] = DatParser.parseMotionFileToTransformMatrix(_wrist.motionFiles[i]);
+                //_transformMatrices[i] = new TransformMatrix[Wrist.NumBones];
+                ////TODO: create DatParser.parseMotionFileToTM()
+                //TransformRT[] tfm = DatParser.parseMotionFileToRT(_wrist.motionFiles[i]);
+                //for (int j = 0; j < Wrist.NumBones; j++)
+                //{
+                //    _transformMatrices[i][j] = new TransformMatrix(tfm[j]);
+                //}
             }
         }
 
