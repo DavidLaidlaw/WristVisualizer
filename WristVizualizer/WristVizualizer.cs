@@ -13,7 +13,7 @@ namespace WristVizualizer
 {
     public partial class WristVizualizer : Form
     {
-        private Coin3DBase _base;
+        private static Coin3DBase _base = new Coin3DBase();
         private ExaminerViewer _viewer;
         private Separator _root;
         
@@ -46,7 +46,6 @@ namespace WristVizualizer
         {
             InitializeComponent();
 
-            _base = new Coin3DBase();
             _viewer = null;
             _root = null;
             
