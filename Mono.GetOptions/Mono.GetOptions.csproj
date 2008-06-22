@@ -1,0 +1,59 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77D5FD1D-325D-4379-9D45-00CAC7DE365E}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mono.GetOptions</RootNamespace>
+    <AssemblyName>Mono.GetOptions</AssemblyName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="GetOptTest\GetOptTester.cs" />
+    <Compile Include="Mono.GetOptions.Useful\CommonCompilerOptions.cs" />
+    <Compile Include="Mono\AboutAttribute.cs" />
+    <Compile Include="Mono\AdditionalInfoAttribute.cs" />
+    <Compile Include="Mono.GetOptions\ArgumentProcessorAttribute.cs" />
+    <Compile Include="Mono\AuthorAttribute.cs" />
+    <Compile Include="Mono\IsPartOfPackageAttribute.cs" />
+    <Compile Include="Mono.GetOptions\KillOptionAttribute.cs" />
+    <Compile Include="Mono.GetOptions\OptionAttribute.cs" />
+    <Compile Include="Mono.GetOptions\OptionDetails.cs" />
+    <Compile Include="Mono.GetOptions\OptionList.cs" />
+    <Compile Include="Mono.GetOptions\Options.cs" />
+    <Compile Include="Mono.GetOptions\OptionsParsingMode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Mono\ReportBugsToAttribute.cs" />
+    <Compile Include="Mono\UsageComplementAttribute.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -30,3 +30,8 @@ using System.Runtime.InteropServices;
 //      Revision
 //
 [assembly: AssemblyVersion("1.4.6.*")]
+
+//Aditional settings for Mono.GetOptions.dll 
+[assembly: Mono.UsageComplement("[filename1] [filename2] ...")]
+[assembly: Mono.About("An okay program for vizualing wrist data and exporting some data on in batch mode")]
+[assembly: Mono.Author("Evan Leventhal")]

@@ -44,6 +44,14 @@ namespace WristVizualizer
 
         public WristVizualizer(string[] fileArgs)
         {
+            CommandLineOptions options = new CommandLineOptions();
+            options.ProcessArgs(fileArgs);
+
+            if (options.isBatchMode())
+            {
+                BatchMode batch = new BatchMode(options);
+            }
+
             InitializeComponent();
 
             _viewer = null;

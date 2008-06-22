@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AviFile", "AviFile\AviFile.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WiimoteLib", "WiimoteLib\WiimoteLib.csproj", "{37A555DF-7012-4B99-8A47-1C922A361E52}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.GetOptions", "Mono.GetOptions\Mono.GetOptions.csproj", "{77D5FD1D-325D-4379-9D45-00CAC7DE365E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug MSRS|Any CPU = Debug MSRS|Any CPU
@@ -360,6 +362,36 @@ Global
 		{37A555DF-7012-4B99-8A47-1C922A361E52}.Release|Win32.ActiveCfg = Release|x86
 		{37A555DF-7012-4B99-8A47-1C922A361E52}.Release|x86.ActiveCfg = Release|x86
 		{37A555DF-7012-4B99-8A47-1C922A361E52}.Release|x86.Build.0 = Release|x86
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug MSRS|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug MSRS|Any CPU.Build.0 = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug MSRS|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug MSRS|Mixed Platforms.Build.0 = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug MSRS|Win32.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug MSRS|x86.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug|Win32.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.MSRS Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.MSRS Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.MSRS Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.MSRS Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.MSRS Debug|Win32.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.MSRS Debug|x86.ActiveCfg = Debug|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release MSRS|Any CPU.ActiveCfg = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release MSRS|Any CPU.Build.0 = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release MSRS|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release MSRS|Mixed Platforms.Build.0 = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release MSRS|Win32.ActiveCfg = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release MSRS|x86.ActiveCfg = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release|Win32.ActiveCfg = Release|Any CPU
+		{77D5FD1D-325D-4379-9D45-00CAC7DE365E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -52,7 +52,9 @@
     <Compile Include="AnimationCreatorForm.Designer.cs">
       <DependentUpon>AnimationCreatorForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="BatchMode.cs" />
     <Compile Include="BoneHideChangeEventArgs.cs" />
+    <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Controller.cs" />
     <Compile Include="DistanceAndContourDialog.cs">
       <SubType>Form</SubType>
@@ -263,6 +265,10 @@
     <ProjectReference Include="..\libWrist\libWrist.csproj">
       <Project>{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}</Project>
       <Name>libWrist</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mono.GetOptions\Mono.GetOptions.csproj">
+      <Project>{77D5FD1D-325D-4379-9D45-00CAC7DE365E}</Project>
+      <Name>Mono.GetOptions</Name>
     </ProjectReference>
     <ProjectReference Include="..\WiimoteLib\WiimoteLib.csproj">
       <Project>{37A555DF-7012-4B99-8A47-1C922A361E52}</Project>
