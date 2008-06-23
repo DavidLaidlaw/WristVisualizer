@@ -223,11 +223,14 @@ namespace libWrist
         /// Given a series, it will try and find the index for it in the current object. (Case sensitive)
         /// </summary>
         /// <param name="series">Series name to check</param>
-        /// <returns>Index to the series</returns>
+        /// <returns>Index to the series, 0 is neutral</returns>
         public int getSeriesIndexFromName(string series)
         {
+            //check for neutral
+            if (_neutralSeries.Equals(series)) return 0;
+
             for (int i = 0; i < _info.Length; i++)
-                if (_info[i].series.Equals(series)) return i;
+                if (_info[i].series.Equals(series)) return i+1;
 
             throw new ArgumentException("Unable to locate series in list");
         }

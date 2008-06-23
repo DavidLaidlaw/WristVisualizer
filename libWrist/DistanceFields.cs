@@ -574,7 +574,7 @@ namespace libWrist
         /// <param name="distanceMap">Pre-calculated distance map for the referenceBone. Distance for each vertex in order</param>
         /// <param name="cDistance">Contour Distance (mm)</param>
         /// <returns></returns>
-        private static Contour createContourSingleBoneSinglePosition(ColoredBone referenceBone, double[] distanceMap, double cDistance)
+        public static Contour createContourSingleBoneSinglePosition(ColoredBone referenceBone, double[] distanceMap, double cDistance)
         {
             /* Yes, its bad to repeat code, but I needed this pretty fast.
              */
