@@ -378,6 +378,69 @@ namespace libWrist
             return distances;
         }
 
+        /// <summary>
+        /// Can be used to create the distance map for a single reference bone, against a single 
+        /// test distance field.
+        /// </summary>
+        /// <param name="testDistanceField">Distance field of the test bone.</param>
+        /// <param name="referenceBone">The bone file of the reference bone. The distance map should be drawn on this bone</param>
+        /// <param name="relativeMotion">The relative transform of the test field as it would have been in neutral </param>
+        /// <returns>an array of distance values (in mm) for each vertex of the referenceBone</returns>
+        public static double[] createDistanceMap(CTmri testDistanceField, ColoredBone referenceBone, TransformMatrix relativeMotion)
+        {
+            /* Yes this is bad, its basically just cut and paste code from above, 
+             * but I need these both to be pretty optimized, and it was hard to remove
+             * the loops from above, or I would have really had to force this
+             */
+
+            CTmri mri = testDistanceField;
+            float[,] pts = referenceBone.getVertices();
+            int numVertices = pts.GetLength(0);
+
+            double[] distances = new double[numVertices];
+
+            bool isNeutral = relativeMotion.isIdentity();
+
+            //for each vertex           
+            for (int i = 0; i < numVertices; i++)
+            {
+                distances[i] = Double.MaxValue; //set this vertex to the default
+
+                double x = pts[i, 0];
+                double y = pts[i, 1];
+                double z = pts[i, 2];
+
+                //check if we need to move for non neutral position
+                if (!isNeutral)
+                {
+                    //lets move the bone getting colored, into the space of the other bone...
+                    double[] p0 = new double[] { x, y, z };
+                    double[] p1 = relativeMotion * p0;
+                    x = p1[0];
+                    y = p1[1];
+                    z = p1[2];
+                }
+
+                double dX = (x - mri.CoordinateOffset[0]) / mri.voxelSizeX;
+                double dY = (y - mri.CoordinateOffset[1]) / mri.voxelSizeY;
+                double dZ = (z - mri.CoordinateOffset[2]) / mri.voxelSizeZ;
+
+                const double xBound = 96.9; //get the boundaries of the distance cube
+                const double yBound = 96.9; //
+                const double zBound = 96.9; //
+
+                ////////////////////////////////////////////////////////
+                //is surface point picked inside of the cube?
+
+                if (dX >= 3.1 && dX <= xBound && dY >= 3.1
+                    && dY <= yBound && dZ >= 3.1 && dZ <= zBound)
+                {
+                    distances[i] = mri.sample_s_InterpCubit(dX, dY, dZ);
+                }
+            }
+            return distances;
+        }
+
 
         private int[] createColormap(int boneIndex, int positionIndex)
         {
