@@ -566,6 +566,49 @@ namespace libWrist
         //    }
         //}
 
+
+        /// <summary>
+        /// Will create a contour based on a distance field for the given reference bone.
+        /// </summary>
+        /// <param name="referenceBone">Bone on which to draw the contour</param>
+        /// <param name="distanceMap">Pre-calculated distance map for the referenceBone. Distance for each vertex in order</param>
+        /// <param name="cDistance">Contour Distance (mm)</param>
+        /// <returns></returns>
+        private static Contour createContourSingleBoneSinglePosition(ColoredBone referenceBone, double[] distanceMap, double cDistance)
+        {
+            /* Yes, its bad to repeat code, but I needed this pretty fast.
+             */
+            double[] dist = distanceMap;
+
+            float[,] points = referenceBone.getVertices();
+            int[,] conn = referenceBone.getFaceSetIndices();
+
+            Contour cont1 = new Contour(1); //only a single distance for this contour
+            //cont1.Color = colors[0];
+
+            double[] cDistances = new double[] { cDistance }; //create new array with single value, needed for helper function later
+
+            int numTrian = conn.GetLength(0);
+            for (int i = 0; i < numTrian; i++)
+            {
+                //check if all the points are out, if so, skip it
+                if (dist[conn[i, 0]] > cDistance &&
+                    dist[conn[i, 1]] > cDistance &&
+                    dist[conn[i, 2]] > cDistance)
+                    continue;
+
+                double[] triDist = { dist[conn[i, 0]], dist[conn[i, 1]], dist[conn[i, 2]] };
+                float[][] triPts = { 
+                    new float[] {points[conn[i, 0], 0], points[conn[i, 0], 1], points[conn[i, 0], 2]},
+                    new float[] {points[conn[i, 1], 0], points[conn[i, 1], 1], points[conn[i, 1], 2]},
+                    new float[] {points[conn[i, 2], 0], points[conn[i, 2], 1], points[conn[i, 2], 2]}
+                };
+
+                contourSingleTriangle(triDist, triPts, cont1, cDistances);
+            }
+            return cont1;
+        }
+
         private Contour createContourSingleBoneSinglePosition(int boneIndex, int positionIndex, double[] cDistances, System.Drawing.Color[] colors)
         {
             double[] dist = getOrCalculateDistanceMap(boneIndex, positionIndex);
