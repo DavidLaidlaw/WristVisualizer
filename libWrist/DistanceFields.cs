@@ -384,7 +384,7 @@ namespace libWrist
         /// </summary>
         /// <param name="testDistanceField">Distance field of the test bone.</param>
         /// <param name="referenceBone">The bone file of the reference bone. The distance map should be drawn on this bone</param>
-        /// <param name="relativeMotion">The relative transform of the test field as it would have been in neutral </param>
+        /// <param name="relativeMotion">The relative transform of to move the reference bone into the distance field for the test bone</param>
         /// <returns>an array of distance values (in mm) for each vertex of the referenceBone</returns>
         public static double[] createDistanceMap(CTmri testDistanceField, ColoredBone referenceBone, TransformMatrix relativeMotion)
         {
