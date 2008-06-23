@@ -58,6 +58,7 @@
     <Compile Include="TransformParser.cs" />
     <Compile Include="TransformMatrix.cs" />
     <Compile Include="Wrist.cs" />
+    <Compile Include="WristException.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />

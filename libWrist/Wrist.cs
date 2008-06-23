@@ -501,6 +501,48 @@ namespace libWrist
         }
 
         /// <summary>
+        /// Tries to locate the radius for the given subject in either a data or Database format. Returns the empty string on failure
+        /// </summary>
+        /// <param name="subjectPath">Subject path to look at</param>
+        /// <param name="side">Whether to look for a right or left radius</param>
+        /// <returns>The full path to the radius, empty string if none can be found</returns>
+        static public string findRadius(string subjectPath, Sides side)
+        {
+            switch (side)
+            {
+                case Sides.LEFT:
+                    return findRadius(subjectPath, "Left");
+                case Sides.RIGHT:
+                    return findRadius(subjectPath, "Right");
+                default:
+                    throw new WristException("Unknown side"); //unreachable, removes compiler warning
+            }
+        }
+
+        /// <summary>
+        /// Given the series, (ie "S15R"), return if the series is for a left or right wrist
+        /// </summary>
+        /// <param name="series"></param>
+        /// <exception cref="WristException">Thrown if the string is not a valid series string</exception>
+        /// <returns></returns>
+        static public Sides getSideFromSeries(string series)
+        {
+            Match m = Regex.Match(series, @"^S?\d{2}([LR])$", RegexOptions.IgnoreCase);
+            if (!m.Success)
+                throw new WristException("Unable to determine side from series");
+
+            switch (m.Groups[1].Value.ToUpper())
+            {
+                case "L":
+                    return Sides.LEFT;
+                case "R":
+                    return Sides.RIGHT;
+                default:
+                    throw new WristException(String.Format("Invalid Side found ({0}).", m.Groups[1].Value));
+            }
+        }
+
+        /// <summary>
         /// Tries to locate a radius for the given subject, for a given side, in either a data or Database format. Returns the empty string on failure
         /// </summary>
         /// <param name="subjectPath">Subject path to look at</param>
