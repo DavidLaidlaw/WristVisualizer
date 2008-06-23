@@ -29,19 +29,30 @@ namespace WristVizualizer
             string radiusPath = Wrist.findRadius(subject, side);
             Wrist w = new Wrist(radiusPath);
             
-            //first read in the two bones
+            //first read in the reference bone
             ColoredBone refBone = new ColoredBone(w.bpaths[referenceBoneIndex]);
-            ColoredBone testBone = new ColoredBone(w.bpaths[testBoneIndex]);
 
             //load the motion file
             int seriesIndex = w.getSeriesIndexFromName(test_position);
-            TransformMatrix[] transforms = DatParser.parseMotionFileToTransformMatrix(w.motionFiles[seriesIndex]);
+            TransformMatrix relativeMotion;
+            if (seriesIndex == 0) //neutral
+            {
+                relativeMotion = new TransformMatrix(); //set to identity for neutral
+            }
+            else //non neutral
+            {
+                TransformMatrix[] transforms = DatParser.parseMotionFileToTransformMatrix(w.motionFiles[seriesIndex - 1]); //offset -1 to skip neutral
+                //this is the transform that moves the reference bone into the distance field of the test bone
+                relativeMotion = transforms[testBoneIndex].Inverse() * transforms[referenceBoneIndex];
+            }
 
-            //load in the distance fields
-            CTmri refField = new CTmri(w.DistanceFieldPaths[referenceBoneIndex]);
+            //load in the distance field for the test bone
             CTmri testField = new CTmri(w.DistanceFieldPaths[testBoneIndex]);
 
+            //generate the distance field
+            double[] distanceMap = DistanceMaps.createDistanceMap(testField, refBone, relativeMotion);
 
+            //go and generate the contours....yes?
         }
     }
 }
