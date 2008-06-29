@@ -38,7 +38,7 @@ namespace WristVizualizer
 
             _positions = convertToPositions(Inertias, transforms, referenceBoneIndex);
             createGraph();
-            showHighlightedPoint(0);
+            setCurrentVisisblePosture(0);
         }
 
         private double[][] convertToPositions(TransformMatrix[] Inertias, TransformMatrix[][] Transforms, int referenceBoneIndex)
@@ -95,6 +95,13 @@ namespace WristVizualizer
         public void setCurrentVisisblePosture(int postureIndex)
         {
             showHighlightedPoint(postureIndex);
+            showTextPostionForPosture(postureIndex);
+        }
+
+        private void showTextPostionForPosture(int postureIndex)
+        {
+            textBoxFE.Text = _positions[postureIndex][0].ToString("0.00");
+            textBoxRU.Text = _positions[postureIndex][1].ToString("0.00");
         }
 
         private void drawSinglePoint(Graphics g, double[] point)
@@ -114,7 +121,8 @@ namespace WristVizualizer
             //Console.WriteLine("Mouse Click: ({0}, {1})",e.X,e.Y);
 
             int index = findClosestPoint(e.X, e.Y);
-            showHighlightedPoint(index); //update display
+            setCurrentVisisblePosture(index); //update display
+            //showHighlightedPoint(index); 
 
             //send the event
             if (SelectedSeriesChanged == null) return;

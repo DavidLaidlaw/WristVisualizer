@@ -1,3 +1,7 @@
+Version 1.4.9
+- Fixed bug: Fixed problem with the neutral position getting the capitate offset even when the reference bone was the mc3
+- New: Added text display for global wrist position in Full Wrist mode
+
 Version 1.4.8
 - Fixed bug: Fixed problem when hiding Inertial axes if there were problems showing them. Prevent null reference exception.
 - New: Added ability to show inertial axes for the metacarpals as well as the carpal bones. 
