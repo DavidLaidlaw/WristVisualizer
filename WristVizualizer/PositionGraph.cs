@@ -21,37 +21,49 @@ namespace WristVizualizer
         private double _FE_conversion;
         private double _RU_conversion;
 
+        private int _referenceBoneIndex;
+
         private double[][] _positions;
 
         private Bitmap _baseImage;
 
-        public PositionGraph(TransformMatrix[] Inertias, TransformMatrix[][] transforms)
+        public PositionGraph(TransformMatrix[] Inertias, TransformMatrix[][] transforms, int referenceBoneIndex)
         {
             InitializeComponent();
+
+            _referenceBoneIndex = referenceBoneIndex;
 
             _FE_conversion = (double)pictureBoxGraph.Height / (MAX_FE * 2);
             _RU_conversion = (double)pictureBoxGraph.Width / (MAX_RU * 2);
 
-            _positions = convertToPositions(Inertias, transforms);
+            _positions = convertToPositions(Inertias, transforms, referenceBoneIndex);
             createGraph();
             showHighlightedPoint(0);
         }
 
-        private double[][] convertToPositions(TransformMatrix[] Inertias, TransformMatrix[][] Transforms)
+        private double[][] convertToPositions(TransformMatrix[] Inertias, TransformMatrix[][] Transforms, int referenceBoneIndex)
         {
             double[][] postures = new double[Transforms.Length + 1][]; //+1 for the neutral posture
             //setup neutral
             postures[0] = new double[2];
-            PostureCalculator.Posture p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[8]);
+            PostureCalculator.Posture p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[referenceBoneIndex]);
             postures[0][0] = p.FE;
             postures[0][1] = p.RU;
 
             for (int i = 0; i < Transforms.Length; i++)
             {
                 postures[i + 1] = new double[2];
-                p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[8], Transforms[i][0], Transforms[i][8]);
-                postures[i + 1][0] = p.FE;
-                postures[i + 1][1] = p.RU;
+                p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[referenceBoneIndex], Transforms[i][0], Transforms[i][referenceBoneIndex]);
+                if (referenceBoneIndex == 8) //check for capitate, special offset used
+                {
+                    postures[i + 1][0] = p.FE;
+                    postures[i + 1][1] = p.RU;
+                }
+                else
+                {
+                    postures[i + 1][0] = p.FE_Raw;
+                    postures[i + 1][1] = p.RU_Raw;
+                }
             }
             return postures;
         }                                           

@@ -20,5 +20,10 @@ namespace WristVizualizer
             int index = tableLayoutPanel1.Controls.Count;
             tableLayoutPanel1.Controls.Add(control, 0, index);
         }
+
+        public void removeControl(Control control)
+        {
+            tableLayoutPanel1.Controls.Remove(control);
+        }
     }
 }

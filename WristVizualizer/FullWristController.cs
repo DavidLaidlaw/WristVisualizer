@@ -123,24 +123,43 @@ namespace WristVizualizer
 
             //try and load the inertialInformation
             loadInertiaAndACSData();
-            setupPositionGraphIfPossible();
+            setupPositionGraphIfPossible(8); //hardcoded default reference bone to the Capitate
         }
 
-        private bool hasPositionInformation()
+        private bool hasPositionInformation(int referenceBoneIndex)
         {
             //only need to check the ACS and the capitate (index 8)
-            if (_inertiaMatrices[0] == null || _inertiaMatrices[8] == null)
+            if (_inertiaMatrices[0] == null || _inertiaMatrices[0].Determinant() == 0 ||
+                _inertiaMatrices[referenceBoneIndex] == null || _inertiaMatrices[referenceBoneIndex].Determinant() == 0)
                 return false;
             else
                 return true;
         }
 
-        private void setupPositionGraphIfPossible()
+        public void changeWristPositionReferenceBoneIndex(int referenceBoneIndex)
         {
-            if (!hasPositionInformation())
+            //first lets remove any existing position graph
+            removeExistingPositionGraph();
+
+            //now lets setup for the new reference bone
+            setupPositionGraphIfPossible(referenceBoneIndex);
+        }
+
+        private void removeExistingPositionGraph()
+        {
+            if (_positionGraph == null) return;
+            _positionGraph.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
+            _layoutControl.removeControl(_positionGraph);
+            _positionGraph = null;
+        }
+
+        private void setupPositionGraphIfPossible(int referenceBoneIndex)
+        {
+            if (!hasPositionInformation(referenceBoneIndex))
                 return;
 
-            _positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices);
+            _positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices, referenceBoneIndex);
+            _positionGraph.setCurrentVisisblePosture(_currentPositionIndex); //make sure the correct position is highlighted
             _layoutControl.addControl(_positionGraph);
             _positionGraph.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
         }

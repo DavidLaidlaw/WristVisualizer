@@ -1,6 +1,7 @@
 Version 1.4.8
 - Fixed bug: Fixed problem when hiding Inertial axes if there were problems showing them. Prevent null reference exception.
 - New: Added ability to show inertial axes for the metacarpals as well as the carpal bones. 
+- New: Added ability to show wrist position by a bone other then the capitate. (currently only the mc3)
 
 Version 1.4.7
 - New: Can change the render style for selected objects. Either bounding box or tight fiting lines.

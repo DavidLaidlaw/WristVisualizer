@@ -127,6 +127,7 @@ namespace WristVizualizer
                     animationRateToolStripMenuItem.Enabled = true;
                     calculateDistanceMapToolStripMenuItem.Enabled = true;
                     showMetacarpalInertiasToolStripMenuItem.Enabled = true;
+                    referenceBoneForWristPositionToolStripMenuItem.Enabled = true;
                     break;
             }
         }
@@ -193,6 +194,9 @@ namespace WristVizualizer
             rate_1sec_15FpsToolStripMenuItem1.Checked = false;
             rate_2sec_15FpsToolStripMenuItem2.Checked = false;
             calculateDistanceMapToolStripMenuItem.Enabled = false;
+            referenceBoneForWristPositionToolStripMenuItem.Enabled = false;
+            capitateToolStripMenuItem.Checked = true;
+            mC3ToolStripMenuItem.Checked = false;
             
             if (_pointSelection != null)
             {
@@ -1038,6 +1042,32 @@ namespace WristVizualizer
 
             if (_viewer != null)
                 _viewer.setHighlightType(ExaminerViewer.HighlighRenderTypes.LINE_HIGHLIGHT_RENDER);
+        }
+
+        private int getBoneIndexForWristPositionReferenceBone()
+        {
+            foreach (ToolStripMenuItem menuItem in referenceBoneForWristPositionToolStripMenuItem.DropDownItems)
+            {
+                if (menuItem.Checked)
+                    return (int)menuItem.Tag;
+            }
+            throw new WristVizualizerException("Unable to determine the ReferenceBone for determining Wrist Position");
+        }
+
+        private void referenceBoneToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //update the check box.
+            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            if (clickedItem.Checked) return; //if we are already set, get out. Nothing to do.
+
+            //update the display
+            foreach (ToolStripMenuItem menuItem in referenceBoneForWristPositionToolStripMenuItem.DropDownItems)
+            {
+                menuItem.Checked = (clickedItem == menuItem);
+            }
+
+            //change the reference bone.
+            _fullWristController.changeWristPositionReferenceBoneIndex(getBoneIndexForWristPositionReferenceBone());
         }
 
 
