@@ -85,6 +85,13 @@ public:
 	TransparencyTypes getTransparencyType();
 	void setTransparencyType(TransparencyTypes type);
 
+	enum class HighlighRenderTypes {
+		BOX_HIGHLIGHT_RENDER,
+		LINE_HIGHLIGHT_RENDER
+	};
+	HighlighRenderTypes getHighlightType();
+	void setHighlightType(HighlighRenderTypes type);
+
 	System::Drawing::Image^ getImage();
 
 	void setDrawStyle();

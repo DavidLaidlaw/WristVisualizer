@@ -41,7 +41,6 @@ libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 	Parent_HWND = parrent;
 
 	_root = new SoSeparator; // remove me later
-    //root->addChild(new SoCone);          // remove me later
     _viewer->setSceneGraph(_root);         // remove me later
 	_viewer->setCameraType(SoOrthographicCamera::getClassTypeId());
 
@@ -90,7 +89,7 @@ void libCoin3D::ExaminerViewer::setSceneGraph(Separator^ root)
 		//_viewer->setSceneGraph(root->getSoSeparator());
 
 	//_viewer->setGLRenderAction( new SoLineHighlightRenderAction );
-	_viewer->setGLRenderAction( new SoBoxHighlightRenderAction );
+	//_viewer->setGLRenderAction( new SoBoxHighlightRenderAction );
 	_selection->unref(); //should be ref by _viewer
 
 	OnNewSceneGraphLoaded(); //raise an event for those listening
@@ -495,6 +494,45 @@ void libCoin3D::ExaminerViewer::setTransparencyType(TransparencyTypes type)
 		break;
 	}
 	_viewer->getGLRenderAction()->setTransparencyType(newType);
+}
+
+libCoin3D::ExaminerViewer::HighlighRenderTypes libCoin3D::ExaminerViewer::getHighlightType()
+{
+	if (_viewer->getGLRenderAction()->getTypeId() == SoBoxHighlightRenderAction::getClassTypeId()) {
+		return HighlighRenderTypes::BOX_HIGHLIGHT_RENDER;
+	}
+	else if (_viewer->getGLRenderAction()->getTypeId() == SoLineHighlightRenderAction::getClassTypeId()) {
+		return HighlighRenderTypes::LINE_HIGHLIGHT_RENDER;
+	}
+	else {
+		const char* typeName = _viewer->getGLRenderAction()->getClassTypeId().getName().getString();
+		throw gcnew System::Exception(System::String::Format("Unknown SoGLRenderAction found for viewer. ({0})", gcnew System::String(typeName)));
+	}
+}
+
+void libCoin3D::ExaminerViewer::setHighlightType(libCoin3D::ExaminerViewer::HighlighRenderTypes type)
+{
+	//create a new Render action of the correct type
+	SoGLRenderAction* newRenderer;
+	switch (type) {
+		case HighlighRenderTypes::BOX_HIGHLIGHT_RENDER:
+			newRenderer = new SoBoxHighlightRenderAction();
+			break;
+		case HighlighRenderTypes::LINE_HIGHLIGHT_RENDER:
+			newRenderer = new SoLineHighlightRenderAction();
+			break;
+		default:
+			throw gcnew System::ArgumentException("Invalid HighlightRenderType");
+	}
+
+	//now lets copy over the old settings (or try to)
+	SoGLRenderAction* oldRenderer = _viewer->getGLRenderAction();
+	newRenderer->setTransparencyType(oldRenderer->getTransparencyType());
+	newRenderer->setViewportRegion(oldRenderer->getViewportRegion());
+	newRenderer->setSortedLayersNumPasses(oldRenderer->getSortedLayersNumPasses());
+
+	//now lets introduce us into the the scene
+	_viewer->setGLRenderAction(newRenderer);
 }
 
 void libCoin3D::ExaminerViewer::fireChangeObjectSelection(bool selected)

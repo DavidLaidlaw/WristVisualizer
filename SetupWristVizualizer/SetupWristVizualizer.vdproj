@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_012AC62025274794975F644D3B2B94FF"
+        "OwnerKey" = "8:_6F774DB1E8F741008148EEB2FBFFF56E"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_01E72E8F7E734EEBA2965B620F6F7F72"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -53,12 +59,6 @@
         {
         "MsmKey" = "8:_17D5FDFFD33E4E3FAE15172831C79317"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_19132DD1D16D47AABE11AD1EE54A7958"
-        "OwnerKey" = "8:_7CF6D23B024D4E75972B2618C65BA502"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -147,6 +147,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_6F774DB1E8F741008148EEB2FBFFF56E"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_71CED6CE67034C1F88905CB7157CCE5C"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -167,12 +173,6 @@
         {
         "MsmKey" = "8:_798F9D1A8D084ADFAFD9E27B6B1B2BA0"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_7CF6D23B024D4E75972B2618C65BA502"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -227,6 +227,12 @@
         {
         "MsmKey" = "8:_B7AA93A38F34463595ABB9BBBABDB770"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_C72888FA2AA2736AF3337C7FC06FD509"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -299,6 +305,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_FA287444373CFFE51203CE40808C07BD"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_C72888FA2AA2736AF3337C7FC06FD509"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -439,7 +451,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3079.27533, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3104.15936, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_0953C32CAF12873EE464628E361E704F"
@@ -550,7 +562,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3048.18905, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3096.22746, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_1A266CA7217EC8B01A63DA8D554A0929"
@@ -1088,6 +1100,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C72888FA2AA2736AF3337C7FC06FD509"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Mono.GetOptions, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_C72888FA2AA2736AF3337C7FC06FD509"
+                    {
+                    "Name" = "8:Mono.GetOptions.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Mono.GetOptions.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C89A30BA3FD441F5A9D1535CEA4FD069"
             {
             "SourcePath" = "8:lib\\msvcrt.dll"
@@ -1152,7 +1195,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3048.18905, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3096.22746, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_D46AB7B823F1ED7AD141FC302DAB375F"
@@ -1437,14 +1480,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{5CD8B932-6323-4313-9357-297FCDEA0DEA}"
-        "PackageCode" = "8:{A171593E-607B-40A9-AE40-FA7C7194AB58}"
+        "ProductCode" = "8:{61609F97-FED2-40F5-94C3-FF3A1059FD50}"
+        "PackageCode" = "8:{F3653C41-05DA-4173-B995-CEACD5007A7E}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.4.6"
+        "ProductVersion" = "8:1.4.7"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2223,7 +2266,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_19132DD1D16D47AABE11AD1EE54A7958"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_012AC62025274794975F644D3B2B94FF"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2237,7 +2280,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_7CF6D23B024D4E75972B2618C65BA502"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_6F774DB1E8F741008148EEB2FBFFF56E"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

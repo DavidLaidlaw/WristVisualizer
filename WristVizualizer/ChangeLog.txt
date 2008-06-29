@@ -1,3 +1,6 @@
+Version 1.4.7
+- New: Can change the render style for selected objects. Either bounding box or tight fiting lines.
+
 Version 1.4.6
 - Fixed bug: Can load linked iv files in full wrist mode.
 - New: Some really basic head tracking using a wiimote and led head bar. Very experimental, but a kind of fun toy.

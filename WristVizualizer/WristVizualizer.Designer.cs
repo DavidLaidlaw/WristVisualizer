@@ -59,6 +59,8 @@ namespace WristVizualizer
             this.rate_1sec_15FpsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rate_2sec_15FpsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateDistanceMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.startHeadtrackingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -88,8 +90,9 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.startHeadtrackingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.selectionStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.boundingBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.lineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -349,6 +352,18 @@ namespace WristVizualizer
             this.calculateDistanceMapToolStripMenuItem.Text = "Calculate Distance Maps...";
             this.calculateDistanceMapToolStripMenuItem.Click += new System.EventHandler(this.calculateDistanceMapToolStripMenuItem_Click);
             // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(216, 6);
+            // 
+            // startHeadtrackingToolStripMenuItem
+            // 
+            this.startHeadtrackingToolStripMenuItem.Name = "startHeadtrackingToolStripMenuItem";
+            this.startHeadtrackingToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
+            this.startHeadtrackingToolStripMenuItem.Text = "Start Headtracking";
+            this.startHeadtrackingToolStripMenuItem.Click += new System.EventHandler(this.startHeadtrackingToolStripMenuItem_Click);
+            // 
             // viewToolStripMenuItem
             // 
             this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -359,6 +374,7 @@ namespace WristVizualizer
             this.showScenegraphToolStripMenuItem,
             this.toolStripSeparator5,
             this.transparencyToolStripMenuItem,
+            this.selectionStyleToolStripMenuItem,
             this.toolStripSeparator4,
             this.hideErrorMessagesToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
@@ -601,17 +617,31 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
-            // startHeadtrackingToolStripMenuItem
+            // selectionStyleToolStripMenuItem
             // 
-            this.startHeadtrackingToolStripMenuItem.Name = "startHeadtrackingToolStripMenuItem";
-            this.startHeadtrackingToolStripMenuItem.Size = new System.Drawing.Size(219, 22);
-            this.startHeadtrackingToolStripMenuItem.Text = "Start Headtracking";
-            this.startHeadtrackingToolStripMenuItem.Click += new System.EventHandler(this.startHeadtrackingToolStripMenuItem_Click);
+            this.selectionStyleToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.boundingBoxToolStripMenuItem,
+            this.lineToolStripMenuItem});
+            this.selectionStyleToolStripMenuItem.Enabled = false;
+            this.selectionStyleToolStripMenuItem.Name = "selectionStyleToolStripMenuItem";
+            this.selectionStyleToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.selectionStyleToolStripMenuItem.Text = "Selection Style";
             // 
-            // toolStripSeparator8
+            // boundingBoxToolStripMenuItem
             // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(216, 6);
+            this.boundingBoxToolStripMenuItem.Checked = true;
+            this.boundingBoxToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.boundingBoxToolStripMenuItem.Name = "boundingBoxToolStripMenuItem";
+            this.boundingBoxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.boundingBoxToolStripMenuItem.Text = "Bounding Box";
+            this.boundingBoxToolStripMenuItem.Click += new System.EventHandler(this.boundingBoxToolStripMenuItem_Click);
+            // 
+            // lineToolStripMenuItem
+            // 
+            this.lineToolStripMenuItem.Name = "lineToolStripMenuItem";
+            this.lineToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lineToolStripMenuItem.Text = "Line Wrap";
+            this.lineToolStripMenuItem.Click += new System.EventHandler(this.lineToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -627,8 +657,8 @@ namespace WristVizualizer
             this.MinimumSize = new System.Drawing.Size(500, 429);
             this.Name = "WristVizualizer";
             this.Text = "Wrist Vizualizer";
-            this.Activated += new System.EventHandler(this.WristVizualizer_Activated);
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
+            this.Activated += new System.EventHandler(this.WristVizualizer_Activated);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -708,6 +738,9 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem calculateDistanceMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem startHeadtrackingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem selectionStyleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem boundingBoxToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem lineToolStripMenuItem;
     }
 }
 

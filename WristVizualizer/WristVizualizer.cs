@@ -134,6 +134,7 @@ namespace WristVizualizer
         private void setupExaminerWindow()
         {
             _viewer = new ExaminerViewer((int)panelCoin.Handle);
+            _viewer.setHighlightType(getSelectionHighlightRenderType());
             _viewer.OnObjectSelected += new ObjectSelectedHandler(_viewer_OnObjectSelected);
             _viewer.OnObjectDeselected += new ObjectDeselectedHandler(_viewer_OnObjectDeselected);
         }
@@ -177,6 +178,7 @@ namespace WristVizualizer
             pointIntersectionToolStripMenuItem.Checked = false;
             colorTransparencyToolStripMenuItem.Enabled = false;
             transparencyToolStripMenuItem.Enabled = true;
+            selectionStyleToolStripMenuItem.Enabled = true;
             viewSourceToolStripMenuItem.Enabled = true;
             saveAsToolStripMenuItem.Enabled = true;
             showScenegraphToolStripMenuItem.Enabled = true;
@@ -999,6 +1001,35 @@ namespace WristVizualizer
                 MessageBox.Show("Error connecting to Wiimote");
                 return;
             }
+        }
+
+        private ExaminerViewer.HighlighRenderTypes getSelectionHighlightRenderType()
+        {
+            if (boundingBoxToolStripMenuItem.Checked) return ExaminerViewer.HighlighRenderTypes.BOX_HIGHLIGHT_RENDER;
+            if (lineToolStripMenuItem.Checked) return ExaminerViewer.HighlighRenderTypes.LINE_HIGHLIGHT_RENDER;
+            throw new WristVizualizerException("Unknown Selection HighlightRender type. None appear to be selected...");
+        }
+
+        private void boundingBoxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (boundingBoxToolStripMenuItem.Checked) return;
+
+            boundingBoxToolStripMenuItem.Checked = true;
+            lineToolStripMenuItem.Checked = false;
+
+            if (_viewer != null)
+                _viewer.setHighlightType(ExaminerViewer.HighlighRenderTypes.BOX_HIGHLIGHT_RENDER);
+        }
+
+        private void lineToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (lineToolStripMenuItem.Checked) return;
+
+            lineToolStripMenuItem.Checked = true;
+            boundingBoxToolStripMenuItem.Checked = false;
+
+            if (_viewer != null)
+                _viewer.setHighlightType(ExaminerViewer.HighlighRenderTypes.LINE_HIGHLIGHT_RENDER);
         }
     }
 }
