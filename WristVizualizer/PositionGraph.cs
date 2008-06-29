@@ -47,8 +47,13 @@ namespace WristVizualizer
             //setup neutral
             postures[0] = new double[2];
             PostureCalculator.Posture p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[referenceBoneIndex]);
-            postures[0][0] = p.FE;
-            postures[0][1] = p.RU;
+            postures[0][0] = p.FE_Raw;
+            postures[0][1] = p.RU_Raw;
+            if (referenceBoneIndex == 8) //check for capitate, special offset used
+            {
+                postures[0][0] = p.FE;
+                postures[0][1] = p.RU;
+            }
 
             for (int i = 0; i < Transforms.Length; i++)
             {
