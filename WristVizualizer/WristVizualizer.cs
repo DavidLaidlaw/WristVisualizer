@@ -126,6 +126,7 @@ namespace WristVizualizer
                     animatePositionTransitionsToolStripMenuItem.Enabled = true;
                     animationRateToolStripMenuItem.Enabled = true;
                     calculateDistanceMapToolStripMenuItem.Enabled = true;
+                    showMetacarpalInertiasToolStripMenuItem.Enabled = true;
                     break;
             }
         }
@@ -171,6 +172,8 @@ namespace WristVizualizer
             saveFrameToolStripMenuItem.Enabled = true;
             showInertiasToolStripMenuItem.Enabled = false;
             showInertiasToolStripMenuItem.Checked = false;
+            showMetacarpalInertiasToolStripMenuItem.Enabled = false;
+            showMetacarpalInertiasToolStripMenuItem.Checked = false;
             showACSToolStripMenuItem.Enabled = false;
             showACSToolStripMenuItem.Checked = false;
             showAxesToolStripMenuItem.Enabled = true;
@@ -892,7 +895,12 @@ namespace WristVizualizer
 
         private void showInertiasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _fullWristController.setInertiaVisibility(showInertiasToolStripMenuItem.Checked);
+            _fullWristController.setInertiaVisibilityCarpalBones(showInertiasToolStripMenuItem.Checked);
+        }
+
+        private void showMetacarpalInertiasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _fullWristController.setInertiaVisibilityMetacarpalBones(showMetacarpalInertiasToolStripMenuItem.Checked);
         }
 
         private void showACSToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1031,5 +1039,7 @@ namespace WristVizualizer
             if (_viewer != null)
                 _viewer.setHighlightType(ExaminerViewer.HighlighRenderTypes.LINE_HIGHLIGHT_RENDER);
         }
+
+
     }
 }

@@ -49,6 +49,9 @@ namespace libWrist
             new int[] {9,13} //mc5 - ham, mc4
             };
 
+        private static int[] _carpalBoneIndexes = { 2, 3, 4, 5, 6, 7, 8, 9 };
+        private static int[] _metacarpalBoneIndexes = { 10, 11, 12, 13, 14 };
+
 
         private string[] _bpaths;
         private string[] _distanceFieldPaths;
@@ -214,6 +217,22 @@ namespace libWrist
         public static int[][] BoneInteractionIndex
         {
             get { return _boneInteraction; }
+        }
+
+        /// <summary>
+        /// Indexes for the eight carpal bones as they fall in the wrist arrays.
+        /// </summary>
+        public static int[] CarpalBoneIndexes
+        {
+            get { return _carpalBoneIndexes; }
+        }
+
+        /// <summary>
+        /// Indexes for the 5 metacarpal bones as they fall in the wrist arrays.
+        /// </summary>
+        public static int[] MetacarpalBoneIndexes
+        {
+            get { return _metacarpalBoneIndexes; }
         }
 
         #endregion

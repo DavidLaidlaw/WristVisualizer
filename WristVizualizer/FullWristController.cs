@@ -159,7 +159,7 @@ namespace WristVizualizer
                 try
                 {
                     TransformRT[] inert = DatParser.parseInertiaFileToRT(_wrist.inertiaFile);
-                    for (int i = 2; i < 10; i++) //skip the long bones
+                    for (int i = 0; i < Wrist.NumBones; i++) //skip the long bones
                     {
                         if (_bones[i] == null)
                             continue;
@@ -533,11 +533,22 @@ namespace WristVizualizer
                 _bones[e.BoneIndex].show();
         }
 
-        public void setInertiaVisibility(bool visible)
+        public void setInertiaVisibilityCarpalBones(bool visible)
+        {
+            setInertiaVisibility(visible, Wrist.CarpalBoneIndexes);
+        }
+
+        public void setInertiaVisibilityMetacarpalBones(bool visible)
+        {
+            setInertiaVisibility(visible, Wrist.MetacarpalBoneIndexes);
+        }
+
+        private void setInertiaVisibility(bool visible, int[] boneIndexes)
         {
             if (visible)
             {
-                for (int i = 2; i < 10; i++) //skip the long bones
+                bool continueOnError = false;
+                foreach (int i in boneIndexes)
                 {
                     if (_bones[i] == null)
                         continue;
@@ -547,6 +558,17 @@ namespace WristVizualizer
                     {
                         MessageBox.Show("Unable to show inertial axes. Error reading file.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
                         return;
+                    }
+                    if (_inertiaMatrices[i].Determinant() == 0)
+                    {
+                        if (continueOnError) continue;
+                        string msg = String.Format("Invalid inertial axis for '{0}'. Determinant==0!\n\nDo you wish to hide this error message and continue anyway?", Wrist.LongBoneNames[i]);
+                        DialogResult r = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                        if (r == DialogResult.No) return;
+
+                        continueOnError = true;
+                        continue;
+
                     }
 
                     _inertias[i] = new Separator();
@@ -559,9 +581,9 @@ namespace WristVizualizer
             else
             {
                 //so we want to remove the inertia files
-                for (int i = 2; i < 10; i++)
+                foreach (int i in boneIndexes)
                 {
-                    _bones[i].removeChild(_inertias[i]);
+                    if (_inertias[i] != null) _bones[i].removeChild(_inertias[i]);
                     _inertias[i] = null;
                 }
 
