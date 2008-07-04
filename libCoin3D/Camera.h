@@ -15,6 +15,17 @@ public:
 
 	void rotateCameraInX(const float movement);
 	void rotateCameraInY(const float movement);
+
+	array<float>^ getPosition();
+	array<float>^ getOrientation();
+	void setPosition(array<float>^ position);
+	void setOrientation(array<float>^ orientation);
+
+	property float FocalDistance {
+		float get();
+		void set(float value);
+	}
+
 private:
 	void rotateCamera(const SbVec3f & aroundaxis, const float delta);
 

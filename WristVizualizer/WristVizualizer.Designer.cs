@@ -99,6 +99,7 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.cameraPositionOrientationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -244,7 +245,8 @@ namespace WristVizualizer
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.colorTransparencyToolStripMenuItem,
-            this.backgroundColorToolStripMenuItem});
+            this.backgroundColorToolStripMenuItem,
+            this.cameraPositionOrientationToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.editToolStripMenuItem.Text = "&Edit";
@@ -253,7 +255,7 @@ namespace WristVizualizer
             // 
             this.colorTransparencyToolStripMenuItem.Enabled = false;
             this.colorTransparencyToolStripMenuItem.Name = "colorTransparencyToolStripMenuItem";
-            this.colorTransparencyToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.colorTransparencyToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.colorTransparencyToolStripMenuItem.Text = "Color && Transparency...";
             this.colorTransparencyToolStripMenuItem.Click += new System.EventHandler(this.colorTransparencyToolStripMenuItem_Click);
             // 
@@ -261,7 +263,7 @@ namespace WristVizualizer
             // 
             this.backgroundColorToolStripMenuItem.Enabled = false;
             this.backgroundColorToolStripMenuItem.Name = "backgroundColorToolStripMenuItem";
-            this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.backgroundColorToolStripMenuItem.Text = "Background Color...";
             this.backgroundColorToolStripMenuItem.Click += new System.EventHandler(this.backgroundColorToolStripMenuItem_Click);
             // 
@@ -381,7 +383,7 @@ namespace WristVizualizer
             this.capitateToolStripMenuItem.Checked = true;
             this.capitateToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.capitateToolStripMenuItem.Name = "capitateToolStripMenuItem";
-            this.capitateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.capitateToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.capitateToolStripMenuItem.Tag = 8;
             this.capitateToolStripMenuItem.Text = "Capitate";
             this.capitateToolStripMenuItem.Click += new System.EventHandler(this.referenceBoneToolStripMenuItem_Click);
@@ -389,7 +391,7 @@ namespace WristVizualizer
             // mC3ToolStripMenuItem
             // 
             this.mC3ToolStripMenuItem.Name = "mC3ToolStripMenuItem";
-            this.mC3ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.mC3ToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.mC3ToolStripMenuItem.Tag = 12;
             this.mC3ToolStripMenuItem.Text = "MC3";
             this.mC3ToolStripMenuItem.Click += new System.EventHandler(this.referenceBoneToolStripMenuItem_Click);
@@ -701,6 +703,14 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
+            // cameraPositionOrientationToolStripMenuItem
+            // 
+            this.cameraPositionOrientationToolStripMenuItem.Enabled = false;
+            this.cameraPositionOrientationToolStripMenuItem.Name = "cameraPositionOrientationToolStripMenuItem";
+            this.cameraPositionOrientationToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.cameraPositionOrientationToolStripMenuItem.Text = "Camera Position && Orientation...";
+            this.cameraPositionOrientationToolStripMenuItem.Click += new System.EventHandler(this.cameraPositionOrientationToolStripMenuItem_Click);
+            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -805,6 +815,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem capitateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mC3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
+        private System.Windows.Forms.ToolStripMenuItem cameraPositionOrientationToolStripMenuItem;
     }
 }
 

@@ -41,3 +41,48 @@ void libCoin3D::Camera::rotateCamera(const SbVec3f & aroundaxis, const float del
 	cam->orientation.getValue().multVec(DEFAULTDIRECTION, newdir);
 	cam->position = focalpoint - cam->focalDistance.getValue() * newdir;
 }
+
+array<float>^ libCoin3D::Camera::getPosition()
+{
+	SoCamera* cam = (SoCamera*)_node;
+	float x,y,z;
+	cam->position.getValue().getValue(x,y,z);
+	return gcnew array<float> {x, y, z};
+}
+array<float>^ libCoin3D::Camera::getOrientation()
+{
+	SoCamera* cam = (SoCamera*)_node;
+	SbVec3f axis;
+	float radians;
+	cam->orientation.getValue().getValue(axis,radians);
+	float x,y,z;
+	axis.getValue(x,y,z);
+	return gcnew array<float> {x, y, z, radians};
+}
+void libCoin3D::Camera::setPosition(array<float>^ position)
+{
+	if (position->Length != 3)
+		throw gcnew System::ArgumentException("Position must have 3 values. (x, y, z)");
+	SoCamera* cam = (SoCamera*)_node;
+	cam->position.setValue(position[0],position[1],position[2]);
+}
+void libCoin3D::Camera::setOrientation(array<float>^ orientation)
+{
+	if (orientation->Length != 4)
+		throw gcnew System::ArgumentException("Orientation must have 3 values. ((x, y, z), radians)");
+	SoCamera* cam = (SoCamera*)_node;
+	cam->orientation.setValue(SbRotation(SbVec3f(orientation[0],orientation[1],orientation[2]),orientation[3]));
+}
+
+float libCoin3D::Camera::FocalDistance::get() 
+{
+	SoCamera* cam = (SoCamera*)_node;
+	float fd = cam->focalDistance.getValue();
+	return fd;
+}
+
+void libCoin3D::Camera::FocalDistance::set(float value) 
+{
+	SoCamera* cam = (SoCamera*)_node;
+	cam->focalDistance.setValue(value);
+}

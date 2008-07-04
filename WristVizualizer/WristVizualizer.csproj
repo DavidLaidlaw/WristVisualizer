@@ -56,6 +56,12 @@
     <Compile Include="BoneHideChangeEventArgs.cs" />
     <Compile Include="CommandLineOptions.cs" />
     <Compile Include="Controller.cs" />
+    <Compile Include="CameraEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CameraEditor.Designer.cs">
+      <DependentUpon>CameraEditor.cs</DependentUpon>
+    </Compile>
     <Compile Include="DistanceAndContourDialog.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -167,6 +173,10 @@
     <EmbeddedResource Include="AnimationCreatorForm.resx">
       <SubType>Designer</SubType>
       <DependentUpon>AnimationCreatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CameraEditor.resx">
+      <DependentUpon>CameraEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DistanceAndContourDialog.resx">
       <SubType>Designer</SubType>

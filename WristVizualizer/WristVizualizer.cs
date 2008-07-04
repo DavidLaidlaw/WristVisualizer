@@ -169,6 +169,7 @@ namespace WristVizualizer
 
             importToolStripMenuItem.Enabled = true;
             backgroundColorToolStripMenuItem.Enabled = true;
+            cameraPositionOrientationToolStripMenuItem.Enabled = true;
             decoratorToolStripMenuItem.Enabled = true;
             saveFrameToolStripMenuItem.Enabled = true;
             showInertiasToolStripMenuItem.Enabled = false;
@@ -1068,6 +1069,14 @@ namespace WristVizualizer
 
             //change the reference bone.
             _fullWristController.changeWristPositionReferenceBoneIndex(getBoneIndexForWristPositionReferenceBone());
+        }
+
+        private void cameraPositionOrientationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null) return;
+            Camera cam = _viewer.Camera;
+            CameraEditor camEditor = new CameraEditor(cam);
+            camEditor.ShowDialog();
         }
 
 
