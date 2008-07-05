@@ -15,8 +15,27 @@ namespace WristVizualizer
         public CameraEditor(Camera camera)
         {
             InitializeComponent();
+
             _camera = camera;
-            showCameraParameters(camera);
+
+        }
+
+
+        /// <summary>
+        /// Checks that we were passed a valid camera, then calls ShowDialog
+        /// </summary>
+        public DialogResult CheckAndShowDialog()
+        {
+            //quick check that this is an othrographic camera, else we don't work
+            if (!_camera.IsOrthographic)
+            {
+                string msg = "Non Othrogrpahic Camera found in scene.\nCan only edit othographic cameras. Sorry.";
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return DialogResult.Abort;
+            }
+
+            showCameraParameters(_camera);
+            return this.ShowDialog();
         }
 
 
@@ -26,6 +45,9 @@ namespace WristVizualizer
             float[] pos = camera.getPosition();
             float[] orient = camera.getOrientation();
             float focalDistance = camera.FocalDistance;
+            float nearDistance = camera.NearDistance;
+            float farDistance = camera.FarDistance;
+            float height  = camera.Height;
 
             textBoxPosX.Text = pos[0].ToString(numberFormat);
             textBoxPosY.Text = pos[1].ToString(numberFormat);
@@ -37,6 +59,9 @@ namespace WristVizualizer
             textBoxOrientRadians.Text = orient[3].ToString(numberFormat);
 
             textBoxFocalDistance.Text = focalDistance.ToString(numberFormat);
+            textBoxNearDistance.Text = nearDistance.ToString(numberFormat);
+            textBoxFarDistance.Text = farDistance.ToString(numberFormat);
+            textBoxHeight.Text = height.ToString(numberFormat);
         }
 
         private void saveCameraParametersFromForm(Camera outputCamera)
@@ -51,10 +76,16 @@ namespace WristVizualizer
             float orientRadians = float.Parse(textBoxOrientRadians.Text);
 
             float focalDistance = float.Parse(textBoxFocalDistance.Text);
+            float nearDistance = float.Parse(textBoxNearDistance.Text);
+            float farDistance = float.Parse(textBoxFarDistance.Text);
+            float height = float.Parse(textBoxHeight.Text);
 
             outputCamera.setPosition(new float[] { posX, posY, posZ });
             outputCamera.setOrientation(new float[] { orientX, orientY, orientZ, orientRadians });
             outputCamera.FocalDistance = focalDistance;
+            outputCamera.NearDistance = nearDistance;
+            outputCamera.FarDistance = farDistance;
+            outputCamera.Height = height;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
@@ -66,6 +97,34 @@ namespace WristVizualizer
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonSaveClipboard_Click(object sender, EventArgs e)
+        {
+            string graph = _camera.getNodeGraph();
+            Clipboard.SetText(graph);
+        }
+
+        private void buttonLoadClipboard_Click(object sender, EventArgs e)
+        {
+            string graph = Clipboard.GetText();
+            if (String.IsNullOrEmpty(graph))
+            {
+                string msg = "No camera found in Clipboard";
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                Camera c = new Camera(graph);
+                showCameraParameters(c);
+            }
+            catch (ArgumentException ex)
+            {
+                string msg = String.Format("Error loading camera.\n{0}",ex.Message);
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
 

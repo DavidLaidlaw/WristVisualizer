@@ -1,14 +1,56 @@
 #include "StdAfx.h"
 #include "Camera.h"
 
+#include <Inventor/actions/SoSearchAction.h>
+
 libCoin3D::Camera::Camera()
 {
 	_node = new SoOrthographicCamera();
+	_node->ref();
 }
 
 libCoin3D::Camera::Camera(SoCamera *camera)
 {
 	_node = camera;
+	_node->ref();
+}
+
+libCoin3D::Camera::Camera(System::String^ scenegraph)
+{
+	char* buffer = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(scenegraph).ToPointer();
+	SoInput in;
+	in.setBuffer(buffer, scenegraph->Length + 1);
+	SoNode* node = SoDB::readAll(&in);
+	System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)buffer);
+	if (node==NULL)
+		throw gcnew System::ArgumentException("Error reading camera");
+
+	//now lets try and find the camera
+	node->ref();
+	SoSearchAction sa;
+	sa.setType(SoCamera::getClassTypeId());
+	sa.apply(node);
+	SoPath* myPath = sa.getPath();
+	if (myPath==NULL) 
+		throw gcnew System::ArgumentException("No camera found in graph");
+
+	SoNode* camera = myPath->getTail();
+	camera->ref();
+	node->unref(); //delete wrapper junk, just save the camera
+	_node = camera; //and now we can return :)
+
+	//System::Console::WriteLine("Graph header of type: {0}", gcnew System::String(camera->getTypeId().getName().getString()));
+}
+
+libCoin3D::Camera::!Camera()
+{
+	if (_node != NULL)
+		_node->unref();
+}
+
+bool libCoin3D::Camera::IsOrthographic::get()
+{
+	return (_node->getTypeId()==SoOrthographicCamera::getClassTypeId());
 }
 
 void libCoin3D::Camera::rotateCameraInX(const float movement)
@@ -85,4 +127,45 @@ void libCoin3D::Camera::FocalDistance::set(float value)
 {
 	SoCamera* cam = (SoCamera*)_node;
 	cam->focalDistance.setValue(value);
+}
+
+float libCoin3D::Camera::FarDistance::get() 
+{
+	SoCamera* cam = (SoCamera*)_node;
+	float fd = cam->farDistance.getValue();
+	return fd;
+}
+
+void libCoin3D::Camera::FarDistance::set(float value) 
+{
+	SoCamera* cam = (SoCamera*)_node;
+	cam->farDistance.setValue(value);
+}
+
+float libCoin3D::Camera::NearDistance::get() 
+{
+	SoCamera* cam = (SoCamera*)_node;
+	float nd = cam->nearDistance.getValue();
+	return nd;
+}
+
+void libCoin3D::Camera::NearDistance::set(float value) 
+{
+	SoCamera* cam = (SoCamera*)_node;
+	cam->nearDistance.setValue(value);
+}
+
+float libCoin3D::Camera::Height::get() 
+{
+	if (!this->IsOrthographic) return 0;
+	SoOrthographicCamera* cam = (SoOrthographicCamera*)_node;
+	float ht = cam->height.getValue();
+	return ht;
+}
+
+void libCoin3D::Camera::Height::set(float value) 
+{
+	if (!this->IsOrthographic) return;
+	SoOrthographicCamera* cam = (SoOrthographicCamera*)_node;
+	cam->height.setValue(value);
 }

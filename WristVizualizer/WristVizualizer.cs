@@ -1076,7 +1076,7 @@ namespace WristVizualizer
             if (_viewer == null) return;
             Camera cam = _viewer.Camera;
             CameraEditor camEditor = new CameraEditor(cam);
-            camEditor.ShowDialog();
+            camEditor.CheckAndShowDialog();
         }
 
 

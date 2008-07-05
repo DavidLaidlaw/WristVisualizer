@@ -50,6 +50,14 @@ namespace WristVizualizer
             this.label11 = new System.Windows.Forms.Label();
             this.textBoxOrientRadians = new System.Windows.Forms.TextBox();
             this.textBoxFocalDistance = new System.Windows.Forms.TextBox();
+            this.buttonSaveClipboard = new System.Windows.Forms.Button();
+            this.buttonLoadClipboard = new System.Windows.Forms.Button();
+            this.textBoxNearDistance = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBoxFarDistance = new System.Windows.Forms.TextBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.textBoxHeight = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // label1
@@ -100,7 +108,7 @@ namespace WristVizualizer
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(261, 199);
+            this.buttonCancel.Location = new System.Drawing.Point(261, 279);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(84, 28);
             this.buttonCancel.TabIndex = 7;
@@ -110,7 +118,7 @@ namespace WristVizualizer
             // 
             // buttonOK
             // 
-            this.buttonOK.Location = new System.Drawing.Point(171, 199);
+            this.buttonOK.Location = new System.Drawing.Point(171, 279);
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(84, 28);
             this.buttonOK.TabIndex = 6;
@@ -228,13 +236,89 @@ namespace WristVizualizer
             this.textBoxFocalDistance.Size = new System.Drawing.Size(40, 20);
             this.textBoxFocalDistance.TabIndex = 21;
             // 
+            // buttonSaveClipboard
+            // 
+            this.buttonSaveClipboard.Location = new System.Drawing.Point(261, 178);
+            this.buttonSaveClipboard.Name = "buttonSaveClipboard";
+            this.buttonSaveClipboard.Size = new System.Drawing.Size(84, 38);
+            this.buttonSaveClipboard.TabIndex = 22;
+            this.buttonSaveClipboard.Text = "Save To Clipboard";
+            this.buttonSaveClipboard.UseVisualStyleBackColor = true;
+            this.buttonSaveClipboard.Click += new System.EventHandler(this.buttonSaveClipboard_Click);
+            // 
+            // buttonLoadClipboard
+            // 
+            this.buttonLoadClipboard.Location = new System.Drawing.Point(261, 222);
+            this.buttonLoadClipboard.Name = "buttonLoadClipboard";
+            this.buttonLoadClipboard.Size = new System.Drawing.Size(84, 38);
+            this.buttonLoadClipboard.TabIndex = 23;
+            this.buttonLoadClipboard.Text = "Load From Clipboard";
+            this.buttonLoadClipboard.UseVisualStyleBackColor = true;
+            this.buttonLoadClipboard.Click += new System.EventHandler(this.buttonLoadClipboard_Click);
+            // 
+            // textBoxNearDistance
+            // 
+            this.textBoxNearDistance.Location = new System.Drawing.Point(107, 156);
+            this.textBoxNearDistance.Name = "textBoxNearDistance";
+            this.textBoxNearDistance.Size = new System.Drawing.Size(40, 20);
+            this.textBoxNearDistance.TabIndex = 25;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(12, 159);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(78, 13);
+            this.label12.TabIndex = 24;
+            this.label12.Text = "Near Distance:";
+            // 
+            // textBoxFarDistance
+            // 
+            this.textBoxFarDistance.Location = new System.Drawing.Point(107, 182);
+            this.textBoxFarDistance.Name = "textBoxFarDistance";
+            this.textBoxFarDistance.Size = new System.Drawing.Size(40, 20);
+            this.textBoxFarDistance.TabIndex = 27;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(12, 185);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(70, 13);
+            this.label13.TabIndex = 26;
+            this.label13.Text = "Far Distance:";
+            // 
+            // textBoxHeight
+            // 
+            this.textBoxHeight.Location = new System.Drawing.Point(107, 208);
+            this.textBoxHeight.Name = "textBoxHeight";
+            this.textBoxHeight.Size = new System.Drawing.Size(40, 20);
+            this.textBoxHeight.TabIndex = 29;
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(12, 211);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(41, 13);
+            this.label14.TabIndex = 28;
+            this.label14.Text = "Height:";
+            // 
             // CameraEditor
             // 
             this.AcceptButton = this.buttonOK;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(357, 241);
+            this.ClientSize = new System.Drawing.Size(357, 319);
+            this.Controls.Add(this.textBoxHeight);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.textBoxFarDistance);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.textBoxNearDistance);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.buttonLoadClipboard);
+            this.Controls.Add(this.buttonSaveClipboard);
             this.Controls.Add(this.textBoxFocalDistance);
             this.Controls.Add(this.textBoxOrientRadians);
             this.Controls.Add(this.textBoxOrientZ);
@@ -288,5 +372,13 @@ namespace WristVizualizer
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox textBoxOrientRadians;
         private System.Windows.Forms.TextBox textBoxFocalDistance;
+        private System.Windows.Forms.Button buttonSaveClipboard;
+        private System.Windows.Forms.Button buttonLoadClipboard;
+        private System.Windows.Forms.TextBox textBoxNearDistance;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.TextBox textBoxFarDistance;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.TextBox textBoxHeight;
+        private System.Windows.Forms.Label label14;
     }
 }

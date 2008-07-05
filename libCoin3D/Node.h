@@ -10,5 +10,6 @@ public:
 	//virtual ~Node()=0;
 	//virtual void test(int t)=0;
 	virtual SoNode* getNode()=0;
+	virtual System::String^ getNodeGraph();
 };
 }
