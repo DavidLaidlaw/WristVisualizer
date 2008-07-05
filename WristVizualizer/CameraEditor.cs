@@ -90,7 +90,18 @@ namespace WristVizualizer
 
         private void buttonOK_Click(object sender, EventArgs e)
         {
-            saveCameraParametersFromForm(_camera);
+            try
+            {
+                saveCameraParametersFromForm(_camera);
+            }
+            catch
+            {
+                //TODO: Add error checking for the many camera paramters
+                string msg = "Error parsing form. Some of your parameters might have been invalid.\nDo you wish to continue anway with a partial read?";
+                DialogResult r = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+                if (r == DialogResult.No)
+                    return;
+            }
             this.Close();
         }
 
