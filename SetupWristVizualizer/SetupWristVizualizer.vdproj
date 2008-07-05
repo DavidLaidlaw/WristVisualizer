@@ -111,6 +111,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_519DF4735D37467AA2554A71E9300FC5"
+        "OwnerKey" = "8:_F8C49D3C076544188D61D6D6DE73851B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_54EE4D19914A47AA961641D342522166"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -249,12 +255,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_CB48D9B501DC45459D5EF5D0D294586C"
-        "OwnerKey" = "8:_E2EAE5E808A54BA2BBBDDB4B603E350C"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -263,12 +263,6 @@
         {
         "MsmKey" = "8:_D14FEB1B05164F8298E5918992DD4643"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E2EAE5E808A54BA2BBBDDB4B603E350C"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -286,6 +280,12 @@
         "Entry"
         {
         "MsmKey" = "8:_F6106B3D9E06B0DF376F42F2AA1EA3FF"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_F8C49D3C076544188D61D6D6DE73851B"
         "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -611,7 +611,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3104.27491, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3114.18615, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_377499BA5A878F1C5B39589E0CC507C7"
@@ -642,7 +642,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3104.27491, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3114.18614, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_3899C63856BDB26FB75EF215A67A6688"
@@ -984,7 +984,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3104.27495, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3114.18618, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_905C4787D34F5BF898DD81B699033EE3"
@@ -1480,14 +1480,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{A3D961FE-C6E4-4784-974C-0CF849E848A2}"
-        "PackageCode" = "8:{BC583F37-E4CC-4CD7-9A3D-34B63B45FD20}"
+        "ProductCode" = "8:{D08EEBBC-9386-4BA3-AC36-D1C124B9C743}"
+        "PackageCode" = "8:{7435304F-0F5E-4E90-8327-D9D03EC2A513}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.4.9"
+        "ProductVersion" = "8:1.4.10"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2266,7 +2266,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_CB48D9B501DC45459D5EF5D0D294586C"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_519DF4735D37467AA2554A71E9300FC5"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2280,7 +2280,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_E2EAE5E808A54BA2BBBDDB4B603E350C"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_F8C49D3C076544188D61D6D6DE73851B"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"

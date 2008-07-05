@@ -1,3 +1,6 @@
+Version 1.4.10
+- New: Added ability to view and edit the parameters for the main Othrographic Camera in the scene.
+
 Version 1.4.9
 - Fixed bug: Fixed problem with the neutral position getting the capitate offset even when the reference bone was the mc3
 - New: Added text display for global wrist position in Full Wrist mode
