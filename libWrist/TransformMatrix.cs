@@ -221,6 +221,21 @@ namespace libWrist
         }
 
         /// <summary>
+        /// Returns the Rotation Matrix represented as 3 Euler angles (in degrees), in x,y,z order.
+        /// </summary>
+        /// <returns></returns>
+        public double[] ToEuler()
+        {
+            double[] euler = new double[3];
+            double sinThetaY = -this.Array[2][0];
+            double cosThetaY = Math.Sqrt(1 - sinThetaY * sinThetaY);
+            euler[0] = Math.Atan2(this.Array[2][1], Array[2][2]) * 180 / Math.PI;
+            euler[1] = Math.Atan2(sinThetaY, cosThetaY) * 180 / Math.PI;
+            euler[2] = Math.Atan2(this.Array[1][0], this.Array[0][0]) * 180 / Math.PI;
+            return euler;
+        }
+
+        /// <summary>
         /// sets the current matrix to the identity matrix
         /// </summary>
         private void setToIdentity()
@@ -379,6 +394,11 @@ namespace libWrist
         public new TransformMatrix Inverse()
         {
             return new TransformMatrix(base.Inverse());
+        }
+
+        public new TransformMatrix Transpose()
+        {
+            return new TransformMatrix(base.Transpose());
         }
         #endregion
 

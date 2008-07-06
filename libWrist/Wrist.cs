@@ -65,6 +65,7 @@ namespace libWrist
         private string _radius;
         private string _inertiaFile;
         private string _acsFile;
+        private string _acsFile_uln;
         private Databases _db;
         private SeriesInfo[] _info;
 
@@ -142,6 +143,15 @@ namespace libWrist
         {
             get { return _acsFile; }
         }
+
+        /// <summary>
+        /// The full path to the neutral ACS file for the ulna if it exists.
+        /// </summary>
+        public string acsFile_uln
+        {
+            get { return _acsFile_uln; }
+        }
+
 
         /// <summary>
         /// An array of full paths to all 15 bones for the wrist
@@ -444,6 +454,7 @@ namespace libWrist
             _subject = Path.GetFileName(_subjectPath);
             _inertiaFile = Path.Combine(Path.Combine(_subjectPath,_neutralSeries),"inertia"+ _neutralSeriesNum + _side + ".dat");
             _acsFile = Path.Combine(Path.Combine(_subjectPath, _neutralSeries), "AnatCoordSys.dat");
+            _acsFile_uln = Path.Combine(Path.Combine(_subjectPath, _neutralSeries), "AnatCoordSys_uln.dat");
 
             //setup Distance fields
             string distanceFieldFolder = Path.Combine(Path.Combine(_subjectPath,_neutralSeries),"DistanceFields");

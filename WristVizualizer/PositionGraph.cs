@@ -45,7 +45,7 @@ namespace WristVizualizer
         {
             double[][] postures = new double[Transforms.Length + 1][]; //+1 for the neutral posture
             //setup neutral
-            postures[0] = new double[2];
+            postures[0] = new double[3];
             PostureCalculator.Posture p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[referenceBoneIndex]);
             postures[0][0] = p.FE_Raw;
             postures[0][1] = p.RU_Raw;
@@ -54,10 +54,11 @@ namespace WristVizualizer
                 postures[0][0] = p.FE;
                 postures[0][1] = p.RU;
             }
+            postures[0][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1]); //TODO: Error checking for no ACS in the ulna
 
             for (int i = 0; i < Transforms.Length; i++)
             {
-                postures[i + 1] = new double[2];
+                postures[i + 1] = new double[3];
                 p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[referenceBoneIndex], Transforms[i][0], Transforms[i][referenceBoneIndex]);
                 if (referenceBoneIndex == 8) //check for capitate, special offset used
                 {
@@ -69,6 +70,7 @@ namespace WristVizualizer
                     postures[i + 1][0] = p.FE_Raw;
                     postures[i + 1][1] = p.RU_Raw;
                 }
+                postures[i + 1][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1], Transforms[i][0], Transforms[i][1]);
             }
             return postures;
         }                                           
@@ -102,6 +104,7 @@ namespace WristVizualizer
         {
             textBoxFE.Text = _positions[postureIndex][0].ToString("0.00");
             textBoxRU.Text = _positions[postureIndex][1].ToString("0.00");
+            textBoxPS.Text = _positions[postureIndex][2].ToString("0.00");
         }
 
         private void drawSinglePoint(Graphics g, double[] point)

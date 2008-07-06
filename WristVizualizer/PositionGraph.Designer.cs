@@ -33,6 +33,8 @@ namespace WristVizualizer
             this.textBoxFE = new System.Windows.Forms.TextBox();
             this.textBoxRU = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.textBoxPS = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxGraph)).BeginInit();
             this.SuspendLayout();
             // 
@@ -50,7 +52,7 @@ namespace WristVizualizer
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(35, 256);
+            this.label1.Location = new System.Drawing.Point(4, 256);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(23, 13);
             this.label1.TabIndex = 1;
@@ -58,7 +60,7 @@ namespace WristVizualizer
             // 
             // textBoxFE
             // 
-            this.textBoxFE.Location = new System.Drawing.Point(64, 253);
+            this.textBoxFE.Location = new System.Drawing.Point(33, 253);
             this.textBoxFE.Name = "textBoxFE";
             this.textBoxFE.ReadOnly = true;
             this.textBoxFE.Size = new System.Drawing.Size(44, 20);
@@ -66,7 +68,7 @@ namespace WristVizualizer
             // 
             // textBoxRU
             // 
-            this.textBoxRU.Location = new System.Drawing.Point(146, 253);
+            this.textBoxRU.Location = new System.Drawing.Point(111, 253);
             this.textBoxRU.Name = "textBoxRU";
             this.textBoxRU.ReadOnly = true;
             this.textBoxRU.Size = new System.Drawing.Size(44, 20);
@@ -75,16 +77,35 @@ namespace WristVizualizer
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(117, 256);
+            this.label2.Location = new System.Drawing.Point(82, 256);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(26, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "RU:";
             // 
+            // textBoxPS
+            // 
+            this.textBoxPS.Location = new System.Drawing.Point(186, 253);
+            this.textBoxPS.Name = "textBoxPS";
+            this.textBoxPS.ReadOnly = true;
+            this.textBoxPS.Size = new System.Drawing.Size(44, 20);
+            this.textBoxPS.TabIndex = 6;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(157, 256);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(24, 13);
+            this.label3.TabIndex = 5;
+            this.label3.Text = "PS:";
+            // 
             // PositionGraph
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.textBoxPS);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.textBoxRU);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBoxFE);
@@ -105,5 +126,7 @@ namespace WristVizualizer
         private System.Windows.Forms.TextBox textBoxFE;
         private System.Windows.Forms.TextBox textBoxRU;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBoxPS;
+        private System.Windows.Forms.Label label3;
     }
 }

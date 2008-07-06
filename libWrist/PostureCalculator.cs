@@ -93,5 +93,23 @@ namespace libWrist
             post.RU = post.RU_Raw - NEUTRAL_RU_POSITION;
             return post;
         }
+
+        public static double CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS, TransformMatrix MotionTestBone, TransformMatrix MotionRelativeBone)
+        {
+            TransformMatrix relativeMotion = MotionRelativeBone.Inverse() * MotionTestBone;
+            return CalculatePronationSupination(RCS, UCS, relativeMotion);
+        }
+
+        public static double CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS)
+        {
+            return CalculatePronationSupination(RCS, UCS, new TransformMatrix());
+        }
+
+        public static double CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS, TransformMatrix BoneRelMation)
+        {
+            TransformMatrix relativeCSMotion = UCS.Inverse() * BoneRelMation * RCS;
+            double[] euler = relativeCSMotion.Transpose().ToEuler();
+            return euler[0];
+        }
     }
 }

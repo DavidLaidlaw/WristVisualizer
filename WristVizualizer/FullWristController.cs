@@ -203,6 +203,21 @@ namespace WristVizualizer
                 }
                 catch { }
             }
+
+            if (File.Exists(_wrist.acsFile_uln))
+            {
+                try
+                {
+                    //If its checked, then we need to add it
+                    TransformRT[] acs = DatParser.parseACSFileToRT(_wrist.acsFile_uln);
+
+                    //only for radius, check if it exists
+                    if (_bones[1] == null)
+                        return;
+                    _inertiaMatrices[1] = new TransformMatrix(acs[0]);
+                }
+                catch { }
+            }
         }
 
         public void calculateDistanceMapsToolClickedHandler()
@@ -562,7 +577,8 @@ namespace WristVizualizer
             setInertiaVisibility(visible, Wrist.MetacarpalBoneIndexes);
         }
 
-        private void setInertiaVisibility(bool visible, int[] boneIndexes)
+        private void setInertiaVisibility(bool visible, int[] boneIndexes) { setInertiaVisibility(visible, boneIndexes, 0); }
+        private void setInertiaVisibility(bool visible, int[] boneIndexes, int arrowLength)
         {
             if (visible)
             {
@@ -592,7 +608,10 @@ namespace WristVizualizer
 
                     _inertias[i] = new Separator();
                     Transform t = _inertiaMatrices[i].ToTransform();
-                    _inertias[i].addNode(new ACS());
+                    if (arrowLength == 0)
+                        _inertias[i].addNode(new ACS());
+                    else
+                        _inertias[i].addNode(new ACS(45));
                     _inertias[i].addTransform(t);
                     _bones[i].addChild(_inertias[i]);
                 }
@@ -611,30 +630,32 @@ namespace WristVizualizer
 
         public void setACSVisibility(bool visible)
         {
-            if (visible)
-            {
-                //only for radius, check if it exists
-                if (_bones[0] == null)
-                    return;
+            int[] forearm = {0, 1};
+            setInertiaVisibility(visible, forearm, 45);
+            //if (visible)
+            //{
+            //    //only for radius, check if it exists
+            //    if (_bones[0] == null)
+            //        return;
 
-                //check that it exists:
-                if (_inertiaMatrices[0] == null)
-                {
-                    MessageBox.Show("Unable to show ACS. Error reading file.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
+            //    //check that it exists:
+            //    if (_inertiaMatrices[0] == null)
+            //    {
+            //        MessageBox.Show("Unable to show ACS. Error reading file.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //        return;
+            //    }
 
-                _inertias[0] = new Separator();
-                Transform t = _inertiaMatrices[0].ToTransform();
-                _inertias[0].addNode(new ACS(45)); //longer axes for the radius/ACS
-                _inertias[0].addTransform(t);
-                _bones[0].addChild(_inertias[0]);
-            }
-            else
-            {
-                _bones[0].removeChild(_inertias[0]);
-                _inertias[0] = null;
-            }
+            //    _inertias[0] = new Separator();
+            //    Transform t = _inertiaMatrices[0].ToTransform();
+            //    _inertias[0].addNode(new ACS(45)); //longer axes for the radius/ACS
+            //    _inertias[0].addTransform(t);
+            //    _bones[0].addChild(_inertias[0]);
+            //}
+            //else
+            //{
+            //    _bones[0].removeChild(_inertias[0]);
+            //    _inertias[0] = null;
+            //}
         }
 
     }
