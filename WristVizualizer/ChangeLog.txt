@@ -1,3 +1,6 @@
+Version 1.4.11
+- New: Can now show the raw pronation/supination angle in full wrist mode.
+
 Version 1.4.10
 - New: Added ability to view and edit the parameters for the main Othrographic Camera in the scene.
 
