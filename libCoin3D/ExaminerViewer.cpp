@@ -742,7 +742,7 @@ static void event_cb(void * ud, SoEventCallback * n)
 
     n->setHandled();
 
-    (void)fprintf(stdout, "\n");
+    //(void)fprintf(stdout, "\n");
 
     SbVec3f v = point->getPoint();
 
