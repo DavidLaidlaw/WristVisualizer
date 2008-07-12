@@ -16,6 +16,8 @@ namespace WristVizualizer
         private ScenegraphNode _rootScenegraph;
         private TreeNode _initiallySelected;
 
+        private bool _makingChanges = false; //prevents looping on ourselves
+
         public ScenegraphTreeViewer(ExaminerViewer viewer, Separator root)
         {
             InitializeComponent();
@@ -33,12 +35,29 @@ namespace WristVizualizer
 
             //setup listener
             _viewer.OnNewSceneGraphLoaded += new NewSceneGraphLoadedHandler(_viewer_OnNewSceneGraphLoaded);
+            _viewer.OnObjectSelected += new ObjectSelectedHandler(_viewer_OnObjectSelected);
         }
 
         void _viewer_OnNewSceneGraphLoaded()
         {
             //if this is the case then, we need to shut ourselves down....
             this.Close();
+        }
+
+        void _viewer_OnObjectSelected()
+        {
+            if (_makingChanges) return; //we're doing it, so do nothing
+
+            //get selected node
+            Separator currentlySelectedSeparator = _viewer.getSeparatorForSelection();
+            if (currentlySelectedSeparator == null) return; //shouldn't be, but lets double check.
+            TreeNode selectedTreeNode = findTreeNodeContainingCoinNode(currentlySelectedSeparator);
+            if (selectedTreeNode != null)
+            {
+                _makingChanges = true;
+                treeViewScene.SelectedNode = selectedTreeNode;
+                _makingChanges = false;
+            }
         }
 
         private TreeNode buildTree(ScenegraphNode node, Separator initiallySelectedNodeToFind)
@@ -56,15 +75,46 @@ namespace WristVizualizer
             return tNode;
         }
 
+        private TreeNode findTreeNodeContainingCoinNode(Separator nodeToSearchFor)
+        {
+            foreach (TreeNode child in treeViewScene.Nodes)
+            {
+                TreeNode subSearchResult = findTreeNodeContainingCoinNodeHelper(nodeToSearchFor, child);
+                if (subSearchResult != null)
+                    return subSearchResult;
+            }
+            return null; //no luck
+        }
+
+        private TreeNode findTreeNodeContainingCoinNodeHelper(Separator nodeToSearchFor, TreeNode searchBase)
+        {
+            ScenegraphNode baseNode = (ScenegraphNode)searchBase.Tag;
+            if (baseNode.isEqualSeparator(nodeToSearchFor))
+                return searchBase;
+
+            foreach (TreeNode child in searchBase.Nodes)
+            {
+                TreeNode subSearchResult = findTreeNodeContainingCoinNodeHelper(nodeToSearchFor, child);
+                if (subSearchResult != null)
+                    return subSearchResult;
+            }
+
+            //no luck
+            return null;
+        }
+
         private void treeViewScene_AfterSelect(object sender, TreeViewEventArgs e)
         {
+            _makingChanges = true;
             _viewer.setSelection((ScenegraphNode)e.Node.Tag);
+            _makingChanges = false;
         }
 
         private void ScenegraphTreeViewer_FormClosed(object sender, FormClosedEventArgs e)
         {
             //clean ourselves up and get rid of the handler
             _viewer.OnNewSceneGraphLoaded -= new NewSceneGraphLoadedHandler(_viewer_OnNewSceneGraphLoaded);
+            _viewer.OnObjectSelected -= new ObjectSelectedHandler(_viewer_OnObjectSelected);
         }
     }
 }
