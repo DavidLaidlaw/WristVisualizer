@@ -16,6 +16,7 @@ namespace WristVizualizer
         private ScenegraphNode _rootScenegraph;
         private TreeNode _initiallySelected;
 
+        private bool _confirmedDelete = false;
         private bool _makingChanges = false; //prevents looping on ourselves
 
         public ScenegraphTreeViewer(ExaminerViewer viewer, Separator root)
@@ -115,6 +116,55 @@ namespace WristVizualizer
             //clean ourselves up and get rid of the handler
             _viewer.OnNewSceneGraphLoaded -= new NewSceneGraphLoadedHandler(_viewer_OnNewSceneGraphLoaded);
             _viewer.OnObjectSelected -= new ObjectSelectedHandler(_viewer_OnObjectSelected);
+        }
+
+        private void treeViewScene_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                deleteCurrentlySelectedNode();
+                e.Handled = true;
+            }
+        }
+
+        private bool checkUserConfirmsFirstDelete()
+        {
+            if (_confirmedDelete) return true;
+            
+            //if not, lets show our message
+            string msg = String.Format("Warning: Deleting a node from the scenegraph can have unintended consequences!\n{0}Application may crash or throw errors if it tries to access this node after its has been deleted.\n\nAre you sure you wish to delete nodes?", Application.ProductName);
+            DialogResult r = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation, MessageBoxDefaultButton.Button1);
+            if (r != DialogResult.Yes) return false;
+            _confirmedDelete = true;
+            return true;
+        }
+
+        private void deleteCurrentlySelectedNode()
+        {
+            if (treeViewScene.SelectedNode == null) return;
+
+            TreeNode current = treeViewScene.SelectedNode;
+            TreeNode parrent = current.Parent;
+            if (parrent == null)
+            {
+                //tried to delete the _root node, yell at the user
+                string msg = "You can not delete the Root node!";
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            if (!checkUserConfirmsFirstDelete()) return; //check if we are allowed to delete
+            //green light, lets find the parent and delete it :)
+
+
+            ScenegraphNode currentNode = (ScenegraphNode)current.Tag;
+            ScenegraphNode parrentNode = (ScenegraphNode)parrent.Tag;
+            Separator parrentSeparator = parrentNode.ToSeparator();
+            parrentSeparator.removeChild(currentNode);
+
+            //remove node from scene graph and make its parrent selected
+            parrent.Nodes.Remove(current); 
+            treeViewScene.SelectedNode = parrent; 
         }
     }
 }

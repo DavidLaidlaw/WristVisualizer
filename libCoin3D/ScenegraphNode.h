@@ -1,10 +1,11 @@
 #pragma once
 
 #include <Inventor/nodes/SoGroup.h>
+#include "Node.h"
 #include "Separator.h"
 
 namespace libCoin3D {
-public ref class ScenegraphNode
+public ref class ScenegraphNode : Node
 {
 public:
 	ScenegraphNode();
@@ -18,8 +19,9 @@ public:
 	property System::String^ TypeName  { System::String^ get() { return _typeName; } }
 
 	virtual bool isEqualSeparator(Separator^ separator);
+	virtual Separator^ ToSeparator();
 
-	SoNode* getNode();
+	virtual SoNode* getNode() override;
 
 private:
 	void buildLocalData();

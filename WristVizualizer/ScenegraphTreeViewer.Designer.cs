@@ -41,6 +41,7 @@ namespace WristVizualizer
             this.treeViewScene.Size = new System.Drawing.Size(354, 415);
             this.treeViewScene.TabIndex = 0;
             this.treeViewScene.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewScene_AfterSelect);
+            this.treeViewScene.KeyUp += new System.Windows.Forms.KeyEventHandler(this.treeViewScene_KeyUp);
             // 
             // ScenegraphTreeViewer
             // 

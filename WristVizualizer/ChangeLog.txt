@@ -1,3 +1,7 @@
+Version 1.4.12
+- New: Can now delete nodes from the Scenegraph viewer. The Scenegraph viewer also updates its slected node as new nodes are selected in the main window.
+- Update: Pronation/Supination angle is now set relative to neutral.
+
 Version 1.4.11
 - New: Can now show the raw pronation/supination angle in full wrist mode.
 

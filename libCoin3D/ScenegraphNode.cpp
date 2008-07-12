@@ -54,6 +54,15 @@ bool libCoin3D::ScenegraphNode::isEqualSeparator(Separator^ separator)
 	return (separator->getNode() == _node);
 }
 
+libCoin3D::Separator^ libCoin3D::ScenegraphNode::ToSeparator()
+{
+	if (_node==NULL) return nullptr;
+	if (_node->getTypeId() != SoSeparator::getClassTypeId()) return nullptr;
+
+	Separator^ sep = gcnew Separator((SoSeparator*)_node);
+	return sep;
+}
+
 SoNode* libCoin3D::ScenegraphNode::getNode()
 {
 	return _node;
