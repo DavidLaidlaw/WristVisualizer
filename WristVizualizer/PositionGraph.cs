@@ -54,7 +54,7 @@ namespace WristVizualizer
                 postures[0][0] = p.FE;
                 postures[0][1] = p.RU;
             }
-            postures[0][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1]); //TODO: Error checking for no ACS in the ulna
+            postures[0][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1]).PronationAngle; //TODO: Error checking for no ACS in the ulna
 
             for (int i = 0; i < Transforms.Length; i++)
             {
@@ -70,7 +70,7 @@ namespace WristVizualizer
                     postures[i + 1][0] = p.FE_Raw;
                     postures[i + 1][1] = p.RU_Raw;
                 }
-                postures[i + 1][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1], Transforms[i][0], Transforms[i][1]);
+                postures[i + 1][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1], Transforms[i][0], Transforms[i][1]).PronationAngle;
             }
             return postures;
         }                                           

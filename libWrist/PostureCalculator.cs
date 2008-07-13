@@ -18,6 +18,14 @@ namespace libWrist
             public double RU_Raw;
         }
 
+        public struct PronationSupination
+        {
+            public double Euler_x;
+            public double Euler_y;
+            public double Euler_z;
+            public double PronationAngle;
+        }
+
         private struct CartesianCoordinate
         {
             public double az;
@@ -29,8 +37,10 @@ namespace libWrist
         private static int[] PROJ_PLANES_SIGN = { 1, 1, -1 };
         private static int POS_AXIS = 0;
 
-        private static double NEUTRAL_FE_POSITION = -43.107;
-        private static double NEUTRAL_RU_POSITION = -10.26;
+        private const double NEUTRAL_FE_POSITION = -43.107;
+        private const double NEUTRAL_RU_POSITION = -10.26;
+
+        private const double NEUTRAL_PS_POSITION = 171.6424;
 
 
         private static CartesianCoordinate cart2spherical(double x, double y, double z)
@@ -94,22 +104,30 @@ namespace libWrist
             return post;
         }
 
-        public static double CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS, TransformMatrix MotionTestBone, TransformMatrix MotionRelativeBone)
+        public static PronationSupination CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS, TransformMatrix MotionTestBone, TransformMatrix MotionRelativeBone)
         {
             TransformMatrix relativeMotion = MotionRelativeBone.Inverse() * MotionTestBone;
             return CalculatePronationSupination(RCS, UCS, relativeMotion);
         }
 
-        public static double CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS)
+        public static PronationSupination CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS)
         {
             return CalculatePronationSupination(RCS, UCS, new TransformMatrix());
         }
 
-        public static double CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS, TransformMatrix BoneRelMation)
+        public static PronationSupination CalculatePronationSupination(TransformMatrix RCS, TransformMatrix UCS, TransformMatrix BoneRelMation)
         {
             TransformMatrix relativeCSMotion = UCS.Inverse() * BoneRelMation * RCS;
-            double[] euler = relativeCSMotion.Transpose().ToEuler();
-            return euler[0];
+            double[] euler = relativeCSMotion.ToEuler();
+            PronationSupination result = new PronationSupination();
+            result.Euler_x = euler[0];
+            result.Euler_y = euler[1];
+            result.Euler_z = euler[2];
+            double pronationAngle = euler[0] - NEUTRAL_PS_POSITION; //correct for offset
+            //correct for negative angles, want final wrist position to be [-180 180]
+            while (pronationAngle < -180) pronationAngle += 360;
+            result.PronationAngle = pronationAngle;
+            return result;
         }
     }
 }
