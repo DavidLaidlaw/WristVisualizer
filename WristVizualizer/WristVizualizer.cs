@@ -317,6 +317,8 @@ namespace WristVizualizer
             }
 
             _viewer.setSceneGraph(_root);
+            //save to recently opened files
+            RegistrySettings.saveMostRecentFile(filenames[0]);
         }
 
         /// <summary>
@@ -1077,6 +1079,46 @@ namespace WristVizualizer
             Camera cam = _viewer.Camera;
             CameraEditor camEditor = new CameraEditor(cam);
             camEditor.CheckAndShowDialog();
+        }
+
+        private void recentFilesToolStripMenuItem_DropDownOpening(object sender, EventArgs e)
+        {
+            //load saved files
+            string[] files = RegistrySettings.getAllRecentFiles();
+            recentFilesToolStripMenuItem.DropDownItems.Clear();
+            if (files.Length == 0)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem();
+                item.Text = "No Recent Files";
+                item.Enabled = false;
+                recentFilesToolStripMenuItem.DropDownItems.Add(item);
+            }
+
+            for (int i=0; i<files.Length; i++)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem();
+                item.Text = String.Format("{0} {1}",i+1, files[i]);
+                item.Tag = files[i];
+                item.Click += new EventHandler(recentFileToolStripMenuItem_Click);
+                recentFilesToolStripMenuItem.DropDownItems.Add(item);
+            }
+            
+        }
+
+        private void recentFileToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ToolStripMenuItem item = (ToolStripMenuItem)sender;
+            string fname = (string)item.Tag;
+            if (!File.Exists(fname))
+            {
+                //TODO: Error handling for invalid file...?
+                string msg = String.Format("Error: Unable to find file: {0}", fname);
+                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+
+            //now lets open the file
+            openFile(new string[] { fname });
         }
 
 

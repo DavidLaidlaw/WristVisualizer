@@ -48,6 +48,7 @@ namespace WristVizualizer
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorTransparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cameraPositionOrientationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pointIntersectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateInertiasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -99,7 +100,9 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.cameraPositionOrientationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.recentFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.placeholderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -134,6 +137,8 @@ namespace WristVizualizer
             this.toolStripSeparator2,
             this.saveFrameToolStripMenuItem,
             this.saveMovieToolStripMenuItem,
+            this.toolStripSeparator11,
+            this.recentFilesToolStripMenuItem,
             this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
@@ -266,6 +271,14 @@ namespace WristVizualizer
             this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.backgroundColorToolStripMenuItem.Text = "Background Color...";
             this.backgroundColorToolStripMenuItem.Click += new System.EventHandler(this.backgroundColorToolStripMenuItem_Click);
+            // 
+            // cameraPositionOrientationToolStripMenuItem
+            // 
+            this.cameraPositionOrientationToolStripMenuItem.Enabled = false;
+            this.cameraPositionOrientationToolStripMenuItem.Name = "cameraPositionOrientationToolStripMenuItem";
+            this.cameraPositionOrientationToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.cameraPositionOrientationToolStripMenuItem.Text = "Camera Position && Orientation...";
+            this.cameraPositionOrientationToolStripMenuItem.Click += new System.EventHandler(this.cameraPositionOrientationToolStripMenuItem_Click);
             // 
             // advancedToolStripMenuItem
             // 
@@ -589,14 +602,14 @@ namespace WristVizualizer
             this.boundingBoxToolStripMenuItem.Checked = true;
             this.boundingBoxToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.boundingBoxToolStripMenuItem.Name = "boundingBoxToolStripMenuItem";
-            this.boundingBoxToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.boundingBoxToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.boundingBoxToolStripMenuItem.Text = "Bounding Box";
             this.boundingBoxToolStripMenuItem.Click += new System.EventHandler(this.boundingBoxToolStripMenuItem_Click);
             // 
             // lineToolStripMenuItem
             // 
             this.lineToolStripMenuItem.Name = "lineToolStripMenuItem";
-            this.lineToolStripMenuItem.Size = new System.Drawing.Size(150, 22);
+            this.lineToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.lineToolStripMenuItem.Text = "Line Wrap";
             this.lineToolStripMenuItem.Click += new System.EventHandler(this.lineToolStripMenuItem_Click);
             // 
@@ -703,13 +716,25 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
-            // cameraPositionOrientationToolStripMenuItem
+            // recentFilesToolStripMenuItem
             // 
-            this.cameraPositionOrientationToolStripMenuItem.Enabled = false;
-            this.cameraPositionOrientationToolStripMenuItem.Name = "cameraPositionOrientationToolStripMenuItem";
-            this.cameraPositionOrientationToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.cameraPositionOrientationToolStripMenuItem.Text = "Camera Position && Orientation...";
-            this.cameraPositionOrientationToolStripMenuItem.Click += new System.EventHandler(this.cameraPositionOrientationToolStripMenuItem_Click);
+            this.recentFilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.placeholderToolStripMenuItem});
+            this.recentFilesToolStripMenuItem.Name = "recentFilesToolStripMenuItem";
+            this.recentFilesToolStripMenuItem.Size = new System.Drawing.Size(202, 22);
+            this.recentFilesToolStripMenuItem.Text = "Recent Files";
+            this.recentFilesToolStripMenuItem.DropDownOpening += new System.EventHandler(this.recentFilesToolStripMenuItem_DropDownOpening);
+            // 
+            // toolStripSeparator11
+            // 
+            this.toolStripSeparator11.Name = "toolStripSeparator11";
+            this.toolStripSeparator11.Size = new System.Drawing.Size(199, 6);
+            // 
+            // placeholderToolStripMenuItem
+            // 
+            this.placeholderToolStripMenuItem.Name = "placeholderToolStripMenuItem";
+            this.placeholderToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.placeholderToolStripMenuItem.Text = "Placeholder";
             // 
             // WristVizualizer
             // 
@@ -816,6 +841,9 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem mC3ToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
         private System.Windows.Forms.ToolStripMenuItem cameraPositionOrientationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
+        private System.Windows.Forms.ToolStripMenuItem recentFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem placeholderToolStripMenuItem;
     }
 }
 
