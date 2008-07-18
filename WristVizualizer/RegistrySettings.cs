@@ -43,6 +43,7 @@ namespace WristVizualizer
         public static void saveMostRecentFile(string filename)
         {
             //look if we have it
+            filename = System.IO.Path.GetFullPath(filename); //make sure its the full path we are saving
             int currentIndex = getIndexRecentFile(filename);
             if (currentIndex == 0) return; //all done, its already first
 
