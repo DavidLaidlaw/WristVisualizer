@@ -1127,6 +1127,12 @@ namespace WristVizualizer
             openFile(new string[] { fname });
         }
 
+        private void trimCameraMaterialsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            TrimIVFileForm trim = new TrimIVFileForm();
+            trim.Show();
+        }
+
 
     }
 }
