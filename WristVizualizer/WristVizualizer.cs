@@ -724,20 +724,25 @@ namespace WristVizualizer
 
         private void showStatusStrip()
         {
-            if (statusStrip1.Visible)
-                return;
-
-            statusStrip1.Visible = true;
-            panelCoin.Height -= 22; //22 is the height of the statusStrip
+            setStatusStripVisibility(true);
         }
 
         private void hideStatusStrip()
         {
-            if (!statusStrip1.Visible)
-                return;
+            setStatusStripVisibility(false);
+        }
 
-            statusStrip1.Visible = false;
-            panelCoin.Height += 22;
+        private void setStatusStripVisibility(bool visible)
+        {
+            if (statusStrip1.Visible == visible)
+                return; //nothing to change
+
+            statusStrip1.Visible = visible;
+            int heightNeeded = (visible) ? 22 : 0; //it takes 22pixels when visible, 0 when not :)
+            //in the default mode, the MainPanel starts 359px high, and the main form starts 442px high
+            // so the normal offset is 442-359 = 83
+            const int normalOffset = 83;
+            mainLayoutPanel.Height = this.Height - normalOffset - heightNeeded;
         }
 
         public void setStatusStripText(string text)
