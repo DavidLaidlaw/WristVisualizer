@@ -1,3 +1,7 @@
+Version 1.4.14
+- New: Added tool for trimming material and camera headings from IV files
+- Fixed bug: When doing point intersection, the main panel is appropriatly resized so you can see the status strip.
+
 Version 1.4.13
 - New: Added list of recent files.
 
