@@ -59,6 +59,10 @@ namespace libWrist
                 }
             }
 
+            string msg2 = String.Format("This will trim {0} file(s).\n\nAre you sure you wish to continue?", filenames.Length);
+            if (MessageBox.Show(msg2, "IV Trim", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return;
+
             //okay, lets start the background worker
             _bgWorker = new BackgroundWorker();
             _bgWorker.WorkerReportsProgress = true;

@@ -28,6 +28,7 @@ namespace libWrist
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(TrimIVFileForm));
             this.checkBoxMaterial = new System.Windows.Forms.CheckBox();
             this.checkBoxCamera = new System.Windows.Forms.CheckBox();
             this.textBoxFilename = new System.Windows.Forms.TextBox();
@@ -145,6 +146,7 @@ namespace libWrist
             this.Controls.Add(this.textBoxFilename);
             this.Controls.Add(this.checkBoxCamera);
             this.Controls.Add(this.checkBoxMaterial);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "TrimIVFileForm";
             this.Text = "TrimIVFileForm";
             this.panelDropFiles.ResumeLayout(false);
