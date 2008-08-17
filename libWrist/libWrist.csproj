@@ -64,6 +64,7 @@
     <Compile Include="TrimIVFileForm.Designer.cs">
       <DependentUpon>TrimIVFileForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="VRMLParser.cs" />
     <Compile Include="Wrist.cs" />
     <Compile Include="WristException.cs" />
   </ItemGroup>
