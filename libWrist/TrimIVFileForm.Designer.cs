@@ -38,6 +38,8 @@ namespace libWrist
             this.panelDropFiles = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.radioButtonTrim = new System.Windows.Forms.RadioButton();
+            this.radioButtonConvert = new System.Windows.Forms.RadioButton();
             this.panelDropFiles.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +48,7 @@ namespace libWrist
             this.checkBoxMaterial.AutoSize = true;
             this.checkBoxMaterial.Checked = true;
             this.checkBoxMaterial.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxMaterial.Location = new System.Drawing.Point(15, 53);
+            this.checkBoxMaterial.Location = new System.Drawing.Point(41, 66);
             this.checkBoxMaterial.Name = "checkBoxMaterial";
             this.checkBoxMaterial.Size = new System.Drawing.Size(86, 17);
             this.checkBoxMaterial.TabIndex = 0;
@@ -58,7 +60,7 @@ namespace libWrist
             this.checkBoxCamera.AutoSize = true;
             this.checkBoxCamera.Checked = true;
             this.checkBoxCamera.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxCamera.Location = new System.Drawing.Point(15, 76);
+            this.checkBoxCamera.Location = new System.Drawing.Point(41, 89);
             this.checkBoxCamera.Name = "checkBoxCamera";
             this.checkBoxCamera.Size = new System.Drawing.Size(85, 17);
             this.checkBoxCamera.TabIndex = 1;
@@ -93,7 +95,7 @@ namespace libWrist
             // 
             // buttonTrim
             // 
-            this.buttonTrim.Location = new System.Drawing.Point(284, 69);
+            this.buttonTrim.Location = new System.Drawing.Point(284, 115);
             this.buttonTrim.Name = "buttonTrim";
             this.buttonTrim.Size = new System.Drawing.Size(78, 28);
             this.buttonTrim.TabIndex = 5;
@@ -106,7 +108,7 @@ namespace libWrist
             this.panelDropFiles.AllowDrop = true;
             this.panelDropFiles.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelDropFiles.Controls.Add(this.label2);
-            this.panelDropFiles.Location = new System.Drawing.Point(15, 114);
+            this.panelDropFiles.Location = new System.Drawing.Point(15, 149);
             this.panelDropFiles.Name = "panelDropFiles";
             this.panelDropFiles.Size = new System.Drawing.Size(347, 110);
             this.panelDropFiles.TabIndex = 6;
@@ -127,17 +129,43 @@ namespace libWrist
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(15, 230);
+            this.progressBar1.Location = new System.Drawing.Point(15, 265);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(347, 21);
             this.progressBar1.TabIndex = 7;
             this.progressBar1.Visible = false;
             // 
+            // radioButtonTrim
+            // 
+            this.radioButtonTrim.AutoSize = true;
+            this.radioButtonTrim.Checked = true;
+            this.radioButtonTrim.Location = new System.Drawing.Point(15, 43);
+            this.radioButtonTrim.Name = "radioButtonTrim";
+            this.radioButtonTrim.Size = new System.Drawing.Size(133, 17);
+            this.radioButtonTrim.TabIndex = 8;
+            this.radioButtonTrim.TabStop = true;
+            this.radioButtonTrim.Text = "Trim Material && Camera";
+            this.radioButtonTrim.UseVisualStyleBackColor = true;
+            this.radioButtonTrim.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
+            // radioButtonConvert
+            // 
+            this.radioButtonConvert.AutoSize = true;
+            this.radioButtonConvert.Location = new System.Drawing.Point(15, 112);
+            this.radioButtonConvert.Name = "radioButtonConvert";
+            this.radioButtonConvert.Size = new System.Drawing.Size(124, 17);
+            this.radioButtonConvert.TabIndex = 9;
+            this.radioButtonConvert.Text = "Convert VRML To IV";
+            this.radioButtonConvert.UseVisualStyleBackColor = true;
+            this.radioButtonConvert.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
+            // 
             // TrimIVFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 263);
+            this.ClientSize = new System.Drawing.Size(384, 295);
+            this.Controls.Add(this.radioButtonConvert);
+            this.Controls.Add(this.radioButtonTrim);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.panelDropFiles);
             this.Controls.Add(this.buttonTrim);
@@ -167,5 +195,7 @@ namespace libWrist
         private System.Windows.Forms.Panel panelDropFiles;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.RadioButton radioButtonTrim;
+        private System.Windows.Forms.RadioButton radioButtonConvert;
     }
 }

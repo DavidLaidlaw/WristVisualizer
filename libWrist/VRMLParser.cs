@@ -30,6 +30,13 @@ namespace libWrist
             get { return _localObject.Connections; }
         }
 
+        public static void ConvertVRMLToIV(string vrmlFilename)
+        {
+            string ivFilename = Path.Combine(Path.GetDirectoryName(vrmlFilename),
+                Path.GetFileNameWithoutExtension(vrmlFilename) + ".iv");
+            ConvertVRMLToIV(vrmlFilename, ivFilename);
+        }
+
         public static void ConvertVRMLToIV(string vrmlFilename, string ivFilename)
         {
             TesselatedObject data = parseVRMLFile(vrmlFilename);

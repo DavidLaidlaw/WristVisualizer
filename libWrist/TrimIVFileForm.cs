@@ -37,10 +37,13 @@ namespace libWrist
 
         private void buttonTrim_Click(object sender, EventArgs e)
         {
-            TrimIVFile.tryStripFile(textBoxFilename.Text.Trim(), checkBoxCamera.Checked, checkBoxMaterial.Checked);
+            if (radioButtonTrim.Checked)
+                TrimIVFile.tryStripFile(textBoxFilename.Text.Trim(), checkBoxCamera.Checked, checkBoxMaterial.Checked);
+            else
+                VRMLParser.ConvertVRMLToIV(textBoxFilename.Text.Trim());
         }
 
-        private void ParseMultipleFiles(string[] filenames)
+        private bool validateTrim(string[] filenames)
         {
             //quick check that this is valid
             foreach (string file in filenames)
@@ -49,18 +52,62 @@ namespace libWrist
                 {
                     string msg = String.Format("Invalid file ({0})\nCan only trim IV files.", file);
                     MessageBox.Show(msg, "IV Trim", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    return false;
                 }
                 if (!File.Exists(file))
                 {
                     string msg = String.Format("Invalid file ({0})\nFile does not exist!", file);
                     MessageBox.Show(msg, "IV Trim", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
+                    return false;
                 }
             }
 
             string msg2 = String.Format("This will trim {0} file(s).\n\nAre you sure you wish to continue?", filenames.Length);
             if (MessageBox.Show(msg2, "IV Trim", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return false;
+
+            //got here, then we are okay
+            return true;
+        }
+
+        private bool validateConvert(string[] filenames)
+        {
+            //quick check that this is valid
+            foreach (string file in filenames)
+            {
+                if (!Path.GetExtension(file).ToLower().Equals(".wrl"))
+                {
+                    string msg = String.Format("Invalid file ({0})\nCan only convert WRL files.", file);
+                    MessageBox.Show(msg, "IV Trim", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+                if (!File.Exists(file))
+                {
+                    string msg = String.Format("Invalid file ({0})\nFile does not exist!", file);
+                    MessageBox.Show(msg, "IV Trim", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return false;
+                }
+            }
+
+            string msg2 = String.Format("This will convert {0} file(s).\n\nAre you sure you wish to continue?", filenames.Length);
+            if (MessageBox.Show(msg2, "IV Trim", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+                return false;
+
+            //got here, then we are okay
+            return true;
+        }
+
+        private bool validateModification(string[] filenames)
+        {
+            if (radioButtonTrim.Checked)
+                return validateTrim(filenames);
+            else
+                return validateConvert(filenames);
+        }
+
+        private void ParseMultipleFiles(string[] filenames)
+        {
+            if (!validateModification(filenames))
                 return;
 
             //okay, lets start the background worker
@@ -121,7 +168,11 @@ namespace libWrist
                 }
                 try
                 {
-                    TrimIVFile.stripFile(nextFile, checkBoxCamera.Checked, checkBoxMaterial.Checked);
+                    if (radioButtonTrim.Checked)
+                        TrimIVFile.stripFile(nextFile, checkBoxCamera.Checked, checkBoxMaterial.Checked);
+                    else
+                        VRMLParser.ConvertVRMLToIV(nextFile);
+
                     lock (workQueue)
                         _converted++;
                 }
@@ -147,7 +198,11 @@ namespace libWrist
             this.Cursor = Cursors.Default;
             this.Enabled = true;
             progressBar1.Value = 100;
-            String msg = String.Format("{0} out of {1} files trimmed.\n\n{2}", _converted, _total, _error.ToString());
+            String msg;
+            if (radioButtonTrim.Checked)
+                msg = String.Format("{0} out of {1} files trimmed.\n\n{2}", _converted, _total, _error.ToString());
+            else
+                msg = String.Format("{0} out of {1} files converted.\n\n{2}", _converted, _total, _error.ToString());
             MessageBox.Show(msg);
             progressBar1.Visible = false;
         }
@@ -172,19 +227,44 @@ namespace libWrist
             }
         }
 
+        private bool validateExtension(string ext)
+        {
+            if (radioButtonTrim.Checked)
+                return ext.ToLower().Equals(".iv");
+            else
+                return ext.ToLower().Equals(".wrl");
+        }
+
         private void panelDropFiles_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent("FileDrop"))
             {
                 string file1 = ((string[])e.Data.GetData("FileDrop"))[0];
                 string ext = Path.GetExtension(file1).ToLower();
-                if (Path.GetExtension(file1).ToLower().Equals(".iv"))
+                if (validateExtension(Path.GetExtension(file1)))
                 {
                     e.Effect = DragDropEffects.Move;
                     return;
                 }
             }
-            e.Effect = DragDropEffects.None;        }
+            e.Effect = DragDropEffects.None;        
+        }
+
+        private void radioButton_CheckedChanged(object sender, EventArgs e)
+        {
+            checkBoxCamera.Enabled = radioButtonTrim.Checked;
+            checkBoxMaterial.Enabled = radioButtonTrim.Checked;
+
+            if (radioButtonConvert.Checked)
+            {
+                //in convert mode
+                buttonTrim.Text = "Convert";
+            }
+            else
+            {
+                buttonTrim.Text = "Trim";
+            }
+        }
 
     }
 }

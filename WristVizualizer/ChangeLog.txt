@@ -1,3 +1,6 @@
+Version 1.4.15
+- New: Added ability to quickly convert VRLM files to IV files (and will apply the scale factor)
+
 Version 1.4.14
 - New: Added tool for trimming material and camera headings from IV files
 - Fixed bug: When doing point intersection, the main panel is appropriatly resized so you can see the status strip.
