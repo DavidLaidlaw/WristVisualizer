@@ -14,21 +14,58 @@ namespace libWrist
             public int[,] Connections;
         }
 
+        private TesselatedObject _localObject;
+
         public VRMLParser(string fname)
         {
-            fname = @"C:\Functional\E02751\S15R\WRL.files\E02751_15R_rad 1_001.wrl";
-            DateTime start = DateTime.Now;
-            start = DateTime.Now;
-            parseVRMLFile(fname);
-            Console.WriteLine("Parse4: {0}", DateTime.Now - start);
+            _localObject = parseVRMLFile(fname);
+        }
+
+        public double[,] Points
+        {
+            get { return _localObject.Points; }
+        }
+        public int[,] Connections
+        {
+            get { return _localObject.Connections; }
         }
 
         public static void ConvertVRMLToIV(string vrmlFilename, string ivFilename)
         {
             TesselatedObject data = parseVRMLFile(vrmlFilename);
+            WriteTesselatedObjectToIVFile(data, ivFilename);
         }
 
-        private static TesselatedObject parseVRMLFile(string filename)
+        private const string IV_FILE_HEADER = @"#VRML V1.0 ascii
+#
+Separator {
+    Coordinate3 {
+        point [";
+
+        private static void WriteTesselatedObjectToIVFile(TesselatedObject vrmlData, string ivFilename)
+        {
+            using (StreamWriter writer = new StreamWriter(ivFilename))
+            {
+                writer.WriteLine(IV_FILE_HEADER);
+                for (int i = 0; i < vrmlData.Points.Length/3; i++)
+                    writer.WriteLine("\t\t\t{0} {1} {2},", vrmlData.Points[i, 0], vrmlData.Points[i, 1], vrmlData.Points[i, 2]);
+
+                writer.WriteLine("\t\t]");
+                writer.WriteLine("\t}");
+                writer.WriteLine("\tIndexedFaceSet {");
+                writer.WriteLine("\t\tcoordIndex [");
+
+                for (int i = 0; i < vrmlData.Connections.Length / 3; i++)
+                    writer.WriteLine("\t\t\t{0}, {1}, {2}, -1,", vrmlData.Connections[i, 0], vrmlData.Connections[i, 1], vrmlData.Connections[i, 2]);
+
+                writer.WriteLine("\t\t]");
+                writer.WriteLine("\t}");
+                writer.WriteLine("}");
+            }
+        }
+
+
+        public static TesselatedObject parseVRMLFile(string filename)
         {
             TesselatedObject vrmlData = new TesselatedObject();
             string full;
