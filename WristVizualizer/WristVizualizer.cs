@@ -13,7 +13,6 @@ namespace WristVizualizer
 {
     public partial class WristVizualizer : Form
     {
-        private static Coin3DBase _base = new Coin3DBase();
         private ExaminerViewer _viewer;
         private Separator _root;
         
@@ -44,6 +43,7 @@ namespace WristVizualizer
 
         public WristVizualizer(string[] fileArgs)
         {
+            Coin3DBase.Init();
             CommandLineOptions options = new CommandLineOptions();
             options.ProcessArgs(fileArgs);
 

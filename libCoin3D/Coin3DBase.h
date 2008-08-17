@@ -4,6 +4,9 @@ namespace libCoin3D {
 public ref class Coin3DBase
 {
 public:
-	Coin3DBase(void);
+	static void Init();
+	static void Init(System::String^ appname);
+private:
+	static bool _initialized = false;
 };
 }
