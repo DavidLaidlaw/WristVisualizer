@@ -10,8 +10,8 @@ namespace libWrist
     {
         public struct TesselatedObject
         {
-            double[,] Points;
-            int[,] Connections;
+            public double[,] Points;
+            public int[,] Connections;
         }
 
         public VRMLParser(string fname)
@@ -21,7 +21,11 @@ namespace libWrist
             start = DateTime.Now;
             parseVRMLFile(fname);
             Console.WriteLine("Parse4: {0}", DateTime.Now - start);
+        }
 
+        public static void ConvertVRMLToIV(string vrmlFilename, string ivFilename)
+        {
+            TesselatedObject data = parseVRMLFile(vrmlFilename);
         }
 
         private static TesselatedObject parseVRMLFile(string filename)
@@ -32,38 +36,30 @@ namespace libWrist
             {
                 full = r.ReadToEnd();
             }
-            DateTime start = DateTime.Now;
-            Regex reg = new Regex(@"point\s+\[");
-            Match m = reg.Match(full);
 
-            int s = m.Index;
-            Regex reg2 = new Regex("]");
-            int e = reg2.Match(full, s + 5).Index;
+            Regex pointRegex = new Regex(@"point\s+\[");
+            Regex closingRegex = new Regex("]");
+            Regex coordIndexRegex = new Regex(@"coordIndex\s+\[");
+
+            int s = pointRegex.Match(full).Index;
+            int e = closingRegex.Match(full, s + 5).Index;
             string ptsSection = full.Substring(s + 7, e - s - 7);
-
-            Regex reg3 = new Regex(@"coordIndex\s+\[");
-            s = reg3.Match(full).Index;
-            e = reg2.Match(full, s + 12).Index;
+            
+            s = coordIndexRegex.Match(full).Index;
+            e = closingRegex.Match(full, s + 12).Index;
             string connSection = full.Substring(s + 12, e - s - 12);
-            Console.WriteLine("\tReg Substrings: {0}", DateTime.Now - start);
 
-            start = DateTime.Now;
             double[] scale = { 1.0, 1.0, 1.0 };
-            Match m2 = Regex.Match(full, @"scale ([\d\.]+) ([\d\.]+) ([\d\.]+)");
-            if (m2.Success)
+            Match scaleMatch = Regex.Match(full, @"scale ([\d\.]+) ([\d\.]+) ([\d\.]+)");
+            if (scaleMatch.Success)
             {
-                scale[0] = Double.Parse(m2.Groups[1].Value);
-                scale[1] = Double.Parse(m2.Groups[1].Value);
-                scale[2] = Double.Parse(m2.Groups[1].Value);
+                scale[0] = Double.Parse(scaleMatch.Groups[1].Value);
+                scale[1] = Double.Parse(scaleMatch.Groups[1].Value);
+                scale[2] = Double.Parse(scaleMatch.Groups[1].Value);
             }
-            Console.WriteLine("\tScale: {0}", DateTime.Now - start);
 
-            start = DateTime.Now;
-            parsePts(ptsSection, scale);
-            Console.WriteLine("\tPts: {0}", DateTime.Now - start);
-            start = DateTime.Now;
-            parseConn(connSection);
-            Console.WriteLine("\tConn: {0}", DateTime.Now - start);
+            vrmlData.Points = parsePts(ptsSection, scale);
+            vrmlData.Connections = parseConn(connSection);
             return vrmlData;
         }
 
