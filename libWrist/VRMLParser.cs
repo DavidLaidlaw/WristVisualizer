@@ -8,144 +8,27 @@ namespace libWrist
 {
     public class VRMLParser
     {
-        List<double[]> _pts;
-        List<int[]> _conn;
+        public struct TesselatedObject
+        {
+            double[,] Points;
+            int[,] Connections;
+        }
+
         public VRMLParser(string fname)
         {
+            fname = @"C:\Functional\E02751\S15R\WRL.files\E02751_15R_rad 1_001.wrl";
             DateTime start = DateTime.Now;
-            parse1();
-            Console.WriteLine("Parse1: {0}", DateTime.Now - start);
             start = DateTime.Now;
-            parse2();
-            Console.WriteLine("Parse2: {0}", DateTime.Now - start);
-            start = DateTime.Now;
-            parse3();
-            Console.WriteLine("Parse3: {0}", DateTime.Now - start);
-            start = DateTime.Now;
-            parse4();
+            parseVRMLFile(fname);
             Console.WriteLine("Parse4: {0}", DateTime.Now - start);
-            parse5();
+
         }
 
-        private void parse1()
+        private static TesselatedObject parseVRMLFile(string filename)
         {
-            _pts = new List<double[]>();
-            _conn = new List<int[]>();
-            string fname = @"C:\Functional\E02751\S15R\WRL.files\E02751_15R_rad 1_001.wrl";
-            using (StreamReader r = new StreamReader(fname))
-            {
-                parse(r);
-            }
-        }
-
-        private void parse(StreamReader reader)
-        {
-            bool next = false;
-            string line = reader.ReadLine();
-            while (line.IndexOf("point [") < 0)
-                line = reader.ReadLine();
-
-            while (!next)
-            {
-                line = reader.ReadLine();
-                if (line.IndexOf(']') >= 0)
-                {
-                    next = true;
-                    continue;
-                }
-                else
-                {
-                    double x, y, z;
-                    string[] parts = line.Split(new char[] { '\t', ' ', ',' }, 3);
-                    string[] parts_full = line.Split(new char[] { '\t', ' ', ',' });
-                    x = Double.Parse(parts[0]);
-                    y = Double.Parse(parts[1]);
-                    z = Double.Parse(parts[2]);
-                    _pts.Add(new double[] { x, y, z });
-                }
-            }
-
-            while (line.IndexOf("coordIndex [") < 0)
-                line = reader.ReadLine();
-            
-            next = false;
-            while (!next)
-            {
-                line = reader.ReadLine();
-                if (line.IndexOf(']') >= 0)
-                {
-                    return; //we are done
-                }
-                else
-                {
-                    int c1, c2, c3;
-                    string[] parts = line.Split(new char[] { '\t', ' ', ',' }, 4);
-                    string[] parts_full = line.Split(new char[] { '\t', ' ', ',' });
-                    c1 = Int32.Parse(parts[0]);
-                    c2 = Int32.Parse(parts[1]);
-                    c3 = Int32.Parse(parts[2]);
-                    _conn.Add(new int[] { c1, c2, c3 });
-                }
-            }
-        }
-
-        private void parse2()
-        {
-            _pts = new List<double[]>();
-            _conn = new List<int[]>();
-            string fname = @"C:\Functional\E02751\S15R\WRL.files\E02751_15R_rad 1_001.wrl";
+            TesselatedObject vrmlData = new TesselatedObject();
             string full;
-            using (StreamReader r = new StreamReader(fname))
-            {
-                full = r.ReadToEnd();
-            }
-            //Regex reg = new Regex(@"(.*)point\s+\[([^\]]*)\](.*)coordIndex\s+\[([\d\s\,\n\r\.-]*)\](.*)");
-            Regex reg = new Regex(@"(.*)point \[([^\]]*)\](.*)coordIndex \[([\d\s\,\n\r\.-]*)\](.*)", RegexOptions.Singleline | RegexOptions.Compiled);
-            DateTime start = DateTime.Now;
-            Match m = reg.Match(full);
-            Console.WriteLine("\tRegex: {0}", DateTime.Now - start);
-            start = DateTime.Now;
-            parsePts(m.Groups[2].Value);
-            Console.WriteLine("\tPts: {0}", DateTime.Now - start);
-            start = DateTime.Now;
-            parseConn(m.Groups[4].Value);
-            Console.WriteLine("\tConn: {0}", DateTime.Now - start);
-        }
-
-        private void parse3()
-        {
-            _pts = new List<double[]>();
-            _conn = new List<int[]>();
-            string fname = @"C:\Functional\E02751\S15R\WRL.files\E02751_15R_rad 1_001.wrl";
-            string full;
-            using (StreamReader r = new StreamReader(fname))
-            {
-                full = r.ReadToEnd();
-            }
-            DateTime start = DateTime.Now;
-            int s = full.IndexOf("point [");
-            int e = full.IndexOf("]", s + 7);
-            string ptsSection = full.Substring(s + 7, e - s - 7);
-
-            s = full.IndexOf("coordIndex [");
-            e = full.IndexOf("]", s + 12);
-            string connSection = full.Substring(s + 12, e - s - 12);
-            Console.WriteLine("\tSubstrings: {0}", DateTime.Now - start);
-            start = DateTime.Now;
-            parsePts(ptsSection);
-            Console.WriteLine("\tPts: {0}", DateTime.Now - start);
-            start = DateTime.Now;
-            parseConn(connSection);
-            Console.WriteLine("\tConn: {0}", DateTime.Now - start);
-        }
-
-        private void parse4()
-        {
-            _pts = new List<double[]>();
-            _conn = new List<int[]>();
-            string fname = @"C:\Functional\E02751\S15R\WRL.files\E02751_15R_rad 1_001.wrl";
-            string full;
-            using (StreamReader r = new StreamReader(fname))
+            using (StreamReader r = new StreamReader(filename))
             {
                 full = r.ReadToEnd();
             }
@@ -181,26 +64,15 @@ namespace libWrist
             start = DateTime.Now;
             parseConn(connSection);
             Console.WriteLine("\tConn: {0}", DateTime.Now - start);
-
-
+            return vrmlData;
         }
 
-        private void parse5()
+        private static double[,] parsePts(string section)
         {
-            libCoin3D.Coin3DBase.Init();
-            libCoin3D.Separator s = new libCoin3D.Separator();
-            string fname = @"C:\Functional\E02751\S15R\WRL.files\E02751_15R_rad 1_001.wrl";
-            DateTime start = DateTime.Now;
-            //libCoin3D.ColoredBone b = new libCoin3D.ColoredBone(fname);
-            Console.WriteLine("Parse5 Coin: {0}", DateTime.Now - start);
+            return parsePts(section, new double[]{1.0, 1.0, 1.0});
         }
 
-        private void parsePts(string section)
-        {
-            parsePts(section, new double[]{1.0, 1.0, 1.0});
-        }
-
-        private void parsePts(string section, double[] scale)
+        private static double[,] parsePts(string section, double[] scale)
         {
             string[] parts = section.Split(new char[] { '\t', ' ', ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             int numPts = parts.Length / 3;
@@ -223,9 +95,10 @@ namespace libWrist
                     pts[i, 2] = Double.Parse(parts[i * 3 + 2]) * scale[2];
                 }
             }
+            return pts;
         }
 
-        private void parseConn(string section)
+        private static int[,] parseConn(string section)
         {
             string[] parts = section.Split(new char[] { '\t', ' ', ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             int numConn = parts.Length / 4;
@@ -236,6 +109,7 @@ namespace libWrist
                 conn[i, 1] = Int32.Parse(parts[i * 4 + 1]);
                 conn[i, 2] = Int32.Parse(parts[i * 4 + 2]);
             }
+            return conn;
         }
 
     }
