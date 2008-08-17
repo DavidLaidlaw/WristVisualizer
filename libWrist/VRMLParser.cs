@@ -163,34 +163,65 @@ namespace libWrist
             e = reg2.Match(full, s + 12).Index;
             string connSection = full.Substring(s + 12, e - s - 12);
             Console.WriteLine("\tReg Substrings: {0}", DateTime.Now - start);
+
             start = DateTime.Now;
-            parsePts(ptsSection);
+            double[] scale = { 1.0, 1.0, 1.0 };
+            Match m2 = Regex.Match(full, @"scale ([\d\.]+) ([\d\.]+) ([\d\.]+)");
+            if (m2.Success)
+            {
+                scale[0] = Double.Parse(m2.Groups[1].Value);
+                scale[1] = Double.Parse(m2.Groups[1].Value);
+                scale[2] = Double.Parse(m2.Groups[1].Value);
+            }
+            Console.WriteLine("\tScale: {0}", DateTime.Now - start);
+
+            start = DateTime.Now;
+            parsePts(ptsSection, scale);
             Console.WriteLine("\tPts: {0}", DateTime.Now - start);
             start = DateTime.Now;
             parseConn(connSection);
             Console.WriteLine("\tConn: {0}", DateTime.Now - start);
+
+
         }
 
         private void parse5()
         {
-            libCoin3D.Coin3DBase b = new libCoin3D.Coin3DBase();
+            libCoin3D.Coin3DBase.Init();
             libCoin3D.Separator s = new libCoin3D.Separator();
             string fname = @"C:\Functional\E02751\S15R\WRL.files\E02751_15R_rad 1_001.wrl";
             DateTime start = DateTime.Now;
-            s.addFile(fname);
+            //libCoin3D.ColoredBone b = new libCoin3D.ColoredBone(fname);
             Console.WriteLine("Parse5 Coin: {0}", DateTime.Now - start);
         }
 
         private void parsePts(string section)
         {
+            parsePts(section, new double[]{1.0, 1.0, 1.0});
+        }
+
+        private void parsePts(string section, double[] scale)
+        {
             string[] parts = section.Split(new char[] { '\t', ' ', ',', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries);
             int numPts = parts.Length / 3;
             double[,] pts = new double[numPts,3];
-            for (int i = 0; i < numPts; i++)
+            if (scale[0] == 1 && scale[1] == 1 && scale[2] == 1)
             {
-                pts[i, 0] = Double.Parse(parts[i * 3]);
-                pts[i, 1] = Double.Parse(parts[i * 3 + 1]);
-                pts[i, 2] = Double.Parse(parts[i * 3 + 2]);
+                for (int i = 0; i < numPts; i++)
+                {
+                    pts[i, 0] = Double.Parse(parts[i * 3]);
+                    pts[i, 1] = Double.Parse(parts[i * 3 + 1]);
+                    pts[i, 2] = Double.Parse(parts[i * 3 + 2]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < numPts; i++)
+                {
+                    pts[i, 0] = Double.Parse(parts[i * 3]) * scale[0];
+                    pts[i, 1] = Double.Parse(parts[i * 3 + 1]) * scale[1];
+                    pts[i, 2] = Double.Parse(parts[i * 3 + 2]) * scale[2];
+                }
             }
         }
 
@@ -206,5 +237,6 @@ namespace libWrist
                 conn[i, 2] = Int32.Parse(parts[i * 4 + 2]);
             }
         }
+
     }
 }
