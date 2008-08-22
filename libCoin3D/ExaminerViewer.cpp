@@ -287,7 +287,7 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 
 	// Render the scene
 	SoGLRenderAction *newRA = new SoGLRenderAction(myViewport);
-	newRA->setTransparencyType(SoGLRenderAction::BLEND);    
+	newRA->setTransparencyType(_viewer->getGLRenderAction()->getTransparencyType());    
 	SoOffscreenRenderer *myRenderer = new SoOffscreenRenderer(newRA);
 	myRenderer->setBackgroundColor(_viewer->getBackgroundColor());
 

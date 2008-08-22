@@ -1,3 +1,6 @@
+Version 1.4.16
+- Fixed bug: Saving frame uses the current transparency for its rendering.
+
 Version 1.4.15
 - New: Added ability to quickly convert VRLM files to IV files (and will apply the scale factor)
 
