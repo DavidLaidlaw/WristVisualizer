@@ -1,3 +1,6 @@
+Version 1.4.17
+- Fixed bug: For VRML->IV conversion, can now read VRML files from newer versions of Mimics
+
 Version 1.4.16
 - Fixed bug: Saving frame uses the current transparency for its rendering.
 

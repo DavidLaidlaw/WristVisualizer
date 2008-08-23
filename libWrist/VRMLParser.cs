@@ -85,16 +85,21 @@ Separator {
             Regex closingRegex = new Regex("]");
             Regex coordIndexRegex = new Regex(@"coordIndex\s+\[");
 
-            int s = pointRegex.Match(full).Index;
-            int e = closingRegex.Match(full, s + 5).Index;
-            string ptsSection = full.Substring(s + 7, e - s - 7);
-            
-            s = coordIndexRegex.Match(full).Index;
-            e = closingRegex.Match(full, s + 12).Index;
-            string connSection = full.Substring(s + 12, e - s - 12);
+            //Remove all comments from the file
+            full = Regex.Replace(full, @"#.*$", "", RegexOptions.Multiline);
+
+            Match pointMatch = pointRegex.Match(full);
+            int s = pointMatch.Index;
+            int e = closingRegex.Match(full, s + pointMatch.Length).Index;
+            string ptsSection = full.Substring(s + pointMatch.Length, e - s - pointMatch.Length);
+
+            Match coordMatch = coordIndexRegex.Match(full);
+            s = coordMatch.Index;
+            e = closingRegex.Match(full, s + coordMatch.Length).Index;
+            string connSection = full.Substring(s + coordMatch.Length, e - s - coordMatch.Length);
 
             double[] scale = { 1.0, 1.0, 1.0 };
-            Match scaleMatch = Regex.Match(full, @"scale ([\d\.]+) ([\d\.]+) ([\d\.]+)");
+            Match scaleMatch = Regex.Match(full, @"scale\s+([\d\.]+)\s+([\d\.]+)\s+([\d\.]+)");
             if (scaleMatch.Success)
             {
                 scale[0] = Double.Parse(scaleMatch.Groups[1].Value);
