@@ -1,3 +1,6 @@
+Version 1.4.18
+- Fixed bug: Was crashing when loading full wrist without an ulna. Also corrected program to not show PS angle when there is no explicit AnatCoordSys_uln.dat file.
+
 Version 1.4.17
 - Fixed bug: For VRML->IV conversion, can now read VRML files from newer versions of Mimics
 
