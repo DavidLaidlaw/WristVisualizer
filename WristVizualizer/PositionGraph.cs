@@ -21,6 +21,8 @@ namespace WristVizualizer
         private double _FE_conversion;
         private double _RU_conversion;
 
+        private bool _showPS = true; //if we have information to show the PS angle
+
         private int _referenceBoneIndex;
 
         private double[][] _positions;
@@ -28,10 +30,14 @@ namespace WristVizualizer
         private Bitmap _baseImage;
 
         public PositionGraph(TransformMatrix[] Inertias, TransformMatrix[][] transforms, int referenceBoneIndex)
+            : this(Inertias, transforms, referenceBoneIndex, true)
+        { }
+        public PositionGraph(TransformMatrix[] Inertias, TransformMatrix[][] transforms, int referenceBoneIndex, bool showPS)
         {
             InitializeComponent();
 
             _referenceBoneIndex = referenceBoneIndex;
+            _showPS = showPS;
 
             _FE_conversion = (double)pictureBoxGraph.Height / (MAX_FE * 2);
             _RU_conversion = (double)pictureBoxGraph.Width / (MAX_RU * 2);
@@ -54,7 +60,8 @@ namespace WristVizualizer
                 postures[0][0] = p.FE;
                 postures[0][1] = p.RU;
             }
-            postures[0][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1]).PronationAngle; //TODO: Error checking for no ACS in the ulna
+            if (_showPS)
+                postures[0][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1]).PronationAngle;
 
             for (int i = 0; i < Transforms.Length; i++)
             {
@@ -70,11 +77,18 @@ namespace WristVizualizer
                     postures[i + 1][0] = p.FE_Raw;
                     postures[i + 1][1] = p.RU_Raw;
                 }
-                postures[i + 1][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1], Transforms[i][0], Transforms[i][1]).PronationAngle;
+
+                if (_showPS)
+                    postures[i + 1][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1], Transforms[i][0], Transforms[i][1]).PronationAngle;
             }
             return postures;
-        }                                           
+        }
 
+        public void HidePS()
+        {
+            _showPS = false;
+            textBoxPS.Clear();
+        }
 
         private void createGraph()
         {
@@ -104,7 +118,8 @@ namespace WristVizualizer
         {
             textBoxFE.Text = _positions[postureIndex][0].ToString("0.00");
             textBoxRU.Text = _positions[postureIndex][1].ToString("0.00");
-            textBoxPS.Text = _positions[postureIndex][2].ToString("0.00");
+            if (_showPS)
+                textBoxPS.Text = _positions[postureIndex][2].ToString("0.00");
         }
 
         private void drawSinglePoint(Graphics g, double[] point)

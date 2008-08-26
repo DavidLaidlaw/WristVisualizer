@@ -136,6 +136,20 @@ namespace WristVizualizer
                 return true;
         }
 
+        private bool hasPronationSupinationInformation()
+        {
+            //Check for existance of the actual AnatCoordSys_uln.dat file; else this information is probably wrong...
+            if (!File.Exists(_wrist.acsFile_uln))
+                return false;
+
+            //need to check for the Radius and the Ulna, (index 0 & 1)
+            if (_inertiaMatrices[0] == null || _inertiaMatrices[0].Determinant() == 0 ||
+                _inertiaMatrices[1] == null || _inertiaMatrices[1].Determinant() == 0)
+                return false;
+            else
+                return true;
+        }
+
         public void changeWristPositionReferenceBoneIndex(int referenceBoneIndex)
         {
             //first lets remove any existing position graph
@@ -159,6 +173,8 @@ namespace WristVizualizer
                 return;
 
             _positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices, referenceBoneIndex);
+            if (!hasPronationSupinationInformation())
+                _positionGraph.HidePS();
             _positionGraph.setCurrentVisisblePosture(_currentPositionIndex); //make sure the correct position is highlighted
             _layoutControl.addControl(_positionGraph);
             _positionGraph.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
@@ -180,8 +196,9 @@ namespace WristVizualizer
                     TransformRT[] inert = DatParser.parseInertiaFileToRT(_wrist.inertiaFile);
                     for (int i = 0; i < Wrist.NumBones; i++) //skip the long bones
                     {
-                        if (_bones[i] == null)
-                            continue;
+                        //No longer check for missing bone... not important here, already read the data, just assigning it
+                        //if (_bones[i] == null)
+                        //    continue;
 
                         _inertiaMatrices[i] = new TransformMatrix(inert[i]);
                     }
@@ -197,8 +214,8 @@ namespace WristVizualizer
                     TransformRT[] acs = DatParser.parseACSFileToRT(_wrist.acsFile);
 
                     //only for radius, check if it exists
-                    if (_bones[0] == null)
-                        return;
+                    //if (_bones[0] == null)
+                    //    return;
                     _inertiaMatrices[0] = new TransformMatrix(acs[0]);
                 }
                 catch { }
@@ -212,8 +229,8 @@ namespace WristVizualizer
                     TransformRT[] acs = DatParser.parseACSFileToRT(_wrist.acsFile_uln);
 
                     //only for radius, check if it exists
-                    if (_bones[1] == null)
-                        return;
+                    //if (_bones[1] == null)
+                    //    return;
                     _inertiaMatrices[1] = new TransformMatrix(acs[0]);
                 }
                 catch { }
