@@ -1,3 +1,6 @@
+Version 1.5.1
+- Fixed bug: Fixed but with Version Checker not always giving the correct comparison of versions.
+
 Version 1.5.0
 - Upgrade: Upgraded from linking against Coin 2.5.0 to Coin 3.0.0. Major change, binary incompatability against previous versions of coin. This upgrade fixes a number of rendering problems from the past.
 - Fixed bug: Was crashing when loading full wrist without an ulna. Also corrected program to not show PS angle when there is no explicit AnatCoordSys_uln.dat file.

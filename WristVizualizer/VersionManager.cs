@@ -60,9 +60,7 @@ namespace WristVizualizer
 
                 Version current = new Version(_currentVersion);
                 Version available = new Version(_availableVersion);
-                if (available.Major > current.Major ||
-                    available.Minor > current.Minor ||
-                    available.Build > current.Build)  //don't want to test the revsion
+                if (availableVersionIsNewer(current, available))
                 {
                     newUpdateAvailable();
                 }
@@ -81,6 +79,16 @@ namespace WristVizualizer
                     ex.Message);
                 MessageBox.Show(msgBoxMesssage);
             }
+        }
+
+        private static bool availableVersionIsNewer(Version current, Version available)
+        {
+            if (available.Major > current.Major) return true;
+            if (available.Major == current.Major && available.Minor > current.Minor) return true;
+            if (available.Major == current.Major && available.Minor == current.Minor
+                && available.Build > current.Build) return true;
+
+            return false; //don't want to test the revsion
         }
 
         public void checkForUpdatesAsynch()
@@ -133,9 +141,7 @@ namespace WristVizualizer
 
                 Version current = new Version(_currentVersion);
                 Version available = new Version(_availableVersion);
-                if (available.Major > current.Major ||
-                    available.Minor > current.Minor ||
-                    available.Build > current.Build)  //don't want to test the revsion
+                if (availableVersionIsNewer(current, available))
                 {
                     newUpdateAvailable();
                 }
