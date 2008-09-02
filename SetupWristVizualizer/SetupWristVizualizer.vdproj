@@ -429,7 +429,7 @@
         {
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_01E72E8F7E734EEBA2965B620F6F7F72"
             {
-            "SourcePath" = "8:C:\\Coin3D-2\\bin\\simage1.dll"
+            "SourcePath" = "8:C:\\Coin3D\\bin\\simage1.dll"
             "TargetName" = "8:simage1.dll"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
