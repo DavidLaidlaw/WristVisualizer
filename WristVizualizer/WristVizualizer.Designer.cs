@@ -49,6 +49,8 @@ namespace WristVizualizer
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.colorTransparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraPositionOrientationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,8 +107,7 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.copyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.createAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -283,6 +284,20 @@ namespace WristVizualizer
             this.editToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.editToolStripMenuItem.Text = "&Edit";
             // 
+            // copyToClipboardToolStripMenuItem
+            // 
+            this.copyToClipboardToolStripMenuItem.Enabled = false;
+            this.copyToClipboardToolStripMenuItem.Name = "copyToClipboardToolStripMenuItem";
+            this.copyToClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.copyToClipboardToolStripMenuItem.Text = "Copy to clipboard";
+            this.copyToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(238, 6);
+            // 
             // colorTransparencyToolStripMenuItem
             // 
             this.colorTransparencyToolStripMenuItem.Enabled = false;
@@ -315,6 +330,7 @@ namespace WristVizualizer
             this.toolStripSeparator7,
             this.animatePositionTransitionsToolStripMenuItem,
             this.animationRateToolStripMenuItem,
+            this.createAnimationToolStripMenuItem,
             this.calculateDistanceMapToolStripMenuItem,
             this.toolStripSeparator8,
             this.referenceBoneForWristPositionToolStripMenuItem,
@@ -758,19 +774,13 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
-            // copyToClipboardToolStripMenuItem
+            // createAnimationToolStripMenuItem
             // 
-            this.copyToClipboardToolStripMenuItem.Enabled = false;
-            this.copyToClipboardToolStripMenuItem.Name = "copyToClipboardToolStripMenuItem";
-            this.copyToClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.copyToClipboardToolStripMenuItem.Text = "Copy to clipboard";
-            this.copyToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator12
-            // 
-            this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(238, 6);
+            this.createAnimationToolStripMenuItem.Enabled = false;
+            this.createAnimationToolStripMenuItem.Name = "createAnimationToolStripMenuItem";
+            this.createAnimationToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.createAnimationToolStripMenuItem.Text = "Create Animation...";
+            this.createAnimationToolStripMenuItem.Click += new System.EventHandler(this.createAnimationToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -884,6 +894,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem launchMRIViewerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem copyToClipboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
+        private System.Windows.Forms.ToolStripMenuItem createAnimationToolStripMenuItem;
     }
 }
 

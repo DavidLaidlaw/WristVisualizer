@@ -675,5 +675,22 @@ namespace WristVizualizer
             //}
         }
 
+        public void createComplexAnimationMovie()
+        {
+            string[] positionNames = createSeriesListWithNiceNames();
+            AnimationCreatorForm acf = new AnimationCreatorForm(positionNames);
+            //TODO: Pass in positions....
+            DialogResult r = acf.ShowDialog();
+            if (r != DialogResult.OK)
+                return;
+
+            int[] animationOrder = acf.getAnimationOrder();
+            int numFrames = acf.NumberStepsPerPositionChange;
+            //TODO: all the distance map stuff, etc.
+            AnimationCreator ac = new AnimationCreator();
+            Switch[] sw = ac.test(_bones, _transformMatrices, animationOrder, numFrames);
+
+        }
+
     }
 }

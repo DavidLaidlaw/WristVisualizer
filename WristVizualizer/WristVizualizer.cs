@@ -128,6 +128,7 @@ namespace WristVizualizer
                     calculateDistanceMapToolStripMenuItem.Enabled = true;
                     showMetacarpalInertiasToolStripMenuItem.Enabled = true;
                     referenceBoneForWristPositionToolStripMenuItem.Enabled = true;
+                    createAnimationToolStripMenuItem.Enabled = true;
                     break;
             }
         }
@@ -183,6 +184,7 @@ namespace WristVizualizer
             pointIntersectionToolStripMenuItem.Enabled = true;
             pointIntersectionToolStripMenuItem.Checked = false;
             colorTransparencyToolStripMenuItem.Enabled = false;
+            createAnimationToolStripMenuItem.Enabled = false;
             transparencyToolStripMenuItem.Enabled = true;
             selectionStyleToolStripMenuItem.Enabled = true;
             viewSourceToolStripMenuItem.Enabled = true;
@@ -1138,6 +1140,17 @@ namespace WristVizualizer
         {
             Image tempImage = _viewer.getImage();
             Clipboard.SetImage(tempImage);
+        }
+
+        private void createAnimationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //check that we are in FullWristMode
+            if (_mode != Modes.FULL_WRIST || _currentController == null ||
+                !_currentController.GetType().Equals(typeof(FullWristController)))
+                return;
+
+            FullWristController control = (FullWristController)_currentController;
+            control.createComplexAnimationMovie();
         }
 
 

@@ -20,7 +20,7 @@ namespace WristVizualizer
         private Button[] _contourColorButtons;
         private double[] _defaultContourDistances;
 
-        public AnimationCreatorForm()
+        public AnimationCreatorForm(string[] positionNames)
         {
 
             InitializeComponent();
@@ -28,8 +28,15 @@ namespace WristVizualizer
             _defaultContourDistances = DEFAULT_DISTANCES;
 
             setupContourSelectionGUI();
-            testSetupTestData();
+            //testSetupTestData();
+            setupListBoxAllPositions(positionNames); //Do I want to save these?
             updateButtonsEnabledState();
+        }
+
+        private void setupListBoxAllPositions(string[] positions)
+        {
+            listBoxAllPositions.Items.Clear();
+            listBoxAllPositions.Items.AddRange(positions);
         }
 
         private void testSetupTestData()
@@ -83,6 +90,8 @@ namespace WristVizualizer
                 buttonMoveUp.Enabled = (listBoxAnimationSequence.SelectedIndex != 0);
                 buttonMoveDown.Enabled = (listBoxAnimationSequence.SelectedIndex != listBoxAnimationSequence.Items.Count - 1);
             }
+
+            buttonOK.Enabled = (listBoxAnimationSequence.Items.Count >= 2); //need at least two positions to animate anything :)
         }
 
         private void listBoxAllPositions_SelectedIndexChanged(object sender, EventArgs e)
