@@ -115,6 +115,7 @@ private:
 
 	SoOffscreenRenderer* getOffscreenRenderer();
 	SoOffscreenRenderer* _myOffscreenRenderer;
+	void disposeOfTemporaryRenderer(SoOffscreenRenderer* renderer);
 
 	//private calls for finding material nodes. Used for material editing
 	SoNode* getSelectedNode();

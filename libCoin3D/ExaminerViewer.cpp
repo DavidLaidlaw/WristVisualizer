@@ -264,8 +264,7 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 	SoOffscreenRenderer *myRenderer = getOffscreenRenderer();
 
     if (!myRenderer->render(_viewer->getSceneManager()->getSceneGraph())) {  //render root?
-		if (_myOffscreenRenderer == NULL)
-			delete myRenderer;
+		disposeOfTemporaryRenderer(myRenderer);
 		System::Console::WriteLine("Couldn't capture root of tree");
 		return false;
     }
@@ -273,8 +272,7 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
     // Generate PostScript and write it to the given file
 	bool result = (myRenderer->writeToFile(fname, ext) != 0);
 
-    if (_myOffscreenRenderer == NULL)
-		delete myRenderer;
+    disposeOfTemporaryRenderer(myRenderer);
 	System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)fname);
 
 	return result;
@@ -299,6 +297,13 @@ SoOffscreenRenderer* libCoin3D::ExaminerViewer::getOffscreenRenderer()
 	myRenderer->setBackgroundColor(_viewer->getBackgroundColor());
 
 	return myRenderer;
+}
+
+void libCoin3D::ExaminerViewer::disposeOfTemporaryRenderer(SoOffscreenRenderer* renderer)
+{
+	//only dispose if there is no cached renderer
+	if (_myOffscreenRenderer == NULL)
+		delete renderer;
 }
 
 void libCoin3D::ExaminerViewer::clearOffscreenRenderer()
