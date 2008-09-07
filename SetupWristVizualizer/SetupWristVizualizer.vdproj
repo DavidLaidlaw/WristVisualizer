@@ -21,12 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_054AC1C0FF9246219B54CFD4C7A25CDE"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0953C32CAF12873EE464628E361E704F"
         "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
@@ -101,6 +95,12 @@
         {
         "MsmKey" = "8:_22930E4141BE4885A65BD019AA851ADF"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_35C1143DF0574B00B7A1226A61136500"
+        "OwnerKey" = "8:_EC98C335673449FB899C70AB84092FBA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -207,12 +207,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A8CCA60FE8D0407381033763BFA55F48"
-        "OwnerKey" = "8:_054AC1C0FF9246219B54CFD4C7A25CDE"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_AE0B4160941644D6921B1EA1E8CDFD1D"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -275,6 +269,12 @@
         {
         "MsmKey" = "8:_E607CDC6D7D24C1C9A9418A9495E0DAF"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_EC98C335673449FB899C70AB84092FBA"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -1480,14 +1480,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{5E4D2E7D-63DA-47D5-829C-2DB4B688EB8D}"
-        "PackageCode" = "8:{2357A4DF-4CB9-4D22-83DA-888EF414FE05}"
+        "ProductCode" = "8:{7786A5A0-30C9-4219-AF46-B28DA8414159}"
+        "PackageCode" = "8:{2AC50D82-548D-41B0-A519-9D8B067C48A6}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.5.2"
+        "ProductVersion" = "8:1.5.3"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2266,11 +2266,11 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_054AC1C0FF9246219B54CFD4C7A25CDE"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_35C1143DF0574B00B7A1226A61136500"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_DebugCRT_x86.msm"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_debugcrt_x86.msm"
                 "Properties"
                 {
                 }
@@ -2280,11 +2280,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_A8CCA60FE8D0407381033763BFA55F48"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_EC98C335673449FB899C70AB84092FBA"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_8_0_microsoft_vc80_debugcrt_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_DebugCRT_x86.msm"
                 "Properties"
                 {
                 }
