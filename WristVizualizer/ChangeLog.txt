@@ -1,3 +1,7 @@
+Version 1.5.2
+- New: Added ability to copy image to clipboard
+- Fixed bug: screen capture is now the same size as what is shown on screen
+
 Version 1.5.1
 - Fixed bug: Fixed but with Version Checker not always giving the correct comparison of versions.
 
