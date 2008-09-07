@@ -170,6 +170,7 @@ namespace WristVizualizer
             importToolStripMenuItem.Enabled = true;
             backgroundColorToolStripMenuItem.Enabled = true;
             cameraPositionOrientationToolStripMenuItem.Enabled = true;
+            copyToClipboardToolStripMenuItem.Enabled = true;
             decoratorToolStripMenuItem.Enabled = true;
             saveFrameToolStripMenuItem.Enabled = true;
             showInertiasToolStripMenuItem.Enabled = false;
@@ -1131,6 +1132,12 @@ namespace WristVizualizer
         {
             TrimIVFileForm trim = new TrimIVFileForm();
             trim.Show();
+        }
+
+        private void copyToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Image tempImage = _viewer.getImage();
+            Clipboard.SetImage(tempImage);
         }
 
 

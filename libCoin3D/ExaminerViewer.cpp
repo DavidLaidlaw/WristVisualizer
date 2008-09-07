@@ -164,54 +164,27 @@ bool libCoin3D::ExaminerViewer::saveToBMP(System::String ^filename)
 
 System::Drawing::Image^ libCoin3D::ExaminerViewer::getImage()
 {
-	const SbViewportRegion &vp  = _viewer->getViewportRegion();
-	const SbVec2s &imagePixSize = vp.getViewportSizePixels();
-	SbVec2f imageInches;
-	float pixPerInch;
-	float quality = 1;
-	int screenDPI = 400;
-  
-	pixPerInch = 300;
-	imageInches.setValue((float)imagePixSize[0] / pixPerInch,
-		       (float)imagePixSize[1] / pixPerInch);
-  
-    // The resolution to render the scene for the printer
-	// is equal to the size of the image in inches times
-	// the printer DPI;
-	SbVec2s postScriptRes;
-    postScriptRes.setValue((short)(imageInches[0]*screenDPI),
-                          (short)(imageInches[1]*screenDPI));
-
-    // Create a viewport to render the scene into.
-    SbViewportRegion myViewport;
-    myViewport.setWindowSize(postScriptRes);
-    myViewport.setPixelsPerInch((float)screenDPI);
-
-	// Render the scene
-	//SoGLRenderAction *newRA = new SoGLRenderAction(myViewport);
-	//newRA->setTransparencyType(SoGLRenderAction::BLEND);    
-	SoOffscreenRenderer *myRenderer = new SoOffscreenRenderer(myViewport);
-
+	SoOffscreenRenderer *myRenderer = getOffscreenRenderer();
 
     if (!myRenderer->render(_viewer->getSceneManager()->getSceneGraph())) {  //render root?
-		delete myRenderer;
+		disposeOfTemporaryRenderer(myRenderer);
 		System::Console::WriteLine("Couldn't capture root of tree");
 		return nullptr;
     }
+
+	//get the pixel size of the new image
 	unsigned char* buffer = myRenderer->getBuffer();
 	short x, y;
-	myViewport.getViewportSizePixels().getValue(x,y);
+	myRenderer->getViewportRegion().getViewportSizePixels().getValue(x,y);
 
-	//array<unsigned char>^ data = gcnew array<unsigned char>(x*y*3);
-	//for (int i=0; i<x*y*3; i++) {
-	//	data[i] = (int)buffer[i];
-	//}
+	//create a new image that we will later return
 	System::Drawing::Bitmap^ im = gcnew System::Drawing::Bitmap(x,y,
 		System::Drawing::Imaging::PixelFormat::Format24bppRgb);
 	//need to initialize the graphic, don't know why
 	System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(im);
 	g->FillRectangle(System::Drawing::Brushes::Green,0,0,x,y);
 
+	//setup BitmapData for raw editing
 	System::Drawing::Imaging::BitmapData^ bitdata;
 	System::Drawing::Rectangle rect = System::Drawing::Rectangle(0,0,x,y);
 	bitdata = im->LockBits(rect,
@@ -253,7 +226,7 @@ System::Drawing::Image^ libCoin3D::ExaminerViewer::getImage()
 	//flip us over
 	im->RotateFlip(System::Drawing::RotateFlipType::RotateNoneFlipY);
 
-    delete myRenderer;
+    disposeOfTemporaryRenderer(myRenderer);
 	return im;
 }
 

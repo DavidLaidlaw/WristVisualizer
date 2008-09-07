@@ -69,8 +69,8 @@ namespace WristVizualizer
             this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
             this.startHeadtrackingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.launchMRIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.trimCameraMaterialsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.launchMRIViewerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.decoratorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.showAxesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -105,6 +105,8 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.copyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -272,6 +274,8 @@ namespace WristVizualizer
             // editToolStripMenuItem
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToClipboardToolStripMenuItem,
+            this.toolStripSeparator12,
             this.colorTransparencyToolStripMenuItem,
             this.backgroundColorToolStripMenuItem,
             this.cameraPositionOrientationToolStripMenuItem});
@@ -445,19 +449,19 @@ namespace WristVizualizer
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
             // 
-            // launchMRIViewerToolStripMenuItem
-            // 
-            this.launchMRIViewerToolStripMenuItem.Name = "launchMRIViewerToolStripMenuItem";
-            this.launchMRIViewerToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
-            this.launchMRIViewerToolStripMenuItem.Text = "Launch MRIViewer";
-            this.launchMRIViewerToolStripMenuItem.Click += new System.EventHandler(this.launchMRIViewerToolStripMenuItem_Click);
-            // 
             // trimCameraMaterialsToolStripMenuItem
             // 
             this.trimCameraMaterialsToolStripMenuItem.Name = "trimCameraMaterialsToolStripMenuItem";
             this.trimCameraMaterialsToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
             this.trimCameraMaterialsToolStripMenuItem.Text = "Trim Camera && Materials...";
             this.trimCameraMaterialsToolStripMenuItem.Click += new System.EventHandler(this.trimCameraMaterialsToolStripMenuItem_Click);
+            // 
+            // launchMRIViewerToolStripMenuItem
+            // 
+            this.launchMRIViewerToolStripMenuItem.Name = "launchMRIViewerToolStripMenuItem";
+            this.launchMRIViewerToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.launchMRIViewerToolStripMenuItem.Text = "Launch MRIViewer";
+            this.launchMRIViewerToolStripMenuItem.Click += new System.EventHandler(this.launchMRIViewerToolStripMenuItem_Click);
             // 
             // viewToolStripMenuItem
             // 
@@ -754,6 +758,20 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
+            // copyToClipboardToolStripMenuItem
+            // 
+            this.copyToClipboardToolStripMenuItem.Enabled = false;
+            this.copyToClipboardToolStripMenuItem.Name = "copyToClipboardToolStripMenuItem";
+            this.copyToClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.copyToClipboardToolStripMenuItem.Text = "Copy to clipboard";
+            this.copyToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator12
+            // 
+            this.toolStripSeparator12.Name = "toolStripSeparator12";
+            this.toolStripSeparator12.Size = new System.Drawing.Size(238, 6);
+            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -864,6 +882,8 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem trimCameraMaterialsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem launchMRIViewerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem copyToClipboardToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
     }
 }
 
