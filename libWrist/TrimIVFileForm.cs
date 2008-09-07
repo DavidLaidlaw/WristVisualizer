@@ -40,7 +40,7 @@ namespace libWrist
             if (radioButtonTrim.Checked)
                 TrimIVFile.tryStripFile(textBoxFilename.Text.Trim(), checkBoxCamera.Checked, checkBoxMaterial.Checked);
             else
-                VRMLParser.ConvertVRMLToIV(textBoxFilename.Text.Trim());
+                VRMLParser.ConvertVRMLToIV(textBoxFilename.Text.Trim(), checkBoxMimics10.Checked);
         }
 
         private bool validateTrim(string[] filenames)
@@ -171,7 +171,7 @@ namespace libWrist
                     if (radioButtonTrim.Checked)
                         TrimIVFile.stripFile(nextFile, checkBoxCamera.Checked, checkBoxMaterial.Checked);
                     else
-                        VRMLParser.ConvertVRMLToIV(nextFile);
+                        VRMLParser.ConvertVRMLToIV(nextFile, checkBoxMimics10.Checked);
 
                     lock (workQueue)
                         _converted++;
@@ -254,6 +254,7 @@ namespace libWrist
         {
             checkBoxCamera.Enabled = radioButtonTrim.Checked;
             checkBoxMaterial.Enabled = radioButtonTrim.Checked;
+            checkBoxMimics10.Enabled = !radioButtonTrim.Checked;
 
             if (radioButtonConvert.Checked)
             {

@@ -40,6 +40,7 @@ namespace libWrist
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.radioButtonTrim = new System.Windows.Forms.RadioButton();
             this.radioButtonConvert = new System.Windows.Forms.RadioButton();
+            this.checkBoxMimics10 = new System.Windows.Forms.CheckBox();
             this.panelDropFiles.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -95,7 +96,7 @@ namespace libWrist
             // 
             // buttonTrim
             // 
-            this.buttonTrim.Location = new System.Drawing.Point(284, 115);
+            this.buttonTrim.Location = new System.Drawing.Point(284, 126);
             this.buttonTrim.Name = "buttonTrim";
             this.buttonTrim.Size = new System.Drawing.Size(78, 28);
             this.buttonTrim.TabIndex = 5;
@@ -108,7 +109,7 @@ namespace libWrist
             this.panelDropFiles.AllowDrop = true;
             this.panelDropFiles.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panelDropFiles.Controls.Add(this.label2);
-            this.panelDropFiles.Location = new System.Drawing.Point(15, 149);
+            this.panelDropFiles.Location = new System.Drawing.Point(15, 160);
             this.panelDropFiles.Name = "panelDropFiles";
             this.panelDropFiles.Size = new System.Drawing.Size(347, 110);
             this.panelDropFiles.TabIndex = 6;
@@ -129,7 +130,7 @@ namespace libWrist
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(15, 265);
+            this.progressBar1.Location = new System.Drawing.Point(15, 276);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(347, 21);
             this.progressBar1.TabIndex = 7;
@@ -159,11 +160,25 @@ namespace libWrist
             this.radioButtonConvert.UseVisualStyleBackColor = true;
             this.radioButtonConvert.CheckedChanged += new System.EventHandler(this.radioButton_CheckedChanged);
             // 
+            // checkBoxMimics10
+            // 
+            this.checkBoxMimics10.AutoSize = true;
+            this.checkBoxMimics10.Checked = true;
+            this.checkBoxMimics10.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxMimics10.Enabled = false;
+            this.checkBoxMimics10.Location = new System.Drawing.Point(41, 135);
+            this.checkBoxMimics10.Name = "checkBoxMimics10";
+            this.checkBoxMimics10.Size = new System.Drawing.Size(199, 17);
+            this.checkBoxMimics10.TabIndex = 10;
+            this.checkBoxMimics10.Text = "Detect Mimics (>=v10) meters output";
+            this.checkBoxMimics10.UseVisualStyleBackColor = true;
+            // 
             // TrimIVFileForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 295);
+            this.ClientSize = new System.Drawing.Size(384, 310);
+            this.Controls.Add(this.checkBoxMimics10);
             this.Controls.Add(this.radioButtonConvert);
             this.Controls.Add(this.radioButtonTrim);
             this.Controls.Add(this.progressBar1);
@@ -197,5 +212,6 @@ namespace libWrist
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.RadioButton radioButtonTrim;
         private System.Windows.Forms.RadioButton radioButtonConvert;
+        private System.Windows.Forms.CheckBox checkBoxMimics10;
     }
 }

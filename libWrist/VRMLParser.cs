@@ -30,16 +30,16 @@ namespace libWrist
             get { return _localObject.Connections; }
         }
 
-        public static void ConvertVRMLToIV(string vrmlFilename)
+        public static void ConvertVRMLToIV(string vrmlFilename, bool autoFixMimics10Scale)
         {
             string ivFilename = Path.Combine(Path.GetDirectoryName(vrmlFilename),
                 Path.GetFileNameWithoutExtension(vrmlFilename) + ".iv");
-            ConvertVRMLToIV(vrmlFilename, ivFilename);
+            ConvertVRMLToIV(vrmlFilename, ivFilename, autoFixMimics10Scale);
         }
 
-        public static void ConvertVRMLToIV(string vrmlFilename, string ivFilename)
+        public static void ConvertVRMLToIV(string vrmlFilename, string ivFilename, bool autoFixMimics10Scale)
         {
-            TesselatedObject data = parseVRMLFile(vrmlFilename);
+            TesselatedObject data = parseVRMLFile(vrmlFilename, autoFixMimics10Scale);
             WriteTesselatedObjectToIVFile(data, ivFilename);
         }
 
@@ -48,6 +48,8 @@ namespace libWrist
 Separator {
     Coordinate3 {
         point [";
+
+        private const string MIMICS_10_SCALE_KEY = @"#coordinates written in 1mm / 10000";
 
         private static void WriteTesselatedObjectToIVFile(TesselatedObject vrmlData, string ivFilename)
         {
@@ -72,7 +74,8 @@ Separator {
         }
 
 
-        public static TesselatedObject parseVRMLFile(string filename)
+        public static TesselatedObject parseVRMLFile(string filename) { return parseVRMLFile(filename, true); }
+        public static TesselatedObject parseVRMLFile(string filename, bool autoFixMimics10Scale)
         {
             TesselatedObject vrmlData = new TesselatedObject();
             string full;
@@ -84,6 +87,17 @@ Separator {
             Regex pointRegex = new Regex(@"point\s+\[");
             Regex closingRegex = new Regex("]");
             Regex coordIndexRegex = new Regex(@"coordIndex\s+\[");
+
+            /* if we are supposed to search for fixing Mimics Scale, 
+             * then we need to look before we strip the comments. The key
+             * is a comment :)
+             */
+            if (autoFixMimics10Scale)
+            {
+                //check for it, we will re-use this bool value as an indicator of if the scale needs to be changed
+                if (!full.Contains(MIMICS_10_SCALE_KEY))
+                    autoFixMimics10Scale = false;
+            }
 
             //Remove all comments from the file
             full = Regex.Replace(full, @"#.*$", "", RegexOptions.Multiline);
@@ -105,6 +119,13 @@ Separator {
                 scale[0] = Double.Parse(scaleMatch.Groups[1].Value);
                 scale[1] = Double.Parse(scaleMatch.Groups[1].Value);
                 scale[2] = Double.Parse(scaleMatch.Groups[1].Value);
+            }
+
+            if (autoFixMimics10Scale)
+            {
+                scale[0] *= 1000;
+                scale[1] *= 1000;
+                scale[2] *= 1000;
             }
 
             vrmlData.Points = parsePts(ptsSection, scale);
