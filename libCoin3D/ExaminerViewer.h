@@ -6,6 +6,8 @@
 
 #include <Inventor/nodes/SoEventCallback.h>
 
+#include <Inventor/SoOffscreenRenderer.h>
+
 #include "Separator.h"
 #include "ScenegraphNode.h"
 #include "Material.h"
@@ -25,12 +27,17 @@ public:
 	~ExaminerViewer();
 	void setDecorator(bool decorate);
 	void setSceneGraph(Separator^ root);
+
+
+	void cacheOffscreenRenderer();
+	void clearOffscreenRenderer();
 	bool saveToJPEG(System::String^ filename);
 	bool saveToPNG(System::String^ filename);
 	bool saveToGIF(System::String^ filename);
 	bool saveToTIFF(System::String^ filename);
 	bool saveToBMP(System::String^ filename);
 	void saveSceneGraph(System::String^ filename);
+	System::Drawing::Image^ getImage();
 
 	//background color stuff
 	float getBackgroundColorR();
@@ -92,7 +99,7 @@ public:
 	HighlighRenderTypes getHighlightType();
 	void setHighlightType(HighlighRenderTypes type);
 
-	System::Drawing::Image^ getImage();
+
 
 	void setDrawStyle();
 	void viewAll();
@@ -105,6 +112,9 @@ private:
 	bool _decorated;
 
 	SoEventCallback* _ecb;
+
+	SoOffscreenRenderer* getOffscreenRenderer();
+	SoOffscreenRenderer* _myOffscreenRenderer;
 
 	//private calls for finding material nodes. Used for material editing
 	SoNode* getSelectedNode();

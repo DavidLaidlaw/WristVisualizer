@@ -37,6 +37,7 @@ libCoin3D::ExaminerViewer::ExaminerViewer(int parrent)
 	_viewer = NULL;
 	_ecb = NULL;
 	_decorated = TRUE;
+	_myOffscreenRenderer = NULL;
 	_viewer = new SoWinExaminerViewer((HWND)parrent);
 	Parent_HWND = parrent;
 
@@ -52,6 +53,8 @@ libCoin3D::ExaminerViewer::~ExaminerViewer()
 {
 	if (_viewer != NULL)
 		delete _viewer;
+	if (_myOffscreenRenderer != NULL)
+		delete _myOffscreenRenderer;
 }
 
 void libCoin3D::ExaminerViewer::setDecorator(bool decorate)
@@ -258,6 +261,30 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 {
 	char* fname = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename).ToPointer();
 
+	SoOffscreenRenderer *myRenderer = getOffscreenRenderer();
+
+    if (!myRenderer->render(_viewer->getSceneManager()->getSceneGraph())) {  //render root?
+		if (_myOffscreenRenderer == NULL)
+			delete myRenderer;
+		System::Console::WriteLine("Couldn't capture root of tree");
+		return false;
+    }
+
+    // Generate PostScript and write it to the given file
+	bool result = (myRenderer->writeToFile(fname, ext) != 0);
+
+    if (_myOffscreenRenderer == NULL)
+		delete myRenderer;
+	System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)fname);
+
+	return result;
+}
+
+SoOffscreenRenderer* libCoin3D::ExaminerViewer::getOffscreenRenderer()
+{
+	if (_myOffscreenRenderer != NULL)
+		return _myOffscreenRenderer;
+
 	const SbViewportRegion &vp  = _viewer->getViewportRegion();
 	const SbVec2s &imagePixSize = vp.getViewportSizePixels();
 
@@ -271,22 +298,21 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 	SoOffscreenRenderer *myRenderer = new SoOffscreenRenderer(newRA);
 	myRenderer->setBackgroundColor(_viewer->getBackgroundColor());
 
-
-    if (!myRenderer->render(_viewer->getSceneManager()->getSceneGraph())) {  //render root?
-		delete myRenderer;
-		System::Console::WriteLine("Couldn't capture root of tree");
-		return false;
-    }
-
-    // Generate PostScript and write it to the given file
-	bool result = (myRenderer->writeToFile(fname, ext) != 0);
-
-    delete myRenderer;
-	System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)fname);
-
-	return result;
-
+	return myRenderer;
 }
+
+void libCoin3D::ExaminerViewer::clearOffscreenRenderer()
+{
+	if (_myOffscreenRenderer != NULL)
+		delete _myOffscreenRenderer;
+}
+
+void libCoin3D::ExaminerViewer::cacheOffscreenRenderer()
+{
+	clearOffscreenRenderer();
+	_myOffscreenRenderer = getOffscreenRenderer();
+}
+
 float libCoin3D::ExaminerViewer::getBackgroundColorR()
 {
 	return _viewer->getBackgroundColor()[0];
