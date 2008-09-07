@@ -258,32 +258,12 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 {
 	char* fname = (char*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(filename).ToPointer();
 
-	//SoOutput *postfile = new SoOutput;
-	//postfile->openFile(fname);
-  
 	const SbViewportRegion &vp  = _viewer->getViewportRegion();
 	const SbVec2s &imagePixSize = vp.getViewportSizePixels();
-	SbVec2f imageInches;
-	float pixPerInch;
-	float quality = 1;
-	int screenDPI = 400;
-  
-	//pixPerInch = SoOffscreenRenderer::getScreenPixelsPerInch();
-	pixPerInch = 300;
-	imageInches.setValue((float)imagePixSize[0] / pixPerInch,
-		       (float)imagePixSize[1] / pixPerInch);
-  
-    // The resolution to render the scene for the printer
-	// is equal to the size of the image in inches times
-	// the printer DPI;
-	SbVec2s postScriptRes;
-    postScriptRes.setValue((short)(imageInches[0]*screenDPI),
-                          (short)(imageInches[1]*screenDPI));
 
     // Create a viewport to render the scene into.
     SbViewportRegion myViewport;
-    myViewport.setWindowSize(postScriptRes);
-    myViewport.setPixelsPerInch((float)screenDPI);
+    myViewport.setWindowSize(imagePixSize);
 
 	// Render the scene
 	SoGLRenderAction *newRA = new SoGLRenderAction(myViewport);
@@ -298,19 +278,11 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 		return false;
     }
 
-
-//    if (!myRenderer->render(root)) {
-//	delete myRenderer;
-//	return FALSE;
-//  }
-
     // Generate PostScript and write it to the given file
-    //myRenderer->writeToRGB(postfile->getFilePointer());
-	bool result = (myRenderer->writeToFile(fname,ext) != 0);
-	//myRenderer->writeToJPEG(postfile->getFilePointer(), quality);
+	bool result = (myRenderer->writeToFile(fname, ext) != 0);
 
     delete myRenderer;
-	//postfile->closeFile();
+	System::Runtime::InteropServices::Marshal::FreeHGlobal((System::IntPtr)fname);
 
 	return result;
 
