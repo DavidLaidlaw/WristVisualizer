@@ -705,7 +705,8 @@ namespace WristVizualizer
 
             AnimationControl a = new AnimationControl();
             _layoutControl.addControl(a);
-            a.setupController(numFrames);
+            int totalNumFrames = numFrames * (animationOrder.Length - 1) + 1;
+            a.setupController(totalNumFrames);
             a.TrackbarScroll += new AnimationControl.TrackbarScrollHandler(a_TrackbarScroll);
             _sw = sw;
             _ac = a;
