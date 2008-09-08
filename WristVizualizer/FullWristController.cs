@@ -413,8 +413,6 @@ namespace WristVizualizer
 
         private void removeCurrentTransforms()
         {
-            if (_root.hasTransform())
-                _root.removeTransform();
             for (int i = 0; i < _bones.Length; i++)
             {
                 //skip missing bones & remove the old
@@ -675,6 +673,9 @@ namespace WristVizualizer
             //}
         }
 
+        private Switch[] _sw;
+        private AnimationControl _ac;
+
         public void createComplexAnimationMovie()
         {
             string[] positionNames = createSeriesListWithNiceNames();
@@ -690,6 +691,37 @@ namespace WristVizualizer
             AnimationCreator ac = new AnimationCreator();
             Switch[] sw = ac.test(_bones, _transformMatrices, animationOrder, numFrames);
 
+            //Okay, at this point, lets remove the current transforms...
+            removeCurrentTransforms();
+            //now, lets go and add the switches into place
+            for (int i = 0; i < _bones.Length; i++)
+            {
+                if (sw[i] != null)
+                {
+                    _bones[i].insertNode(sw[i], 0);
+                    sw[i].whichChild(0);
+                }
+            }
+
+            AnimationControl a = new AnimationControl();
+            _layoutControl.addControl(a);
+            a.setupController(numFrames);
+            a.TrackbarScroll += new AnimationControl.TrackbarScrollHandler(a_TrackbarScroll);
+            _sw = sw;
+            _ac = a;
+
+        }
+
+        void a_TrackbarScroll()
+        {
+            int index = _ac.currentFrame;
+            for (int i = 0; i < _bones.Length; i++)
+            {
+                if (_sw[i] == null)
+                    continue;
+
+                _sw[i].whichChild(index);
+            }
         }
 
     }
