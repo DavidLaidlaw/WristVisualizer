@@ -35,8 +35,10 @@ namespace WristVizualizer
 
         //Full Animation Stuff
         private Switch[] _animationSwitches;
+        private Switch[] _animationInverseSwitches;
         private Switch[] _animationHamSwitches;
-        private AnimationControl _animationControl;
+        private Switch _currentInverseSwitch;
+        private AnimationControl _animationControl;        
 
         //Distance Maps
         private DistanceMaps _distMap;
@@ -686,6 +688,11 @@ namespace WristVizualizer
                 if (_animationHamSwitches[i] != null)
                     _animationHamSwitches[i].unref(); //unref to be deleted
             }
+            if (_currentInverseSwitch != null)
+            {
+                _root.removeChild(_currentInverseSwitch);
+                _currentInverseSwitch = null;
+            }
 
             //return GUI
             _layoutControl.removeControl(_animationControl);
@@ -720,6 +727,8 @@ namespace WristVizualizer
             AnimationCreator ac = new AnimationCreator();
             _animationSwitches = ac.CreateAnimationSwitches(_bones, _transformMatrices, animationOrder, numFrames);
             _animationHamSwitches = ac.CreateHAMSwitches(_bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
+            _animationInverseSwitches = ac.CreateAnimationSwitches(_bones, _transformMatrices, animationOrder, numFrames, true);
+            _currentInverseSwitch = null;
 
             //Okay, at this point, lets remove the current transforms...
             removeCurrentTransforms();
@@ -824,12 +833,25 @@ namespace WristVizualizer
                         _animationHamSwitches[i].whichChild(frameIndex);
                 }
             }
+            if (_currentInverseSwitch != null)
+                _currentInverseSwitch.whichChild(frameIndex);
         }
 
         void _control_Animation_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
-            Console.WriteLine("Fixed bone changed to {0}",e.BoneIndex);
-            //TODO: Yeah...something!
+            //remove existing
+            if (_currentInverseSwitch != null)
+            {
+                _root.removeChild(_currentInverseSwitch);
+                _currentInverseSwitch = null;
+            }
+
+            if (_animationInverseSwitches[e.BoneIndex] != null)
+            {
+                _currentInverseSwitch = _animationInverseSwitches[e.BoneIndex];
+                _root.insertNode(_currentInverseSwitch,0);
+                _currentInverseSwitch.whichChild(_animationControl.currentFrame);
+            }
         }
 
         public override void saveToMovie()

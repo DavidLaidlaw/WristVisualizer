@@ -13,6 +13,11 @@ namespace libWrist
 
         public Switch[] CreateAnimationSwitches(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
         {
+            return CreateAnimationSwitches(bones, transforms, animationOrder, numFrames, false);
+        }
+
+        public Switch[] CreateAnimationSwitches(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames, bool invert)
+        {
             Switch[] switches = new Switch[bones.Length];
             //loop through each bone, skip the first one (radius, we set that to be the fixed bone, yay!)
             for (int i = 1; i < bones.Length; i++)
@@ -21,24 +26,31 @@ namespace libWrist
                     continue; //do nothing if the bone does not exist :)
 
                 //now need to loop through this this bone
-                switches[i] = createSwitchSingleBone(i, transforms, animationOrder, numFrames);
+                switches[i] = createSwitchSingleBone(i, transforms, animationOrder, numFrames, invert);
             }
             return switches;
         }
 
-        private Switch createSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
+        private Switch createSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames, bool invert)
         {
             Switch sw = new Switch();
             sw.reference();
 
             //add starting position, each animation does the animation and the ending frame, not the starting one :)
             TransformMatrix startPosition = calculateRelativeMotionFromNeutral(boneIndex, transforms, animationOrder[0]);
-            sw.addChild(startPosition.ToTransform());
+            Transform startTform = startPosition.ToTransform();
+            if (invert)
+                startTform.invert();
+            sw.addChild(startTform);
             for (int i = 0; i < animationOrder.Length - 1; i++) //not the last animation, there need start and end
             {
                 Transform[] tforms = createSingleAnimation(boneIndex, transforms, animationOrder[i], animationOrder[i + 1], numFrames);
                 foreach (Transform tform in tforms)
+                {
+                    if (invert)
+                        tform.invert();
                     sw.addChild(tform);
+                }
             }
             sw.unrefNoDelete();
             return sw;
