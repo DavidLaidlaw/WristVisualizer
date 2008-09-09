@@ -19,7 +19,6 @@ namespace WristVizualizer
         private RadioButton[] _radioButtonsFixed;
 
         private string[] _boneNames;
-        private bool _showSeriesList;
 
         public FullWristAnimationControl()
         {
@@ -27,34 +26,6 @@ namespace WristVizualizer
         }
 
         #region Public Interfaces
-        public void clearSeriesList()
-        {
-            seriesListBox.Items.Clear();
-        }
-
-        public void addToSeriesList(object item)
-        {
-            seriesListBox.Items.Add(item);
-        }
-        public void addToSeriesList(object[] items)
-        {
-            seriesListBox.Items.AddRange(items);
-        }
-
-        private void SetSeriesListVisibility(bool visible)
-        {
-            seriesListBox.Visible = visible;
-            labelSeries.Visible = visible;
-        }
-
-        public void HideSeriesList()
-        {
-            SetSeriesListVisibility(false);
-        }
-        public void ShowSeriesList()
-        {
-            SetSeriesListVisibility(true);
-        }
 
         public void disableBone(int boneIndex)
         {
@@ -76,22 +47,14 @@ namespace WristVizualizer
         {
             setBoneHiddenStatus(boneIndex, true);
         }
-
-        public int selectedSeriesIndex
-        {
-            get { return seriesListBox.SelectedIndex; }
-            set { seriesListBox.SelectedIndex = value; }
-        }
-
         #endregion
 
         #region GUI Control Setup
-        public void setupControl(string[] boneNames, bool showSeriesList)
+        public void setupControl(string[] boneNames)
         {
             if (boneNames.Length == 0)
                 throw new ArgumentException("Can't create Control for 0 bones");
             _boneNames = boneNames;
-            _showSeriesList = showSeriesList;
             setupControlLayout();
 
             //set the first bone to be fixed
@@ -115,13 +78,6 @@ namespace WristVizualizer
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             for (int i = 0; i < numBones; i++)
                 setupForm_generateRow(i);
-
-            if (!_showSeriesList)
-            {
-                seriesListBox.Visible = false;
-                labelSeries.Visible = false;
-            }
-            //tableLayoutPanel1.SetRowSpan(seriesListBox, numBones);
 
             //add in the hideall/showall links
             tableLayoutPanel1.Controls.Add(linkLabelShowAll, 1, numBones + 1);
@@ -210,13 +166,6 @@ namespace WristVizualizer
                     BoneHideChanged(sender, new BoneHideChangeEventArgs(i, hidden));
                 }
             }
-        }
-
-        private void seriesListBox_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (SelectedSeriesChanged == null) return;
-            int index = seriesListBox.SelectedIndex;
-            SelectedSeriesChanged(sender, new SelectedSeriesChangedEventArgs(index));
         }
 
         private void linkLabelShowAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
