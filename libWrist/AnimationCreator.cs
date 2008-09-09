@@ -66,13 +66,15 @@ namespace libWrist
 
         private TransformMatrix calculateRelativeMotionFromNeutral(int boneIndex, TransformMatrix[][] transforms, int positionIndex)
         {
-            if (boneIndex == 0) //relative to the Radius is always the same :)
-                return new TransformMatrix();
+            return calculateRelativeMotionFromNeutral(boneIndex, 0, transforms, positionIndex); //default to fixed radius :)
+        }
 
+        private TransformMatrix calculateRelativeMotionFromNeutral(int boneIndex, int fixedBoneIndex, TransformMatrix[][] transforms, int positionIndex)
+        {
             if (positionIndex == 0) //the first position, also no change :)
                 return new TransformMatrix();
 
-            TransformMatrix tmFixedBone = transforms[positionIndex - 1][0];
+            TransformMatrix tmFixedBone = transforms[positionIndex - 1][fixedBoneIndex];
             TransformMatrix tmCurrentBone = transforms[positionIndex - 1][boneIndex];
 
             return tmFixedBone.Inverse() * tmCurrentBone;
