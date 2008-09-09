@@ -81,6 +81,11 @@ namespace WristVizualizer
             get { return trackBarCurrentFrame.Enabled; }
             set { trackBarCurrentFrame.Enabled = value; }
         }
+
+        public int NumberOfFrames
+        {
+            get { return trackBarCurrentFrame.Maximum + 1; }
+        }
         #endregion
 
         #region Event Passing

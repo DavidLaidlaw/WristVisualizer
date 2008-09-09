@@ -430,7 +430,7 @@ namespace WristVizualizer
             showACSToolStripMenuItem.Enabled = true;
 
             //Setup motion files, etc
-            _fullWristController = new FullWristController();
+            _fullWristController = new FullWristController(_viewer);
             _fullWristController.loadFullWrist(radius);
             _currentController = _fullWristController;
             _root = _fullWristController.Root;

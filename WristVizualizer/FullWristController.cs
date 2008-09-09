@@ -5,6 +5,7 @@ using System.Windows.Forms;
 using System.IO;
 using libWrist;
 using libCoin3D;
+using AviFile;
 
 namespace WristVizualizer
 {    
@@ -22,6 +23,7 @@ namespace WristVizualizer
         private int _fixedBoneIndex;
         private int _lastFixedBoneIndex;
 
+        private ExaminerViewer _viewer;
         private Separator _root;
 
         //animation stuff
@@ -46,8 +48,9 @@ namespace WristVizualizer
         private FullWristControl _wristControl;
         private PositionGraph _positionGraph;
 
-        public FullWristController()
+        public FullWristController(ExaminerViewer viewer)
         {
+            _viewer = viewer;
             setupControl();
             setupControlEventListeners();
             _root = new Separator();
@@ -802,13 +805,18 @@ namespace WristVizualizer
         private void updateAnimationFrame()
         {
             int index = _animationControl.currentFrame;
+            setAnimationToFrame(index);
+        }
+
+        private void setAnimationToFrame(int frameIndex)
+        {
             for (int i = 0; i < _bones.Length; i++)
             {
                 if (_animationSwitches[i] != null)
                 {
-                    _animationSwitches[i].whichChild(index);
+                    _animationSwitches[i].whichChild(frameIndex);
                     if (_wristControl.IsHamVissible(i))
-                        _animationHamSwitches[i].whichChild(index);
+                        _animationHamSwitches[i].whichChild(frameIndex);
                 }
             }
         }
@@ -817,6 +825,66 @@ namespace WristVizualizer
         {
             Console.WriteLine("Fixed bone changed to {0}",e.BoneIndex);
             //TODO: Yeah...something!
+        }
+
+        public override void saveToMovie()
+        {
+            //save starting state & stop playback
+            bool startPlaying = _animationTimer.Enabled;
+            int startFrame = _animationControl.currentFrame;
+            _animationTimer.Stop();
+
+            //show save dialogue
+            MovieExportOptions dialog = new MovieExportOptions(_wrist.subjectPath, _animationControl.FPS);
+            dialog.ShowDialog();
+
+            //okay, now lets figure out what we are doing here
+            switch (dialog.results)
+            {
+                case MovieExportOptions.SaveType.CANCEL:
+                    //nothing to do, we were canceled
+                    break;
+                case MovieExportOptions.SaveType.IMAGES:
+                    //save images
+                    string outputDir = dialog.OutputFileName;
+                    //save it to a movie
+                    _viewer.cacheOffscreenRenderer();
+                    for (int i = 0; i < _animationControl.NumberOfFrames; i++)
+                    {
+                        setAnimationToFrame(i);  //change to current frame
+                        string fname = Path.Combine(outputDir, String.Format("outfile{0:d3}.jpg", i));
+                        _viewer.saveToJPEG(fname);
+                    }
+                    _viewer.clearOffscreenRenderer();
+                    break;
+                case MovieExportOptions.SaveType.MOVIE:
+                    //save movie
+                    try
+                    {
+                        AviManager aviManager = new AviManager(dialog.OutputFileName, false);
+                        _viewer.cacheOffscreenRenderer();
+                        setAnimationToFrame(0); //set to first frame, so we can grab it.
+                        System.Drawing.Bitmap frame = (System.Drawing.Bitmap)_viewer.getImage();
+                        VideoStream vStream = aviManager.AddVideoStream(dialog.MovieCompress, (double)dialog.MovieFPS, frame);
+                        for (int i = 1; i < _animationControl.NumberOfFrames; i++) //start from frame 1, frame 0 was added when we began
+                        {
+                            setAnimationToFrame(i);  //change to current frame
+                            vStream.AddFrame((System.Drawing.Bitmap)_viewer.getImage());
+                        }
+                        aviManager.Close();  //close out and save
+                        _viewer.clearOffscreenRenderer();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Error saving to movie file.\n\n" + ex.Message);
+                    }
+                    break;
+            }
+
+            //wrap us up, resume frame and playing status
+            updateAnimationFrame();
+            if (startPlaying)
+                _animationTimer.Start();
         }
 
     }
