@@ -223,7 +223,6 @@ namespace WristVizualizer
                 tableLayoutPanel1.Controls.Remove(box);
 
             tableLayoutPanel1.Controls.Add(seriesListBox,3,1);
-            //tableLayoutPanel1.SetRowSpan(seriesListBox, _boneNames.Length);
             labelSeries.Text = "Series";
 
             tableLayoutPanel1.ResumeLayout();

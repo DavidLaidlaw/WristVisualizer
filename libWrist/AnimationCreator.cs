@@ -11,7 +11,7 @@ namespace libWrist
         {
         }
 
-        public Switch[] test(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
+        public Switch[] CreateAnimationSwitches(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
         {
             Switch[] switches = new Switch[bones.Length];
             //loop through each bone, skip the first one (radius, we set that to be the fixed bone, yay!)
@@ -76,6 +76,55 @@ namespace libWrist
             TransformMatrix tmCurrentBone = transforms[positionIndex - 1][boneIndex];
 
             return tmFixedBone.Inverse() * tmCurrentBone;
+        }
+
+
+        public Switch[] CreateHAMSwitches(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
+        {
+            Switch[] switches = new Switch[bones.Length];
+            //loop through each bone, skip the first one (radius, we set that to be the fixed bone, yay!)
+            for (int i = 1; i < bones.Length; i++)
+            {
+                if (bones[i] == null)
+                    continue; //do nothing if the bone does not exist :)
+
+                //now need to loop through this this bone
+                switches[i] = createHAMSwitchSingleBone(i, transforms, animationOrder, numFrames);
+            }
+            return switches;
+        }
+
+        private Switch createHAMSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
+        {
+            Switch sw = new Switch();
+            sw.reference();
+
+            //add starting HAM (none shown), each animation does the animation and the ending frame, not the starting one :)
+            Separator nullSep = new Separator();
+            sw.addChild(nullSep);
+            for (int i = 0; i < animationOrder.Length - 1; i++) //not the last animation, there need start and end
+            {
+                HelicalTransform tform = createSingleHAM(boneIndex, transforms, animationOrder[i], animationOrder[i + 1]);
+                //TODO: Fix it so the HAMS are centered on the bone!!!!
+                HamAxis axis = new HamAxis(tform.N[0], tform.N[1], tform.N[2], tform.Q[0], tform.Q[1], tform.Q[2]);
+                for (int j = 0; j < numFrames - 1; j++) //do one less then num frames, no HAM shown for the final position
+                {
+                    sw.addChild(axis);
+                }
+                sw.addChild(nullSep); //add the empty at the end :)
+            }
+            sw.unrefNoDelete();
+            return sw;
+        }
+
+        private HelicalTransform createSingleHAM(int boneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition)
+        {
+            TransformMatrix startRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, startPosition);
+            TransformMatrix endRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, endPosition);
+
+            //this motion, relative to the radius
+            TransformMatrix relMotion = endRelTransform * startRelTransform.Inverse();
+            return relMotion.ToHelical();
         }
     }
 }
