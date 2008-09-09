@@ -11,6 +11,7 @@ namespace WristVizualizer
     public delegate void SelectedSeriesChangedHandler(object sender, SelectedSeriesChangedEventArgs e);
     public delegate void FixedBoneChangedHandler(object sender, FixedBoneChangeEventArgs e);
     public delegate void BoneHideChangedHandler(object sender, BoneHideChangeEventArgs e);
+    public delegate void ShowHamChangedHandler(object sender, BoneHideChangeEventArgs e);
 
 
     public partial class FullWristControl : UserControl
@@ -18,10 +19,12 @@ namespace WristVizualizer
         public event SelectedSeriesChangedHandler SelectedSeriesChanged;
         public event FixedBoneChangedHandler FixedBoneChanged;
         public event BoneHideChangedHandler BoneHideChanged;
+        public event ShowHamChangedHandler ShowHamChanged;
 
         private Label[] _labels;
         private CheckBox[] _checkBoxesHide;
         private RadioButton[] _radioButtonsFixed;
+        private CheckBox[] _checkBoxesShowHams;
 
         private string[] _boneNames;
         private bool _showSeriesList;
@@ -174,6 +177,58 @@ namespace WristVizualizer
             _checkBoxesHide[rowIndex] = cb;
             _radioButtonsFixed[rowIndex] = rb;
         }
+
+        private void changeToAnimationMode_generateRow(int rowIndex)
+        {
+            CheckBox cb = new CheckBox();
+
+            cb.CheckAlign = ContentAlignment.MiddleCenter;
+            cb.AutoSize = true;
+            cb.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                        | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+
+            tableLayoutPanel1.Controls.Add(cb, 3, rowIndex + 1);
+
+            //check if we have this bone
+            cb.Enabled = _checkBoxesHide[rowIndex].Enabled;
+
+            //add event callbacks
+            cb.CheckedChanged += new EventHandler(checkBoxShowHam_CheckedChanged);
+
+            //save these
+            _checkBoxesShowHams[rowIndex] = cb;
+        }
+
+        public void changeToAnimationMode()
+        {
+            this.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+            tableLayoutPanel1.Controls.Remove(seriesListBox);
+            labelSeries.Text = "Show HAM";
+            _checkBoxesShowHams = new CheckBox[_boneNames.Length];
+            for (int i = 0; i < _boneNames.Length; i++)
+                changeToAnimationMode_generateRow(i);
+
+            tableLayoutPanel1.ResumeLayout();
+            this.ResumeLayout();
+        }
+
+        public void changeBackToNormalMode()
+        {
+            this.SuspendLayout();
+            tableLayoutPanel1.SuspendLayout();
+
+            foreach (CheckBox box in _checkBoxesShowHams)
+                tableLayoutPanel1.Controls.Remove(box);
+
+            tableLayoutPanel1.Controls.Add(seriesListBox,3,1);
+            //tableLayoutPanel1.SetRowSpan(seriesListBox, _boneNames.Length);
+            labelSeries.Text = "Series";
+
+            tableLayoutPanel1.ResumeLayout();
+            this.ResumeLayout();
+        }
         #endregion
 
         #region Event Listeners
@@ -231,6 +286,19 @@ namespace WristVizualizer
             {
                 if (_checkBoxesHide[i].Enabled)
                     _checkBoxesHide[i].Checked = true;
+            }
+        }
+
+        void checkBoxShowHam_CheckedChanged(object sender, EventArgs e)
+        {
+            if (ShowHamChanged == null) return;
+            for (int i = 0; i < _checkBoxesShowHams.Length; i++)
+            {
+                if (sender == _checkBoxesShowHams[i])
+                {
+                    bool show = ((CheckBox)sender).Checked;
+                    ShowHamChanged(sender, new BoneHideChangeEventArgs(i, show));
+                }
             }
         }
         #endregion

@@ -1192,7 +1192,17 @@ namespace WristVizualizer
                 return;
 
             FullWristController control = (FullWristController)_currentController;
-            control.createComplexAnimationMovie();
+
+            if (createAnimationToolStripMenuItem.Checked)
+            {
+                //get out of this crap
+                control.endComplexAnimationMovie();
+            }
+            else
+            {
+                control.createComplexAnimationMovie(); //TODO: check if the dialog was cancelled
+            }
+            createAnimationToolStripMenuItem.Checked = !createAnimationToolStripMenuItem.Checked;
         }
 
 

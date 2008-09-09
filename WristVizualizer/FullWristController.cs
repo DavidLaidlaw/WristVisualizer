@@ -665,6 +665,11 @@ namespace WristVizualizer
             startFullAnimation(acf);
         }
 
+        public void endComplexAnimationMovie()
+        {
+            endFullAnimation();
+        }
+
         private void endFullAnimation()
         {
             //return GUI
@@ -672,6 +677,9 @@ namespace WristVizualizer
             if (_positionGraph != null)
                 _layoutControl.addControl(_positionGraph);
             _wristControl.ShowSeriesList();
+            _wristControl.changeBackToNormalMode();
+
+            _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_control_FixedBoneChanged);
 
             _animationControl.TrackbarScroll -= new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
             _animationControl.StopClicked -= new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
@@ -690,8 +698,6 @@ namespace WristVizualizer
             _animationTimer = null;
             _animationControl = null;
 
-
-            _wristControl.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
 
             //try and reset the display back to where it was....try
             //TODO
@@ -721,7 +727,11 @@ namespace WristVizualizer
             if (_layoutControl.Contains(_positionGraph))
                 _layoutControl.removeControl(_positionGraph);
             _wristControl.HideSeriesList();
-            _wristControl.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
+            _wristControl.changeToAnimationMode();
+
+            //redirect change in fixed bone....
+            _wristControl.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);
+            _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_control_Animation_FixedBoneChanged);
 
             _animationControl = new AnimationControl();
             _layoutControl.addControl(_animationControl);
@@ -780,6 +790,11 @@ namespace WristVizualizer
 
                 _animationSwitches[i].whichChild(index);
             }
+        }
+
+        void _control_Animation_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
+        {
+            Console.WriteLine("Fixed bone changed to {0}",e.BoneIndex);
         }
 
     }
