@@ -97,7 +97,7 @@ namespace WristVizualizer
             _timer.Interval = (int)(1000 / (double)FPS);
         }
 
-        public void saveToMovie()
+        public override void saveToMovie()
         {
             //save starting state & stop playback
             bool startPlaying = _timer.Enabled;

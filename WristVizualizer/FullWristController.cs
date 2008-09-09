@@ -26,7 +26,7 @@ namespace WristVizualizer
 
         //animation stuff
         private bool _animatePositionChanges;
-        private AnimationController _animationController;
+        private ShortAnimationController _shortAnimationController;
         private int _FPS;
         private double _animateDuration;
 
@@ -34,9 +34,6 @@ namespace WristVizualizer
         private DistanceMaps _distMap;
         private bool _hideMaps;
         private bool _hideContours;
-
-        //posture information
-        private double[] _postures;
 
         //GUI stuff
         private WristPanelLayoutControl _layoutControl;
@@ -449,9 +446,9 @@ namespace WristVizualizer
         private void animateChangeInPosition()
         {
             //setup animations....
-            if (_animationController != null)
-                _animationController.Stop(); //ugly, but should work
-            _animationController = new AnimationController();
+            if (_shortAnimationController != null)
+                _shortAnimationController.Stop(); //ugly, but should work
+            _shortAnimationController = new ShortAnimationController();
             int numFrames = Math.Max((int)(_FPS * _animateDuration), 1); //want at least one frame
 
             HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length]; //rel motion from last to current
@@ -490,10 +487,10 @@ namespace WristVizualizer
             _distMap.clearDistanceColorMapsForAllBones();
             _distMap.clearContoursForAllBones();
 
-            _animationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
-            _animationController.LoopAnimation = false;
-            _animationController.FPS = _FPS;
-            _animationController.Start();
+            _shortAnimationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
+            _shortAnimationController.LoopAnimation = false;
+            _shortAnimationController.FPS = _FPS;
+            _shortAnimationController.Start();
             //TODO: add color information back in at the end....how?
         }
 
@@ -647,30 +644,6 @@ namespace WristVizualizer
         {
             int[] forearm = {0, 1};
             setInertiaVisibility(visible, forearm, 45);
-            //if (visible)
-            //{
-            //    //only for radius, check if it exists
-            //    if (_bones[0] == null)
-            //        return;
-
-            //    //check that it exists:
-            //    if (_inertiaMatrices[0] == null)
-            //    {
-            //        MessageBox.Show("Unable to show ACS. Error reading file.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            //        return;
-            //    }
-
-            //    _inertias[0] = new Separator();
-            //    Transform t = _inertiaMatrices[0].ToTransform();
-            //    _inertias[0].addNode(new ACS(45)); //longer axes for the radius/ACS
-            //    _inertias[0].addTransform(t);
-            //    _bones[0].addChild(_inertias[0]);
-            //}
-            //else
-            //{
-            //    _bones[0].removeChild(_inertias[0]);
-            //    _inertias[0] = null;
-            //}
         }
 
         private Switch[] _sw;
@@ -680,7 +653,7 @@ namespace WristVizualizer
         {
             string[] positionNames = createSeriesListWithNiceNames();
             AnimationCreatorForm acf = new AnimationCreatorForm(positionNames);
-            //TODO: Pass in positions....
+            //Pass in positions....
             DialogResult r = acf.ShowDialog();
             if (r != DialogResult.OK)
                 return;
@@ -689,7 +662,9 @@ namespace WristVizualizer
             int numFrames = acf.NumberStepsPerPositionChange;
             //TODO: all the distance map stuff, etc.
             AnimationCreator ac = new AnimationCreator();
+            DateTime start = DateTime.Now;
             Switch[] sw = ac.test(_bones, _transformMatrices, animationOrder, numFrames);
+            Console.WriteLine("Creating took: {0}",(DateTime.Now - start).ToString());
 
             //Okay, at this point, lets remove the current transforms...
             removeCurrentTransforms();

@@ -22,6 +22,10 @@ namespace WristVizualizer
         {
         }
 
+        public virtual void saveToMovie()
+        {
+        }
+
         protected Control _control = null;
     }
 }

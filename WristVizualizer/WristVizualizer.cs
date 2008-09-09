@@ -540,7 +540,8 @@ namespace WristVizualizer
 
         private void saveMovieToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _posViewController.saveToMovie();
+            //_posViewController.saveToMovie();
+            _currentController.saveToMovie();
         }
 
         private void calculateInertiasToolStripMenuItem_Click(object sender, EventArgs e)

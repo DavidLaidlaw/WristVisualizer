@@ -7,7 +7,7 @@ using libCoin3D;
 
 namespace WristVizualizer
 {
-    class AnimationController
+    class ShortAnimationController
     {
         public event EventHandler EndOfAnimationReached;
 
@@ -25,7 +25,7 @@ namespace WristVizualizer
 
         private DateTime _startTime;
 
-        public AnimationController()
+        public ShortAnimationController()
         {
             _timer = new Timer();
             _timer.Enabled = false;
