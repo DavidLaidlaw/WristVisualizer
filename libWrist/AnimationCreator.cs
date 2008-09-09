@@ -48,36 +48,8 @@ namespace libWrist
         {
             Transform[] finalTransforms = new Transform[numFrames];
 
-            TransformMatrix startTransform, endTransform;
-            TransformMatrix startRadTransform, endRadTransform;
-            TransformMatrix startRelTransform, endRelTransform;
-            if (startPosition == 0)
-            { 
-                //special
-                startRelTransform = new TransformMatrix(); //identity
-            } 
-            else
-            {
-                startTransform = transforms[startPosition - 1][boneIndex];
-                startRadTransform = transforms[startPosition - 1][0];
-                startRelTransform = startRadTransform.Inverse() * startTransform;
-            }
-            if (endPosition == 0)
-            { 
-                //special
-                endRelTransform = new TransformMatrix(); //identity
-            } 
-            else
-            {
-                endTransform = transforms[endPosition - 1][boneIndex];
-                endRadTransform = transforms[endPosition - 1][0];
-                endRelTransform = endRadTransform.Inverse() * endTransform;
-            }
-
-            //TODO: is this the same?
-            //TRY 2
-            startRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, startPosition);
-            endRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, endPosition);
+            TransformMatrix startRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, startPosition);
+            TransformMatrix endRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, endPosition);
 
             //this motion, relative to the radius
             TransformMatrix relMotion = endRelTransform * startRelTransform.Inverse();
