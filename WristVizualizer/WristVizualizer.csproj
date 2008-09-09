@@ -45,6 +45,12 @@
     <Compile Include="AnimationControl.Designer.cs">
       <DependentUpon>AnimationControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="FullWristAnimationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FullWristAnimationControl.Designer.cs">
+      <DependentUpon>FullWristAnimationControl.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShortAnimationController.cs" />
     <Compile Include="AnimationCreatorForm.cs">
       <SubType>Form</SubType>
@@ -176,6 +182,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="CameraEditor.resx">
       <DependentUpon>CameraEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FullWristAnimationControl.resx">
+      <DependentUpon>FullWristAnimationControl.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="DistanceAndContourDialog.resx">
