@@ -19,9 +19,9 @@ namespace libWrist
         {
             Switch[] switches = new Switch[bones.Length];
             //loop through each bone, skip the first one (radius, we set that to be the fixed bone, yay!)
-            for (int i = 1; i < bones.Length; i++)
+            for (int i = 0; i < bones.Length; i++)
             {
-                if (bones[i] == null)
+                if (bones[i] == null || i==fixedBoneIndex)
                     continue; //do nothing if the bone does not exist :)
 
                 //now need to loop through this this bone

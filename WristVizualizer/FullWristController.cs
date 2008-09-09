@@ -790,6 +790,8 @@ namespace WristVizualizer
         {
             if (e.BoneHidden)
             {
+
+                //TODO: Check if the bone to be hidden or shown is the fixed bone...fudge
                 int index = _animationControl.currentFrame;
                 _root.addNode(_animationHamSwitches[e.BoneIndex]);
                 _animationHamSwitches[e.BoneIndex].whichChild(index);
