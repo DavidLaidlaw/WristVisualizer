@@ -713,7 +713,7 @@ namespace WristVizualizer
             //TODO: all the distance map stuff, etc.
             AnimationCreator ac = new AnimationCreator();
             _animationSwitches = ac.CreateAnimationSwitches(_bones, _transformMatrices, animationOrder, numFrames);
-            _animationHamSwitches = ac.CreateHAMSwitches(_bones, _transformMatrices, animationOrder, numFrames);
+            _animationHamSwitches = ac.CreateHAMSwitches(_bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
 
             //Okay, at this point, lets remove the current transforms...
             removeCurrentTransforms();
@@ -815,6 +815,7 @@ namespace WristVizualizer
         void _control_Animation_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
             Console.WriteLine("Fixed bone changed to {0}",e.BoneIndex);
+            //TODO: Yeah...something!
         }
 
     }

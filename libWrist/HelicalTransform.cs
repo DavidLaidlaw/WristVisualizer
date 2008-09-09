@@ -73,6 +73,17 @@ namespace libWrist
             return steps;
         }
 
+        public void AdjustQToLocateHamNearCentroid(double[] centroid)
+        {
+            //first find the index of the largest N
+            int index = (Math.Abs(_n[0]) > Math.Abs(_n[1])) ? 0 : 1;
+            index = (Math.Abs(_n[index]) > Math.Abs(_n[2])) ? index : 2;
+            double moveFactor = (centroid[index] - _q[index]) / _n[index];
+            _q[0] += _n[0] * moveFactor;
+            _q[1] += _n[1] * moveFactor;
+            _q[2] += _n[2] * moveFactor;
+        }
+
         public string ToStringDirty()
         {
             return String.Format("{0} {1} {2} {3} {4} {5} {6} {7}", _phi, _n[0], _n[1], _n[2], _trans, _q[0], _q[1], _q[2]);

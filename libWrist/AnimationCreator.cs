@@ -79,7 +79,7 @@ namespace libWrist
         }
 
 
-        public Switch[] CreateHAMSwitches(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
+        public Switch[] CreateHAMSwitches(Separator[] bones, TransformMatrix[][] transforms, TransformMatrix[] inertias, int[] animationOrder, int numFrames)
         {
             Switch[] switches = new Switch[bones.Length];
             //loop through each bone, skip the first one (radius, we set that to be the fixed bone, yay!)
@@ -89,12 +89,12 @@ namespace libWrist
                     continue; //do nothing if the bone does not exist :)
 
                 //now need to loop through this this bone
-                switches[i] = createHAMSwitchSingleBone(i, transforms, animationOrder, numFrames);
+                switches[i] = createHAMSwitchSingleBone(i, transforms, inertias, animationOrder, numFrames);
             }
             return switches;
         }
 
-        private Switch createHAMSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
+        private Switch createHAMSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, TransformMatrix[] inertias, int[] animationOrder, int numFrames)
         {
             Switch sw = new Switch();
             sw.reference();
@@ -105,7 +105,11 @@ namespace libWrist
             for (int i = 0; i < animationOrder.Length - 1; i++) //not the last animation, there need start and end
             {
                 HelicalTransform tform = createSingleHAM(boneIndex, transforms, animationOrder[i], animationOrder[i + 1]);
-                //TODO: Fix it so the HAMS are centered on the bone!!!!
+                if (inertias != null && inertias[boneIndex] != null)
+                {
+                    double[] cent = { inertias[boneIndex].GetElement(0, 3), inertias[boneIndex].GetElement(1, 3), inertias[boneIndex].GetElement(2, 3) };
+                    tform.AdjustQToLocateHamNearCentroid(cent);
+                }
                 HamAxis axis = new HamAxis(tform.N[0], tform.N[1], tform.N[2], tform.Q[0], tform.Q[1], tform.Q[2]);
                 for (int j = 0; j < numFrames - 1; j++) //do one less then num frames, no HAM shown for the final position
                 {
@@ -115,6 +119,18 @@ namespace libWrist
             }
             sw.unrefNoDelete();
             return sw;
+        }
+
+        private double[] getCentroid(TransformMatrix[] inertias, int boneIndex)
+        {
+            double[] result = { 0.0, 0.0, 0.0 };
+            if (inertias == null || inertias[boneIndex] == null)
+                return result;
+
+            result[0] = inertias[boneIndex].GetElement(0, 3);
+            result[1] = inertias[boneIndex].GetElement(1, 3);
+            result[2] = inertias[boneIndex].GetElement(2, 3);
+            return result;
         }
 
         private HelicalTransform createSingleHAM(int boneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition)
