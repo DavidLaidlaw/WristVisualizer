@@ -29,6 +29,11 @@ namespace WristVizualizer
         private ShortAnimationController _shortAnimationController;
         private int _FPS;
         private double _animateDuration;
+        private Timer _animationTimer;
+
+        //Full Animation Stuff
+        private Switch[] _animationSwitches;
+        private AnimationControl _animationControl;
 
         //Distance Maps
         private DistanceMaps _distMap;
@@ -646,8 +651,7 @@ namespace WristVizualizer
             setInertiaVisibility(visible, forearm, 45);
         }
 
-        private Switch[] _sw;
-        private AnimationControl _ac;
+
 
         public void createComplexAnimationMovie()
         {
@@ -658,47 +662,123 @@ namespace WristVizualizer
             if (r != DialogResult.OK)
                 return;
 
+            startFullAnimation(acf);
+        }
+
+        private void endFullAnimation()
+        {
+            //return GUI
+            _layoutControl.removeControl(_animationControl);
+            if (_positionGraph != null)
+                _layoutControl.addControl(_positionGraph);
+            _wristControl.ShowSeriesList();
+
+            _animationControl.TrackbarScroll -= new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
+            _animationControl.StopClicked -= new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
+            _animationControl.PlayClicked -= new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
+            _animationControl.FPSChanged -= new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
+
+            //remove switches
+            for (int i = 0; i < _bones.Length; i++)
+            {
+                if (_animationSwitches[i] != null)
+                    _bones[i].removeChild(_animationSwitches[i]);
+            }
+            _animationSwitches = null;
+            _animationTimer.Tick -= new EventHandler(_animationTimer_Tick);
+            _animationTimer.Stop();
+            _animationTimer = null;
+            _animationControl = null;
+
+
+            _wristControl.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
+
+            //try and reset the display back to where it was....try
+            //TODO
+        }
+
+        private void startFullAnimation(AnimationCreatorForm acf)
+        {
             int[] animationOrder = acf.getAnimationOrder();
             int numFrames = acf.NumberStepsPerPositionChange;
             //TODO: all the distance map stuff, etc.
             AnimationCreator ac = new AnimationCreator();
-            Switch[] sw = ac.test(_bones, _transformMatrices, animationOrder, numFrames);
+            _animationSwitches = ac.test(_bones, _transformMatrices, animationOrder, numFrames);
 
             //Okay, at this point, lets remove the current transforms...
             removeCurrentTransforms();
             //now, lets go and add the switches into place
             for (int i = 0; i < _bones.Length; i++)
             {
-                if (sw[i] != null)
+                if (_animationSwitches[i] != null)
                 {
-                    _bones[i].insertNode(sw[i], 0);
-                    sw[i].whichChild(0);
+                    _bones[i].insertNode(_animationSwitches[i], 0);
+                    _animationSwitches[i].whichChild(0);
                 }
             }
 
             //little bit of gui stuff
-            _layoutControl.removeControl(_positionGraph);
+            if (_layoutControl.Contains(_positionGraph))
+                _layoutControl.removeControl(_positionGraph);
             _wristControl.HideSeriesList();
+            _wristControl.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
 
-            AnimationControl a = new AnimationControl();
-            _layoutControl.addControl(a);
+            AnimationControl _animationControl = new AnimationControl();
+            _layoutControl.addControl(_animationControl);
+
             int totalNumFrames = numFrames * (animationOrder.Length - 1) + 1;
-            a.setupController(totalNumFrames);
-            a.TrackbarScroll += new AnimationControl.TrackbarScrollHandler(a_TrackbarScroll);
-            _sw = sw;
-            _ac = a;
+            _animationControl.setupController(totalNumFrames);
+            _animationControl.FPS = 10;
 
+            _animationControl.TrackbarScroll += new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
+            _animationControl.StopClicked += new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
+            _animationControl.PlayClicked += new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
+            _animationControl.FPSChanged += new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
+
+            _animationTimer = new Timer();
+            _animationTimer.Tick += new EventHandler(_animationTimer_Tick);
+            _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
         }
 
-        void a_TrackbarScroll()
+        void _animationTimer_Tick(object sender, EventArgs e)
         {
-            int index = _ac.currentFrame;
+            _animationControl.AdvanceCurrentFrameTrackbar();
+            updateAnimationFrame(); //do I need this? Or will the trackbar update event not fire
+        }
+
+        void _animationControl_FPSChanged()
+        {
+            _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
+        }
+
+        void _animationControl_PlayClicked()
+        {
+            _animationControl.StopButtonEnabled = true;
+            _animationControl.PlayButtonEnabled = false;
+            _animationTimer.Start();
+        }
+
+        void _animationControl_StopClicked()
+        {
+            _animationControl.StopButtonEnabled = false;
+            _animationControl.PlayButtonEnabled = true;
+            _animationTimer.Stop();
+        }
+
+        void _animationControl_TrackbarScroll()
+        {
+            updateAnimationFrame();
+        }
+
+        private void updateAnimationFrame()
+        {
+            int index = _animationControl.currentFrame;
             for (int i = 0; i < _bones.Length; i++)
             {
-                if (_sw[i] == null)
+                if (_animationSwitches[i] == null)
                     continue;
 
-                _sw[i].whichChild(index);
+                _animationSwitches[i].whichChild(index);
             }
         }
 

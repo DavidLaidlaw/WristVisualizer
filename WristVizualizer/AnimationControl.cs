@@ -35,6 +35,15 @@ namespace WristVizualizer
             buttonStop.Enabled = true;
         }
 
+        public void AdvanceCurrentFrameTrackbar()
+        {
+            int current = trackBarCurrentFrame.Value;
+            current++;
+            if (current > trackBarCurrentFrame.Maximum)
+                current = 0;
+            trackBarCurrentFrame.Value = current;
+        }
+
         #region Interfaces
         public decimal FPS
         {
