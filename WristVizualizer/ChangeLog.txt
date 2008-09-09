@@ -1,3 +1,6 @@
+Version 1.5.4
+- New: Can load stackfiles
+
 Version 1.5.3
 - New: When converting VRML -> IV, can optionally detect output from Mimics 10 or greater and convert the output from m to mm. 
 
