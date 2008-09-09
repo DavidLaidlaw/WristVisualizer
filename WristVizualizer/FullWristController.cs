@@ -723,7 +723,7 @@ namespace WristVizualizer
             _wristControl.HideSeriesList();
             _wristControl.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
 
-            AnimationControl _animationControl = new AnimationControl();
+            _animationControl = new AnimationControl();
             _layoutControl.addControl(_animationControl);
 
             int totalNumFrames = numFrames * (animationOrder.Length - 1) + 1;
