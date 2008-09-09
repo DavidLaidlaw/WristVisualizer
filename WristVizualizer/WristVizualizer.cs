@@ -227,7 +227,7 @@ namespace WristVizualizer
             if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
                 open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
 #endif
-            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|All Files (*.*)|*.*";
+            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|Stack Files (*.stack)|*.stack|All Files (*.*)|*.*";
             open.Multiselect = true;
             if (DialogResult.OK != open.ShowDialog())
                 return null;
@@ -303,7 +303,7 @@ namespace WristVizualizer
             {
                 _mode = Modes.SCENEVIEWER;
                 foreach (string filename in filenames)
-                    _root.addFile(filename);
+                    addFileToRoot(filename);
 
                 //save first filename for recording sake
                 if (filenames.Length >= 1)
@@ -333,7 +333,48 @@ namespace WristVizualizer
             if (filenames == null) return;
             _numberFilesLoaded += filenames.Length;
             foreach (string filename in filenames)
-                _root.addFile(filename);
+                addFileToRoot(filename);
+        }
+
+        /// <summary>
+        /// Intelligently try and add the given file to the root node
+        /// </summary>
+        /// <param name="filename"></param>
+        private void addFileToRoot(string filename)
+        {
+            string ext = Path.GetExtension(filename).ToLower();
+            try
+            {
+                switch (ext)
+                {
+                    case ".iv":
+                    case ".vrml":
+                    case ".wrl":
+                        _root.addFile(filename);
+                        break;
+                    case ".stack":
+                    case ".dat":
+                        _root.addChild(readStackfile(filename));
+                        break;
+                    default:
+                        MessageBox.Show("Error: Unknown file extension for: " + filename, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                if (!hideErrorMessagesToolStripMenuItem.Checked)
+                {
+                    string msg = String.Format("Error loading file: {0}\n\n{1}", filename, ex.ToString());
+                    MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+        }
+
+        private Separator readStackfile(string filename)
+        {
+            double[][] pts = DatParser.parseDatFile(filename);
+            return Texture.createPointsFileObject(pts);
         }
 
         private void openFullWristToolStripMenuItem_Click(object sender, EventArgs e)
