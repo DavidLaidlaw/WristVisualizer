@@ -45,7 +45,7 @@
     <Compile Include="AnimationControl.Designer.cs">
       <DependentUpon>AnimationControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="AnimationController.cs" />
+    <Compile Include="ShortAnimationController.cs" />
     <Compile Include="AnimationCreatorForm.cs">
       <SubType>Form</SubType>
     </Compile>
