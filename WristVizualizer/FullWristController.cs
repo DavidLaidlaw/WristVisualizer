@@ -662,9 +662,7 @@ namespace WristVizualizer
             int numFrames = acf.NumberStepsPerPositionChange;
             //TODO: all the distance map stuff, etc.
             AnimationCreator ac = new AnimationCreator();
-            DateTime start = DateTime.Now;
             Switch[] sw = ac.test(_bones, _transformMatrices, animationOrder, numFrames);
-            Console.WriteLine("Creating took: {0}",(DateTime.Now - start).ToString());
 
             //Okay, at this point, lets remove the current transforms...
             removeCurrentTransforms();
@@ -677,6 +675,10 @@ namespace WristVizualizer
                     sw[i].whichChild(0);
                 }
             }
+
+            //little bit of gui stuff
+            _layoutControl.removeControl(_positionGraph);
+            _wristControl.HideSeriesList();
 
             AnimationControl a = new AnimationControl();
             _layoutControl.addControl(a);

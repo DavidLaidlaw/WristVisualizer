@@ -46,6 +46,21 @@ namespace WristVizualizer
             seriesListBox.Items.AddRange(items);
         }
 
+        private void SetSeriesListVisibility(bool visible)
+        {
+            seriesListBox.Visible = visible;
+            labelSeries.Visible = visible;
+        }
+
+        public void HideSeriesList()
+        {
+            SetSeriesListVisibility(false);
+        }
+        public void ShowSeriesList()
+        {
+            SetSeriesListVisibility(true);
+        }
+
         public void disableBone(int boneIndex)
         {
             _checkBoxesHide[boneIndex].Enabled = false;
