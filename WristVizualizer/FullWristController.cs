@@ -677,7 +677,6 @@ namespace WristVizualizer
             _layoutControl.removeControl(_animationControl);
             if (_positionGraph != null)
                 _layoutControl.addControl(_positionGraph);
-            _wristControl.ShowSeriesList();
             _wristControl.changeBackToNormalMode();
 
             _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_control_FixedBoneChanged);
@@ -702,8 +701,7 @@ namespace WristVizualizer
             _animationControl = null;
 
 
-            //try and reset the display back to where it was....try
-            //TODO
+            //try and reset the display back to where it was....hopefully everything is reset, so we don't have too?
         }
 
         private void startFullAnimation(AnimationCreatorForm acf)
@@ -732,11 +730,12 @@ namespace WristVizualizer
             //little bit of gui stuff
             if (_layoutControl.Contains(_positionGraph))
                 _layoutControl.removeControl(_positionGraph);
-            _wristControl.HideSeriesList();
             _wristControl.changeToAnimationMode();
 
             //redirect change in fixed bone....
             _wristControl.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);
+            _wristControl.setFixedBone(0); //reset the fixed bone to radius for later :)
+            _wristControl.selectedSeriesIndex = 0;
             _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_control_Animation_FixedBoneChanged);
             _wristControl.ShowHamChanged += new ShowHamChangedHandler(_wristControl_ShowHamChanged);
 

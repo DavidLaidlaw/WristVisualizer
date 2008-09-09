@@ -80,6 +80,11 @@ namespace WristVizualizer
             _checkBoxesHide[boneIndex].Checked = hidden;
         }
 
+        public void setFixedBone(int boneIndex)
+        {
+            _radioButtonsFixed[boneIndex].Checked = true;
+        }
+
         public void hideBone(int boneIndex)
         {
             setBoneHiddenStatus(boneIndex, true);

@@ -1198,12 +1198,16 @@ namespace WristVizualizer
                 //get out of this crap
                 control.endComplexAnimationMovie();
                 createAnimationToolStripMenuItem.Checked = false;
+                saveMovieToolStripMenuItem.Enabled = false;
             }
             else
             {
                 DialogResult r = control.createComplexAnimationMovie();
                 if (r == DialogResult.OK)
+                {
                     createAnimationToolStripMenuItem.Checked = true;
+                    saveMovieToolStripMenuItem.Enabled = true;
+                }
             }
         }
 
