@@ -1197,12 +1197,14 @@ namespace WristVizualizer
             {
                 //get out of this crap
                 control.endComplexAnimationMovie();
+                createAnimationToolStripMenuItem.Checked = false;
             }
             else
             {
-                control.createComplexAnimationMovie(); //TODO: check if the dialog was cancelled
+                DialogResult r = control.createComplexAnimationMovie();
+                if (r == DialogResult.OK)
+                    createAnimationToolStripMenuItem.Checked = true;
             }
-            createAnimationToolStripMenuItem.Checked = !createAnimationToolStripMenuItem.Checked;
         }
 
 

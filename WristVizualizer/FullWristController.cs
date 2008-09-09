@@ -654,16 +654,16 @@ namespace WristVizualizer
 
 
 
-        public void createComplexAnimationMovie()
+        public DialogResult createComplexAnimationMovie()
         {
             string[] positionNames = createSeriesListWithNiceNames();
             AnimationCreatorForm acf = new AnimationCreatorForm(positionNames);
             //Pass in positions....
             DialogResult r = acf.ShowDialog();
-            if (r != DialogResult.OK)
-                return;
+            if (r == DialogResult.OK)
+                startFullAnimation(acf);
 
-            startFullAnimation(acf);
+            return r;
         }
 
         public void endComplexAnimationMovie()
@@ -805,10 +805,12 @@ namespace WristVizualizer
             int index = _animationControl.currentFrame;
             for (int i = 0; i < _bones.Length; i++)
             {
-                if (_animationSwitches[i] == null)
-                    continue;
-
-                _animationSwitches[i].whichChild(index);
+                if (_animationSwitches[i] != null)
+                {
+                    _animationSwitches[i].whichChild(index);
+                    if (_wristControl.IsHamVissible(i))
+                        _animationHamSwitches[i].whichChild(index);
+                }
             }
         }
 

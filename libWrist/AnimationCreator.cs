@@ -121,18 +121,6 @@ namespace libWrist
             return sw;
         }
 
-        private double[] getCentroid(TransformMatrix[] inertias, int boneIndex)
-        {
-            double[] result = { 0.0, 0.0, 0.0 };
-            if (inertias == null || inertias[boneIndex] == null)
-                return result;
-
-            result[0] = inertias[boneIndex].GetElement(0, 3);
-            result[1] = inertias[boneIndex].GetElement(1, 3);
-            result[2] = inertias[boneIndex].GetElement(2, 3);
-            return result;
-        }
-
         private HelicalTransform createSingleHAM(int boneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition)
         {
             TransformMatrix startRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, startPosition);

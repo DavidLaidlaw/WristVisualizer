@@ -91,6 +91,11 @@ namespace WristVizualizer
             set { seriesListBox.SelectedIndex = value; }
         }
 
+        public bool IsHamVissible(int boneIndex)
+        {
+            return _checkBoxesShowHams[boneIndex].Checked;
+        }
+
         #endregion
 
         #region GUI Control Setup
