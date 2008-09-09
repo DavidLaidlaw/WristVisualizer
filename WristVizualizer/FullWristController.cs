@@ -676,6 +676,17 @@ namespace WristVizualizer
 
         private void endFullAnimation()
         {
+            //remove switches
+            for (int i = 0; i < _bones.Length; i++)
+            {
+                if (_animationSwitches[i] != null)
+                    _bones[i].removeChild(_animationSwitches[i]);
+                if (_wristControl.IsHamVissible(i)) //TODO: Check if displayed...?
+                    _root.removeChild(_animationHamSwitches[i]);
+                if (_animationHamSwitches[i] != null)
+                    _animationHamSwitches[i].unref(); //unref to be deleted
+            }
+
             //return GUI
             _layoutControl.removeControl(_animationControl);
             if (_positionGraph != null)
@@ -689,15 +700,9 @@ namespace WristVizualizer
             _animationControl.StopClicked -= new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
             _animationControl.PlayClicked -= new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
             _animationControl.FPSChanged -= new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
-            
-
-            //remove switches
-            for (int i = 0; i < _bones.Length; i++)
-            {
-                if (_animationSwitches[i] != null)
-                    _bones[i].removeChild(_animationSwitches[i]);
-            }
+                        
             _animationSwitches = null;
+            _animationHamSwitches = null;
             _animationTimer.Tick -= new EventHandler(_animationTimer_Tick);
             _animationTimer.Stop();
             _animationTimer = null;
@@ -725,8 +730,7 @@ namespace WristVizualizer
                 {
                     _bones[i].insertNode(_animationSwitches[i], 0);
                     _animationSwitches[i].whichChild(0);
-                    _root.addNode(_animationHamSwitches[i]);
-                    _animationHamSwitches[i].hideAll();
+                    _animationHamSwitches[i].reference();
                 }
             }
 
@@ -764,11 +768,12 @@ namespace WristVizualizer
             if (e.BoneHidden)
             {
                 int index = _animationControl.currentFrame;
+                _root.addNode(_animationHamSwitches[e.BoneIndex]);
                 _animationHamSwitches[e.BoneIndex].whichChild(index);
             }
             else
             {
-                _animationHamSwitches[e.BoneIndex].hideAll();
+                _root.removeChild(_animationHamSwitches[e.BoneIndex]);
             }
         }
 
