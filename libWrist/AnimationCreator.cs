@@ -13,10 +13,9 @@ namespace libWrist
 
         public Switch[] CreateAnimationSwitches(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
         {
-            return CreateAnimationSwitches(bones, transforms, animationOrder, numFrames, false);
+            return CreateAnimationSwitches(0, bones, transforms, animationOrder, numFrames);
         }
-
-        public Switch[] CreateAnimationSwitches(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames, bool invert)
+        public Switch[] CreateAnimationSwitches(int fixedBoneIndex, Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
         {
             Switch[] switches = new Switch[bones.Length];
             //loop through each bone, skip the first one (radius, we set that to be the fixed bone, yay!)
@@ -26,29 +25,29 @@ namespace libWrist
                     continue; //do nothing if the bone does not exist :)
 
                 //now need to loop through this this bone
-                switches[i] = createSwitchSingleBone(i, transforms, animationOrder, numFrames, invert);
+                switches[i] = createSwitchSingleBone(i, fixedBoneIndex, transforms, animationOrder, numFrames);
             }
             return switches;
         }
 
-        private Switch createSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames, bool invert)
+        private Switch createSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
+        {
+            return createSwitchSingleBone(boneIndex, 0, transforms, animationOrder, numFrames);
+        }
+
+        private Switch createSwitchSingleBone(int boneIndex, int fixedBoneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
         {
             Switch sw = new Switch();
             sw.reference();
 
             //add starting position, each animation does the animation and the ending frame, not the starting one :)
-            TransformMatrix startPosition = calculateRelativeMotionFromNeutral(boneIndex, transforms, animationOrder[0]);
-            Transform startTform = startPosition.ToTransform();
-            if (invert)
-                startTform.invert();
-            sw.addChild(startTform);
+            TransformMatrix startPosition = calculateRelativeMotionFromNeutral(boneIndex, fixedBoneIndex, transforms, animationOrder[0]);
+            sw.addChild(startPosition.ToTransform());
             for (int i = 0; i < animationOrder.Length - 1; i++) //not the last animation, there need start and end
             {
-                Transform[] tforms = createSingleAnimation(boneIndex, transforms, animationOrder[i], animationOrder[i + 1], numFrames);
+                Transform[] tforms = createSingleAnimation(boneIndex, fixedBoneIndex, transforms, animationOrder[i], animationOrder[i + 1], numFrames);
                 foreach (Transform tform in tforms)
                 {
-                    if (invert)
-                        tform.invert();
                     sw.addChild(tform);
                 }
             }
@@ -58,10 +57,15 @@ namespace libWrist
 
         private Transform[] createSingleAnimation(int boneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition, int numFrames)
         {
+            return createSingleAnimation(boneIndex, 0, transforms, startPosition, endPosition, numFrames);
+        }
+
+        private Transform[] createSingleAnimation(int boneIndex, int fixedBoneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition, int numFrames)
+        {
             Transform[] finalTransforms = new Transform[numFrames];
 
-            TransformMatrix startRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, startPosition);
-            TransformMatrix endRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, endPosition);
+            TransformMatrix startRelTransform = calculateRelativeMotionFromNeutral(boneIndex, fixedBoneIndex, transforms, startPosition);
+            TransformMatrix endRelTransform = calculateRelativeMotionFromNeutral(boneIndex, fixedBoneIndex, transforms, endPosition);
 
             //this motion, relative to the radius
             TransformMatrix relMotion = endRelTransform * startRelTransform.Inverse();

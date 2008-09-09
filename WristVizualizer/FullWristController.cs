@@ -29,6 +29,7 @@ namespace WristVizualizer
         //animation stuff
         private bool _animatePositionChanges;
         private ShortAnimationController _shortAnimationController;
+        AnimationCreatorForm _acf;
         private int _FPS;
         private double _animateDuration;
         private Timer _animationTimer;
@@ -719,29 +720,49 @@ namespace WristVizualizer
             //try and reset the display back to where it was....hopefully everything is reset, so we don't have too?
         }
 
-        private void startFullAnimation(AnimationCreatorForm acf)
+        private void addAnimationSwitchesToBones()
         {
-            int[] animationOrder = acf.getAnimationOrder();
-            int numFrames = acf.NumberStepsPerPositionChange;
-            //TODO: all the distance map stuff, etc.
-            AnimationCreator ac = new AnimationCreator();
-            _animationSwitches = ac.CreateAnimationSwitches(_bones, _transformMatrices, animationOrder, numFrames);
-            _animationHamSwitches = ac.CreateHAMSwitches(_bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
-            _animationInverseSwitches = ac.CreateAnimationSwitches(_bones, _transformMatrices, animationOrder, numFrames, true);
-            _currentInverseSwitch = null;
-
-            //Okay, at this point, lets remove the current transforms...
-            removeCurrentTransforms();
-            //now, lets go and add the switches into place
             for (int i = 0; i < _bones.Length; i++)
             {
                 if (_animationSwitches[i] != null)
                 {
                     _bones[i].insertNode(_animationSwitches[i], 0);
-                    _animationSwitches[i].whichChild(0);
-                    _animationHamSwitches[i].reference();
+                    _animationSwitches[i].whichChild(_animationControl.currentFrame);
                 }
             }
+        }
+
+        private void removeAnimationSwitchesFromBones()
+        {
+            for (int i = 0; i < _bones.Length; i++)
+            {
+                if (_animationSwitches[i] != null)
+                    _bones[i].removeChild(_animationSwitches[i]);
+            }
+        }
+
+        private void startFullAnimation(AnimationCreatorForm acf)
+        {
+            _acf = acf;
+            int[] animationOrder = acf.getAnimationOrder();
+            int numFrames = acf.NumberStepsPerPositionChange;
+            //TODO: all the distance map stuff, etc.
+            AnimationCreator ac = new AnimationCreator();
+            _animationSwitches = ac.CreateAnimationSwitches(0, _bones, _transformMatrices, animationOrder, numFrames);
+            _animationHamSwitches = ac.CreateHAMSwitches(_bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
+            _currentInverseSwitch = null;
+
+            _animationControl = new AnimationControl();
+            _layoutControl.addControl(_animationControl);
+
+            int totalNumFrames = numFrames * (animationOrder.Length - 1) + 1;
+            _animationControl.setupController(totalNumFrames);
+            _animationControl.FPS = 10;
+
+            //Okay, at this point, lets remove the current transforms...
+            removeCurrentTransforms();
+            //now, lets go and add the switches into place
+            addAnimationSwitchesToBones();
 
             //little bit of gui stuff
             if (_layoutControl.Contains(_positionGraph))
@@ -754,13 +775,6 @@ namespace WristVizualizer
             _wristControl.selectedSeriesIndex = 0;
             _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_control_Animation_FixedBoneChanged);
             _wristControl.ShowHamChanged += new ShowHamChangedHandler(_wristControl_ShowHamChanged);
-
-            _animationControl = new AnimationControl();
-            _layoutControl.addControl(_animationControl);
-
-            int totalNumFrames = numFrames * (animationOrder.Length - 1) + 1;
-            _animationControl.setupController(totalNumFrames);
-            _animationControl.FPS = 10;
 
             _animationControl.TrackbarScroll += new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
             _animationControl.StopClicked += new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
@@ -839,19 +853,25 @@ namespace WristVizualizer
 
         void _control_Animation_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
-            //remove existing
-            if (_currentInverseSwitch != null)
-            {
-                _root.removeChild(_currentInverseSwitch);
-                _currentInverseSwitch = null;
-            }
+            ////remove existing
+            //if (_currentInverseSwitch != null)
+            //{
+            //    _root.removeChild(_currentInverseSwitch);
+            //    _currentInverseSwitch = null;
+            //}
 
-            if (_animationInverseSwitches[e.BoneIndex] != null)
-            {
-                _currentInverseSwitch = _animationInverseSwitches[e.BoneIndex];
-                _root.insertNode(_currentInverseSwitch,0);
-                _currentInverseSwitch.whichChild(_animationControl.currentFrame);
-            }
+            //if (_animationInverseSwitches[e.BoneIndex] != null)
+            //{
+            //    _currentInverseSwitch = _animationInverseSwitches[e.BoneIndex];
+            //    _root.insertNode(_currentInverseSwitch,0);
+            //    _currentInverseSwitch.whichChild(_animationControl.currentFrame);
+            //}
+            AnimationCreator ac = new AnimationCreator();
+            int[] animationOrder = _acf.getAnimationOrder();
+            int numFrames = _acf.NumberStepsPerPositionChange;
+            removeAnimationSwitchesFromBones();
+            _animationSwitches = ac.CreateAnimationSwitches(e.BoneIndex, _bones, _transformMatrices, animationOrder, numFrames);
+            addAnimationSwitchesToBones();
         }
 
         public override void saveToMovie()
