@@ -11,10 +11,6 @@ namespace libWrist
         {
         }
 
-        public Switch[] CreateAnimationSwitches(Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
-        {
-            return CreateAnimationSwitches(0, bones, transforms, animationOrder, numFrames);
-        }
         public Switch[] CreateAnimationSwitches(int fixedBoneIndex, Separator[] bones, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
         {
             Switch[] switches = new Switch[bones.Length];
@@ -28,11 +24,6 @@ namespace libWrist
                 switches[i] = createSwitchSingleBone(i, fixedBoneIndex, transforms, animationOrder, numFrames);
             }
             return switches;
-        }
-
-        private Switch createSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
-        {
-            return createSwitchSingleBone(boneIndex, 0, transforms, animationOrder, numFrames);
         }
 
         private Switch createSwitchSingleBone(int boneIndex, int fixedBoneIndex, TransformMatrix[][] transforms, int[] animationOrder, int numFrames)
@@ -55,11 +46,6 @@ namespace libWrist
             return sw;
         }
 
-        private Transform[] createSingleAnimation(int boneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition, int numFrames)
-        {
-            return createSingleAnimation(boneIndex, 0, transforms, startPosition, endPosition, numFrames);
-        }
-
         private Transform[] createSingleAnimation(int boneIndex, int fixedBoneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition, int numFrames)
         {
             Transform[] finalTransforms = new Transform[numFrames];
@@ -80,11 +66,6 @@ namespace libWrist
             return finalTransforms;
         }
 
-        private TransformMatrix calculateRelativeMotionFromNeutral(int boneIndex, TransformMatrix[][] transforms, int positionIndex)
-        {
-            return calculateRelativeMotionFromNeutral(boneIndex, 0, transforms, positionIndex); //default to fixed radius :)
-        }
-
         private TransformMatrix calculateRelativeMotionFromNeutral(int boneIndex, int fixedBoneIndex, TransformMatrix[][] transforms, int positionIndex)
         {
             if (positionIndex == 0) //the first position, also no change :)
@@ -97,22 +78,22 @@ namespace libWrist
         }
 
 
-        public Switch[] CreateHAMSwitches(Separator[] bones, TransformMatrix[][] transforms, TransformMatrix[] inertias, int[] animationOrder, int numFrames)
+        public Switch[] CreateHAMSwitches(int fixedBoneIndex, Separator[] bones, TransformMatrix[][] transforms, TransformMatrix[] inertias, int[] animationOrder, int numFrames)
         {
             Switch[] switches = new Switch[bones.Length];
             //loop through each bone, skip the first one (radius, we set that to be the fixed bone, yay!)
-            for (int i = 1; i < bones.Length; i++)
+            for (int i = 0; i < bones.Length; i++)
             {
-                if (bones[i] == null)
+                if (bones[i] == null || i==fixedBoneIndex)
                     continue; //do nothing if the bone does not exist :)
 
                 //now need to loop through this this bone
-                switches[i] = createHAMSwitchSingleBone(i, transforms, inertias, animationOrder, numFrames);
+                switches[i] = createHAMSwitchSingleBone(i,fixedBoneIndex, transforms, inertias, animationOrder, numFrames);
             }
             return switches;
         }
 
-        private Switch createHAMSwitchSingleBone(int boneIndex, TransformMatrix[][] transforms, TransformMatrix[] inertias, int[] animationOrder, int numFrames)
+        private Switch createHAMSwitchSingleBone(int boneIndex, int fixedBoneIndex, TransformMatrix[][] transforms, TransformMatrix[] inertias, int[] animationOrder, int numFrames)
         {
             Switch sw = new Switch();
             sw.reference();
@@ -122,7 +103,7 @@ namespace libWrist
             sw.addChild(nullSep);
             for (int i = 0; i < animationOrder.Length - 1; i++) //not the last animation, there need start and end
             {
-                HelicalTransform tform = createSingleHAM(boneIndex, transforms, animationOrder[i], animationOrder[i + 1]);
+                HelicalTransform tform = createSingleHAM(boneIndex,fixedBoneIndex, transforms, animationOrder[i], animationOrder[i + 1]);
                 if (inertias != null && inertias[boneIndex] != null)
                 {
                     double[] cent = { inertias[boneIndex].GetElement(0, 3), inertias[boneIndex].GetElement(1, 3), inertias[boneIndex].GetElement(2, 3) };
@@ -139,10 +120,10 @@ namespace libWrist
             return sw;
         }
 
-        private HelicalTransform createSingleHAM(int boneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition)
+        private HelicalTransform createSingleHAM(int boneIndex,int fixedBoneIndex, TransformMatrix[][] transforms, int startPosition, int endPosition)
         {
-            TransformMatrix startRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, startPosition);
-            TransformMatrix endRelTransform = calculateRelativeMotionFromNeutral(boneIndex, transforms, endPosition);
+            TransformMatrix startRelTransform = calculateRelativeMotionFromNeutral(boneIndex,fixedBoneIndex, transforms, startPosition);
+            TransformMatrix endRelTransform = calculateRelativeMotionFromNeutral(boneIndex,fixedBoneIndex, transforms, endPosition);
 
             //this motion, relative to the radius
             TransformMatrix relMotion = endRelTransform * startRelTransform.Inverse();
