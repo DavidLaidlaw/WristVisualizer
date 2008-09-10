@@ -185,6 +185,7 @@ namespace WristVizualizer
             pointIntersectionToolStripMenuItem.Checked = false;
             colorTransparencyToolStripMenuItem.Enabled = false;
             createAnimationToolStripMenuItem.Enabled = false;
+            createAnimationToolStripMenuItem.Checked = false;
             transparencyToolStripMenuItem.Enabled = true;
             selectionStyleToolStripMenuItem.Enabled = true;
             viewSourceToolStripMenuItem.Enabled = true;
