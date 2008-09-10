@@ -1,5 +1,6 @@
-Version 1.5.4
+Version 1.6.0
 - New: Can load stackfiles
+- New: Can create custom animation sequence. Still very buggy, but basic functionality appears to be working.
 
 Version 1.5.3
 - New: When converting VRML -> IV, can optionally detect output from Mimics 10 or greater and convert the output from m to mm. 
