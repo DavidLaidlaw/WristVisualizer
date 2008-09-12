@@ -50,6 +50,13 @@ namespace WristVizualizer
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.copyToClipboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveImageOptionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xScaleNoSmoothingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xScale2xSmoothingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xScale3xSmoothingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.xScaleNoSmoothingToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.xScaleNoSmoothingToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.xScaleNoSmoothingToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.colorTransparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -63,6 +70,7 @@ namespace WristVizualizer
             this.rate_05sec_15FpsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rate_1sec_15FpsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.rate_2sec_15FpsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.createAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.calculateDistanceMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.referenceBoneForWristPositionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,7 +115,6 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.createAnimationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -276,6 +283,7 @@ namespace WristVizualizer
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.copyToClipboardToolStripMenuItem,
+            this.saveImageOptionsToolStripMenuItem,
             this.toolStripSeparator12,
             this.colorTransparencyToolStripMenuItem,
             this.backgroundColorToolStripMenuItem,
@@ -292,6 +300,64 @@ namespace WristVizualizer
             this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.copyToClipboardToolStripMenuItem.Text = "Copy to clipboard";
             this.copyToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem_Click);
+            // 
+            // saveImageOptionsToolStripMenuItem
+            // 
+            this.saveImageOptionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.xScaleNoSmoothingToolStripMenuItem,
+            this.xScale2xSmoothingToolStripMenuItem,
+            this.xScale3xSmoothingToolStripMenuItem,
+            this.xScaleNoSmoothingToolStripMenuItem1,
+            this.xScaleNoSmoothingToolStripMenuItem2,
+            this.xScaleNoSmoothingToolStripMenuItem3});
+            this.saveImageOptionsToolStripMenuItem.Enabled = false;
+            this.saveImageOptionsToolStripMenuItem.Name = "saveImageOptionsToolStripMenuItem";
+            this.saveImageOptionsToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.saveImageOptionsToolStripMenuItem.Text = "Save Image Options";
+            // 
+            // xScaleNoSmoothingToolStripMenuItem
+            // 
+            this.xScaleNoSmoothingToolStripMenuItem.Name = "xScaleNoSmoothingToolStripMenuItem";
+            this.xScaleNoSmoothingToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.xScaleNoSmoothingToolStripMenuItem.Text = "1x Scale - No Smoothing";
+            this.xScaleNoSmoothingToolStripMenuItem.Click += new System.EventHandler(this.xScaleSmoothingToolStripMenuItem_Click);
+            // 
+            // xScale2xSmoothingToolStripMenuItem
+            // 
+            this.xScale2xSmoothingToolStripMenuItem.Checked = true;
+            this.xScale2xSmoothingToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.xScale2xSmoothingToolStripMenuItem.Name = "xScale2xSmoothingToolStripMenuItem";
+            this.xScale2xSmoothingToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.xScale2xSmoothingToolStripMenuItem.Text = "1x Scale - 2x Smoothing";
+            this.xScale2xSmoothingToolStripMenuItem.Click += new System.EventHandler(this.xScaleSmoothingToolStripMenuItem_Click);
+            // 
+            // xScale3xSmoothingToolStripMenuItem
+            // 
+            this.xScale3xSmoothingToolStripMenuItem.Name = "xScale3xSmoothingToolStripMenuItem";
+            this.xScale3xSmoothingToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
+            this.xScale3xSmoothingToolStripMenuItem.Text = "1x Scale - 3x Smoothing";
+            this.xScale3xSmoothingToolStripMenuItem.Click += new System.EventHandler(this.xScaleSmoothingToolStripMenuItem_Click);
+            // 
+            // xScaleNoSmoothingToolStripMenuItem1
+            // 
+            this.xScaleNoSmoothingToolStripMenuItem1.Name = "xScaleNoSmoothingToolStripMenuItem1";
+            this.xScaleNoSmoothingToolStripMenuItem1.Size = new System.Drawing.Size(201, 22);
+            this.xScaleNoSmoothingToolStripMenuItem1.Text = "2x Scale - No Smoothing";
+            this.xScaleNoSmoothingToolStripMenuItem1.Click += new System.EventHandler(this.xScaleSmoothingToolStripMenuItem_Click);
+            // 
+            // xScaleNoSmoothingToolStripMenuItem2
+            // 
+            this.xScaleNoSmoothingToolStripMenuItem2.Name = "xScaleNoSmoothingToolStripMenuItem2";
+            this.xScaleNoSmoothingToolStripMenuItem2.Size = new System.Drawing.Size(201, 22);
+            this.xScaleNoSmoothingToolStripMenuItem2.Text = "3x Scale - No Smoothing";
+            this.xScaleNoSmoothingToolStripMenuItem2.Click += new System.EventHandler(this.xScaleSmoothingToolStripMenuItem_Click);
+            // 
+            // xScaleNoSmoothingToolStripMenuItem3
+            // 
+            this.xScaleNoSmoothingToolStripMenuItem3.Name = "xScaleNoSmoothingToolStripMenuItem3";
+            this.xScaleNoSmoothingToolStripMenuItem3.Size = new System.Drawing.Size(201, 22);
+            this.xScaleNoSmoothingToolStripMenuItem3.Text = "4x Scale - No Smoothing";
+            this.xScaleNoSmoothingToolStripMenuItem3.Click += new System.EventHandler(this.xScaleSmoothingToolStripMenuItem_Click);
             // 
             // toolStripSeparator12
             // 
@@ -401,6 +467,14 @@ namespace WristVizualizer
             this.rate_2sec_15FpsToolStripMenuItem2.Size = new System.Drawing.Size(160, 22);
             this.rate_2sec_15FpsToolStripMenuItem2.Text = "2.0 sec / 15 fps";
             this.rate_2sec_15FpsToolStripMenuItem2.Click += new System.EventHandler(this.animationRateToolStripMenuItem_Click);
+            // 
+            // createAnimationToolStripMenuItem
+            // 
+            this.createAnimationToolStripMenuItem.Enabled = false;
+            this.createAnimationToolStripMenuItem.Name = "createAnimationToolStripMenuItem";
+            this.createAnimationToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.createAnimationToolStripMenuItem.Text = "Create Animation...";
+            this.createAnimationToolStripMenuItem.Click += new System.EventHandler(this.createAnimationToolStripMenuItem_Click);
             // 
             // calculateDistanceMapToolStripMenuItem
             // 
@@ -774,14 +848,6 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
-            // createAnimationToolStripMenuItem
-            // 
-            this.createAnimationToolStripMenuItem.Enabled = false;
-            this.createAnimationToolStripMenuItem.Name = "createAnimationToolStripMenuItem";
-            this.createAnimationToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
-            this.createAnimationToolStripMenuItem.Text = "Create Animation...";
-            this.createAnimationToolStripMenuItem.Click += new System.EventHandler(this.createAnimationToolStripMenuItem_Click);
-            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -895,6 +961,13 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem copyToClipboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator12;
         private System.Windows.Forms.ToolStripMenuItem createAnimationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem saveImageOptionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xScale2xSmoothingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xScale3xSmoothingToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem3;
     }
 }
 

@@ -53,6 +53,7 @@ namespace WristVizualizer
             }
 
             InitializeComponent();
+            setupScaleFactorMenuItemTags();
 
             _viewer = null;
             _root = null;
@@ -172,6 +173,7 @@ namespace WristVizualizer
             backgroundColorToolStripMenuItem.Enabled = true;
             cameraPositionOrientationToolStripMenuItem.Enabled = true;
             copyToClipboardToolStripMenuItem.Enabled = true;
+            saveImageOptionsToolStripMenuItem.Enabled = true;
             decoratorToolStripMenuItem.Enabled = true;
             saveFrameToolStripMenuItem.Enabled = true;
             showInertiasToolStripMenuItem.Enabled = false;
@@ -1181,8 +1183,43 @@ namespace WristVizualizer
 
         private void copyToClipboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Image tempImage = _viewer.getImage();
-            Clipboard.SetImage(tempImage);
+            this.Cursor = Cursors.WaitCursor;
+            KeyValuePair<int, int> factors = getSelectedScaleAndSmoothFactors();
+            int finalScale = factors.Key;
+            int smooth = factors.Value;
+
+            int scale = finalScale * smooth;
+            Image rawImage;
+            //lets get the image
+            if (scale == 1)
+                rawImage = _viewer.getImage();
+            else
+            {
+                _viewer.cacheOffscreenRenderer(scale);
+                rawImage = _viewer.getImage();
+                _viewer.clearOffscreenRenderer();
+            }
+            
+            //now lets check if we don't need to downsample
+            if (smooth == 1)
+            {
+                Clipboard.SetImage(rawImage);
+                rawImage.Dispose();
+                this.Cursor = Cursors.Default;
+                return;
+            }
+             
+            //else, we need to downsample
+            Image finalImage = new Bitmap(rawImage.Size.Width / smooth, rawImage.Size.Height / smooth);
+            using (Graphics g = Graphics.FromImage(finalImage))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(rawImage, 0, 0, rawImage.Size.Width / smooth, rawImage.Size.Height / smooth);
+            }
+            Clipboard.SetImage(finalImage);
+            rawImage.Dispose();
+            finalImage.Dispose();
+            this.Cursor = Cursors.Default;
         }
 
         private void createAnimationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1212,6 +1249,32 @@ namespace WristVizualizer
             }
         }
 
+        private void xScaleSmoothingToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (ToolStripMenuItem choiceItem in saveImageOptionsToolStripMenuItem.DropDownItems)
+            {
+                choiceItem.Checked = (choiceItem == sender);
+            }
+        }
 
+        private KeyValuePair<int, int> getSelectedScaleAndSmoothFactors()
+        {
+            foreach (ToolStripMenuItem choiceItem in saveImageOptionsToolStripMenuItem.DropDownItems)
+            {
+                if (choiceItem.Checked)
+                    return (KeyValuePair<int, int>)choiceItem.Tag;
+            }
+            return new KeyValuePair<int, int>(1, 0);
+        }
+
+        private void setupScaleFactorMenuItemTags()
+        {
+            this.xScaleNoSmoothingToolStripMenuItem.Tag = new System.Collections.Generic.KeyValuePair<int, int>(1, 1);
+            this.xScale2xSmoothingToolStripMenuItem.Tag = new System.Collections.Generic.KeyValuePair<int, int>(1, 2);
+            this.xScale3xSmoothingToolStripMenuItem.Tag = new System.Collections.Generic.KeyValuePair<int, int>(1, 3);
+            this.xScaleNoSmoothingToolStripMenuItem1.Tag = new System.Collections.Generic.KeyValuePair<int, int>(2, 1);
+            this.xScaleNoSmoothingToolStripMenuItem2.Tag = new System.Collections.Generic.KeyValuePair<int, int>(3, 1);
+            this.xScaleNoSmoothingToolStripMenuItem3.Tag = new System.Collections.Generic.KeyValuePair<int, int>(4, 1);
+        }
     }
 }
