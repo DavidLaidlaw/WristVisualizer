@@ -1,3 +1,8 @@
+Version 1.6.1
+- Fixed bug: Saving image multiple could cause a crash due to trying to reuse a deleted reference. Only when using cached renderer (ie exporting a movie)
+- New: Can copy image to clipboard in differnt sizes and smoothing factors
+- New: Can export movies using smoothing factor.
+
 Version 1.6.0
 - New: Can load stackfiles
 - New: Can create custom animation sequence. Still very buggy, but basic functionality appears to be working.

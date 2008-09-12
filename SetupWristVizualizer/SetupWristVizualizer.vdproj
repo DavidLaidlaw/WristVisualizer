@@ -21,12 +21,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_0470EB14283B4A738EECEF52E48BBB2E"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_0953C32CAF12873EE464628E361E704F"
         "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
@@ -123,6 +117,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_4B8B9574E1F4413092002AAE1B635F94"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_4EC925A366834187BF49A5CE2DA2C378"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -213,12 +213,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_B20DC64507564F86A2ABCAADBFAA61CC"
-        "OwnerKey" = "8:_0470EB14283B4A738EECEF52E48BBB2E"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_B27E7C2889164349B46B8542DCC15573"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -263,6 +257,12 @@
         {
         "MsmKey" = "8:_D46AB7B823F1ED7AD141FC302DAB375F"
         "OwnerKey" = "8:_21F66970F153DF101E4FD1C7AA9587CA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D9BA5D14AF5B4275854ABA4431418ED4"
+        "OwnerKey" = "8:_4B8B9574E1F4413092002AAE1B635F94"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -451,7 +451,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3197.20317, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3206.18481, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_0953C32CAF12873EE464628E361E704F"
@@ -1480,14 +1480,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{52FAA955-D9B6-402A-BB93-9BB2EE176C84}"
-        "PackageCode" = "8:{B51C1773-D0D1-447E-B399-D9F5B22C3870}"
+        "ProductCode" = "8:{C98F6A6B-E0D2-4D54-AB7D-6542E8FB8CC4}"
+        "PackageCode" = "8:{549B99AE-784A-4CA6-9FD1-5BE933BB7BBF}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.6.0"
+        "ProductVersion" = "8:1.6.1"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2266,7 +2266,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_0470EB14283B4A738EECEF52E48BBB2E"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_4B8B9574E1F4413092002AAE1B635F94"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2280,7 +2280,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_B20DC64507564F86A2ABCAADBFAA61CC"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_D9BA5D14AF5B4275854ABA4431418ED4"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2299,7 +2299,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_80C0E60655A94B188B3AEA53719E7AC3"
             {
-            "SourcePath" = "8:..\\WristVizualizer\\obj\\Debug\\WristVizualizer.exe"
+            "SourcePath" = "8:..\\WristVizualizer\\obj\\Release\\WristVizualizer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
@@ -2327,7 +2327,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D048A19E73FC4C3986BE75EA1EE2B99F"
             {
-            "SourcePath" = "8:..\\debug\\libCoin3D.dll"
+            "SourcePath" = "8:..\\release\\libCoin3D.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
