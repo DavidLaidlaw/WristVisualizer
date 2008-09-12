@@ -291,6 +291,7 @@ void libCoin3D::ExaminerViewer::clearOffscreenRenderer()
 {
 	if (_myOffscreenRenderer != NULL)
 		delete _myOffscreenRenderer;
+	_myOffscreenRenderer = NULL; //make sure that we remove this reference
 }
 
 void libCoin3D::ExaminerViewer::cacheOffscreenRenderer()
