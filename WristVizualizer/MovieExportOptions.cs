@@ -57,6 +57,18 @@ namespace WristVizualizer
             get { return checkBoxCompression.Checked; }
         }
 
+        public int SmoothFactor
+        {
+            get
+            {
+                if (radioButton2xSmoothing.Checked)
+                    return 2;
+                if (radioButton3xSmoothing.Checked)
+                    return 3;
+                return 1;  //default is 1
+            }
+        }
+
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             _result = SaveType.CANCEL;

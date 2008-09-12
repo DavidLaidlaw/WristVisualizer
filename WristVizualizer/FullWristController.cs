@@ -911,14 +911,15 @@ namespace WristVizualizer
                     try
                     {
                         AviManager aviManager = new AviManager(dialog.OutputFileName, false);
-                        _viewer.cacheOffscreenRenderer();
+                        int smooth = dialog.SmoothFactor;
+                        _viewer.cacheOffscreenRenderer(smooth); //TODO: Check that output is multiple of 4!!!!
                         setAnimationToFrame(0); //set to first frame, so we can grab it.
-                        System.Drawing.Bitmap frame = (System.Drawing.Bitmap)_viewer.getImage();
+                        System.Drawing.Bitmap frame = getSmoothedFrame(smooth);
                         VideoStream vStream = aviManager.AddVideoStream(dialog.MovieCompress, (double)dialog.MovieFPS, frame);
                         for (int i = 1; i < _animationControl.NumberOfFrames; i++) //start from frame 1, frame 0 was added when we began
                         {
                             setAnimationToFrame(i);  //change to current frame
-                            vStream.AddFrame((System.Drawing.Bitmap)_viewer.getImage());
+                            vStream.AddFrame(getSmoothedFrame(smooth));
                         }
                         aviManager.Close();  //close out and save
                         _viewer.clearOffscreenRenderer();
@@ -934,6 +935,22 @@ namespace WristVizualizer
             updateAnimationFrame();
             if (startPlaying)
                 _animationTimer.Start();
+        }
+
+        private System.Drawing.Bitmap getSmoothedFrame(int smoothFactor)
+        {
+            System.Drawing.Image rawImage = _viewer.getImage();
+            if (smoothFactor == 1)
+                return (System.Drawing.Bitmap)rawImage;
+
+            System.Drawing.Image finalImage = new System.Drawing.Bitmap(rawImage.Size.Width / smoothFactor, rawImage.Size.Height / smoothFactor);
+            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(finalImage))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(rawImage, 0, 0, rawImage.Size.Width / smoothFactor, rawImage.Size.Height / smoothFactor);
+            }
+            rawImage.Dispose();
+            return (System.Drawing.Bitmap)finalImage;
         }
 
     }
