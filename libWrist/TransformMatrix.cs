@@ -103,6 +103,9 @@ namespace libWrist
              * the situation for n = [0 0 0] returns NaN as of now, can add in a specific situation for 
              * that.
              */
+
+            if (this.isIdentity())
+                return new HelicalTransform();
             
 
             bool flag = false;
