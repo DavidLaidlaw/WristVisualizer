@@ -253,11 +253,19 @@ bool libCoin3D::ExaminerViewer::saveToImage(System::String ^filename, char *ext)
 
 SoOffscreenRenderer* libCoin3D::ExaminerViewer::getOffscreenRenderer()
 {
+	return getOffscreenRenderer(1);
+}
+
+SoOffscreenRenderer* libCoin3D::ExaminerViewer::getOffscreenRenderer(int scaleFactor)
+{
 	if (_myOffscreenRenderer != NULL)
 		return _myOffscreenRenderer;
 
 	const SbViewportRegion &vp  = _viewer->getViewportRegion();
-	const SbVec2s &imagePixSize = vp.getViewportSizePixels();
+	const SbVec2s &oldImagePixSize = vp.getViewportSizePixels();
+	SbVec2s imagePixSize = SbVec2s(oldImagePixSize);
+	imagePixSize *= scaleFactor;
+
 
     // Create a viewport to render the scene into.
     SbViewportRegion myViewport;
@@ -287,8 +295,13 @@ void libCoin3D::ExaminerViewer::clearOffscreenRenderer()
 
 void libCoin3D::ExaminerViewer::cacheOffscreenRenderer()
 {
+	cacheOffscreenRenderer(1);
+}
+
+void libCoin3D::ExaminerViewer::cacheOffscreenRenderer(int scaleFactor)
+{
 	clearOffscreenRenderer();
-	_myOffscreenRenderer = getOffscreenRenderer();
+	_myOffscreenRenderer = getOffscreenRenderer(scaleFactor);
 }
 
 float libCoin3D::ExaminerViewer::getBackgroundColorR()

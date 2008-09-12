@@ -30,6 +30,7 @@ public:
 
 
 	void cacheOffscreenRenderer();
+	void cacheOffscreenRenderer(int scaleFactor);
 	void clearOffscreenRenderer();
 	bool saveToJPEG(System::String^ filename);
 	bool saveToPNG(System::String^ filename);
@@ -114,6 +115,7 @@ private:
 	SoEventCallback* _ecb;
 
 	SoOffscreenRenderer* getOffscreenRenderer();
+	SoOffscreenRenderer* getOffscreenRenderer(int scaleFactor);
 	SoOffscreenRenderer* _myOffscreenRenderer;
 	void disposeOfTemporaryRenderer(SoOffscreenRenderer* renderer);
 
