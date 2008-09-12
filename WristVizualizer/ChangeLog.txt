@@ -1,3 +1,6 @@
+Version 1.6.2
+- Fixed bug: Interpolating an identity matrix no longer gives crazy results. (Removed NaN error)
+
 Version 1.6.1
 - Fixed bug: Saving image multiple could cause a crash due to trying to reuse a deleted reference. Only when using cached renderer (ie exporting a movie)
 - New: Can copy image to clipboard in differnt sizes and smoothing factors
