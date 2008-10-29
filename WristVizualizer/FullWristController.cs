@@ -179,9 +179,9 @@ namespace WristVizualizer
             if (!hasPositionInformation(referenceBoneIndex))
                 return;
 
-            _positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices, referenceBoneIndex);
-            if (!hasPronationSupinationInformation())
-                _positionGraph.HidePS();
+            bool showPS = hasPronationSupinationInformation();
+            _positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices, referenceBoneIndex, showPS);
+
             _positionGraph.setCurrentVisisblePosture(_currentPositionIndex); //make sure the correct position is highlighted
             _layoutControl.addControl(_positionGraph);
             _positionGraph.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);

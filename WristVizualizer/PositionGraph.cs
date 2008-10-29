@@ -38,6 +38,8 @@ namespace WristVizualizer
 
             _referenceBoneIndex = referenceBoneIndex;
             _showPS = showPS;
+            if (!_showPS)
+                HidePS(); //make sure this is cleared
 
             _FE_conversion = (double)pictureBoxGraph.Height / (MAX_FE * 2);
             _RU_conversion = (double)pictureBoxGraph.Width / (MAX_RU * 2);
