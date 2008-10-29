@@ -50,6 +50,13 @@
     <Compile Include="CTmri.cs" />
     <Compile Include="DatParser.cs" />
     <Compile Include="DistanceFields.cs" />
+    <Compile Include="ExceptionHandling\ExceptionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExceptionHandling\ExceptionDialog.Designer.cs">
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExceptionHandling\HandledExceptionManager.cs" />
     <Compile Include="HelicalTransform.cs" />
     <Compile Include="InertialProperties.cs" />
     <Compile Include="IniFileParser.cs" />
@@ -86,6 +93,10 @@
     <EmbeddedResource Include="BackgroundWorkerStatusForm.resx">
       <DependentUpon>BackgroundWorkerStatusForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExceptionHandling\ExceptionDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ExceptionDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TrimIVFileForm.resx">
       <SubType>Designer</SubType>
