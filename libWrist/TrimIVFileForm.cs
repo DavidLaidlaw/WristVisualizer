@@ -219,7 +219,7 @@ namespace libWrist
             catch (Exception ex)
             {
                 string msg = "Error loading file(s):\n" + ex.Message;
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
             }
             finally
             {

@@ -104,7 +104,7 @@ namespace WristVizualizer
             catch (WristVizualizerException ex)
             {
                 String msg = "Error: " + ex.Message + "\n" + getHelpMessageAsString();
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
                 System.Environment.Exit(1);
             }
             return mode;

@@ -150,7 +150,8 @@ namespace WristVizualizer
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error saving to movie file.\n\n" + ex.Message);
+                        string msg = "Error saving to movie file.\n\n" + ex.Message;
+                        libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
                     }
                     break;
             }

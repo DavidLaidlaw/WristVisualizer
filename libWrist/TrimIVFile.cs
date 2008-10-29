@@ -26,7 +26,7 @@ namespace libWrist
             catch (Exception ex)
             {
                 string msg = String.Format("Error trimming file ({0}):\n{1}", filename, ex.Message);
-                MessageBox.Show(msg, "IV Trim", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
             }
         }
 

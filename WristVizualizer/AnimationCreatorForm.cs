@@ -314,7 +314,8 @@ namespace WristVizualizer
             }
             catch (WristVizualizerException ex)
             {
-                MessageBox.Show("Error: " + ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string msg = "Error: " + ex.Message;
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
                 return;
             }
 

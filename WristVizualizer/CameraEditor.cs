@@ -134,7 +134,7 @@ namespace WristVizualizer
             catch (ArgumentException ex)
             {
                 string msg = String.Format("Error loading camera.\n{0}",ex.Message);
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
             }
         }
 

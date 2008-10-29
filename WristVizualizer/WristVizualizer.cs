@@ -369,7 +369,7 @@ namespace WristVizualizer
                 if (!hideErrorMessagesToolStripMenuItem.Checked)
                 {
                     string msg = String.Format("Error loading file: {0}\n\n{1}", filename, ex.ToString());
-                    MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
                 }
             }
         }
@@ -419,7 +419,8 @@ namespace WristVizualizer
                 }
                 catch (ArgumentException ex)
                 {
-                    MessageBox.Show("Error opening wrist. " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    string msg = "Error opening wrist. " + ex.Message;
+                    libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
                 }
             }
         }
@@ -678,7 +679,7 @@ namespace WristVizualizer
             catch (ApplicationException ex)
             {
                 string msg = "Error: " + ex;
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
             }
         }
         #endregion
@@ -695,8 +696,8 @@ namespace WristVizualizer
             }
             catch (Exception ex)
             {
-                string msg = "Error loading file(s):\n" + ex.Message;
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string msg = "Error loading file(s)";
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
             }
             System.Security.CodeAccessPermission.RevertAssert();
         }
@@ -737,8 +738,8 @@ namespace WristVizualizer
             }
             catch (Exception ex)
             {
-                string msg = "Error loading file(s):\n" + ex.Message;
-                MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                string msg = "Error loading file(s)";
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
             }
             System.Security.CodeAccessPermission.RevertAssert();
         }

@@ -55,7 +55,7 @@ namespace WristVizualizer.MRIViewer
             catch (Exception ex)
             {
                 string msg = "Error loading mri.\n" + ex.Message;
-                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
             }
             finally
             {

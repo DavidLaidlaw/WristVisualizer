@@ -273,7 +273,7 @@ namespace WristVizualizer
             catch (Exception ex)
             {
                 string msg = "Error loading texture.\n" + ex.Message;
-                DialogResult r = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
                 return;
             }
             //save last Path

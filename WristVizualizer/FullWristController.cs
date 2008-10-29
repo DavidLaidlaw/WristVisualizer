@@ -91,7 +91,7 @@ namespace WristVizualizer
                 {
                     string msg = "Error loading wrist kinematics.\n\n" + ex.Message;
                     //TODO: Change to abort,retry, and find way of cancelling load
-                    MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
                 }
                 for (int i = 0; i < Wrist.NumBones; i++)
                     _wristControl.disableFixingBone(i);
@@ -926,7 +926,8 @@ namespace WristVizualizer
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Error saving to movie file.\n\n" + ex.Message);
+                        string msg = "Error saving to movie file.\n\n" + ex.Message;
+                        libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
                     }
                     break;
             }
