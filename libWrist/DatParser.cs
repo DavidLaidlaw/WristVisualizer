@@ -43,7 +43,7 @@ namespace libWrist
             char[] div = { ' ', '\t', ',' };
             System.Collections.ArrayList dat = new System.Collections.ArrayList(100);
 
-            Regex reg = new Regex(@"([-\d\.e+]+)");
+            Regex reg = new Regex(@"([-\d\.eE+]+)");
             while (!filestream.EndOfStream)
             {
                 string line = filestream.ReadLine().Trim();
