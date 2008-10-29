@@ -1,3 +1,7 @@
+Version NEW
+- Fixed bug: Parsing motion files with an 'E' would fail (ie. 1.1233E-4)
+- New: Better error messages for exceptions
+
 Version 1.6.2
 - Fixed bug: Interpolating an identity matrix no longer gives crazy results. (Removed NaN error)
 
