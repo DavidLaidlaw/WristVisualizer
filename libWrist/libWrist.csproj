@@ -46,6 +46,7 @@
     <Compile Include="BackgroundWorkerStatusForm.Designer.cs">
       <DependentUpon>BackgroundWorkerStatusForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Bone.cs" />
     <Compile Include="CropValuesParser.cs" />
     <Compile Include="CTmri.cs" />
     <Compile Include="DatParser.cs" />
