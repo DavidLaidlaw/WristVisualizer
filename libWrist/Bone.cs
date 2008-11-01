@@ -58,6 +58,15 @@ namespace libWrist
             _bone = bone; //only save if we get this far, its possible to still be throwing an exception
         }
 
+        private void ReadDistanceField()
+        {
+            if (!Directory.Exists(_distanceFieldFilename))
+                return;
+
+            _distanceField = new CTmri(_distanceFieldFilename);
+            _distanceField.loadImageData();
+        }
+
         public TransformMatrix InertiaMatrix
         {
             get { return _inertiaMatrix; }
@@ -87,6 +96,11 @@ namespace libWrist
         public int BoneIndex
         {
             get { return _boneIndex; }
+        }
+
+        public CTmri DistanceField
+        {
+            get { return _distanceField; }
         }
 
         public bool HasDistanceField
