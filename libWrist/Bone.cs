@@ -75,7 +75,10 @@ namespace libWrist
 
         public bool HasInertia
         {
-            get { return _inertiaMatrix != null; }
+            get
+            {
+                return _inertiaMatrix != null && _inertiaMatrix.Determinant() != 0;
+            }
         }
 
         public string IvFilename
@@ -108,5 +111,108 @@ namespace libWrist
             get { return _distanceField != null; }
         }
 
+        public bool IsValidBone
+        {
+            get { return _bone != null; }
+        }
+
+        public bool IsColoredBone
+        {
+            get { return _coloredBone != null; }
+        }
+
+
+        public void HideBone()
+        {
+            SetBoneVisibility(false);
+        }
+
+        public void ShowBone()
+        {
+            SetBoneVisibility(true);
+        }
+
+        public void SetBoneVisibility(bool visible)
+        {
+            //TODO: Fill in
+        }
+
+        public void HideInertia()
+        {
+            //first check if we are visible. if not, we are done
+            if (_inertiaSeparator == null) return;
+
+            _bone.removeChild(_inertiaSeparator);
+        }
+
+        public void ShowInertia()
+        {
+            //if there is no inertia information, do nothing
+            if (!this.HasInertia) return;
+
+            //if it does not exist, generate it
+            if (_inertiaSeparator == null)
+                GenerateInertiaSeparator();
+
+            _bone.addChild(_inertiaSeparator); //TODO: check if already there!
+        }
+
+        private void GenerateInertiaSeparator() { GenerateInertiaSeparator(0); }
+        private void GenerateInertiaSeparator(int arrowLength)
+        {
+            //if there is no inertia information, do nothing
+            if (!this.HasInertia) return;
+
+            Separator inert = new Separator();
+            Transform t = _inertiaMatrix.ToTransform();
+            if (arrowLength == 0)
+                inert.addNode(new ACS());
+            else
+                inert.addNode(new ACS(45));
+            inert.addTransform(t);
+            _inertiaSeparator = inert;
+        }
+
+        public void SetInertiaVisibility(bool visible)
+        {
+            if (visible)
+                ShowInertia();
+            else
+                HideInertia();
+        }
+
+        public bool HasKinematicInformationForPosition(int positionIndex)
+        {
+            if (positionIndex == 0) return true; //always have for neutral... duh
+            if (_transformMatrices.Count <= positionIndex) return false;
+            if (_transformMatrices[positionIndex] == null) return false;
+            return (!_transformMatrices[positionIndex].isIdentity());
+        }
+
+
+        public TransformMatrix CalculateRelativeMotionFromNeutral(int positionIndex, Bone fixedBone)
+        {
+            //check for a neutral position
+            if (positionIndex == 0)
+                return new TransformMatrix(); //no motion in neutral
+
+            //check for the fixed bone being us :)
+            if (this == fixedBone)
+            {
+                //TODO: What do I do in this case...?
+                return new TransformMatrix();
+            }
+
+            TransformMatrix tmFixedBoneInverse = fixedBone._transformMatrices[positionIndex].Inverse();
+            return tmFixedBoneInverse * _transformMatrices[positionIndex];
+        }
+
+        public TransformMatrix CalculateRelativeMotion(int startPositionIndex, int endPositionIndex, Bone fixedBone)
+        {
+            TransformMatrix startRelTransform = this.CalculateRelativeMotionFromNeutral(startPositionIndex, fixedBone);
+            TransformMatrix endRelTransform = this.CalculateRelativeMotionFromNeutral(endPositionIndex, fixedBone);
+
+            return endRelTransform * startRelTransform.Inverse();
+        }
     }
 }
