@@ -34,9 +34,10 @@ namespace libWrist
             _shortName = Wrist.ShortBoneNames[boneIndex];
             _ivFilename = _wrist.bpaths[boneIndex];
             _distanceFieldFilename = _wrist.DistanceFieldPaths[boneIndex];
+            _transformMatrices = new List<TransformMatrix>();
         }
 
-        private void LoadIVFile()
+        public void LoadIVFile()
         {
             if (!File.Exists(_ivFilename))
                 return;
@@ -122,19 +123,33 @@ namespace libWrist
         }
 
 
+        public void SetTransformation(TransformMatrix transform, int positionIndex)
+        {
+            _transformMatrices[positionIndex] = transform;
+        }
+
         public void HideBone()
         {
-            SetBoneVisibility(false);
+            if (_coloredBone != null)
+                _coloredBone.setHidden(true);
+            else
+                _bone.hide();
         }
 
         public void ShowBone()
         {
-            SetBoneVisibility(true);
+            if (_coloredBone != null)
+                _coloredBone.setHidden(false);
+            else
+                _bone.show();
         }
 
         public void SetBoneVisibility(bool visible)
         {
-            //TODO: Fill in
+            if (visible)
+                ShowBone();
+            else
+                HideBone();
         }
 
         public void HideInertia()
@@ -157,6 +172,14 @@ namespace libWrist
             _bone.addChild(_inertiaSeparator); //TODO: check if already there!
         }
 
+        public void SetInertiaVisibility(bool visible)
+        {
+            if (visible)
+                ShowInertia();
+            else
+                HideInertia();
+        }
+
         private void GenerateInertiaSeparator() { GenerateInertiaSeparator(0); }
         private void GenerateInertiaSeparator(int arrowLength)
         {
@@ -171,14 +194,6 @@ namespace libWrist
                 inert.addNode(new ACS(45));
             inert.addTransform(t);
             _inertiaSeparator = inert;
-        }
-
-        public void SetInertiaVisibility(bool visible)
-        {
-            if (visible)
-                ShowInertia();
-            else
-                HideInertia();
         }
 
         public bool HasKinematicInformationForPosition(int positionIndex)
