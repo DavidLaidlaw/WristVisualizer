@@ -19,11 +19,11 @@ namespace libWrist
 
         //Data objects
         private TransformMatrix _inertiaMatrix;
-        private List<TransformMatrix> _transformMatrices;
+        private TransformMatrix[] _transformMatrices;
         private CTmri _distanceField;
-        private List<double[]> _computedDistances;
-        private List<int[]> _computedColorMaps;
-        private List<Contour> _computedContours;
+        private double[][] _computedDistances;
+        private int[][] _computedColorMaps;
+        private Contour[] _computedContours;
 
 
         //Coin3D objects
@@ -40,10 +40,11 @@ namespace libWrist
             _shortName = Wrist.ShortBoneNames[boneIndex];
             _ivFilename = _wrist.bpaths[boneIndex];
             _distanceFieldFilename = _wrist.DistanceFieldPaths[boneIndex];
-            _transformMatrices = new List<TransformMatrix>();
-            _computedDistances = new List<double[]>();
-            _computedColorMaps = new List<int[]>();
-            _computedContours = new List<Contour>();
+            int numSeries = _wrist.motionFiles.Length + 1; //add 1 for neutral
+            _transformMatrices = new TransformMatrix[numSeries];
+            _computedDistances = new double[numSeries][];
+            _computedColorMaps = new int[numSeries][];
+            _computedContours = new Contour[numSeries];
         }
 
         public void LoadIVFile()
@@ -109,6 +110,11 @@ namespace libWrist
         public int BoneIndex
         {
             get { return _boneIndex; }
+        }
+
+        public Separator BoneSeparator
+        {
+            get { return _bone; }
         }
 
         public CTmri DistanceField
@@ -224,7 +230,7 @@ namespace libWrist
         public bool HasKinematicInformationForPosition(int positionIndex)
         {
             if (positionIndex == 0) return true; //always have for neutral... duh
-            if (_transformMatrices.Count <= positionIndex) return false;
+            if (_transformMatrices.Length <= positionIndex) return false;
             if (_transformMatrices[positionIndex] == null) return false;
             return (!_transformMatrices[positionIndex].isIdentity());
         }

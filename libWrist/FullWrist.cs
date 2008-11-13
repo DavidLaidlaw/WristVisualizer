@@ -8,7 +8,7 @@ namespace libWrist
 {
     public class FullWrist
     {
-        private List<Bone> _bones;
+        private Bone[] _bones;
         private Wrist _wrist;
         private Separator _root;
 
@@ -20,12 +20,17 @@ namespace libWrist
             _wrist = wrist;
             _fixedBoneIndex = (int)Wrist.BIndex.RAD;
             _currentPositionIndex = 0;
-            _bones = new List<Bone>(Wrist.NumBones);
+            _bones = new Bone[Wrist.NumBones];
         }
 
         public Separator Root
         {
             get { return _root; }
+        }
+
+        public Bone[] Bones
+        {
+            get { return _bones; }
         }
 
         public void LoadFullWrist()
@@ -35,6 +40,8 @@ namespace libWrist
             {
                 _bones[i] = new Bone(_wrist, this, i);
                 _bones[i].LoadIVFile();
+                if (_bones[i].IsValidBone)
+                    _root.addChild(_bones[i].BoneSeparator);
             }
 
             LoadKinematicTransforms();
@@ -88,6 +95,12 @@ namespace libWrist
             _bones[boneIndex].InertiaMatrix = new TransformMatrix(acs[0]);
         }
 
+        public void MoveToPositionAndFixedBone(int positionIndex, int fixedBoneIndex)
+        {
+            _currentPositionIndex = positionIndex;
+            _fixedBoneIndex = fixedBoneIndex;
+            UpdateTransformsForCurrentPositionAndFixedBone();
+        }
 
         private void SetCurrentPosition(int positionIndex)
         {
@@ -113,6 +126,22 @@ namespace libWrist
                 if (!_bones[i].IsValidBone) continue; //skip missing bones 
 
                 _bones[i].MoveToPosition(_currentPositionIndex, _bones[_fixedBoneIndex]);
+            }
+        }
+
+        
+
+        public void HideBonesWithNoKinematics()
+        {
+            HideBonesWithNoKinematics(_currentPositionIndex);
+        }
+
+        public void HideBonesWithNoKinematics(int positionIndex)
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                if (!_bones[i].HasKinematicInformationForPosition(positionIndex))
+                    _bones[i].HideBone();
             }
         }
     }

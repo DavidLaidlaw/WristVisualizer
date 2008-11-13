@@ -12,12 +12,10 @@ namespace WristVizualizer
     class FullWristController : Controller
     {
         private bool _showErrors = false;
-        private ColoredBone[] _colorBones;
-        private Separator[] _bones;
-        private Separator[] _inertias;
+        
         private Wrist _wrist;
-        private TransformMatrix[][] _transformMatrices;
-        private TransformMatrix[] _inertiaMatrices;
+        private FullWrist _fullWrist;
+        
         private int _currentPositionIndex;
         private int _lastPositionIndex;
         private int _fixedBoneIndex;
@@ -55,9 +53,7 @@ namespace WristVizualizer
             setupControl();
             setupControlEventListeners();
             _root = new Separator();
-            _bones = new Separator[Wrist.NumBones];
-            _colorBones = new ColoredBone[Wrist.NumBones];
-            _inertias = new Separator[Wrist.NumBones];
+            
 
             //defaults
             _FPS = 15;
@@ -78,69 +74,45 @@ namespace WristVizualizer
             //TODO: Enable ShowACS
 
             //First Try and load the wrist data
+            
             _wrist = new Wrist();
-            try
-            {
-                _wrist.setupWrist(radiusFilename);
-                loadTransforms();
-                populateSeriesList();
-            }
-            catch (ArgumentException ex)
-            {
-                if (_showErrors)
-                {
-                    string msg = "Error loading wrist kinematics.\n\n" + ex.Message;
-                    //TODO: Change to abort,retry, and find way of cancelling load
-                    libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
-                }
-                for (int i = 0; i < Wrist.NumBones; i++)
-                    _wristControl.disableFixingBone(i);
-            }
 
+            _wrist.setupWrist(radiusFilename);
+            _fullWrist = new FullWrist(_wrist);
+            _fullWrist.LoadFullWrist();
+            _root = _fullWrist.Root;
+
+            populateSeriesList(); //TODO?
+            
+            //catch (ArgumentException ex)
+            //{
+            //    if (_showErrors)
+            //    {
+            //        string msg = "Error loading wrist kinematics.\n\n" + ex.Message;
+            //        //TODO: Change to abort,retry, and find way of cancelling load
+            //        libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
+            //    }
+            //    for (int i = 0; i < Wrist.NumBones; i++)
+            //        _wristControl.disableFixingBone(i);
+            //}
+
+            //disable invalid bones!
             for (int i = 0; i < Wrist.NumBones; i++)
             {
-                string fname = _wrist.bpaths[i];
-                if (File.Exists(fname))
-                {
-                    _bones[i] = new Separator();
-                    _bones[i].makeHideable();
-                    try
-                    {
-                        _colorBones[i] = new ColoredBone(fname);
-                        _bones[i].addNode(_colorBones[i]);
-                    }
-                    catch (System.ArgumentException)
-                    {
-                        //try and load non-standard bones here.... shit. This needs to be fixed
-                        //TODO: Better error handling...
-                        _colorBones[i] = null;
-                        _bones[i].addFile(fname);
-                    }
-                    _root.addChild(_bones[i]);
-                }
-                else
-                {
-                    _bones[i] = null;
+                if (!_fullWrist.Bones[i].IsValidBone)
                     _wristControl.disableBone(i);
-                }
             }
 
-            //create empty distance map strucutre
-            _distMap = new DistanceMaps(_wrist, _transformMatrices, _colorBones);
-
-            //try and load the inertialInformation
-            loadInertiaAndACSData();
             setupPositionGraphIfPossible(8); //hardcoded default reference bone to the Capitate
         }
 
         private bool hasPositionInformation(int referenceBoneIndex)
         {
             //only need to check the ACS and the capitate (index 8)
-            if (_inertiaMatrices[0] == null || _inertiaMatrices[0].Determinant() == 0 ||
-                _inertiaMatrices[referenceBoneIndex] == null || _inertiaMatrices[referenceBoneIndex].Determinant() == 0)
-                return false;
-            else
+            if (_fullWrist.Bones[0].HasInertia && _fullWrist.Bones[referenceBoneIndex].HasInertia)
                 return true;
+            else
+                return false;
         }
 
         private bool hasPronationSupinationInformation()
@@ -150,11 +122,10 @@ namespace WristVizualizer
                 return false;
 
             //need to check for the Radius and the Ulna, (index 0 & 1)
-            if (_inertiaMatrices[0] == null || _inertiaMatrices[0].Determinant() == 0 ||
-                _inertiaMatrices[1] == null || _inertiaMatrices[1].Determinant() == 0)
-                return false;
-            else
+            if (_fullWrist.Bones[0].HasInertia && _fullWrist.Bones[1].HasInertia)
                 return true;
+            else
+                return false;
         }
 
         public void changeWristPositionReferenceBoneIndex(int referenceBoneIndex)
@@ -180,11 +151,11 @@ namespace WristVizualizer
                 return;
 
             bool showPS = hasPronationSupinationInformation();
-            _positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices, referenceBoneIndex, showPS);
+            //_positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices, referenceBoneIndex, showPS);
 
-            _positionGraph.setCurrentVisisblePosture(_currentPositionIndex); //make sure the correct position is highlighted
-            _layoutControl.addControl(_positionGraph);
-            _positionGraph.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
+            //_positionGraph.setCurrentVisisblePosture(_currentPositionIndex); //make sure the correct position is highlighted
+            //_layoutControl.addControl(_positionGraph);
+            //_positionGraph.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
         }
 
         void _positionGraph_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
@@ -193,56 +164,6 @@ namespace WristVizualizer
             _wristControl.selectedSeriesIndex = e.SelectedIndex;
         }
 
-        private void loadInertiaAndACSData()
-        {
-            _inertiaMatrices = new TransformMatrix[Wrist.NumBones];
-            if (File.Exists(_wrist.inertiaFile))
-            {
-                try
-                {
-                    TransformRT[] inert = DatParser.parseInertiaFileToRT(_wrist.inertiaFile);
-                    for (int i = 0; i < Wrist.NumBones; i++) //skip the long bones
-                    {
-                        //No longer check for missing bone... not important here, already read the data, just assigning it
-                        //if (_bones[i] == null)
-                        //    continue;
-
-                        _inertiaMatrices[i] = new TransformMatrix(inert[i]);
-                    }
-                }
-                catch { }
-            }
-
-            if (File.Exists(_wrist.acsFile))
-            {
-                try
-                {
-                    //If its checked, then we need to add it
-                    TransformRT[] acs = DatParser.parseACSFileToRT(_wrist.acsFile);
-
-                    //only for radius, check if it exists
-                    //if (_bones[0] == null)
-                    //    return;
-                    _inertiaMatrices[0] = new TransformMatrix(acs[0]);
-                }
-                catch { }
-            }
-
-            if (File.Exists(_wrist.acsFile_uln))
-            {
-                try
-                {
-                    //If its checked, then we need to add it
-                    TransformRT[] acs = DatParser.parseACSFileToRT(_wrist.acsFile_uln);
-
-                    //only for radius, check if it exists
-                    //if (_bones[1] == null)
-                    //    return;
-                    _inertiaMatrices[1] = new TransformMatrix(acs[0]);
-                }
-                catch { }
-            }
-        }
 
         public void calculateDistanceMapsToolClickedHandler()
         {
@@ -296,16 +217,6 @@ namespace WristVizualizer
             applyDistanceMapsIfRequired();
         }
 
-        private void loadTransforms()
-        {
-            int numPos = _wrist.motionFiles.Length;
-            _transformMatrices = new TransformMatrix[numPos][];
-
-            for (int i = 0; i < numPos; i++)
-            {
-                _transformMatrices[i] = DatParser.parseMotionFileToTransformMatrix(_wrist.motionFiles[i]);
-            }
-        }
 
         #region public properties
         public bool AnimatePositionTransitions
@@ -418,43 +329,11 @@ namespace WristVizualizer
         }
         #endregion
 
-        private void removeCurrentTransforms()
-        {
-            for (int i = 0; i < _bones.Length; i++)
-            {
-                //skip missing bones & remove the old
-                if (_bones[i] != null && _bones[i].hasTransform())
-                    _bones[i].removeTransform();
-            }
-        }
-
-        private TransformMatrix[] calculateRelativeMotionFromNeutral(int positionIndex, int fixedBoneIndex)
-        {
-            TransformMatrix[] relMotions = new TransformMatrix[Wrist.NumBones];
-
-            //check if neutral, if so, do something special....fuck?
-            if (positionIndex == 0)
-                return relMotions;  //okay, for now return null for all....
-
-            TransformMatrix tmFixedBone = _transformMatrices[positionIndex - 1][fixedBoneIndex];
-            for (int i = 0; i < _bones.Length; i++)
-            {
-                //skip missing bones
-                if (_bones[i] == null) 
-                    continue;
-
-                //do we need to check if we are the fixed bone....?
-                if (i == fixedBoneIndex)
-                    continue;
-
-                TransformMatrix tmCurrentBone = _transformMatrices[positionIndex - 1][i];
-                relMotions[i] = tmFixedBone.Inverse() * tmCurrentBone;
-            }
-            return relMotions;
-        }
 
         private void animateChangeInPosition()
         {
+            /*
+
             //setup animations....
             if (_shortAnimationController != null)
                 _shortAnimationController.Stop(); //ugly, but should work
@@ -502,35 +381,25 @@ namespace WristVizualizer
             _shortAnimationController.FPS = _FPS;
             _shortAnimationController.Start();
             //TODO: add color information back in at the end....how?
-        }
-
-        private void hideBonesWithNoKinematicsForPosition(int positionIndex)
-        {
-            if (positionIndex==0)
-                return; //no bone can be missing in neutral
-
-            for (int i=0; i<_bones.Length; i++) {
-            //only check if the bone exists
-            if (_bones[i]==null)
-                continue;
-
-                if (_transformMatrices[positionIndex-1][i].isIdentity())
-                    _wristControl.hideBone(i); //send to the control, so the GUI gets updated, it will call back to the controller to actually hide the bone :)
-            }
+             
+             */
         }
 
         private void applyDistanceMapsIfRequired()
         {
             //load in the color maps, if they already exist
+            /*
             if (!_hideMaps)
                 _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
             if (!_hideContours)
                 _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
+             */
         }
 
         private void setTransformsForCurrentPositionAndFixedBone()
         {
-            hideBonesWithNoKinematicsForPosition(_currentPositionIndex);
+            _fullWrist.HideBonesWithNoKinematics(_currentPositionIndex);
+
             if (_animatePositionChanges)
             {
                 animateChangeInPosition();
@@ -540,19 +409,7 @@ namespace WristVizualizer
                 applyDistanceMapsIfRequired();
                 
                 //first remove the old transforms, if they exist
-                removeCurrentTransforms();
-
-                //save to current positions, then apply
-                TransformMatrix[] transforms = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex);
-                for (int i = 0; i < _bones.Length; i++)
-                {
-                    //skip missing bones, or bones without motion
-                    if (_bones[i] == null || transforms[i] == null)
-                        continue;
-
-                    _bones[i].addTransform(transforms[i].ToTransform());
-                }
-
+                _fullWrist.MoveToPositionAndFixedBone(_currentPositionIndex, _fixedBoneIndex);
             }
 
             //now that we are done, lets save the last positions
@@ -581,12 +438,7 @@ namespace WristVizualizer
 
         void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
         {
-            if (_colorBones[e.BoneIndex] != null)
-                _colorBones[e.BoneIndex].setHidden(e.BoneHidden);
-            if (e.BoneHidden)
-                _bones[e.BoneIndex].hide();
-            else
-                _bones[e.BoneIndex].show();
+            _fullWrist.Bones[e.BoneIndex].SetBoneVisibility(!e.BoneHidden);
         }
 
         public void setInertiaVisibilityCarpalBones(bool visible)
@@ -602,51 +454,9 @@ namespace WristVizualizer
         private void setInertiaVisibility(bool visible, int[] boneIndexes) { setInertiaVisibility(visible, boneIndexes, 0); }
         private void setInertiaVisibility(bool visible, int[] boneIndexes, int arrowLength)
         {
-            if (visible)
+            foreach (int i in boneIndexes)
             {
-                bool continueOnError = false;
-                foreach (int i in boneIndexes)
-                {
-                    if (_bones[i] == null)
-                        continue;
-
-                    //check that it exists:
-                    if (_inertiaMatrices[i] == null)
-                    {
-                        MessageBox.Show("Unable to show inertial axes. Error reading file.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        return;
-                    }
-                    if (_inertiaMatrices[i].Determinant() == 0)
-                    {
-                        if (continueOnError) continue;
-                        string msg = String.Format("Invalid inertial axis for '{0}'. Determinant==0!\n\nDo you wish to hide this error message and continue anyway?", Wrist.LongBoneNames[i]);
-                        DialogResult r = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
-                        if (r == DialogResult.No) return;
-
-                        continueOnError = true;
-                        continue;
-
-                    }
-
-                    _inertias[i] = new Separator();
-                    Transform t = _inertiaMatrices[i].ToTransform();
-                    if (arrowLength == 0)
-                        _inertias[i].addNode(new ACS());
-                    else
-                        _inertias[i].addNode(new ACS(45));
-                    _inertias[i].addTransform(t);
-                    _bones[i].addChild(_inertias[i]);
-                }
-            }
-            else
-            {
-                //so we want to remove the inertia files
-                foreach (int i in boneIndexes)
-                {
-                    if (_inertias[i] != null) _bones[i].removeChild(_inertias[i]);
-                    _inertias[i] = null;
-                }
-
+                _fullWrist.Bones[i].SetInertiaVisibility(visible);
             }
         }
 
@@ -707,6 +517,7 @@ namespace WristVizualizer
 
         private void addAnimationSwitchesToBones()
         {
+            /*
             for (int i = 0; i < _bones.Length; i++)
             {
                 if (_animationSwitches[i] != null)
@@ -725,10 +536,12 @@ namespace WristVizualizer
                     }
                 }
             }
+             */
         }
 
         private void removeAnimationSwitchesFromBones()
         {
+            /*
             for (int i = 0; i < _bones.Length; i++)
             {
                 //bone transforms
@@ -741,10 +554,12 @@ namespace WristVizualizer
                 if (_animationHamSwitches[i] != null)
                     _animationHamSwitches[i].unref(); //unref to be deleted
             }
+             */
         }
 
         private void startFullAnimation(AnimationCreatorForm acf)
         {
+            /*
             _acf = acf;
             int[] animationOrder = acf.getAnimationOrder();
             int numFrames = acf.NumberStepsPerPositionChange;
@@ -785,6 +600,7 @@ namespace WristVizualizer
             _animationTimer = new Timer();
             _animationTimer.Tick += new EventHandler(_animationTimer_Tick);
             _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
+             */
         }
 
         void _wristControl_ShowHamChanged(object sender, BoneHideChangeEventArgs e)
@@ -841,6 +657,7 @@ namespace WristVizualizer
 
         private void setAnimationToFrame(int frameIndex)
         {
+            /*
             for (int i = 0; i < _bones.Length; i++)
             {
                 if (_animationSwitches[i] != null)
@@ -850,23 +667,12 @@ namespace WristVizualizer
                         _animationHamSwitches[i].whichChild(frameIndex);
                 }
             }
+             */
         }
 
         void _control_Animation_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
-            ////remove existing
-            //if (_currentInverseSwitch != null)
-            //{
-            //    _root.removeChild(_currentInverseSwitch);
-            //    _currentInverseSwitch = null;
-            //}
-
-            //if (_animationInverseSwitches[e.BoneIndex] != null)
-            //{
-            //    _currentInverseSwitch = _animationInverseSwitches[e.BoneIndex];
-            //    _root.insertNode(_currentInverseSwitch,0);
-            //    _currentInverseSwitch.whichChild(_animationControl.currentFrame);
-            //}
+            /*
             AnimationCreator ac = new AnimationCreator();
             int[] animationOrder = _acf.getAnimationOrder();
             int numFrames = _acf.NumberStepsPerPositionChange;
@@ -874,6 +680,7 @@ namespace WristVizualizer
             _animationSwitches = ac.CreateAnimationSwitches(e.BoneIndex, _bones, _transformMatrices, animationOrder, numFrames);
             _animationHamSwitches = ac.CreateHAMSwitches(e.BoneIndex, _bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
             addAnimationSwitchesToBones();
+             */
         }
 
         public override void saveToMovie()
