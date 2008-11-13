@@ -410,7 +410,7 @@ namespace WristVizualizer
             // 
             this.pointIntersectionToolStripMenuItem.Enabled = false;
             this.pointIntersectionToolStripMenuItem.Name = "pointIntersectionToolStripMenuItem";
-            this.pointIntersectionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.pointIntersectionToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.pointIntersectionToolStripMenuItem.Text = "Point &Intersection...";
             this.pointIntersectionToolStripMenuItem.Click += new System.EventHandler(this.pointIntersectionToolStripMenuItem_Click);
             // 
@@ -418,21 +418,23 @@ namespace WristVizualizer
             // 
             this.calculateInertiasToolStripMenuItem.Enabled = false;
             this.calculateInertiasToolStripMenuItem.Name = "calculateInertiasToolStripMenuItem";
-            this.calculateInertiasToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.calculateInertiasToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.calculateInertiasToolStripMenuItem.Text = "Calculate Inertias";
             this.calculateInertiasToolStripMenuItem.Click += new System.EventHandler(this.calculateInertiasToolStripMenuItem_Click);
             // 
             // toolStripSeparator7
             // 
             this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(244, 6);
+            this.toolStripSeparator7.Size = new System.Drawing.Size(285, 6);
             // 
             // animatePositionTransitionsToolStripMenuItem
             // 
             this.animatePositionTransitionsToolStripMenuItem.CheckOnClick = true;
             this.animatePositionTransitionsToolStripMenuItem.Enabled = false;
             this.animatePositionTransitionsToolStripMenuItem.Name = "animatePositionTransitionsToolStripMenuItem";
-            this.animatePositionTransitionsToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.animatePositionTransitionsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.A)));
+            this.animatePositionTransitionsToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.animatePositionTransitionsToolStripMenuItem.Text = "Animate Position Transitions";
             this.animatePositionTransitionsToolStripMenuItem.Click += new System.EventHandler(this.animatePositionTransitionsToolStripMenuItem_Click);
             // 
@@ -444,7 +446,7 @@ namespace WristVizualizer
             this.rate_2sec_15FpsToolStripMenuItem2});
             this.animationRateToolStripMenuItem.Enabled = false;
             this.animationRateToolStripMenuItem.Name = "animationRateToolStripMenuItem";
-            this.animationRateToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.animationRateToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.animationRateToolStripMenuItem.Text = "Animation Rate";
             // 
             // rate_05sec_15FpsToolStripMenuItem
@@ -472,7 +474,7 @@ namespace WristVizualizer
             // 
             this.createAnimationToolStripMenuItem.Enabled = false;
             this.createAnimationToolStripMenuItem.Name = "createAnimationToolStripMenuItem";
-            this.createAnimationToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.createAnimationToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.createAnimationToolStripMenuItem.Text = "Create Animation...";
             this.createAnimationToolStripMenuItem.Click += new System.EventHandler(this.createAnimationToolStripMenuItem_Click);
             // 
@@ -480,14 +482,14 @@ namespace WristVizualizer
             // 
             this.calculateDistanceMapToolStripMenuItem.Enabled = false;
             this.calculateDistanceMapToolStripMenuItem.Name = "calculateDistanceMapToolStripMenuItem";
-            this.calculateDistanceMapToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.calculateDistanceMapToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.calculateDistanceMapToolStripMenuItem.Text = "Calculate Distance Maps...";
             this.calculateDistanceMapToolStripMenuItem.Click += new System.EventHandler(this.calculateDistanceMapToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
             this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(244, 6);
+            this.toolStripSeparator8.Size = new System.Drawing.Size(285, 6);
             // 
             // referenceBoneForWristPositionToolStripMenuItem
             // 
@@ -496,7 +498,7 @@ namespace WristVizualizer
             this.mC3ToolStripMenuItem});
             this.referenceBoneForWristPositionToolStripMenuItem.Enabled = false;
             this.referenceBoneForWristPositionToolStripMenuItem.Name = "referenceBoneForWristPositionToolStripMenuItem";
-            this.referenceBoneForWristPositionToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.referenceBoneForWristPositionToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.referenceBoneForWristPositionToolStripMenuItem.Tag = "";
             this.referenceBoneForWristPositionToolStripMenuItem.Text = "Reference Bone for Wrist Position";
             // 
@@ -521,12 +523,12 @@ namespace WristVizualizer
             // toolStripSeparator10
             // 
             this.toolStripSeparator10.Name = "toolStripSeparator10";
-            this.toolStripSeparator10.Size = new System.Drawing.Size(244, 6);
+            this.toolStripSeparator10.Size = new System.Drawing.Size(285, 6);
             // 
             // startHeadtrackingToolStripMenuItem
             // 
             this.startHeadtrackingToolStripMenuItem.Name = "startHeadtrackingToolStripMenuItem";
-            this.startHeadtrackingToolStripMenuItem.Size = new System.Drawing.Size(247, 22);
+            this.startHeadtrackingToolStripMenuItem.Size = new System.Drawing.Size(288, 22);
             this.startHeadtrackingToolStripMenuItem.Text = "Start Headtracking";
             this.startHeadtrackingToolStripMenuItem.Click += new System.EventHandler(this.startHeadtrackingToolStripMenuItem_Click);
             // 
