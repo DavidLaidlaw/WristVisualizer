@@ -305,8 +305,8 @@ namespace WristVizualizer
             {
                 if (sender == _checkBoxesShowHams[i])
                 {
-                    bool show = ((CheckBox)sender).Checked;
-                    ShowHamChanged(sender, new BoneHideChangeEventArgs(i, show));
+                    bool hide = !((CheckBox)sender).Checked;
+                    ShowHamChanged(sender, new BoneHideChangeEventArgs(i, hide));
                 }
             }
         }

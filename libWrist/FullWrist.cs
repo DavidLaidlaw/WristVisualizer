@@ -236,6 +236,7 @@ namespace libWrist
 
                 Switch animationSwitch = AnimationCreator.CreateAnimationSwitch(_bones[i], _bones[fixedBoneIndex], animationOrder, numFrames);
                 Switch animationHamSwitch = AnimationCreator.CreateHAMSwitch(_bones[i], _bones[fixedBoneIndex], animationOrder, numFrames);
+                _bones[i].MoveToPosition(0, _bones[i]); //remove the current saved transform
                 _bones[i].SetupForAnimation(animationSwitch, animationHamSwitch);
                 //TODO: remove old transforms...
             }

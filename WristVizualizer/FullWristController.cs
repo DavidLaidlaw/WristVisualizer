@@ -455,6 +455,7 @@ namespace WristVizualizer
 
             //now, lets go and add the switches into place
             _fullWrist.SetupWristForAnimation(0, animationOrder, numFrames); //default to radius fixed...
+            _fullWrist.SetToAnimationFrame(0); //set us to 0;
 
             //redirect change in fixed bone....
             _wristControl.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);

@@ -458,6 +458,11 @@ namespace libWrist
         {
             if (_hamVisible == visible) return; //no change
             if (_animationHamSwitch == null) return; //nothing todo
+            _hamVisible = visible;
+            if (visible)
+                _bone.addNode(_animationHamSwitch);
+            else
+                _bone.removeChild(_animationHamSwitch);
         }
 
         public void RemoveAnimationSwitches()
