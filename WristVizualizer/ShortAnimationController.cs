@@ -20,6 +20,9 @@ namespace WristVizualizer
         private int _currentFrame;
         private int _numberOfFrames;
 
+        private int _endPositionIndex;
+        private int _endFixedBoneIndex;
+
         public ShortAnimationController()
         {
             _timer = new Timer();
@@ -47,6 +50,8 @@ namespace WristVizualizer
 
             _fullWrist = wrist;
             _numberOfFrames = numSteps;
+            _endPositionIndex = endPosition;
+            _endFixedBoneIndex = endFixedBoneIndex;
         }
 
 
@@ -67,7 +72,10 @@ namespace WristVizualizer
                 //if here, we want to stop and announce the event
                 _timer.Stop(); //top the timer, so we don't get called again
                 if (EndOfAnimationReached != null) //if anyone is listening, lets announce ourselves!
-                    EndOfAnimationReached(this, new EventArgs());               
+                    EndOfAnimationReached(this, new EventArgs());
+           
+                //add the color back in, if it existed
+                _fullWrist.MoveToPositionAndFixedBone(_endPositionIndex, _endFixedBoneIndex);
             }
         }
 

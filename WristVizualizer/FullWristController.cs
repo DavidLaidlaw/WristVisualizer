@@ -326,67 +326,13 @@ namespace WristVizualizer
             int numFrames = Math.Max((int)(_FPS * _animateDuration), 1); //want at least one frame
             _shortAnimationController.FPS = _FPS;
 
-            _fullWrist.HideColorMap();
-            _fullWrist.HideContours();
+            _fullWrist.HideColorMapAndContoursTemporarily();
 
             _shortAnimationController.SetupAnimationForLinearInterpolation(_fullWrist, _lastPositionIndex, _currentPositionIndex, _lastFixedBoneIndex, _lastFixedBoneIndex, numFrames);
             _shortAnimationController.Start();
 
             //TODO: Add contours back in....
-
-            /*
-            HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length]; //rel motion from last to current
-            TransformMatrix[] lastRelMotion = calculateRelativeMotionFromNeutral(_lastPositionIndex, _lastFixedBoneIndex); //rel motion from neutral to last
-            TransformMatrix[] currentRelMotion = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex); //rel motion from neutral to current
-
-            //loop for each bone, and setup
-            for (int i = 0; i < _bones.Length; i++)
-            {
-                //skip missing bones
-                if (_bones[i] == null) continue;
-                                
-                //skip if no transforms at all, then the bone is not changing places...
-                if (lastRelMotion[i] == null && currentRelMotion[i] == null)
-                    continue;
-
-                //if there is no transform for the current position, but there is a reverse
-                if (currentRelMotion[i] == null)
-                    currentRelMotion[i] = new TransformMatrix(); //set to identity....
-
-                //if the last position was null, then just use the current position. This should happen when moving from neutral
-                if (lastRelMotion[i] == null)
-                {
-                    htRelMotions[i] = currentRelMotion[i].ToHelical();
-                }
-                else
-                {
-                    //so we should have both transforms now... though one can be the identity.... hm....
-                    TransformMatrix relLastToCurrent = currentRelMotion[i] * lastRelMotion[i].Inverse();
-                    htRelMotions[i] = relLastToCurrent.ToHelical();
-                }
-            }
-             
-            //clear the coloring scheme, its not really calculated yet for intermediary positions
-            _distMap.clearDistanceColorMapsForAllBones();
-            _distMap.clearContoursForAllBones();
-            _shortAnimationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
-            */
-
-
-            
-            
             //TODO: add color information back in at the end....how?
-        }
-
-        private void applyDistanceMapsIfRequired()
-        {
-            //load in the color maps, if they already exist
-            /*
-            if (!_hideMaps)
-                _distMap.showDistanceColorMapsForPositionIfCalculatedOrClear(_currentPositionIndex);
-            if (!_hideContours)
-                _distMap.showContoursForPositionIfCalculatedOrClear(_currentPositionIndex);
-             */
         }
 
         private void setTransformsForCurrentPositionAndFixedBone()
@@ -399,7 +345,7 @@ namespace WristVizualizer
             }
             else
             {
-                applyDistanceMapsIfRequired();
+                
                 
                 //first remove the old transforms, if they exist
                 _fullWrist.MoveToPositionAndFixedBone(_currentPositionIndex, _fixedBoneIndex);

@@ -195,6 +195,15 @@ namespace libWrist
                 _bones[i].RemoveColorMap();
         }
 
+        public void HideColorMapAndContoursTemporarily()
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                _bones[i].RemoveColorMap();
+                _bones[i].RemoveContour();
+            }
+        }
+
         public void HideBonesWithNoKinematics()
         {
             HideBonesWithNoKinematics(_currentPositionIndex);
