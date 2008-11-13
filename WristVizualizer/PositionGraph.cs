@@ -23,8 +23,6 @@ namespace WristVizualizer
 
         private bool _showPS = true; //if we have information to show the PS angle
 
-        private int _referenceBoneIndex;
-
         private double[][] _positionsFE;
         private double[] _positionsPS;
 

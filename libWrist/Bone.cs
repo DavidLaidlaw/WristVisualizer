@@ -291,6 +291,42 @@ namespace libWrist
             _bone.addTransform(tm.ToTransform());
         }
 
+        public void RemoveContour()
+        {
+            if (_coloredBone != null)
+                _coloredBone.removeContour();
+        }
+
+        public void SetContour(Contour contour)
+        {
+            if (_coloredBone != null)
+                _coloredBone.setAndReplaceContour(contour);
+        }
+
+        public void SetContourForPositionIfCalculated(int positionIndex)
+        {
+            if (_computedContours[positionIndex] != null)
+                SetContour(_computedContours[positionIndex]);
+        }
+
+        public void RemoveColorMap()
+        {
+            if (_coloredBone != null)
+                _coloredBone.clearColorMap();
+        }
+
+        public void SetColorMap(int[] colormap)
+        {
+            if (_coloredBone != null)
+                _coloredBone.setColorMap(colormap);
+        }
+
+        public void SetColorMapForPositionIfCalculated(int positionIndex)
+        {
+            if (_computedColorMaps[positionIndex] != null)
+                SetColorMap(_computedColorMaps[positionIndex]);
+        }
+
         public void CalculateAndSaveDistanceMapForPosition(int positionIndex, Bone[] testBones)
         {
             //quick check that we can do this.

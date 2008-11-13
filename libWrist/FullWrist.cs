@@ -15,12 +15,17 @@ namespace libWrist
         private int _fixedBoneIndex;
         private int _currentPositionIndex;
 
+        private bool _showContourIfCalculated;
+        private bool _showColorMapIfCalculated;
+
         public FullWrist(Wrist wrist)
         {
             _wrist = wrist;
             _fixedBoneIndex = (int)Wrist.BIndex.RAD;
             _currentPositionIndex = 0;
             _bones = new Bone[Wrist.NumBones];
+            _showColorMapIfCalculated = true;
+            _showContourIfCalculated = true;
         }
 
         public Separator Root
@@ -31,6 +36,18 @@ namespace libWrist
         public Bone[] Bones
         {
             get { return _bones; }
+        }
+
+        public bool ShowContourIfCalculated
+        {
+            get { return _showContourIfCalculated; }
+            set { _showContourIfCalculated = value; }
+        }
+
+        public bool ShowColorMapIfCalculated
+        {
+            get { return _showColorMapIfCalculated; }
+            set { _showColorMapIfCalculated = value; }
         }
 
         public void LoadFullWrist()
@@ -97,38 +114,28 @@ namespace libWrist
 
         public void MoveToPositionAndFixedBone(int positionIndex, int fixedBoneIndex)
         {
+            //quick checks here
+            Bone fixedBone = _bones[fixedBoneIndex];
+            if (fixedBone == null || !fixedBone.IsValidBone)
+                throw new WristException(String.Format("Attempting to set fixed bone to a non-valid bone ({0}: {1})", fixedBone.ShortName, fixedBoneIndex));
+
             _currentPositionIndex = positionIndex;
             _fixedBoneIndex = fixedBoneIndex;
-            UpdateTransformsForCurrentPositionAndFixedBone();
-        }
 
-        private void SetCurrentPosition(int positionIndex)
-        {
-            _currentPositionIndex = positionIndex;
-            UpdateTransformsForCurrentPositionAndFixedBone();
-        }
-
-        private void SetFixedBone(int boneIndex)
-        {
-            //quick checks here
-            Bone fixedBone = _bones[boneIndex];
-            if (fixedBone == null || !fixedBone.IsValidBone)
-                throw new WristException(String.Format("Attempting to set fixed bone to a non-valid bone ({0}: {1})", fixedBone.ShortName, fixedBone.BoneIndex));
-
-            _fixedBoneIndex = boneIndex;
-            UpdateTransformsForCurrentPositionAndFixedBone();
-        }
-
-        private void UpdateTransformsForCurrentPositionAndFixedBone()
-        {
             for (int i = 0; i < Wrist.NumBones; i++)
             {
                 if (!_bones[i].IsValidBone) continue; //skip missing bones 
 
                 _bones[i].MoveToPosition(_currentPositionIndex, _bones[_fixedBoneIndex]);
-            }
-        }
 
+                if (_showColorMapIfCalculated)
+                    _bones[i].SetColorMapForPositionIfCalculated(_currentPositionIndex);
+                if (_showContourIfCalculated)
+                    _bones[i].SetContourForPositionIfCalculated(_currentPositionIndex);
+            }
+
+            HideBonesWithNoKinematics(); //yes?
+        }
         
 
         public void HideBonesWithNoKinematics()
