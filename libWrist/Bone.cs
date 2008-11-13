@@ -229,5 +229,29 @@ namespace libWrist
 
             return endRelTransform * startRelTransform.Inverse();
         }
+
+        public void MoveToPosition(int positionIndex, Bone fixedBone)
+        {
+            //first remove any existing transform....
+            if (_bone.hasTransform())
+                _bone.removeTransform();
+
+            //there is no need to move if we are the fixed bone, or this is the neutral position
+            if (positionIndex == 0 || fixedBone == this)
+                return;
+
+            //now create the correct transform and apply
+            TransformMatrix tm = CalculateRelativeMotionFromNeutral(positionIndex, fixedBone);
+            _bone.addTransform(tm.ToTransform());
+        }
+
+        public void MoveToPosition(TransformMatrix tm)
+        {
+            if (_bone.hasTransform())
+                _bone.removeTransform();
+
+            if (tm.isIdentity()) return; //nothing to do in this case
+            _bone.addTransform(tm.ToTransform());
+        }
     }
 }

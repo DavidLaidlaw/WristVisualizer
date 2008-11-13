@@ -12,9 +12,14 @@ namespace libWrist
         private Wrist _wrist;
         private Separator _root;
 
+        private int _fixedBoneIndex;
+        private int _currentPositionIndex;
+
         public FullWrist(Wrist wrist)
         {
             _wrist = wrist;
+            _fixedBoneIndex = (int)Wrist.BIndex.RAD;
+            _currentPositionIndex = 0;
             _bones = new List<Bone>(Wrist.NumBones);
         }
 
@@ -28,7 +33,7 @@ namespace libWrist
             }
 
             LoadKinematicTransforms();
-
+            LoadInertiaData();
         }
 
         private void LoadKinematicTransforms()
@@ -54,11 +59,11 @@ namespace libWrist
             }
 
             //now try and load special inertia data
-            LoadInertiaData_Special(_wrist.acsFile, 0);
-            LoadInertiaData_Special(_wrist.acsFile_uln, 1);
+            LoadInertiaData_SingleBone(_wrist.acsFile, (int)Wrist.BIndex.RAD);
+            LoadInertiaData_SingleBone(_wrist.acsFile_uln, (int)Wrist.BIndex.ULN);
         }
 
-        private void LoadInertiaData_Special(string filename, int boneIndex)
+        private void LoadInertiaData_SingleBone(string filename, int boneIndex)
         {
             if (!File.Exists(filename))
                 return;
@@ -67,5 +72,32 @@ namespace libWrist
             _bones[boneIndex].InertiaMatrix = new TransformMatrix(acs[0]);
         }
 
+
+        private void SetCurrentPosition(int positionIndex)
+        {
+            _currentPositionIndex = positionIndex;
+            UpdateTransformsForCurrentPositionAndFixedBone();
+        }
+
+        private void SetFixedBone(int boneIndex)
+        {
+            //quick checks here
+            Bone fixedBone = _bones[boneIndex];
+            if (fixedBone == null || !fixedBone.IsValidBone)
+                throw new WristException(String.Format("Attempting to set fixed bone to a non-valid bone ({0}: {1})", fixedBone.ShortName, fixedBone.BoneIndex));
+
+            _fixedBoneIndex = boneIndex;
+            UpdateTransformsForCurrentPositionAndFixedBone();
+        }
+
+        private void UpdateTransformsForCurrentPositionAndFixedBone()
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                if (!_bones[i].IsValidBone) continue; //skip missing bones 
+
+                _bones[i].MoveToPosition(_currentPositionIndex, _bones[_fixedBoneIndex]);
+            }
+        }
     }
 }

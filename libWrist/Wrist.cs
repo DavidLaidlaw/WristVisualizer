@@ -29,6 +29,25 @@ namespace libWrist
             public string motionFile;
         }
 
+        public enum BIndex
+        {
+            RAD = 0,
+            ULN = 1,
+            SCA = 2,
+            LUN = 3,
+            TRQ = 4,
+            PIS = 5,
+            TPD = 6,
+            TPM = 7,
+            CAP = 8,
+            HAM = 9,
+            MC1 = 10,
+            MC2 = 11,
+            MC3 = 12,
+            MC4 = 13,
+            MC5 = 14
+        }
+
         private static string[] _bnames = { "rad", "uln", "sca", "lun", "trq", "pis", "tpd", "tpm", "cap", "ham", "mc1", "mc2", "mc3", "mc4", "mc5" };
         private static string[] _longBnames = { "Radius", "Ulna", "Scaphoid", "Lunate", "Triquetrum", "Pisiform", "Trapezoid", "Trapezium", "Capitate", "Hamate", "MC1", "MC2", "MC3", "MC4", "MC5" };
         private static int[][] _boneInteraction = { 
