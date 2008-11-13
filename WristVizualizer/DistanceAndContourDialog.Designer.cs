@@ -193,6 +193,7 @@ namespace WristVizualizer
             this.radioButtonDistanceHide.TabIndex = 1;
             this.radioButtonDistanceHide.Text = "Hide";
             this.radioButtonDistanceHide.UseVisualStyleBackColor = true;
+            this.radioButtonDistanceHide.CheckedChanged += new System.EventHandler(this.radioButtonDistanceHide_CheckedChanged);
             // 
             // groupBox2
             // 
@@ -239,6 +240,7 @@ namespace WristVizualizer
             this.radioButtonContourHide.TabIndex = 7;
             this.radioButtonContourHide.Text = "Hide";
             this.radioButtonContourHide.UseVisualStyleBackColor = true;
+            this.radioButtonContourHide.CheckedChanged += new System.EventHandler(this.radioButtonContourHide_CheckedChanged);
             // 
             // DistanceAndContourDialog
             // 

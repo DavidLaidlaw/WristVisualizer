@@ -212,6 +212,16 @@ namespace WristVizualizer
             this.Close();
         }
 
+        private void radioButtonDistanceHide_CheckedChanged(object sender, EventArgs e)
+        {
+            numericUpDownDistanceMapDist.Enabled = radioButtonDistanceAll.Checked;
+        }
+
+        private void radioButtonContourHide_CheckedChanged(object sender, EventArgs e)
+        {
+            tableLayoutPanel.Enabled = radioButtonContourAll.Checked;
+        }
+
         
     }
 }
