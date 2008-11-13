@@ -17,22 +17,24 @@ namespace libWrist
         private Wrist _wrist;
         private FullWrist _fullWrist; //the full wrist we are part of
 
+        private bool _hamVisible; //for state reasons
+
         //Data objects
         private TransformMatrix _inertiaMatrix;
         private TransformMatrix[] _transformMatrices;
+
+        //DistanceField Data objects
         private CTmri _distanceField;
         private double[][] _computedDistances;
         private int[][] _computedColorMaps;
         private Contour[] _computedContours;
 
-        private float[,] _cachedVertices;
-        private int[,] _cachedFaceSetIndices;
-
-
         //Coin3D objects
         private Separator _bone;
         private ColoredBone _coloredBone;
         private Separator _inertiaSeparator;
+        private Switch _animationSwitch;
+        private Switch _animationHamSwitch;
 
         public Bone(Wrist wrist, FullWrist fullwrist, int boneIndex)
         {
@@ -425,6 +427,53 @@ namespace libWrist
         {
             for (int i = 0; i < _computedColorMaps.Length; i++)
                 _computedColorMaps[i] = null;
+        }
+
+        public void SetAnimationFrame(int frameNumber)
+        {
+            if (_animationSwitch != null)
+                _animationSwitch.whichChild(frameNumber);
+
+            if (_animationHamSwitch != null)
+                _animationHamSwitch.whichChild(frameNumber);
+        }
+
+        public void SetupForAnimation(Switch animationSwitch, Switch animationHamSwitch)
+        {
+            //first remove the old animation switch if it exists
+            RemoveAnimationSwitches();
+
+            //now add it, if its not null
+            _animationSwitch = animationSwitch;
+            _animationHamSwitch = animationHamSwitch;
+            if (animationSwitch != null)
+                _bone.insertNode(_animationSwitch, 0);
+
+            if (animationHamSwitch != null)
+                _animationHamSwitch.reference(); //don't actually insert it, just reference it, so its ready
+            _hamVisible = false;
+        }
+
+        public void SetHamVisibility(bool visible)
+        {
+            if (_hamVisible == visible) return; //no change
+            if (_animationHamSwitch == null) return; //nothing todo
+        }
+
+        public void RemoveAnimationSwitches()
+        {
+            if (_animationSwitch != null)
+                _bone.removeChild(_animationSwitch);
+            if (_animationHamSwitch != null)
+            {
+                if (_hamVisible)
+                    _bone.removeChild(_animationHamSwitch);
+                _animationHamSwitch.unref(); //need to unref the ham switch
+            }
+
+            _animationHamSwitch = null;
+            _animationSwitch = null;
+            _hamVisible = false;
         }
     }
 }

@@ -1235,7 +1235,7 @@ namespace WristVizualizer
             if (createAnimationToolStripMenuItem.Checked)
             {
                 //get out of this crap
-                control.endComplexAnimationMovie();
+                control.EndFullAnimation();
                 createAnimationToolStripMenuItem.Checked = false;
                 saveMovieToolStripMenuItem.Enabled = false;
             }

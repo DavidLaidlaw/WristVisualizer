@@ -218,6 +218,36 @@ namespace libWrist
             }
         }
 
+        public void SetToAnimationFrame(int frameNumber)
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+                _bones[i].SetAnimationFrame(frameNumber);
+        }
+
+        public void SetupWristForAnimation(int fixedBoneIndex, int[] animationOrder, int numFrames)
+        {
+            //TODO: Distance Maps
+            HideColorMapAndContoursTemporarily(); //hide for now
+
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                //skip invalid bones
+                if (!_bones[i].IsValidBone) continue;
+
+                Switch animationSwitch = AnimationCreator.CreateAnimationSwitch(_bones[i], _bones[fixedBoneIndex], animationOrder, numFrames);
+                Switch animationHamSwitch = AnimationCreator.CreateHAMSwitch(_bones[i], _bones[fixedBoneIndex], animationOrder, numFrames);
+                _bones[i].SetupForAnimation(animationSwitch, animationHamSwitch);
+                //TODO: remove old transforms...
+            }
+        }
+
+        public void EndAnimation()
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+                _bones[i].RemoveAnimationSwitches();
+            MoveToPositionAndFixedBone(_currentPositionIndex, _fixedBoneIndex);
+        }
+
         public Queue<Queue<DistanceMaps.DistanceCalculationJob>> CreateDistanceMapJobQueue(double colorMapDistance, double[] cDistances, System.Drawing.Color[] colors)
         {
             //first check if we are doing anything
@@ -338,29 +368,5 @@ namespace libWrist
             return interactionBones;
         }
 
-        public void TestLoadDistanceMaps()
-        {
-            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
-            ReadInDistanceFields();
-
-            for (int pos = 0; pos < 3; pos++)
-            {
-                for (int i = 0; i < Wrist.NumBones; i++)
-                {
-                    Bone[] testBones = new Bone[Wrist.BoneInteractionIndex[i].Length];
-                    for (int j = 0; j < testBones.Length; j++)
-                        testBones[j] = _bones[Wrist.BoneInteractionIndex[i][j]];
-                    _bones[i].CalculateAndSaveDistanceMapForPosition(pos, testBones);
-                }
-
-                for (int i = 0; i < Wrist.NumBones; i++)
-                {
-                    _bones[i].CalculateAndSaveColorDistanceMapForPosition(pos, 3.0);
-                    _bones[i].CalculateAndSaveContourForPosition(pos, new double[] { 1.0, 1.5 }, new System.Drawing.Color[] { System.Drawing.Color.White, System.Drawing.Color.White });
-                }
-            }
-            sw.Stop();
-            Console.WriteLine("Time: {0}",sw.Elapsed.ToString());
-        }
     }
 }

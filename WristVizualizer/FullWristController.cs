@@ -31,8 +31,6 @@ namespace WristVizualizer
         private Timer _animationTimer;
 
         //Full Animation Stuff
-        private Switch[] _animationSwitches;
-        private Switch[] _animationHamSwitches;
         private AnimationControl _animationControl;        
 
         //Distance Maps
@@ -408,16 +406,8 @@ namespace WristVizualizer
             return r;
         }
 
-        public void endComplexAnimationMovie()
+        public void EndFullAnimation()
         {
-            endFullAnimation();
-        }
-
-        private void endFullAnimation()
-        {
-            //remove switches
-            removeAnimationSwitchesFromBones();
-
             //return GUI
             _layoutControl.removeControl(_animationControl);
             if (_positionGraph != null)
@@ -432,69 +422,24 @@ namespace WristVizualizer
             _animationControl.PlayClicked -= new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
             _animationControl.FPSChanged -= new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
                         
-            _animationSwitches = null;
-            _animationHamSwitches = null;
             _animationTimer.Tick -= new EventHandler(_animationTimer_Tick);
             _animationTimer.Stop();
             _animationTimer = null;
             _animationControl = null;
 
-
-            //try and reset the display back to where it was....hopefully everything is reset, so we don't have too?
-        }
-
-        private void addAnimationSwitchesToBones()
-        {
-            /*
-            for (int i = 0; i < _bones.Length; i++)
-            {
-                if (_animationSwitches[i] != null)
-                {
-                    _bones[i].insertNode(_animationSwitches[i], 0);
-                    _animationSwitches[i].whichChild(_animationControl.currentFrame);
-                }
-
-                if (_animationHamSwitches[i] != null)
-                {
-                    _animationHamSwitches[i].reference();
-                    if (_wristControl.IsHamVissible(i))
-                    {
-                        _root.addNode(_animationHamSwitches[i]);
-                        _animationHamSwitches[i].whichChild(_animationControl.currentFrame);
-                    }
-                }
-            }
-             */
-        }
-
-        private void removeAnimationSwitchesFromBones()
-        {
-            /*
-            for (int i = 0; i < _bones.Length; i++)
-            {
-                //bone transforms
-                if (_animationSwitches[i] != null)
-                    _bones[i].removeChild(_animationSwitches[i]);
-
-                //ham axes
-                if (_wristControl.IsHamVissible(i)) //TODO: Check if displayed...?
-                    _root.removeChild(_animationHamSwitches[i]);
-                if (_animationHamSwitches[i] != null)
-                    _animationHamSwitches[i].unref(); //unref to be deleted
-            }
-             */
+            //reset wrist
+            _fullWrist.EndAnimation();
         }
 
         private void startFullAnimation(AnimationCreatorForm acf)
         {
-            /*
             _acf = acf;
             int[] animationOrder = acf.getAnimationOrder();
             int numFrames = acf.NumberStepsPerPositionChange;
             //TODO: all the distance map stuff, etc.
-            AnimationCreator ac = new AnimationCreator();
-            _animationSwitches = ac.CreateAnimationSwitches(0, _bones, _transformMatrices, animationOrder, numFrames);
-            _animationHamSwitches = ac.CreateHAMSwitches(0, _bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
+
+            //_animationSwitches = ac.CreateAnimationSwitches(0, _bones, _transformMatrices, animationOrder, numFrames);
+            //_animationHamSwitches = ac.CreateHAMSwitches(0, _bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
 
             _animationControl = new AnimationControl();
             _layoutControl.addControl(_animationControl);
@@ -508,10 +453,8 @@ namespace WristVizualizer
                 _layoutControl.removeControl(_positionGraph);
             _wristControl.changeToAnimationMode();
 
-            //Okay, at this point, lets remove the current transforms...
-            removeCurrentTransforms();
             //now, lets go and add the switches into place
-            addAnimationSwitchesToBones();
+            _fullWrist.SetupWristForAnimation(0, animationOrder, numFrames); //default to radius fixed...
 
             //redirect change in fixed bone....
             _wristControl.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);
@@ -528,23 +471,24 @@ namespace WristVizualizer
             _animationTimer = new Timer();
             _animationTimer.Tick += new EventHandler(_animationTimer_Tick);
             _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
-             */
         }
 
         void _wristControl_ShowHamChanged(object sender, BoneHideChangeEventArgs e)
         {
-            if (e.BoneHidden)
-            {
+            _fullWrist.Bones[e.BoneIndex].SetHamVisibility(!e.BoneHidden);
 
-                //TODO: Check if the bone to be hidden or shown is the fixed bone...fudge
-                int index = _animationControl.currentFrame;
-                _root.addNode(_animationHamSwitches[e.BoneIndex]);
-                _animationHamSwitches[e.BoneIndex].whichChild(index);
-            }
-            else
-            {
-                _root.removeChild(_animationHamSwitches[e.BoneIndex]);
-            }
+            //if (e.BoneHidden)
+            //{
+
+            //    //TODO: Check if the bone to be hidden or shown is the fixed bone...fudge
+            //    int index = _animationControl.currentFrame;
+            //    _root.addNode(_animationHamSwitches[e.BoneIndex]);
+            //    _animationHamSwitches[e.BoneIndex].whichChild(index);
+            //}
+            //else
+            //{
+            //    _root.removeChild(_animationHamSwitches[e.BoneIndex]);
+            //}
         }
 
         void _animationTimer_Tick(object sender, EventArgs e)
@@ -585,6 +529,7 @@ namespace WristVizualizer
 
         private void setAnimationToFrame(int frameIndex)
         {
+            _fullWrist.SetToAnimationFrame(frameIndex);
             /*
             for (int i = 0; i < _bones.Length; i++)
             {
@@ -600,6 +545,10 @@ namespace WristVizualizer
 
         void _control_Animation_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
+            //TODO: Recalculate animation....
+
+            //TODO: Make certain that we stay at the same frame and with the same HAM's visible
+
             /*
             AnimationCreator ac = new AnimationCreator();
             int[] animationOrder = _acf.getAnimationOrder();
