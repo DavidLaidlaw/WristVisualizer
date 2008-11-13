@@ -319,16 +319,23 @@ namespace WristVizualizer
 
         private void animateChangeInPosition()
         {
-            /*
-
             //setup animations....
             if (_shortAnimationController != null)
                 _shortAnimationController.Stop(); //ugly, but should work
             _shortAnimationController = new ShortAnimationController();
             int numFrames = Math.Max((int)(_FPS * _animateDuration), 1); //want at least one frame
+            _shortAnimationController.FPS = _FPS;
 
+            _fullWrist.HideColorMap();
+            _fullWrist.HideContours();
+
+            _shortAnimationController.SetupAnimationForLinearInterpolation(_fullWrist, _lastPositionIndex, _currentPositionIndex, _lastFixedBoneIndex, _lastFixedBoneIndex, numFrames);
+            _shortAnimationController.Start();
+
+            //TODO: Add contours back in....
+
+            /*
             HelicalTransform[] htRelMotions = new HelicalTransform[_bones.Length]; //rel motion from last to current
-
             TransformMatrix[] lastRelMotion = calculateRelativeMotionFromNeutral(_lastPositionIndex, _lastFixedBoneIndex); //rel motion from neutral to last
             TransformMatrix[] currentRelMotion = calculateRelativeMotionFromNeutral(_currentPositionIndex, _fixedBoneIndex); //rel motion from neutral to current
 
@@ -358,18 +365,17 @@ namespace WristVizualizer
                     htRelMotions[i] = relLastToCurrent.ToHelical();
                 }
             }
-
+             
             //clear the coloring scheme, its not really calculated yet for intermediary positions
             _distMap.clearDistanceColorMapsForAllBones();
             _distMap.clearContoursForAllBones();
-
             _shortAnimationController.setupAnimationForLinearInterpolation(_bones, htRelMotions, lastRelMotion, numFrames);
-            _shortAnimationController.LoopAnimation = false;
-            _shortAnimationController.FPS = _FPS;
-            _shortAnimationController.Start();
+            */
+
+
+            
+            
             //TODO: add color information back in at the end....how?
-             
-             */
         }
 
         private void applyDistanceMapsIfRequired()

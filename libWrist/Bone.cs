@@ -270,6 +270,27 @@ namespace libWrist
             return endRelTransform * startRelTransform.Inverse();
         }
 
+        public TransformMatrix[] CalculateInterpolatedMotion(int startPositionIndex, int endPositionIndex, Bone fixedBone, int numSteps)
+        {
+            return CalculateInterpolatedMotion(startPositionIndex, endPositionIndex, fixedBone, fixedBone, numSteps);
+        }
+        public TransformMatrix[] CalculateInterpolatedMotion(int startPositionIndex, int endPositionIndex, Bone startFixedBone, Bone endFixedBone, int numSteps)
+        {
+            TransformMatrix[] finalTransforms = new TransformMatrix[numSteps];
+            TransformMatrix startTransform = this.CalculateRelativeMotionFromNeutral(startPositionIndex, startFixedBone);
+            TransformMatrix endTransform = this.CalculateRelativeMotionFromNeutral(endPositionIndex, endFixedBone);
+            
+            TransformMatrix relMotion = endTransform * startTransform.Inverse();
+            HelicalTransform relMotionHT = relMotion.ToHelical();
+
+            HelicalTransform[] htTransforms = relMotionHT.LinearlyInterpolateMotion(numSteps);
+
+            for (int i = 0; i < numSteps; i++)
+                finalTransforms[i] = htTransforms[i].ToTransformMatrix() * startTransform;
+
+            return finalTransforms;
+        }
+
         public void MoveToPosition(int positionIndex, Bone fixedBone)
         {
             //first remove any existing transform....
