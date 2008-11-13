@@ -379,6 +379,71 @@ namespace libWrist
         }
 
         /// <summary>
+        /// Calculates the distanceMaps for a given bone using the precalculated distance fields.
+        /// If a distance field is unavailable, it is assumed to be infinately far away...
+        /// </summary>
+        /// <param name="boneIndex"></param>
+        /// <param name="positionIndex"></param>
+        /// <returns></returns>
+        public static double[] createDistanceMap(Bone referenceBone, Bone[] testBones, TransformMatrix[] tmRelMotions)
+        {
+            if (testBones.Length != tmRelMotions.Length)
+                throw new ArgumentException("Must pass the same number of transforms as test bones");
+
+            float[,] pts = referenceBone.GetVertices();
+            int numVertices = pts.GetLength(0);
+
+            double[] distances = new double[numVertices];
+            bool isNeutralPosition = (tmRelMotions[0] == null); //if we have no transforms, then its the neutral position
+
+            //for each vertex           
+            for (int i = 0; i < numVertices; i++)
+            {
+                distances[i] = Double.MaxValue; //set this vertex to the default
+                for (int j=0; j<testBones.Length; j++) //only use the bones that we have specified interact
+                {
+                    //TODO: how to skip missing information?
+                    //if (mri[j] == null) continue; //skip missing scans
+
+                    double x = pts[i, 0];
+                    double y = pts[i, 1];
+                    double z = pts[i, 2];
+
+                    //check if we need to move for non neutral position
+                    if (isNeutralPosition)
+                    {
+                        //lets move the bone getting colored, into the space of the other bone...
+                        double[] p0 = new double[] { x, y, z };
+                        double[] p1 = tmRelMotions[j] * p0;
+                        x = p1[0];
+                        y = p1[1];
+                        z = p1[2];
+                    }
+
+                    double dX = (x - testBones[j].DistanceField.CoordinateOffset[0]) / testBones[j].DistanceField.voxelSizeX;
+                    double dY = (y - testBones[j].DistanceField.CoordinateOffset[1]) / testBones[j].DistanceField.voxelSizeY;
+                    double dZ = (z - testBones[j].DistanceField.CoordinateOffset[2]) / testBones[j].DistanceField.voxelSizeZ;
+
+                    const double xBound = 96.9; //get the boundaries of the distance cube
+                    const double yBound = 96.9; //
+                    const double zBound = 96.9; //
+
+                    ////////////////////////////////////////////////////////
+                    //is surface point picked inside of the cube?
+
+                    if (dX >= 3.1 && dX <= xBound && dY >= 3.1
+                        && dY <= yBound && dZ >= 3.1 && dZ <= zBound)
+                    {
+                        double localDist = testBones[j].DistanceField.sample_s_InterpCubit(dX, dY, dZ);
+                        if (localDist < distances[i]) //check if this is smaller, if so save it
+                            distances[i] = localDist;
+                    }
+                }
+            }
+            return distances;
+        }
+
+        /// <summary>
         /// Can be used to create the distance map for a single reference bone, against a single 
         /// test distance field.
         /// </summary>
@@ -441,10 +506,14 @@ namespace libWrist
             return distances;
         }
 
-
         private int[] createColormap(int boneIndex, int positionIndex)
         {
             double[] distances = getOrCalculateDistanceMap(boneIndex, positionIndex);
+            return createColormap(distances);
+        }
+
+        public static int[] createColormap(double[] distances)
+        {
             int numVertices = distances.Length;
             int[] colors = new int[numVertices];
 
@@ -615,6 +684,20 @@ namespace libWrist
             //if distance maps are not available, just returns max distances....should we warn the user?
             float[,] points = _colorBones[boneIndex].getVertices();
             int[,] conn = _colorBones[boneIndex].getFaceSetIndices();
+
+            return DistanceMaps.createContourSingleBoneSinglePosition(points, conn, dist, cDistances, colors);
+        }
+
+        public static Contour createContourSingleBoneSinglePosition(Bone referenceBone, double[] distanceMap, double[] cDistances, System.Drawing.Color[] colors)
+        {
+            float[,] points = referenceBone.GetVertices();
+            int[,] conn = referenceBone.GetFaceSetIndices();
+            return DistanceMaps.createContourSingleBoneSinglePosition(points, conn, distanceMap, cDistances, colors);
+        }
+
+        private static Contour createContourSingleBoneSinglePosition(float[,] points, int[,] conn, double[] distanceMap, double[] cDistances, System.Drawing.Color[] colors)
+        {
+            double[] dist = distanceMap;
 
             Contour cont1 = new Contour(cDistances.Length);
             cont1.Color = colors[0];

@@ -15,19 +15,25 @@ namespace libWrist
         private string _shortName;
         private int _boneIndex;
         private Wrist _wrist;
+        private FullWrist _fullWrist; //the full wrist we are part of
 
         //Data objects
         private TransformMatrix _inertiaMatrix;
         private List<TransformMatrix> _transformMatrices;
         private CTmri _distanceField;
+        private List<double[]> _computedDistances;
+        private List<int[]> _computedColorMaps;
+        private List<Contour> _computedContours;
+
 
         //Coin3D objects
         private Separator _bone;
         private ColoredBone _coloredBone;
         private Separator _inertiaSeparator;
 
-        public Bone(Wrist wrist, int boneIndex)
+        public Bone(Wrist wrist, FullWrist fullwrist, int boneIndex)
         {
+            _fullWrist = fullwrist;
             _wrist = wrist;
             _boneIndex = boneIndex;
             _longName = Wrist.LongBoneNames[boneIndex];
@@ -35,6 +41,9 @@ namespace libWrist
             _ivFilename = _wrist.bpaths[boneIndex];
             _distanceFieldFilename = _wrist.DistanceFieldPaths[boneIndex];
             _transformMatrices = new List<TransformMatrix>();
+            _computedDistances = new List<double[]>();
+            _computedColorMaps = new List<int[]>();
+            _computedContours = new List<Contour>();
         }
 
         public void LoadIVFile()
@@ -59,7 +68,7 @@ namespace libWrist
             _bone = bone; //only save if we get this far, its possible to still be throwing an exception
         }
 
-        private void ReadDistanceField()
+        public void ReadDistanceField()
         {
             if (!Directory.Exists(_distanceFieldFilename))
                 return;
@@ -126,6 +135,22 @@ namespace libWrist
         public void SetTransformation(TransformMatrix transform, int positionIndex)
         {
             _transformMatrices[positionIndex] = transform;
+        }
+
+        public float[,] GetVertices()
+        {
+            if (_coloredBone == null)
+                throw new WristException("Cannot get vertices from non-colored bone");
+
+            return _coloredBone.getVertices();
+        }
+
+        public int[,] GetFaceSetIndices()
+        {
+            if (_coloredBone == null)
+                throw new WristException("Cannot get FaceSetIndices from non-colored bone");
+
+            return _coloredBone.getFaceSetIndices();
         }
 
         public void HideBone()
@@ -252,6 +277,39 @@ namespace libWrist
 
             if (tm.isIdentity()) return; //nothing to do in this case
             _bone.addTransform(tm.ToTransform());
+        }
+
+        public void CalculateAndSaveDistanceMapForPosition(int positionIndex, Bone[] testBones)
+        {
+            //quick check that we can do this.
+            if (_distanceField == null || _coloredBone == null) return;
+
+            //calculate the relative motion for each bone. Need a transform for each testBone, that will
+            //move this bone into its coordinate system
+            TransformMatrix[] transforms = new TransformMatrix[testBones.Length];
+            if (positionIndex != 0) //in the neutral position, we are in the correct place
+            {
+                for (int i = 0; i < testBones.Length; i++)
+                    transforms[i] = CalculateRelativeMotionFromNeutral(positionIndex, testBones[i]);
+            }
+
+            _computedDistances[positionIndex] = DistanceMaps.createDistanceMap(this, testBones, transforms);
+        }
+
+        public void CalculateAndSaveColorDistanceMapForPosition(int positionIndex)
+        {
+            if (_computedDistances[positionIndex] == null)
+                throw new WristException("Raw distances (_computedDistancs) must be pre-computed before calculating ColorDistanceMap");
+
+            _computedColorMaps[positionIndex] = DistanceMaps.createColormap(_computedDistances[positionIndex]);
+        }
+
+        public void CalculateAndSaveContourForPosition(int positionIndex, double[] cDistances, System.Drawing.Color[] colors)
+        {
+            if (_computedDistances[positionIndex] == null)
+                throw new WristException("Raw distances (_computedDistancs) must be pre-computed before calculating ColorDistanceMap");
+
+            _computedContours[positionIndex] = DistanceMaps.createContourSingleBoneSinglePosition(this, _computedDistances[positionIndex], cDistances, colors);
         }
     }
 }

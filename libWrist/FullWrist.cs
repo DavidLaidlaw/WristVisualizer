@@ -23,17 +23,33 @@ namespace libWrist
             _bones = new List<Bone>(Wrist.NumBones);
         }
 
+        public Separator Root
+        {
+            get { return _root; }
+        }
+
         public void LoadFullWrist()
         {
             _root = new Separator();
             for (int i = 0; i < Wrist.NumBones; i++)
             {
-                _bones[i] = new Bone(_wrist, i);
+                _bones[i] = new Bone(_wrist, this, i);
                 _bones[i].LoadIVFile();
             }
 
             LoadKinematicTransforms();
             LoadInertiaData();
+        }
+
+        public void ReadInDistanceFields()
+        {
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                if (!_bones[i].IsValidBone) continue;
+
+                if (!_bones[i].HasDistanceField) //skip if already loaded
+                    _bones[i].ReadDistanceField();
+            }
         }
 
         private void LoadKinematicTransforms()
