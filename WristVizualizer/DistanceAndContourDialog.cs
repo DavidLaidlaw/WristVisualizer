@@ -19,13 +19,6 @@ namespace WristVizualizer
         private Button[] _contourColorButtons;
         private double[] _defaultContourDistances;
 
-        public enum CalculationTypes
-        {
-            Current,
-            All,
-            CachedOnly,
-            None
-        }
 
         public DistanceAndContourDialog() : this(DEFAULT_DISTANCES, DEFAULT_MAX_NUM_CONTOURS) { }
         public DistanceAndContourDialog(double[] defaultContourDistances) : this(defaultContourDistances, DEFAULT_MAX_NUM_CONTOURS) { }
@@ -113,63 +106,23 @@ namespace WristVizualizer
         #endregion
 
         #region Properties
-        public CalculationTypes CalculateColorMap
+        public bool CalculateColorMap
         {
-            get
-            {
-                if (radioButtonAll.Checked) return CalculationTypes.All;
-                if (radioButtonCurrent.Checked) return CalculationTypes.Current;
-                if (radioButtonCalculated.Checked) return CalculationTypes.CachedOnly;
-                if (radioButtonNone.Checked) return CalculationTypes.None;
-                throw new WristVizualizerException("No type of color map specified!");
-            }
+            get { return radioButtonDistanceAll.Checked; }
             set
             {
-                switch (value)
-                {
-                    case CalculationTypes.All:
-                        radioButtonAll.Checked = true;
-                        break;
-                    case CalculationTypes.Current:
-                        radioButtonCurrent.Checked = true;
-                        break;
-                    case CalculationTypes.CachedOnly:
-                        radioButtonCalculated.Checked = true;
-                        break;
-                    case CalculationTypes.None:
-                        radioButtonNone.Checked = true;
-                        break;
-                }
+                radioButtonDistanceAll.Checked = value;
+                radioButtonDistanceHide.Checked = !value;
             }
         }
 
-        public CalculationTypes CalculateContours
+        public bool CalculateContours
         {
-            get
-            {
-                if (radioButtonContourAll.Checked) return CalculationTypes.All;
-                if (radioButtonContourCurrent.Checked) return CalculationTypes.Current;
-                if (radioButtonContourCalculated.Checked) return CalculationTypes.CachedOnly;
-                if (radioButtonContourNone.Checked) return CalculationTypes.None;
-                throw new WristVizualizerException("No type of contour specified!");
-            }
+            get { return radioButtonContourAll.Checked; }
             set
             {
-                switch (value)
-                {
-                    case CalculationTypes.All:
-                        radioButtonContourAll.Checked = true;
-                        break;
-                    case CalculationTypes.Current:
-                        radioButtonContourCurrent.Checked = true;
-                        break;
-                    case CalculationTypes.CachedOnly:
-                        radioButtonContourCalculated.Checked = true;
-                        break;
-                    case CalculationTypes.None:
-                        radioButtonContourNone.Checked = true;
-                        break;
-                }
+                radioButtonContourAll.Checked = value;
+                radioButtonContourHide.Checked = !value;
             }
         }
 
@@ -181,43 +134,6 @@ namespace WristVizualizer
                 if (value <= 0) return; //skip junk values
                 numericUpDownDistanceMapDist.Value = (decimal)value;
             }
-        }
-
-        public bool HideColorMap
-        {
-            get { return (radioButtonNone.Checked); }
-        }
-
-        public bool HideContour
-        {
-            get { return (radioButtonContourNone.Checked); }
-        }
-
-        public bool RequiresCalculatingColorMaps
-        {
-            get { return (radioButtonAll.Checked || radioButtonCurrent.Checked); }
-        }
-        public bool RequiresCalculatingContours
-        {
-            get { return (radioButtonContourAll.Checked || radioButtonContourCurrent.Checked); }
-        }
-
-        public bool CalculateAllColorMaps
-        {
-            get { return (radioButtonAll.Checked); }
-        }
-        public bool CalculateAllContours
-        {
-            get { return (radioButtonContourAll.Checked); }
-        }
-
-        public bool CalculateCurrentColorMap
-        {
-            get { return this.RequiresCalculatingColorMaps; }
-        }
-        public bool CalculateCurrentContour
-        {
-            get { return this.RequiresCalculatingContours; }
         }
         #endregion
 

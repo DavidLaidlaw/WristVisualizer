@@ -12,17 +12,7 @@ namespace libWrist
 {
     public class DistanceMaps
     {
-        private TransformMatrix[][] _transformMatrices;
-        private ColoredBone[] _colorBones;
-        private Wrist _wrist;
-
-        private CTmri[] _distanceFields;
-        private int[][][] _calculatedColorMaps;  //stores the packed colors in 32bit INT values.
-        private double[][][] _calculatedDistances;
-        private Contour[][] _calculatedContours;
-
-        private Queue _workQueueColorMaps;
-        private Queue _workQueueContours;
+        Queue<Queue<DistanceMaps.DistanceCalculationJob>> _masterQueue;
         private Thread[] _workerThreads;
         private BackgroundWorkerStatusForm _bgStatusForm;
         private BackgroundWorker _bgWorker;
@@ -31,79 +21,9 @@ namespace libWrist
         private System.Drawing.Color[] _contourColors;
         private double _maxColoredDistance;
 
-        public DistanceMaps(Wrist wrist, TransformMatrix[][] transformMatrices, ColoredBone[] colorBones)
-        {
-            _wrist = wrist;
-            _transformMatrices = transformMatrices;
-            _colorBones = colorBones;
-
-            //initialize thread-safe queues
-            _workQueueColorMaps = Queue.Synchronized(new Queue());
-            _workQueueContours = Queue.Synchronized(new Queue());
-        }
-
-        /// <summary>
-        /// Will set the maximum distance to use for applying the color of Distance Maps.
-        /// If this is different then previous, it will clear ALL cached color maps to maintain
-        /// consistancy.
-        /// </summary>
-        /// <param name="maxDistance">maximum distance to color</param>
-        public void setMaxColoredDistance(double maxDistance)
-        {
-            if (_maxColoredDistance == maxDistance) return; //no change
-
-            if (_maxColoredDistance > 0) //check for existing colored distance
-            {
-                //if so, we need to delete the cache and clear all the contours from bones
-                _calculatedContours = null;
-                showDistanceColorMapsForPositionIfCalculatedOrClear(0); //could be any index, they are all empty
-            }
-
-            //now save the result
-            _maxColoredDistance = maxDistance;
-        }
-
-        /// <summary>
-        /// Will set the number of contours to display, and what distances to use for each contour.
-        /// If this is different then previous, it will clear ALL cached contours to maintain
-        /// consistancy.
-        /// </summary>
-        /// <param name="cDistances">Array of contour distances, one value per contour</param>
-        /// <param name="colors">Array of colors for the contours, one per contour</param>
-        public void setContourDistances(double[] cDistances, System.Drawing.Color[] colors)
-        {
-            //if it was not set, then set it and get out
-            if (_contourDistances == null)
-            {
-                _contourDistances = cDistances;
-                _contourColors = colors;
-                return;
-            }
-
-            //lets check if it changed
-            bool changed = false;
-            if (_contourDistances.Length == cDistances.Length)
-            {
-                for (int i = 0; i < _contourDistances.Length; i++)
-                {
-                    if (_contourDistances[i] != cDistances[i])
-                        changed = true;
-                    if (_contourColors[i] != colors[i])
-                        changed = true;
-                }
-            }
-            else 
-                changed = true;
-
-            //if nothing is different, then we are fine
-            if (!changed) return;
-
-            //if here, then something changed, and we need to clear the cache and save the new values
-            _calculatedContours = null;
-            showContoursForPositionIfCalculatedOrClear(0); //could be any index, they are all empty
-
-            _contourDistances = cDistances; //save new values
-            _contourColors = colors;
+        public DistanceMaps()
+        {           
+            
         }
 
         public double[] ContourDistances
@@ -121,191 +41,8 @@ namespace libWrist
             get { return _contourColors; }
         }
 
-        private void readInDistanceFieldsIfNotLoaded()
-        {
-            if (_distanceFields != null)
-                return;
-
-            _distanceFields = new CTmri[Wrist.NumBones];
-
-            for (int i = 0; i < Wrist.NumBones; i++)
-            {
-                if (Directory.Exists(_wrist.DistanceFieldPaths[i]))
-                {
-                    _distanceFields[i] = new CTmri(_wrist.DistanceFieldPaths[i]);
-                    _distanceFields[i].loadImageData();
-                }
-                else
-                    _distanceFields[i] = null;
-            }
-        }
-
-        public bool hasContourForBonePosition(int boneIndex, int positionIndex)
-        {
-            if (_calculatedContours == null)
-                return false;
-
-            if (_calculatedContours[boneIndex] == null)
-                return false;
-
-            return (_calculatedContours[boneIndex][positionIndex] != null);
-        }
-
-        private bool hasDistanceMapsForBonePosition(int boneIndex, int positionIndex)
-        {
-            if (_calculatedDistances == null)
-                return false;
-
-            if (_calculatedDistances[boneIndex] == null)
-                return false;
-
-            return (_calculatedDistances[boneIndex][positionIndex] != null);
-        }
-
-        public bool hasDistanceColorMapsForPosition(int positionIndex)
-        {
-            if (_calculatedColorMaps == null)
-                return false;
-
-            //only check the radius, it should be a good enough check....
-            if (_calculatedColorMaps[0] == null)
-                return false;
-
-            return (_calculatedColorMaps[0][positionIndex] != null);
-        }
-
-        public void showContoursForPositionIfCalculatedOrClear(int positionIndex)
-        {
-            for (int i = 0; i < Wrist.NumBones; i++)
-            {
-                if (_colorBones[i] == null) continue;
-                if (hasContourForBonePosition(i, positionIndex))
-                    _colorBones[i].setAndReplaceContour(_calculatedContours[i][positionIndex]);
-                else
-                    _colorBones[i].removeContour();
-            }
-        }
-
-        public void showDistanceColorMapsForPositionIfCalculatedOrClear(int positionIndex)
-        {
-            if (hasDistanceColorMapsForPosition(positionIndex))
-                showDistanceColorMapsForPosition(positionIndex);
-            else
-                clearDistanceColorMapsForAllBones();
-        }
-
-        public void readInAllDistanceColorMaps()
-        {
-            //setup save space if it doesn't exist
-            if (_calculatedColorMaps == null)
-                _calculatedColorMaps = new int[Wrist.NumBones][][];
-
-            readInDistanceFieldsIfNotLoaded();
-            int numPos = _transformMatrices.Length + 1; //add one extra for neutral :)
-
-            //try and create color scheme....
-            for (int i = 0; i < Wrist.NumBones; i++)
-            {
-                //setup space if it doesn't exist
-                if (_calculatedColorMaps[i] == null)
-                    _calculatedColorMaps[i] = new int[numPos][]; 
-
-                //now read the color map for each position index
-                for (int j = 0; j < numPos; j++)
-                {
-                    //read in the colors if not yet loaded
-                    if (_calculatedColorMaps[i][j] == null)
-                        _calculatedColorMaps[i][j] = createColormap(i, j);
-                }
-            }
-        }
-
-        public void showDistanceColorMapsForPosition(int positionIndex)
-        {
-            //setup save space if it doesn't exist
-            if (_calculatedColorMaps == null)
-                _calculatedColorMaps = new int[Wrist.NumBones][][];
-
-            readInDistanceFieldsIfNotLoaded();
-
-            //try and create color scheme....
-            for (int i = 0; i < Wrist.NumBones; i++)
-            {
-                //setup space if it doesn't exist
-                if (_calculatedColorMaps[i] == null)
-                    _calculatedColorMaps[i] = new int[_transformMatrices.Length + 1][]; //add one extra for neutral :)
-
-                //read in the colors if not yet loaded
-                if (_calculatedColorMaps[i][positionIndex] == null)
-                    _calculatedColorMaps[i][positionIndex] = createColormap(i, positionIndex);
-
-                //now set that color
-                _colorBones[i].setColorMap(_calculatedColorMaps[i][positionIndex]);
-            }
-        }
-
-        public void clearDistanceColorMapsForAllBones()
-        {
-            for (int i = 0; i < Wrist.NumBones; i++)
-            {
-                if (_colorBones[i] != null)
-                    _colorBones[i].clearColorMap();
-            }
-        }
-
-        public void clearContoursForAllBones()
-        {
-            for (int i = 0; i < Wrist.NumBones; i++)
-                if (_colorBones[i] != null)
-                    _colorBones[i].removeContour();
-        }
-
-        private TransformMatrix[] calculateRelativeMotionForDistanceMaps(int boneIndex, int positionIndex, int[] boneInteraction)
-        {
-            TransformMatrix[] tmRelMotions = new TransformMatrix[Wrist.NumBones]; //for each position
-            if (positionIndex == 0) //no transforms needed for the neutral position, we are all set :)
-                return tmRelMotions;
-
-            /* Check if we are missing kinematics for the bone, if so, then we can not
-             * calculate distance maps (we don't know where the bone is, so we just return all null)
-             */
-            if (_transformMatrices[positionIndex - 1][boneIndex] == null ||
-                _transformMatrices[positionIndex - 1][boneIndex].isIdentity())
-                return tmRelMotions;
-
-            TransformMatrix tmBone = _transformMatrices[positionIndex - 1][boneIndex];
-            foreach (int testBoneIndex in boneInteraction)
-            {
-                //Again, check if there is no kinematics for the test bone, again, if none, just move on
-                if (_transformMatrices[positionIndex - 1][testBoneIndex] == null ||
-                _transformMatrices[positionIndex - 1][testBoneIndex].isIdentity())
-                    continue;
-
-                TransformMatrix tmFixedBone = _transformMatrices[positionIndex - 1][testBoneIndex];
-                //so fix the current bone, and move our test bone to that position....yes?
-                tmRelMotions[testBoneIndex] = tmFixedBone.Inverse() * tmBone;
-            }
-            return tmRelMotions;
-
-        }
-
-
-        private double[] getOrCalculateDistanceMap(int boneIndex, int positionIndex)
-        {
-            //setup save space if it doesn't exist
-            if (_calculatedDistances == null)
-                _calculatedDistances = new double[Wrist.NumBones][][];
-
-            readInDistanceFieldsIfNotLoaded();
-
-            if (_calculatedDistances[boneIndex]==null)
-                _calculatedDistances[boneIndex] = new double[_transformMatrices.Length+1][]; //add one extra for neutral
-            
-            if (_calculatedDistances[boneIndex][positionIndex]==null)
-                _calculatedDistances[boneIndex][positionIndex] = createDistanceMap(boneIndex,positionIndex);
-
-            return _calculatedDistances[boneIndex][positionIndex];
-        }
+       
+        /*
 
         /// <summary>
         /// Calculates the distanceMaps for a given bone using the precalculated distance fields.
@@ -377,6 +114,9 @@ namespace libWrist
             }
             return distances;
         }
+
+         */
+ 
 
         /// <summary>
         /// Calculates the distanceMaps for a given bone using the precalculated distance fields.
@@ -506,13 +246,7 @@ namespace libWrist
             return distances;
         }
 
-        private int[] createColormap(int boneIndex, int positionIndex)
-        {
-            double[] distances = getOrCalculateDistanceMap(boneIndex, positionIndex);
-            return createColormap(distances);
-        }
-
-        public static int[] createColormap(double[] distances)
+        public static int[] createColormap(double[] distances, double maxColorDistance)
         {
             int numVertices = distances.Length;
             int[] colors = new int[numVertices];
@@ -528,7 +262,7 @@ namespace libWrist
                     packedColor = 0X0000FFFF;
                 }
                 // a parameter could be used instead of plain 3
-                else if (distances[i] > 3)  //check if we are too far away
+                else if (distances[i] > maxColorDistance)  //check if we are too far away
                 {
                     //make us white
                     packedColor = 0xFFFFFFFF;
@@ -544,7 +278,7 @@ namespace libWrist
                      * So we then ahve 0x00GGBB00, we can then bitwise OR with 0xFF0000FF, 
                      * since we want both R and Alpha to be at 255. Then we are set :)
                      */
-                    uint GB = (uint)(distances[i] * 255.0 / 3.0);
+                    uint GB = (uint)(distances[i] * 255.0 / maxColorDistance);
                     packedColor = (GB << 16) | (GB << 8) | 0xFF0000FF;
                 }
                 colors[i] = (int)packedColor;
@@ -565,57 +299,6 @@ namespace libWrist
             t.setTranslation(contour.Centroids[contourIndex][0], contour.Centroids[contourIndex][1], contour.Centroids[contourIndex][2]);
             m.setColor(0, 1, 0);
             return spher1;
-        }
-
-        private int[] getColorMapSingleBoneSinglePosition(int boneIndex, int positionIndex)
-        {
-            lock (this)
-            {
-                if (_calculatedColorMaps == null)
-                    _calculatedColorMaps = new int[Wrist.NumBones][][];
-
-                if (_calculatedColorMaps[boneIndex] == null)
-                    _calculatedColorMaps[boneIndex] = new int[_transformMatrices.Length + 1][];
-            }
-            if (_calculatedColorMaps[boneIndex][positionIndex] == null)
-                _calculatedColorMaps[boneIndex][positionIndex] = createColormap(boneIndex, positionIndex);
-
-            return _calculatedColorMaps[boneIndex][positionIndex];
-        }
-
-        private Contour getContourSingleBoneSinglePosition(int boneIndex, int positionIndex)
-        {
-            lock (this)
-            {
-                if (_calculatedContours == null)
-                    _calculatedContours = new Contour[Wrist.NumBones][];
-
-                if (_calculatedContours[boneIndex] == null)
-                    _calculatedContours[boneIndex] = new Contour[_transformMatrices.Length + 1];
-            }
-            if (_calculatedContours[boneIndex][positionIndex] == null)
-                _calculatedContours[boneIndex][positionIndex] = createContourSingleBoneSinglePosition(boneIndex, positionIndex, _contourDistances, _contourColors);
-
-            return _calculatedContours[boneIndex][positionIndex];
-        }
-
-        public void showContoursForPosition(int positionIndex)
-        {
-            for (int i = 0; i < Wrist.NumBones; i++)
-            {
-                Contour cont = getContourSingleBoneSinglePosition(i, positionIndex);
-                _colorBones[i].setAndReplaceContour(cont);
-            }
-        }
-
-        public void calculateAllContours()
-        {
-            int numPos = _transformMatrices.Length + 1;
-            for (int i = 0; i < Wrist.NumBones; i++)
-                for (int j = 0; j < numPos; j++)
-                {
-                    getContourSingleBoneSinglePosition(i, j); //this function will cache them, but not show anything...
-                }
         }
 
         //[Obsolete("Don't f'ing use!")]
@@ -676,16 +359,6 @@ namespace libWrist
                 contourSingleTriangle(triDist, triPts, cont1, cDistances);
             }
             return cont1;
-        }
-
-        private Contour createContourSingleBoneSinglePosition(int boneIndex, int positionIndex, double[] cDistances, System.Drawing.Color[] colors)
-        {
-            double[] dist = getOrCalculateDistanceMap(boneIndex, positionIndex);
-            //if distance maps are not available, just returns max distances....should we warn the user?
-            float[,] points = _colorBones[boneIndex].getVertices();
-            int[,] conn = _colorBones[boneIndex].getFaceSetIndices();
-
-            return DistanceMaps.createContourSingleBoneSinglePosition(points, conn, dist, cDistances, colors);
         }
 
         public static Contour createContourSingleBoneSinglePosition(Bone referenceBone, double[] distanceMap, double[] cDistances, System.Drawing.Color[] colors)
@@ -848,74 +521,33 @@ namespace libWrist
         #endregion
 
         #region Multi-Threaded Processing
-        private struct BonePositionInfo
+        public enum DistanceCalculationType
         {
+            VetrexDistances,
+            ColorMap,
+            Contours            
+        }
+
+        public struct DistanceCalculationJob
+        {
+            public FullWrist FullWrist;
+            public DistanceCalculationType JobType;
+            public Bone PrimaryBone;
+            public Bone[] IneractionBones;
+            public double ColorMapMaxDistance;
+            public double[] ContourDistances;
+            public System.Drawing.Color[] ContourColors;
             public int PositionIndex;
-            public int BoneIndex;
         }
 
-        public void addToColorMapQueue(int currentPositionIndex, bool addAll, bool addCurrent)
+        public void ProcessMasterQueue(Queue<Queue<DistanceMaps.DistanceCalculationJob>> masterQueue)
         {
-            if (addAll)
-            {
-                for (int i = 0; i < _transformMatrices.Length + 1; i++)
-                    addToColorMapQueue(i);
-            }
-            else if (addCurrent)
-                addToColorMapQueue(currentPositionIndex);
-        }
-        private void addToColorMapQueue(int[] positionIndexs)
-        {
-            foreach (int posIndex in positionIndexs)
-                addToColorMapQueue(posIndex);
-        }
-        private void addToColorMapQueue(int positionIndex)
-        {
-            for (int i = 0; i < Wrist.NumBones; i++)
-                addToColorMapQueue(positionIndex, i);
-        }
-        private void addToColorMapQueue(int positionIndex, int boneIndex)
-        {
-            //int processors = System.Environment.ProcessorCount;
-            BonePositionInfo info = new BonePositionInfo();
-            info.PositionIndex = positionIndex;
-            info.BoneIndex = boneIndex;
-
-            _workQueueColorMaps.Enqueue(info);
-        }
-
-        public void addToContourQueue(int currentPositionIndex, bool addAll, bool addCurrent)
-        {
-            if (addAll)
-            {
-                for (int i = 0; i < _transformMatrices.Length + 1; i++)
-                    addToContourQueue(i);
-            }
-            else if (addCurrent)
-                addToContourQueue(currentPositionIndex);
-        }
-        private void addToContourQueue(int[] positionIndexs)
-        {
-            foreach (int posIndex in positionIndexs)
-                addToContourQueue(posIndex);
-        }
-        private void addToContourQueue(int positionIndex)
-        {
-            for (int i = 0; i < Wrist.NumBones; i++)
-                addToContourQueue(positionIndex, i);
-        }
-        private void addToContourQueue(int positionIndex, int boneIndex)
-        {
-            BonePositionInfo info = new BonePositionInfo();
-            info.PositionIndex = positionIndex;
-            info.BoneIndex = boneIndex;
-
-            _workQueueContours.Enqueue(info);
-        }
-
-        public void processAllPendingQueues()
-        {
-            int totalNumberJobs = _workQueueColorMaps.Count + _workQueueContours.Count;
+            if (masterQueue == null) return;
+            _masterQueue = masterQueue;
+            int totalNumberJobs = 0;
+            Queue<Queue<DistanceMaps.DistanceCalculationJob>>.Enumerator e = masterQueue.GetEnumerator();
+            while (e.MoveNext())
+                totalNumberJobs += e.Current.Count;
 
             //check if there is actually work to do
             if (totalNumberJobs == 0)
@@ -939,39 +571,31 @@ namespace libWrist
 
         void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            //load in the distance fields
-            readInDistanceFieldsIfNotLoaded();
+            //assume that we have at least one
+            FullWrist fullWrist = _masterQueue.Peek().Peek().FullWrist;
+            fullWrist.ReadInDistanceFields();
 
-            //first process the ColorMap Queue
-            int numThreads = Math.Min(System.Environment.ProcessorCount, _workQueueColorMaps.Count);
-
-            //start all of the worker threads
-            _workerThreads = new Thread[numThreads];
-            for (int i = 0; i < numThreads; i++)
+            //Loop through each queue to run
+            Queue<Queue<DistanceMaps.DistanceCalculationJob>>.Enumerator enumerator = _masterQueue.GetEnumerator();
+            while (enumerator.MoveNext())
             {
-                _workerThreads[i] = new Thread(workThreadWork);
-                _workerThreads[i].Start(_workQueueColorMaps);
+                Queue<DistanceMaps.DistanceCalculationJob> currentQueue = enumerator.Current;
+
+                int numThreads = Math.Min(System.Environment.ProcessorCount, currentQueue.Count);
+                //numThreads = 1;
+
+                //start all of the worker threads
+                _workerThreads = new Thread[numThreads];
+                for (int i = 0; i < numThreads; i++)
+                {
+                    _workerThreads[i] = new Thread(workThreadWork);
+                    _workerThreads[i].Start(currentQueue);
+                }
+                //wait for worker threads to finish
+                foreach (Thread curThread in _workerThreads)
+                    curThread.Join();
+
             }
-            //wait for worker threads to finish
-            foreach (Thread curThread in _workerThreads)
-                curThread.Join();
-
-
-            //okay, now lets run the Contour queue
-            numThreads = Math.Min(System.Environment.ProcessorCount, _workQueueContours.Count);
-
-            //start all of the worker threads
-            _workerThreads = new Thread[numThreads];
-            for (int i = 0; i < numThreads; i++)
-            {
-                _workerThreads[i] = new Thread(workThreadWork);
-                _workerThreads[i].Start(_workQueueContours);
-            }
-            //wait for worker threads to finish
-            foreach (Thread curThread in _workerThreads)
-                curThread.Join();
-
-            //hmm....we should be done now... so we return
         }
 
         void _bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -996,8 +620,8 @@ namespace libWrist
 
         private void workThreadWork(object queue)
         {
-            Queue workQueue = (Queue)queue;
-            BonePositionInfo currentJob;
+            Queue<DistanceMaps.DistanceCalculationJob> workQueue = (Queue<DistanceMaps.DistanceCalculationJob>)queue;
+            DistanceCalculationJob currentJob;
             bool done = false;
             while (!done)
             {
@@ -1005,7 +629,7 @@ namespace libWrist
                 lock (workQueue)
                 {
                     if (workQueue.Count > 0)
-                        currentJob = (BonePositionInfo)workQueue.Dequeue();
+                        currentJob = (DistanceCalculationJob)workQueue.Dequeue();
                     else
                     {
                         done = true;
@@ -1013,14 +637,19 @@ namespace libWrist
                     }
                 }
 
-                //now lets process this job
-                if (workQueue == _workQueueColorMaps)
+                switch (currentJob.JobType)
                 {
-                    getColorMapSingleBoneSinglePosition(currentJob.BoneIndex, currentJob.PositionIndex); //get and discard is fine
-                }
-                else if (workQueue == _workQueueContours)
-                {
-                    getContourSingleBoneSinglePosition(currentJob.BoneIndex, currentJob.PositionIndex); //get and discard is fine
+                    case DistanceCalculationType.VetrexDistances:
+                        currentJob.PrimaryBone.CalculateAndSaveDistanceMapForPosition(currentJob.PositionIndex, currentJob.IneractionBones);
+                        break;
+                    case DistanceCalculationType.ColorMap:
+                        currentJob.PrimaryBone.CalculateAndSaveColorDistanceMapForPosition(currentJob.PositionIndex, currentJob.ColorMapMaxDistance);
+                        break;
+                    case DistanceCalculationType.Contours:
+                        currentJob.PrimaryBone.CalculateAndSaveContourForPosition(currentJob.PositionIndex, currentJob.ContourDistances, currentJob.ContourColors);
+                        break;
+                    default:
+                        break;  
                 }
 
                 //done with the job, lets report in our progress

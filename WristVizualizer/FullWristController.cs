@@ -53,6 +53,7 @@ namespace WristVizualizer
             setupControl();
             setupControlEventListeners();
             _root = new Separator();
+            _distMap = new DistanceMaps();
             
 
             //defaults
@@ -179,50 +180,32 @@ namespace WristVizualizer
             DistanceAndContourDialog dialog = new DistanceAndContourDialog(_distMap.ContourDistances);
             dialog.ColorMapMaxDistance = _distMap.MaxColoredDistance;
             dialog.setContourColors(_distMap.ContourColors);
-            if (_hideMaps)
-                dialog.CalculateColorMap = DistanceAndContourDialog.CalculationTypes.None;
-            else if (_distMap.hasDistanceColorMapsForPosition(_currentPositionIndex))
-                dialog.CalculateColorMap = DistanceAndContourDialog.CalculationTypes.CachedOnly;
-            else 
-                dialog.CalculateColorMap = DistanceAndContourDialog.CalculationTypes.Current;
-
-            if (_hideContours)
-                dialog.CalculateContours = DistanceAndContourDialog.CalculationTypes.None;
-            else if (_distMap.hasContourForBonePosition(0, _currentPositionIndex)) //check the radius only
-                dialog.CalculateContours = DistanceAndContourDialog.CalculationTypes.CachedOnly;
-            else
-                dialog.CalculateContours = DistanceAndContourDialog.CalculationTypes.Current;
+            dialog.CalculateColorMap = !_hideMaps;
+            dialog.CalculateContours = !_hideContours;
 
             //show the dialog window
             DialogResult r = dialog.ShowDialog();
             if (r != DialogResult.OK)
                 return;
 
-            calculateDistanceMapsHelper(dialog);
-        }
+            double colorDistance = -1;
+            double[] contourDistances = new double[0];
+            if (dialog.CalculateColorMap)
+                colorDistance = dialog.ColorMapMaxDistance;
+            if (dialog.CalculateContours)
+                contourDistances = dialog.getContourDistancesToCalculate();
 
-        private void calculateDistanceMapsHelper(DistanceAndContourDialog dialog)
-        {
-            //set hidden variables
-            _hideMaps = dialog.HideColorMap;
-            _hideContours = dialog.HideContour;
+            //get the queue to calculate stuff
+            Queue<Queue<DistanceMaps.DistanceCalculationJob>> q = _fullWrist.CreateDistanceMapJobQueue(colorDistance, contourDistances, dialog.getContourColorsToCalculate());
+            //go compute this!
+            _distMap.ProcessMasterQueue(q);
 
-            //apply new values if we need to
-            if (dialog.RequiresCalculatingColorMaps)
-                _distMap.setMaxColoredDistance(dialog.ColorMapMaxDistance);
-            if (dialog.RequiresCalculatingContours)
-                _distMap.setContourDistances(dialog.getContourDistancesToCalculate(), dialog.getContourColorsToCalculate());
-
-            //setup background worker... to process loading....
-            bool readAllColors = dialog.CalculateAllColorMaps;
-            bool readAllContours = dialog.CalculateAllContours;
-
-            _distMap.addToColorMapQueue(_currentPositionIndex, readAllColors, dialog.CalculateCurrentColorMap);
-            _distMap.addToContourQueue(_currentPositionIndex, readAllContours, dialog.CalculateCurrentContour);
-            _distMap.processAllPendingQueues();
-            
-            //they have all been calculated, lets apply them so they are visisble.
-            applyDistanceMapsIfRequired();
+            //update on screen now to current settings
+            _hideContours = !dialog.CalculateContours;
+            _hideMaps = !dialog.CalculateColorMap;
+            _fullWrist.ShowColorMap = dialog.CalculateColorMap;
+            _fullWrist.ShowContours = dialog.CalculateContours;
+            _fullWrist.UpdateColorsAndContoursForCurrentPosition();
         }
 
 

@@ -25,6 +25,9 @@ namespace libWrist
         private int[][] _computedColorMaps;
         private Contour[] _computedContours;
 
+        private float[,] _cachedVertices;
+        private int[,] _cachedFaceSetIndices;
+
 
         //Coin3D objects
         private Separator _bone;
@@ -311,6 +314,11 @@ namespace libWrist
                 RemoveContour();
         }
 
+        public bool HasContourForPosition(int positionIndex)
+        {
+            return (_computedContours[positionIndex] != null);
+        }
+
         public void RemoveColorMap()
         {
             if (_coloredBone != null)
@@ -331,6 +339,16 @@ namespace libWrist
                 RemoveColorMap();
         }
 
+        public bool HasColorMapForPosition(int positionIndex)
+        {
+            return (_computedColorMaps[positionIndex] != null);
+        }
+
+        public bool HasVertexDistancesForPosition(int positionIndex)
+        {
+            return (_computedDistances[positionIndex] != null);
+        }
+
         public void CalculateAndSaveDistanceMapForPosition(int positionIndex, Bone[] testBones)
         {
             //quick check that we can do this.
@@ -345,15 +363,23 @@ namespace libWrist
                     transforms[i] = CalculateRelativeMotionFromNeutral(positionIndex, testBones[i]);
             }
 
-            _computedDistances[positionIndex] = DistanceMaps.createDistanceMap(this, testBones, transforms);
+            double[] distances = DistanceMaps.createDistanceMap(this, testBones, transforms);
+            lock (_computedDistances)
+            {
+                _computedDistances[positionIndex] = distances;
+            }
         }
 
-        public void CalculateAndSaveColorDistanceMapForPosition(int positionIndex)
+        public void CalculateAndSaveColorDistanceMapForPosition(int positionIndex, double maxColorDistance)
         {
             if (_computedDistances[positionIndex] == null)
                 throw new WristException("Raw distances (_computedDistancs) must be pre-computed before calculating ColorDistanceMap");
 
-            _computedColorMaps[positionIndex] = DistanceMaps.createColormap(_computedDistances[positionIndex]);
+            int[] colorMap = DistanceMaps.createColormap(_computedDistances[positionIndex], maxColorDistance);
+            lock (_computedColorMaps)
+            {
+                _computedColorMaps[positionIndex] = colorMap;
+            }
         }
 
         public void CalculateAndSaveContourForPosition(int positionIndex, double[] cDistances, System.Drawing.Color[] colors)
@@ -361,7 +387,23 @@ namespace libWrist
             if (_computedDistances[positionIndex] == null)
                 throw new WristException("Raw distances (_computedDistancs) must be pre-computed before calculating ColorDistanceMap");
 
-            _computedContours[positionIndex] = DistanceMaps.createContourSingleBoneSinglePosition(this, _computedDistances[positionIndex], cDistances, colors);
+            Contour contour = DistanceMaps.createContourSingleBoneSinglePosition(this, _computedDistances[positionIndex], cDistances, colors);
+            lock (_computedContours)
+            {
+                _computedContours[positionIndex] = contour;
+            }
+        }
+
+        public void ClearCachedContours()
+        {
+            for (int i = 0; i < _computedContours.Length; i++)
+                _computedContours[i] = null;
+        }
+
+        public void ClearCachedColorMaps()
+        {
+            for (int i = 0; i < _computedColorMaps.Length; i++)
+                _computedColorMaps[i] = null;
         }
     }
 }

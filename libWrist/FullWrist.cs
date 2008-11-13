@@ -15,8 +15,14 @@ namespace libWrist
         private int _fixedBoneIndex;
         private int _currentPositionIndex;
 
-        private bool _showContourIfCalculated;
-        private bool _showColorMapIfCalculated;
+        private bool _showContours;
+        private bool _showColorMap;
+
+        private double _colorMapDistance;
+        private double[] _contourDistances;
+        private System.Drawing.Color[] _contourColors;
+
+        private int _numberPositions;
 
         public FullWrist(Wrist wrist)
         {
@@ -24,8 +30,9 @@ namespace libWrist
             _fixedBoneIndex = (int)Wrist.BIndex.RAD;
             _currentPositionIndex = 0;
             _bones = new Bone[Wrist.NumBones];
-            _showColorMapIfCalculated = true;
-            _showContourIfCalculated = true;
+            _showColorMap = true;
+            _showContours = true;
+            _contourDistances = new double[0];
         }
 
         public Separator Root
@@ -38,16 +45,16 @@ namespace libWrist
             get { return _bones; }
         }
 
-        public bool ShowContourIfCalculated
+        public bool ShowContours
         {
-            get { return _showContourIfCalculated; }
-            set { _showContourIfCalculated = value; }
+            get { return _showContours; }
+            set { _showContours = value; }
         }
 
-        public bool ShowColorMapIfCalculated
+        public bool ShowColorMap
         {
-            get { return _showColorMapIfCalculated; }
-            set { _showColorMapIfCalculated = value; }
+            get { return _showColorMap; }
+            set { _showColorMap = value; }
         }
 
         public void LoadFullWrist()
@@ -79,6 +86,7 @@ namespace libWrist
         private void LoadKinematicTransforms()
         {
             int numPos = _wrist.motionFiles.Length;
+            _numberPositions = numPos + 1; //add 1 for the neutral position
             for (int i = 0; i < numPos; i++)
             {
                 TransformMatrix[] transforms = DatParser.parseMotionFileToTransformMatrix(_wrist.motionFiles[i]);
@@ -127,16 +135,52 @@ namespace libWrist
                 if (!_bones[i].IsValidBone) continue; //skip missing bones 
 
                 _bones[i].MoveToPosition(_currentPositionIndex, _bones[_fixedBoneIndex]);
-
-                if (_showColorMapIfCalculated)
-                    _bones[i].SetColorMapForPositionIfCalculated(_currentPositionIndex);
-                if (_showContourIfCalculated)
-                    _bones[i].SetContourForPositionIfCalculated(_currentPositionIndex);
             }
 
+            UpdateColorsAndContoursForCurrentPosition();
             HideBonesWithNoKinematics(); //yes?
         }
-        
+
+        public void UpdateColorsAndContoursForCurrentPosition()
+        {
+            if (_showColorMap)
+                ShowColorMapIfCalculated();
+            else
+                HideColorMap();
+
+            if (_showContours)
+                ShowContoursIfCalculated();
+            else
+                HideContours();
+        }
+
+        public void ShowContoursIfCalculated()
+        {
+            _showContours = true;
+            for (int i = 0; i < Wrist.NumBones; i++)
+                _bones[i].SetContourForPositionIfCalculated(_currentPositionIndex);
+        }
+
+        public void HideContours()
+        {
+            _showContours = false;
+            for (int i = 0; i < Wrist.NumBones; i++)
+                _bones[i].RemoveContour();
+        }
+
+        public void ShowColorMapIfCalculated()
+        {
+            _showColorMap = true;
+            for (int i = 0; i < Wrist.NumBones; i++)
+                _bones[i].SetColorMapForPositionIfCalculated(_currentPositionIndex);
+        }
+
+        public void HideColorMap()
+        {
+            _showColorMap = false;
+            for (int i = 0; i < Wrist.NumBones; i++)
+                _bones[i].RemoveColorMap();
+        }
 
         public void HideBonesWithNoKinematics()
         {
@@ -150,6 +194,126 @@ namespace libWrist
                 if (!_bones[i].HasKinematicInformationForPosition(positionIndex))
                     _bones[i].HideBone();
             }
+        }
+
+        public Queue<Queue<DistanceMaps.DistanceCalculationJob>> CreateDistanceMapJobQueue(double colorMapDistance, double[] cDistances, System.Drawing.Color[] colors)
+        {
+            //first check if we are doing anything
+            if (colorMapDistance <= 0 && cDistances.Length == 0)
+                return null;
+
+            Queue<Queue<DistanceMaps.DistanceCalculationJob>> masterQueue = new Queue<Queue<DistanceMaps.DistanceCalculationJob>>(2);
+            
+            //okay, doing something, so lets make certain that we have computed the distances at each vertex
+            Queue<DistanceMaps.DistanceCalculationJob> q = CreateVertexDistanceQueue();
+            if (q.Count > 0)
+                masterQueue.Enqueue(q);
+
+            if (cDistances.Length > 0 && ContourDistancesDiffer(cDistances))
+            {
+                q = CreateContourQueue(cDistances, colors);
+                masterQueue.Enqueue(q);
+                _contourDistances = cDistances;
+                _contourColors = colors;
+            }
+
+            if (colorMapDistance > 0 && colorMapDistance != _colorMapDistance) //check that we have this job, and its different
+            {
+                q = CreateColorMapQueue(colorMapDistance);
+                masterQueue.Enqueue(q);
+                _colorMapDistance = colorMapDistance;
+            }
+
+            return masterQueue;
+        }
+
+        private bool ContourDistancesDiffer(double[] cDistances)
+        {
+            if (_contourDistances.Length != cDistances.Length) return true;
+            for (int i = 0; i < _contourDistances.Length; i++)            
+                if (_contourDistances[i] != cDistances[i]) return true;
+
+            return false;
+        }
+
+        private Queue<DistanceMaps.DistanceCalculationJob> CreateVertexDistanceQueue()
+        {
+            Queue<DistanceMaps.DistanceCalculationJob> q = new Queue<DistanceMaps.DistanceCalculationJob>();
+            //need to create this for each position and every bone...
+            for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
+            {
+                Bone referenceBone = _bones[boneIndex];
+                Bone[] interactionBones = GetBonesThatInteractWithBone(boneIndex);
+                for (int i = 0; i < _numberPositions; i++)
+                {
+                    //check that we need to do this
+                    if (referenceBone.HasContourForPosition(i)) continue;
+
+                    DistanceMaps.DistanceCalculationJob job = new DistanceMaps.DistanceCalculationJob();
+                    job.JobType = DistanceMaps.DistanceCalculationType.VetrexDistances;
+                    job.FullWrist = this;
+                    job.PrimaryBone = referenceBone;
+                    job.IneractionBones = interactionBones;
+                    job.PositionIndex = i;
+                    q.Enqueue(job);
+                }
+            }
+            return q;
+        }
+
+        private Queue<DistanceMaps.DistanceCalculationJob> CreateColorMapQueue(double colorMapDistance)
+        {
+            Queue<DistanceMaps.DistanceCalculationJob> q = new Queue<DistanceMaps.DistanceCalculationJob>();
+            //need to create this for each position and every bone...
+            for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
+            {
+                Bone referenceBone = _bones[boneIndex];
+                for (int i = 0; i < _numberPositions; i++)
+                {
+                    DistanceMaps.DistanceCalculationJob job = new DistanceMaps.DistanceCalculationJob();
+                    job.JobType = DistanceMaps.DistanceCalculationType.ColorMap;
+                    job.FullWrist = this;
+                    job.PrimaryBone = referenceBone;
+                    job.PositionIndex = i;
+                    job.ColorMapMaxDistance = colorMapDistance;
+                    q.Enqueue(job);
+                }
+            }
+            return q;
+        }
+
+        private Queue<DistanceMaps.DistanceCalculationJob> CreateContourQueue(double[] cDistances, System.Drawing.Color[] colors)
+        {
+            Queue<DistanceMaps.DistanceCalculationJob> q = new Queue<DistanceMaps.DistanceCalculationJob>();
+            //need to create this for each position and every bone...
+            for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
+            {
+                Bone referenceBone = _bones[boneIndex];
+                for (int i = 0; i < _numberPositions; i++)
+                {
+                    DistanceMaps.DistanceCalculationJob job = new DistanceMaps.DistanceCalculationJob();
+                    job.JobType = DistanceMaps.DistanceCalculationType.Contours;
+                    job.FullWrist = this;
+                    job.PrimaryBone = referenceBone;
+                    job.PositionIndex = i;
+                    job.ContourDistances = cDistances;
+                    job.ContourColors = colors;
+                    q.Enqueue(job);
+                }
+            }
+            return q;
+        }
+
+        private Bone[] GetBonesThatInteractWithBone(Bone testBone)
+        {
+            return GetBonesThatInteractWithBone(testBone.BoneIndex);
+        }
+        private Bone[] GetBonesThatInteractWithBone(int testBoneIndex)
+        {
+            Bone[] interactionBones = new Bone[Wrist.BoneInteractionIndex[testBoneIndex].Length];
+            for (int i = 0; i < interactionBones.Length; i++)
+                interactionBones[i] = _bones[Wrist.BoneInteractionIndex[testBoneIndex][i]];
+            return interactionBones;
         }
 
         public void TestLoadDistanceMaps()
@@ -169,7 +333,7 @@ namespace libWrist
 
                 for (int i = 0; i < Wrist.NumBones; i++)
                 {
-                    _bones[i].CalculateAndSaveColorDistanceMapForPosition(pos);
+                    _bones[i].CalculateAndSaveColorDistanceMapForPosition(pos, 3.0);
                     _bones[i].CalculateAndSaveContourForPosition(pos, new double[] { 1.0, 1.5 }, new System.Drawing.Color[] { System.Drawing.Color.White, System.Drawing.Color.White });
                 }
             }
