@@ -42,6 +42,7 @@ namespace libWrist
             _distanceFieldFilename = _wrist.DistanceFieldPaths[boneIndex];
             int numSeries = _wrist.motionFiles.Length + 1; //add 1 for neutral
             _transformMatrices = new TransformMatrix[numSeries];
+            _transformMatrices[0] = new TransformMatrix(); //set the neutral position to the identity matrix :)
             _computedDistances = new double[numSeries][];
             _computedColorMaps = new int[numSeries][];
             _computedContours = new Contour[numSeries];
@@ -90,6 +91,11 @@ namespace libWrist
             {
                 return _inertiaMatrix != null && _inertiaMatrix.Determinant() != 0;
             }
+        }
+
+        public TransformMatrix[] TransformMatrices
+        {
+            get { return _transformMatrices; }
         }
 
         public string IvFilename

@@ -25,71 +25,52 @@ namespace WristVizualizer
 
         private int _referenceBoneIndex;
 
-        private double[][] _positions;
+        private double[][] _positionsFE;
+        private double[] _positionsPS;
 
         private Bitmap _baseImage;
 
-        public PositionGraph(TransformMatrix[] Inertias, TransformMatrix[][] transforms, int referenceBoneIndex)
-            : this(Inertias, transforms, referenceBoneIndex, true)
-        { }
-        public PositionGraph(TransformMatrix[] Inertias, TransformMatrix[][] transforms, int referenceBoneIndex, bool showPS)
+        public PositionGraph()
         {
             InitializeComponent();
-
-            _referenceBoneIndex = referenceBoneIndex;
-            _showPS = showPS;
-            if (!_showPS)
-                HidePS(); //make sure this is cleared
 
             _FE_conversion = (double)pictureBoxGraph.Height / (MAX_FE * 2);
             _RU_conversion = (double)pictureBoxGraph.Width / (MAX_RU * 2);
 
-            _positions = convertToPositions(Inertias, transforms, referenceBoneIndex);
-            createGraph();
-            setCurrentVisisblePosture(0);
+            _positionsFE = new double[0][];
+
+            createGraph(); //create an empty graph
         }
 
-        private double[][] convertToPositions(TransformMatrix[] Inertias, TransformMatrix[][] Transforms, int referenceBoneIndex)
+        public void SetPositions(PostureCalculator.Posture[] positionsFE, PostureCalculator.PronationSupination[] positionsPS)
         {
-            double[][] postures = new double[Transforms.Length + 1][]; //+1 for the neutral posture
-            //setup neutral
-            postures[0] = new double[3];
-            PostureCalculator.Posture p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[referenceBoneIndex]);
-            postures[0][0] = p.FE_Raw;
-            postures[0][1] = p.RU_Raw;
-            if (referenceBoneIndex == 8) //check for capitate, special offset used
-            {
-                postures[0][0] = p.FE;
-                postures[0][1] = p.RU;
-            }
-            if (_showPS)
-                postures[0][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1]).PronationAngle;
+            _positionsFE = new double[positionsFE.Length][];
+            for (int i = 0; i < positionsFE.Length; i++)            
+                _positionsFE[i] = new double[] { positionsFE[i].FE, positionsFE[i].RU };
+            createGraph();            
 
-            for (int i = 0; i < Transforms.Length; i++)
+            //check if we have PS information
+            if (positionsPS == null)
             {
-                postures[i + 1] = new double[3];
-                p = PostureCalculator.CalculatePosture(Inertias[0], Inertias[referenceBoneIndex], Transforms[i][0], Transforms[i][referenceBoneIndex]);
-                if (referenceBoneIndex == 8) //check for capitate, special offset used
-                {
-                    postures[i + 1][0] = p.FE;
-                    postures[i + 1][1] = p.RU;
-                }
-                else
-                {
-                    postures[i + 1][0] = p.FE_Raw;
-                    postures[i + 1][1] = p.RU_Raw;
-                }
-
-                if (_showPS)
-                    postures[i + 1][2] = PostureCalculator.CalculatePronationSupination(Inertias[0], Inertias[1], Transforms[i][0], Transforms[i][1]).PronationAngle;
+                HidePS();
+                return;
             }
-            return postures;
+            
+            ShowPS();
+            _positionsPS = new double[positionsPS.Length];
+            for (int i = 0; i < positionsPS.Length; i++)
+                _positionsPS[i] = positionsPS[i].PronationAngle;
         }
 
         public void HidePS()
         {
             _showPS = false;
             textBoxPS.Clear();
+        }
+
+        public void ShowPS()
+        {
+            _showPS = true;
         }
 
         private void createGraph()
@@ -104,7 +85,7 @@ namespace WristVizualizer
             g.DrawLine(black, _baseImage.Width / 2, 0, _baseImage.Width / 2, _baseImage.Height - 1); //vertical line
 
             //draw test point
-            foreach (double[] point in _positions)
+            foreach (double[] point in _positionsFE)
                 drawSinglePoint(g, point);
 
             pictureBoxGraph.Image = _baseImage;
@@ -118,10 +99,10 @@ namespace WristVizualizer
 
         private void showTextPostionForPosture(int postureIndex)
         {
-            textBoxFE.Text = _positions[postureIndex][0].ToString("0.00");
-            textBoxRU.Text = _positions[postureIndex][1].ToString("0.00");
+            textBoxFE.Text = _positionsFE[postureIndex][0].ToString("0.00");
+            textBoxRU.Text = _positionsFE[postureIndex][1].ToString("0.00");
             if (_showPS)
-                textBoxPS.Text = _positions[postureIndex][2].ToString("0.00");
+                textBoxPS.Text = _positionsPS[postureIndex].ToString("0.00");
         }
 
         private void drawSinglePoint(Graphics g, double[] point)
@@ -153,7 +134,7 @@ namespace WristVizualizer
         {            
             Bitmap highlightedImage = (Bitmap)_baseImage.Clone();
             Graphics g = Graphics.FromImage(highlightedImage);
-            drawCircleAroundPoint(g, _positions[index]);
+            drawCircleAroundPoint(g, _positionsFE[index]);
             pictureBoxGraph.Image = highlightedImage;            
         }
 
@@ -180,9 +161,9 @@ namespace WristVizualizer
             //return the index to the closest
             int closestIndex = 0;
             double minDist = Double.MaxValue;
-            for (int i = 0; i < _positions.Length; i++)
+            for (int i = 0; i < _positionsFE.Length; i++)
             {
-                double dist = Math.Sqrt((_positions[i][0] - FE) * (_positions[i][0] - FE) + (_positions[i][1] - RU) * (_positions[i][1] - RU));
+                double dist = Math.Sqrt((_positionsFE[i][0] - FE) * (_positionsFE[i][0] - FE) + (_positionsFE[i][1] - RU) * (_positionsFE[i][1] - RU));
                 if (dist < minDist)
                 {
                     minDist = dist;

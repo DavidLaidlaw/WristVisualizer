@@ -130,32 +130,40 @@ namespace WristVizualizer
 
         public void changeWristPositionReferenceBoneIndex(int referenceBoneIndex)
         {
-            //first lets remove any existing position graph
-            removeExistingPositionGraph();
-
             //now lets setup for the new reference bone
             setupPositionGraphIfPossible(referenceBoneIndex);
         }
 
-        private void removeExistingPositionGraph()
-        {
-            if (_positionGraph == null) return;
-            _positionGraph.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
-            _layoutControl.removeControl(_positionGraph);
-            _positionGraph = null;
-        }
-
         private void setupPositionGraphIfPossible(int referenceBoneIndex)
         {
-            if (!hasPositionInformation(referenceBoneIndex))
+            //first lets calculate the new data
+            Bone acsBone = _fullWrist.Bones[(int)Wrist.BIndex.RAD];
+            Bone refBone = _fullWrist.Bones[referenceBoneIndex];
+            Bone ulnBone = _fullWrist.Bones[(int)Wrist.BIndex.ULN];
+
+            PostureCalculator.Posture[] postureFE = PostureCalculator.CalculatePosturesFE(acsBone, refBone);
+            if (postureFE == null)
+            {
+                //if we could not calculate it, then we need to remove an existing graph
+                if (_positionGraph == null) return;
+                _positionGraph.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
+                _layoutControl.removeControl(_positionGraph);
+                _positionGraph = null;
                 return;
+            }
 
-            bool showPS = hasPronationSupinationInformation();
-            //_positionGraph = new PositionGraph(_inertiaMatrices, _transformMatrices, referenceBoneIndex, showPS);
+            //so we have data, lets first make sure that the graph exists
+            if (_positionGraph == null)
+            {
+                _positionGraph = new PositionGraph();
+                _layoutControl.addControl(_positionGraph);
+                _positionGraph.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
+            }
 
-            //_positionGraph.setCurrentVisisblePosture(_currentPositionIndex); //make sure the correct position is highlighted
-            //_layoutControl.addControl(_positionGraph);
-            //_positionGraph.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_positionGraph_SelectedSeriesChanged);
+            //now lets push the new data up
+            PostureCalculator.PronationSupination[] posturesPS = PostureCalculator.CalculatePosturesPS(acsBone, ulnBone);
+            _positionGraph.SetPositions(postureFE, posturesPS);
+            _positionGraph.setCurrentVisisblePosture(_currentPositionIndex);
         }
 
         void _positionGraph_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)

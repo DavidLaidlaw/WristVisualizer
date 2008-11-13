@@ -129,5 +129,49 @@ namespace libWrist
             result.PronationAngle = pronationAngle;
             return result;
         }
+
+        public static Posture[] CalculatePosturesFE(Bone CoordinateSystemBone, Bone PositionDefiningBone)
+        {
+            //First check if we have enough
+            if (!CoordinateSystemBone.IsValidBone || !CoordinateSystemBone.HasInertia ||
+                !PositionDefiningBone.IsValidBone || !PositionDefiningBone.HasInertia)
+                return null;
+
+            //Lets create an array for the number of postures...
+            int numPositions = CoordinateSystemBone.TransformMatrices.Length;
+            Posture[] postures = new Posture[numPositions];
+            for (int i = 0; i < numPositions; i++)
+            {
+                postures[i] = CalculatePosture(CoordinateSystemBone.InertiaMatrix, PositionDefiningBone.InertiaMatrix,
+                    CoordinateSystemBone.TransformMatrices[i], PositionDefiningBone.TransformMatrices[i]);
+
+                //need to make certain that only the capitate is corrected
+                if (PositionDefiningBone.BoneIndex != (int)Wrist.BIndex.CAP)
+                {
+                    postures[i].FE = postures[i].FE_Raw;
+                    postures[i].RU = postures[i].RU_Raw;
+                }
+            }
+            return postures;
+        }
+
+        public static PronationSupination[] CalculatePosturesPS(Bone radius, Bone ulna)
+        {
+            //First check if we have enough
+            if (!radius.IsValidBone || !radius.HasInertia ||
+                !ulna.IsValidBone || !ulna.HasInertia)
+                return null;
+
+            //Lets create an array for the number of postures...
+            int numPositions = radius.TransformMatrices.Length;
+            PronationSupination[] postures = new PronationSupination[numPositions];
+
+            for (int i = 0; i < numPositions; i++)
+            {
+                postures[i] = CalculatePronationSupination(radius.InertiaMatrix, ulna.InertiaMatrix,
+                    radius.TransformMatrices[i], ulna.TransformMatrices[i]);
+            }
+            return postures;
+        }
     }
 }
