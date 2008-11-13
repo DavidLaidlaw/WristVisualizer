@@ -307,6 +307,8 @@ namespace libWrist
         {
             if (_computedContours[positionIndex] != null)
                 SetContour(_computedContours[positionIndex]);
+            else
+                RemoveContour();
         }
 
         public void RemoveColorMap()
@@ -325,6 +327,8 @@ namespace libWrist
         {
             if (_computedColorMaps[positionIndex] != null)
                 SetColorMap(_computedColorMaps[positionIndex]);
+            else
+                RemoveColorMap();
         }
 
         public void CalculateAndSaveDistanceMapForPosition(int positionIndex, Bone[] testBones)

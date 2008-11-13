@@ -410,7 +410,7 @@ namespace libWrist
                     double z = pts[i, 2];
 
                     //check if we need to move for non neutral position
-                    if (isNeutralPosition)
+                    if (!isNeutralPosition)
                     {
                         //lets move the bone getting colored, into the space of the other bone...
                         double[] p0 = new double[] { x, y, z };

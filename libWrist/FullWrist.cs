@@ -151,5 +151,30 @@ namespace libWrist
                     _bones[i].HideBone();
             }
         }
+
+        public void TestLoadDistanceMaps()
+        {
+            System.Diagnostics.Stopwatch sw = System.Diagnostics.Stopwatch.StartNew();
+            ReadInDistanceFields();
+
+            for (int pos = 0; pos < 3; pos++)
+            {
+                for (int i = 0; i < Wrist.NumBones; i++)
+                {
+                    Bone[] testBones = new Bone[Wrist.BoneInteractionIndex[i].Length];
+                    for (int j = 0; j < testBones.Length; j++)
+                        testBones[j] = _bones[Wrist.BoneInteractionIndex[i][j]];
+                    _bones[i].CalculateAndSaveDistanceMapForPosition(pos, testBones);
+                }
+
+                for (int i = 0; i < Wrist.NumBones; i++)
+                {
+                    _bones[i].CalculateAndSaveColorDistanceMapForPosition(pos);
+                    _bones[i].CalculateAndSaveContourForPosition(pos, new double[] { 1.0, 1.5 }, new System.Drawing.Color[] { System.Drawing.Color.White, System.Drawing.Color.White });
+                }
+            }
+            sw.Stop();
+            Console.WriteLine("Time: {0}",sw.Elapsed.ToString());
+        }
     }
 }
