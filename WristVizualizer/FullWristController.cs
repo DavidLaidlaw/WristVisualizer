@@ -17,9 +17,7 @@ namespace WristVizualizer
         private FullWrist _fullWrist;
         
         private int _currentPositionIndex;
-        private int _lastPositionIndex;
         private int _fixedBoneIndex;
-        private int _lastFixedBoneIndex;
 
         private ExaminerViewer _viewer;
         private Separator _root;
@@ -317,7 +315,7 @@ namespace WristVizualizer
         #endregion
 
 
-        private void animateChangeInPosition()
+        private void animateChangeInPosition(int lastPositionIndex, int currentPositionIndex, int lastFixedBoneIndex, int currentFixedBoneIndex)
         {
             //setup animations....
             if (_shortAnimationController != null)
@@ -328,32 +326,26 @@ namespace WristVizualizer
 
             _fullWrist.HideColorMapAndContoursTemporarily();
 
-            _shortAnimationController.SetupAnimationForLinearInterpolation(_fullWrist, _lastPositionIndex, _currentPositionIndex, _lastFixedBoneIndex, _lastFixedBoneIndex, numFrames);
+            _shortAnimationController.SetupAnimationForLinearInterpolation(_fullWrist, lastPositionIndex, currentPositionIndex, lastFixedBoneIndex, currentFixedBoneIndex, numFrames);
             _shortAnimationController.Start();
-
-            //TODO: Add contours back in....
-            //TODO: add color information back in at the end....how?
         }
 
-        private void setTransformsForCurrentPositionAndFixedBone()
+        private void MoveToPosition(int positionIndex, int fixedBoneIndex)
         {
             _fullWrist.HideBonesWithNoKinematics(_currentPositionIndex);
 
             if (_animatePositionChanges)
             {
-                animateChangeInPosition();
+                animateChangeInPosition(_currentPositionIndex, positionIndex, _fixedBoneIndex, fixedBoneIndex);
             }
             else
             {
-                
-                
-                //first remove the old transforms, if they exist
-                _fullWrist.MoveToPositionAndFixedBone(_currentPositionIndex, _fixedBoneIndex);
+                _fullWrist.MoveToPositionAndFixedBone(positionIndex, fixedBoneIndex);
             }
 
             //now that we are done, lets save the last positions
-            _lastFixedBoneIndex = _fixedBoneIndex;
-            _lastPositionIndex = _currentPositionIndex;
+            _currentPositionIndex = positionIndex;
+            _fixedBoneIndex = fixedBoneIndex;
         }
 
         void _control_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
@@ -361,18 +353,15 @@ namespace WristVizualizer
             if (_currentPositionIndex == e.SelectedIndex)
                 return;
 
-            _currentPositionIndex = e.SelectedIndex;
             if (_positionGraph != null)
-                _positionGraph.setCurrentVisisblePosture(_currentPositionIndex);
+                _positionGraph.setCurrentVisisblePosture(e.SelectedIndex);
 
-            setTransformsForCurrentPositionAndFixedBone();
+            MoveToPosition(e.SelectedIndex, _fixedBoneIndex);
         }
 
         void _control_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
-            _fixedBoneIndex = e.BoneIndex;
-
-            setTransformsForCurrentPositionAndFixedBone();
+            MoveToPosition(_currentPositionIndex, e.BoneIndex);
         }
 
         void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
