@@ -9,6 +9,10 @@
 #include <Inventor/nodes/SoDrawStyle.h>
 #include <Inventor/nodes/SoShapeHints.h>
 
+#pragma warning(disable:4091)
+#include <msclr\lock.h>
+#pragma warning(default:4091)
+
 libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
 {
 	_node = new SoSeparator();
@@ -187,6 +191,8 @@ void libCoin3D::ColoredBone::removeContour()
 
 array<float,2>^ libCoin3D::ColoredBone::getVertices()
 {
+	msclr::lock l(this); //apply lock during this method, so that this method is threadsafe
+
 	if (_vertices==nullptr) {
 		int numPts = _vertexProperty->vertex.getNum();
 		_vertices = gcnew array<float,2>(numPts,3);
@@ -201,6 +207,8 @@ array<float,2>^ libCoin3D::ColoredBone::getVertices()
 
 array<int,2>^ libCoin3D::ColoredBone::getFaceSetIndices()
 {
+	msclr::lock l(this);
+
 	if (_faceSet==nullptr) {
 		int numTriangles = _indexedFaceSet->coordIndex.getNum();
 		numTriangles = numTriangles/4;
