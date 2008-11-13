@@ -17,106 +17,10 @@ namespace libWrist
         private BackgroundWorkerStatusForm _bgStatusForm;
         private BackgroundWorker _bgWorker;
 
-        private double[] _contourDistances;
-        private System.Drawing.Color[] _contourColors;
-        private double _maxColoredDistance;
-
         public DistanceMaps()
         {           
             
-        }
-
-        public double[] ContourDistances
-        {
-            get { return _contourDistances; }
-        }
-
-        public double MaxColoredDistance
-        {
-            get { return _maxColoredDistance; }
-        }
-
-        public System.Drawing.Color[] ContourColors
-        {
-            get { return _contourColors; }
-        }
-
-       
-        /*
-
-        /// <summary>
-        /// Calculates the distanceMaps for a given bone using the precalculated distance fields.
-        /// If a distance field is unavailable, it is assumed to be infinately far away...
-        /// </summary>
-        /// <param name="boneIndex"></param>
-        /// <param name="positionIndex"></param>
-        /// <returns></returns>
-        private double[] createDistanceMap(int boneIndex, int positionIndex)
-        {
-            readInDistanceFieldsIfNotLoaded();
-            CTmri[] mri = _distanceFields;
-            float[,] pts = _colorBones[boneIndex].getVertices();
-            int numVertices = pts.GetLength(0);
-
-            double[] distances = new double[numVertices];
-            int[] interaction = Wrist.BoneInteractionIndex[boneIndex]; //load  bone interactions
-
-            TransformMatrix[] tmRelMotions = calculateRelativeMotionForDistanceMaps(boneIndex, positionIndex, interaction);
-
-            //for each vertex           
-            for (int i = 0; i < numVertices; i++)
-            {
-                distances[i] = Double.MaxValue; //set this vertex to the default
-                //for (int j = 0; j < Wrist.NumBones; j++)
-                foreach (int j in interaction) //only use the bones that we have specified interact
-                {
-                    if (j == boneIndex) continue;
-                    if (mri[j] == null) continue; //skip missing scans
-
-                    double x = pts[i, 0];
-                    double y = pts[i, 1];
-                    double z = pts[i, 2];
-
-                    //check if we need to move for non neutral position
-                    if (positionIndex != 0)
-                    {
-                        //skip missing kinematic info
-                        if (tmRelMotions[j] == null)
-                            continue;
-
-                        //lets move the bone getting colored, into the space of the other bone...
-                        double[] p0 = new double[] { x, y, z };
-                        double[] p1 = tmRelMotions[j] * p0;
-                        x = p1[0];
-                        y = p1[1];
-                        z = p1[2];
-                    }
-
-                    double dX = (x - mri[j].CoordinateOffset[0]) / mri[j].voxelSizeX;
-                    double dY = (y - mri[j].CoordinateOffset[1]) / mri[j].voxelSizeY;
-                    double dZ = (z - mri[j].CoordinateOffset[2]) / mri[j].voxelSizeZ;
-
-                    const double xBound = 96.9; //get the boundaries of the distance cube
-                    const double yBound = 96.9; //
-                    const double zBound = 96.9; //
-
-                    ////////////////////////////////////////////////////////
-                    //is surface point picked inside of the cube?
-
-                    if (dX >= 3.1 && dX <= xBound && dY >= 3.1
-                        && dY <= yBound && dZ >= 3.1 && dZ <= zBound)
-                    {
-                        double localDist = mri[j].sample_s_InterpCubit(dX, dY, dZ);
-                        if (localDist < distances[i]) //check if this is smaller, if so save it
-                            distances[i] = localDist;
-                    }
-                }
-            }
-            return distances;
-        }
-
-         */
- 
+        } 
 
         /// <summary>
         /// Calculates the distanceMaps for a given bone using the precalculated distance fields.

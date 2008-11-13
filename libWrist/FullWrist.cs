@@ -57,6 +57,19 @@ namespace libWrist
             set { _showColorMap = value; }
         }
 
+        public double ColorMapDistance
+        {
+            get { return _colorMapDistance; }
+        }
+        public double[] ContourDistances
+        {
+            get { return _contourDistances; }
+        }
+        public System.Drawing.Color[] ContourColors
+        {
+            get { return _contourColors; }
+        }
+
         public void LoadFullWrist()
         {
             _root = new Separator();

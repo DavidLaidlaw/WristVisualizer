@@ -26,7 +26,7 @@ namespace WristVizualizer
         {
             InitializeComponent();
             //check for empty defaults
-            if (defaultContourDistances == null)
+            if (defaultContourDistances == null || defaultContourDistances.Length==0)
                 defaultContourDistances = DEFAULT_DISTANCES;
             if (maxNumberContours < 0)
                 maxNumberContours = DEFAULT_MAX_NUM_CONTOURS;

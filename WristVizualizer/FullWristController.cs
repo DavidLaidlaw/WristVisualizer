@@ -39,8 +39,6 @@ namespace WristVizualizer
 
         //Distance Maps
         private DistanceMaps _distMap;
-        private bool _hideMaps;
-        private bool _hideContours;
 
         //GUI stuff
         private WristPanelLayoutControl _layoutControl;
@@ -177,11 +175,11 @@ namespace WristVizualizer
         public void calculateDistanceMapsToolClickedHandler()
         {
             //setup the dialog window
-            DistanceAndContourDialog dialog = new DistanceAndContourDialog(_distMap.ContourDistances);
-            dialog.ColorMapMaxDistance = _distMap.MaxColoredDistance;
-            dialog.setContourColors(_distMap.ContourColors);
-            dialog.CalculateColorMap = !_hideMaps;
-            dialog.CalculateContours = !_hideContours;
+            DistanceAndContourDialog dialog = new DistanceAndContourDialog(_fullWrist.ContourDistances);
+            dialog.ColorMapMaxDistance = _fullWrist.ColorMapDistance;
+            dialog.setContourColors(_fullWrist.ContourColors);
+            dialog.CalculateColorMap = _fullWrist.ShowColorMap;
+            dialog.CalculateContours = _fullWrist.ShowContours;
 
             //show the dialog window
             DialogResult r = dialog.ShowDialog();
@@ -201,8 +199,6 @@ namespace WristVizualizer
             _distMap.ProcessMasterQueue(q);
 
             //update on screen now to current settings
-            _hideContours = !dialog.CalculateContours;
-            _hideMaps = !dialog.CalculateColorMap;
             _fullWrist.ShowColorMap = dialog.CalculateColorMap;
             _fullWrist.ShowContours = dialog.CalculateContours;
             _fullWrist.UpdateColorsAndContoursForCurrentPosition();
