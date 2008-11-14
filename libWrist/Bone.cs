@@ -51,6 +51,7 @@ namespace libWrist
             _computedDistances = new double[numSeries][];
             _computedColorMaps = new int[numSeries][];
             _computedContours = new Contour[numSeries];
+            _hamVisible = false;
         }
 
         public void LoadIVFile()
@@ -451,7 +452,10 @@ namespace libWrist
 
             if (animationHamSwitch != null)
                 _animationHamSwitch.reference(); //don't actually insert it, just reference it, so its ready
-            _hamVisible = false;
+            
+            //if ham is supposed to be visible, add it to the scene
+            if (_hamVisible)
+                _bone.addNode(_animationHamSwitch);
         }
 
         public void SetHamVisibility(bool visible)
@@ -465,7 +469,13 @@ namespace libWrist
                 _bone.removeChild(_animationHamSwitch);
         }
 
-        public void RemoveAnimationSwitches()
+        public void EndAnimation()
+        {
+            RemoveAnimationSwitches();
+            _hamVisible = false;
+        }
+
+        private void RemoveAnimationSwitches()
         {
             if (_animationSwitch != null)
                 _bone.removeChild(_animationSwitch);
@@ -478,7 +488,6 @@ namespace libWrist
 
             _animationHamSwitch = null;
             _animationSwitch = null;
-            _hamVisible = false;
         }
     }
 }

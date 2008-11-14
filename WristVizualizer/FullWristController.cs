@@ -415,6 +415,8 @@ namespace WristVizualizer
             _wristControl.changeBackToNormalMode();
 
             _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_control_FixedBoneChanged);
+            _wristControl.setFixedBone(_fixedBoneIndex); //set back to where we were
+            _wristControl.FixedBoneChanged -= new FixedBoneChangedHandler(_control_Animation_FixedBoneChanged);
             _wristControl.ShowHamChanged -= new ShowHamChangedHandler(_wristControl_ShowHamChanged);
 
             _animationControl.TrackbarScroll -= new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
@@ -438,9 +440,6 @@ namespace WristVizualizer
             int numFrames = acf.NumberStepsPerPositionChange;
             //TODO: all the distance map stuff, etc.
 
-            //_animationSwitches = ac.CreateAnimationSwitches(0, _bones, _transformMatrices, animationOrder, numFrames);
-            //_animationHamSwitches = ac.CreateHAMSwitches(0, _bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
-
             _animationControl = new AnimationControl();
             _layoutControl.addControl(_animationControl);
 
@@ -453,14 +452,14 @@ namespace WristVizualizer
                 _layoutControl.removeControl(_positionGraph);
             _wristControl.changeToAnimationMode();
 
+            int startingFixedBone = (int)Wrist.BIndex.RAD; //default to fixing to the radius...
             //now, lets go and add the switches into place
-            _fullWrist.SetupWristForAnimation(0, animationOrder, numFrames); //default to radius fixed...
-            _fullWrist.SetToAnimationFrame(0); //set us to 0;
+            _fullWrist.SetupWristForAnimation(startingFixedBone, animationOrder, numFrames); //default to radius fixed...
+            _fullWrist.SetToAnimationFrame(0); //set us to the first frame
 
             //redirect change in fixed bone....
             _wristControl.FixedBoneChanged -= new FixedBoneChangedHandler(_control_FixedBoneChanged);
-            _wristControl.setFixedBone(0); //reset the fixed bone to radius for later :)
-            _wristControl.selectedSeriesIndex = 0;
+            _wristControl.setFixedBone(startingFixedBone); //do this while no one is listening
             _wristControl.FixedBoneChanged += new FixedBoneChangedHandler(_control_Animation_FixedBoneChanged);
             _wristControl.ShowHamChanged += new ShowHamChangedHandler(_wristControl_ShowHamChanged);
 
@@ -477,19 +476,6 @@ namespace WristVizualizer
         void _wristControl_ShowHamChanged(object sender, BoneHideChangeEventArgs e)
         {
             _fullWrist.Bones[e.BoneIndex].SetHamVisibility(!e.BoneHidden);
-
-            //if (e.BoneHidden)
-            //{
-
-            //    //TODO: Check if the bone to be hidden or shown is the fixed bone...fudge
-            //    int index = _animationControl.currentFrame;
-            //    _root.addNode(_animationHamSwitches[e.BoneIndex]);
-            //    _animationHamSwitches[e.BoneIndex].whichChild(index);
-            //}
-            //else
-            //{
-            //    _root.removeChild(_animationHamSwitches[e.BoneIndex]);
-            //}
         }
 
         void _animationTimer_Tick(object sender, EventArgs e)
@@ -531,34 +517,15 @@ namespace WristVizualizer
         private void setAnimationToFrame(int frameIndex)
         {
             _fullWrist.SetToAnimationFrame(frameIndex);
-            /*
-            for (int i = 0; i < _bones.Length; i++)
-            {
-                if (_animationSwitches[i] != null)
-                {
-                    _animationSwitches[i].whichChild(frameIndex);
-                    if (_wristControl.IsHamVissible(i))
-                        _animationHamSwitches[i].whichChild(frameIndex);
-                }
-            }
-             */
         }
 
         void _control_Animation_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
-            //TODO: Recalculate animation....
-
-            //TODO: Make certain that we stay at the same frame and with the same HAM's visible
-
-            /*
-            AnimationCreator ac = new AnimationCreator();
+            //Recalculate animation....
             int[] animationOrder = _acf.getAnimationOrder();
             int numFrames = _acf.NumberStepsPerPositionChange;
-            removeAnimationSwitchesFromBones();
-            _animationSwitches = ac.CreateAnimationSwitches(e.BoneIndex, _bones, _transformMatrices, animationOrder, numFrames);
-            _animationHamSwitches = ac.CreateHAMSwitches(e.BoneIndex, _bones, _transformMatrices, _inertiaMatrices, animationOrder, numFrames);
-            addAnimationSwitchesToBones();
-             */
+            _fullWrist.SetupWristForAnimation(e.BoneIndex, animationOrder, numFrames);
+            updateAnimationFrame(); //make certain we are on the correct frame...
         }
 
         public override void saveToMovie()
