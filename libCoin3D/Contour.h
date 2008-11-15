@@ -12,6 +12,8 @@ public ref class Contour : Node
 {
 public:
 	Contour(int numberOfDistances);
+	Contour(array<System::Drawing::Color>^ contourColors);
+	virtual void addLineSegment(int contourIndex, float x0, float y0, float z0, float x1, float y1, float z1);
 	virtual void addLineSegment(float x0, float y0, float z0, float x1, float y1, float z1);
 	virtual void setHidden(bool hidden);
 
@@ -27,23 +29,20 @@ public:
 		array<array<double>^>^ get();
 	}
 
-	property System::Drawing::Color Color {
-		System::Drawing::Color get() { return _contourColor; }
-		void set(System::Drawing::Color value) { setColor(value); }
-	}
-
 	virtual SoNode* getNode() override { return _node; }
 private:
+	virtual void SetupContour(array<System::Drawing::Color>^ contourColors);
+
 	SoSeparator* _node;
-	SoCoordinate3* _pts;
-	SoLineSet* _lineSet;
+	array<SoSeparator*>^ _contourSeparators;
+	array<SoCoordinate3*>^ _contourPts;
+	array<SoLineSet*>^ _contourLineSets;
+	array<SoBaseColor*>^ _contourColors;
+
 	SoDrawStyle* _drawStyle;
 	array<double>^ _contourArea;
 	array<array<double>^>^ _contourCentroidSums;
 
-	SoBaseColor* _color;
-	System::Drawing::Color _contourColor;
-
-	void setColor(System::Drawing::Color color);
+	void setColor(int contourIndex, System::Drawing::Color color);
 };
 }

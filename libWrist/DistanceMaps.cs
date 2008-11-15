@@ -292,10 +292,12 @@ namespace libWrist
 
         private static Contour createContourSingleBoneSinglePosition(float[,] points, int[,] conn, double[] distanceMap, double[] cDistances, System.Drawing.Color[] colors)
         {
+            if (cDistances.Length != colors.Length)
+                throw new ArgumentException("Number of colors must be the same as the number of contours being created");
+
             double[] dist = distanceMap;
 
-            Contour cont1 = new Contour(cDistances.Length);
-            cont1.Color = colors[0];
+            Contour cont1 = new Contour(colors);
 
             double maxContourDistance = -1;
             foreach (double cDist in cDistances)
@@ -425,7 +427,7 @@ namespace libWrist
                 contour.CentroidSums[i][1] += area * centroid[1];
                 contour.CentroidSums[i][2] += area * centroid[2];
 
-                contour.addLineSegment(newPt1[0], newPt1[1], newPt1[2], newPt2[0], newPt2[1], newPt2[2]);
+                contour.addLineSegment(i, newPt1[0], newPt1[1], newPt1[2], newPt2[0], newPt2[1], newPt2[2]);
             }
         }
 
