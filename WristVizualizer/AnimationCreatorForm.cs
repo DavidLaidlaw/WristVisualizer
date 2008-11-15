@@ -67,7 +67,7 @@ namespace WristVizualizer
 
         public decimal DistanceMapMaximumValue
         {
-            get { return numericUpDownDistanceMapDist.Value; }
+            get { return checkBoxDistanceMap.Checked ? numericUpDownDistanceMapDist.Value : 0; }
             set { numericUpDownDistanceMapDist.Value = value; }
         }
 

@@ -12,16 +12,6 @@ namespace libWrist
 {
     public static class DistanceMaps
     {
-        //Queue<Queue<BulkCalculator.DistanceCalculationJob>> _masterQueue;
-        //private Thread[] _workerThreads;
-        //private BackgroundWorkerStatusForm _bgStatusForm;
-        //private BackgroundWorker _bgWorker;
-
-        //public DistanceMaps()
-        //{           
-            
-        //}
-
         /// <summary>
         /// Check an array of Bone objects and return an array of indices to the primary array 
         /// indicating which are valid bones with valid distance fields

@@ -29,6 +29,10 @@ namespace libWrist
         private int[][] _computedColorMaps;
         private Contour[] _computedContours;
 
+        private double[][] _animationComputedDistances;
+        private int[][] _animationComputedColorMaps;
+        private Contour[] _animationComputedContours;
+
         //Coin3D objects
         private Separator _bone;
         private ColoredBone _coloredBone;
@@ -394,6 +398,48 @@ namespace libWrist
             }
         }
 
+        public void CalculateAndSaveDistanceMapForAnimation(int[] animationOrder, int numFramesPerStep, int absoluteFrameNumber, Bone[] testBones, Bone fixedBone)
+        {
+            //quick check that we can do this. Don't need our own distance field, just the testBones'
+            if (_coloredBone == null) return;
+
+            //need to calculate where we are in the whole animation scheme. What two positions are we between?
+            int startPositionIndex = absoluteFrameNumber / numFramesPerStep;
+            int partialFrame = absoluteFrameNumber % numFramesPerStep;
+            int startPosition = animationOrder[startPositionIndex];
+
+            //calculate the relative motion for each bone. Need a transform for each testBone, that will
+            //move this bone into its coordinate system
+            TransformMatrix[] transforms = new TransformMatrix[testBones.Length];
+            if (partialFrame == 0) //no partial frame, we are exactly where we want to be
+            {
+                if (startPosition != 0) //if we are at absolute neutral, no calculations needed
+                {
+                    //check for the non
+                    for (int i = 0; i < testBones.Length; i++)
+                        transforms[i] = CalculateRelativeMotionFromNeutral(startPosition, testBones[i]);
+                }
+            }
+            else
+            {
+                //so we have a partial motion to deal with, first calculate the position of the current bone
+                TransformMatrix tmCurrentBone = CalculateInterpolatedMotion(startPosition, animationOrder[startPositionIndex + 1], fixedBone, numFramesPerStep)[partialFrame];
+                for (int i = 0; i < testBones.Length; i++)
+                {
+                    TransformMatrix tmTestBone = testBones[i].CalculateInterpolatedMotion(startPosition, animationOrder[startPositionIndex + 1], fixedBone, numFramesPerStep)[partialFrame];
+                    transforms[i] = tmTestBone.Inverse() * tmCurrentBone;
+                }
+            }
+
+            double[] distances = DistanceMaps.createDistanceMap(this, testBones, transforms);
+            lock (this)
+            {
+                if (_animationComputedDistances == null)
+                    _animationComputedDistances = new double[(animationOrder.Length-1) * numFramesPerStep + 1][];
+                _animationComputedDistances[absoluteFrameNumber] = distances;
+            }
+        }
+
         public void CalculateAndSaveColorDistanceMapForPosition(int positionIndex, double maxColorDistance)
         {
             if (_computedDistances[positionIndex] == null)
@@ -406,15 +452,43 @@ namespace libWrist
             }
         }
 
+        public void CalculateAndSaveColorDistanceMapForAnimation(int absoluteFrameNumber, double maxColorDistance)
+        {
+            if (_animationComputedDistances[absoluteFrameNumber] == null)
+                throw new WristException("Raw distances (_animationComputedDistances) must be pre-computed before calculating ColorDistanceMap");
+
+            int[] colorMap = DistanceMaps.createColormap(_animationComputedDistances[absoluteFrameNumber], maxColorDistance);
+            lock (this)
+            {
+                if (_animationComputedColorMaps == null)
+                    _animationComputedColorMaps = new int[_animationComputedDistances.Length][];
+                _animationComputedColorMaps[absoluteFrameNumber] = colorMap;
+            }
+        }
+
         public void CalculateAndSaveContourForPosition(int positionIndex, double[] cDistances, System.Drawing.Color[] colors)
         {
             if (_computedDistances[positionIndex] == null)
-                throw new WristException("Raw distances (_computedDistancs) must be pre-computed before calculating ColorDistanceMap");
+                throw new WristException("Raw distances (_computedDistancs) must be pre-computed before calculating Contour");
 
             Contour contour = DistanceMaps.createContourSingleBoneSinglePosition(this, _computedDistances[positionIndex], cDistances, colors);
             lock (_computedContours)
             {
                 _computedContours[positionIndex] = contour;
+            }
+        }
+
+        public void CalculateAndSaveContourForAnimation(int absoluteFrameNumber, double[] cDistances, System.Drawing.Color[] colors)
+        {
+            if (_animationComputedDistances[absoluteFrameNumber] == null)
+                throw new WristException("Raw distances (_computedDistancs) must be pre-computed before calculating Contour");
+
+            Contour contour = DistanceMaps.createContourSingleBoneSinglePosition(this, _animationComputedDistances[absoluteFrameNumber], cDistances, colors);
+            lock (this)
+            {
+                if (_animationComputedContours == null)
+                    _animationComputedContours = new Contour[_animationComputedDistances.Length];
+                _animationComputedContours[absoluteFrameNumber] = contour;
             }
         }
 
@@ -437,6 +511,12 @@ namespace libWrist
 
             if (_animationHamSwitch != null)
                 _animationHamSwitch.whichChild(frameNumber);
+
+            if (_animationComputedColorMaps != null)
+                _coloredBone.setColorMap(_animationComputedColorMaps[frameNumber]);
+
+            if (_animationComputedContours != null)
+                _coloredBone.setAndReplaceContour(_animationComputedContours[frameNumber]);
         }
 
         public void SetupForAnimation(Switch animationSwitch, Switch animationHamSwitch)
@@ -473,6 +553,9 @@ namespace libWrist
         {
             RemoveAnimationSwitches();
             _hamVisible = false;
+            _animationComputedDistances = null;
+            _animationComputedColorMaps = null;
+            _animationComputedContours = null;
         }
 
         private void RemoveAnimationSwitches()

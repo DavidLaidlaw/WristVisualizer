@@ -30,6 +30,11 @@ namespace libWrist
             public double[] ContourDistances;
             public System.Drawing.Color[] ContourColors;
             public int PositionIndex;
+
+            //special information needed for interpolated data
+            public int[] AnimationOrder;
+            public int AnimationNumFramesPerStep;
+            public Bone FixedBone;
         }
 
         public void ProcessMasterQueue(Queue<Queue<DistanceCalculationJob>> masterQueue)
@@ -129,19 +134,36 @@ namespace libWrist
                     }
                 }
 
-                switch (currentJob.JobType)
+                if (currentJob.AnimationOrder == null) //standard job
                 {
-                    case DistanceCalculationType.VetrexDistances:
-                        currentJob.PrimaryBone.CalculateAndSaveDistanceMapForPosition(currentJob.PositionIndex, currentJob.IneractionBones);
-                        break;
-                    case DistanceCalculationType.ColorMap:
-                        currentJob.PrimaryBone.CalculateAndSaveColorDistanceMapForPosition(currentJob.PositionIndex, currentJob.ColorMapMaxDistance);
-                        break;
-                    case DistanceCalculationType.Contours:
-                        currentJob.PrimaryBone.CalculateAndSaveContourForPosition(currentJob.PositionIndex, currentJob.ContourDistances, currentJob.ContourColors);
-                        break;
-                    default:
-                        break;
+                    switch (currentJob.JobType)
+                    {
+                        case DistanceCalculationType.VetrexDistances:
+                            currentJob.PrimaryBone.CalculateAndSaveDistanceMapForPosition(currentJob.PositionIndex, currentJob.IneractionBones);
+                            break;
+                        case DistanceCalculationType.ColorMap:
+                            currentJob.PrimaryBone.CalculateAndSaveColorDistanceMapForPosition(currentJob.PositionIndex, currentJob.ColorMapMaxDistance);
+                            break;
+                        case DistanceCalculationType.Contours:
+                            currentJob.PrimaryBone.CalculateAndSaveContourForPosition(currentJob.PositionIndex, currentJob.ContourDistances, currentJob.ContourColors);
+                            break;
+                    }
+                }
+                else //animation job
+                {
+                    switch (currentJob.JobType)
+                    {
+                        case DistanceCalculationType.VetrexDistances:
+                            currentJob.PrimaryBone.CalculateAndSaveDistanceMapForAnimation(currentJob.AnimationOrder, currentJob.AnimationNumFramesPerStep, 
+                                currentJob.PositionIndex, currentJob.IneractionBones, currentJob.FixedBone);
+                            break;
+                        case DistanceCalculationType.ColorMap:
+                            currentJob.PrimaryBone.CalculateAndSaveColorDistanceMapForAnimation(currentJob.PositionIndex, currentJob.ColorMapMaxDistance);
+                            break;
+                        case DistanceCalculationType.Contours:
+                            currentJob.PrimaryBone.CalculateAndSaveContourForAnimation(currentJob.PositionIndex, currentJob.ContourDistances, currentJob.ContourColors);
+                            break;
+                    }
                 }
 
                 //done with the job, lets report in our progress

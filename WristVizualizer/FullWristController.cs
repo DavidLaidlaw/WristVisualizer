@@ -190,7 +190,7 @@ namespace WristVizualizer
                 contourDistances = dialog.getContourDistancesToCalculate();
 
             //get the queue to calculate stuff
-            Queue<Queue<BulkCalculator.DistanceCalculationJob>> q = _fullWrist.CreateDistanceMapJobQueue(colorDistance, contourDistances, dialog.getContourColorsToCalculate());
+            Queue<Queue<BulkCalculator.DistanceCalculationJob>> q = _fullWrist.CreateDistanceMapMasterQueue(colorDistance, contourDistances, dialog.getContourColorsToCalculate());
             //go compute this!
             _calculator.ProcessMasterQueue(q);
 
@@ -433,7 +433,6 @@ namespace WristVizualizer
             _acf = acf;
             int[] animationOrder = acf.getAnimationOrder();
             int numFrames = acf.NumberStepsPerPositionChange;
-            //TODO: all the distance map stuff, etc.
 
             _animationControl = new AnimationControl();
             _layoutControl.addControl(_animationControl);
@@ -449,6 +448,7 @@ namespace WristVizualizer
 
             int startingFixedBone = (int)Wrist.BIndex.RAD; //default to fixing to the radius...
             //now, lets go and add the switches into place
+            SetupWristDistancesForAnimation(startingFixedBone, animationOrder, numFrames, (double)acf.DistanceMapMaximumValue, acf.GetContourDistancesToCalculate(), acf.GetContourColorsToCalculate());
             _fullWrist.SetupWristForAnimation(startingFixedBone, animationOrder, numFrames); //default to radius fixed...
             _fullWrist.SetToAnimationFrame(0); //set us to the first frame
 
@@ -466,6 +466,16 @@ namespace WristVizualizer
             _animationTimer = new Timer();
             _animationTimer.Tick += new EventHandler(_animationTimer_Tick);
             _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
+        }
+
+        private void SetupWristDistancesForAnimation(int fixedBoneIndex, int[] animationOrder, int numFrames, double colorMapDistance, double[] cDistances, System.Drawing.Color[] colors)
+        {
+            Queue<Queue<BulkCalculator.DistanceCalculationJob>> q;
+            q = _fullWrist.CreateDistanceMapMasterAnimationQueue(animationOrder, numFrames, _fullWrist.Bones[fixedBoneIndex], colorMapDistance, cDistances, colors);
+            if (q == null)
+                return;
+            //go compute this!
+            _calculator.ProcessMasterQueue(q);
         }
 
         void _wristControl_ShowHamChanged(object sender, BoneHideChangeEventArgs e)
