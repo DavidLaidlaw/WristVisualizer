@@ -333,8 +333,8 @@ namespace libWrist
                 Bone[] interactionBones = GetBonesThatInteractWithBone(boneIndex);
                 for (int i = 0; i < totalNumberPositions; i++)
                 {
-                    //check that we need to do this
-                    //if (referenceBone.HasContourForPosition(i)) continue;
+                    //check that we need to do this (can only skip when not in animation mode)
+                    if (animationOrder == null && referenceBone.HasVertexDistancesForPosition(i)) continue;
 
                     BulkCalculator.DistanceCalculationJob job = new BulkCalculator.DistanceCalculationJob();
                     job.JobType = BulkCalculator.DistanceCalculationType.VetrexDistances;
