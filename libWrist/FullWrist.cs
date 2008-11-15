@@ -248,16 +248,16 @@ namespace libWrist
             MoveToPositionAndFixedBone(_currentPositionIndex, _fixedBoneIndex);
         }
 
-        public Queue<Queue<DistanceMaps.DistanceCalculationJob>> CreateDistanceMapJobQueue(double colorMapDistance, double[] cDistances, System.Drawing.Color[] colors)
+        public Queue<Queue<BulkCalculator.DistanceCalculationJob>> CreateDistanceMapJobQueue(double colorMapDistance, double[] cDistances, System.Drawing.Color[] colors)
         {
             //first check if we are doing anything
             if (colorMapDistance <= 0 && cDistances.Length == 0)
                 return null;
 
-            Queue<Queue<DistanceMaps.DistanceCalculationJob>> masterQueue = new Queue<Queue<DistanceMaps.DistanceCalculationJob>>(2);
+            Queue<Queue<BulkCalculator.DistanceCalculationJob>> masterQueue = new Queue<Queue<BulkCalculator.DistanceCalculationJob>>(2);
             
             //okay, doing something, so lets make certain that we have computed the distances at each vertex
-            Queue<DistanceMaps.DistanceCalculationJob> q = CreateVertexDistanceQueue();
+            Queue<BulkCalculator.DistanceCalculationJob> q = CreateVertexDistanceQueue();
             if (q.Count > 0)
                 masterQueue.Enqueue(q);
 
@@ -288,9 +288,9 @@ namespace libWrist
             return false;
         }
 
-        private Queue<DistanceMaps.DistanceCalculationJob> CreateVertexDistanceQueue()
+        private Queue<BulkCalculator.DistanceCalculationJob> CreateVertexDistanceQueue()
         {
-            Queue<DistanceMaps.DistanceCalculationJob> q = new Queue<DistanceMaps.DistanceCalculationJob>();
+            Queue<BulkCalculator.DistanceCalculationJob> q = new Queue<BulkCalculator.DistanceCalculationJob>();
             //need to create this for each position and every bone...
             for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
             {
@@ -304,8 +304,8 @@ namespace libWrist
                     //check that we need to do this
                     if (referenceBone.HasContourForPosition(i)) continue;
 
-                    DistanceMaps.DistanceCalculationJob job = new DistanceMaps.DistanceCalculationJob();
-                    job.JobType = DistanceMaps.DistanceCalculationType.VetrexDistances;
+                    BulkCalculator.DistanceCalculationJob job = new BulkCalculator.DistanceCalculationJob();
+                    job.JobType = BulkCalculator.DistanceCalculationType.VetrexDistances;
                     job.FullWrist = this;
                     job.PrimaryBone = referenceBone;
                     job.IneractionBones = interactionBones;
@@ -316,9 +316,9 @@ namespace libWrist
             return q;
         }
 
-        private Queue<DistanceMaps.DistanceCalculationJob> CreateColorMapQueue(double colorMapDistance)
+        private Queue<BulkCalculator.DistanceCalculationJob> CreateColorMapQueue(double colorMapDistance)
         {
-            Queue<DistanceMaps.DistanceCalculationJob> q = new Queue<DistanceMaps.DistanceCalculationJob>();
+            Queue<BulkCalculator.DistanceCalculationJob> q = new Queue<BulkCalculator.DistanceCalculationJob>();
             //need to create this for each position and every bone...
             for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
             {
@@ -328,8 +328,8 @@ namespace libWrist
 
                 for (int i = 0; i < _numberPositions; i++)
                 {
-                    DistanceMaps.DistanceCalculationJob job = new DistanceMaps.DistanceCalculationJob();
-                    job.JobType = DistanceMaps.DistanceCalculationType.ColorMap;
+                    BulkCalculator.DistanceCalculationJob job = new BulkCalculator.DistanceCalculationJob();
+                    job.JobType = BulkCalculator.DistanceCalculationType.ColorMap;
                     job.FullWrist = this;
                     job.PrimaryBone = referenceBone;
                     job.PositionIndex = i;
@@ -340,9 +340,9 @@ namespace libWrist
             return q;
         }
 
-        private Queue<DistanceMaps.DistanceCalculationJob> CreateContourQueue(double[] cDistances, System.Drawing.Color[] colors)
+        private Queue<BulkCalculator.DistanceCalculationJob> CreateContourQueue(double[] cDistances, System.Drawing.Color[] colors)
         {
-            Queue<DistanceMaps.DistanceCalculationJob> q = new Queue<DistanceMaps.DistanceCalculationJob>();
+            Queue<BulkCalculator.DistanceCalculationJob> q = new Queue<BulkCalculator.DistanceCalculationJob>();
             //need to create this for each position and every bone...
             for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
             {
@@ -352,8 +352,8 @@ namespace libWrist
 
                 for (int i = 0; i < _numberPositions; i++)
                 {
-                    DistanceMaps.DistanceCalculationJob job = new DistanceMaps.DistanceCalculationJob();
-                    job.JobType = DistanceMaps.DistanceCalculationType.Contours;
+                    BulkCalculator.DistanceCalculationJob job = new BulkCalculator.DistanceCalculationJob();
+                    job.JobType = BulkCalculator.DistanceCalculationType.Contours;
                     job.FullWrist = this;
                     job.PrimaryBone = referenceBone;
                     job.PositionIndex = i;

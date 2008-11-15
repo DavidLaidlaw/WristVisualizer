@@ -10,17 +10,17 @@ using libCoin3D;
 
 namespace libWrist
 {
-    public class DistanceMaps
+    public static class DistanceMaps
     {
-        Queue<Queue<DistanceMaps.DistanceCalculationJob>> _masterQueue;
-        private Thread[] _workerThreads;
-        private BackgroundWorkerStatusForm _bgStatusForm;
-        private BackgroundWorker _bgWorker;
+        //Queue<Queue<BulkCalculator.DistanceCalculationJob>> _masterQueue;
+        //private Thread[] _workerThreads;
+        //private BackgroundWorkerStatusForm _bgStatusForm;
+        //private BackgroundWorker _bgWorker;
 
-        public DistanceMaps()
-        {           
+        //public DistanceMaps()
+        //{           
             
-        }
+        //}
 
         /// <summary>
         /// Check an array of Bone objects and return an array of indices to the primary array 
@@ -205,7 +205,7 @@ namespace libWrist
             return colors;
         }
 
-        private Separator createContourCentroidSphere(Contour contour, int contourIndex)
+        private static Separator createContourCentroidSphere(Contour contour, int contourIndex)
         {
             Sphere s = new Sphere(0.3f);
             Separator spher1 = new Separator();
@@ -441,142 +441,5 @@ namespace libWrist
         }
         #endregion
 
-        #region Multi-Threaded Processing
-        public enum DistanceCalculationType
-        {
-            VetrexDistances,
-            ColorMap,
-            Contours            
-        }
-
-        public struct DistanceCalculationJob
-        {
-            public FullWrist FullWrist;
-            public DistanceCalculationType JobType;
-            public Bone PrimaryBone;
-            public Bone[] IneractionBones;
-            public double ColorMapMaxDistance;
-            public double[] ContourDistances;
-            public System.Drawing.Color[] ContourColors;
-            public int PositionIndex;
-        }
-
-        public void ProcessMasterQueue(Queue<Queue<DistanceMaps.DistanceCalculationJob>> masterQueue)
-        {
-            if (masterQueue == null) return;
-            _masterQueue = masterQueue;
-            int totalNumberJobs = 0;
-            Queue<Queue<DistanceMaps.DistanceCalculationJob>>.Enumerator e = masterQueue.GetEnumerator();
-            while (e.MoveNext())
-                totalNumberJobs += e.Current.Count;
-
-            //check if there is actually work to do
-            if (totalNumberJobs == 0)
-                return;
-
-            //setup gui
-            _bgStatusForm = new BackgroundWorkerStatusForm(totalNumberJobs);
-            
-            //setup background worker
-            _bgWorker = new BackgroundWorker();
-            _bgWorker.WorkerReportsProgress = true;
-            _bgWorker.WorkerSupportsCancellation = false;
-            _bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(_bgWorker_RunWorkerCompleted);
-            _bgWorker.ProgressChanged += new ProgressChangedEventHandler(_bgWorker_ProgressChanged);
-            _bgWorker.DoWork += new DoWorkEventHandler(_bgWorker_DoWork);
-            
-            //start background worker
-            _bgWorker.RunWorkerAsync();
-            _bgStatusForm.ShowDialog(); //show in dialog mode, we will close it elsewhere
-        }
-
-        void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            //assume that we have at least one
-            FullWrist fullWrist = _masterQueue.Peek().Peek().FullWrist;
-            fullWrist.ReadInDistanceFields();
-
-            //Loop through each queue to run
-            Queue<Queue<DistanceMaps.DistanceCalculationJob>>.Enumerator enumerator = _masterQueue.GetEnumerator();
-            while (enumerator.MoveNext())
-            {
-                Queue<DistanceMaps.DistanceCalculationJob> currentQueue = enumerator.Current;
-
-                int numThreads = Math.Min(System.Environment.ProcessorCount, currentQueue.Count);
-                //numThreads = 1;
-
-                //start all of the worker threads
-                _workerThreads = new Thread[numThreads];
-                for (int i = 0; i < numThreads; i++)
-                {
-                    _workerThreads[i] = new Thread(workThreadWork);
-                    _workerThreads[i].Start(currentQueue);
-                }
-                //wait for worker threads to finish
-                foreach (Thread curThread in _workerThreads)
-                    curThread.Join();
-
-            }
-        }
-
-        void _bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            _bgStatusForm.UnSafeIncrimentCompletedParts();
-        }
-
-        void _bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            //remove callbacks
-            _bgWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(_bgWorker_RunWorkerCompleted);
-            _bgWorker.ProgressChanged -= new ProgressChangedEventHandler(_bgWorker_ProgressChanged);
-            _bgWorker.DoWork -= new DoWorkEventHandler(_bgWorker_DoWork);
-
-            //close status window
-            _bgStatusForm.Close();
-
-            //cleanup
-            _bgStatusForm = null;
-            _bgWorker = null;
-        }
-
-        private void workThreadWork(object queue)
-        {
-            Queue<DistanceMaps.DistanceCalculationJob> workQueue = (Queue<DistanceMaps.DistanceCalculationJob>)queue;
-            DistanceCalculationJob currentJob;
-            bool done = false;
-            while (!done)
-            {
-                //first get the job
-                lock (workQueue)
-                {
-                    if (workQueue.Count > 0)
-                        currentJob = (DistanceCalculationJob)workQueue.Dequeue();
-                    else
-                    {
-                        done = true;
-                        continue;
-                    }
-                }
-
-                switch (currentJob.JobType)
-                {
-                    case DistanceCalculationType.VetrexDistances:
-                        currentJob.PrimaryBone.CalculateAndSaveDistanceMapForPosition(currentJob.PositionIndex, currentJob.IneractionBones);
-                        break;
-                    case DistanceCalculationType.ColorMap:
-                        currentJob.PrimaryBone.CalculateAndSaveColorDistanceMapForPosition(currentJob.PositionIndex, currentJob.ColorMapMaxDistance);
-                        break;
-                    case DistanceCalculationType.Contours:
-                        currentJob.PrimaryBone.CalculateAndSaveContourForPosition(currentJob.PositionIndex, currentJob.ContourDistances, currentJob.ContourColors);
-                        break;
-                    default:
-                        break;  
-                }
-
-                //done with the job, lets report in our progress
-                _bgWorker.ReportProgress(1);
-            }
-        }
-        #endregion
     }
 }

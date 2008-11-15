@@ -34,7 +34,7 @@ namespace WristVizualizer
         private AnimationControl _animationControl;        
 
         //Distance Maps
-        private DistanceMaps _distMap;
+        private BulkCalculator _calculator;
 
         //GUI stuff
         private WristPanelLayoutControl _layoutControl;
@@ -47,7 +47,7 @@ namespace WristVizualizer
             setupControl();
             setupControlEventListeners();
             _root = new Separator();
-            _distMap = new DistanceMaps();
+            _calculator = new BulkCalculator();
             
 
             //defaults
@@ -190,9 +190,9 @@ namespace WristVizualizer
                 contourDistances = dialog.getContourDistancesToCalculate();
 
             //get the queue to calculate stuff
-            Queue<Queue<DistanceMaps.DistanceCalculationJob>> q = _fullWrist.CreateDistanceMapJobQueue(colorDistance, contourDistances, dialog.getContourColorsToCalculate());
+            Queue<Queue<BulkCalculator.DistanceCalculationJob>> q = _fullWrist.CreateDistanceMapJobQueue(colorDistance, contourDistances, dialog.getContourColorsToCalculate());
             //go compute this!
-            _distMap.ProcessMasterQueue(q);
+            _calculator.ProcessMasterQueue(q);
 
             //update on screen now to current settings
             _fullWrist.ShowColorMap = dialog.CalculateColorMap;
@@ -218,11 +218,6 @@ namespace WristVizualizer
         {
             get { return _animateDuration; }
             set { _animateDuration = value; }
-        }
-
-        public DistanceMaps DistanceMaps
-        {
-            get { return _distMap; }
         }
 
         public bool ShowErrors
