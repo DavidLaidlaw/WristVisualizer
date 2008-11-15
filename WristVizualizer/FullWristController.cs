@@ -529,6 +529,7 @@ namespace WristVizualizer
             //Recalculate animation....
             int[] animationOrder = _acf.getAnimationOrder();
             int numFrames = _acf.NumberStepsPerPositionChange;
+            SetupWristDistancesForAnimation(e.BoneIndex, animationOrder, numFrames, (double)_acf.DistanceMapMaximumValue, _acf.GetContourDistancesToCalculate(), _acf.GetContourColorsToCalculate());
             _fullWrist.SetupWristForAnimation(e.BoneIndex, animationOrder, numFrames);
             updateAnimationFrame(); //make certain we are on the correct frame...
         }
