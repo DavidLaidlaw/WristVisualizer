@@ -23,7 +23,7 @@ public:
 	void insertNode(Node^ node, int position);
 	void removeChild(Separator^ child);
 	void removeChild(Node^ node);
-	bool hasTransform() { return (_numTransforms>0); }
+	bool hasTransform() { return (_transform != nullptr); }
 	virtual void reference();
 	virtual void unref();
 	virtual void unrefNoDelete();
@@ -39,8 +39,7 @@ public:
 private:
 	SoSeparator* _separator;
 	SoDrawStyle* _style;
-	int _numTransforms;
 
-	
+	Transform^ _transform;
 };
 }

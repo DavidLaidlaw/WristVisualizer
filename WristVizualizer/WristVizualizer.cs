@@ -130,6 +130,7 @@ namespace WristVizualizer
                     showMetacarpalInertiasToolStripMenuItem.Enabled = true;
                     referenceBoneForWristPositionToolStripMenuItem.Enabled = true;
                     createAnimationToolStripMenuItem.Enabled = true;
+                    boneColorsToolStripMenuItem.Enabled = true;
                     break;
             }
         }
@@ -204,6 +205,7 @@ namespace WristVizualizer
             referenceBoneForWristPositionToolStripMenuItem.Enabled = false;
             capitateToolStripMenuItem.Checked = true;
             mC3ToolStripMenuItem.Checked = false;
+            boneColorsToolStripMenuItem.Enabled = false;
             
             if (_pointSelection != null)
             {
@@ -1276,6 +1278,12 @@ namespace WristVizualizer
             this.xScaleNoSmoothingToolStripMenuItem1.Tag = new System.Collections.Generic.KeyValuePair<int, int>(2, 1);
             this.xScaleNoSmoothingToolStripMenuItem2.Tag = new System.Collections.Generic.KeyValuePair<int, int>(3, 1);
             this.xScaleNoSmoothingToolStripMenuItem3.Tag = new System.Collections.Generic.KeyValuePair<int, int>(4, 1);
+        }
+
+        private void boneColorsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FullWristController control = (FullWristController)_currentController;
+            control.EditBoneColorsShowDialog();
         }
     }
 }

@@ -40,6 +40,8 @@ namespace libWrist
         private Switch _animationSwitch;
         private Switch _animationHamSwitch;
 
+        private Material _boneMaterial;
+
         public Bone(Wrist wrist, FullWrist fullwrist, int boneIndex)
         {
             _fullWrist = fullwrist;
@@ -79,6 +81,7 @@ namespace libWrist
             }
             _bone = bone; //only save if we get this far, its possible to still be throwing an exception
         }
+
 
         public void ReadDistanceField()
         {
@@ -225,6 +228,24 @@ namespace libWrist
                 ShowInertia();
             else
                 HideInertia();
+        }
+
+        public System.Drawing.Color GetColor()
+        {
+            if (_boneMaterial != null)
+                return _boneMaterial.getColor();
+            else
+                return Material.GetDefaultColor();
+        }
+
+        public void SetColor(System.Drawing.Color color)
+        {
+            if (_boneMaterial == null)
+            {
+                _boneMaterial = new Material();
+                _bone.insertNode(_boneMaterial, 0);
+            }
+            _boneMaterial.setColor(color);
         }
 
         private void GenerateInertiaSeparator() { GenerateInertiaSeparator(0); }

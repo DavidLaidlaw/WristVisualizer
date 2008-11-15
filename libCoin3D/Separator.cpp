@@ -10,6 +10,7 @@ libCoin3D::Separator::Separator(void)
 {
 	_separator = new SoSeparator();
 	_style = NULL;
+	_transform = nullptr;
 }
 
 libCoin3D::Separator::Separator(SoSeparator* node)
@@ -103,16 +104,18 @@ SoSeparator* libCoin3D::Separator::getSoSeparator(void)
 
 void libCoin3D::Separator::addTransform(libCoin3D::Transform ^transform)
 {
+	if (_transform != nullptr)
+		throw gcnew System::ArgumentException("Cannot add transform to separator, one transform already present");
+
 	_separator->insertChild(transform->getSoTransform(),0);
-	_numTransforms++;
+	_transform = transform;
 }
 
 void libCoin3D::Separator::removeTransform()
 {
-	if (_numTransforms>0) {
-		_separator->removeChild(0);
-		_numTransforms--;
-	}
+	if (_transform != nullptr)
+		_separator->removeChild(_transform->getNode());
+	_transform = nullptr;
 }
 
 SoNode* libCoin3D::Separator::getNode()

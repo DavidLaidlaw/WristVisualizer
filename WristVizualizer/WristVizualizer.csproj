@@ -45,6 +45,12 @@
     <Compile Include="AnimationControl.Designer.cs">
       <DependentUpon>AnimationControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="EditBoneColors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoneColors.Designer.cs">
+      <DependentUpon>EditBoneColors.cs</DependentUpon>
+    </Compile>
     <Compile Include="FullWristAnimationControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -183,6 +189,10 @@
     <EmbeddedResource Include="CameraEditor.resx">
       <DependentUpon>CameraEditor.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoneColors.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EditBoneColors.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FullWristAnimationControl.resx">
       <DependentUpon>FullWristAnimationControl.cs</DependentUpon>

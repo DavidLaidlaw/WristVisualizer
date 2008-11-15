@@ -115,6 +115,7 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.boneColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -286,6 +287,7 @@ namespace WristVizualizer
             this.saveImageOptionsToolStripMenuItem,
             this.toolStripSeparator12,
             this.colorTransparencyToolStripMenuItem,
+            this.boneColorsToolStripMenuItem,
             this.backgroundColorToolStripMenuItem,
             this.cameraPositionOrientationToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
@@ -850,6 +852,14 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
+            // boneColorsToolStripMenuItem
+            // 
+            this.boneColorsToolStripMenuItem.Enabled = false;
+            this.boneColorsToolStripMenuItem.Name = "boneColorsToolStripMenuItem";
+            this.boneColorsToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.boneColorsToolStripMenuItem.Text = "Bone Colors...";
+            this.boneColorsToolStripMenuItem.Click += new System.EventHandler(this.boneColorsToolStripMenuItem_Click);
+            // 
             // WristVizualizer
             // 
             this.AllowDrop = true;
@@ -970,6 +980,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem boneColorsToolStripMenuItem;
     }
 }
 

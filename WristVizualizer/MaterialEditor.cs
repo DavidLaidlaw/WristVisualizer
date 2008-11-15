@@ -42,7 +42,7 @@ namespace WristVizualizer
             InitializeComponent();
 
 
-            int packedC = _material.getColor();
+            int packedC = _material.getPackedColor();
             _startColor = unpackColor(packedC);
             _startTransparency = _material.getTransparency();
 

@@ -612,5 +612,17 @@ namespace WristVizualizer
             return (System.Drawing.Bitmap)finalImage;
         }
 
+        public void EditBoneColorsShowDialog()
+        {
+            EditBoneColors edit = new EditBoneColors(_fullWrist);
+            DialogResult r = edit.ShowDialog();
+            if (r != DialogResult.OK)
+                return;
+            for (int i = 0; i < Wrist.NumBones; i++)
+            {
+                if (_fullWrist.Bones[i].IsValidBone && edit.IsColorChanged(i))
+                    _fullWrist.Bones[i].SetColor(edit.GetNewBoneColor(i));
+            }
+        }
     }
 }
