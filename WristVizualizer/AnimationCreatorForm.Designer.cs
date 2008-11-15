@@ -38,21 +38,22 @@ namespace WristVizualizer
             this.buttonOK = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDownSteps = new System.Windows.Forms.NumericUpDown();
-            this.checkBoxDistanceMap = new System.Windows.Forms.CheckBox();
-            this.numericUpDownDistanceMapDist = new System.Windows.Forms.NumericUpDown();
-            this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.numericUpDownDistanceMapDist = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            this.checkBoxDistanceMap = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDownSteps = new System.Windows.Forms.NumericUpDown();
+            this.labelWarning = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSteps)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDistanceMapDist)).BeginInit();
             this.tableLayoutPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDistanceMapDist)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSteps)).BeginInit();
             this.SuspendLayout();
             // 
             // listBoxAllPositions
@@ -154,6 +155,7 @@ namespace WristVizualizer
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.labelWarning);
             this.groupBox2.Controls.Add(this.label2);
             this.groupBox2.Controls.Add(this.tableLayoutPanel);
             this.groupBox2.Controls.Add(this.numericUpDownDistanceMapDist);
@@ -167,76 +169,6 @@ namespace WristVizualizer
             this.groupBox2.TabIndex = 13;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Animation Options";
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 18);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(169, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Number of Frames/Animation Step";
-            // 
-            // numericUpDownSteps
-            // 
-            this.numericUpDownSteps.Location = new System.Drawing.Point(181, 16);
-            this.numericUpDownSteps.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.numericUpDownSteps.Name = "numericUpDownSteps";
-            this.numericUpDownSteps.Size = new System.Drawing.Size(53, 20);
-            this.numericUpDownSteps.TabIndex = 0;
-            this.numericUpDownSteps.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            // 
-            // checkBoxDistanceMap
-            // 
-            this.checkBoxDistanceMap.AutoSize = true;
-            this.checkBoxDistanceMap.Location = new System.Drawing.Point(9, 43);
-            this.checkBoxDistanceMap.Name = "checkBoxDistanceMap";
-            this.checkBoxDistanceMap.Size = new System.Drawing.Size(97, 17);
-            this.checkBoxDistanceMap.TabIndex = 3;
-            this.checkBoxDistanceMap.Text = "Distance Maps";
-            this.checkBoxDistanceMap.UseVisualStyleBackColor = true;
-            this.checkBoxDistanceMap.CheckedChanged += new System.EventHandler(this.checkBoxDistanceMap_CheckedChanged);
-            // 
-            // numericUpDownDistanceMapDist
-            // 
-            this.numericUpDownDistanceMapDist.DecimalPlaces = 2;
-            this.numericUpDownDistanceMapDist.Enabled = false;
-            this.numericUpDownDistanceMapDist.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.numericUpDownDistanceMapDist.Location = new System.Drawing.Point(189, 42);
-            this.numericUpDownDistanceMapDist.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numericUpDownDistanceMapDist.Name = "numericUpDownDistanceMapDist";
-            this.numericUpDownDistanceMapDist.Size = new System.Drawing.Size(53, 20);
-            this.numericUpDownDistanceMapDist.TabIndex = 5;
-            this.numericUpDownDistanceMapDist.Value = new decimal(new int[] {
-            3,
-            0,
-            0,
-            0});
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(114, 44);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(75, 13);
-            this.label3.TabIndex = 6;
-            this.label3.Text = "Max Distance:";
             // 
             // label2
             // 
@@ -291,6 +223,87 @@ namespace WristVizualizer
             this.checkBox1.TabIndex = 11;
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // numericUpDownDistanceMapDist
+            // 
+            this.numericUpDownDistanceMapDist.DecimalPlaces = 2;
+            this.numericUpDownDistanceMapDist.Enabled = false;
+            this.numericUpDownDistanceMapDist.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.numericUpDownDistanceMapDist.Location = new System.Drawing.Point(189, 42);
+            this.numericUpDownDistanceMapDist.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numericUpDownDistanceMapDist.Name = "numericUpDownDistanceMapDist";
+            this.numericUpDownDistanceMapDist.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownDistanceMapDist.TabIndex = 5;
+            this.numericUpDownDistanceMapDist.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(114, 44);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(75, 13);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "Max Distance:";
+            // 
+            // checkBoxDistanceMap
+            // 
+            this.checkBoxDistanceMap.AutoSize = true;
+            this.checkBoxDistanceMap.Location = new System.Drawing.Point(9, 43);
+            this.checkBoxDistanceMap.Name = "checkBoxDistanceMap";
+            this.checkBoxDistanceMap.Size = new System.Drawing.Size(97, 17);
+            this.checkBoxDistanceMap.TabIndex = 3;
+            this.checkBoxDistanceMap.Text = "Distance Maps";
+            this.checkBoxDistanceMap.UseVisualStyleBackColor = true;
+            this.checkBoxDistanceMap.CheckedChanged += new System.EventHandler(this.checkBoxDistanceMap_CheckedChanged);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 18);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(169, 13);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "Number of Frames/Animation Step";
+            // 
+            // numericUpDownSteps
+            // 
+            this.numericUpDownSteps.Location = new System.Drawing.Point(181, 16);
+            this.numericUpDownSteps.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numericUpDownSteps.Name = "numericUpDownSteps";
+            this.numericUpDownSteps.Size = new System.Drawing.Size(53, 20);
+            this.numericUpDownSteps.TabIndex = 0;
+            this.numericUpDownSteps.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            // 
+            // labelWarning
+            // 
+            this.labelWarning.AutoSize = true;
+            this.labelWarning.ForeColor = System.Drawing.Color.Red;
+            this.labelWarning.Location = new System.Drawing.Point(6, 73);
+            this.labelWarning.Name = "labelWarning";
+            this.labelWarning.Size = new System.Drawing.Size(304, 13);
+            this.labelWarning.TabIndex = 13;
+            this.labelWarning.Text = "Warning: Calculating distance information for animaions is slow.";
+            this.labelWarning.Visible = false;
+            // 
             // AnimationCreatorForm
             // 
             this.AcceptButton = this.buttonOK;
@@ -308,11 +321,11 @@ namespace WristVizualizer
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSteps)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDistanceMapDist)).EndInit();
             this.tableLayoutPanel.ResumeLayout(false);
             this.tableLayoutPanel.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDistanceMapDist)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSteps)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -338,5 +351,6 @@ namespace WristVizualizer
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.Label labelWarning;
     }
 }

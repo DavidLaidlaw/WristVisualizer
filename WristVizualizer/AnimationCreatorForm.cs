@@ -71,6 +71,30 @@ namespace WristVizualizer
             set { numericUpDownDistanceMapDist.Value = value; }
         }
 
+        public double[] GetContourDistancesToCalculate()
+        {
+            List<double> dists = new List<double>();
+            for (int i = 0; i < _contourCheckBoxes.Length; i++)
+            {
+                if (!_contourCheckBoxes[i].Checked) continue;
+                if (_contourNumericUpDowns[i].Value == 0) continue;
+                dists.Add((double)_contourNumericUpDowns[i].Value);
+            }
+            return dists.ToArray();
+        }
+
+        public Color[] GetContourColorsToCalculate()
+        {
+            List<Color> colors = new List<Color>();
+            for (int i = 0; i < _contourCheckBoxes.Length; i++)
+            {
+                if (!_contourCheckBoxes[i].Checked) continue;
+                if (_contourNumericUpDowns[i].Value == 0) continue;
+                colors.Add(_contourColorButtons[i].BackColor);
+            }
+            return colors.ToArray();
+        }
+
         #region Selecting Positions and Order
         private void updateButtonsEnabledState()
         {
@@ -212,10 +236,12 @@ namespace WristVizualizer
                 setupContourRow(i);
                 if (_defaultContourDistances.Length > i) //check if we have a default value...
                 {
-                    _contourCheckBoxes[i].Checked = true;
-                    _contourNumericUpDowns[i].Enabled = true;
+                    //enter the default value, but still leave it disabled by default.
+                    //Calculating all of this is SLOW!!!
+                    _contourCheckBoxes[i].Checked = false;
+                    _contourNumericUpDowns[i].Enabled = false;
                     _contourNumericUpDowns[i].Value = (decimal)_defaultContourDistances[i];
-                    _contourColorButtons[i].Enabled = true;
+                    _contourColorButtons[i].Enabled = false;
                 }
             }
             this.ResumeLayout();
@@ -264,7 +290,6 @@ namespace WristVizualizer
 
         #endregion
 
-        #region Distance Map Stuff
         void contourCheckBox_CheckedChanged(object sender, EventArgs e)
         {
             //lets find out which one we are, and change the enabled state of our little friend
@@ -274,6 +299,7 @@ namespace WristVizualizer
                 {
                     _contourNumericUpDowns[i].Enabled = ((CheckBox)sender).Checked;
                     _contourColorButtons[i].Enabled = ((CheckBox)sender).Checked;
+                    UpdateWarningLabelVisibility();
                     return;
                 }
             }
@@ -296,7 +322,6 @@ namespace WristVizualizer
                 }
             }
         }
-        #endregion
 
         private bool validateForm()
         {
@@ -334,6 +359,26 @@ namespace WristVizualizer
         private void checkBoxDistanceMap_CheckedChanged(object sender, EventArgs e)
         {
             numericUpDownDistanceMapDist.Enabled = checkBoxDistanceMap.Checked;
+            UpdateWarningLabelVisibility();
+        }
+
+        private void UpdateWarningLabelVisibility()
+        {
+            if (checkBoxDistanceMap.Checked)
+            {
+                labelWarning.Visible = true;
+                return;
+            }
+
+            for (int i = 0; i < _contourCheckBoxes.Length; i++)
+            {
+                if (_contourCheckBoxes[i].Checked)
+                {
+                    labelWarning.Visible = true;
+                    return;
+                }
+            }
+            labelWarning.Visible = false;
         }
 
     }
