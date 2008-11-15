@@ -64,9 +64,6 @@ namespace libWrist
                 distances[i] = Double.MaxValue; //set this vertex to the default
                 foreach(int j in validTestBoneIndices) //only use the bones that we have specified interactions for and are valid
                 {
-                    //TODO: how to skip missing information?
-                    //if (mri[j] == null) continue; //skip missing scans
-
                     double x = pts[i, 0];
                     double y = pts[i, 1];
                     double z = pts[i, 2];
