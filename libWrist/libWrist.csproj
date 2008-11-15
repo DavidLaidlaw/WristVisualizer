@@ -50,7 +50,7 @@
     <Compile Include="CropValuesParser.cs" />
     <Compile Include="CTmri.cs" />
     <Compile Include="DatParser.cs" />
-    <Compile Include="DistanceFields.cs" />
+    <Compile Include="DistanceMaps.cs" />
     <Compile Include="ExceptionHandling\ExceptionDialog.cs">
       <SubType>Form</SubType>
     </Compile>
