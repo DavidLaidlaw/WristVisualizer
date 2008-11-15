@@ -20,7 +20,24 @@ namespace libWrist
         public DistanceMaps()
         {           
             
-        } 
+        }
+
+        /// <summary>
+        /// Check an array of Bone objects and return an array of indices to the primary array 
+        /// indicating which are valid bones with valid distance fields
+        /// </summary>
+        /// <param name="testBones"></param>
+        /// <returns></returns>
+        public static int[] GetIndexesOfValidBones(Bone[] testBones)
+        {
+            List<int> indices = new List<int>(testBones.Length);
+            for (int i = 0; i < testBones.Length; i++)
+            {
+                if (testBones[i].IsValidBone && testBones[i].HasDistanceField)
+                    indices.Add(i);
+            }
+            return indices.ToArray();
+        }
 
         /// <summary>
         /// Calculates the distanceMaps for a given bone using the precalculated distance fields.
@@ -39,12 +56,13 @@ namespace libWrist
 
             double[] distances = new double[numVertices];
             bool isNeutralPosition = (tmRelMotions[0] == null); //if we have no transforms, then its the neutral position
+            int[] validTestBoneIndices = GetIndexesOfValidBones(testBones);
 
             //for each vertex           
             for (int i = 0; i < numVertices; i++)
             {
                 distances[i] = Double.MaxValue; //set this vertex to the default
-                for (int j=0; j<testBones.Length; j++) //only use the bones that we have specified interact
+                foreach(int j in validTestBoneIndices) //only use the bones that we have specified interactions for and are valid
                 {
                     //TODO: how to skip missing information?
                     //if (mri[j] == null) continue; //skip missing scans

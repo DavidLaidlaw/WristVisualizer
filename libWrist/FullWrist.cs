@@ -295,6 +295,9 @@ namespace libWrist
             for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
             {
                 Bone referenceBone = _bones[boneIndex];
+                //we can only do this for valid color bones, so lets check that this is the case, if not, continue
+                if (!referenceBone.IsValidBone || !referenceBone.IsColoredBone) continue;
+
                 Bone[] interactionBones = GetBonesThatInteractWithBone(boneIndex);
                 for (int i = 0; i < _numberPositions; i++)
                 {
@@ -320,6 +323,9 @@ namespace libWrist
             for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
             {
                 Bone referenceBone = _bones[boneIndex];
+                //we can only do this for valid color bones, so lets check that this is the case, if not, continue
+                if (!referenceBone.IsValidBone || !referenceBone.IsColoredBone) continue;
+
                 for (int i = 0; i < _numberPositions; i++)
                 {
                     DistanceMaps.DistanceCalculationJob job = new DistanceMaps.DistanceCalculationJob();
@@ -341,6 +347,9 @@ namespace libWrist
             for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
             {
                 Bone referenceBone = _bones[boneIndex];
+                //we can only do this for valid color bones, so lets check that this is the case, if not, continue
+                if (!referenceBone.IsValidBone || !referenceBone.IsColoredBone) continue;
+
                 for (int i = 0; i < _numberPositions; i++)
                 {
                     DistanceMaps.DistanceCalculationJob job = new DistanceMaps.DistanceCalculationJob();
