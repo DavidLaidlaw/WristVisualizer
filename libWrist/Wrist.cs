@@ -266,6 +266,46 @@ namespace libWrist
 
         #endregion
 
+        public static int GetBoneIndexFromShortName(string shortname)
+        {
+            shortname = shortname.ToLower();
+            for (int i = 0; i < _bnames.Length; i++)
+                if (shortname.Equals(_bnames[i]))
+                    return i;
+
+            //if we get here, we failed.... return -1 or throw exception...?
+            throw new ArgumentException(String.Format("'{0}' is not a valid bone name", shortname));
+        }
+
+        public static Sides GetSideFromString(string sideString)
+        {
+            switch (sideString.ToLower())
+            {
+                case "l":
+                case "left":
+                    return Sides.LEFT;
+                case "r":
+                case "right":
+                    return Sides.RIGHT;
+                default:
+                    throw new ArgumentException(String.Format("Invalid side: '{0}'", sideString));
+            }
+        }
+
+        public static bool IsValidSideString(string side)
+        {
+            switch (side.ToLower())
+            {
+                case "l":
+                case "left":
+                case "r":
+                case "right":
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         #region Public Get Methods
         /// <summary>
         /// Given a series, it will try and find the index for it in the current object. (Case sensitive)

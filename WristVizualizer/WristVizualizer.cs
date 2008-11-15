@@ -44,12 +44,17 @@ namespace WristVizualizer
         public WristVizualizer(string[] fileArgs)
         {
             Coin3DBase.Init();
+#if DEBUG
+            if (System.Diagnostics.Debugger.IsAttached)
+                fileArgs = new string[] { @"-s:F:\LocalCopies\Functional\Cleaned Subjects For Vizual\asdf\E02862", "--side:R","--testbone:sca","--refbone:rad","--poslist:02R","-c:1.0,1.5", "-f:rad" };
+#endif
             CommandLineOptions options = new CommandLineOptions();
             options.ProcessArgs(fileArgs);
 
             if (options.isBatchMode())
             {
                 BatchMode batch = new BatchMode(options);
+                System.Environment.Exit(0);
             }
 
             InitializeComponent();

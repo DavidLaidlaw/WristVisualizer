@@ -70,6 +70,25 @@ namespace libWrist
             get { return _contourColors; }
         }
 
+        public void LoadSelectBonesAndDistancesForBatchMode(int[] testbones, int[] refbones)
+        {
+            _root = new Separator();
+            for (int i=0; i<Wrist.NumBones; i++)
+                _bones[i] = new Bone(_wrist,this,i);
+            foreach (int bIndex in testbones)
+            {
+                _bones[bIndex].LoadIVFile();
+                //for the test bones, we need the distance fields
+                _bones[bIndex].ReadDistanceField();
+            }
+            foreach (int bIndex in refbones)
+            {
+                _bones[bIndex].LoadIVFile();
+            }
+            LoadKinematicTransforms();
+            LoadInertiaData();
+        }
+
         public void LoadFullWrist()
         {
             _root = new Separator();
