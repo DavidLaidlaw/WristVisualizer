@@ -148,6 +148,14 @@ namespace libWrist
         }
 
         /// <summary>
+        /// Returns the full full path to the neutral series folder
+        /// </summary>
+        public string NeutralSeriesPath
+        {
+            get { return Path.Combine(_subjectPath, _neutralSeries); }
+        }
+
+        /// <summary>
         /// The full path to the neutral intertia file
         /// </summary>
         public string inertiaFile

@@ -368,6 +368,11 @@ namespace libWrist
             return (_computedContours[positionIndex] != null);
         }
 
+        public Contour GetContourForPosition(int positionIndex)
+        {
+            return _computedContours[positionIndex];
+        }
+
         public void RemoveColorMap()
         {
             if (_coloredBone != null)

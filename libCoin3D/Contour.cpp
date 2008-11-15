@@ -6,11 +6,22 @@ libCoin3D::Contour::Contour(int numberOfDistances)
 	array<System::Drawing::Color>^ contourColors = gcnew array<System::Drawing::Color>(numberOfDistances);
 	for (int i=0; i<numberOfDistances; i++)
 		contourColors[i] = System::Drawing::Color::White; //default to all white
+	_contourDistances = nullptr;
 	SetupContour(contourColors);
 }
 
 libCoin3D::Contour::Contour(array<System::Drawing::Color>^ contourColors)
 {
+	_contourDistances = nullptr;
+	SetupContour(contourColors);
+}
+
+libCoin3D::Contour::Contour(array<System::Drawing::Color>^ contourColors, array<double>^ contourDistances)
+{
+	if (contourColors->Length != contourDistances->Length)
+		throw gcnew System::ArgumentException("Must pass the same number of colors as distances for contour");
+
+	_contourDistances = contourDistances;
 	SetupContour(contourColors);
 }
 

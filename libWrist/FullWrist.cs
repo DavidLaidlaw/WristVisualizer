@@ -45,6 +45,11 @@ namespace libWrist
             get { return _bones; }
         }
 
+        public Wrist Wrist
+        {
+            get { return _wrist; }
+        }
+
         public bool ShowContours
         {
             get { return _showContours; }

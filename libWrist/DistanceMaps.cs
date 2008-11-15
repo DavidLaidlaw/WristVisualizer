@@ -284,7 +284,7 @@ namespace libWrist
 
             double[] dist = distanceMap;
 
-            Contour cont1 = new Contour(colors);
+            Contour cont1 = new Contour(colors, cDistances);
 
             double maxContourDistance = -1;
             foreach (double cDist in cDistances)

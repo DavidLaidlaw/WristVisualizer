@@ -46,7 +46,10 @@ namespace WristVizualizer
             Coin3DBase.Init();
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
-                fileArgs = new string[] { @"-s:F:\LocalCopies\Functional\Cleaned Subjects For Vizual\asdf\E02862", "--side:R","--testbone:sca","--refbone:rad","--poslist:02R","-c:1.0,1.5", "-f:rad" };
+            {
+                fileArgs = new string[] { @"-s:F:\LocalCopies\Functional\Cleaned Subjects For Vizual\asdf\E02862", "--side:R", "--testbone:sca", "--refbone:rad", "--poslist:02R", "-c:1.0,1.5", "-f:rad", @"--appendMaster:f:\tsetOutput.txt", "--saveCentAreaDefault"};
+                //fileArgs = new string[] { @"--help" };
+            }
 #endif
             CommandLineOptions options = new CommandLineOptions();
             options.ProcessArgs(fileArgs);

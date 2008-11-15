@@ -40,11 +40,77 @@ namespace WristVizualizer
             fullWrist.LoadSelectBonesAndDistancesForBatchMode(new int[] { testBoneIndex }, new int[] { referenceBoneIndex }); //only load selective bones..
 
 
+            if (options.MultiThread)
+                ProcessMultiThreaded(fullWrist, referenceBoneIndex, testBoneIndex, positionList, cDistances);
+            else
+                ProcessSingleThread(fullWrist, referenceBoneIndex, testBoneIndex, positionList, cDistances);
+            
 
-            ProcessSingleThread(fullWrist, referenceBoneIndex, testBoneIndex, positionList, cDistances);
-            //ProcessMultiThreaded(fullWrist, referenceBoneIndex, testBoneIndex, positionList, cDistances);
+            SaveDataCentroidArea(options, fullWrist);
+        }
 
+        private static void SaveDataCentroidArea(CommandLineOptions options, FullWrist fullWrist)
+        {
+            int refBoneIndex = options.GetReferenceBoneIndex();
+            int testBoneIndex = options.GetTestBoneIndex();
+            int[] positionList = GetPositionIndexes(fullWrist.Wrist, options.GetPositionNames());
 
+            for (int i = 0; i < positionList.Length; i++)
+            {
+                Contour c = fullWrist.Bones[refBoneIndex].GetContourForPosition(positionList[i]);
+                string line = CreateContourResultsLine(c);
+                if (options.SaveCentroidAreaDefault)
+                {
+                    string fname = CreateOutputFilename(fullWrist, refBoneIndex, testBoneIndex, positionList[i]);
+                    writeToFile(fname, line);
+                }
+                if (options.AppendMasterAreaCentroidFname != null)
+                {
+                    string fname = options.AppendMasterAreaCentroidFname;
+                    appendToFile(fname, line);
+                }
+            }
+        }
+
+        private static string CreateOutputFilename(FullWrist fullWrist, int refBoneIndex, int testBoneIndex, int posIndex)
+        {
+            Wrist w = fullWrist.Wrist;
+            string pos = (posIndex == 0) ? w.neutralSeries : w.series[posIndex - 1];
+            string refBname = Wrist.ShortBoneNames[refBoneIndex];
+            string testBname = Wrist.ShortBoneNames[testBoneIndex];
+            string fname = String.Format("{0}_{1}{2}_ContourMaster.dat", refBname, testBname, pos.Substring(1));
+            string seriesPath = (posIndex == 0) ? w.NeutralSeriesPath : w.getSeriesPath(posIndex - 1);
+            string distanceFolder = Path.Combine(seriesPath, "Distances");
+            if (!Directory.Exists(distanceFolder))
+                Directory.CreateDirectory(distanceFolder);
+            return Path.Combine(distanceFolder, fname);
+        }
+
+        private static string CreateContourResultsLine(Contour contour)
+        {
+            StringBuilder builder = new StringBuilder();
+            for (int i = 0; i < contour.ContourDistances.Length; i++)
+            {
+                builder.AppendFormat("{0},{1},{2},{3},{4}", contour.ContourDistances[i], contour.Areas[i], contour.Centroids[i][0], contour.Centroids[i][1], contour.Centroids[i][2]);
+                builder.AppendLine();
+            }
+            return builder.ToString();
+        }
+
+        private static void appendToFile(string fname, string line)
+        {
+            using (StreamWriter writer = new StreamWriter(fname, true))
+            {
+                writer.Write(line);
+            }
+        }
+
+        private static void writeToFile(string fname, string line)
+        {
+            using (StreamWriter writer = new StreamWriter(fname, false))
+            {
+                writer.Write(line);
+            }
         }
 
         private static void ProcessSingleThread(FullWrist fullWrist, int refBoneIndex, int testBoneIndex, int[] posList, double[] cDistances)

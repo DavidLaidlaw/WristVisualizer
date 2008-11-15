@@ -12,32 +12,47 @@ namespace WristVizualizer
     {
         public string error = "";
 
-        [Option(1,"Path to the subject directory to use",'s',"subject")]
+        [Option(1,"Path to the {subject} directory to use",'s',"subject")]
         public string Subject = null;
 
-        [Option("Wrist side (L/R)", "side")]
+        [Option("Wrist {side} (L/R)", "side")]
         public string SideString = null;
 
-        [Option(1,"Reference bone. Specify three letter bone code (ie. 'rad')",'r',"refbone")]
+        [Option(1,"Reference bone. Specify three letter {bone code} (ie. 'rad')",'r',"refbone")]
         public string ReferenceBone = null;
 
-        [Option(1,"Test bone. Specify three letter bone code (ie. 'rad')",'t',"testbone")]
+        [Option(1,"Test bone. Specify three letter {bone code} (ie. 'rad')",'t',"testbone")]
         public string TestBone = null;
 
         //[Option(1, "Fixed bone. Specify three letter bone code (ie. 'rad')", 'f', "fixedbone")]
         //public string FixedBone = null;
 
-        [Option("Position List. Specify index (0==neutral) or 4 char code",'p',"poslist")]
+        [Option("Position List. Specify {index} (0==neutral) or 4 char code",'p',"poslist")]
         public string PositionList = null;
 
-        [Option("Max distance for color map", "maxcolordistance")]
+        [Option("Max {distance} for color map", "maxcolordistance")]
         public double MaxColorDistance = 0;
 
-        [Option("Contour Distances", 'c', "contours")]
+        [Option("Contour {Distances}", 'c', "contours")]
         public string ContourString = null;
-                
-        [Option(1, "Name of output file", 'o')]
-        public string output = null;        
+
+        [Option("{Filename} for contour file", "saveContour")]
+        public string SaveContourFname = null;
+
+        [Option("{Filename} for patch file", "savePatch")]
+        public string SavePatchFname = null;
+
+        [Option("{Filename} for area file", "saveArea")]
+        public string SaveAreaFname = null;
+
+        [Option("{Filename} for master centroid/area file. Data is appended to the end", "appendMaster")]
+        public string AppendMasterAreaCentroidFname = null;
+
+        [Option("Output centroid and area to to default file", "saveCentAreaDefault")]
+        public bool SaveCentroidAreaDefault = false;
+
+        [Option("Use multi-threaded processing for increased speed", "multithread")]
+        public bool MultiThread = false;   
 
 
         public bool isBatchMode()
