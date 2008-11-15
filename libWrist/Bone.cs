@@ -375,8 +375,8 @@ namespace libWrist
 
         public void CalculateAndSaveDistanceMapForPosition(int positionIndex, Bone[] testBones)
         {
-            //quick check that we can do this.
-            if (_distanceField == null || _coloredBone == null) return;
+            //quick check that we can do this. Don't need our own distance field, just the testBones'
+            if (_coloredBone == null) return;
 
             //calculate the relative motion for each bone. Need a transform for each testBone, that will
             //move this bone into its coordinate system
