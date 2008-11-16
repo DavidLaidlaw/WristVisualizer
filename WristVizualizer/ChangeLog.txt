@@ -1,7 +1,8 @@
-Version NEXT
+Version 1.7.0
 - Change: Significant refactoring of logic code. Hopefully have not broken too much.
 - New: Can use distance maps in animation
 - New: Can easily color bones and HAM axes during animation.
+- New: Added batch mode, for processing distance maps from the command line.
 
 Version 1.6.3
 - Fixed bug: Parsing motion files with an 'E' would fail (ie. 1.1233E-4)
