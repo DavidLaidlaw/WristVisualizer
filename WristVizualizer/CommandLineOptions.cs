@@ -42,14 +42,8 @@ namespace WristVizualizer
         [Option("{Filename} for patch file", "savePatch")]
         public string SavePatchFname = null;
 
-        [Option("{Filename} for area file", "saveArea")]
-        public string SaveAreaFname = null;
-
-        [Option("{Filename} for master centroid/area file. Data is appended to the end", "appendMaster")]
-        public string AppendMasterAreaCentroidFname = null;
-
-        [Option("Output centroid and area to to default file", "saveCentAreaDefault")]
-        public bool SaveCentroidAreaDefault = false;
+        [Option("Save area and centroid data to disk. Optionally: specify {directory} to save to (Defaults to <subject>\\<series>\\Distances\\)", "saveArea")]
+        public string SaveAreaDirectory = null;
 
         [Option("Use multi-threaded processing for increased speed", "multithread")]
         public bool MultiThread = false;   
