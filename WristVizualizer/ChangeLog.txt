@@ -1,3 +1,6 @@
+Version 1.7.1
+- Fixed bug: Fixed problem when animating bones with no inertial information and no transformation.
+
 Version 1.7.0
 - Change: Significant refactoring of logic code. Hopefully have not broken too much.
 - New: Can use distance maps in animation
