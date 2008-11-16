@@ -1,6 +1,8 @@
 #include "StdAfx.h"
 #include "Switch.h"
 
+#include <Inventor/nodes/SoSeparator.h>
+
 libCoin3D::Switch::Switch()
 {
 	_switch = new SoSwitch();
@@ -35,7 +37,10 @@ void libCoin3D::Switch::unrefNoDelete()
 
 void libCoin3D::Switch::addChild(libCoin3D::Node ^node) 
 {
-	_switch->addChild(node->getNode());
+	if (node->getNode() != NULL) //check to make sure we have a valid node
+		_switch->addChild(node->getNode());
+	else //if there is no child, then we put in a placeholder
+		_switch->addChild(new SoSeparator);
 }
 
 void libCoin3D::Switch::whichChild(int childIndex) 
