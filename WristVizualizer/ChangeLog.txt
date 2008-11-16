@@ -1,3 +1,6 @@
+Version Next
+- Fixed bug: Removed blue border from exported image. Also forced all output images to be sized as a multiple of 4, for compatability with video compression.
+
 Version 1.7.1
 - Fixed bug: Fixed problem when animating bones with no inertial information and no transformation.
 

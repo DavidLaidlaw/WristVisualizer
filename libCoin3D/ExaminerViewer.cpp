@@ -182,7 +182,7 @@ System::Drawing::Image^ libCoin3D::ExaminerViewer::getImage()
 		System::Drawing::Imaging::PixelFormat::Format24bppRgb);
 	//need to initialize the graphic, don't know why
 	System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(im);
-	g->FillRectangle(System::Drawing::Brushes::Green,0,0,x,y);
+	g->FillRectangle(System::Drawing::Brushes::White,0,0,x,y);
 
 	//setup BitmapData for raw editing
 	System::Drawing::Imaging::BitmapData^ bitdata;
@@ -264,6 +264,13 @@ SoOffscreenRenderer* libCoin3D::ExaminerViewer::getOffscreenRenderer(int scaleFa
 	const SbViewportRegion &vp  = _viewer->getViewportRegion();
 	const SbVec2s &oldImagePixSize = vp.getViewportSizePixels();
 	SbVec2s imagePixSize = SbVec2s(oldImagePixSize);
+
+	//make sure that our image dimensions are a multiple of 4, needed for video,
+	//not certain why its leaving blue borders on the other images though....
+	imagePixSize[0] += imagePixSize[0] % 4;
+	imagePixSize[1] += imagePixSize[1] % 4;
+
+	//now scale that image, by the appropriate factor
 	imagePixSize *= scaleFactor;
 
 
