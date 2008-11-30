@@ -1,4 +1,4 @@
-Version Next
+Version 1.7.2
 - Fixed bug: Removed blue border from exported image. Also forced all output images to be sized as a multiple of 4, for compatability with video compression.
 - New: In batch mode, can create contour targeting a specific surface area
 
