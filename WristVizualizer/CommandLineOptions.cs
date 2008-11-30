@@ -33,7 +33,7 @@ namespace WristVizualizer
         [Option("Max {distance} for color map", "maxcolordistance")]
         public double MaxColorDistance = 0;
 
-        [Option("Contour {Distances}", 'c', "contours")]
+        [Option("Contour {Distances} (mm) (Max==3mm)", 'c', "contours")]
         public string ContourString = null;
 
         [Option("{Filename} for contour file", "saveContour")]
@@ -44,6 +44,15 @@ namespace WristVizualizer
 
         [Option("Save area and centroid data to disk. Optionally: specify {directory} to save to (Defaults to <subject>\\<series>\\Distances\\)", "saveArea")]
         public string SaveAreaDirectory = null;
+
+        [Option("Determine contour by targeting {area} (mm2). (max resulting distance: 3mm)", "contourArea")]
+        public string TargetContourArea = null;
+
+        [Option("Maximum number of {iterations} during minimization routine", "iterationslimit")]
+        public int IterationLimit = 30;
+
+        [Option(1, "Specify {precision} for determining the distance (optional) ", "tolerance")]
+        public double Tolerance = 0.001;
 
         [Option("Use multi-threaded processing for increased speed", "multithread")]
         public bool MultiThread = false;   
@@ -58,11 +67,17 @@ namespace WristVizualizer
             if (TestBone != null) return true;
             if (PositionList != null) return true;
             if (ContourString != null) return true;
+            if (TargetContourArea != null) return true;
             //if (FixedBone != null) return true;
             if (MaxColorDistance != 0) return true;
 
             //if we get here, then nothing was set
             return false;
+        }
+
+        public double[] GetTargetContourAreas()
+        {
+            return GetListDoubles(this.TargetContourArea);
         }
 
         public double[] GetCoutourDistances()
@@ -72,6 +87,7 @@ namespace WristVizualizer
 
         private static double[] GetListDoubles(string doubleString)
         {
+            if (doubleString == null) return null;
             string[] stringparts = doubleString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             double[] distances = new double[stringparts.Length];
             for (int i = 0; i < stringparts.Length; i++)

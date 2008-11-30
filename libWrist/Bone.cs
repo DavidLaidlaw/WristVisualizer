@@ -504,6 +504,16 @@ namespace libWrist
             }
         }
 
+        public Contour[] CalculateContourForPositionTargetingAreas(int positionIndex, double[] targetArea, double tolerance, int maxNumIterations)
+        {
+            if (_computedDistances[positionIndex] == null)
+                throw new WristException("Raw distances (_computedDistancs) must be pre-computed before calculating Contour");
+            Contour[] c = new Contour[targetArea.Length];
+            for (int i = 0; i < targetArea.Length; i++)
+                c[i] = DistanceMaps.CreateContourSingleBoneSinglePositionTargetingArea(this, _computedDistances[positionIndex], targetArea[i], tolerance, maxNumIterations);
+            return c;
+        }
+
         public void CalculateAndSaveContourForAnimation(int absoluteFrameNumber, double[] cDistances, System.Drawing.Color[] colors)
         {
             if (_animationComputedDistances[absoluteFrameNumber] == null)

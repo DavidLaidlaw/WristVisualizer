@@ -19,6 +19,7 @@ namespace WristVizualizer
         private int[] _positionList;
 
         private double[] _cDistances;
+        private double[] _cAreas;
 
         public BatchMode(CommandLineOptions options)
         {
@@ -27,8 +28,16 @@ namespace WristVizualizer
             {
                 _options = options;
                 ReadInJobFromOption();
-                LoadFilesAndCalculate();
-                SaveDataCentroidArea();
+
+                //load the wrist and files
+                _fullWrist.LoadSelectBonesAndDistancesForBatchMode(new int[] { _testBoneIndex }, new int[] { _refBoneIndex }); //only load selective bones..
+
+                //process parts
+                if (_cDistances != null)
+                    CalculateAndSaveContours();
+                if (_cAreas != null)
+                    CalcualteAndSaveContourByArea();
+                
             }
             catch (Exception ex)
             {
@@ -49,16 +58,33 @@ namespace WristVizualizer
             //int fixedBoneIndex = options.GetFixedBoneIndex();
             _positionList = GetPositionIndexes(_wrist, _options.GetPositionNames());
             _cDistances = _options.GetCoutourDistances();
+            _cAreas = _options.GetTargetContourAreas();
         }
 
-        private void LoadFilesAndCalculate()
+        private void CalcualteAndSaveContourByArea()
         {
-            _fullWrist.LoadSelectBonesAndDistancesForBatchMode(new int[] { _testBoneIndex }, new int[] { _refBoneIndex }); //only load selective bones..
-            
-            if (_options.MultiThread)
-                ProcessMultiThreaded(_fullWrist, _refBoneIndex, _testBoneIndex, _positionList, _cDistances);
-            else
-                ProcessSingleThread(_fullWrist, _refBoneIndex, _testBoneIndex, _positionList, _cDistances);
+            if (_cAreas == null) return;
+            if (_options.SaveAreaDirectory == null) return; //nothing to do if we don't save
+
+            Contour[][] contours = ProcessTargetAreaSingleThread();
+            for (int i = 0; i < _positionList.Length; i++)
+            {
+                string fname = CreateTargetAreaOutputFilename(_positionList[i]);
+                SaveContourAreaAndCentroidToFile(contours[i], fname);
+            }
+        }
+
+        private void CalculateAndSaveContours()
+        {
+            if (_cDistances != null)
+            {
+                if (_options.MultiThread)
+                    ProcessContoursMultiThreaded(_fullWrist, _refBoneIndex, _testBoneIndex, _positionList);
+                else
+                    ProcessContoursSingleThread(_fullWrist, _refBoneIndex, _testBoneIndex, _positionList);
+
+                SaveDataCentroidArea();
+            }
         }
 
         private void SaveDataCentroidArea()
@@ -72,36 +98,82 @@ namespace WristVizualizer
             }
         }
 
+        private string CreateTargetAreaOutputFilename(int posIndex)
+        {
+            const string format = "%SUBJECT%_%REFBONE%_%TESTBONE%%POSITION%_ContourTargeted.dat";
+            string fname = createFilenameHelper(format, posIndex);
+
+            return Path.Combine(GetContourOutputDirectory(posIndex), fname);
+        }
+
         private string CreateAreaOutputFilename(int posIndex)
+        {
+            const string format = "%SUBJECT%_%REFBONE%_%TESTBONE%%POSITION%_ContourMaster.dat";
+            string fname = createFilenameHelper(format, posIndex);
+
+            return Path.Combine(GetContourOutputDirectory(posIndex), fname);
+        }
+
+        private string createFilenameHelper(string formatString, int posIndex)
         {
             string pos = (posIndex == 0) ? _wrist.neutralSeries : _wrist.series[posIndex - 1];
             string refBname = Wrist.ShortBoneNames[_refBoneIndex];
             string testBname = Wrist.ShortBoneNames[_testBoneIndex];
-            string fname = String.Format("{0}_{1}_{2}{3}_ContourMaster.dat", _wrist.subject, refBname, testBname, pos.Substring(1));
-            
+
+            string output = formatString;
+            output = output.Replace("%SUBJECT%", _wrist.subject);
+            output = output.Replace("%REFBONE%", refBname);
+            output = output.Replace("%TESTBONE%", testBname);
+            output = output.Replace("%POSITION%", pos.Substring(1));
+            return output;
+        }
+
+        private string GetContourOutputDirectory(int posIndex)
+        {
             if (_options.SaveAreaDirectory.Trim().Length > 0) //if an output directory was specified, use that
-                return Path.Combine(_options.SaveAreaDirectory, fname);
-            
+                return _options.SaveAreaDirectory;
+
             //otherwise, specify our own default location
             string seriesPath = (posIndex == 0) ? _wrist.NeutralSeriesPath : _wrist.getSeriesPath(posIndex - 1);
             string distanceFolder = Path.Combine(seriesPath, "Distances");
             if (!Directory.Exists(distanceFolder))
                 Directory.CreateDirectory(distanceFolder);
-            return Path.Combine(distanceFolder, fname);
+            return distanceFolder;
         }
 
         private static void SaveContourAreaAndCentroidToFile(Contour contour, string filename)
         {
+            SaveContourAreaAndCentroidToFile(new Contour[] { contour }, filename);
+        }
+        private static void SaveContourAreaAndCentroidToFile(Contour[] contours, string filename)
+        {
             using (StreamWriter writer = new StreamWriter(filename, false))
             {
-                for (int i = 0; i < contour.ContourDistances.Length; i++)
+                foreach (Contour contour in contours)
                 {
-                    writer.WriteLine("{0},{1},{2},{3},{4}", contour.ContourDistances[i], contour.Areas[i], contour.Centroids[i][0], contour.Centroids[i][1], contour.Centroids[i][2]);
+                    for (int i = 0; i < contour.ContourDistances.Length; i++)
+                    {
+                        writer.WriteLine("{0},{1},{2},{3},{4}", contour.ContourDistances[i], contour.Areas[i], contour.Centroids[i][0], contour.Centroids[i][1], contour.Centroids[i][2]);
+                    }
                 }
             }
         }
 
-        private static void ProcessSingleThread(FullWrist fullWrist, int refBoneIndex, int testBoneIndex, int[] posList, double[] cDistances)
+        private Contour[][] ProcessTargetAreaSingleThread()
+        {
+            Bone refBone = _fullWrist.Bones[_refBoneIndex];
+            Bone testBone = _fullWrist.Bones[_testBoneIndex];
+            Contour[][] allContours = new Contour[_positionList.Length][];
+            for (int i = 0; i < _positionList.Length; i++)
+            {
+                int pos = _positionList[i];
+                refBone.CalculateAndSaveDistanceMapForPosition(pos, new Bone[] { testBone });
+                allContours[i] = refBone.CalculateContourForPositionTargetingAreas(pos, _cAreas, _options.Tolerance, _options.IterationLimit);
+            }
+            return allContours;
+        }
+
+        private void ProcessContoursSingleThread(FullWrist fullWrist, int refBoneIndex, int testBoneIndex, int[] posList)
         {
             Bone refBone = fullWrist.Bones[refBoneIndex];
             Bone testBone = fullWrist.Bones[testBoneIndex];
@@ -109,14 +181,14 @@ namespace WristVizualizer
             {
                 int pos = posList[i];
                 refBone.CalculateAndSaveDistanceMapForPosition(pos, new Bone[] { testBone });
-                refBone.CalculateAndSaveContourForPosition(pos, cDistances, GetWhiteColors(cDistances.Length));
+                refBone.CalculateAndSaveContourForPosition(pos, _cDistances, GetWhiteColors(_cDistances.Length));
             }
         }
 
-        private static void ProcessMultiThreaded(FullWrist fullWrist, int refBoneIndex, int testBoneIndex, int[] posList, double[] cDistances)
+        private void ProcessContoursMultiThreaded(FullWrist fullWrist, int refBoneIndex, int testBoneIndex, int[] posList)
         {
             Queue<Queue<BulkCalculator.DistanceCalculationJob>> q;
-            q = BuildMasterQueue(fullWrist, refBoneIndex, testBoneIndex, posList, cDistances);
+            q = BuildMasterQueue(fullWrist, refBoneIndex, testBoneIndex, posList, _cDistances);
             //go compute this!
             BulkCalculator calculator = new BulkCalculator();
             calculator.ProcessMasterQueue(q);

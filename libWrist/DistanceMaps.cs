@@ -311,6 +311,42 @@ namespace libWrist
             return cont1;
         }
 
+        public static Contour CreateContourSingleBoneSinglePositionTargetingArea(Bone referenceBone, double[] distanceMap, double targetArea, double tolerance, int iterations)
+        {
+            float[,] points = referenceBone.GetVertices();
+            int[,] conn = referenceBone.GetFaceSetIndices();
+
+            System.Drawing.Color[] colors = new System.Drawing.Color[] { System.Drawing.Color.White };
+
+            /* Setup my starting bounds for our target answer. We are done with
+             * this loop when the difference between these bounds is either less 
+             * then the tolerance, or we hit the max number of iterations
+             */
+            double minBounds = 0; 
+            double maxBounds = 3;
+            while (iterations-- > 0)
+            {
+                double currentDistanceTrial = (maxBounds + minBounds) / 2; //try the middle
+                double[] cDistances = new double[] {currentDistanceTrial};
+                Contour c = createContourSingleBoneSinglePosition(points, conn, distanceMap, cDistances, colors);
+                if (c.Areas[0] < targetArea) //if our area was too small, then are distance is too small
+                    minBounds = currentDistanceTrial;
+                else if (c.Areas[0] > targetArea) // area is too large => distance is too large
+                    maxBounds = currentDistanceTrial;
+                else //we hit the nail on the head, not possible, but oh well
+                    return c;
+
+                //TODO: Should I be able to check for an area within a limit?
+                //check if we are done.
+                System.Diagnostics.Debug.Assert(maxBounds > minBounds);
+                if (maxBounds - minBounds < tolerance)
+                {
+                    return c;
+                }
+            }
+            return null; //if we reach here, we maxed our iterations, so return null....I think?
+        }
+
         #region Contour Helper Functions
         private static double distanceBetweenPoints(float[] p0, float[] p1)
         {
