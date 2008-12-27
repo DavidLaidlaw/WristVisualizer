@@ -21,6 +21,8 @@ namespace libWrist
         private string _baseFiberPath;
         private string _fiberName;
         private int _numFibers;
+        private float _hamLength = -1;
+        private float _hamRadius = -1;
 
         private string[] _labels = null;
 
@@ -56,6 +58,16 @@ namespace libWrist
         public bool SetColor
         {
             get { return _setColor; }
+        }
+
+        public float HamLength
+        {
+            get { return _hamLength; }
+        }
+
+        public float HamRadius
+        {
+            get { return _hamRadius; }
         }
 
         public bool LoadLigaments
@@ -216,6 +228,12 @@ namespace libWrist
                     break;
                 case "numfibers":
                     _numFibers = Int32.Parse(value);
+                    break;
+                case "hamlength":
+                    _hamLength = float.Parse(value);
+                    break;
+                case "hamradius":
+                    _hamRadius = float.Parse(value);
                     break;
             }
         }

@@ -1,3 +1,6 @@
+Version 1.7.3
+- New: In PosView mode, can now set the length and radius of the HAM axis. (For Nick's little fish heads)
+
 Version 1.7.2
 - Fixed bug: Removed blue border from exported image. Also forced all output images to be sized as a multiple of 4, for compatability with video compression.
 - New: In batch mode, can create contour targeting a specific surface area

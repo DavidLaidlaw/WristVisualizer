@@ -322,13 +322,16 @@ namespace WristVizualizer
             for (int i = 0; i < HAMdata.Length; i++)
             {
                 Separator sepPosition = new Separator();
+                s.addChild(sepPosition);
                 Material color = new Material();
                 color.setColor(hamColors[boneIndex][0], hamColors[boneIndex][1], hamColors[boneIndex][2]);
                 color.setOverride(true);
                 sepPosition.addNode(color);
                 HamAxis axis = new HamAxis(HAMdata[i][1], HAMdata[i][2], HAMdata[i][3], HAMdata[i][5], HAMdata[i][6], HAMdata[i][7]);
                 sepPosition.addNode(axis);
-                s.addChild(sepPosition);
+                
+                if (_reader.HamLength > -1) axis.SetHamLength(_reader.HamLength);
+                if (_reader.HamRadius > -1) axis.SetHamRadius(_reader.HamRadius);
             }
             s.whichChild(0); //set it to start at the first frame
             s.unrefNoDelete();

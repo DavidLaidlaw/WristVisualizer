@@ -31,11 +31,29 @@ void libCoin3D::HamAxis::makeHam(float Nx, float Ny, float Nz, float Qx, float Q
 	}
 
 	float fromVec[3] = {0, 1, 0};
-	float hamAxesHeight = 60;
+	const float hamAxesHeight = 60;
+	const float hamAxesRadius = 0.5;
+
+    // make axis separator
+    SoSeparator *hamAxis = new SoSeparator;
+	hamAxis->ref();
+
+	if (m != NULL)
+		hamAxis->addChild(m);	// Color appropriately
+
+	SoTransform *axes_transform = new SoTransform;
+	_cylinder = new SoCylinder;
+	_cone = new SoCone;
+	_coneTransform = new SoTransform;
+
+    hamAxis->addChild(axes_transform);		// move so Q is center
+	hamAxis->addChild(_cylinder);				// add cylinder of arbitrary length    
+	hamAxis->addChild(_coneTransform);
+	hamAxis->addChild(_cone);
+
     SbRotation axesRot;
 
-
-    SoTransform *axes_transform = new SoTransform;
+    
     axesRot.setValue(fromVec, N);				// rotation from normal cylinder to N
     axes_transform->rotation.setValue(axesRot);
     
@@ -49,26 +67,38 @@ void libCoin3D::HamAxis::makeHam(float Nx, float Ny, float Nz, float Qx, float Q
  //   Col.setValue(hamColors[bint][0], hamColors[bint][1], hamColors[bint][2]);
  //   axesMaterial->diffuseColor.setValue(Col);
 
-    SoCylinder *segment = new SoCylinder;
-	SoCone *myCone = new SoCone;
-	myCone->bottomRadius = 1;
-	myCone->height = 4; 
-	SoTransform *coneTransform = new SoTransform;
-	coneTransform->translation.setValue(0,hamAxesHeight/2,0);
-    segment->radius = 0.5;
-    segment->height = hamAxesHeight;
+	_cone->bottomRadius = hamAxesRadius/AXIS_CONE_RADIUS_RATIO;
+	_cone->height = hamAxesHeight/AXIS_CONE_LENGTH_RATIO; 
+	
+	_coneTransform->translation.setValue(0,hamAxesHeight/2 + (hamAxesHeight/AXIS_CONE_LENGTH_RATIO)/2,0);
+    _cylinder->radius = hamAxesRadius;
+    _cylinder->height = hamAxesHeight;
 
-    // make axis separator
-    SoSeparator *hamAxis = new SoSeparator;
-	if (m != NULL)
-		hamAxis->addChild(m);	// Color appropriately
-    hamAxis->addChild(axes_transform);		// move so Q is center
-	hamAxis->addChild(segment);				// add cylinder of arbitrary length    
-	hamAxis->addChild(coneTransform);
-	hamAxis->addChild(myCone);
-    
+	hamAxis->unrefNoDelete();
     _node = hamAxis; //save it as the local node :)
 }
+
+void libCoin3D::HamAxis::SetHamDimensions(float length, float radius)
+{
+	SetHamLength(length);
+	SetHamRadius(radius);
+}
+
+void libCoin3D::HamAxis::SetHamLength(float length)
+{
+	if (_node == NULL) return;
+	_cylinder->height = length;
+	_cone->height = length/AXIS_CONE_LENGTH_RATIO;
+	_coneTransform->translation.setValue(0,length/2 + (length/AXIS_CONE_LENGTH_RATIO)/2,0);
+}
+
+void libCoin3D::HamAxis::SetHamRadius(float radius)
+{
+	if (_node == NULL) return;
+	_cylinder->radius = radius;
+	_cone->bottomRadius = radius/AXIS_CONE_RADIUS_RATIO;
+}
+
 
 void libCoin3D::HamAxis::setColor(float r, float g, float b)
 {
