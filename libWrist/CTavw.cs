@@ -4,7 +4,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.Windows.Forms;
 
 namespace libWrist
 {
@@ -13,10 +12,6 @@ namespace libWrist
 	/// </summary>
 	public class CTavw : CT
 	{
-        //private int _intensityOffset;
-        //private double _intensityScale;
-
-		private bool _autoScale=false;
 		private short[] _data;
 
 
@@ -93,17 +88,12 @@ namespace libWrist
 				if (data[i]<min) min=data[i];
 				if (data[i]>max) max=data[i];
 			}
-            //System.Console.WriteLine("Min: "+min.ToString());
-            //System.Console.WriteLine("Max: "+max.ToString());
 
             _imageAutoOffset = new int[1];
             _imageAutoScale = new double[1];
 
             _imageAutoOffset[0] = min;
             _imageAutoScale[0] = 255.0 / (max - min);
-
-            //_intensityOffset=-min;
-            //_intensityScale = (max-min)/255.0;
 		}
 
 
@@ -285,18 +275,6 @@ namespace libWrist
             return voxels;
         }
 
-		public bool autoScale
-		{
-			get 
-			{
-				return _autoScale;
-			}
-			set
-			{
-				_autoScale = value;
-			}
-		}
-
         public override void loadBitmapData(int echo)
         {
             copyDataFromShortToBitmaps(echo);
@@ -326,10 +304,5 @@ namespace libWrist
             int temp = (int)((_data[z * _width * _height + y * _width + x] - _imageAutoOffset[0]) * _imageAutoScale[0]);
             return Math.Min(temp, 255);
         }
-
-        //public override ushort getVoxel(int x, int y, int z, int echo) { return 0; }
-        //public override int getVoxel_s(int x, int y, int z, int echo) { return 0; }
-        //public override int getVoxel_as(int x, int y, int z, int echo) { return 0; }
-        //public override short getCroppedVoxel(int x, int y, int z, int echo) { return 0; }
 	}
 }

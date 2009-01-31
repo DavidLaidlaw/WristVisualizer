@@ -33,7 +33,6 @@ namespace libWrist
         private double[] _coordOffset;
 
 		private ushort[][] _data;
-        //private Bitmap[][] _bitmaps;
 
 
         public CTmri(string mriDirectory)
@@ -289,7 +288,6 @@ namespace libWrist
                 BitmapData imdata = im.LockBits(new Rectangle(0, 0, _width, _height), ImageLockMode.ReadWrite, im.PixelFormat);
                 unsafe
                 {
-                    //for (int j = _height - 1; j >= 0; j--) //special, so we can flip about y 
                     for (int j = 0; j < _height; j++) //special, so we can flip about y 
                     {
                         byte* row = (byte*)imdata.Scan0 + ((_height-j-1) * imdata.Stride);
@@ -326,7 +324,6 @@ namespace libWrist
 
 		#region Accessors for Volume Data
 
-        public override Byte[][] getCroppedRegionScaledToBytes() { return getCroppedRegionScaledToBytes(0); }
         public override Byte[][] getCroppedRegionScaledToBytes(int echo)
         {
             int sizeX = _xmax - _xmin + 1;
@@ -380,8 +377,6 @@ namespace libWrist
             //if 8bit
             if (_format == Formats.Sign8 || _format == Formats.USign8) return _data[echo][z * _width * _height + y * _width + x];
 
-            //if (x>= _width || y>=_height || z>=_depth) return 0;
-            //int temp = (int)((_data[z*_width*_height + y*_width + x]+1040)/8.1568627);
             int temp = (int)((_data[echo][z * _width * _height + y * _width + x] - _imageAutoOffset[echo]) * _imageAutoScale[echo]);
             return Math.Min(temp, 255);
         }
