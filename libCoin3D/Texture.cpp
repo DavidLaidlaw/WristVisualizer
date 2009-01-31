@@ -160,15 +160,24 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 				 * to try and always be oriented in a portrait mode (or square). So we check 
 				 * for that case here.
 				 */
-				System::Runtime::InteropServices::Marshal::Copy((array<unsigned char>^)data[i],0,(System::IntPtr)buffer[i],_sizeX*_sizeY);
+				if (_side == Sides::RIGHT)
+					System::Runtime::InteropServices::Marshal::Copy((array<unsigned char>^)data[i],0,(System::IntPtr)buffer[i],_sizeX*_sizeY);
+				else
+					for (int j=0; j<_sizeX; j++)
+						for (int k=0; k<_sizeY; k++)
+							buffer[i][j*_sizeY + k] = (unsigned char)data[i][(_sizeX-j-1)*_sizeY + k];
 			}
 			else {
 				/* This is the case for landscape, so when creating the buffer, we need to go 
 				 * and flip the X & Y coordinates of the image, so it displays correctly
 				 */
 				for (int j=0; j<_sizeY; j++) {
-					for (int k=0; k<_sizeX; k++)
-						buffer[i][j*_sizeX + k] = (unsigned char)data[i][k*_sizeY + j];
+					for (int k=0; k<_sizeX; k++) {
+						if (_side == Sides::RIGHT)
+							buffer[i][j*_sizeX + k] = (unsigned char)data[i][k*_sizeY + j];
+						else
+							buffer[i][j*_sizeX + k] = (unsigned char)data[i][(_sizeX-k-1)*_sizeY + j];
+					}
 				}
 			}
 		}
@@ -180,14 +189,20 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 			if (_sizeZ*_voxelZ >= _sizeY*_voxelY) {
 				for (int j=0; j<_sizeZ; j++) {  //loop through Z
 					for (int k=0; k<_sizeY; k++) {  //loop through Y
-						buffer[i][k*_sizeZ + j] = (unsigned char)data[j][i*_sizeY + k];
+						if (_side == Sides::RIGHT)
+							buffer[i][k*_sizeZ + j] = (unsigned char)data[j][i*_sizeY + k];
+						else
+							buffer[i][k*_sizeZ + j] = (unsigned char)data[j][(_sizeX-i-1)*_sizeY + k];
 					}
 				}				
 			}
 			else {
 				for (int j=0; j<_sizeZ; j++) {  //loop through Z
 					for (int k=0; k<_sizeY; k++) {  //loop through Y
-						buffer[i][j*_sizeY + k] = (unsigned char)data[j][i*_sizeY + k];
+						if (_side == Sides::RIGHT)
+							buffer[i][j*_sizeY + k] = (unsigned char)data[j][i*_sizeY + k];
+						else
+							buffer[i][j*_sizeY + k] = (unsigned char)data[j][(_sizeX-i-1)*_sizeY + k];
 					}
 				}
 			}
