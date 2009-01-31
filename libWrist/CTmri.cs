@@ -10,7 +10,7 @@ namespace libWrist
 	/// <summary>
 	/// Summary description for CTmri.
 	/// </summary>
-	public class CTmri
+	public class CTmri : CT
 	{
 		private const string RESOLUTION = "resolution";
 		private const string VSIZE = "vsize";
@@ -23,8 +23,7 @@ namespace libWrist
          * And then scaling that data to range from 0-255 automatically
          */
         private ushort[] _minIntensity, _maxIntensity;
-        private int[] _imageAutoOffset;
-        private double[] _imageAutoScale;
+
 
 
         private double _scaleIntensity;
@@ -33,20 +32,9 @@ namespace libWrist
 
         private double[] _coordOffset;
 
-		private int _height;
-		private int _width;
-		private int _depth;
-		private int _layers;
-		private double _voxelSizeX;
-		private double _voxelSizeY;
-		private double _voxelSizeZ;
 		private ushort[][] _data;
-        private Bitmap[][] _bitmaps;
-		private Formats _format;
-		public enum Formats { Sign16, USign16, Sign8, USign8 };
+        //private Bitmap[][] _bitmaps;
 
-        //crop settings
-        private int _xmin, _xmax, _ymin, _ymax, _zmin, _zmax;
 
         public CTmri(string mriDirectory)
 		{
@@ -67,14 +55,7 @@ namespace libWrist
             _imageAutoScale = new double[_layers];
 		}
 
-        public void loadBitmapDataAllLayers()
-        {
-            for (int i = 0; i < _layers; i++)
-                loadBitmapData(i);
-        }
-
-        public void loadBitmapData() { loadBitmapData(0); }
-        public void loadBitmapData(int echo)
+        public override void loadBitmapData(int echo)
         {
             //this should only work for now when there are NO crop values set
             if (_xmin != 0 || _xmax != 0 || _ymin != 0 || _ymax != 0)
@@ -86,8 +67,8 @@ namespace libWrist
 
         }
 
-        public void loadImageData() { loadImageData(0); }
-        public void loadImageData(int layer)
+        public override void loadImageData() { loadImageData(0); }
+        public override void loadImageData(int layer)
         {
             readDataToShort(_mriDirectory, layer);
             calculateOffsetAndScaleFromMinMax(layer);
@@ -98,9 +79,6 @@ namespace libWrist
             _imageAutoOffset[echo] = _minIntensity[echo];
             _imageAutoScale[echo] = 255.0 / ((double)_maxIntensity[echo] - _minIntensity[echo]);
         }
-
-        [Obsolete("Replaced by readVoxelSize(string mriDirectory) for clarity in function name")]
-        private void readScale(string mriDirectory) { readVoxelSize(mriDirectory); }
 
 		private void readVoxelSize(string mriDirectory)
 		{
@@ -256,6 +234,7 @@ namespace libWrist
             //Console.WriteLine("Done reading");
         }
 
+        [Obsolete("This method is no longer used, use the loadBitmapData function")]
         private void readDataToBitmap(string mriDirectory, int echo)
         {
             _bitmaps[echo] = new Bitmap[_depth];            
@@ -327,22 +306,6 @@ namespace libWrist
             }
         }
 
-        public void deleteFrames()
-        {
-            if (_bitmaps == null) return;
-            for (int i = 0; i < _bitmaps.Length; i++)
-            {
-                if (_bitmaps[i] == null) continue;
-                for (int j = 0; j < _bitmaps[i].Length; j++)
-                {
-                    if (_bitmaps[i][j] != null)
-                        _bitmaps[i][j].Dispose();
-                }
-                _bitmaps[i] = null;
-            }
-            _bitmaps = null;
-        }
-
         private ushort ShortSwap(ushort x)
         {
             int b1, b2;
@@ -361,24 +324,10 @@ namespace libWrist
 			return d;
 		}
 
-        public void setCrop(int xmin, int xmax, int ymin, int ymax, int zmin, int zmax)
-        {
-            //check for an already cropped image
-            if ((_width <= xmax - xmin + 1) && (_height <= ymax - ymin + 1) && (_depth <= zmax - zmin + 1))
-                return; //then return, we don't actually want to crop
-
-            _xmin = xmin;
-            _xmax = xmax;
-            _ymin = ymin;
-            _ymax = ymax;
-            _zmin = zmin;
-            _zmax = zmax;            
-        }
-
 		#region Accessors for Volume Data
 
-        public Byte[][] getCroppedRegionScaledToBytes() { return getCroppedRegionScaledToBytes(0); }
-        public Byte[][] getCroppedRegionScaledToBytes(int echo)
+        public override Byte[][] getCroppedRegionScaledToBytes() { return getCroppedRegionScaledToBytes(0); }
+        public override Byte[][] getCroppedRegionScaledToBytes(int echo)
         {
             int sizeX = _xmax - _xmin + 1;
             int sizeY = _ymax - _ymin + 1;
@@ -412,13 +361,13 @@ namespace libWrist
 		/// <param name="y"></param>
 		/// <param name="z"></param>
 		/// <returns></returns>
-		public ushort getVoxel(int x, int y, int z, int echo) 
+        public override ushort getVoxel(int x, int y, int z, int echo) 
 		{
 			//y = _height - 1 - y; //flip about the y axis - lets do it when we load
 			return _data[echo][z*_width*_height + y*_width + x];
 		}
 
-		public int getVoxel_s(int x, int y, int z, int echo)
+        public override int getVoxel_s(int x, int y, int z, int echo)
 		{
 			//if 8bit
 			if (_format==Formats.Sign8 || _format==Formats.USign8) return _data[echo][z*_width*_height + y*_width + x];
@@ -426,7 +375,7 @@ namespace libWrist
             return (int)((_data[echo][z * _width * _height + y * _width + x] * _scaleIntensity) - _offsetIntensity);
 		}
 
-        public int getVoxel_as(int x, int y, int z, int echo)
+        public override int getVoxel_as(int x, int y, int z, int echo)
         {
             //if 8bit
             if (_format == Formats.Sign8 || _format == Formats.USign8) return _data[echo][z * _width * _height + y * _width + x];
@@ -437,7 +386,7 @@ namespace libWrist
             return Math.Min(temp, 255);
         }
 
-        public short getCroppedVoxel(int x, int y, int z, int echo)
+        public override short getCroppedVoxel(int x, int y, int z, int echo)
         {
             if (_data == null) return 0;
             x += _xmin;
@@ -446,12 +395,6 @@ namespace libWrist
             if (x < 0 || y < 0 || z < 0 || x >= _width || y >= _height || z >= _depth) 
                 return 0;
             return (short)((_data[echo][z * _width * _height + y * _width + x] - _imageAutoOffset[echo]) * _imageAutoScale[echo]); //scale to correct range
-        }
-
-        public Bitmap getFrame(int frame) { return getFrame(frame, 0); }
-        public Bitmap getFrame(int frame, int echo)
-        {
-            return _bitmaps[echo][frame];
         }
 
 		#endregion
@@ -603,7 +546,7 @@ namespace libWrist
             get { return _coordOffset; }
         }
 
-        public int Cropped_SizeX
+        public override int Cropped_SizeX
         {
             get
             {
@@ -614,7 +557,7 @@ namespace libWrist
             }
         }
 
-        public int Cropped_SizeY
+        public override int Cropped_SizeY
         {
             get
             {
@@ -625,7 +568,7 @@ namespace libWrist
             }
         }
 
-        public int Cropped_SizeZ
+        public override int Cropped_SizeZ
         {
             get
             {
@@ -636,60 +579,11 @@ namespace libWrist
             }
         }
 
-		public int width 
-		{
-			get 
-			{
-				return _width;
-			}
-		}
-
-		public int height 
-		{
-			get 
-			{
-				return _height;
-			}
-		}
-
-		public int depth 
-		{
-			get 
-			{
-				return _depth;
-			}
-		}
-
-        public int Layers
+        public override int Layers
         {
             get { return _layers; }
         }
 
-		public Formats fileFormat 
-		{
-			get 
-			{
-				return _format;
-			}
-		}
-
-		public double voxelSizeZ
-		{
-			get
-			{
-				return _voxelSizeZ;
-			}
-		}
-
-        public double voxelSizeX
-        {
-            get { return _voxelSizeX; }
-        }
-
-        public double voxelSizeY
-        {
-            get { return _voxelSizeY; }
-        }
 		#endregion
 	}
 }

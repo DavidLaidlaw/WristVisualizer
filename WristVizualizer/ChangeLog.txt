@@ -1,3 +1,6 @@
+Version NEXT
+- New: Added the ability to read analyze files in MRI Viewer (yeah....the name no longer makes any sense)
+
 Version 1.7.3
 - New: In PosView mode, can now set the length and radius of the HAM axis. (For Nick's little fish heads)
 

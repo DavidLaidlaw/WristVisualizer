@@ -11,7 +11,7 @@ namespace WristVizualizer.MRIViewer
 {
     public partial class MRIViewerMainForm : Form
     {
-        CTmri _mri;
+        CT _mri;
         Bitmap _frame;
         string _path;
 
@@ -79,7 +79,7 @@ namespace WristVizualizer.MRIViewer
             /* Try and load first (and to temp space). If we fail, it will throw an exception 
              * And the rest of the code will not get run
              */
-            CTmri newMri = new CTmri(filename);
+            CT newMri = CT.SmartLoad(filename);
             newMri.loadBitmapDataAllLayers();
             if (_mri != null) //save memory. TODO: use dispose instead
                 _mri.deleteFrames();
@@ -94,6 +94,7 @@ namespace WristVizualizer.MRIViewer
             textBoxYVoxel.Text = _mri.voxelSizeY.ToString();
             textBoxZVoxel.Text = _mri.voxelSizeZ.ToString();
             textBoxLayersSize.Text = _mri.Layers.ToString();
+            labelMax.Text = (_mri.depth - 1).ToString();
 
             numericUpDownLayer.Minimum = 0;
             numericUpDownLayer.Maximum = _mri.Layers - 1;
