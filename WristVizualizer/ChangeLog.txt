@@ -1,5 +1,6 @@
-Version NEXT
+Version 1.7.4
 - New: Added the ability to read analyze files in MRI Viewer (yeah....the name no longer makes any sense)
+- New: Can load analyze files in Texture (though left wrists don't work at all)
 
 Version 1.7.3
 - New: In PosView mode, can now set the length and radius of the HAM axis. (For Nick's little fish heads)

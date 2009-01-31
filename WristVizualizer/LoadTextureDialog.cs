@@ -16,7 +16,7 @@ namespace WristVizualizer
     partial class LoadTextureDialog : Form
     {
         private static string _LastImagePath = "";
-        private static CTmri _LastMRI = null;
+        private static CT _LastMRI = null;
 
         private ExaminerViewer _viewer;
         private Separator _root;
@@ -178,7 +178,7 @@ namespace WristVizualizer
             //TODO: Figure out the image type....
             parseCropValues();
             
-            CTmri mri;
+            CT mri;
             //check if we have this MRI saved!!!, dirty cache
             //TODO: Check if the crop values are compatable!!!
             if (_LastImagePath.ToLower().Equals(textBoxImageFile.Text.Trim().ToLower()))
@@ -186,7 +186,7 @@ namespace WristVizualizer
             else
             {
                 //pass crop values now, for faster read :)
-                mri = new CTmri(textBoxImageFile.Text);
+                mri = CT.SmartLoad(textBoxImageFile.Text);
                 mri.setCrop(_minX, _maxX, _minY, _maxY, _minZ, _maxZ);
                 if (mri.Layers == 1)  //the default case, we want to load the only layer, echo 0
                     mri.loadImageData();
