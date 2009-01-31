@@ -53,25 +53,25 @@ namespace libWrist
 			{
 				case Formats.Sign16:
 					for (int i=0; i<_depth; i++)
-						for (int j=_height-1; j>=0; j--)  //special, so we can flip about y
+                        for (int j = 0; j<_height; j++)
 							for (int k=0; k<_width; k++)
-								data[i*_width*_height + j*_width + k]=r.ReadInt16();	
+								data[i*_width*_height + j*_width + k]=r.ReadInt16();
 					break;
 				case Formats.USign16:
 					for (int i=0; i<_depth; i++)
-						for (int j=_height-1; j>=0; j--)  //special, so we can flip about y
+                        for (int j = 0; j < _height; j++)
 							for (int k=0; k<_width; k++)
 								data[i*_width*_height + j*_width + k]=(short)r.ReadUInt16();
 					break;
 				case Formats.Sign8:
 					for (int i=0; i<_depth; i++)
-						for (int j=_height-1; j>=0; j--)  //special, so we can flip about y
+                        for (int j = 0; j < _height; j++)
 							for (int k=0; k<_width; k++)
 								data[i*_width*_height + j*_width + k]=(short)r.ReadSByte();
 					break;
 				case Formats.USign8:
 					for (int i=0; i<_depth; i++)
-						for (int j=_height-1; j>=0; j--)  //special, so we can flip about y
+                        for (int j = 0; j < _height; j++)
 							for (int k=0; k<_width; k++)
 								data[i*_width*_height + j*_width + k]=(short)r.ReadByte();
 					break;
