@@ -1,3 +1,6 @@
+Version 1.7.5
+- Fixed bug: Vizualization of left wrists now works correctly.
+
 Version 1.7.4
 - New: Added the ability to read analyze files in MRI Viewer (yeah....the name no longer makes any sense)
 - New: Can load analyze files in Texture (though left wrists don't work at all)

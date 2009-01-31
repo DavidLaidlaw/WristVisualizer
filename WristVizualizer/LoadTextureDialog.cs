@@ -181,7 +181,7 @@ namespace WristVizualizer
             CT mri;
             //check if we have this MRI saved!!!, dirty cache
             //TODO: Check if the crop values are compatable!!!
-            if (_LastImagePath.ToLower().Equals(textBoxImageFile.Text.Trim().ToLower()))
+            if (false && _LastImagePath.ToLower().Equals(textBoxImageFile.Text.Trim().ToLower()))
                 mri = _LastMRI;
             else
             {

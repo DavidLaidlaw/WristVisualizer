@@ -343,20 +343,39 @@ SoSeparator* libCoin3D::Texture::makeRectangle(Planes plane)
 	// Define coordinates for vertices
 	// vertices is an array of pts of length 4 (each pt has 3 floats; total 12 pts)
 	// these vertices define the corner of the texture plane that the CT slices are shown on
-	switch( plane ) 
-	{
-	case Planes::XY_PLANE:  //Z
-		myVertexProperty->vertex.set1Value(0, 0.0f, 0.0f, 0.0f);
-		myVertexProperty->vertex.set1Value(1, (float)(_sizeX*_voxelX),0.0f,0.0f);
-		myVertexProperty->vertex.set1Value(2, (float)(_sizeX*_voxelX), (float)(_sizeY*_voxelY), 0.0f);
-		myVertexProperty->vertex.set1Value(3, 0.0f, (float)(_sizeY*_voxelY), 0.0f);
-		break;
-	case Planes::YZ_PLANE:  //X
-		myVertexProperty->vertex.set1Value(0, 0.0f, 0.0f, 0.0f);
-		myVertexProperty->vertex.set1Value(1, 0.0f, (float)(_sizeY*_voxelY), 0.0f);
-		myVertexProperty->vertex.set1Value(2, 0.0f, (float)(_sizeY*_voxelY), (float)(_sizeZ*_voxelZ));
-		myVertexProperty->vertex.set1Value(3, 0.0f, 0.0f, (float)(_sizeZ*_voxelZ));
-		break;
+	if (_side==Sides::RIGHT) {
+		switch( plane ) 
+		{
+		case Planes::XY_PLANE:  //Z
+			myVertexProperty->vertex.set1Value(0, 0.0f, 0.0f, 0.0f);
+			myVertexProperty->vertex.set1Value(1, (float)(_sizeX*_voxelX),0.0f,0.0f);
+			myVertexProperty->vertex.set1Value(2, (float)(_sizeX*_voxelX), (float)(_sizeY*_voxelY), 0.0f);
+			myVertexProperty->vertex.set1Value(3, 0.0f, (float)(_sizeY*_voxelY), 0.0f);
+			break;
+		case Planes::YZ_PLANE:  //X
+			myVertexProperty->vertex.set1Value(0, 0.0f, 0.0f, 0.0f);
+			myVertexProperty->vertex.set1Value(1, 0.0f, (float)(_sizeY*_voxelY), 0.0f);
+			myVertexProperty->vertex.set1Value(2, 0.0f, (float)(_sizeY*_voxelY), (float)(_sizeZ*_voxelZ));
+			myVertexProperty->vertex.set1Value(3, 0.0f, 0.0f, (float)(_sizeZ*_voxelZ));
+			break;
+		}
+	}
+	else { //left wrist needs to be flipped around x....
+		switch( plane ) 
+		{
+		case Planes::XY_PLANE:  //Z
+			myVertexProperty->vertex.set1Value(0, -(float)(_sizeX*_voxelX), 0.0f, 0.0f);
+			myVertexProperty->vertex.set1Value(1, 0.0f,0.0f,0.0f);
+			myVertexProperty->vertex.set1Value(2, 0.0f, (float)(_sizeY*_voxelY), 0.0f);
+			myVertexProperty->vertex.set1Value(3, -(float)(_sizeX*_voxelX), (float)(_sizeY*_voxelY), 0.0f);
+			break;
+		case Planes::YZ_PLANE:  //X
+			myVertexProperty->vertex.set1Value(0, -(float)(_sizeX*_voxelX), 0.0f, 0.0f);
+			myVertexProperty->vertex.set1Value(1, -(float)(_sizeX*_voxelX), (float)(_sizeY*_voxelY), 0.0f);
+			myVertexProperty->vertex.set1Value(2, -(float)(_sizeX*_voxelX), (float)(_sizeY*_voxelY), (float)(_sizeZ*_voxelZ));
+			myVertexProperty->vertex.set1Value(3, -(float)(_sizeX*_voxelX), 0.0f, (float)(_sizeZ*_voxelZ));
+			break;
+		}
 	}
 
 	// Define the FaceSet
