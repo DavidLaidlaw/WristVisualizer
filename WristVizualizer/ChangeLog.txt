@@ -1,3 +1,6 @@
+Version 1.7.6
+- New: When a file is automatically reloaded (after external changes). Background color and camera position are maintained.
+
 Version 1.7.5
 - Fixed bug: Vizualization of left wrists now works correctly.
 

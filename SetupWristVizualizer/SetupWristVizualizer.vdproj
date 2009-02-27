@@ -21,6 +21,18 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_0953C32CAF12873EE464628E361E704F"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_0953C32CAF12873EE464628E361E704F"
+        "OwnerKey" = "8:_21F66970F153DF101E4FD1C7AA9587CA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_0C9F3FCEDC084FBE8DFDB9C7BD7574C0"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -45,8 +57,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_1A266CA7217EC8B01A63DA8D554A0929"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_1BB422AD969748C98079ED853C26D59B"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_1C9137575A13C03FC5EE2420C991BE8C"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -57,14 +81,14 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_2085FA8D8D16418AAB6EA2873C0EE024"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
+        "MsmKey" = "8:_2193950E00E14838868D4D39E7963D80"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_2193950E00E14838868D4D39E7963D80"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_21F66970F153DF101E4FD1C7AA9587CA"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -75,20 +99,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_377499BA5A878F1C5B39589E0CC507C7"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3899C63856BDB26FB75EF215A67A6688"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_3899C63856BDB26FB75EF215A67A6688"
-        "OwnerKey" = "8:_64E7C98FB63F1F444AE1D573F7A94658"
+        "MsmKey" = "8:_2C13CE2EC8954C57BFAAD6A0EE5520A0"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -107,12 +119,6 @@
         {
         "MsmKey" = "8:_48F51D2A7B634DAFB8C57C0830255519"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4D6E2149051FCFF21A99B603411750D0"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -137,12 +143,6 @@
         {
         "MsmKey" = "8:_5F6B33B9891B4B0AA2A6F157DB4BC81C"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_64E7C98FB63F1F444AE1D573F7A94658"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -189,32 +189,20 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_905C4787D34F5BF898DD81B699033EE3"
-        "OwnerKey" = "8:_64E7C98FB63F1F444AE1D573F7A94658"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_905C4787D34F5BF898DD81B699033EE3"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_9325EAC17BBF4CEFAB80168A7FF05BDD"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_943191C2A7B6E5AB903979EF45F0A0A4"
-        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
+        "MsmKey" = "8:_9E671F0D6C0B4DEB8DB08FBA2D6DAFE4"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_9E671F0D6C0B4DEB8DB08FBA2D6DAFE4"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_9F2A75358D77477092CACC8687A75B68"
+        "OwnerKey" = "8:_2C13CE2EC8954C57BFAAD6A0EE5520A0"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -243,7 +231,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C67FAB259E253B39EA4C6F07C428CF58"
+        "MsmKey" = "8:_C72888FA2AA2736AF3337C7FC06FD509"
         "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -251,12 +239,6 @@
         {
         "MsmKey" = "8:_C89A30BA3FD441F5A9D1535CEA4FD069"
         "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_CA1D593087B649ECA639871953C55309"
-        "OwnerKey" = "8:_2085FA8D8D16418AAB6EA2873C0EE024"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -273,6 +255,24 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_D46AB7B823F1ED7AD141FC302DAB375F"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_D46AB7B823F1ED7AD141FC302DAB375F"
+        "OwnerKey" = "8:_21F66970F153DF101E4FD1C7AA9587CA"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_E23BCADBB564003348668F1271FCFDCA"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_E607CDC6D7D24C1C9A9418A9495E0DAF"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -285,8 +285,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_F710AEF1BB1A0934082E7162643D91BE"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
+        "MsmKey" = "8:_FA287444373CFFE51203CE40808C07BD"
+        "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -304,37 +304,37 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_C67FAB259E253B39EA4C6F07C428CF58"
+        "OwnerKey" = "8:_FA287444373CFFE51203CE40808C07BD"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_943191C2A7B6E5AB903979EF45F0A0A4"
+        "OwnerKey" = "8:_C72888FA2AA2736AF3337C7FC06FD509"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_64E7C98FB63F1F444AE1D573F7A94658"
+        "OwnerKey" = "8:_21F66970F153DF101E4FD1C7AA9587CA"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_905C4787D34F5BF898DD81B699033EE3"
+        "OwnerKey" = "8:_D46AB7B823F1ED7AD141FC302DAB375F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3899C63856BDB26FB75EF215A67A6688"
+        "OwnerKey" = "8:_0953C32CAF12873EE464628E361E704F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_377499BA5A878F1C5B39589E0CC507C7"
+        "OwnerKey" = "8:_1A266CA7217EC8B01A63DA8D554A0929"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -447,6 +447,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_0953C32CAF12873EE464628E361E704F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3349.21207, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_0953C32CAF12873EE464628E361E704F"
+                    {
+                    "Name" = "8:libCoin3D.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:libCoin3D.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:TRUE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_0C9F3FCEDC084FBE8DFDB9C7BD7574C0"
             {
             "SourcePath" = "8:Sample Wrist\\66582\\66582_ClinicalExam_R.txt"
@@ -527,6 +558,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_1A266CA7217EC8B01A63DA8D554A0929"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3324.25241, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_1A266CA7217EC8B01A63DA8D554A0929"
+                    {
+                    "Name" = "8:AviFile.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:AviFile.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1BB422AD969748C98079ED853C26D59B"
             {
             "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_ham_L.iv"
@@ -545,6 +607,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1C9137575A13C03FC5EE2420C991BE8C"
+            {
+            "SourcePath" = "8:sowin1d.dll"
+            "TargetName" = "8:sowin1d.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_1DA8D623D9E24F62931A64761A49B2F1"
@@ -587,6 +669,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_21F66970F153DF101E4FD1C7AA9587CA"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:libWrist, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_21F66970F153DF101E4FD1C7AA9587CA"
+                    {
+                    "Name" = "8:libWrist.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:libWrist.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_22930E4141BE4885A65BD019AA851ADF"
             {
             "SourcePath" = "8:Sample Wrist\\66582\\03L\\66582_Motion03L.dat"
@@ -605,68 +718,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_377499BA5A878F1C5B39589E0CC507C7"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3324.21494, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_377499BA5A878F1C5B39589E0CC507C7"
-                    {
-                    "Name" = "8:AviFile.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:AviFile.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_3899C63856BDB26FB75EF215A67A6688"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3324.21494, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_3899C63856BDB26FB75EF215A67A6688"
-                    {
-                    "Name" = "8:GeneralMatrix.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:GeneralMatrix.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4412AF997C0747F3811297577B854A79"
@@ -727,26 +778,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4D6E2149051FCFF21A99B603411750D0"
-            {
-            "SourcePath" = "8:sowin1.dll"
-            "TargetName" = "8:sowin1.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4EC925A366834187BF49A5CE2DA2C378"
@@ -827,37 +858,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_64E7C98FB63F1F444AE1D573F7A94658"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libWrist, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_64E7C98FB63F1F444AE1D573F7A94658"
-                    {
-                    "Name" = "8:libWrist.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:libWrist.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_71CED6CE67034C1F88905CB7157CCE5C"
@@ -980,37 +980,6 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_905C4787D34F5BF898DD81B699033EE3"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.3324.21512, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_905C4787D34F5BF898DD81B699033EE3"
-                    {
-                    "Name" = "8:libCoin3D.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:libCoin3D.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:TRUE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9325EAC17BBF4CEFAB80168A7FF05BDD"
             {
             "SourcePath" = "8:Sample Wrist\\66582\\LeftIV\\66582_rad_L.iv"
@@ -1029,37 +998,6 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_943191C2A7B6E5AB903979EF45F0A0A4"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:Mono.GetOptions, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL"
-                "ScatterAssemblies"
-                {
-                    "_943191C2A7B6E5AB903979EF45F0A0A4"
-                    {
-                    "Name" = "8:Mono.GetOptions.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:Mono.GetOptions.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_9E671F0D6C0B4DEB8DB08FBA2D6DAFE4"
@@ -1162,20 +1100,20 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C67FAB259E253B39EA4C6F07C428CF58"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_C72888FA2AA2736AF3337C7FC06FD509"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:WiimoteLib, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:Mono.GetOptions, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_C67FAB259E253B39EA4C6F07C428CF58"
+                    "_C72888FA2AA2736AF3337C7FC06FD509"
                     {
-                    "Name" = "8:WiimoteLib.dll"
+                    "Name" = "8:Mono.GetOptions.dll"
                     "Attributes" = "3:512"
                     }
                 }
-            "SourcePath" = "8:WiimoteLib.dll"
+            "SourcePath" = "8:Mono.GetOptions.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
@@ -1233,6 +1171,57 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D46AB7B823F1ED7AD141FC302DAB375F"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3324.25240, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_D46AB7B823F1ED7AD141FC302DAB375F"
+                    {
+                    "Name" = "8:GeneralMatrix.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:GeneralMatrix.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E23BCADBB564003348668F1271FCFDCA"
+            {
+            "SourcePath" = "8:coin3d.dll"
+            "TargetName" = "8:coin3d.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E607CDC6D7D24C1C9A9418A9495E0DAF"
             {
             "SourcePath" = "8:Sample Wrist\\66582\\02L\\66582_Motion02L.dat"
@@ -1273,10 +1262,21 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F710AEF1BB1A0934082E7162643D91BE"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_FA287444373CFFE51203CE40808C07BD"
             {
-            "SourcePath" = "8:coin3.dll"
-            "TargetName" = "8:coin3.dll"
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:WiimoteLib, Version=1.2.1.0, Culture=neutral, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_FA287444373CFFE51203CE40808C07BD"
+                    {
+                    "Name" = "8:WiimoteLib.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:WiimoteLib.dll"
+            "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
             "Condition" = "8:"
@@ -1480,14 +1480,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{FBC23CF8-4911-4BA9-91A4-4F027BF1307B}"
-        "PackageCode" = "8:{6BEA35BB-BE21-4801-BC9B-4F6B0262F01F}"
+        "ProductCode" = "8:{E3451D59-9C14-4073-B533-79F6450339E4}"
+        "PackageCode" = "8:{44338C9E-D315-4535-8A00-AF7E3D290E3D}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.7.5"
+        "ProductVersion" = "8:1.7.6"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2266,11 +2266,11 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2085FA8D8D16418AAB6EA2873C0EE024"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_2C13CE2EC8954C57BFAAD6A0EE5520A0"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:Microsoft_VC80_CRT_x86.msm"
+            "SourcePath" = "8:Microsoft_VC80_DebugCRT_x86.msm"
                 "Properties"
                 {
                 }
@@ -2280,11 +2280,11 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_CA1D593087B649ECA639871953C55309"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_9F2A75358D77477092CACC8687A75B68"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
-            "SourcePath" = "8:policy_8_0_microsoft_vc80_crt_x86.msm"
+            "SourcePath" = "8:policy_8_0_microsoft_vc80_debugcrt_x86.msm"
                 "Properties"
                 {
                 }
@@ -2299,7 +2299,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_80C0E60655A94B188B3AEA53719E7AC3"
             {
-            "SourcePath" = "8:..\\WristVizualizer\\obj\\Debug\\WristVizualizer.exe"
+            "SourcePath" = "8:..\\WristVizualizer\\obj\\Release\\WristVizualizer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
@@ -2327,7 +2327,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D048A19E73FC4C3986BE75EA1EE2B99F"
             {
-            "SourcePath" = "8:..\\debug\\libCoin3D.dll"
+            "SourcePath" = "8:..\\release\\libCoin3D.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
