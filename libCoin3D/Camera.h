@@ -16,6 +16,8 @@ public:
 
 	virtual SoNode* getNode() override { return _node; }
 
+	void copySettingsFromCamera(Camera^ camera);
+
 	void rotateCameraInX(const float movement);
 	void rotateCameraInY(const float movement);
 

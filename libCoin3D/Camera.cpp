@@ -53,6 +53,13 @@ bool libCoin3D::Camera::IsOrthographic::get()
 	return (_node->getTypeId()==SoOrthographicCamera::getClassTypeId());
 }
 
+void libCoin3D::Camera::copySettingsFromCamera(Camera^ camera)
+{
+	SoCamera* cam = (SoCamera*)_node;
+	SoCamera* cam2 = (SoCamera*)camera->getNode();
+	cam->copyContents(cam2,false);
+}
+
 void libCoin3D::Camera::rotateCameraInX(const float movement)
 {
 	this->rotateCamera(SbVec3f(-1, 0, 0), movement);

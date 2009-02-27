@@ -929,8 +929,15 @@ namespace WristVizualizer
             //at this point, we should tell the user that a new file was loaded, and let them deal with it
             string msg = String.Format("{0} has been updated outside of {1}.\n\nDo you wish to reload the file?", fname, Application.ProductName);
             DialogResult r = MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (r == DialogResult.Yes)
-                openFile(new string[] { _firstFileName }, false);
+            if (r != DialogResult.Yes)
+                return;
+
+            //lets load the file. New option is to save the camera setting first, and then re-apply them...
+            Camera originalCam = _viewer.Camera; //save starting camera
+            int backColor = _viewer.getBackgroundColor();
+            openFile(new string[] { _firstFileName }, false); //load new scene
+            _viewer.Camera.copySettingsFromCamera(originalCam); //copy back settings I hope...
+            _viewer.setBackgroundColor(backColor);
         }
 
         #endregion
