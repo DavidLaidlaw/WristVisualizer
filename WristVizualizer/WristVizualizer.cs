@@ -701,51 +701,11 @@ namespace WristVizualizer
         #region Drag and Drop
         private void WristVizualizer_DragDrop(object sender, DragEventArgs e)
         {
-            new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
             string[] filenames = e.Data.GetData("FileDrop") as string[];
             try
             {
-                openFile(filenames);
-            }
-            catch (Exception ex)
-            {
-                string msg = "Error loading file(s)";
-                libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
-            }
-            System.Security.CodeAccessPermission.RevertAssert();
-        }
-
-        private void WristVizualizer_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent("FileDrop"))
-                e.Effect = DragDropEffects.Move;
-            else
-                e.Effect = DragDropEffects.None;
-        }
-
-        private void panelCoin_DragEnter(object sender, DragEventArgs e)
-        {
-            if (e.Data.GetDataPresent("FileDrop"))
-            {
-                if (importToolStripMenuItem.Enabled)
-                    e.Effect = DragDropEffects.Copy;
-                else
-                    e.Effect = DragDropEffects.Move;
-            }
-            else
-                e.Effect = DragDropEffects.None;
-        }
-
-        private void panelCoin_DragDrop(object sender, DragEventArgs e)
-        {
-            new System.Security.Permissions.FileIOPermission(System.Security.Permissions.PermissionState.Unrestricted).Assert();
-            string[] filenames = e.Data.GetData("FileDrop") as string[];
-            try
-            {
-                if (importToolStripMenuItem.Enabled && _viewer != null && _root != null)
-                {
-                    importFile(filenames); 
-                }
+                if (sender == panelCoin && importToolStripMenuItem.Enabled && _viewer != null && _root != null)
+                    importFile(filenames);
                 else
                     openFile(filenames);
             }
@@ -754,7 +714,20 @@ namespace WristVizualizer
                 string msg = "Error loading file(s)";
                 libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
             }
-            System.Security.CodeAccessPermission.RevertAssert();
+        }
+
+        private void WristVizualizer_DragEnter(object sender, DragEventArgs e)
+        {
+            if (!e.Data.GetDataPresent("FileDrop"))
+            {
+                e.Effect = DragDropEffects.None;
+                return;
+            }
+
+            if (sender == panelCoin && importToolStripMenuItem.Enabled)
+                e.Effect = DragDropEffects.Copy;
+            else
+                e.Effect = DragDropEffects.Move;           
         }
         #endregion
 

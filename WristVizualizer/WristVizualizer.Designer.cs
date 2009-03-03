@@ -28,6 +28,7 @@ namespace WristVizualizer
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WristVizualizer));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,6 +60,7 @@ namespace WristVizualizer
             this.xScaleNoSmoothingToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
             this.colorTransparencyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.boneColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.backgroundColorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraPositionOrientationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.advancedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -115,10 +117,13 @@ namespace WristVizualizer
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.boneColorsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.contextMenuStrip_RightDrag = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
+            this.contextMenuStrip_RightDrag.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -373,6 +378,14 @@ namespace WristVizualizer
             this.colorTransparencyToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
             this.colorTransparencyToolStripMenuItem.Text = "Color && Transparency...";
             this.colorTransparencyToolStripMenuItem.Click += new System.EventHandler(this.colorTransparencyToolStripMenuItem_Click);
+            // 
+            // boneColorsToolStripMenuItem
+            // 
+            this.boneColorsToolStripMenuItem.Enabled = false;
+            this.boneColorsToolStripMenuItem.Name = "boneColorsToolStripMenuItem";
+            this.boneColorsToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.boneColorsToolStripMenuItem.Text = "Bone Colors...";
+            this.boneColorsToolStripMenuItem.Click += new System.EventHandler(this.boneColorsToolStripMenuItem_Click);
             // 
             // backgroundColorToolStripMenuItem
             // 
@@ -817,8 +830,8 @@ namespace WristVizualizer
             this.panelCoin.Name = "panelCoin";
             this.panelCoin.Size = new System.Drawing.Size(647, 353);
             this.panelCoin.TabIndex = 1;
-            this.panelCoin.DragDrop += new System.Windows.Forms.DragEventHandler(this.panelCoin_DragDrop);
-            this.panelCoin.DragEnter += new System.Windows.Forms.DragEventHandler(this.panelCoin_DragEnter);
+            this.panelCoin.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
+            this.panelCoin.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             // 
             // statusStrip1
             // 
@@ -852,13 +865,25 @@ namespace WristVizualizer
             this.mainLayoutPanel.Size = new System.Drawing.Size(653, 359);
             this.mainLayoutPanel.TabIndex = 34;
             // 
-            // boneColorsToolStripMenuItem
+            // contextMenuStrip_RightDrag
             // 
-            this.boneColorsToolStripMenuItem.Enabled = false;
-            this.boneColorsToolStripMenuItem.Name = "boneColorsToolStripMenuItem";
-            this.boneColorsToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
-            this.boneColorsToolStripMenuItem.Text = "Bone Colors...";
-            this.boneColorsToolStripMenuItem.Click += new System.EventHandler(this.boneColorsToolStripMenuItem_Click);
+            this.contextMenuStrip_RightDrag.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.openToolStripMenuItem1,
+            this.importToolStripMenuItem1});
+            this.contextMenuStrip_RightDrag.Name = "contextMenuStrip_RightDrag";
+            this.contextMenuStrip_RightDrag.Size = new System.Drawing.Size(118, 48);
+            // 
+            // openToolStripMenuItem1
+            // 
+            this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.openToolStripMenuItem1.Text = "Open";
+            // 
+            // importToolStripMenuItem1
+            // 
+            this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
+            this.importToolStripMenuItem1.Text = "Import";
             // 
             // WristVizualizer
             // 
@@ -874,14 +899,15 @@ namespace WristVizualizer
             this.MinimumSize = new System.Drawing.Size(500, 429);
             this.Name = "WristVizualizer";
             this.Text = "Wrist Vizualizer";
-            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.Activated += new System.EventHandler(this.WristVizualizer_Activated);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragDrop);
             this.DragEnter += new System.Windows.Forms.DragEventHandler(this.WristVizualizer_DragEnter);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.mainLayoutPanel.ResumeLayout(false);
+            this.contextMenuStrip_RightDrag.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -981,6 +1007,9 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem xScaleNoSmoothingToolStripMenuItem3;
         private System.Windows.Forms.ToolStripMenuItem boneColorsToolStripMenuItem;
+        private System.Windows.Forms.ContextMenuStrip contextMenuStrip_RightDrag;
+        private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem1;
     }
 }
 
