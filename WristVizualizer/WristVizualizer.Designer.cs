@@ -105,6 +105,11 @@ namespace WristVizualizer
             this.selectionStyleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.boundingBoxToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lineToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.presetViewpointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.volarViewACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.radialViewACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.volarViewACSPrettyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.hideErrorMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -120,8 +125,10 @@ namespace WristVizualizer
             this.contextMenuStrip_RightDrag = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.openSaveViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.openSaveViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.distalViewACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -587,6 +594,8 @@ namespace WristVizualizer
             this.toolStripSeparator5,
             this.transparencyToolStripMenuItem,
             this.selectionStyleToolStripMenuItem,
+            this.toolStripSeparator14,
+            this.presetViewpointsToolStripMenuItem,
             this.toolStripSeparator4,
             this.hideErrorMessagesToolStripMenuItem});
             this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
@@ -766,6 +775,47 @@ namespace WristVizualizer
             this.lineToolStripMenuItem.Text = "Line Wrap";
             this.lineToolStripMenuItem.Click += new System.EventHandler(this.lineToolStripMenuItem_Click);
             // 
+            // toolStripSeparator14
+            // 
+            this.toolStripSeparator14.Name = "toolStripSeparator14";
+            this.toolStripSeparator14.Size = new System.Drawing.Size(219, 6);
+            // 
+            // presetViewpointsToolStripMenuItem
+            // 
+            this.presetViewpointsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.volarViewACSToolStripMenuItem,
+            this.radialViewACSToolStripMenuItem,
+            this.distalViewACSToolStripMenuItem,
+            this.toolStripSeparator15,
+            this.volarViewACSPrettyToolStripMenuItem});
+            this.presetViewpointsToolStripMenuItem.Name = "presetViewpointsToolStripMenuItem";
+            this.presetViewpointsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.presetViewpointsToolStripMenuItem.Text = "Preset &Viewpoints...";
+            // 
+            // volarViewACSToolStripMenuItem
+            // 
+            this.volarViewACSToolStripMenuItem.Name = "volarViewACSToolStripMenuItem";
+            this.volarViewACSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D1)));
+            this.volarViewACSToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.volarViewACSToolStripMenuItem.Text = "&Volar View ACS";
+            this.volarViewACSToolStripMenuItem.Click += new System.EventHandler(this.volarViewACSToolStripMenuItem_Click);
+            // 
+            // radialViewACSToolStripMenuItem
+            // 
+            this.radialViewACSToolStripMenuItem.Name = "radialViewACSToolStripMenuItem";
+            this.radialViewACSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D2)));
+            this.radialViewACSToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.radialViewACSToolStripMenuItem.Text = "&Radial View ACS";
+            this.radialViewACSToolStripMenuItem.Click += new System.EventHandler(this.radialViewACSToolStripMenuItem_Click);
+            // 
+            // volarViewACSPrettyToolStripMenuItem
+            // 
+            this.volarViewACSPrettyToolStripMenuItem.Name = "volarViewACSPrettyToolStripMenuItem";
+            this.volarViewACSPrettyToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D0)));
+            this.volarViewACSPrettyToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.volarViewACSPrettyToolStripMenuItem.Text = "Volar View ACS - &Pretty";
+            this.volarViewACSPrettyToolStripMenuItem.Click += new System.EventHandler(this.volarViewACSPrettyToolStripMenuItem_Click);
+            // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
@@ -894,6 +944,11 @@ namespace WristVizualizer
             this.importToolStripMenuItem1.Text = "&Import";
             this.importToolStripMenuItem1.Click += new System.EventHandler(this.importToolStripMenuItem1_Click);
             // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(142, 6);
+            // 
             // openSaveViewToolStripMenuItem
             // 
             this.openSaveViewToolStripMenuItem.Name = "openSaveViewToolStripMenuItem";
@@ -901,10 +956,18 @@ namespace WristVizualizer
             this.openSaveViewToolStripMenuItem.Text = "Open - Save &View";
             this.openSaveViewToolStripMenuItem.Click += new System.EventHandler(this.openSaveViewToolStripMenuItem_Click);
             // 
-            // toolStripSeparator13
+            // distalViewACSToolStripMenuItem
             // 
-            this.toolStripSeparator13.Name = "toolStripSeparator13";
-            this.toolStripSeparator13.Size = new System.Drawing.Size(142, 6);
+            this.distalViewACSToolStripMenuItem.Name = "distalViewACSToolStripMenuItem";
+            this.distalViewACSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
+            this.distalViewACSToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.distalViewACSToolStripMenuItem.Text = "&Distal View ACS";
+            this.distalViewACSToolStripMenuItem.Click += new System.EventHandler(this.distalViewACSToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(232, 6);
             // 
             // WristVizualizer
             // 
@@ -1033,6 +1096,13 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem openSaveViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
+        private System.Windows.Forms.ToolStripMenuItem presetViewpointsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem volarViewACSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem volarViewACSPrettyToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+        private System.Windows.Forms.ToolStripMenuItem radialViewACSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem distalViewACSToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
     }
 }
 

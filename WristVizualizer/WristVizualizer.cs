@@ -1316,6 +1316,37 @@ namespace WristVizualizer
             control.EditBoneColorsShowDialog();
         }
 
+        //preset views
+        private void volarViewACSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null || _viewer.Camera == null) return;
+            _viewer.Camera.setOrthogonalViewpoint(Camera.PresetViews.VOLAR_VIEW_ACS);
+            _viewer.viewAll();
+        }
+
+        private void volarViewACSPrettyToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null || _viewer.Camera == null) return;
+            _viewer.setBackgroundColor(1, 1, 1);
+            _viewer.Camera.setOrthogonalViewpoint(Camera.PresetViews.VOLAR_VIEW_ACS);
+            _viewer.viewAll();
+            _viewer.setTransparencyType(ExaminerViewer.TransparencyTypes.SORTED_OBJECT_SORTED_TRIANGLE_BLEND);
+        }
+
+        private void radialViewACSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null || _viewer.Camera == null) return;
+            _viewer.Camera.setOrthogonalViewpoint(Camera.PresetViews.RADIAL_VIEW_ACS);
+            _viewer.viewAll();
+        }
+
+        private void distalViewACSToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_viewer == null || _viewer.Camera == null) return;
+            _viewer.Camera.setOrthogonalViewpoint(Camera.PresetViews.DISTAL_VIEW_ACS);
+            _viewer.viewAll();
+        }
+
 
     }
 }

@@ -47,6 +47,14 @@ public:
 		void set(float value);
 	}
 
+	enum class PresetViews {
+		VOLAR_VIEW_ACS,
+		RADIAL_VIEW_ACS,
+		DISTAL_VIEW_ACS
+	};
+
+	void setOrthogonalViewpoint(PresetViews view);
+
 private:
 	void rotateCamera(const SbVec3f & aroundaxis, const float delta);
 

@@ -91,6 +91,25 @@ void libCoin3D::Camera::rotateCamera(const SbVec3f & aroundaxis, const float del
 	cam->position = focalpoint - cam->focalDistance.getValue() * newdir;
 }
 
+void libCoin3D::Camera::setOrthogonalViewpoint(Camera::PresetViews views)
+{
+	SoCamera* cam = (SoCamera*)_node;
+	switch (views) {
+		case PresetViews::VOLAR_VIEW_ACS:
+			cam->orientation.setValue(SbVec3f(0, 0, 1), 1.5707963f);
+			break;
+		case PresetViews::RADIAL_VIEW_ACS:
+			cam->orientation.setValue(SbVec3f(-0.577350f,0.577350f,0.577350f), 2.0943951024f);
+			break;
+		case PresetViews::DISTAL_VIEW_ACS:
+			//cam->orientation.setValue(SbVec3f(-0.7071067812,0,0.7071067812), 3.1415926536);
+			cam->orientation.setValue(SbVec3f(-0.577350f,-0.577350f,0.577350f), 2.0943951024f);
+			break;
+		default:
+			throw gcnew System::ArgumentException("Unknown preset view");
+	}
+}
+
 array<float>^ libCoin3D::Camera::getPosition()
 {
 	SoCamera* cam = (SoCamera*)_node;
