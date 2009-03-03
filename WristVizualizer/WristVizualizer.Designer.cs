@@ -306,7 +306,7 @@ namespace WristVizualizer
             this.copyToClipboardToolStripMenuItem.Enabled = false;
             this.copyToClipboardToolStripMenuItem.Name = "copyToClipboardToolStripMenuItem";
             this.copyToClipboardToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
-            this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.copyToClipboardToolStripMenuItem.Size = new System.Drawing.Size(310, 22);
             this.copyToClipboardToolStripMenuItem.Text = "Copy to clipboard";
             this.copyToClipboardToolStripMenuItem.Click += new System.EventHandler(this.copyToClipboardToolStripMenuItem_Click);
             // 
@@ -321,7 +321,7 @@ namespace WristVizualizer
             this.xScaleNoSmoothingToolStripMenuItem3});
             this.saveImageOptionsToolStripMenuItem.Enabled = false;
             this.saveImageOptionsToolStripMenuItem.Name = "saveImageOptionsToolStripMenuItem";
-            this.saveImageOptionsToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.saveImageOptionsToolStripMenuItem.Size = new System.Drawing.Size(310, 22);
             this.saveImageOptionsToolStripMenuItem.Text = "Save Image Options";
             // 
             // xScaleNoSmoothingToolStripMenuItem
@@ -371,13 +371,13 @@ namespace WristVizualizer
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(238, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(307, 6);
             // 
             // colorTransparencyToolStripMenuItem
             // 
             this.colorTransparencyToolStripMenuItem.Enabled = false;
             this.colorTransparencyToolStripMenuItem.Name = "colorTransparencyToolStripMenuItem";
-            this.colorTransparencyToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.colorTransparencyToolStripMenuItem.Size = new System.Drawing.Size(310, 22);
             this.colorTransparencyToolStripMenuItem.Text = "Color && Transparency...";
             this.colorTransparencyToolStripMenuItem.Click += new System.EventHandler(this.colorTransparencyToolStripMenuItem_Click);
             // 
@@ -385,7 +385,7 @@ namespace WristVizualizer
             // 
             this.boneColorsToolStripMenuItem.Enabled = false;
             this.boneColorsToolStripMenuItem.Name = "boneColorsToolStripMenuItem";
-            this.boneColorsToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.boneColorsToolStripMenuItem.Size = new System.Drawing.Size(310, 22);
             this.boneColorsToolStripMenuItem.Text = "Bone Colors...";
             this.boneColorsToolStripMenuItem.Click += new System.EventHandler(this.boneColorsToolStripMenuItem_Click);
             // 
@@ -393,7 +393,7 @@ namespace WristVizualizer
             // 
             this.backgroundColorToolStripMenuItem.Enabled = false;
             this.backgroundColorToolStripMenuItem.Name = "backgroundColorToolStripMenuItem";
-            this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.backgroundColorToolStripMenuItem.Size = new System.Drawing.Size(310, 22);
             this.backgroundColorToolStripMenuItem.Text = "Background Color...";
             this.backgroundColorToolStripMenuItem.Click += new System.EventHandler(this.backgroundColorToolStripMenuItem_Click);
             // 
@@ -401,7 +401,9 @@ namespace WristVizualizer
             // 
             this.cameraPositionOrientationToolStripMenuItem.Enabled = false;
             this.cameraPositionOrientationToolStripMenuItem.Name = "cameraPositionOrientationToolStripMenuItem";
-            this.cameraPositionOrientationToolStripMenuItem.Size = new System.Drawing.Size(241, 22);
+            this.cameraPositionOrientationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
+            this.cameraPositionOrientationToolStripMenuItem.Size = new System.Drawing.Size(310, 22);
             this.cameraPositionOrientationToolStripMenuItem.Text = "Camera Position && Orientation...";
             this.cameraPositionOrientationToolStripMenuItem.Click += new System.EventHandler(this.cameraPositionOrientationToolStripMenuItem_Click);
             // 
