@@ -340,6 +340,18 @@ namespace WristVizualizer
             RegistrySettings.saveMostRecentFile(filenames[0]);
         }
 
+        private void openFileSaveView(string[] filenames)
+        {
+            if (_viewer == null)
+                throw new InvalidConstraintException("Can not open a file and save the view when there is no existing view");
+
+            Camera originalCam = _viewer.Camera; //save starting camera
+            int backColor = _viewer.getBackgroundColor();
+            openFile(filenames); //load new scene
+            _viewer.Camera.copySettingsFromCamera(originalCam); //copy back settings I hope...
+            _viewer.setBackgroundColor(backColor);
+        }
+
         /// <summary>
         /// Adds the given files to the scene
         /// </summary>
@@ -704,7 +716,14 @@ namespace WristVizualizer
             string[] filenames = e.Data.GetData("FileDrop") as string[];
             try
             {
-                if (sender == panelCoin && importToolStripMenuItem.Enabled && _viewer != null && _root != null)
+                if (e.Effect == DragDropEffects.All)
+                {
+                    contextMenuStrip_RightDrag.Tag = filenames;
+                    importToolStripMenuItem1.Enabled = (importToolStripMenuItem.Enabled && _viewer != null && _root != null);
+                    openSaveViewToolStripMenuItem.Enabled = (_viewer != null && _root != null);
+                    contextMenuStrip_RightDrag.Show(e.X, e.Y);
+                }
+                else if (e.Effect == DragDropEffects.Copy)
                     importFile(filenames);
                 else
                     openFile(filenames);
@@ -724,10 +743,30 @@ namespace WristVizualizer
                 return;
             }
 
-            if (sender == panelCoin && importToolStripMenuItem.Enabled)
+            if ((e.KeyState & 2) == 2) //right mouse button                
+                e.Effect = DragDropEffects.All;                
+            else if (sender == panelCoin && importToolStripMenuItem.Enabled && _viewer != null && _root != null)
                 e.Effect = DragDropEffects.Copy;
             else
                 e.Effect = DragDropEffects.Move;           
+        }
+
+        private void openToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string[] filenames = (string[])contextMenuStrip_RightDrag.Tag;
+            openFile(filenames);
+        }
+
+        private void importToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            string[] filenames = (string[])contextMenuStrip_RightDrag.Tag;
+            importFile(filenames);
+        }
+
+        private void openSaveViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string[] filenames = (string[])contextMenuStrip_RightDrag.Tag;
+            openFileSaveView(filenames);
         }
         #endregion
 
@@ -1276,5 +1315,7 @@ namespace WristVizualizer
             FullWristController control = (FullWristController)_currentController;
             control.EditBoneColorsShowDialog();
         }
+
+
     }
 }

@@ -1,3 +1,6 @@
+Version 1.7.X
+- New: New drag and drop options. When right-dragging, can choose how to open the file.
+
 Version 1.7.6
 - New: When a file is automatically reloaded (after external changes). Background color and camera position are maintained.
 

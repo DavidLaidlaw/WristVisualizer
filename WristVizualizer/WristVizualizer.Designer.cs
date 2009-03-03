@@ -120,6 +120,8 @@ namespace WristVizualizer
             this.contextMenuStrip_RightDrag = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.openSaveViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -869,21 +871,38 @@ namespace WristVizualizer
             // 
             this.contextMenuStrip_RightDrag.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem1,
-            this.importToolStripMenuItem1});
+            this.importToolStripMenuItem1,
+            this.toolStripSeparator13,
+            this.openSaveViewToolStripMenuItem});
             this.contextMenuStrip_RightDrag.Name = "contextMenuStrip_RightDrag";
-            this.contextMenuStrip_RightDrag.Size = new System.Drawing.Size(118, 48);
+            this.contextMenuStrip_RightDrag.ShowImageMargin = false;
+            this.contextMenuStrip_RightDrag.Size = new System.Drawing.Size(146, 76);
             // 
             // openToolStripMenuItem1
             // 
             this.openToolStripMenuItem1.Name = "openToolStripMenuItem1";
-            this.openToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
-            this.openToolStripMenuItem1.Text = "Open";
+            this.openToolStripMenuItem1.Size = new System.Drawing.Size(145, 22);
+            this.openToolStripMenuItem1.Text = "&Open";
+            this.openToolStripMenuItem1.Click += new System.EventHandler(this.openToolStripMenuItem1_Click);
             // 
             // importToolStripMenuItem1
             // 
             this.importToolStripMenuItem1.Name = "importToolStripMenuItem1";
-            this.importToolStripMenuItem1.Size = new System.Drawing.Size(117, 22);
-            this.importToolStripMenuItem1.Text = "Import";
+            this.importToolStripMenuItem1.Size = new System.Drawing.Size(145, 22);
+            this.importToolStripMenuItem1.Text = "&Import";
+            this.importToolStripMenuItem1.Click += new System.EventHandler(this.importToolStripMenuItem1_Click);
+            // 
+            // openSaveViewToolStripMenuItem
+            // 
+            this.openSaveViewToolStripMenuItem.Name = "openSaveViewToolStripMenuItem";
+            this.openSaveViewToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
+            this.openSaveViewToolStripMenuItem.Text = "Open - Save &View";
+            this.openSaveViewToolStripMenuItem.Click += new System.EventHandler(this.openSaveViewToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator13
+            // 
+            this.toolStripSeparator13.Name = "toolStripSeparator13";
+            this.toolStripSeparator13.Size = new System.Drawing.Size(142, 6);
             // 
             // WristVizualizer
             // 
@@ -1010,6 +1029,8 @@ namespace WristVizualizer
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip_RightDrag;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem importToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem openSaveViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator13;
     }
 }
 
