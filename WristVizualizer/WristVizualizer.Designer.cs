@@ -109,6 +109,8 @@ namespace WristVizualizer
             this.presetViewpointsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.volarViewACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.radialViewACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.distalViewACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
             this.volarViewACSPrettyToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
             this.hideErrorMessagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -127,8 +129,7 @@ namespace WristVizualizer
             this.importToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
             this.openSaveViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.distalViewACSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.launchMRISubRegionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.mainLayoutPanel.SuspendLayout();
@@ -562,7 +563,8 @@ namespace WristVizualizer
             // 
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.trimCameraMaterialsToolStripMenuItem,
-            this.launchMRIViewerToolStripMenuItem});
+            this.launchMRIViewerToolStripMenuItem,
+            this.launchMRISubRegionToolStripMenuItem});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
             this.toolsToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.toolsToolStripMenuItem.Text = "&Tools";
@@ -808,6 +810,19 @@ namespace WristVizualizer
             this.radialViewACSToolStripMenuItem.Text = "&Radial View ACS";
             this.radialViewACSToolStripMenuItem.Click += new System.EventHandler(this.radialViewACSToolStripMenuItem_Click);
             // 
+            // distalViewACSToolStripMenuItem
+            // 
+            this.distalViewACSToolStripMenuItem.Name = "distalViewACSToolStripMenuItem";
+            this.distalViewACSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
+            this.distalViewACSToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.distalViewACSToolStripMenuItem.Text = "&Distal View ACS";
+            this.distalViewACSToolStripMenuItem.Click += new System.EventHandler(this.distalViewACSToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator15
+            // 
+            this.toolStripSeparator15.Name = "toolStripSeparator15";
+            this.toolStripSeparator15.Size = new System.Drawing.Size(232, 6);
+            // 
             // volarViewACSPrettyToolStripMenuItem
             // 
             this.volarViewACSPrettyToolStripMenuItem.Name = "volarViewACSPrettyToolStripMenuItem";
@@ -956,18 +971,12 @@ namespace WristVizualizer
             this.openSaveViewToolStripMenuItem.Text = "Open - Save &View";
             this.openSaveViewToolStripMenuItem.Click += new System.EventHandler(this.openSaveViewToolStripMenuItem_Click);
             // 
-            // distalViewACSToolStripMenuItem
+            // launchMRISubRegionToolStripMenuItem
             // 
-            this.distalViewACSToolStripMenuItem.Name = "distalViewACSToolStripMenuItem";
-            this.distalViewACSToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.D3)));
-            this.distalViewACSToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
-            this.distalViewACSToolStripMenuItem.Text = "&Distal View ACS";
-            this.distalViewACSToolStripMenuItem.Click += new System.EventHandler(this.distalViewACSToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator15
-            // 
-            this.toolStripSeparator15.Name = "toolStripSeparator15";
-            this.toolStripSeparator15.Size = new System.Drawing.Size(232, 6);
+            this.launchMRISubRegionToolStripMenuItem.Name = "launchMRISubRegionToolStripMenuItem";
+            this.launchMRISubRegionToolStripMenuItem.Size = new System.Drawing.Size(213, 22);
+            this.launchMRISubRegionToolStripMenuItem.Text = "Launch MRI SubRegion";
+            this.launchMRISubRegionToolStripMenuItem.Click += new System.EventHandler(this.launchMRISubRegionToolStripMenuItem_Click);
             // 
             // WristVizualizer
             // 
@@ -1103,6 +1112,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem radialViewACSToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem distalViewACSToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
+        private System.Windows.Forms.ToolStripMenuItem launchMRISubRegionToolStripMenuItem;
     }
 }
 

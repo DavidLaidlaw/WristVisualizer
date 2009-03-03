@@ -1347,6 +1347,12 @@ namespace WristVizualizer
             _viewer.viewAll();
         }
 
+        private void launchMRISubRegionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            libWrist.MRISubRegion.MRISubRegionMainForm mriSubRegion = new libWrist.MRISubRegion.MRISubRegionMainForm();
+            mriSubRegion.Show();
+        }
+
 
     }
 }
