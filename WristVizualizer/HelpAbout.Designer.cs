@@ -109,7 +109,7 @@ namespace WristVizualizer
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(109, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "Evan Leventhal 2008";
+            this.label4.Text = "Evan Leventhal 2009";
             // 
             // label5
             // 

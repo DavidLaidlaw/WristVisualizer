@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Networking Doc")]
 [assembly: AssemblyProduct("WristVizualizer")]
-[assembly: AssemblyCopyright("Copyright © Networking Doc 2008")]
+[assembly: AssemblyCopyright("Copyright © Networking Doc 2009")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
