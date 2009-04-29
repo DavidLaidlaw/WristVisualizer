@@ -36,14 +36,17 @@ namespace WristVizualizer
         [Option("Contour {Distances} (mm) (Max==3mm)", 'c', "contours")]
         public string ContourString = null;
 
-        [Option("{Filename} for contour file", "saveContour")]
-        public string SaveContourFname = null;
+        //[Option("{Filename} for contour file", "saveContour")]
+        //public string SaveContourFname = null;
 
         [Option("{Filename} for patch file", "savePatch")]
         public string SavePatchFname = null;
 
         [Option("Save area and centroid data to disk. Optionally: specify {directory} to save to (Defaults to <subject>\\<series>\\Distances\\)", "saveArea")]
         public string SaveAreaDirectory = null;
+
+        [Option("Save edges of calculated contours to disk. Optionally: specify {directory} to save to (Defaults to <subject>\\<series>\\Distances\\)", "saveContour")]
+        public string SaveContourFileDirectory = null;
 
         [Option("Determine contour by targeting {area} (mm2). (max resulting distance: 3mm)", "contourArea")]
         public string TargetContourArea = null;

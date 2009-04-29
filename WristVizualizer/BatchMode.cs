@@ -69,32 +69,41 @@ namespace WristVizualizer
             Contour[][] contours = ProcessTargetAreaSingleThread();
             for (int i = 0; i < _positionList.Length; i++)
             {
-                string fname = CreateTargetAreaOutputFilename(_positionList[i]);
-                SaveContourAreaAndCentroidToFile(contours[i], fname);
+                if (_options.SaveAreaDirectory != null) //save area information if needed
+                {
+                    string fname = CreateTargetAreaOutputFilename(_positionList[i]);
+                    SaveContourAreaAndCentroidToFile(contours[i], fname);
+                }
+                if (_options.SaveContourFileDirectory != null) //save contour stack file if needed
+                {
+                    SaveContourToStackFile(contours[i], i);
+                }
             }
         }
 
         private void CalculateAndSaveContours()
         {
-            if (_cDistances != null)
-            {
-                if (_options.MultiThread)
-                    ProcessContoursMultiThreaded(_fullWrist, _refBoneIndex, _testBoneIndex, _positionList);
-                else
-                    ProcessContoursSingleThread(_fullWrist, _refBoneIndex, _testBoneIndex, _positionList);
+            if (_cDistances == null) return;
 
-                SaveDataCentroidArea();
-            }
-        }
+            //Perform the actuall calculations
+            if (_options.MultiThread)
+                ProcessContoursMultiThreaded(_fullWrist, _refBoneIndex, _testBoneIndex, _positionList);
+            else
+                ProcessContoursSingleThread(_fullWrist, _refBoneIndex, _testBoneIndex, _positionList);
 
-        private void SaveDataCentroidArea()
-        {
-            if (_options.SaveAreaDirectory == null) return; //nothing to do. no save specified
+            //save the output as needed
             for (int i = 0; i < _positionList.Length; i++)
             {
                 Contour c = _fullWrist.Bones[_refBoneIndex].GetContourForPosition(_positionList[i]);
-                string fname = CreateAreaOutputFilename(_positionList[i]);
-                SaveContourAreaAndCentroidToFile(c, fname);
+                if (_options.SaveAreaDirectory != null) //save area information if needed
+                {
+                    string fname = CreateAreaOutputFilename(_positionList[i]);
+                    SaveContourAreaAndCentroidToFile(c, fname);
+                }
+                if (_options.SaveContourFileDirectory != null) //save contour stack file if needed
+                {
+                    SaveContourToStackFile(c, i);
+                }
             }
         }
 
@@ -103,7 +112,7 @@ namespace WristVizualizer
             const string format = "%SUBJECT%_%REFBONE%_%TESTBONE%%POSITION%_ContourTargeted.dat";
             string fname = createFilenameHelper(format, posIndex);
 
-            return Path.Combine(GetContourOutputDirectory(posIndex), fname);
+            return Path.Combine(GetAreaOutputDirectory(posIndex), fname);
         }
 
         private string CreateAreaOutputFilename(int posIndex)
@@ -111,10 +120,22 @@ namespace WristVizualizer
             const string format = "%SUBJECT%_%REFBONE%_%TESTBONE%%POSITION%_ContourMaster.dat";
             string fname = createFilenameHelper(format, posIndex);
 
-            return Path.Combine(GetContourOutputDirectory(posIndex), fname);
+            return Path.Combine(GetAreaOutputDirectory(posIndex), fname);
+        }
+
+        private string CreateContourOutputFilename(int posIndex, double distance)
+        {
+            const string format = "%SUBJECT%_%REFBONE%_%TESTBONE%%POSITION%_%DISTANCE%Contour.stack";
+            string fname = createFilenameHelper(format, posIndex, distance);
+
+            return Path.Combine(GetAreaOutputDirectory(posIndex), fname);
         }
 
         private string createFilenameHelper(string formatString, int posIndex)
+        {
+            return createFilenameHelper(formatString, posIndex, 0);
+        }
+        private string createFilenameHelper(string formatString, int posIndex, double distance)
         {
             string pos = (posIndex == 0) ? _wrist.neutralSeries : _wrist.series[posIndex - 1];
             string refBname = Wrist.ShortBoneNames[_refBoneIndex];
@@ -125,10 +146,11 @@ namespace WristVizualizer
             output = output.Replace("%REFBONE%", refBname);
             output = output.Replace("%TESTBONE%", testBname);
             output = output.Replace("%POSITION%", pos.Substring(1));
+            output = output.Replace("%DISTANCE%", distance.ToString("0.000"));
             return output;
         }
 
-        private string GetContourOutputDirectory(int posIndex)
+        private string GetAreaOutputDirectory(int posIndex)
         {
             if (_options.SaveAreaDirectory.Trim().Length > 0) //if an output directory was specified, use that
                 return _options.SaveAreaDirectory;
@@ -140,6 +162,19 @@ namespace WristVizualizer
                 Directory.CreateDirectory(distanceFolder);
             return distanceFolder;
         }
+
+        private string GetContourOutputDirectory(int posIndex)
+        {
+            if (_options.SaveContourFileDirectory.Trim().Length > 0) //if an output directory was specified, use that
+                return _options.SaveContourFileDirectory;
+
+            //otherwise, specify our own default location
+            string seriesPath = (posIndex == 0) ? _wrist.NeutralSeriesPath : _wrist.getSeriesPath(posIndex - 1);
+            string distanceFolder = Path.Combine(seriesPath, "Distances");
+            if (!Directory.Exists(distanceFolder))
+                Directory.CreateDirectory(distanceFolder);
+            return distanceFolder;
+        }        
 
         private static void SaveContourAreaAndCentroidToFile(Contour contour, string filename)
         {
@@ -158,6 +193,28 @@ namespace WristVizualizer
                 }
             }
         }
+
+
+        private void SaveContourToStackFile(Contour[] contours, int posIndex)
+        {
+            foreach (Contour c in contours)
+                SaveContourToStackFile(c, posIndex);
+        }
+        private void SaveContourToStackFile(Contour contour, int posIndex)
+        {
+            //loop for each contour
+            for (int i = 0; i < contour.ContourDistances.Length; i++)
+            {
+                //Get contour distance
+                double distance = contour.ContourDistances[i];
+                //Get filename
+                string filename = CreateContourOutputFilename(posIndex, distance);
+                //save to contour....
+                //TODO: Actually save something....
+            }
+        }
+        
+
 
         private Contour[][] ProcessTargetAreaSingleThread()
         {
