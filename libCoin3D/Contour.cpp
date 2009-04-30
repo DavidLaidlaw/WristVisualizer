@@ -1,5 +1,6 @@
 #include "StdAfx.h"
 #include "Contour.h"
+#include "Separator.h"
 
 libCoin3D::Contour::Contour(int numberOfDistances)
 {
@@ -122,4 +123,10 @@ array<array<double>^>^ libCoin3D::Contour::Centroids::get()
 void libCoin3D::Contour::setColor(int contourIndex, System::Drawing::Color color)
 {
 	_contourColors[contourIndex]->rgb.setValue(color.R/255.0f, color.G/255.0f, color.B/255.0f);
+}
+
+System::String^ libCoin3D::Contour::getContourNodeGraph(int contourIndex)
+{
+	Separator^ s = gcnew Separator(_contourSeparators[contourIndex]);
+	return s->getNodeGraph();
 }

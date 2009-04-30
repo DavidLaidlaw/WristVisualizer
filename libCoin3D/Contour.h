@@ -34,6 +34,8 @@ public:
 		array<double>^ get() { return _contourDistances; }
 	}
 
+	virtual System::String^ getContourNodeGraph(int contourIndex);
+
 	virtual SoNode* getNode() override { return _node; }
 private:
 	virtual void SetupContour(array<System::Drawing::Color>^ contourColors);

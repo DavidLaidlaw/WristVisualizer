@@ -76,7 +76,7 @@ namespace WristVizualizer
                 }
                 if (_options.SaveContourFileDirectory != null) //save contour stack file if needed
                 {
-                    SaveContourToStackFile(contours[i], i);
+                    SaveContourToStackFile(contours[i], _positionList[i]);
                 }
             }
         }
@@ -102,7 +102,7 @@ namespace WristVizualizer
                 }
                 if (_options.SaveContourFileDirectory != null) //save contour stack file if needed
                 {
-                    SaveContourToStackFile(c, i);
+                    SaveContourToStackFile(c, _positionList[i]);
                 }
             }
         }
@@ -126,6 +126,14 @@ namespace WristVizualizer
         private string CreateContourOutputFilename(int posIndex, double distance)
         {
             const string format = "%SUBJECT%_%REFBONE%_%TESTBONE%%POSITION%_%DISTANCE%Contour.stack";
+            string fname = createFilenameHelper(format, posIndex, distance);
+
+            return Path.Combine(GetAreaOutputDirectory(posIndex), fname);
+        }
+
+        private string CreateContourIVFilename(int posIndex, double distance)
+        {
+            const string format = "%SUBJECT%_%REFBONE%_%TESTBONE%%POSITION%_%DISTANCE%Contour.iv";
             string fname = createFilenameHelper(format, posIndex, distance);
 
             return Path.Combine(GetAreaOutputDirectory(posIndex), fname);
@@ -208,9 +216,13 @@ namespace WristVizualizer
                 //Get contour distance
                 double distance = contour.ContourDistances[i];
                 //Get filename
-                string filename = CreateContourOutputFilename(posIndex, distance);
+                string filename = CreateContourIVFilename(posIndex, distance);
                 //save to contour....
-                //TODO: Actually save something....
+                string ivText = contour.getContourNodeGraph(i);
+                using (StreamWriter writer = new StreamWriter(filename, false))
+                {
+                    writer.Write(ivText);
+                }
             }
         }
         
