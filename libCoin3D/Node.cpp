@@ -32,7 +32,7 @@ System::String^ libCoin3D::Node::getNodeGraph()
 	size_t endPosition;
 	void* outBuf = buffer;
 	out.getBuffer(outBuf, endPosition);
-	SbString s(buffer);
+	SbString s((const char*)outBuf);
 	free(outBuf);
 	return gcnew System::String(s.getString());
 }
