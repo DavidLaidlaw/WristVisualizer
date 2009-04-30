@@ -29,7 +29,7 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.7.8.*")]
+[assembly: AssemblyVersion("1.7.9.*")]
 
 //Aditional settings for Mono.GetOptions.dll 
 [assembly: Mono.UsageComplement("[filename1] [filename2] ...")]

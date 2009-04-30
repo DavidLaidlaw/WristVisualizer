@@ -1,3 +1,6 @@
+Version 1.7.9
+- New: Can export contours as IV files from batch mode.
+
 Version 1.7.8
 - New: Integrated old MRI SubRegion into WristVizualizer. Can now launch from the Tools menu.
 
