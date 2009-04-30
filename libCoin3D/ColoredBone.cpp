@@ -9,6 +9,8 @@
 #include <Inventor/nodes/SoDrawStyle.h>
 #include <Inventor/nodes/SoShapeHints.h>
 
+#include "TessellatedSurface.h"
+
 #pragma warning(disable:4091)
 #include <msclr\lock.h>
 #pragma warning(default:4091)
@@ -194,13 +196,7 @@ array<float,2>^ libCoin3D::ColoredBone::getVertices()
 	msclr::lock l(this); //apply lock during this method, so that this method is threadsafe
 
 	if (_vertices==nullptr) {
-		int numPts = _vertexProperty->vertex.getNum();
-		_vertices = gcnew array<float,2>(numPts,3);
-		for (int i=0; i<numPts; i++) {
-			_vertices[i,0] = _vertexProperty->vertex[i][0];
-			_vertices[i,1] = _vertexProperty->vertex[i][1];
-			_vertices[i,2] = _vertexProperty->vertex[i][2];
-		}
+		_vertices = TessellatedSurface::SoVertexProperyToArray(_vertexProperty);
 	}
 	return _vertices;
 }
@@ -210,14 +206,16 @@ array<int,2>^ libCoin3D::ColoredBone::getFaceSetIndices()
 	msclr::lock l(this);
 
 	if (_faceSet==nullptr) {
-		int numTriangles = _indexedFaceSet->coordIndex.getNum();
-		numTriangles = numTriangles/4;
-		_faceSet = gcnew array<int,2>(numTriangles,3);  //yes, only copying the indices, not the -1
-		for (int i=0; i<numTriangles; i++) {
-			_faceSet[i,0] = _indexedFaceSet->coordIndex[i*4];
-			_faceSet[i,1] = _indexedFaceSet->coordIndex[i*4+1];
-			_faceSet[i,2] = _indexedFaceSet->coordIndex[i*4+2];
-		}
+		_faceSet = TessellatedSurface::SoIndexedFaceSetToMultiArray(_indexedFaceSet);
+
+		//int numTriangles = _indexedFaceSet->coordIndex.getNum();
+		//numTriangles = numTriangles/4;
+		//_faceSet = gcnew array<int,2>(numTriangles,3);  //yes, only copying the indices, not the -1
+		//for (int i=0; i<numTriangles; i++) {
+		//	_faceSet[i,0] = _indexedFaceSet->coordIndex[i*4];
+		//	_faceSet[i,1] = _indexedFaceSet->coordIndex[i*4+1];
+		//	_faceSet[i,2] = _indexedFaceSet->coordIndex[i*4+2];
+		//}
 	}
 	return _faceSet;
 }
