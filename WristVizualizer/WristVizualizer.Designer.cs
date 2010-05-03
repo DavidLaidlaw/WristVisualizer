@@ -122,7 +122,7 @@ namespace WristVizualizer
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelCoin = new System.Windows.Forms.Panel();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.mainLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.contextMenuStrip_RightDrag = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.openToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
@@ -905,7 +905,7 @@ namespace WristVizualizer
             // statusStrip1
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1});
+            this.toolStripStatusLabel});
             this.statusStrip1.Location = new System.Drawing.Point(0, 386);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(680, 22);
@@ -915,8 +915,8 @@ namespace WristVizualizer
             // 
             // toolStripStatusLabel1
             // 
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(0, 17);
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(0, 17);
             // 
             // mainLayoutPanel
             // 
@@ -1040,7 +1040,7 @@ namespace WristVizualizer
         private System.Windows.Forms.ToolStripMenuItem advancedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pointIntersectionToolStripMenuItem;
         private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripMenuItem transparencyToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem screenDoorToolStripMenuItem;

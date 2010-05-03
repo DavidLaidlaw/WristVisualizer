@@ -86,6 +86,7 @@
     <Compile Include="VRMLParser.cs" />
     <Compile Include="WristFilesystem.cs" />
     <Compile Include="WristException.cs" />
+    <Compile Include="XrommFilesystem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\GeneralMatrix\GeneralMatrix.csproj">

@@ -227,7 +227,7 @@ namespace WristVizualizer
             }
 
             hideStatusStrip();
-            toolStripStatusLabel1.Text = "";
+            toolStripStatusLabel.Text = "";
 
             resetExaminerViewer();
         }
@@ -819,7 +819,7 @@ namespace WristVizualizer
 
         public void setStatusStripText(string text)
         {
-            toolStripStatusLabel1.Text = text;
+            toolStripStatusLabel.Text = text;
         }
         #endregion
 
