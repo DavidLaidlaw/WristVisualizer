@@ -88,9 +88,6 @@
     <Compile Include="WristException.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\GeneralMatrix\GeneralMatrix.csproj">
       <Project>{6ABA6EAD-58B0-4FCE-A97F-BC884281A170}</Project>
       <Name>GeneralMatrix</Name>
