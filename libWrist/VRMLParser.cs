@@ -50,6 +50,7 @@ Separator {
         point [";
 
         private const string MIMICS_10_SCALE_KEY = @"#coordinates written in 1mm / 10000";
+        private const string MIMICS_13_SCALE_KEY = @"#coordinates written in 1mm / 0";
 
         private static void WriteTesselatedObjectToIVFile(TesselatedObject vrmlData, string ivFilename)
         {
@@ -92,11 +93,13 @@ Separator {
              * then we need to look before we strip the comments. The key
              * is a comment :)
              */
+            bool applyMimics10Scale = false;
             if (autoFixMimics10Scale)
             {
                 //check for it, we will re-use this bool value as an indicator of if the scale needs to be changed
-                if (!full.Contains(MIMICS_10_SCALE_KEY))
-                    autoFixMimics10Scale = false;
+                if (full.Contains(MIMICS_10_SCALE_KEY) ||
+                    full.Contains(MIMICS_13_SCALE_KEY))
+                    applyMimics10Scale = true;
             }
 
             //Remove all comments from the file
@@ -121,7 +124,7 @@ Separator {
                 scale[2] = Double.Parse(scaleMatch.Groups[1].Value);
             }
 
-            if (autoFixMimics10Scale)
+            if (applyMimics10Scale)
             {
                 scale[0] *= 1000;
                 scale[1] *= 1000;
