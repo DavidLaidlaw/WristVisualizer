@@ -801,31 +801,20 @@ namespace WristVizualizer
 
         private void showStatusStrip()
         {
-            setStatusStripVisibility(true);
+            if (statusStrip1.Visible) return; //nothing to change
+
+            statusStrip1.Visible = true;
+            //was hidden, now visible, so shrink the panel to make room
+            mainLayoutPanel.Height -= statusStrip1.Height; //how much do we need to move by...
         }
 
         private void hideStatusStrip()
         {
-            setStatusStripVisibility(false);
-        }
+            if (!statusStrip1.Visible) return; //nothing to change
 
-        private void setStatusStripVisibility(bool visible)
-        {
-            if (statusStrip1.Visible == visible)
-                return; //nothing to change
-
-            statusStrip1.Visible = visible;
-            int heightNeeded = statusStrip1.Height; //how much do we need to move by...
-            if (visible)
-            {
-                //was hidden, now visible, so shrink the panel to make room
-                mainLayoutPanel.Height -= heightNeeded;
-            }
-            else
-            {
-                //was visible, we are going to hide it; so expand the panel to fill in the space
-                mainLayoutPanel.Height += heightNeeded;
-            }
+            statusStrip1.Visible = false;
+            //was visible, we are going to hide it; so expand the panel to fill in the space
+            mainLayoutPanel.Height += statusStrip1.Height; //how much do we need to move by...
         }
 
         public void setStatusStripText(string text)
