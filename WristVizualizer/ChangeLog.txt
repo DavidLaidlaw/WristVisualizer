@@ -1,5 +1,6 @@
 Version 1.X.X
 - Fixed bug: VMRL->IV now correctly scales output from Mimics 13
+- Fixed bug: No longer crashes on File->New
 
 Version 1.7.9
 - New: Can export contours as IV files from batch mode.

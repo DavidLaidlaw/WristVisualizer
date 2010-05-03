@@ -38,7 +38,9 @@ namespace WristVizualizer
             FULL_WRIST,
             POSVIEW,
             TEXTURE,
-            DISTV
+            DISTV,
+            XROMM,
+            GENERIC
         }
 
         public WristVizualizer(string[] fileArgs)
@@ -337,7 +339,8 @@ namespace WristVizualizer
 
             _viewer.setSceneGraph(_root);
             //save to recently opened files
-            RegistrySettings.saveMostRecentFile(filenames[0]);
+            if (filenames.Length > 0)
+                RegistrySettings.saveMostRecentFile(filenames[0]);
         }
 
         private void openFileSaveView(string[] filenames)
