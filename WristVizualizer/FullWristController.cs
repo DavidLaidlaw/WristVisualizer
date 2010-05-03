@@ -13,7 +13,7 @@ namespace WristVizualizer
     {
         private bool _showErrors = false;
         
-        private Wrist _wrist;
+        private WristFilesystem _wrist;
         private FullWrist _fullWrist;
         
         private int _currentPositionIndex;
@@ -70,7 +70,7 @@ namespace WristVizualizer
 
             //First Try and load the wrist data
             
-            _wrist = new Wrist();
+            _wrist = new WristFilesystem();
 
             _wrist.setupWrist(radiusFilename);
             _fullWrist = new FullWrist(_wrist);
@@ -92,7 +92,7 @@ namespace WristVizualizer
             //}
 
             //disable invalid bones!
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 if (!_fullWrist.Bones[i].IsValidBone)
                     _wristControl.disableBone(i);
@@ -132,9 +132,9 @@ namespace WristVizualizer
         private void setupPositionGraphIfPossible(int referenceBoneIndex)
         {
             //first lets calculate the new data
-            Bone acsBone = _fullWrist.Bones[(int)Wrist.BIndex.RAD];
+            Bone acsBone = _fullWrist.Bones[(int)WristFilesystem.BIndex.RAD];
             Bone refBone = _fullWrist.Bones[referenceBoneIndex];
-            Bone ulnBone = _fullWrist.Bones[(int)Wrist.BIndex.ULN];
+            Bone ulnBone = _fullWrist.Bones[(int)WristFilesystem.BIndex.ULN];
 
             PostureCalculator.Posture[] postureFE = PostureCalculator.CalculatePosturesFE(acsBone, refBone);
             if (postureFE == null)
@@ -285,7 +285,7 @@ namespace WristVizualizer
         {
             _layoutControl = new WristPanelLayoutControl();
             _wristControl = new FullWristControl();
-            _wristControl.setupControl(Wrist.LongBoneNames, true);
+            _wristControl.setupControl(WristFilesystem.LongBoneNames, true);
             _layoutControl.addControl(_wristControl);
         }
 
@@ -364,12 +364,12 @@ namespace WristVizualizer
 
         public void setInertiaVisibilityCarpalBones(bool visible)
         {
-            setInertiaVisibility(visible, Wrist.CarpalBoneIndexes);
+            setInertiaVisibility(visible, WristFilesystem.CarpalBoneIndexes);
         }
 
         public void setInertiaVisibilityMetacarpalBones(bool visible)
         {
-            setInertiaVisibility(visible, Wrist.MetacarpalBoneIndexes);
+            setInertiaVisibility(visible, WristFilesystem.MetacarpalBoneIndexes);
         }
 
         private void setInertiaVisibility(bool visible, int[] boneIndexes) { setInertiaVisibility(visible, boneIndexes, 0); }
@@ -446,7 +446,7 @@ namespace WristVizualizer
                 _layoutControl.removeControl(_positionGraph);
             _wristControl.changeToAnimationMode();
 
-            int startingFixedBone = (int)Wrist.BIndex.RAD; //default to fixing to the radius...
+            int startingFixedBone = (int)WristFilesystem.BIndex.RAD; //default to fixing to the radius...
             //now, lets go and add the switches into place
             SetupWristDistancesForAnimation(startingFixedBone, animationOrder, numFrames, (double)acf.DistanceMapMaximumValue, acf.GetContourDistancesToCalculate(), acf.GetContourColorsToCalculate());
             _fullWrist.SetupWristForAnimation(startingFixedBone, animationOrder, numFrames); //default to radius fixed...
@@ -618,7 +618,7 @@ namespace WristVizualizer
             DialogResult r = edit.ShowDialog();
             if (r != DialogResult.OK)
                 return;
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 if (_fullWrist.Bones[i].IsValidBone && edit.IsColorChanged(i))
                     _fullWrist.Bones[i].SetColor(edit.GetNewBoneColor(i));

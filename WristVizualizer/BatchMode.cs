@@ -11,8 +11,8 @@ namespace WristVizualizer
     {
         private CommandLineOptions _options;
         private FullWrist _fullWrist;
-        private Wrist _wrist;
-        private Wrist.Sides _side;
+        private WristFilesystem _wrist;
+        private WristFilesystem.Sides _side;
 
         private int _refBoneIndex;
         private int _testBoneIndex;
@@ -49,8 +49,8 @@ namespace WristVizualizer
         private void ReadInJobFromOption()
         {
             PreliminaryValidation(_options);
-            _side = Wrist.GetSideFromString(_options.SideString);
-            _wrist = new Wrist(Wrist.findRadius(_options.Subject, _side));
+            _side = WristFilesystem.GetSideFromString(_options.SideString);
+            _wrist = new WristFilesystem(WristFilesystem.findRadius(_options.Subject, _side));
             _fullWrist = new FullWrist(_wrist);
 
             _refBoneIndex = _options.GetReferenceBoneIndex();
@@ -146,8 +146,8 @@ namespace WristVizualizer
         private string createFilenameHelper(string formatString, int posIndex, double distance)
         {
             string pos = (posIndex == 0) ? _wrist.neutralSeries : _wrist.series[posIndex - 1];
-            string refBname = Wrist.ShortBoneNames[_refBoneIndex];
-            string testBname = Wrist.ShortBoneNames[_testBoneIndex];
+            string refBname = WristFilesystem.ShortBoneNames[_refBoneIndex];
+            string testBname = WristFilesystem.ShortBoneNames[_testBoneIndex];
 
             string output = formatString;
             output = output.Replace("%SUBJECT%", _wrist.subject);
@@ -306,7 +306,7 @@ namespace WristVizualizer
             return c;
         }
 
-        private static int[] GetPositionIndexes(Wrist wrist, string[] positionNames)
+        private static int[] GetPositionIndexes(WristFilesystem wrist, string[] positionNames)
         {
             int[] indices = new int[positionNames.Length];
             for (int i = 0; i < positionNames.Length; i++)

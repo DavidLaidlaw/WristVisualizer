@@ -157,8 +157,8 @@ namespace libWrist
         public static TransformMatrix[] parseMotionFileToTransformMatrix(string filename)
         {
             double[][] dat = parseMotionFile(filename);
-            TransformMatrix[] transforms = new TransformMatrix[Wrist.NumBones];
-            for (int i = 0; i < Wrist.NumBones; i++)
+            TransformMatrix[] transforms = new TransformMatrix[WristFilesystem.NumBones];
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 double[][] tempR = { dat[i * 4], dat[i * 4 + 1], dat[i * 4 + 2] };
                 transforms[i] = new TransformMatrix(tempR, dat[i * 4 + 3]);

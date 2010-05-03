@@ -19,8 +19,8 @@ namespace WristVizualizer
         {
             _fullWrist = fullWrist;
             InitializeComponent();
-            _startingColors = new Color[Wrist.NumBones];
-            for (int i = 0; i < Wrist.NumBones; i++)
+            _startingColors = new Color[WristFilesystem.NumBones];
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
                 _startingColors[i] = _fullWrist.Bones[i].GetColor();
             setupGUI();
         }
@@ -31,8 +31,8 @@ namespace WristVizualizer
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.RowStyles.Clear();
 
-            _colorButtons = new Button[Wrist.NumBones];
-            for (int i = 0; i < Wrist.NumBones; i++)
+            _colorButtons = new Button[WristFilesystem.NumBones];
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 string labelText = String.Format("{0}:", _fullWrist.Bones[i].LongName);
                 //Color startColor = _fullWrist.Bones[i]

@@ -9,7 +9,7 @@ namespace libWrist
     public class FullWrist
     {
         private Bone[] _bones;
-        private Wrist _wrist;
+        private WristFilesystem _wrist;
         private Separator _root;
 
         private int _fixedBoneIndex;
@@ -24,12 +24,12 @@ namespace libWrist
 
         private int _numberPositions;
 
-        public FullWrist(Wrist wrist)
+        public FullWrist(WristFilesystem wrist)
         {
             _wrist = wrist;
-            _fixedBoneIndex = (int)Wrist.BIndex.RAD;
+            _fixedBoneIndex = (int)WristFilesystem.BIndex.RAD;
             _currentPositionIndex = 0;
-            _bones = new Bone[Wrist.NumBones];
+            _bones = new Bone[WristFilesystem.NumBones];
             _showColorMap = true;
             _showContours = true;
             _contourDistances = new double[0];
@@ -45,7 +45,7 @@ namespace libWrist
             get { return _bones; }
         }
 
-        public Wrist Wrist
+        public WristFilesystem Wrist
         {
             get { return _wrist; }
         }
@@ -78,7 +78,7 @@ namespace libWrist
         public void LoadSelectBonesAndDistancesForBatchMode(int[] testbones, int[] refbones)
         {
             _root = new Separator();
-            for (int i=0; i<Wrist.NumBones; i++)
+            for (int i=0; i<WristFilesystem.NumBones; i++)
                 _bones[i] = new Bone(_wrist,this,i);
             foreach (int bIndex in testbones)
             {
@@ -97,7 +97,7 @@ namespace libWrist
         public void LoadFullWrist()
         {
             _root = new Separator();
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 _bones[i] = new Bone(_wrist, this, i);
                 _bones[i].LoadIVFile();
@@ -111,7 +111,7 @@ namespace libWrist
 
         public void ReadInDistanceFields()
         {
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 if (!_bones[i].IsValidBone) continue;
 
@@ -127,7 +127,7 @@ namespace libWrist
             for (int i = 0; i < numPos; i++)
             {
                 TransformMatrix[] transforms = DatParser.parseMotionFileToTransformMatrix(_wrist.motionFiles[i]);
-                for (int j = 0; j < Wrist.NumBones; j++)
+                for (int j = 0; j < WristFilesystem.NumBones; j++)
                     _bones[j].SetTransformation(transforms[j], i + 1); //offset position index by 1, 0 is neutral now!
             }
         }
@@ -137,15 +137,15 @@ namespace libWrist
             if (File.Exists(_wrist.inertiaFile))
             {                
                     TransformRT[] inert = DatParser.parseInertiaFileToRT(_wrist.inertiaFile);
-                    for (int i = 0; i < Wrist.NumBones; i++) //skip the long bones
+                    for (int i = 0; i < WristFilesystem.NumBones; i++) //skip the long bones
                     {
                         _bones[i].InertiaMatrix = new TransformMatrix(inert[i]);
                     }
             }
 
             //now try and load special inertia data
-            LoadInertiaData_SingleBone(_wrist.acsFile, (int)Wrist.BIndex.RAD);
-            LoadInertiaData_SingleBone(_wrist.acsFile_uln, (int)Wrist.BIndex.ULN);
+            LoadInertiaData_SingleBone(_wrist.acsFile, (int)WristFilesystem.BIndex.RAD);
+            LoadInertiaData_SingleBone(_wrist.acsFile_uln, (int)WristFilesystem.BIndex.ULN);
         }
 
         private void LoadInertiaData_SingleBone(string filename, int boneIndex)
@@ -167,7 +167,7 @@ namespace libWrist
             _currentPositionIndex = positionIndex;
             _fixedBoneIndex = fixedBoneIndex;
 
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 if (!_bones[i].IsValidBone) continue; //skip missing bones 
 
@@ -194,34 +194,34 @@ namespace libWrist
         public void ShowContoursIfCalculated()
         {
             _showContours = true;
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
                 _bones[i].SetContourForPositionIfCalculated(_currentPositionIndex);
         }
 
         public void HideContours()
         {
             _showContours = false;
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
                 _bones[i].RemoveContour();
         }
 
         public void ShowColorMapIfCalculated()
         {
             _showColorMap = true;
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
                 _bones[i].SetColorMapForPositionIfCalculated(_currentPositionIndex);
         }
 
         public void HideColorMap()
         {
             _showColorMap = false;
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
                 _bones[i].RemoveColorMap();
         }
 
         public void HideColorMapAndContoursTemporarily()
         {
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 _bones[i].RemoveColorMap();
                 _bones[i].RemoveContour();
@@ -235,7 +235,7 @@ namespace libWrist
 
         public void HideBonesWithNoKinematics(int positionIndex)
         {
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 if (!_bones[i].HasKinematicInformationForPosition(positionIndex))
                     _bones[i].HideBone();
@@ -244,7 +244,7 @@ namespace libWrist
 
         public void SetToAnimationFrame(int frameNumber)
         {
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
                 _bones[i].SetAnimationFrame(frameNumber);
         }
 
@@ -262,7 +262,7 @@ namespace libWrist
         {
             HideColorMapAndContoursTemporarily(); //hide for now
 
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 //skip invalid bones
                 if (!_bones[i].IsValidBone) continue;
@@ -276,7 +276,7 @@ namespace libWrist
 
         public void EndAnimation()
         {
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
                 _bones[i].EndAnimation();
             MoveToPositionAndFixedBone(_currentPositionIndex, _fixedBoneIndex);
         }
@@ -348,7 +348,7 @@ namespace libWrist
         {
             Queue<BulkCalculator.DistanceCalculationJob> q = new Queue<BulkCalculator.DistanceCalculationJob>();
             //need to create this for each position and every bone...
-            for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
+            for (int boneIndex = 0; boneIndex < WristFilesystem.NumBones; boneIndex++)
             {
                 Bone referenceBone = _bones[boneIndex];
                 //we can only do this for valid color bones, so lets check that this is the case, if not, continue
@@ -383,7 +383,7 @@ namespace libWrist
         {
             Queue<BulkCalculator.DistanceCalculationJob> q = new Queue<BulkCalculator.DistanceCalculationJob>();
             //need to create this for each position and every bone...
-            for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
+            for (int boneIndex = 0; boneIndex < WristFilesystem.NumBones; boneIndex++)
             {
                 Bone referenceBone = _bones[boneIndex];
                 //we can only do this for valid color bones, so lets check that this is the case, if not, continue
@@ -413,7 +413,7 @@ namespace libWrist
         {
             Queue<BulkCalculator.DistanceCalculationJob> q = new Queue<BulkCalculator.DistanceCalculationJob>();
             //need to create this for each position and every bone...
-            for (int boneIndex = 0; boneIndex < Wrist.NumBones; boneIndex++)
+            for (int boneIndex = 0; boneIndex < WristFilesystem.NumBones; boneIndex++)
             {
                 Bone referenceBone = _bones[boneIndex];
                 //we can only do this for valid color bones, so lets check that this is the case, if not, continue
@@ -442,9 +442,9 @@ namespace libWrist
         }
         private Bone[] GetBonesThatInteractWithBone(int testBoneIndex)
         {
-            Bone[] interactionBones = new Bone[Wrist.BoneInteractionIndex[testBoneIndex].Length];
+            Bone[] interactionBones = new Bone[WristFilesystem.BoneInteractionIndex[testBoneIndex].Length];
             for (int i = 0; i < interactionBones.Length; i++)
-                interactionBones[i] = _bones[Wrist.BoneInteractionIndex[testBoneIndex][i]];
+                interactionBones[i] = _bones[WristFilesystem.BoneInteractionIndex[testBoneIndex][i]];
             return interactionBones;
         }
 

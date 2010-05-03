@@ -6,9 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace libWrist
 {
-
-
-    public class Wrist
+    public class WristFilesystem
     {
         public enum Sides
         {
@@ -91,7 +89,7 @@ namespace libWrist
         //this is precompiled crap
         //private string[] _series;
 
-        public Wrist(string pathRadiusIV)
+        public WristFilesystem(string pathRadiusIV)
         {
             _radius = pathRadiusIV;
             _bpaths = new string[_bnames.Length];
@@ -100,7 +98,7 @@ namespace libWrist
             findAllSeries();
         }
 
-        public Wrist()
+        public WristFilesystem()
         {
         }
 

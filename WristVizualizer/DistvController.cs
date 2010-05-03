@@ -76,9 +76,9 @@ namespace WristVizualizer
         private void setupControl()
         {
             _wristControl = new FullWristControl();
-            _wristControl.setupControl(Wrist.LongBoneNames, false);
+            _wristControl.setupControl(WristFilesystem.LongBoneNames, false);
             //disable long bones
-            for (int i = 10; i < Wrist.NumBones; i++)
+            for (int i = 10; i < WristFilesystem.NumBones; i++)
                 _wristControl.disableBone(i);
 
             WristPanelLayoutControl p = new WristPanelLayoutControl();
@@ -128,9 +128,9 @@ namespace WristVizualizer
 
             for (int i = 0; i < NUM_BONES; i++)
             {
-                string bonePath = Path.Combine(rootPath, String.Format(BONE_FILE_PATTERN, Wrist.ShortBoneNames[i]));
-                string transformPath = Path.Combine(rootPath, String.Format(RT_FILE_PATTERN, Wrist.ShortBoneNames[i]));
-                string colorPath = Path.Combine(rootPath, String.Format(COLOR_FILE_PATTERN, Wrist.ShortBoneNames[i]));
+                string bonePath = Path.Combine(rootPath, String.Format(BONE_FILE_PATTERN, WristFilesystem.ShortBoneNames[i]));
+                string transformPath = Path.Combine(rootPath, String.Format(RT_FILE_PATTERN, WristFilesystem.ShortBoneNames[i]));
+                string colorPath = Path.Combine(rootPath, String.Format(COLOR_FILE_PATTERN, WristFilesystem.ShortBoneNames[i]));
                 _boneSeparators[i] = new Separator();
                 _bones[i] = new ColoredBone(bonePath);
 

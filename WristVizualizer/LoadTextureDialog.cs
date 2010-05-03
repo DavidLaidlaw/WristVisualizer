@@ -31,7 +31,7 @@ namespace WristVizualizer
         string _seriesKey;
         string _stackSeriesKey;
         int _seriesNumber;
-        Wrist.Sides _side;
+        WristFilesystem.Sides _side;
         KinematicFileTypes _kinematicFileType = KinematicFileTypes.AUTO_REGISTR;
         Modes _mode = Modes.AUTOMATIC;
 
@@ -237,7 +237,7 @@ namespace WristVizualizer
                 _root.addChild(_bones[i]);
             }
 
-            _texture = new Texture(_side == Wrist.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
+            _texture = new Texture(_side == WristFilesystem.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
                 mri.Cropped_SizeX, mri.Cropped_SizeY, mri.Cropped_SizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ);
             Separator plane1 = _texture.makeDragerAndTexture(voxels, Texture.Planes.XY_PLANE);
             Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
@@ -417,8 +417,8 @@ namespace WristVizualizer
                 labelErrorSeries.Text = "Unable to locate any imges";
                 return;
             }
-            bool hasLeft = canLocateStackfileDirectory(Wrist.Sides.LEFT);
-            bool hasRight = canLocateStackfileDirectory(Wrist.Sides.RIGHT);
+            bool hasLeft = canLocateStackfileDirectory(WristFilesystem.Sides.LEFT);
+            bool hasRight = canLocateStackfileDirectory(WristFilesystem.Sides.RIGHT);
 
             ArrayList list = new ArrayList();
             foreach (DirectoryInfo d in dir.GetDirectories(String.Format("{0}_???", _subject)))
@@ -503,7 +503,7 @@ namespace WristVizualizer
 
             _seriesKey = (string)listBoxSeries.SelectedItem;
             _seriesNumber = Int32.Parse(_seriesKey.Substring(0, 2));
-            _side = (_seriesKey.Substring(2, 1).ToUpper().Equals("L")) ? Wrist.Sides.LEFT : Wrist.Sides.RIGHT;
+            _side = (_seriesKey.Substring(2, 1).ToUpper().Equals("L")) ? WristFilesystem.Sides.LEFT : WristFilesystem.Sides.RIGHT;
 
             //update kinematics file
             textBoxKinematicFilename.Text = generateKinematicsFileName(textBoxSubjectDirectory.Text, _seriesKey, _kinematicFileType);
@@ -516,7 +516,7 @@ namespace WristVizualizer
             //update image file
             textBoxImageFile.Text = Path.Combine(Path.Combine(textBoxSubjectDirectory.Text, "CTScans"), String.Format("{0}_{1:00}", _subject, _seriesNumber));
             if (!File.Exists(textBoxImageFile.Text) && !Directory.Exists(textBoxImageFile.Text))
-                textBoxImageFile.Text = textBoxImageFile.Text + (_side == Wrist.Sides.LEFT ? "L" : "R");
+                textBoxImageFile.Text = textBoxImageFile.Text + (_side == WristFilesystem.Sides.LEFT ? "L" : "R");
 
             //try and find stackFile Directory
             string neutralSeriesDir = String.Format("S15{0}",_seriesKey.Substring(2,1));
@@ -531,9 +531,9 @@ namespace WristVizualizer
                 textBoxStackFileDirectory.Text = stackPath2;
         }
 
-        private bool canLocateStackfileDirectory(Wrist.Sides side)
+        private bool canLocateStackfileDirectory(WristFilesystem.Sides side)
         {
-            string s = (side == Wrist.Sides.LEFT) ? "L" : "R";
+            string s = (side == WristFilesystem.Sides.LEFT) ? "L" : "R";
             string neutralSeriesDir = "S15" + s;
             string stackPath1 = Path.Combine(textBoxSubjectDirectory.Text, neutralSeriesDir);
             string stackPath2 = Path.Combine(stackPath1, "Stack.files");

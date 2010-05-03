@@ -146,7 +146,7 @@ namespace libWrist
                     CoordinateSystemBone.TransformMatrices[i], PositionDefiningBone.TransformMatrices[i]);
 
                 //need to make certain that only the capitate is corrected
-                if (PositionDefiningBone.BoneIndex != (int)Wrist.BIndex.CAP)
+                if (PositionDefiningBone.BoneIndex != (int)WristFilesystem.BIndex.CAP)
                 {
                     postures[i].FE = postures[i].FE_Raw;
                     postures[i].RU = postures[i].RU_Raw;

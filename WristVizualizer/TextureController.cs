@@ -34,7 +34,7 @@ namespace WristVizualizer
             _transformHashtables = parser.getArrayOfTransformHashtables();
             _textureControl = new TextureControl(parser.getArrayOfAllignmentSteps());
             _fullWristControl = new FullWristControl();
-            _fullWristControl.setupControl(Wrist.LongBoneNames, false);
+            _fullWristControl.setupControl(WristFilesystem.LongBoneNames, false);
             _mainControlPanel = new WristPanelLayoutControl();
             _mainControlPanel.addControl(_textureControl);
             _mainControlPanel.addControl(_fullWristControl);

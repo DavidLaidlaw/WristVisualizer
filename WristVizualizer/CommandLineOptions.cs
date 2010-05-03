@@ -161,7 +161,7 @@ namespace WristVizualizer
             string[] parts = boneListString.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
             int[] boneIndices = new int[parts.Length];
             for (int i = 0; i < parts.Length; i++)
-                boneIndices[i] = libWrist.Wrist.GetBoneIndexFromShortName(parts[i]);
+                boneIndices[i] = libWrist.WristFilesystem.GetBoneIndexFromShortName(parts[i]);
             return boneIndices;
         }
 

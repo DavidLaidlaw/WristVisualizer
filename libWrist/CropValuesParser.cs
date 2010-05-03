@@ -40,7 +40,7 @@ namespace libWrist
             /// </summary>
             public string Key;
             public int PositionNumber;
-            public Wrist.Sides Side;
+            public WristFilesystem.Sides Side;
             public int MinX;
             public int MaxX;
             public int MinY;
@@ -93,7 +93,7 @@ namespace libWrist
                 CropValues cv = new CropValues();
                 cv.Subject = m.Groups[1].Value.ToUpper();
                 cv.PositionNumber = Int32.Parse(m.Groups[2].Value);
-                cv.Side = m.Groups[3].Value.Equals("L") ? Wrist.Sides.LEFT : Wrist.Sides.RIGHT;
+                cv.Side = m.Groups[3].Value.Equals("L") ? WristFilesystem.Sides.LEFT : WristFilesystem.Sides.RIGHT;
                 cv.MinX = Int32.Parse(m.Groups[4].Value);
                 cv.MaxX = Int32.Parse(m.Groups[5].Value);
                 cv.MinY = Int32.Parse(m.Groups[6].Value);
@@ -151,9 +151,9 @@ namespace libWrist
         }
         #endregion
 
-        private string generatePositionKey(int series, Wrist.Sides side)
+        private string generatePositionKey(int series, WristFilesystem.Sides side)
         {
-            return String.Format("{0:00}{1}", series, side == Wrist.Sides.LEFT ? "L" : "R");
+            return String.Format("{0:00}{1}", series, side == WristFilesystem.Sides.LEFT ? "L" : "R");
         }
 
         private string generatePositionKey(int series, string side)
@@ -168,7 +168,7 @@ namespace libWrist
             return _cropData.ContainsKey(positionKey);
         }
 
-        public bool hasPosition(int series, Wrist.Sides side)
+        public bool hasPosition(int series, WristFilesystem.Sides side)
         {
             return hasPosition(generatePositionKey(series,side));
         }
@@ -183,7 +183,7 @@ namespace libWrist
             return (CropValues)_cropData[positionKey];
         }
 
-        public CropValues getCropData(int series, Wrist.Sides side)
+        public CropValues getCropData(int series, WristFilesystem.Sides side)
         {
             return getCropData(generatePositionKey(series, side));
         }

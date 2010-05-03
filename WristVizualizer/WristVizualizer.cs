@@ -283,7 +283,7 @@ namespace WristVizualizer
 
             bool loadFull = false;
             //check if this is a radius and what we want to do....
-            if (Wrist.isRadius(filenames))
+            if (WristFilesystem.isRadius(filenames))
             {
                 string msg = "It looks like you are trying to open a radius.\n\nDo you wish to load the entire wrist?";
                 if (DialogResult.Yes == MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question))
@@ -421,8 +421,8 @@ namespace WristVizualizer
             {
                 try
                 {
-                    string left = Wrist.findLeftRadius(folder.SelectedPath);
-                    string right = Wrist.findRightRadius(folder.SelectedPath);
+                    string left = WristFilesystem.findLeftRadius(folder.SelectedPath);
+                    string right = WristFilesystem.findRightRadius(folder.SelectedPath);
                     if (left.Length == 0 && right.Length == 0)
                         throw new ArgumentException("No wrist found.");
 

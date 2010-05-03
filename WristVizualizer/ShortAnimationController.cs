@@ -39,8 +39,8 @@ namespace WristVizualizer
             if (!startFixedBone.IsValidBone || !endFixedBone.IsValidBone)
                 throw new ArgumentException("Cannot set fixed bone to a non-valid bone");
 
-            _boneTransforms = new TransformMatrix[Wrist.NumBones][];
-            for (int i = 0; i < Wrist.NumBones; i++)
+            _boneTransforms = new TransformMatrix[WristFilesystem.NumBones][];
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 if (!wrist.Bones[i].IsValidBone) continue;
                 Bone bone = wrist.Bones[i];
@@ -81,7 +81,7 @@ namespace WristVizualizer
 
         private void showFrame(int frameNum)
         {
-            for (int i = 0; i < Wrist.NumBones; i++)
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 if (_fullWrist.Bones[i].IsValidBone)
                     _fullWrist.Bones[i].MoveToPosition(_boneTransforms[i][frameNum]);
