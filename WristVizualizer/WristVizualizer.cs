@@ -815,11 +815,17 @@ namespace WristVizualizer
                 return; //nothing to change
 
             statusStrip1.Visible = visible;
-            int heightNeeded = (visible) ? 22 : 0; //it takes 22pixels when visible, 0 when not :)
-            //in the default mode, the MainPanel starts 359px high, and the main form starts 442px high
-            // so the normal offset is 442-359 = 83
-            const int normalOffset = 83;
-            mainLayoutPanel.Height = this.Height - normalOffset - heightNeeded;
+            int heightNeeded = statusStrip1.Height; //how much do we need to move by...
+            if (visible)
+            {
+                //was hidden, now visible, so shrink the panel to make room
+                mainLayoutPanel.Height -= heightNeeded;
+            }
+            else
+            {
+                //was visible, we are going to hide it; so expand the panel to fill in the space
+                mainLayoutPanel.Height += heightNeeded;
+            }
         }
 
         public void setStatusStripText(string text)
