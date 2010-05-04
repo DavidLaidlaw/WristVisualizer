@@ -51,6 +51,7 @@ namespace WristVizualizer
             
 
             //defaults
+            _animationControl = null;
             _FPS = 15;
             _animateDuration = 0.5;
         }
@@ -123,7 +124,8 @@ namespace WristVizualizer
                 return false;
         }
 
-        public void changeWristPositionReferenceBoneIndex(int referenceBoneIndex)
+        public override bool CanChangeReferenceBone { get { return true; } }
+        public override void changeReferenceBoneByIndex(int referenceBoneIndex)
         {
             //now lets setup for the new reference bone
             setupPositionGraphIfPossible(referenceBoneIndex);
@@ -167,8 +169,8 @@ namespace WristVizualizer
             _wristControl.selectedSeriesIndex = e.SelectedIndex;
         }
 
-
-        public void calculateDistanceMapsToolClickedHandler()
+        public override bool CanCalculateDistanceMap { get { return true; } }
+        public override void calculateDistanceMapsToolClickedHandler()
         {
             //setup the dialog window
             DistanceAndContourDialog dialog = new DistanceAndContourDialog(_fullWrist.ContourDistances);
@@ -202,22 +204,9 @@ namespace WristVizualizer
 
 
         #region public properties
-        public bool AnimatePositionTransitions
+        public override bool AnimatePositionTransitions
         {
-            get { return _animatePositionChanges; }
             set { _animatePositionChanges = value; }
-        }
-
-        public int FPS
-        {
-            get { return _FPS; }
-            set { _FPS = value; }
-        }
-
-        public double AnimationDuration
-        {
-            get { return _animateDuration; }
-            set { _animateDuration = value; }
         }
 
         public bool ShowErrors
@@ -307,6 +296,12 @@ namespace WristVizualizer
         }
         #endregion
 
+        public override bool CanAnimatePositionTransforms { get { return true; } }
+        public override void setPositionTransitionAnimationRate(int FPS, double animationDuration)
+        {
+            _FPS = FPS;
+            _animateDuration = animationDuration;
+        }
 
         private void animateChangeInPosition(int lastPositionIndex, int currentPositionIndex, int lastFixedBoneIndex, int currentFixedBoneIndex)
         {
@@ -362,14 +357,24 @@ namespace WristVizualizer
             _fullWrist.Bones[e.BoneIndex].SetBoneVisibility(!e.BoneHidden);
         }
 
-        public void setInertiaVisibilityCarpalBones(bool visible)
+        
+        public override bool CanShowCarpalInertias { get { return true; } }
+        public override void setInertiaVisibilityCarpalBones(bool visible)
         {
             setInertiaVisibility(visible, WristFilesystem.CarpalBoneIndexes);
         }
 
-        public void setInertiaVisibilityMetacarpalBones(bool visible)
+        public override bool CanShowMetacarpalInertias { get { return true; } }
+        public override void setInertiaVisibilityMetacarpalBones(bool visible)
         {
             setInertiaVisibility(visible, WristFilesystem.MetacarpalBoneIndexes);
+        }
+
+        public override bool CanShowACS { get { return true; } }
+        public override void setACSVisibility(bool visible)
+        {
+            int[] forearm = { 0, 1 };
+            setInertiaVisibility(visible, forearm, 45);
         }
 
         private void setInertiaVisibility(bool visible, int[] boneIndexes) { setInertiaVisibility(visible, boneIndexes, 0); }
@@ -381,15 +386,9 @@ namespace WristVizualizer
             }
         }
 
-        public void setACSVisibility(bool visible)
-        {
-            int[] forearm = {0, 1};
-            setInertiaVisibility(visible, forearm, 45);
-        }
 
-
-
-        public DialogResult createComplexAnimationMovie()
+        public override bool CanCreateComplexAnimations { get { return true; } }
+        public override DialogResult createComplexAnimationMovie()
         {
             string[] positionNames = createSeriesListWithNiceNames();
             AnimationCreatorForm acf = new AnimationCreatorForm(positionNames);
@@ -401,7 +400,7 @@ namespace WristVizualizer
             return r;
         }
 
-        public void EndFullAnimation()
+        public override void EndFullAnimation()
         {
             //return GUI
             _layoutControl.removeControl(_animationControl);
@@ -534,6 +533,11 @@ namespace WristVizualizer
             updateAnimationFrame(); //make certain we are on the correct frame...
         }
 
+        public override bool CanSaveToMovie
+        {
+            // we can only save if we are in animation mode, which is defined by the control existing
+            get { return (_animationControl != null); }
+        }
         public override void saveToMovie()
         {
             //save starting state & stop playback
@@ -612,7 +616,8 @@ namespace WristVizualizer
             return (System.Drawing.Bitmap)finalImage;
         }
 
-        public void EditBoneColorsShowDialog()
+        public override bool CanEditBoneColors { get { return true; } }
+        public override void EditBoneColorsShowDialog()
         {
             EditBoneColors edit = new EditBoneColors(_fullWrist);
             DialogResult r = edit.ShowDialog();

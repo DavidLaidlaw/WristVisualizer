@@ -97,6 +97,7 @@ namespace WristVizualizer
             _timer.Interval = (int)(1000 / (double)FPS);
         }
 
+        public override bool CanSaveToMovie { get { return true; } }
         public override void saveToMovie()
         {
             //save starting state & stop playback

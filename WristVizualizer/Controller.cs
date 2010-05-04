@@ -18,14 +18,46 @@ namespace WristVizualizer
             get;
         }
 
-        public virtual void CleanUp()
-        {
-        }
-
-        public virtual void saveToMovie()
-        {
-        }
-
         protected Control _control = null;
+
+        // region where we define if the class has certain features
+        // By default, they don't, unless the subclass overrides it :)
+
+        public virtual bool CanImportObject { get { return false; } }
+        public virtual bool CanCalculateDistanceMap { get { return false; } }
+        public virtual bool CanEditBoneColors { get { return false; } }
+        public virtual bool CanSaveToMovie { get { return false; } }
+
+        public virtual bool CanCreateComplexAnimations { get { return false; } }
+        public virtual bool CanAnimatePositionTransforms { get { return false; } }
+
+        public virtual bool CanShowMetacarpalInertias { get { return false; } }
+        public virtual bool CanShowCarpalInertias { get { return false; } }
+        public virtual bool CanShowACS { get { return false; } }
+
+        public virtual bool CanChangeReferenceBone { get { return false; } }
+
+
+
+        // Empty functions that by default do nothing, but can
+        // Be overridden in an inheriting class to have functionality
+        public virtual void CleanUp() {}
+        public virtual void saveToMovie() {}
+        public virtual void calculateDistanceMapsToolClickedHandler() { }
+        public virtual void EditBoneColorsShowDialog() { }
+
+        public virtual void setInertiaVisibilityCarpalBones(bool visible) { }
+        public virtual void setInertiaVisibilityMetacarpalBones(bool visible) { }
+        public virtual void setACSVisibility(bool visible) { }
+
+        public virtual void changeReferenceBoneByIndex(int referenceBoneIndex) { }
+
+        public virtual void setPositionTransitionAnimationRate(int FPS, double animationDuration) { }
+        public virtual bool AnimatePositionTransitions { set { } }
+
+        public virtual DialogResult createComplexAnimationMovie() { return DialogResult.Cancel; }
+        public virtual void EndFullAnimation() { }
+
+        
     }
 }

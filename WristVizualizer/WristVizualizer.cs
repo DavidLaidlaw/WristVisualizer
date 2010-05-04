@@ -20,9 +20,6 @@ namespace WristVizualizer
 
         private Controller _currentController;
 
-        private PosViewController _posViewController;
-        private FullWristController _fullWristController;
-
         private PointSelection _pointSelection;
         private MaterialEditor _materialEditor;
         private string _firstFileName;
@@ -67,6 +64,7 @@ namespace WristVizualizer
 
             InitializeComponent();
             setupScaleFactorMenuItemTags();
+            setupAnimationRateMenuItemTags();
 
             _viewer = null;
             _root = null;
@@ -129,38 +127,32 @@ namespace WristVizualizer
             if (_currentController != null && _currentController.Control != null)
                 addControlBox(_currentController.Control);
 
-            switch (mode)
-            {
-                case Modes.POSVIEW:
-                    importToolStripMenuItem.Enabled = false;
-                    saveMovieToolStripMenuItem.Visible = true;
-                    saveMovieToolStripMenuItem.Enabled = true;
-                    break;
-                case Modes.FULL_WRIST:
-                    animatePositionTransitionsToolStripMenuItem.Enabled = true;
-                    animationRateToolStripMenuItem.Enabled = true;
-                    calculateDistanceMapToolStripMenuItem.Enabled = true;
-                    showMetacarpalInertiasToolStripMenuItem.Enabled = true;
-                    referenceBoneForWristPositionToolStripMenuItem.Enabled = true;
-                    createAnimationToolStripMenuItem.Enabled = true;
-                    boneColorsToolStripMenuItem.Enabled = true;
-                    break;
-            }
+            //current controller shouldn't be null, but lets double check
+#if DEBUG
+            System.Diagnostics.Debug.Assert(_currentController != null);
+#endif
+            importToolStripMenuItem.Enabled = _currentController.CanImportObject;
+            calculateDistanceMapToolStripMenuItem.Enabled = _currentController.CanCalculateDistanceMap;
+            boneColorsToolStripMenuItem.Enabled = _currentController.CanEditBoneColors;
+            saveMovieToolStripMenuItem.Enabled = _currentController.CanSaveToMovie;
+
+            animationRateToolStripMenuItem.Enabled = _currentController.CanAnimatePositionTransforms;
+            animatePositionTransitionsToolStripMenuItem.Enabled = _currentController.CanAnimatePositionTransforms;
+            createAnimationToolStripMenuItem.Enabled = _currentController.CanCreateComplexAnimations;
+
+            showMetacarpalInertiasToolStripMenuItem.Enabled = _currentController.CanShowMetacarpalInertias;
+            showInertiasToolStripMenuItem.Enabled = _currentController.CanShowCarpalInertias;
+            showACSToolStripMenuItem.Enabled = _currentController.CanShowACS;
+
+            referenceBoneForWristPositionToolStripMenuItem.Enabled = _currentController.CanChangeReferenceBone;
         }
 
-        #region setupMethods
         private void setupExaminerWindow()
         {
             _viewer = new ExaminerViewer((int)panelCoin.Handle);
             _viewer.setHighlightType(getSelectionHighlightRenderType());
             _viewer.OnObjectSelected += new ObjectSelectedHandler(_viewer_OnObjectSelected);
             _viewer.OnObjectDeselected += new ObjectDeselectedHandler(_viewer_OnObjectDeselected);
-        }
-        #endregion
-
-        private void resetExaminerViewer()
-        {
-            _viewer.setBackgroundColor(0f, 0f, 0f);
         }
 
         private void resetForm()
@@ -179,9 +171,6 @@ namespace WristVizualizer
                 _currentController.CleanUp();
                 _currentController = null;
             }
-
-            _posViewController = null;
-            _fullWristController = null;
 
             importToolStripMenuItem.Enabled = true;
             backgroundColorToolStripMenuItem.Enabled = true;
@@ -229,7 +218,7 @@ namespace WristVizualizer
             hideStatusStrip();
             toolStripStatusLabel.Text = "";
 
-            resetExaminerViewer();
+            _viewer.setBackgroundColor(0f, 0f, 0f);
         }
 
         #region File Open
@@ -413,8 +402,8 @@ namespace WristVizualizer
             FolderBrowserDialog folder = new FolderBrowserDialog();
 #if DEBUG
             if (System.IO.Directory.Exists(@"L:\Data\NIH_Phase_I\Normal_Male\E17172"))
-#endif
                 folder.SelectedPath = @"L:\Data\NIH_Phase_I\Normal_Male\E17172";
+#endif
             folder.ShowNewFolderButton=false;
             folder.Description = "Select the subject folder to open";
             if (DialogResult.OK == folder.ShowDialog())
@@ -456,40 +445,35 @@ namespace WristVizualizer
         private void loadFullWrist(string radius, Separator root)
         {            
             //block importing a file
-            importToolStripMenuItem.Enabled = false;
+            //importToolStripMenuItem.Enabled = false;
             viewSourceToolStripMenuItem.Enabled = false;
-            showInertiasToolStripMenuItem.Enabled = true;
-            showACSToolStripMenuItem.Enabled = true;
+            //showInertiasToolStripMenuItem.Enabled = true;
+            //showACSToolStripMenuItem.Enabled = true;
 
             //Setup motion files, etc
-            _fullWristController = new FullWristController(_viewer);
-            _fullWristController.loadFullWrist(radius);
-            _currentController = _fullWristController;
-            _root = _fullWristController.Root;
+            FullWristController fwc = new FullWristController(_viewer);
+            fwc.loadFullWrist(radius);
+            _currentController = fwc;
+            _root = fwc.Root;
             _viewer.setSceneGraph(_root);
 
             setFormForMode(Modes.FULL_WRIST);
 
             //set title bar now
-            this.Text = Application.ProductName + " - " + _fullWristController.getTitleCaption();
-            _firstFileName = _fullWristController.getFilenameOfFirstFile();
+            this.Text = Application.ProductName + " - " + fwc.getTitleCaption();
+            _firstFileName = fwc.getFilenameOfFirstFile();
         }
         #endregion
-
-
-        #region PosView
 
         private void loadPosView(string posViewFilename)
         {
             resetForm();
-            _posViewController = new PosViewController(posViewFilename, _viewer);
-            _currentController = _posViewController;
-            _root = _posViewController.Root; //save local copy also
+            PosViewController pvc = new PosViewController(posViewFilename, _viewer);
+            _currentController = pvc;
+            _root = pvc.Root; //save local copy also
             setFormForMode(Modes.POSVIEW);
             //_viewer.setDrawStyle(); //attempt to fix rendering problem....fuck
         }
-
-        #endregion
 
 
         private void loadSampleWristToolStripMenuItem_Click(object sender, EventArgs e)
@@ -986,17 +970,17 @@ namespace WristVizualizer
 
         private void showInertiasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _fullWristController.setInertiaVisibilityCarpalBones(showInertiasToolStripMenuItem.Checked);
+            _currentController.setInertiaVisibilityCarpalBones(showInertiasToolStripMenuItem.Checked);
         }
 
         private void showMetacarpalInertiasToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _fullWristController.setInertiaVisibilityMetacarpalBones(showMetacarpalInertiasToolStripMenuItem.Checked);
+            _currentController.setInertiaVisibilityMetacarpalBones(showMetacarpalInertiasToolStripMenuItem.Checked);
         }
 
         private void showACSToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _fullWristController.setACSVisibility(showACSToolStripMenuItem.Checked);
+            _currentController.setACSVisibility(showACSToolStripMenuItem.Checked);
         }
 
         private void loadDistvToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1030,65 +1014,36 @@ namespace WristVizualizer
 
         private void animatePositionTransitionsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //check that we are in FullWristMode
-            if (_mode != Modes.FULL_WRIST || _currentController == null ||
-                !_currentController.GetType().Equals(typeof(FullWristController)))
-                return;
+            _currentController.AnimatePositionTransitions = animatePositionTransitionsToolStripMenuItem.Checked;
+        }
 
-            FullWristController control = (FullWristController)_currentController;
-            control.AnimatePositionTransitions = animatePositionTransitionsToolStripMenuItem.Checked;
+        private void setupAnimationRateMenuItemTags()
+        {
+            this.rate_05sec_15FpsToolStripMenuItem.Tag = new KeyValuePair<int, double>(15, 0.5);
+            this.rate_1sec_15FpsToolStripMenuItem1.Tag = new KeyValuePair<int, double>(15, 1.0);
+            this.rate_2sec_15FpsToolStripMenuItem2.Tag = new KeyValuePair<int, double>(15, 2.0);
         }
 
         private void animationRateToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //check that we are in FullWristMode
-            if (_mode != Modes.FULL_WRIST || _currentController == null ||
-                !_currentController.GetType().Equals(typeof(FullWristController)))
-                return;
+            //if we are already checked, nothing to do
+            ToolStripMenuItem clickedItem = (ToolStripMenuItem)sender;
+            if (clickedItem.Checked) return;
 
-            FullWristController control = (FullWristController)_currentController;
-
-            //let go through each one, and proccess
-            if (sender == rate_05sec_15FpsToolStripMenuItem)
+            //update the display, we the correct item is checked
+            foreach (ToolStripMenuItem animationRateItem in animationRateToolStripMenuItem.DropDownItems)
             {
-                control.FPS = 15;
-                control.AnimationDuration = 0.5;
+                animationRateItem.Checked = (animationRateItem == sender);
             }
-            else
-            {
-                rate_05sec_15FpsToolStripMenuItem.Checked = false;
-            }
-
-            if (sender == rate_1sec_15FpsToolStripMenuItem1)
-            {
-                control.FPS = 15;
-                control.AnimationDuration = 1.0;
-            }
-            else
-            {
-                rate_1sec_15FpsToolStripMenuItem1.Checked = false;
-            }
-
-            if (sender == rate_2sec_15FpsToolStripMenuItem2)
-            {
-                control.FPS = 15;
-                control.AnimationDuration = 2.0;
-            }
-            else
-            {
-                rate_2sec_15FpsToolStripMenuItem2.Checked = false;
-            }
+            //get the values to send
+            int FPS = ((KeyValuePair<int, double>)clickedItem.Tag).Key;
+            double duration = ((KeyValuePair<int, double>)clickedItem.Tag).Value;
+            _currentController.setPositionTransitionAnimationRate(FPS, duration);
         }
 
         private void calculateDistanceMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //check that we are in FullWristMode
-            if (_mode != Modes.FULL_WRIST || _currentController == null ||
-                !_currentController.GetType().Equals(typeof(FullWristController)))
-                return;
-
-            FullWristController control = (FullWristController)_currentController;
-            control.calculateDistanceMapsToolClickedHandler();
+            _currentController.calculateDistanceMapsToolClickedHandler();
         }
 
         private void startHeadtrackingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1131,16 +1086,6 @@ namespace WristVizualizer
                 _viewer.setHighlightType(ExaminerViewer.HighlighRenderTypes.LINE_HIGHLIGHT_RENDER);
         }
 
-        private int getBoneIndexForWristPositionReferenceBone()
-        {
-            foreach (ToolStripMenuItem menuItem in referenceBoneForWristPositionToolStripMenuItem.DropDownItems)
-            {
-                if (menuItem.Checked)
-                    return (int)menuItem.Tag;
-            }
-            throw new WristVizualizerException("Unable to determine the ReferenceBone for determining Wrist Position");
-        }
-
         private void referenceBoneToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //update the check box.
@@ -1151,10 +1096,11 @@ namespace WristVizualizer
             foreach (ToolStripMenuItem menuItem in referenceBoneForWristPositionToolStripMenuItem.DropDownItems)
             {
                 menuItem.Checked = (clickedItem == menuItem);
-            }
+            }           
 
             //change the reference bone.
-            _fullWristController.changeWristPositionReferenceBoneIndex(getBoneIndexForWristPositionReferenceBone());
+            int boneIndex = (int)clickedItem.Tag;
+            _currentController.changeReferenceBoneByIndex(boneIndex);
         }
 
         private void cameraPositionOrientationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1255,29 +1201,20 @@ namespace WristVizualizer
 
         private void createAnimationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //check that we are in FullWristMode
-            if (_mode != Modes.FULL_WRIST || _currentController == null ||
-                !_currentController.GetType().Equals(typeof(FullWristController)))
-                return;
-
-            FullWristController control = (FullWristController)_currentController;
-
+            //if we were already checked, than we need to end the animation
             if (createAnimationToolStripMenuItem.Checked)
             {
                 //get out of this crap
-                control.EndFullAnimation();
+                _currentController.EndFullAnimation();
                 createAnimationToolStripMenuItem.Checked = false;
-                saveMovieToolStripMenuItem.Enabled = false;
             }
             else
             {
-                DialogResult r = control.createComplexAnimationMovie();
+                DialogResult r = _currentController.createComplexAnimationMovie();
                 if (r == DialogResult.OK)
-                {
-                    createAnimationToolStripMenuItem.Checked = true;
-                    saveMovieToolStripMenuItem.Enabled = true;
-                }
+                    createAnimationToolStripMenuItem.Checked = true;                    
             }
+            saveMovieToolStripMenuItem.Enabled = _currentController.CanSaveToMovie;
         }
 
         private void xScaleSmoothingToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1295,7 +1232,7 @@ namespace WristVizualizer
                 if (choiceItem.Checked)
                     return (KeyValuePair<int, int>)choiceItem.Tag;
             }
-            return new KeyValuePair<int, int>(1, 0);
+            return new KeyValuePair<int, int>(1, 0); //default value...
         }
 
         private void setupScaleFactorMenuItemTags()
@@ -1310,8 +1247,7 @@ namespace WristVizualizer
 
         private void boneColorsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FullWristController control = (FullWristController)_currentController;
-            control.EditBoneColorsShowDialog();
+            _currentController.EditBoneColorsShowDialog();
         }
 
         //preset views
