@@ -61,7 +61,7 @@ namespace WristVizualizer
 
         public override string LastFileFilename { get { return _wrist.Radius; } }
 
-        public new void CleanUp()  //TODO: Should this be override not NEW?
+        public override void CleanUp()  //TODO: Should this be override not NEW?
         {
             removeControlEventListeners();
         }
