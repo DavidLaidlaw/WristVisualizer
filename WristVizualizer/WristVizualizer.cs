@@ -51,7 +51,6 @@ namespace WristVizualizer
             setupAnimationRateMenuItemTags();
 
             _viewer = null;
-            //_root = null;
             _currentController = null;
             
             VersionManager manager = new VersionManager();
@@ -62,11 +61,7 @@ namespace WristVizualizer
                 //if we were passed something
                 if (fileArgs != null && fileArgs.Length >= 1)
                 {
-                    //check for being passed a single pos view file
-                    //loadPosView(fileArgs[0]);
-
                     SmartOpenFiles(fileArgs);
-                    //openFile(fileArgs);
                 }
             }
             catch (Exception ex)
@@ -261,10 +256,7 @@ namespace WristVizualizer
         }
         private void SmartOpenFiles(string[] filenames, Controller.Types controllerType)
         {
-            //STEP 1 - Reset Window?
-            if (_viewer == null) //should only happen for the first file opened
-                setupExaminerWindow();
-
+            //STEP 1 - Reset Window
             resetForm();
 
             //STEP 2: Create the controller
@@ -361,17 +353,6 @@ namespace WristVizualizer
         }
 
 
-        private void loadPosView(string posViewFilename)
-        {
-            resetForm();
-            PosViewController pvc = new PosViewController(posViewFilename, _viewer);
-            _currentController = pvc;
-            //_root = pvc.Root; //save local copy also
-            updateFormToCurrentMode();
-            //_viewer.setDrawStyle(); //attempt to fix rendering problem....fuck
-        }
-
-
         private void loadSampleWristToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string baseFolder = Path.GetDirectoryName(Application.ExecutablePath);
@@ -409,7 +390,6 @@ namespace WristVizualizer
 
                 TextureController controller = texture.setup(_viewer);
                 _currentController = controller;
-                //_root = controller.Root;  //save root;
                 updateFormToCurrentMode();
 
                 _viewer.disableSelection();
@@ -424,6 +404,7 @@ namespace WristVizualizer
 
         private void loadDistvToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            //TODO: This should really be part of smart loader
             resetForm();
             DistvController distv = null;
             string basePath = @"P:\WORKING_OI_CODE\distv\data";
@@ -446,7 +427,6 @@ namespace WristVizualizer
                 return;
             }
             _currentController = distv;
-            //_root = distv.Root; //save local copy also
             _viewer.setSceneGraph(distv.Root);
             updateFormToCurrentMode();
         }
@@ -493,9 +473,6 @@ namespace WristVizualizer
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SmartOpenFiles(new string[0]);
-            //importToolStripMenuItem.Enabled = false; //disable importing
-            //_firstFileName = "";
-            //this.Text = Application.ProductName;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -543,13 +520,11 @@ namespace WristVizualizer
                 return;
 
             string fname = open.FileName;
-            loadPosView(fname);
-            //TODO: Force PosViewMode
+            SmartOpenFiles(new string[] { fname }, Controller.Types.PosView);
         }
 
         private void saveMovieToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //_posViewController.saveToMovie();
             _currentController.saveToMovie();
         }
 
