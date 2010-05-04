@@ -35,6 +35,11 @@ namespace libWrist
             //findAllSeries();
         }
 
+        public static bool IsXrommFile(string[] files)
+        {
+            return false;
+        }
+
         public XrommFilesystem()
         {
             string test = @"C:\LocalCopies\XROMM\X12345\IV\X12345_tibia_L.iv";

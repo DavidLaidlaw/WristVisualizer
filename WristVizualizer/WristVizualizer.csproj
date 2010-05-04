@@ -57,6 +57,7 @@
     <Compile Include="FullWristAnimationControl.Designer.cs">
       <DependentUpon>FullWristAnimationControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="SceneviewController.cs" />
     <Compile Include="ShortAnimationController.cs" />
     <Compile Include="AnimationCreatorForm.cs">
       <SubType>Form</SubType>

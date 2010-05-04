@@ -41,7 +41,7 @@ namespace WristVizualizer
         private FullWristControl _wristControl;
         private PositionGraph _positionGraph;
 
-        public FullWristController(ExaminerViewer viewer)
+        public FullWristController(ExaminerViewer viewer, string radiusFilename)
         {
             _viewer = viewer;
             setupControl();
@@ -54,14 +54,17 @@ namespace WristVizualizer
             _animationControl = null;
             _FPS = 15;
             _animateDuration = 0.5;
+
+            //now lets load
+            loadFullWrist(radiusFilename);
         }
 
-        public new void CleanUp()
+        public new void CleanUp()  //TODO: Should this be override not NEW?
         {
             removeControlEventListeners();
         }
 
-        public void loadFullWrist(string radiusFilename)
+        private void loadFullWrist(string radiusFilename)
         {
             //TODO: ShowFullWristControlBox
             //TODO: Block importing a file

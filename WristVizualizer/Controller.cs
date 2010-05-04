@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
+using libWrist;
 using libCoin3D;
 
 namespace WristVizualizer
@@ -20,6 +21,10 @@ namespace WristVizualizer
 
         protected Control _control = null;
 
+        public virtual string ApplicationTitle { get { return null; } }
+        public virtual string WatchedFileFilename { get { return null; } }
+        public virtual string LastFileFilename { get { return null; } }
+
         // region where we define if the class has certain features
         // By default, they don't, unless the subclass overrides it :)
 
@@ -27,6 +32,8 @@ namespace WristVizualizer
         public virtual bool CanCalculateDistanceMap { get { return false; } }
         public virtual bool CanEditBoneColors { get { return false; } }
         public virtual bool CanSaveToMovie { get { return false; } }
+
+        public virtual bool CanViewSource { get { return false; } }
 
         public virtual bool CanCreateComplexAnimations { get { return false; } }
         public virtual bool CanAnimatePositionTransforms { get { return false; } }
@@ -58,6 +65,38 @@ namespace WristVizualizer
         public virtual DialogResult createComplexAnimationMovie() { return DialogResult.Cancel; }
         public virtual void EndFullAnimation() { }
 
+        public virtual void ImportFilesToScene(string[] filenames) { }
+
+        public enum Types
+        {
+            Sceneviewer,
+            PosView,
+            FullWrist,
+            Xromm
+        }
+
+        public static Types GetTypeOfControllerForFile(string[] filenames)
+        {
+            //Check if this is a full wrist and if we should load as such
+            if (WristFilesystem.isRadius(filenames))
+            {
+                string msg = "It looks like you are trying to open a radius.\n\nDo you wish to load the entire wrist?";
+                if (DialogResult.Yes == MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    return Types.FullWrist;
+            }
+
+            if (XrommFilesystem.IsXrommFile(filenames)) //then we are in XROMM mode
+            {
+                return Types.Xromm;
+            }
+
+            if (PosViewController.IsPosViewFile(filenames))
+            {
+                return Types.PosView;
+            }
+
+            return Types.Sceneviewer;
+        }
         
     }
 }

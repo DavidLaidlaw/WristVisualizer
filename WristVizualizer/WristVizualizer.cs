@@ -14,9 +14,7 @@ namespace WristVizualizer
     public partial class WristVizualizer : Form
     {
         private ExaminerViewer _viewer;
-        private Separator _root;
-        
-        private Modes _mode = Modes.NONE;
+        //private Separator _root;
 
         private Controller _currentController;
 
@@ -27,18 +25,6 @@ namespace WristVizualizer
 
         private FileSystemWatcher _fileSysWatcher;
         private string _fileNameOfChangedFile;
-
-        private enum Modes
-        {
-            NONE,
-            SCENEVIEWER,
-            FULL_WRIST,
-            POSVIEW,
-            TEXTURE,
-            DISTV,
-            XROMM,
-            GENERIC
-        }
 
         public WristVizualizer(string[] fileArgs)
         {
@@ -67,7 +53,8 @@ namespace WristVizualizer
             setupAnimationRateMenuItemTags();
 
             _viewer = null;
-            _root = null;
+            //_root = null;
+            _currentController = null;
             
             VersionManager manager = new VersionManager();
             manager.checkForUpdatesAsynch(); //check for updates in the backround
@@ -75,15 +62,13 @@ namespace WristVizualizer
             try
             {
                 //if we were passed something
-                if (fileArgs != null && fileArgs.Length == 1 &&
-                    Path.GetExtension(fileArgs[0]).ToLower().Equals("pos"))
+                if (fileArgs != null && fileArgs.Length >= 1)
                 {
                     //check for being passed a single pos view file
-                    loadPosView(fileArgs[0]);
-                }
-                else if (fileArgs != null && fileArgs.Length >= 1)
-                {
-                    openFile(fileArgs);
+                    //loadPosView(fileArgs[0]);
+
+                    SmartOpenFiles(fileArgs);
+                    //openFile(fileArgs);
                 }
             }
             catch (Exception ex)
@@ -115,22 +100,18 @@ namespace WristVizualizer
         }
         #endregion
 
-        [Obsolete("use setFormForMode(Modes mode) which will both save the mode, and then apply the settings")]
-        private void setFormForCurrentMode()
-        {
-            setFormForMode(_mode);
-        }
-        private void setFormForMode(Modes mode)
-        {
-            _mode = mode; //update current mode
 
-            if (_currentController != null && _currentController.Control != null)
-                addControlBox(_currentController.Control);
-
+        private void updateFormToCurrentMode()
+        {
             //current controller shouldn't be null, but lets double check
 #if DEBUG
             System.Diagnostics.Debug.Assert(_currentController != null);
 #endif
+
+            //if we have an extra control, we should add it
+            if (_currentController.Control != null)
+                addControlBox(_currentController.Control);
+
             importToolStripMenuItem.Enabled = _currentController.CanImportObject;
             calculateDistanceMapToolStripMenuItem.Enabled = _currentController.CanCalculateDistanceMap;
             boneColorsToolStripMenuItem.Enabled = _currentController.CanEditBoneColors;
@@ -145,6 +126,24 @@ namespace WristVizualizer
             showACSToolStripMenuItem.Enabled = _currentController.CanShowACS;
 
             referenceBoneForWristPositionToolStripMenuItem.Enabled = _currentController.CanChangeReferenceBone;
+
+            viewSourceToolStripMenuItem.Enabled = _currentController.CanViewSource;
+
+            //other stuff:
+
+            //set the application title
+            if (_currentController.ApplicationTitle == null)
+                this.Text = Application.ProductName;
+            else
+                this.Text = Application.ProductName + " - " + _currentController.ApplicationTitle;
+
+            //setup watched file 
+            if (_currentController.WatchedFileFilename != null)
+                startWatchingFile(_currentController.WatchedFileFilename);
+
+            //save openfile to registry...
+            if (_currentController.LastFileFilename != null)
+                RegistrySettings.saveMostRecentFile(_currentController.LastFileFilename);
         }
 
         private void setupExaminerWindow()
@@ -234,7 +233,7 @@ namespace WristVizualizer
             if (System.IO.Directory.Exists(@"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files"))
                 open.InitialDirectory = @"L:\Data\CADAVER_WRISTS\Pinned\l\E03274\S15L\IV.files";
 #endif
-            open.Filter = "Compatable Files (*.iv;*.wrl)|*.iv;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|Stack Files (*.stack)|*.stack|All Files (*.*)|*.*";
+            open.Filter = "Compatable Files (*.iv;*.stack;*.wrl)|*.iv;*.stack;*.wrl|Inventor Files (*.iv)|*.iv|VRML Files (*.wrl)|*.wrl|Stack Files (*.stack)|*.stack|All Files (*.*)|*.*";
             open.Multiselect = true;
             if (DialogResult.OK != open.ShowDialog())
                 return null;
@@ -245,91 +244,54 @@ namespace WristVizualizer
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string[] filenames = getFilesToOpen();
-            if (filenames == null) return;
+            if (filenames == null || filenames.Length == 0) return;
 
-            openFile(filenames);
+            SmartOpenFiles(filenames);
         }
 
         private void importToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string[] filenames = getFilesToOpen();
-            if (filenames == null) return;
+            if (filenames == null || filenames.Length == 0) return;
 
             importFile(filenames);
         }
 
-
-        /// <summary>
-        /// This function will take a file(s) and load them into the scene,
-        /// removing whatever was there before (so this is open, not import). 
-        /// It will try determine if this is a full wrist or not.
-        /// </summary>
-        /// <param name="filenames">List of files to open. If only a single file, and
-        /// a radius, it will ask and then try to open the full wrist</param>
-        private void openFile(string[] filenames)
+        private void SmartOpenFiles(string[] filenames)
         {
-            if (filenames.Length == 0) return;
-
-            bool loadFull = false;
-            //check if this is a radius and what we want to do....
-            if (WristFilesystem.isRadius(filenames))
-            {
-                string msg = "It looks like you are trying to open a radius.\n\nDo you wish to load the entire wrist?";
-                if (DialogResult.Yes == MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question))
-                    //load full wrist
-                    loadFull = true;
-            }
-            openFile(filenames, loadFull);
+            SmartOpenFiles(filenames, Controller.GetTypeOfControllerForFile(filenames));
         }
-
-        /// <summary>
-        /// This function will take a file(s) and load them into the scene,
-        /// removing whatever was there before (so this is open, not import). 
-        /// It will try and load a full wrist if specified, or load the files as
-        /// individual objects
-        /// </summary>
-        /// <param name="filenames">List of files to open</param>
-        /// <param name="loadFull">Whether to treat the files as a full wrist. If so
-        /// only the first string in filenames is looked at, and it is assumed to be
-        /// the radius.</param>
-        private void openFile(string[] filenames, bool loadFull)
+        private void SmartOpenFiles(string[] filenames, Controller.Types controllerType)
         {
+            //STEP 1 - Reset Window?
             if (_viewer == null) //should only happen for the first file opened
                 setupExaminerWindow();
 
-
-            //if we get here, then we are loading a new file....so
             resetForm();
-            _root = new Separator(); //setup new node (might need to change that...
 
-            if (loadFull)
+            //STEP 2: Create the controller
+            //lets try and figure out what kind of mode we are in
+            switch (controllerType)
             {
-                loadFullWrist(filenames[0], _root);
-            }
-            else
-            {
-                _mode = Modes.SCENEVIEWER;
-                foreach (string filename in filenames)
-                    addFileToRoot(filename);
-
-                //save first filename for recording sake
-                if (filenames.Length >= 1)
-                    _firstFileName = filenames[0];
-                _numberFilesLoaded = filenames.Length;
-
-                //setup watching
-                if (filenames.Length == 1)
-                    startWatchingFile(filenames[0]);
-
-                //set title
-                if (filenames.Length == 1)
-                    this.Text = Application.ProductName + " - " + filenames[0];
+                case Controller.Types.PosView:
+                    _currentController = new PosViewController(filenames[0], _viewer);
+                    //_viewer.setDrawStyle(); //attempt to fix rendering problem....fuck
+                    break;
+                case Controller.Types.FullWrist:
+                    _currentController = new FullWristController(_viewer, filenames[0]);
+                    break;
+                case Controller.Types.Xromm:
+                    throw new NotImplementedException();
+                    break;
+                case Controller.Types.Sceneviewer:
+                default:
+                    _currentController = new SceneviewController(filenames);
+                    break;
             }
 
-            _viewer.setSceneGraph(_root);
-            //save to recently opened files
-            if (filenames.Length > 0)
-                RegistrySettings.saveMostRecentFile(filenames[0]);
+            //Post loading steps now....
+            _viewer.setSceneGraph(_currentController.Root);
+            updateFormToCurrentMode();
         }
 
         private void openFileSaveView(string[] filenames)
@@ -339,7 +301,7 @@ namespace WristVizualizer
 
             Camera originalCam = _viewer.Camera; //save starting camera
             int backColor = _viewer.getBackgroundColor();
-            openFile(filenames); //load new scene
+            SmartOpenFiles(filenames); //load new scene
             _viewer.Camera.copySettingsFromCamera(originalCam); //copy back settings I hope...
             _viewer.setBackgroundColor(backColor);
         }
@@ -350,52 +312,10 @@ namespace WristVizualizer
         /// <param name="filenames">list of files to add</param>
         private void importFile(string[] filenames)
         {
-            if (filenames == null) return;
-            _numberFilesLoaded += filenames.Length;
-            foreach (string filename in filenames)
-                addFileToRoot(filename);
+            if (filenames == null || filenames.Length == 0) return;
+            _currentController.ImportFilesToScene(filenames);
         }
 
-        /// <summary>
-        /// Intelligently try and add the given file to the root node
-        /// </summary>
-        /// <param name="filename"></param>
-        private void addFileToRoot(string filename)
-        {
-            string ext = Path.GetExtension(filename).ToLower();
-            try
-            {
-                switch (ext)
-                {
-                    case ".iv":
-                    case ".vrml":
-                    case ".wrl":
-                        _root.addFile(filename);
-                        break;
-                    case ".stack":
-                    case ".dat":
-                        _root.addChild(readStackfile(filename));
-                        break;
-                    default:
-                        MessageBox.Show("Error: Unknown file extension for: " + filename, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                        break;
-                }
-            }
-            catch (Exception ex)
-            {
-                if (!hideErrorMessagesToolStripMenuItem.Checked)
-                {
-                    string msg = String.Format("Error loading file: {0}\n\n{1}", filename, ex.ToString());
-                    libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
-                }
-            }
-        }
-
-        private Separator readStackfile(string filename)
-        {
-            double[][] pts = DatParser.parseDatFile(filename);
-            return Texture.createPointsFileObject(pts);
-        }
 
         private void openFullWristToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -432,7 +352,7 @@ namespace WristVizualizer
                         else
                             return;
                     }
-                    openFile(files, true);
+                    SmartOpenFiles(files, Controller.Types.FullWrist);
                 }
                 catch (ArgumentException ex)
                 {
@@ -442,36 +362,14 @@ namespace WristVizualizer
             }
         }
 
-        private void loadFullWrist(string radius, Separator root)
-        {            
-            //block importing a file
-            //importToolStripMenuItem.Enabled = false;
-            viewSourceToolStripMenuItem.Enabled = false;
-            //showInertiasToolStripMenuItem.Enabled = true;
-            //showACSToolStripMenuItem.Enabled = true;
-
-            //Setup motion files, etc
-            FullWristController fwc = new FullWristController(_viewer);
-            fwc.loadFullWrist(radius);
-            _currentController = fwc;
-            _root = fwc.Root;
-            _viewer.setSceneGraph(_root);
-
-            setFormForMode(Modes.FULL_WRIST);
-
-            //set title bar now
-            this.Text = Application.ProductName + " - " + fwc.getTitleCaption();
-            _firstFileName = fwc.getFilenameOfFirstFile();
-        }
-        #endregion
 
         private void loadPosView(string posViewFilename)
         {
             resetForm();
             PosViewController pvc = new PosViewController(posViewFilename, _viewer);
             _currentController = pvc;
-            _root = pvc.Root; //save local copy also
-            setFormForMode(Modes.POSVIEW);
+            //_root = pvc.Root; //save local copy also
+            updateFormToCurrentMode();
             //_viewer.setDrawStyle(); //attempt to fix rendering problem....fuck
         }
 
@@ -497,17 +395,72 @@ namespace WristVizualizer
                 MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
-            string[] files = new string[1];
-            files[0] = radFile;
-            openFile(files, true);
+            SmartOpenFiles(new string[] { radFile }, Controller.Types.FullWrist);
         }
+
+        private void openTextureToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            LoadTextureDialog texture = new LoadTextureDialog();
+            DialogResult r = texture.ShowDialog();
+            if (r == DialogResult.Cancel)
+                return;
+            try
+            {
+                this.Cursor = Cursors.WaitCursor;
+                resetForm();
+
+                TextureController controller = texture.setup(_viewer);
+                _currentController = controller;
+                //_root = controller.Root;  //save root;
+                updateFormToCurrentMode();
+
+                _viewer.disableSelection();
+                _viewer.setBackgroundColor(0.8f, 0.8f, 0.8f);
+                this.Text = Application.ProductName + " - " + texture.DisplayTitle;
+            }
+            finally
+            {
+                this.Cursor = Cursors.Default;
+            }
+        }
+
+        private void loadDistvToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            resetForm();
+            DistvController distv = null;
+            string basePath = @"P:\WORKING_OI_CODE\distv\data";
+#if DEBUG
+            if (!Directory.Exists(basePath))
+            {
+                string vizPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath))));
+                basePath = Path.Combine(vizPath, @"SetupWristVizualizer\Sample DistV Data\"); //doesn't yet exist :)
+            }
+#endif
+            try
+            {
+                distv = new DistvController(basePath);
+            }
+            catch
+            {
+                string msg = "Unable to load the Distv data.\n\n";
+                msg += "You must be connected to the private network to access these files, sorry.";
+                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            _currentController = distv;
+            //_root = distv.Root; //save local copy also
+            _viewer.setSceneGraph(distv.Root);
+            updateFormToCurrentMode();
+        }
+
+        #endregion
 
         /// <summary>
         /// Get the Root Seperator node
         /// </summary>
         public Separator Root
         {
-            get { return _root; }
+            get { return _currentController.Root; }
         }
 
         #region Callbacks for Menu Items
@@ -541,10 +494,10 @@ namespace WristVizualizer
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            openFile(new string[0], false);
-            importToolStripMenuItem.Enabled = false; //disable importing
-            _firstFileName = "";
-            this.Text = Application.ProductName;
+            SmartOpenFiles(new string[0]);
+            //importToolStripMenuItem.Enabled = false; //disable importing
+            //_firstFileName = "";
+            //this.Text = Application.ProductName;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -577,9 +530,9 @@ namespace WristVizualizer
 
         private void showScenegraphToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_viewer == null || _root == null)
+            if (_viewer == null || _currentController == null)
                 return;
-            ScenegraphTreeViewer viewer = new ScenegraphTreeViewer(_viewer, _root);
+            ScenegraphTreeViewer viewer = new ScenegraphTreeViewer(_viewer, _currentController.Root);
             viewer.Show();
         }
 
@@ -593,6 +546,7 @@ namespace WristVizualizer
 
             string fname = open.FileName;
             loadPosView(fname);
+            //TODO: Force PosViewMode
         }
 
         private void saveMovieToolStripMenuItem_Click(object sender, EventArgs e)
@@ -706,14 +660,14 @@ namespace WristVizualizer
                 if (e.Effect == DragDropEffects.All)
                 {
                     contextMenuStrip_RightDrag.Tag = filenames;
-                    importToolStripMenuItem1.Enabled = (importToolStripMenuItem.Enabled && _viewer != null && _root != null);
-                    openSaveViewToolStripMenuItem.Enabled = (_viewer != null && _root != null);
+                    importToolStripMenuItem1.Enabled = (importToolStripMenuItem.Enabled && _viewer != null && _currentController != null);
+                    openSaveViewToolStripMenuItem.Enabled = (_viewer != null && _currentController != null);
                     contextMenuStrip_RightDrag.Show(e.X, e.Y);
                 }
                 else if (e.Effect == DragDropEffects.Copy)
                     importFile(filenames);
                 else
-                    openFile(filenames);
+                    SmartOpenFiles(filenames);
             }
             catch (Exception ex)
             {
@@ -731,8 +685,8 @@ namespace WristVizualizer
             }
 
             if ((e.KeyState & 2) == 2) //right mouse button                
-                e.Effect = DragDropEffects.All;                
-            else if (sender == panelCoin && importToolStripMenuItem.Enabled && _viewer != null && _root != null)
+                e.Effect = DragDropEffects.All;
+            else if (sender == panelCoin && importToolStripMenuItem.Enabled && _viewer != null && _currentController != null)
                 e.Effect = DragDropEffects.Copy;
             else
                 e.Effect = DragDropEffects.Move;           
@@ -741,7 +695,7 @@ namespace WristVizualizer
         private void openToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             string[] filenames = (string[])contextMenuStrip_RightDrag.Tag;
-            openFile(filenames);
+            SmartOpenFiles(filenames);
         }
 
         private void importToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -929,38 +883,15 @@ namespace WristVizualizer
             //lets load the file. New option is to save the camera setting first, and then re-apply them...
             Camera originalCam = _viewer.Camera; //save starting camera
             int backColor = _viewer.getBackgroundColor();
-            openFile(new string[] { _firstFileName }, false); //load new scene
+            //openFile(new string[] { _firstFileName }, false); //load new scene
+            SmartOpenFiles(new string[] { _firstFileName });
             _viewer.Camera.copySettingsFromCamera(originalCam); //copy back settings I hope...
             _viewer.setBackgroundColor(backColor);
         }
 
         #endregion
 
-        private void openTextureToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LoadTextureDialog texture = new LoadTextureDialog();
-            DialogResult r = texture.ShowDialog();
-            if (r == DialogResult.Cancel)
-                return;
-            try
-            {
-                this.Cursor = Cursors.WaitCursor;
-                resetForm();
 
-                TextureController controller = texture.setup(_viewer);
-                _currentController = controller;
-                _root = controller.Root;  //save root;
-                setFormForMode(Modes.TEXTURE);
-
-                _viewer.disableSelection();
-                _viewer.setBackgroundColor(0.8f, 0.8f, 0.8f);
-                this.Text = Application.ProductName + " - " + texture.DisplayTitle;
-            }
-            finally
-            {
-                this.Cursor = Cursors.Default;
-            }
-        }
 
         private void launchMRIViewerToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -981,35 +912,6 @@ namespace WristVizualizer
         private void showACSToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _currentController.setACSVisibility(showACSToolStripMenuItem.Checked);
-        }
-
-        private void loadDistvToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            resetForm();
-            DistvController distv = null;
-            string basePath = @"P:\WORKING_OI_CODE\distv\data";
-#if DEBUG
-            if (!Directory.Exists(basePath))
-            {
-                string vizPath = Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath))));
-                basePath = Path.Combine(vizPath, @"SetupWristVizualizer\Sample DistV Data\"); //doesn't yet exist :)
-            }
-#endif
-            try
-            {
-                distv = new DistvController(basePath);
-            }
-            catch
-            {
-                string msg = "Unable to load the Distv data.\n\n";
-                msg += "You must be connected to the private network to access these files, sorry.";
-                MessageBox.Show(msg, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
-            _currentController = distv;
-            _root = distv.Root; //save local copy also
-            _viewer.setSceneGraph(_root);
-            setFormForMode(Modes.DISTV);
         }
 
         private void animatePositionTransitionsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1149,7 +1051,7 @@ namespace WristVizualizer
             }
 
             //now lets open the file
-            openFile(new string[] { fname });
+            SmartOpenFiles(new string[] { fname });
         }
 
         private void trimCameraMaterialsToolStripMenuItem_Click(object sender, EventArgs e)

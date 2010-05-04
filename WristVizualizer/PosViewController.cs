@@ -403,5 +403,14 @@ namespace WristVizualizer
                 throw;
             }
         }
+
+        public static bool IsPosViewFile(string[] filename)
+        {
+            return filename.Length == 1 && IsPosViewFile(filename[0]);
+        }
+        public static bool IsPosViewFile(string filename)
+        {
+            return Path.GetExtension(filename).Equals("pos", StringComparison.InvariantCultureIgnoreCase);
+        }
     }
 }
