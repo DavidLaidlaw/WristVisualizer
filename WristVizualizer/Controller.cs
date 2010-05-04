@@ -27,7 +27,6 @@ namespace WristVizualizer
 
         // region where we define if the class has certain features
         // By default, they don't, unless the subclass overrides it :)
-
         public virtual bool CanImportObject { get { return false; } }
         public virtual bool CanCalculateDistanceMap { get { return false; } }
         public virtual bool CanEditBoneColors { get { return false; } }
@@ -43,7 +42,6 @@ namespace WristVizualizer
         public virtual bool CanShowACS { get { return false; } }
 
         public virtual bool CanChangeReferenceBone { get { return false; } }
-
 
 
         // Empty functions that by default do nothing, but can

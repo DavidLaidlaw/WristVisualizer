@@ -59,6 +59,8 @@ namespace WristVizualizer
             loadFullWrist(radiusFilename);
         }
 
+        public override string LastFileFilename { get { return _wrist.Radius; } }
+
         public new void CleanUp()  //TODO: Should this be override not NEW?
         {
             removeControlEventListeners();
@@ -228,9 +230,9 @@ namespace WristVizualizer
             get { return _root; }
         }
 
-        public string getTitleCaption()
+        public override string ApplicationTitle
         {
-            return _wrist.subject + _wrist.side + " - " + _wrist.subjectPath;
+            get { return _wrist.subject + _wrist.side + " - " + _wrist.subjectPath; }
         }
 
         public string getFilenameOfFirstFile()

@@ -122,6 +122,14 @@ namespace libWrist
         }
 
         /// <summary>
+        /// Full path to the radius IV file that was originally passed in
+        /// </summary>
+        public string Radius
+        {
+            get { return _radius; }
+        }
+
+        /// <summary>
         /// Full path to the subject folder. (ie p:\data\young\E02366)
         /// </summary>
         public string subjectPath

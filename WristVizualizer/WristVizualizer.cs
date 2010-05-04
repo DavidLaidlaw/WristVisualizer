@@ -20,8 +20,6 @@ namespace WristVizualizer
 
         private PointSelection _pointSelection;
         private MaterialEditor _materialEditor;
-        private string _firstFileName;
-        private int _numberFilesLoaded;
 
         private FileSystemWatcher _fileSysWatcher;
         private string _fileNameOfChangedFile;
@@ -519,12 +517,12 @@ namespace WristVizualizer
 
         private void viewSourceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (_viewer == null || _firstFileName == null || _firstFileName.Length == 0)
+            if (_currentController == null || _currentController.WatchedFileFilename == null)
                 return;
 
             //launch in wordpad
             const string wordpadLocation = @"C:\Program Files\Windows NT\Accessories\wordpad.exe";
-            System.Diagnostics.Process.Start(wordpadLocation,String.Format("\"{0}\"",_firstFileName));
+            System.Diagnostics.Process.Start(wordpadLocation, String.Format("\"{0}\"", _currentController.WatchedFileFilename));
 
         }
 
@@ -627,8 +625,8 @@ namespace WristVizualizer
         {
             if (_viewer == null) return;
             SaveFileDialog save = new SaveFileDialog();
-            if (Directory.Exists(Path.GetDirectoryName(_firstFileName)))
-                save.InitialDirectory = Path.GetDirectoryName(_firstFileName);
+            if (Directory.Exists(Path.GetDirectoryName(_currentController.LastFileFilename)))
+                save.InitialDirectory = Path.GetDirectoryName(_currentController.LastFileFilename);
             save.Filter = "Inventor Files (*.iv)|*.iv|All Files (*.*)|*.*";
             save.OverwritePrompt = true;
             save.AddExtension = true;
@@ -726,7 +724,7 @@ namespace WristVizualizer
             }
             else
             {
-                PointSelection ps = new PointSelection(_viewer, this, _firstFileName);
+                PointSelection ps = new PointSelection(_viewer, this, _currentController.LastFileFilename);
                 ps.ShowDialog();
                 if (!ps.SelectionEnabled) return; //if we were canceled, etc.
 
@@ -854,8 +852,8 @@ namespace WristVizualizer
         void _fileSysWatcher_Changed(object sender, FileSystemEventArgs e)
         {
             //check if we are somehow watching a different file, or if there is more then one
-            //file loaded that we should be watching
-            if (!Path.Equals(_firstFileName.ToLower(), e.FullPath.ToLower()) || _numberFilesLoaded != 1)
+            //file loaded that we should be watching (update: Do I care if only one file is loaded...I don't think so)
+            if (!Path.Equals(_currentController.WatchedFileFilename.ToLower(), e.FullPath.ToLower()))
             {
                 _fileSysWatcher.EnableRaisingEvents = false; //stop watching and exit
                 return;
@@ -870,8 +868,8 @@ namespace WristVizualizer
             string fname = _fileNameOfChangedFile;
             _fileNameOfChangedFile = null;
 
-            //check that we are dealing with the same file and again, that there is only one file loaded
-            if (!Path.Equals(_firstFileName.ToLower(), fname.ToLower()) || _numberFilesLoaded != 1)
+            //check that we are dealing with the same file and again, that there is only one file loaded (update: Do I care if only one file is loaded...I don't think so)
+            if (!Path.Equals(_currentController.WatchedFileFilename.ToLower(), fname.ToLower()))
                 return;  //if not, get out
 
             //at this point, we should tell the user that a new file was loaded, and let them deal with it
@@ -884,7 +882,7 @@ namespace WristVizualizer
             Camera originalCam = _viewer.Camera; //save starting camera
             int backColor = _viewer.getBackgroundColor();
             //openFile(new string[] { _firstFileName }, false); //load new scene
-            SmartOpenFiles(new string[] { _firstFileName });
+            SmartOpenFiles(new string[] { _currentController.WatchedFileFilename });
             _viewer.Camera.copySettingsFromCamera(originalCam); //copy back settings I hope...
             _viewer.setBackgroundColor(backColor);
         }

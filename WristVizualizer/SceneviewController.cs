@@ -18,6 +18,13 @@ namespace WristVizualizer
             ImportFilesToScene(files);
         }
 
+        //set options
+        public override string ApplicationTitle { get { return _firstFilename; } }
+        public override string WatchedFileFilename { get { return _firstFilename; } }
+        public override string LastFileFilename { get { return _firstFilename; } }
+        public override bool CanImportObject { get { return true; } }
+        public override bool CanViewSource { get { return true; } }
+
         public override void ImportFilesToScene(string[] filenames)
         {
             foreach (string filename in filenames)
@@ -41,6 +48,8 @@ namespace WristVizualizer
                 default:
                     throw new WristException("Error: Unknown file extension for: " + filename);
             }
+
+            //save the name of the first file!
             if (_firstFilename == null)
                 _firstFilename = filename;
         }
