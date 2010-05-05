@@ -21,28 +21,30 @@ namespace libWrist
         private string[] _bpaths;
         private string[] _distanceFieldPaths;
 
+        private string _pathFirstIVFile;
+
         private string _subjectPath;
         private string _subject;
         private string _ivFolderPath;
+        private string _modelsPath;
         private TrialInfo[] _info;
 
 
-        public XrommFilesystem(string pathRadiusIV)
+        public XrommFilesystem(string PathFirstIVFile)
         {
+            _pathFirstIVFile = PathFirstIVFile;
+            SetupXromm(PathFirstIVFile);
+
             //_bpaths = new string[_bnames.Length];
             //_distanceFieldPaths = new string[_bnames.Length];
             //setupPaths();
             //findAllSeries();
         }
 
-        public static bool IsXrommFile(string[] files)
-        {
-            return false;
-        }
-
+        [Obsolete("Test method only")]
         public XrommFilesystem()
         {
-            string test = @"C:\LocalCopies\XROMM\X12345\IV\X12345_tibia_L.iv";
+            string test = @"P:\XROMM\SampleStudy\E00001\Models\IV\E00001_Fem_L.iv";
             SetupXromm(test);
         }
 
@@ -53,13 +55,14 @@ namespace libWrist
                 throw new FileNotFoundException("Can not find IV file specified");
 
             _ivFolderPath = Path.GetDirectoryName(PathFirstIVFile);
-            _subjectPath = Path.GetDirectoryName(_ivFolderPath);
+            _modelsPath = Path.GetDirectoryName(_ivFolderPath);
+            _subjectPath = Path.GetDirectoryName(_modelsPath);
             _subject = Path.GetFileName(_subjectPath);
 
             string boneFileName = Path.GetFileName(PathFirstIVFile);
             string boneFileNameNoExtension = Path.GetFileNameWithoutExtension(boneFileName);
 
-            Match m = Regex.Match(boneFileNameNoExtension, @"^(X\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
+            Match m = Regex.Match(boneFileNameNoExtension, @"^(E\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
             if (!m.Success)
                 throw new WristException("Initial IV file is not in a valid XROMM format");
 
@@ -93,18 +96,19 @@ namespace libWrist
             //now to find all of the trials
             List<TrialInfo> trialInfo = new List<TrialInfo>();
             DirectoryInfo SubjectDir = new DirectoryInfo(_subjectPath);
-            DirectoryInfo[] trials = SubjectDir.GetDirectories("Trial_???");
+            DirectoryInfo[] trials = SubjectDir.GetDirectories("Trial???");
             foreach (DirectoryInfo trialDir in trials)
             {
-                m = Regex.Match(trialDir.Name, @"Trial_(\d{3})", RegexOptions.IgnoreCase);
+                m = Regex.Match(trialDir.Name, @"Trial(\d{3})", RegexOptions.IgnoreCase);
                 if (!m.Success)
                     continue;
 
                 string trialNumberString = m.Groups[1].Value.ToLower();
                 int trialNumber = Int32.Parse(trialNumberString);
 
-                string kinematicFname = String.Format("{0}_{1}_kinematics.csv", _subject, trialNumberString);
-                string kinematicFilePath = Path.Combine(trialDir.FullName, kinematicFname);
+                //TODO: Change so it allows multiple filter types.... yar!
+                string kinematicFname = String.Format("{0}_Trial{1}_xyzptsBUTTER25_sm125AbsTforms.csv", _subject, trialNumberString);
+                string kinematicFilePath = Path.Combine(Path.Combine(trialDir.FullName, "XROMM"), kinematicFname);
                 if (File.Exists(kinematicFilePath))
                 {
                     TrialInfo info = new TrialInfo();
@@ -117,6 +121,55 @@ namespace libWrist
             }
             _info = trialInfo.ToArray();
         }
+
+        #region Static XROMM detection Methods
+        public static bool IsXrommFile(string[] filenames)
+        {
+            if (filenames == null || filenames.Length != 1) return false;
+            return IsXrommFile(filenames[0]);
+        }
+        public static bool IsXrommFile(string PathFirstIVFile)
+        {
+            try
+            {
+                //check that the file exists
+                if (!File.Exists(PathFirstIVFile))
+                    return false;
+
+                string ivFolderPath = Path.GetDirectoryName(PathFirstIVFile);
+                string modelsPath = Path.GetDirectoryName(ivFolderPath);
+                string subjectPath = Path.GetDirectoryName(modelsPath);
+                string subject = Path.GetFileName(subjectPath);
+
+                string boneFileName = Path.GetFileName(PathFirstIVFile);
+                string boneFileNameNoExtension = Path.GetFileNameWithoutExtension(boneFileName);
+
+                Match m = Regex.Match(boneFileNameNoExtension, @"^(E\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
+                if (!m.Success)
+                    return false;
+
+                string subjectID = m.Groups[1].Value;
+                string boneName = m.Groups[2].Value.ToLower();
+                string side = m.Groups[3].Value.ToLower();
+
+                if (!String.Equals(subject, subjectID, StringComparison.InvariantCultureIgnoreCase))
+                    return false;
+
+                string Trial001_Folder = Path.Combine(subjectPath, "Trial001");
+                if (!Directory.Exists(Trial001_Folder))
+                    return false;
+
+                string kinematicFname = String.Format("{0}_Trial001_xyzptsBUTTER25_sm125AbsTforms.csv", subject);
+                string kinematicFilePath = Path.Combine(Path.Combine(Trial001_Folder, "XROMM"), kinematicFname);
+
+                return File.Exists(kinematicFilePath);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+        #endregion
 
         #region Public Accessors
 
@@ -136,7 +189,10 @@ namespace libWrist
             get { return _subjectPath; }
         }
 
-
+        public string PathFirstIVFile
+        {
+            get { return _pathFirstIVFile; }
+        }
 
         /// <summary>
         /// An array of full paths to all 15 bones for the wrist

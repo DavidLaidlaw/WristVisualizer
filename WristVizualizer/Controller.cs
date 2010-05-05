@@ -85,7 +85,9 @@ namespace WristVizualizer
 
             if (XrommFilesystem.IsXrommFile(filenames)) //then we are in XROMM mode
             {
-                return Types.Xromm;
+                string msg = "It looks like you are trying to open an XROMM model.\n\nDo you wish to load the entire model?";
+                if (DialogResult.Yes == MessageBox.Show(msg, Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question))
+                    return Types.Xromm;
             }
 
             if (PosViewController.IsPosViewFile(filenames))

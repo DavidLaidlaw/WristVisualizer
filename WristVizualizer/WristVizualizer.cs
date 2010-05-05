@@ -14,7 +14,6 @@ namespace WristVizualizer
     public partial class WristVizualizer : Form
     {
         private ExaminerViewer _viewer;
-        //private Separator _root;
 
         private Controller _currentController;
 
@@ -271,7 +270,7 @@ namespace WristVizualizer
                     _currentController = new FullWristController(_viewer, filenames[0]);
                     break;
                 case Controller.Types.Xromm:
-                    throw new NotImplementedException();
+                    _currentController = new XrommController(filenames[0]);
                     break;
                 case Controller.Types.Sceneviewer:
                 default:
