@@ -98,7 +98,7 @@ namespace libWrist
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    this.Array[i][j] = a[i * 4 + j + offset];
+                    this.Array[j][i] = a[i * 4 + j + offset];
                 }
             }
         }
