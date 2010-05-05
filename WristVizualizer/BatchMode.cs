@@ -271,7 +271,7 @@ namespace WristVizualizer
             {
                 BulkCalculator.DistanceCalculationJob job = new BulkCalculator.DistanceCalculationJob();
                 job.JobType = BulkCalculator.DistanceCalculationType.VetrexDistances;
-                job.FullWrist = fullWrist;
+                job.FullJoint = fullWrist;
                 job.PrimaryBone = fullWrist.Bones[refBoneIndex];
                 job.IneractionBones = new Bone[] { fullWrist.Bones[testBoneIndex] };
                 job.PositionIndex = posList[i];
@@ -285,7 +285,7 @@ namespace WristVizualizer
             {
                 BulkCalculator.DistanceCalculationJob job = new BulkCalculator.DistanceCalculationJob();
                 job.JobType = BulkCalculator.DistanceCalculationType.Contours;
-                job.FullWrist = fullWrist;
+                job.FullJoint = fullWrist;
                 job.PrimaryBone = fullWrist.Bones[refBoneIndex];
                 job.ContourDistances = cDistances;
                 job.ContourColors = GetWhiteColors(cDistances.Length);
