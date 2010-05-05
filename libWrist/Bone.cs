@@ -277,7 +277,7 @@ namespace libWrist
             if (positionIndex == 0) return true; //always have for neutral... duh
             if (_transformMatrices.Length <= positionIndex) return false;
             if (_transformMatrices[positionIndex] == null) return false;
-            return (!_transformMatrices[positionIndex].isIdentity());
+            return (!_transformMatrices[positionIndex].isIdentity()); //is this the correct action for identity!?
         }
 
 

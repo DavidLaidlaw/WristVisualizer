@@ -52,6 +52,11 @@ namespace libWrist
             get { return _contourColors; }
         }
 
+        public virtual int NumberPositions //TODO: UGLY!
+        {
+            get { return _numberPositions; }
+        }
+
         #endregion
 
         #region Common Code
