@@ -8,15 +8,7 @@ namespace libWrist
 {
     public class FullWrist : FullJoint
     {
-        //private Bone[] _bones;
         private WristFilesystem _wrist;
-        //private Separator _root;
-
-        //private int _fixedBoneIndex;
-        //private int _currentPositionIndex;
-
-        private bool _showContours;
-        private bool _showColorMap;
 
         private double _colorMapDistance;
         private double[] _contourDistances;
@@ -70,7 +62,7 @@ namespace libWrist
             {
                 _bones[bIndex].LoadIVFile();
                 //for the test bones, we need the distance fields
-                _bones[bIndex].ReadDistanceField();
+                _bones[bIndex].TryReadDistanceField();
             }
             foreach (int bIndex in refbones)
             {
@@ -80,7 +72,7 @@ namespace libWrist
             LoadInertiaData();
         }
 
-        public void LoadFullWrist()
+        public override void LoadFullJoint()
         {
             _root = new Separator();
             for (int i = 0; i < WristFilesystem.NumBones; i++)
@@ -102,7 +94,7 @@ namespace libWrist
                 if (!_bones[i].IsValidBone) continue;
 
                 if (!_bones[i].HasDistanceField) //skip if already loaded
-                    _bones[i].ReadDistanceField();
+                    _bones[i].TryReadDistanceField();
             }
         }
 
@@ -143,90 +135,90 @@ namespace libWrist
             _bones[boneIndex].InertiaMatrix = new TransformMatrix(acs[0]);
         }
 
-        public void MoveToPositionAndFixedBone(int positionIndex, int fixedBoneIndex)
-        {
-            //quick checks here
-            Bone fixedBone = _bones[fixedBoneIndex];
-            if (fixedBone == null || !fixedBone.IsValidBone)
-                throw new WristException(String.Format("Attempting to set fixed bone to a non-valid bone ({0}: {1})", fixedBone.ShortName, fixedBoneIndex));
+        //public void MoveToPositionAndFixedBone(int positionIndex, int fixedBoneIndex)
+        //{
+        //    //quick checks here
+        //    Bone fixedBone = _bones[fixedBoneIndex];
+        //    if (fixedBone == null || !fixedBone.IsValidBone)
+        //        throw new WristException(String.Format("Attempting to set fixed bone to a non-valid bone ({0}: {1})", fixedBone.ShortName, fixedBoneIndex));
 
-            _currentPositionIndex = positionIndex;
-            _fixedBoneIndex = fixedBoneIndex;
+        //    _currentPositionIndex = positionIndex;
+        //    _fixedBoneIndex = fixedBoneIndex;
 
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
-            {
-                if (!_bones[i].IsValidBone) continue; //skip missing bones 
+        //    for (int i = 0; i < WristFilesystem.NumBones; i++)
+        //    {
+        //        if (!_bones[i].IsValidBone) continue; //skip missing bones 
 
-                _bones[i].MoveToPosition(_currentPositionIndex, _bones[_fixedBoneIndex]);
-            }
+        //        _bones[i].MoveToPosition(_currentPositionIndex, _bones[_fixedBoneIndex]);
+        //    }
 
-            UpdateColorsAndContoursForCurrentPosition();
-            HideBonesWithNoKinematics(); //yes?
-        }
+        //    UpdateColorsAndContoursForCurrentPosition();
+        //    HideBonesWithNoKinematics(); //yes?
+        //}
 
-        public void UpdateColorsAndContoursForCurrentPosition()
-        {
-            if (_showColorMap)
-                ShowColorMapIfCalculated();
-            else
-                HideColorMap();
+        //public void UpdateColorsAndContoursForCurrentPosition()
+        //{
+        //    if (_showColorMap)
+        //        ShowColorMapIfCalculated();
+        //    else
+        //        HideColorMap();
 
-            if (_showContours)
-                ShowContoursIfCalculated();
-            else
-                HideContours();
-        }
+        //    if (_showContours)
+        //        ShowContoursIfCalculated();
+        //    else
+        //        HideContours();
+        //}
 
-        public void ShowContoursIfCalculated()
-        {
-            _showContours = true;
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
-                _bones[i].SetContourForPositionIfCalculated(_currentPositionIndex);
-        }
+        //public void ShowContoursIfCalculated()
+        //{
+        //    _showContours = true;
+        //    for (int i = 0; i < WristFilesystem.NumBones; i++)
+        //        _bones[i].SetContourForPositionIfCalculated(_currentPositionIndex);
+        //}
 
-        public void HideContours()
-        {
-            _showContours = false;
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
-                _bones[i].RemoveContour();
-        }
+        //public void HideContours()
+        //{
+        //    _showContours = false;
+        //    for (int i = 0; i < WristFilesystem.NumBones; i++)
+        //        _bones[i].RemoveContour();
+        //}
 
-        public void ShowColorMapIfCalculated()
-        {
-            _showColorMap = true;
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
-                _bones[i].SetColorMapForPositionIfCalculated(_currentPositionIndex);
-        }
+        //public void ShowColorMapIfCalculated()
+        //{
+        //    _showColorMap = true;
+        //    for (int i = 0; i < WristFilesystem.NumBones; i++)
+        //        _bones[i].SetColorMapForPositionIfCalculated(_currentPositionIndex);
+        //}
 
-        public void HideColorMap()
-        {
-            _showColorMap = false;
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
-                _bones[i].RemoveColorMap();
-        }
+        //public void HideColorMap()
+        //{
+        //    _showColorMap = false;
+        //    for (int i = 0; i < WristFilesystem.NumBones; i++)
+        //        _bones[i].RemoveColorMap();
+        //}
 
-        public void HideColorMapAndContoursTemporarily()
-        {
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
-            {
-                _bones[i].RemoveColorMap();
-                _bones[i].RemoveContour();
-            }
-        }
+        //public void HideColorMapAndContoursTemporarily()
+        //{
+        //    for (int i = 0; i < WristFilesystem.NumBones; i++)
+        //    {
+        //        _bones[i].RemoveColorMap();
+        //        _bones[i].RemoveContour();
+        //    }
+        //}
 
-        private void HideBonesWithNoKinematics()
-        {
-            HideBonesWithNoKinematics(_currentPositionIndex);
-        }
+        //private void HideBonesWithNoKinematics()
+        //{
+        //    HideBonesWithNoKinematics(_currentPositionIndex);
+        //}
 
-        public void HideBonesWithNoKinematics(int positionIndex)
-        {
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
-            {
-                if (!_bones[i].HasKinematicInformationForPosition(positionIndex))
-                    _bones[i].HideBone();
-            }
-        }
+        //public void HideBonesWithNoKinematics(int positionIndex)
+        //{
+        //    for (int i = 0; i < WristFilesystem.NumBones; i++)
+        //    {
+        //        if (!_bones[i].HasKinematicInformationForPosition(positionIndex))
+        //            _bones[i].HideBone();
+        //    }
+        //}
 
         public void SetToAnimationFrame(int frameNumber)
         {

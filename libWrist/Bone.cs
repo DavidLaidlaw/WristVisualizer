@@ -78,7 +78,7 @@ namespace libWrist
         }
 
 
-        public void ReadDistanceField()
+        public void TryReadDistanceField()
         {
             if (!Directory.Exists(_distanceFieldFilename))
                 return;

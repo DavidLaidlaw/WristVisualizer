@@ -77,7 +77,7 @@ namespace WristVizualizer
 
             _wrist.setupWrist(radiusFilename);
             _fullWrist = new FullWrist(_wrist);
-            _fullWrist.LoadFullWrist();
+            _fullWrist.LoadFullJoint();
             _root = _fullWrist.Root;
 
             populateSeriesList(); //TODO?
