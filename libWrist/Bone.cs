@@ -14,8 +14,6 @@ namespace libWrist
         private string _longName;
         private string _shortName;
         private int _boneIndex;
-        private WristFilesystem _wrist;
-        private FullWrist _fullWrist; //the full wrist we are part of
 
         private bool _hamVisible; //for state reasons
 
@@ -42,16 +40,13 @@ namespace libWrist
 
         private Material _boneMaterial;
 
-        public Bone(WristFilesystem wrist, FullWrist fullwrist, int boneIndex)
+        public Bone(string ivFilename, string distanceFieldFilename, int boneIndex, int numSeries)
         {
-            _fullWrist = fullwrist;
-            _wrist = wrist;
             _boneIndex = boneIndex;
             _longName = WristFilesystem.LongBoneNames[boneIndex];
             _shortName = WristFilesystem.ShortBoneNames[boneIndex];
-            _ivFilename = _wrist.bpaths[boneIndex];
-            _distanceFieldFilename = _wrist.DistanceFieldPaths[boneIndex];
-            int numSeries = _wrist.motionFiles.Length + 1; //add 1 for neutral
+            _ivFilename = ivFilename;
+            _distanceFieldFilename = distanceFieldFilename;
             _transformMatrices = new TransformMatrix[numSeries];
             _transformMatrices[0] = new TransformMatrix(); //set the neutral position to the identity matrix :)
             _computedDistances = new double[numSeries][];

@@ -15,7 +15,13 @@ namespace WristVizualizer
         {
             _root = new Separator();
             _xrommFileSys = new XrommFilesystem(filename);
+            LoadXromm();
             readAllFiles();
+        }
+
+        private void LoadXromm()
+        {
+            throw new Exception("The method or operation is not implemented.");
         }
 
         public override Separator Root

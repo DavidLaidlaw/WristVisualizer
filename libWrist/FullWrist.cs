@@ -6,14 +6,14 @@ using libCoin3D;
 
 namespace libWrist
 {
-    public class FullWrist
+    public class FullWrist : FullJoint
     {
-        private Bone[] _bones;
+        //private Bone[] _bones;
         private WristFilesystem _wrist;
-        private Separator _root;
+        //private Separator _root;
 
-        private int _fixedBoneIndex;
-        private int _currentPositionIndex;
+        //private int _fixedBoneIndex;
+        //private int _currentPositionIndex;
 
         private bool _showContours;
         private bool _showColorMap;
@@ -35,20 +35,6 @@ namespace libWrist
             _contourDistances = new double[0];
         }
 
-        public Separator Root
-        {
-            get { return _root; }
-        }
-
-        public Bone[] Bones
-        {
-            get { return _bones; }
-        }
-
-        public WristFilesystem Wrist
-        {
-            get { return _wrist; }
-        }
 
         public bool ShowContours
         {
@@ -78,8 +64,8 @@ namespace libWrist
         public void LoadSelectBonesAndDistancesForBatchMode(int[] testbones, int[] refbones)
         {
             _root = new Separator();
-            for (int i=0; i<WristFilesystem.NumBones; i++)
-                _bones[i] = new Bone(_wrist,this,i);
+            for (int i = 0; i < WristFilesystem.NumBones; i++)
+                _bones[i] = new Bone(_wrist.bpaths[i], _wrist.DistanceFieldPaths[i], i, _wrist.motionFiles.Length + 1);
             foreach (int bIndex in testbones)
             {
                 _bones[bIndex].LoadIVFile();
@@ -99,7 +85,7 @@ namespace libWrist
             _root = new Separator();
             for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
-                _bones[i] = new Bone(_wrist, this, i);
+                _bones[i] = new Bone(_wrist.bpaths[i], _wrist.DistanceFieldPaths[i], i, _wrist.motionFiles.Length + 1);
                 _bones[i].LoadIVFile();
                 if (_bones[i].IsValidBone)
                     _root.addChild(_bones[i].BoneSeparator);
@@ -228,7 +214,7 @@ namespace libWrist
             }
         }
 
-        public void HideBonesWithNoKinematics()
+        private void HideBonesWithNoKinematics()
         {
             HideBonesWithNoKinematics(_currentPositionIndex);
         }

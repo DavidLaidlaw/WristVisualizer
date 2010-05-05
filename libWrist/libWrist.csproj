@@ -61,7 +61,9 @@
       <DependentUpon>ExceptionDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="ExceptionHandling\HandledExceptionManager.cs" />
+    <Compile Include="FullJoint.cs" />
     <Compile Include="FullWrist.cs" />
+    <Compile Include="FullXromm.cs" />
     <Compile Include="HelicalTransform.cs" />
     <Compile Include="InertialProperties.cs" />
     <Compile Include="IniFileParser.cs" />

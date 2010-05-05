@@ -61,7 +61,7 @@ namespace WristVizualizer
 
         public override string LastFileFilename { get { return _wrist.Radius; } }
 
-        public override void CleanUp()  //TODO: Should this be override not NEW?
+        public override void CleanUp() 
         {
             removeControlEventListeners();
         }
@@ -69,10 +69,7 @@ namespace WristVizualizer
         private void loadFullWrist(string radiusFilename)
         {
             //TODO: ShowFullWristControlBox
-            //TODO: Block importing a file
             //TODO: Block viewSource
-            //TODO: Enable ShowInertia
-            //TODO: Enable ShowACS
 
             //First Try and load the wrist data
             
