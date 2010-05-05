@@ -247,7 +247,7 @@ namespace WristVizualizer
             string[] filenames = getFilesToOpen();
             if (filenames == null || filenames.Length == 0) return;
 
-            importFile(filenames);
+            _currentController.ImportFilesToScene(filenames);
         }
 
         private void SmartOpenFiles(string[] filenames)
@@ -295,17 +295,6 @@ namespace WristVizualizer
             _viewer.Camera.copySettingsFromCamera(originalCam); //copy back settings I hope...
             _viewer.setBackgroundColor(backColor);
         }
-
-        /// <summary>
-        /// Adds the given files to the scene
-        /// </summary>
-        /// <param name="filenames">list of files to add</param>
-        private void importFile(string[] filenames)
-        {
-            if (filenames == null || filenames.Length == 0) return;
-            _currentController.ImportFilesToScene(filenames);
-        }
-
 
         private void openFullWristToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -638,7 +627,7 @@ namespace WristVizualizer
                     contextMenuStrip_RightDrag.Show(e.X, e.Y);
                 }
                 else if (e.Effect == DragDropEffects.Copy)
-                    importFile(filenames);
+                    _currentController.ImportFilesToScene(filenames);
                 else
                     SmartOpenFiles(filenames);
             }
@@ -674,7 +663,7 @@ namespace WristVizualizer
         private void importToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             string[] filenames = (string[])contextMenuStrip_RightDrag.Tag;
-            importFile(filenames);
+            _currentController.ImportFilesToScene(filenames);
         }
 
         private void openSaveViewToolStripMenuItem_Click(object sender, EventArgs e)
