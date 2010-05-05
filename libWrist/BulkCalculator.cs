@@ -22,7 +22,6 @@ namespace libWrist
 
         public struct DistanceCalculationJob
         {
-            //public FullWrist FullJoint;
             public FullJoint FullJoint;
             public DistanceCalculationType JobType;
             public Bone PrimaryBone;
@@ -70,8 +69,8 @@ namespace libWrist
         void _bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             //assume that we have at least one
-            FullJoint fullWrist = _masterQueue.Peek().Peek().FullJoint;
-            fullWrist.ReadInDistanceFields();
+            FullJoint fullJoint = _masterQueue.Peek().Peek().FullJoint;
+            fullJoint.ReadInDistanceFields();
 
             //Loop through each queue to run
             Queue<Queue<DistanceCalculationJob>>.Enumerator enumerator = _masterQueue.GetEnumerator();
