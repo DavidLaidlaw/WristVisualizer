@@ -9,31 +9,26 @@ namespace WristVizualizer
     class XrommController : Controller
     {
         private XrommFilesystem _xrommFileSys;
-        private Separator _root;
+        private FullXromm _fullXromm;
 
         public XrommController(string filename)
         {
-            _root = new Separator();
             _xrommFileSys = new XrommFilesystem(filename);
-            LoadXromm();
-            readAllFiles();
-        }
+            _fullXromm = new FullXromm(_xrommFileSys);
+            _fullXromm.LoadFullJoint();
 
-        private void LoadXromm()
-        {
-            throw new Exception("The method or operation is not implemented.");
         }
 
         public override Separator Root
         {
-            get { return _root; }
+            get { return _fullXromm.Root; }
         }
 
-        private void readAllFiles()
-        {
-            foreach (string ivFile in _xrommFileSys.bpaths)
-                _root.addFile(ivFile);
-        }
+        //private void readAllFiles()
+        //{
+        //    foreach (string ivFile in _xrommFileSys.bpaths)
+        //        _root.addFile(ivFile);
+        //}
 
 
         //public override string ApplicationTitle { get { return _firstFilename; } }

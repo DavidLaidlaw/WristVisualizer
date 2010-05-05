@@ -9,7 +9,7 @@ namespace libWrist
     public class XrommFilesystem
     {
 
-        private struct TrialInfo
+        public struct TrialInfo
         {
             public string TrialName;
             public int TrialNumber;
@@ -35,6 +35,8 @@ namespace libWrist
             _pathFirstIVFile = PathFirstIVFile;
             SetupXromm(PathFirstIVFile);
 
+            _distanceFieldPaths = new string[NumBones];
+
             //_bpaths = new string[_bnames.Length];
             //_distanceFieldPaths = new string[_bnames.Length];
             //setupPaths();
@@ -44,11 +46,11 @@ namespace libWrist
         [Obsolete("Test method only")]
         public XrommFilesystem()
         {
-            string test = @"P:\XROMM\SampleStudy\E00001\Models\IV\E00001_Fem_L.iv";
+            string test = @"P:\XROMM\SampleStudy\X00001\Models\IV\X00001_Fem_L.iv";
             SetupXromm(test);
         }
 
-        public void SetupXromm(string PathFirstIVFile)
+        private void SetupXromm(string PathFirstIVFile)
         {
             //check that the file exists
             if (!File.Exists(PathFirstIVFile))
@@ -62,7 +64,7 @@ namespace libWrist
             string boneFileName = Path.GetFileName(PathFirstIVFile);
             string boneFileNameNoExtension = Path.GetFileNameWithoutExtension(boneFileName);
 
-            Match m = Regex.Match(boneFileNameNoExtension, @"^(E\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
+            Match m = Regex.Match(boneFileNameNoExtension, @"^(X\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
             if (!m.Success)
                 throw new WristException("Initial IV file is not in a valid XROMM format");
 
@@ -144,7 +146,7 @@ namespace libWrist
                 string boneFileName = Path.GetFileName(PathFirstIVFile);
                 string boneFileNameNoExtension = Path.GetFileNameWithoutExtension(boneFileName);
 
-                Match m = Regex.Match(boneFileNameNoExtension, @"^(E\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
+                Match m = Regex.Match(boneFileNameNoExtension, @"^(X\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
                 if (!m.Success)
                     return false;
 
@@ -231,6 +233,11 @@ namespace libWrist
         public int NumBones
         {
             get { return _bnames.Length; }
+        }
+
+        public TrialInfo[] Trials
+        {
+            get { return _info; }
         }
 
         #endregion

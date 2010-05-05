@@ -40,6 +40,7 @@ namespace libWrist
 
         private Material _boneMaterial;
 
+        public Bone(string ivFilename, string distanceFieldFilename, int boneIndex) : this(ivFilename, distanceFieldFilename, boneIndex, 0) { }
         public Bone(string ivFilename, string distanceFieldFilename, int boneIndex, int numSeries)
         {
             _boneIndex = boneIndex;
@@ -47,12 +48,19 @@ namespace libWrist
             _shortName = WristFilesystem.ShortBoneNames[boneIndex];
             _ivFilename = ivFilename;
             _distanceFieldFilename = distanceFieldFilename;
+            _hamVisible = false;
+
+            InitializeDataStructures(numSeries);
+        }
+
+        public void InitializeDataStructures(int numSeries)
+        {
             _transformMatrices = new TransformMatrix[numSeries];
-            _transformMatrices[0] = new TransformMatrix(); //set the neutral position to the identity matrix :)
+            if (numSeries > 0)
+                _transformMatrices[0] = new TransformMatrix(); //set the neutral position to the identity matrix :)
             _computedDistances = new double[numSeries][];
             _computedColorMaps = new int[numSeries][];
             _computedContours = new Contour[numSeries];
-            _hamVisible = false;
         }
 
         public void LoadIVFile()
@@ -151,6 +159,11 @@ namespace libWrist
             get { return _coloredBone != null; }
         }
 
+        public void SetTransformation(TransformMatrix[] transforms)
+        {
+            // Do I need to add more error checking to ensure that the length is correct?
+            _transformMatrices = transforms;
+        }
 
         public void SetTransformation(TransformMatrix transform, int positionIndex)
         {

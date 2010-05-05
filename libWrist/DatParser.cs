@@ -40,10 +40,9 @@ namespace libWrist
 
         public static double[][] parseDatFile(StreamReader filestream)
         {
-            char[] div = { ' ', '\t', ',' };
-            System.Collections.ArrayList dat = new System.Collections.ArrayList(100);
+            List<double[]> dat = new List<double[]>(100);
 
-            Regex reg = new Regex(@"([-\d\.eE+]+)");
+            Regex reg = new Regex(@"(NaN|[-\d\.eE+]+)");
             while (!filestream.EndOfStream)
             {
                 string line = filestream.ReadLine().Trim();
@@ -57,7 +56,7 @@ namespace libWrist
                 }
                 dat.Add(values);
             }
-            return (double[][])dat.ToArray(typeof(double[]));
+            return dat.ToArray();
         }
 
         public static double[][] parseDatFile(string filename)
@@ -164,6 +163,38 @@ namespace libWrist
                 transforms[i] = new TransformMatrix(tempR, dat[i * 4 + 3]);
             }
 
+            return transforms;
+        }
+
+        public static TransformMatrix[][] parseXrommKinematicFileToTransformMatrix(string filename)
+        {
+            double[][] dat = parseDatFile(filename);
+            if (dat.Length == 0 || dat[0].Length==0) return null;
+            if (dat[0].Length % 16 != 0) 
+                throw new ArgumentException("Invalid Xromm data file format. Column number must be multiple of 16!");
+            int numCol = dat[0].Length;
+            int numBones = dat[0].Length/16;
+
+            TransformMatrix[][] transforms = new TransformMatrix[numBones][];
+            for (int i=0; i<numBones; i++)
+                transforms[i] = new TransformMatrix[dat.Length];
+
+            for (int i = 0; i < dat.Length; i++)
+            {
+                if (dat[i].Length != numCol) throw new ArgumentException("Invalid XROMM data file format. Every row must have the same number of columns");
+                for (int j = 0; j < numBones; j++)
+                {
+                    if (Double.IsNaN(dat[i][j * 16]))
+                    {
+                        //what do we do for NaN's.... for now we leave blank...yes?
+                        //so do nothing
+                    }
+                    else
+                    {
+                        transforms[j][i] = new TransformMatrix(dat[i], 16 * j);
+                    }
+                }
+            }
             return transforms;
         }
 

@@ -79,6 +79,29 @@ namespace libWrist
                 this.Array[i][3] = t[i];
         }
 
+        /// <summary>
+        /// Create a transform matrix from a 4x4 rotational matrix, which was flattened into a 16x1 array
+        /// </summary>
+        /// <param name="a">Flattened array of 16 elements representing the 4x4</param>
+        public TransformMatrix(double[] a) : this(a, 0) { }
+
+
+        /// <summary>
+        /// Create a transform matrix from a 4x4 rotational matrix, which was flattened into a 16x1 array
+        /// </summary>
+        /// <param name="r">Array containing the 16 elements representing the 4x4 matrix flattened out</param>
+        /// <param name="offset">Starting index of the first value in r</param>
+        public TransformMatrix(double[] a, int offset) : base(4, 4)
+        {
+            this.setToIdentity();
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 4; j++)
+                {
+                    this.Array[i][j] = a[i * 4 + j + offset];
+                }
+            }
+        }
 
         public libCoin3D.Transform ToTransform()
         {
