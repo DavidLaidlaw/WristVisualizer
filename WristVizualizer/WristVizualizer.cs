@@ -270,7 +270,7 @@ namespace WristVizualizer
                     _currentController = new FullWristController(_viewer, filenames[0]);
                     break;
                 case Controller.Types.Xromm:
-                    _currentController = new XrommController(filenames[0]);
+                    _currentController = new XrommController(_viewer, filenames[0]);
                     break;
                 case Controller.Types.Sceneviewer:
                 default:

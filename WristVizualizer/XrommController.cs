@@ -11,6 +11,7 @@ namespace WristVizualizer
     {
         private XrommFilesystem _xrommFileSys;
         private FullXromm _fullXromm;
+        private ExaminerViewer _viewer;
 
         private int _currentTrialIndex;
         private int _fixedBoneIndex;
@@ -19,11 +20,12 @@ namespace WristVizualizer
         private FullWristControl _wristControl;
         private AnimationControl _animationControl;
 
-        public XrommController(string filename)
+        public XrommController(ExaminerViewer viewer, string filename)
         {
             _xrommFileSys = new XrommFilesystem(filename);
             _fullXromm = new FullXromm(_xrommFileSys);
             _fullXromm.LoadFullJoint();
+            _viewer = viewer;
 
             _fixedBoneIndex = 0;
             _currentTrialIndex = 0;
@@ -156,6 +158,91 @@ namespace WristVizualizer
                     _fullXromm.Bones[i].SetColor(edit.GetNewBoneColor(i));
             }
         }
+
+        #region Movie Export
+        public override bool CanSaveToMovie
+        {
+            // we can only save if we are in animation mode, which is defined by the control existing
+            get { return (_animationControl != null); }
+        }
+        public override void saveToMovie()
+        {
+            //save starting state & stop playback
+            bool startPlaying = _animationControl.AnimationTimer.Enabled;
+            _animationControl.AnimationTimer.Stop();
+
+            //show save dialogue 
+            MovieExportOptions dialog = new MovieExportOptions(_xrommFileSys.subjectPath, _animationControl.FPS);
+            dialog.ShowDialog();
+
+            //okay, now lets figure out what we are doing here
+            switch (dialog.results)
+            {
+                case MovieExportOptions.SaveType.CANCEL:
+                    //nothing to do, we were canceled
+                    break;
+                case MovieExportOptions.SaveType.IMAGES:
+                    //save images
+                    string outputDir = dialog.OutputFileName;
+                    //save it to a movie
+                    _viewer.cacheOffscreenRenderer();
+                    for (int i = 0; i < _animationControl.NumberOfFrames; i++)
+                    {
+                        _fullXromm.SetToPositionAndFixedBoneAndTrial(i, _fixedBoneIndex, _currentTrialIndex);  //change to current frame
+                        string fname = System.IO.Path.Combine(outputDir, String.Format("outfile{0:d3}.jpg", i));
+                        _viewer.saveToJPEG(fname);
+                    }
+                    _viewer.clearOffscreenRenderer();
+                    break;
+                case MovieExportOptions.SaveType.MOVIE:
+                    //save movie
+                    try
+                    {
+                        AviFile.AviManager aviManager = new AviFile.AviManager(dialog.OutputFileName, false);
+                        int smooth = dialog.SmoothFactor;
+                        _viewer.cacheOffscreenRenderer(smooth); //TODO: Check that output is multiple of 4!!!!
+                        _fullXromm.SetToPositionAndFixedBoneAndTrial(0, _fixedBoneIndex, _currentTrialIndex); ; //set to first frame, so we can grab it.
+                        System.Drawing.Bitmap frame = getSmoothedFrame(smooth);
+                        AviFile.VideoStream vStream = aviManager.AddVideoStream(dialog.MovieCompress, (double)dialog.MovieFPS, frame);
+                        for (int i = 1; i < _animationControl.NumberOfFrames; i++) //start from frame 1, frame 0 was added when we began
+                        {
+                            _fullXromm.SetToPositionAndFixedBoneAndTrial(i, _fixedBoneIndex, _currentTrialIndex);
+                            vStream.AddFrame(getSmoothedFrame(smooth));
+                        }
+                        aviManager.Close();  //close out and save
+                        _viewer.clearOffscreenRenderer();
+                    }
+                    catch (Exception ex)
+                    {
+                        string msg = "Error saving to movie file.\n\n" + ex.Message;
+                        libWrist.ExceptionHandling.HandledExceptionManager.ShowDialog(msg, "", "", ex);
+                    }
+                    break;
+            }
+
+            //wrap us up, resume frame and playing status
+            _fullXromm.SetToPositionAndFixedBoneAndTrial(_animationControl.currentFrame, _fixedBoneIndex, _currentTrialIndex);
+            if (startPlaying)
+                _animationControl.AnimationTimer.Start();
+        }
+
+        private System.Drawing.Bitmap getSmoothedFrame(int smoothFactor)
+        {
+            System.Drawing.Image rawImage = _viewer.getImage();
+            if (smoothFactor == 1)
+                return (System.Drawing.Bitmap)rawImage;
+
+            System.Drawing.Image finalImage = new System.Drawing.Bitmap(rawImage.Size.Width / smoothFactor, rawImage.Size.Height / smoothFactor);
+            using (System.Drawing.Graphics g = System.Drawing.Graphics.FromImage(finalImage))
+            {
+                g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                g.DrawImage(rawImage, 0, 0, rawImage.Size.Width / smoothFactor, rawImage.Size.Height / smoothFactor);
+            }
+            rawImage.Dispose();
+            return (System.Drawing.Bitmap)finalImage;
+        }
+
+        #endregion
 
 
         public override Separator Root

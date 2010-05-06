@@ -106,6 +106,11 @@ namespace WristVizualizer
         {
             get { return trackBarCurrentFrame.Maximum + 1; }
         }
+
+        public Timer AnimationTimer
+        {
+            get { return _animationTimer; }
+        }
         #endregion
 
         #region Event Passing

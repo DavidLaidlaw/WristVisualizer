@@ -39,6 +39,7 @@ public:
 	bool saveToBMP(System::String^ filename);
 	void saveSceneGraph(System::String^ filename);
 	System::Drawing::Image^ getImage();
+	//System::Drawing::Bitmap^ getSmoothedImage(int smoothFactor);
 
 	//background color stuff
 	float getBackgroundColorR();

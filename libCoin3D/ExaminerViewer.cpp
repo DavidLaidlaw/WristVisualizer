@@ -162,6 +162,21 @@ bool libCoin3D::ExaminerViewer::saveToBMP(System::String ^filename)
 	return saveToImage(filename,"bmp");
 }
 
+//System::Drawing::Bitmap^ libCoin3D::ExaminerViewer::getSmoothedImage(int smoothFactor)
+//{
+//	System::Drawing::Image^ rawImage = getImage();
+//	if (smoothFactor == 1)
+//		return (System::Drawing::Bitmap^)rawImage;
+//
+//	System::Drawing::Image^ finalImage = gcnew System::Drawing::Bitmap(rawImage->Size.Width / smoothFactor, rawImage->Size.Height / smoothFactor);
+//	System::Drawing::Graphics^ g = System::Drawing::Graphics::FromImage(finalImage);
+//	g->InterpolationMode = System::Drawing::Drawing2D::InterpolationMode::HighQualityBicubic;
+//	g->DrawImage(rawImage, 0, 0, rawImage->Size.Width / smoothFactor, rawImage->Size.Height / smoothFactor);
+//	delete g;
+//	delete rawImage;
+//	return (System::Drawing::Bitmap^)finalImage;
+//}
+
 System::Drawing::Image^ libCoin3D::ExaminerViewer::getImage()
 {
 	SoOffscreenRenderer *myRenderer = getOffscreenRenderer();
