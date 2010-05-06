@@ -143,6 +143,20 @@ namespace WristVizualizer
             return series;
         }
 
+        public override bool CanEditBoneColors { get { return true; } }
+        public override void EditBoneColorsShowDialog()
+        {
+            EditBoneColors edit = new EditBoneColors(_fullXromm);
+            DialogResult r = edit.ShowDialog();
+            if (r != DialogResult.OK)
+                return;
+            for (int i = 0; i < _xrommFileSys.NumBones; i++)
+            {
+                if (_fullXromm.Bones[i].IsValidBone && edit.IsColorChanged(i))
+                    _fullXromm.Bones[i].SetColor(edit.GetNewBoneColor(i));
+            }
+        }
+
 
         public override Separator Root
         {

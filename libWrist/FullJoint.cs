@@ -57,6 +57,11 @@ namespace libWrist
             get { return _numberPositions; }
         }
 
+        public virtual int NumberBones
+        {
+            get { return _bones.Length; }
+        }
+
         #endregion
 
         #region Common Code

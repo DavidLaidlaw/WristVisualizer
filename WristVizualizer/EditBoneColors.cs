@@ -11,17 +11,17 @@ namespace WristVizualizer
 {
     public partial class EditBoneColors : Form
     {
-        private FullWrist _fullWrist;
+        private FullJoint _fullJoint;
         private Button[] _colorButtons;
         private Color[] _startingColors;
 
-        public EditBoneColors(FullWrist fullWrist)
+        public EditBoneColors(FullJoint fullJoint)
         {
-            _fullWrist = fullWrist;
+            _fullJoint = fullJoint;
             InitializeComponent();
-            _startingColors = new Color[WristFilesystem.NumBones];
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
-                _startingColors[i] = _fullWrist.Bones[i].GetColor();
+            _startingColors = new Color[fullJoint.NumberBones];
+            for (int i = 0; i < fullJoint.NumberBones; i++)
+                _startingColors[i] = _fullJoint.Bones[i].GetColor();
             setupGUI();
         }
 
@@ -31,13 +31,13 @@ namespace WristVizualizer
             tableLayoutPanel1.Controls.Clear();
             tableLayoutPanel1.RowStyles.Clear();
 
-            _colorButtons = new Button[WristFilesystem.NumBones];
-            for (int i = 0; i < WristFilesystem.NumBones; i++)
+            _colorButtons = new Button[_fullJoint.NumberBones];
+            for (int i = 0; i < _fullJoint.NumberBones; i++)
             {
-                string labelText = String.Format("{0}:", _fullWrist.Bones[i].LongName);
+                string labelText = String.Format("{0}:", _fullJoint.Bones[i].LongName);
                 //Color startColor = _fullWrist.Bones[i]
                 setupContourRow(i, labelText, Color.White);
-                if (!_fullWrist.Bones[i].IsValidBone)
+                if (!_fullJoint.Bones[i].IsValidBone)
                 {
                     _colorButtons[i].Enabled = false;
                 }
