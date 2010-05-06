@@ -55,16 +55,17 @@ namespace WristVizualizer
 
         private void SetupXrommControl()
         {
+            string[] seriesNames = createSeriesListWithNiceNames();
             _layoutControl = new WristPanelLayoutControl();
             _wristControl = new FullWristControl();
-            _wristControl.setupControl(_xrommFileSys.ShortBoneNames, true);
+            _wristControl.setupControl(_xrommFileSys.ShortBoneNames, true, seriesNames.Length);
             _layoutControl.addControl(_wristControl);
 
             _animationControl = new AnimationControl();
             _layoutControl.addControl(_animationControl);
 
             _wristControl.clearSeriesList();
-            _wristControl.addToSeriesList(createSeriesListWithNiceNames());
+            _wristControl.addToSeriesList(seriesNames);
             _wristControl.selectedSeriesIndex = 0;
         }
 

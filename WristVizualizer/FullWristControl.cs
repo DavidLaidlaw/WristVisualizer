@@ -106,17 +106,21 @@ namespace WristVizualizer
         #region GUI Control Setup
         public void setupControl(string[] boneNames, bool showSeriesList)
         {
+            setupControl(boneNames, showSeriesList, 1);
+        }
+        public void setupControl(string[] boneNames, bool showSeriesList, int minSeriesSize)
+        {
             if (boneNames.Length == 0)
                 throw new ArgumentException("Can't create Control for 0 bones");
             _boneNames = boneNames;
             _showSeriesList = showSeriesList;
-            setupControlLayout();
+            setupControlLayout(minSeriesSize);
 
             //set the first bone to be fixed
             _radioButtonsFixed[0].Checked = true;
         }
 
-        private void setupControlLayout()
+        private void setupControlLayout(int minSeriesSize)
         {
             int numBones = _boneNames.Length;
 
@@ -128,18 +132,23 @@ namespace WristVizualizer
             _labels = new Label[numBones];
             _checkBoxesHide = new CheckBox[numBones];
             _radioButtonsFixed = new RadioButton[numBones];
-            tableLayoutPanel1.RowCount = numBones + 3;
+            tableLayoutPanel1.RowCount = Math.Max(numBones, minSeriesSize) + 3;
             tableLayoutPanel1.RowStyles.Clear();
             tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             for (int i = 0; i < numBones; i++)
                 setupForm_generateRow(i);
+
+            //add extra rows if we need to make room for the series box
+            for (int i=numBones; i<minSeriesSize; i++)
+                tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 19F));
+
 
             if (!_showSeriesList)
             {
                 seriesListBox.Visible = false;
                 labelSeries.Visible = false;
             }
-            tableLayoutPanel1.SetRowSpan(seriesListBox, numBones);
+            tableLayoutPanel1.SetRowSpan(seriesListBox, Math.Max(numBones, minSeriesSize));
 
             //add in the hideall/showall links
             tableLayoutPanel1.Controls.Add(linkLabelShowAll, 1, numBones + 1);
