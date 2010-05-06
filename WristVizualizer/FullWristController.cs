@@ -322,15 +322,15 @@ namespace WristVizualizer
 
         private void MoveToPosition(int positionIndex, int fixedBoneIndex)
         {
-            _fullWrist.HideBonesWithNoKinematics(_currentPositionIndex);
-
             if (_animatePositionChanges)
             {
+                _fullWrist.HideBonesWithNoKinematics(_currentPositionIndex); //TODO: Should be a better way (also, this hides bones for the last position!)
                 animateChangeInPosition(_currentPositionIndex, positionIndex, _fixedBoneIndex, fixedBoneIndex);
             }
             else
             {
-                _fullWrist.MoveToPositionAndFixedBone(positionIndex, fixedBoneIndex);
+                //this will hide the needed bones are move everything
+                _fullWrist.SetToPositionAndFixedBone(positionIndex, fixedBoneIndex);
             }
 
             //now that we are done, lets save the last positions

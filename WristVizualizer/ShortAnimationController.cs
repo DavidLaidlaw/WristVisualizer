@@ -75,7 +75,7 @@ namespace WristVizualizer
                     EndOfAnimationReached(this, new EventArgs());
            
                 //add the color back in, if it existed
-                _fullWrist.MoveToPositionAndFixedBone(_endPositionIndex, _endFixedBoneIndex);
+                _fullWrist.SetToPositionAndFixedBone(_endPositionIndex, _endFixedBoneIndex);
             }
         }
 
@@ -84,7 +84,7 @@ namespace WristVizualizer
             for (int i = 0; i < WristFilesystem.NumBones; i++)
             {
                 if (_fullWrist.Bones[i].IsValidBone)
-                    _fullWrist.Bones[i].MoveToPosition(_boneTransforms[i][frameNum]);
+                    _fullWrist.Bones[i].SetToPosition(_boneTransforms[i][frameNum]);
             }
         }
 

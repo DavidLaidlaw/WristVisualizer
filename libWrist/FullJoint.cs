@@ -61,7 +61,7 @@ namespace libWrist
 
         #region Common Code
 
-        public virtual void MoveToPositionAndFixedBone(int positionIndex, int fixedBoneIndex)
+        public virtual void SetToPositionAndFixedBone(int positionIndex, int fixedBoneIndex)
         {
             //quick checks here
             Bone fixedBone = _bones[fixedBoneIndex];
@@ -75,7 +75,7 @@ namespace libWrist
             {
                 if (!_bones[i].IsValidBone) continue; //skip missing bones 
 
-                _bones[i].MoveToPosition(_currentPositionIndex, _bones[_fixedBoneIndex]);
+                _bones[i].SetToPosition(_currentPositionIndex, _bones[_fixedBoneIndex]);
             }
 
             UpdateColorsAndContoursForCurrentPosition();

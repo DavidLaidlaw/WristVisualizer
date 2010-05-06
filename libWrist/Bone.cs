@@ -327,7 +327,7 @@ namespace libWrist
             return finalTransforms;
         }
 
-        public void MoveToPosition(int positionIndex, Bone fixedBone)
+        public void SetToPosition(int positionIndex, Bone fixedBone)
         {
             //first remove any existing transform....
             if (_bone.hasTransform())
@@ -342,7 +342,7 @@ namespace libWrist
             _bone.addTransform(tm.ToTransform());
         }
 
-        public void MoveToPosition(TransformMatrix tm)
+        public void SetToPosition(TransformMatrix tm)
         {
             if (_bone.hasTransform())
                 _bone.removeTransform();

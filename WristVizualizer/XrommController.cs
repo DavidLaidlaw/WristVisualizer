@@ -38,7 +38,7 @@ namespace WristVizualizer
         void _posViewControl_TrackbarScroll()
         {
             _fullXromm.HideBonesWithNoKinematics(_posViewControl.currentFrame);
-            _fullXromm.MoveToPositionAndFixedBone(_posViewControl.currentFrame, 0);
+            _fullXromm.SetToPositionAndFixedBone(_posViewControl.currentFrame, 0);
         }
 
         public override Separator Root

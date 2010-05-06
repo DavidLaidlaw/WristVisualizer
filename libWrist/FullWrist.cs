@@ -135,7 +135,7 @@ namespace libWrist
 
                 Switch animationSwitch = AnimationCreator.CreateAnimationSwitch(_bones[i], _bones[fixedBoneIndex], animationOrder, numFrames);
                 Switch animationHamSwitch = AnimationCreator.CreateHAMSwitch(_bones[i], _bones[fixedBoneIndex], animationOrder, numFrames);
-                _bones[i].MoveToPosition(0, _bones[i]); //remove the current saved transform for regular mode, dirty hack
+                _bones[i].SetToPosition(0, _bones[i]); //remove the current saved transform for regular mode, dirty hack
                 _bones[i].SetupForAnimation(animationSwitch, animationHamSwitch);
             }
         }
@@ -144,7 +144,7 @@ namespace libWrist
         {
             for (int i = 0; i < WristFilesystem.NumBones; i++)
                 _bones[i].EndAnimation();
-            MoveToPositionAndFixedBone(_currentPositionIndex, _fixedBoneIndex);
+            SetToPositionAndFixedBone(_currentPositionIndex, _fixedBoneIndex);
         }
 
     }
