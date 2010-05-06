@@ -37,7 +37,7 @@ namespace WristVizualizer
 
         void _posViewControl_TrackbarScroll()
         {
-            _fullXromm.HideBonesWithNoKinematics(_posViewControl.currentFrame);
+            //_fullXromm.HideBonesWithNoKinematics(_posViewControl.currentFrame);
             _fullXromm.SetToPositionAndFixedBone(_posViewControl.currentFrame, 0);
         }
 
