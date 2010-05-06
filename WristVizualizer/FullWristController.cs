@@ -356,7 +356,7 @@ namespace WristVizualizer
 
         void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
         {
-            _fullWrist.Bones[e.BoneIndex].SetBoneVisibility(!e.BoneHidden);
+            _fullWrist.Bones[e.BoneIndex].SetBoneVisibilityManually(!e.BoneHidden);
         }
 
         

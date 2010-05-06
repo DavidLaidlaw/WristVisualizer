@@ -188,30 +188,41 @@ namespace libWrist
             return _coloredBone.getFaceSetIndices();
         }
 
-        public void HideBone()
+        //public void HideBone()
+        //{
+        //    _isManuallyHidden = true;
+        //    if (_coloredBone != null)
+        //        _coloredBone.setVisibility(false);
+        //    else
+        //        _bone.SetVisibility(false);
+        //}
+
+        //public void ShowBone()
+        //{
+        //    _isManuallyHidden = false;
+        //    if (_coloredBone != null)
+        //        _coloredBone.setVisibility(true);
+        //    else
+        //        _bone.SetVisibility(true);
+        //}
+
+        private void RestoreBoneVisibility()
         {
-            _isManuallyHidden = true;
-            if (_coloredBone != null)
-                _coloredBone.setVisibility(false);
-            else
-                _bone.SetVisibility(false);
+            SetBoneVisibility(!_isManuallyHidden);
         }
 
-        public void ShowBone()
+        public void SetBoneVisibilityManually(bool visible)
         {
-            _isManuallyHidden = false;
-            if (_coloredBone != null)
-                _coloredBone.setVisibility(true);
-            else
-                _bone.SetVisibility(true);
+            _isManuallyHidden = !visible;
+            SetBoneVisibility(visible);
         }
 
-        public void SetBoneVisibility(bool visible)
+        private void SetBoneVisibility(bool visible)
         {
-            if (visible)
-                ShowBone();
+            if (_coloredBone != null)
+                _coloredBone.setVisibility(visible);
             else
-                HideBone();
+                _bone.SetVisibility(visible);
         }
 
         public void HideInertia()
@@ -281,7 +292,8 @@ namespace libWrist
             if (positionIndex == 0) return true; //always have for neutral... duh
             if (_transformMatrices.Length <= positionIndex) return false;
             if (_transformMatrices[positionIndex] == null) return false;
-            return (!_transformMatrices[positionIndex].isIdentity()); //is this the correct action for identity!?
+            if (_transformMatrices[positionIndex].isIdentity()) return false; //ugly, but we assume identity matrix is missing data
+            return true; //got here, than we are good
         }
 
 
@@ -333,17 +345,21 @@ namespace libWrist
 
         public void SetToPosition(int positionIndex, Bone fixedBone)
         {
-            //first remove any existing transform....
-            if (_bone.hasTransform())
-                _bone.removeTransform();
-
-            //there is no need to move if we are the fixed bone, or this is the neutral position
-            if (positionIndex == 0 || fixedBone == this)
+            //first check if we have kinematics for ourselves and the fixedBone in the
+            //specified position, if not; we will hide ourselves but not change our position
+            if (!HasKinematicInformationForPosition(positionIndex) ||
+                !fixedBone.HasKinematicInformationForPosition(positionIndex))
+            {
+                //we have no kinematic data, so hide and get out
+                SetBoneVisibility(false);
                 return;
+            }
 
-            //now create the correct transform and apply
-            TransformMatrix tm = CalculateRelativeMotionFromNeutral(positionIndex, fixedBone);
-            _bone.addTransform(tm.ToTransform());
+            //Calculate the correct transform and apply it
+            // This relative motion calculation will correctly return an Identity matrix 
+            // if there is no motion, which will be handled correctly later
+            SetToPosition(CalculateRelativeMotionFromNeutral(positionIndex, fixedBone));
+            RestoreBoneVisibility(); //make sure we are not hidden if we souldn't be
         }
 
         public void SetToPosition(TransformMatrix tm)
@@ -351,8 +367,10 @@ namespace libWrist
             if (_bone.hasTransform())
                 _bone.removeTransform();
 
-            if (tm.isIdentity()) return; //nothing to do in this case
-            _bone.addTransform(tm.ToTransform());
+            if (tm.isIdentity()) 
+                return; //nothing to do in this case
+            else
+                _bone.addTransform(tm.ToTransform());
         }
 
         public void RemoveContour()

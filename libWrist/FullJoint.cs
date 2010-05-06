@@ -61,6 +61,11 @@ namespace libWrist
 
         #region Common Code
 
+        /// <summary>
+        /// Will set the entire joint to a given position; relative to a fixed bone
+        /// </summary>
+        /// <param name="positionIndex"></param>
+        /// <param name="fixedBoneIndex"></param>
         public virtual void SetToPositionAndFixedBone(int positionIndex, int fixedBoneIndex)
         {
             //quick checks here
@@ -79,7 +84,6 @@ namespace libWrist
             }
 
             UpdateColorsAndContoursForCurrentPosition();
-            HideBonesWithNoKinematics(); //yes?
         }
 
 
@@ -93,7 +97,7 @@ namespace libWrist
             for (int i = 0; i < _bones.Length; i++)
             {
                 if (!_bones[i].HasKinematicInformationForPosition(positionIndex))
-                    _bones[i].HideBone();
+                    _bones[i].SetBoneVisibilityManually(false);
             }
         }
 
