@@ -19,6 +19,7 @@ namespace WristVizualizer
         private WristPanelLayoutControl _layoutControl;
         private FullWristControl _wristControl;
         private AnimationControl _animationControl;
+        private Timer _animationTimer;
 
         //private PosViewControl _posViewControl;
 
@@ -60,7 +61,12 @@ namespace WristVizualizer
             _wristControl.clearSeriesList();
             _wristControl.addToSeriesList(seriesNames);
             _wristControl.selectedSeriesIndex = 0;
+
+            _animationTimer = new Timer();
+            _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
         }
+
+
 
         private void setupControlEventListeners()
         {
@@ -69,7 +75,13 @@ namespace WristVizualizer
             _wristControl.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
 
             _animationControl.TrackbarScroll += new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
+            _animationControl.FPSChanged += new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
+            _animationControl.PlayClicked += new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
+            _animationControl.StopClicked += new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
+
+            _animationTimer.Tick += new EventHandler(_animationTimer_Tick);
         }
+
 
         private void removeControlEventListeners()
         {
@@ -78,6 +90,11 @@ namespace WristVizualizer
             _wristControl.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
 
             _animationControl.TrackbarScroll -= new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
+            _animationControl.FPSChanged -= new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
+            _animationControl.PlayClicked -= new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
+            _animationControl.StopClicked -= new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
+
+            _animationTimer.Tick -= new EventHandler(_animationTimer_Tick);
         }
         #endregion
 
@@ -89,6 +106,7 @@ namespace WristVizualizer
             _animationControl.Enabled = (frames > 1);
             _animationControl.StopButtonEnabled = false;
 
+            _animationTimer.Stop();
             //TODO: stop timer?
         }
 
@@ -118,6 +136,31 @@ namespace WristVizualizer
         void _animationControl_TrackbarScroll()
         {
             _fullXromm.SetToPositionAndFixedBoneAndTrial(_animationControl.currentFrame, _fixedBoneIndex, _currentTrialIndex);
+        }
+
+        void _animationTimer_Tick(object sender, EventArgs e)
+        {
+            _animationControl.AdvanceCurrentFrameTrackbar();
+            _animationControl_TrackbarScroll(); //update the display :)
+        }
+
+        void _animationControl_FPSChanged()
+        {
+            _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
+        }
+
+        void _animationControl_StopClicked()
+        {
+            _animationControl.StopButtonEnabled = false;
+            _animationControl.PlayButtonEnabled = true;
+            _animationTimer.Stop();
+        }
+
+        void _animationControl_PlayClicked()
+        {
+            _animationControl.StopButtonEnabled = true;
+            _animationControl.PlayButtonEnabled = false;
+            _animationTimer.Start();
         }
 
         #endregion
