@@ -115,7 +115,7 @@ namespace libWrist
                 {
                     TrialInfo info = new TrialInfo();
                     info.KinematicFilename = kinematicFilePath;
-                    info.TrialName = ""; //empty for now!
+                    info.TrialName = String.Format("Trial{0:000}", trialNumber);
                     info.TrialNumber = trialNumber;
 
                     trialInfo.Add(info);
