@@ -13,6 +13,7 @@ namespace WristVizualizer
         private FullXromm _fullXromm;
 
         private int _currentPositionIndex;
+        private int _currentTrialIndex;
         private int _fixedBoneIndex;
 
         private WristPanelLayoutControl _layoutControl;
@@ -29,24 +30,15 @@ namespace WristVizualizer
 
             _currentPositionIndex = 0;
             _fixedBoneIndex = 0;
+            _currentTrialIndex = 0;
 
 
             SetupXrommControl();
+            ResetAnimationControl();
             setupControlEventListeners();
-
-            ////TEMP STUFF
-            //_posViewControl = new PosViewControl();
-            //_posViewControl.setupController(_fullXromm.NumberPositions, false, false);
-            //_posViewControl.ShowHam = false;
-            //_posViewControl.ShowLabels = false;
-            //_posViewControl.OverrideMaterial = false;
-            //_posViewControl.PlayButtonEnabled = true; //we are going to start stopped
-            //_posViewControl.StopButtonEnabled = false;
-            //_posViewControl.FPS = 10; //default FPS
-
-            //_posViewControl.TrackbarScroll += new PosViewControl.TrackbarScrollHandler(_posViewControl_TrackbarScroll);
-
         }
+
+        #region Setup and Breakdown
 
         public override void CleanUp()
         {
@@ -62,6 +54,7 @@ namespace WristVizualizer
             _layoutControl.addControl(_wristControl);
 
             _animationControl = new AnimationControl();
+            _animationControl.FPS = 10; //default
             _layoutControl.addControl(_animationControl);
 
             _wristControl.clearSeriesList();
@@ -86,20 +79,35 @@ namespace WristVizualizer
 
             _animationControl.TrackbarScroll -= new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
         }
+        #endregion
 
+        private void ResetAnimationControl()
+        {            
+            int frames = _fullXromm.NumPositionsPerTrial[_currentTrialIndex];
+            _animationControl.setupController(frames);
+            _animationControl.PlayButtonEnabled = (frames > 1); //no play button if only 1 frame!
+            _animationControl.Enabled = (frames > 1);
+            _animationControl.StopButtonEnabled = false;
+
+            //TODO: stop timer?
+        }
+
+
+        #region CallBacks
         void _control_SelectedSeriesChanged(object sender, SelectedSeriesChangedEventArgs e)
         {
-            //if (_currentPositionIndex == e.SelectedIndex)
-            //    return;
+            if (_currentTrialIndex == e.SelectedIndex)
+                return;
 
-            //MoveToPosition(e.SelectedIndex, _fixedBoneIndex);
+            _currentTrialIndex = e.SelectedIndex;
+            ResetAnimationControl();
+            _fullXromm.SetToPositionAndFixedBoneAndTrial(_animationControl.currentFrame, _fixedBoneIndex, _currentTrialIndex);
         }
 
         void _control_FixedBoneChanged(object sender, FixedBoneChangeEventArgs e)
         {
-            //MoveToPosition(_currentPositionIndex, e.BoneIndex);
             _fixedBoneIndex = e.BoneIndex;
-            _fullXromm.SetToPositionAndFixedBone(_animationControl.currentFrame, _fixedBoneIndex);
+            _fullXromm.SetToPositionAndFixedBoneAndTrial(_animationControl.currentFrame, _fixedBoneIndex, _currentTrialIndex);
         }
 
         void _control_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
@@ -109,7 +117,13 @@ namespace WristVizualizer
 
         void _animationControl_TrackbarScroll()
         {
-            _fullXromm.SetToPositionAndFixedBone(_animationControl.currentFrame, _fixedBoneIndex);
+            _fullXromm.SetToPositionAndFixedBoneAndTrial(_animationControl.currentFrame, _fixedBoneIndex, _currentTrialIndex);
+        }
+
+        #endregion
+
+        private void ChangeSeries()
+        {
         }
 
 
