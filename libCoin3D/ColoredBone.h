@@ -17,7 +17,7 @@ public:
 	virtual void setColorIndex(int index);
 	virtual void clearColorMap();
 
-	virtual void setHidden(bool hidden);
+	virtual void setVisibility(bool visible);
 	virtual void addNode(Node^ node);
 	virtual void removeChild(Node^ node);
 	virtual void insertNode(Node^ node, int position);
@@ -37,7 +37,7 @@ private:
 	SoDrawStyle* _drawstyle;
 	int _numColoredVertices;
 	int _numPositions; 
-	bool _hidden;
+	bool _visible;
 
 	Contour^ _contour;
 

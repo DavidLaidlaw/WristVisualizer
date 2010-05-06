@@ -244,7 +244,7 @@ namespace WristVizualizer
 
         void _wristControl_BoneHideChanged(object sender, BoneHideChangeEventArgs e)
         {
-            _bones[e.BoneIndex].setHidden(e.BoneHidden);
+            _bones[e.BoneIndex].setVisibility(!e.BoneHidden);
         }
     }
 }

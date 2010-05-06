@@ -95,7 +95,7 @@ libCoin3D::ColoredBone::ColoredBone(System::String^ filename)
 
 	_fullColormap = NULL;
 	_colorData = new unsigned int[_numColoredVertices]; 
-	_hidden = false;
+	_visible = true;
 }
 
 libCoin3D::ColoredBone::!ColoredBone()
@@ -140,18 +140,18 @@ void libCoin3D::ColoredBone::setupFullColorMap(array<array<int>^>^ colors)
 	}
 }
 
-void libCoin3D::ColoredBone::setHidden(bool hidden)
+void libCoin3D::ColoredBone::setVisibility(bool visible)
 {
-	_hidden = hidden;
-	if (hidden) {
-		_drawstyle->style = SoDrawStyle::INVISIBLE;
+	_visible = visible;
+	if (visible) {
+		_drawstyle->style = SoDrawStyle::FILLED;
 	}
 	else {
-		_drawstyle->style = SoDrawStyle::FILLED;
+		_drawstyle->style = SoDrawStyle::INVISIBLE;
 	}
 
 	//now the contour, if it exists
-	if (_contour != nullptr) _contour->setHidden(hidden);
+	if (_contour != nullptr) _contour->setHidden(!visible);
 }
 
 void libCoin3D::ColoredBone::addNode(Node^ node)
@@ -173,7 +173,7 @@ void libCoin3D::ColoredBone::removeChild(Node^ child)
 void libCoin3D::ColoredBone::addContour(Contour^ contour)
 {
 	_contour = contour;
-	contour->setHidden(_hidden); //make sure the hidden state matches the current state
+	contour->setHidden(!_visible); //make sure the hidden state matches the current state
 	_node->addChild(contour->getNode());	
 }
 

@@ -16,6 +16,7 @@ namespace libWrist
         private int _boneIndex;
 
         private bool _hamVisible; //for state reasons
+        private bool _isManuallyHidden; 
 
         //Data objects
         private TransformMatrix _inertiaMatrix;
@@ -49,6 +50,7 @@ namespace libWrist
             _ivFilename = ivFilename;
             _distanceFieldFilename = distanceFieldFilename;
             _hamVisible = false;
+            _isManuallyHidden = false;
 
             InitializeDataStructures(numSeries);
         }
@@ -188,18 +190,20 @@ namespace libWrist
 
         public void HideBone()
         {
+            _isManuallyHidden = true;
             if (_coloredBone != null)
-                _coloredBone.setHidden(true);
+                _coloredBone.setVisibility(false);
             else
-                _bone.hide();
+                _bone.SetVisibility(false);
         }
 
         public void ShowBone()
         {
+            _isManuallyHidden = false;
             if (_coloredBone != null)
-                _coloredBone.setHidden(false);
+                _coloredBone.setVisibility(true);
             else
-                _bone.show();
+                _bone.SetVisibility(true);
         }
 
         public void SetBoneVisibility(bool visible)

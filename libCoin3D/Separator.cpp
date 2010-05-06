@@ -84,18 +84,27 @@ void libCoin3D::Separator::makeHideable()
 	_separator->addChild(_style);
 }
 
-void libCoin3D::Separator::hide()
+//void libCoin3D::Separator::hide()
+//{
+//	if (_style != NULL) 
+//		_style->style = SoDrawStyle::INVISIBLE;
+//}
+
+//void libCoin3D::Separator::show()
+//{
+//	if (_style != NULL) 
+//		_style->style = SoDrawStyle::FILLED;
+//}
+
+void libCoin3D::Separator::SetVisibility(bool visible)
 {
-	if (_style != NULL) 
+	if (_style==NULL) return; //no style, do nothing :)
+
+	if (visible)
+		_style->style = SoDrawStyle::FILLED;
+	else
 		_style->style = SoDrawStyle::INVISIBLE;
 }
-
-void libCoin3D::Separator::show()
-{
-	if (_style != NULL) 
-		_style->style = SoDrawStyle::FILLED;
-}
-
 
 SoSeparator* libCoin3D::Separator::getSoSeparator(void)
 {
