@@ -12,16 +12,12 @@ namespace WristVizualizer
         private XrommFilesystem _xrommFileSys;
         private FullXromm _fullXromm;
 
-        private int _currentPositionIndex;
         private int _currentTrialIndex;
         private int _fixedBoneIndex;
 
         private WristPanelLayoutControl _layoutControl;
         private FullWristControl _wristControl;
         private AnimationControl _animationControl;
-        private Timer _animationTimer;
-
-        //private PosViewControl _posViewControl;
 
         public XrommController(string filename)
         {
@@ -29,10 +25,8 @@ namespace WristVizualizer
             _fullXromm = new FullXromm(_xrommFileSys);
             _fullXromm.LoadFullJoint();
 
-            _currentPositionIndex = 0;
             _fixedBoneIndex = 0;
             _currentTrialIndex = 0;
-
 
             SetupXrommControl();
             ResetAnimationControl();
@@ -55,15 +49,13 @@ namespace WristVizualizer
             _layoutControl.addControl(_wristControl);
 
             _animationControl = new AnimationControl();
-            _animationControl.FPS = 10; //default
+            _animationControl.EnableInternalTimer();
+            _animationControl.FPS = 10; //default            
             _layoutControl.addControl(_animationControl);
 
             _wristControl.clearSeriesList();
             _wristControl.addToSeriesList(seriesNames);
             _wristControl.selectedSeriesIndex = 0;
-
-            _animationTimer = new Timer();
-            _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
         }
 
 
@@ -75,11 +67,6 @@ namespace WristVizualizer
             _wristControl.SelectedSeriesChanged += new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
 
             _animationControl.TrackbarScroll += new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
-            _animationControl.FPSChanged += new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
-            _animationControl.PlayClicked += new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
-            _animationControl.StopClicked += new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
-
-            _animationTimer.Tick += new EventHandler(_animationTimer_Tick);
         }
 
 
@@ -90,24 +77,17 @@ namespace WristVizualizer
             _wristControl.SelectedSeriesChanged -= new SelectedSeriesChangedHandler(_control_SelectedSeriesChanged);
 
             _animationControl.TrackbarScroll -= new AnimationControl.TrackbarScrollHandler(_animationControl_TrackbarScroll);
-            _animationControl.FPSChanged -= new AnimationControl.FPSChangedHandler(_animationControl_FPSChanged);
-            _animationControl.PlayClicked -= new AnimationControl.PlayClickedHandler(_animationControl_PlayClicked);
-            _animationControl.StopClicked -= new AnimationControl.StopClickedHandler(_animationControl_StopClicked);
-
-            _animationTimer.Tick -= new EventHandler(_animationTimer_Tick);
         }
         #endregion
 
         private void ResetAnimationControl()
         {            
             int frames = _fullXromm.NumPositionsPerTrial[_currentTrialIndex];
+            _animationControl.StopTimer();
             _animationControl.setupController(frames);
             _animationControl.PlayButtonEnabled = (frames > 1); //no play button if only 1 frame!
             _animationControl.Enabled = (frames > 1);
             _animationControl.StopButtonEnabled = false;
-
-            _animationTimer.Stop();
-            //TODO: stop timer?
         }
 
 
@@ -138,36 +118,7 @@ namespace WristVizualizer
             _fullXromm.SetToPositionAndFixedBoneAndTrial(_animationControl.currentFrame, _fixedBoneIndex, _currentTrialIndex);
         }
 
-        void _animationTimer_Tick(object sender, EventArgs e)
-        {
-            _animationControl.AdvanceCurrentFrameTrackbar();
-            _animationControl_TrackbarScroll(); //update the display :)
-        }
-
-        void _animationControl_FPSChanged()
-        {
-            _animationTimer.Interval = (int)(1000 / (double)_animationControl.FPS);
-        }
-
-        void _animationControl_StopClicked()
-        {
-            _animationControl.StopButtonEnabled = false;
-            _animationControl.PlayButtonEnabled = true;
-            _animationTimer.Stop();
-        }
-
-        void _animationControl_PlayClicked()
-        {
-            _animationControl.StopButtonEnabled = true;
-            _animationControl.PlayButtonEnabled = false;
-            _animationTimer.Start();
-        }
-
         #endregion
-
-        private void ChangeSeries()
-        {
-        }
 
 
         private string[] createSeriesListWithNiceNames()
@@ -204,7 +155,6 @@ namespace WristVizualizer
         }
 
 
-        //public override string ApplicationTitle { get { return _firstFilename; } }
         //public override string WatchedFileFilename { get { return _firstFilename; } }
         public override string LastFileFilename { get { return _xrommFileSys.PathFirstIVFile; } }
 

@@ -63,9 +63,19 @@ namespace WristVizualizer
             0,
             0,
             0});
+            this.numericUpDownFPS.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            131072});
             this.numericUpDownFPS.Name = "numericUpDownFPS";
             this.numericUpDownFPS.Size = new System.Drawing.Size(41, 20);
             this.numericUpDownFPS.TabIndex = 15;
+            this.numericUpDownFPS.Value = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
             this.numericUpDownFPS.ValueChanged += new System.EventHandler(this.numericUpDownFPS_ValueChanged);
             // 
             // buttonStop

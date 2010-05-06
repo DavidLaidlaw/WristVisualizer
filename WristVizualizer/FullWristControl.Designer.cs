@@ -61,7 +61,7 @@ namespace WristVizualizer
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(157, 80);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(157, 138);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // linkLabelHideAll
@@ -74,7 +74,7 @@ namespace WristVizualizer
             this.linkLabelHideAll.Location = new System.Drawing.Point(0, 60);
             this.linkLabelHideAll.Margin = new System.Windows.Forms.Padding(0);
             this.linkLabelHideAll.Name = "linkLabelHideAll";
-            this.linkLabelHideAll.Size = new System.Drawing.Size(61, 20);
+            this.linkLabelHideAll.Size = new System.Drawing.Size(61, 78);
             this.linkLabelHideAll.TabIndex = 38;
             this.linkLabelHideAll.TabStop = true;
             this.linkLabelHideAll.Text = "hide all";
@@ -156,7 +156,7 @@ namespace WristVizualizer
             this.AutoSize = true;
             this.Controls.Add(this.tableLayoutPanel1);
             this.Name = "FullWristControl";
-            this.Size = new System.Drawing.Size(230, 92);
+            this.Size = new System.Drawing.Size(230, 150);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             this.ResumeLayout(false);

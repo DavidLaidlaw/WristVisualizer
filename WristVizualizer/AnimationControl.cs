@@ -19,6 +19,9 @@ namespace WristVizualizer
         public event StopClickedHandler StopClicked;
         public event FPSChangedHandler FPSChanged;
         public event TrackbarScrollHandler TrackbarScroll;
+        public event EventHandler Tick;
+
+        private Timer _animationTimer;
 
         public AnimationControl()
         {
@@ -33,6 +36,23 @@ namespace WristVizualizer
 
             buttonPlay.Enabled = true;
             buttonStop.Enabled = true;
+        }
+
+        public void EnableInternalTimer()
+        {
+            _animationTimer = new Timer();
+            _animationTimer.Interval = (int)(1000 / (double)numericUpDownFPS.Value);
+            _animationTimer.Tick += new EventHandler(_animationTimer_Tick);
+        }
+
+        public void StopTimer()
+        {
+            _animationTimer.Stop();
+        }
+
+        public void StartTimer()
+        {
+            _animationTimer.Start();
         }
 
         public void AdvanceCurrentFrameTrackbar()
@@ -91,12 +111,26 @@ namespace WristVizualizer
         #region Event Passing
         private void buttonPlay_Click(object sender, EventArgs e)
         {
+            if (_animationTimer != null)
+            {
+                _animationTimer.Start();
+                buttonPlay.Enabled = false;
+                buttonStop.Enabled = true;
+            }
+
             if (PlayClicked != null)
                 PlayClicked();
         }
 
         private void buttonStop_Click(object sender, EventArgs e)
         {
+            if (_animationTimer != null)
+            {
+                _animationTimer.Stop();
+                buttonPlay.Enabled = true;
+                buttonStop.Enabled = false;
+            }
+
             if (StopClicked != null)
                 StopClicked();
         }
@@ -109,8 +143,20 @@ namespace WristVizualizer
 
         private void numericUpDownFPS_ValueChanged(object sender, EventArgs e)
         {
+            if (_animationTimer != null)
+                _animationTimer.Interval = (int)(1000 / (double)numericUpDownFPS.Value);
+
             if (FPSChanged != null)
                 FPSChanged();
+        }
+
+        void _animationTimer_Tick(object sender, EventArgs e)
+        {
+            AdvanceCurrentFrameTrackbar();
+            //now let the world know that we moved
+            trackBarCurrentFrame_Scroll(sender, e);
+            if (Tick != null)
+                Tick(this, e);
         }
         #endregion
     }
