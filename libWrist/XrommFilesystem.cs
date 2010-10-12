@@ -115,20 +115,22 @@ namespace libWrist
                 if (!kinematicDirectory.Exists) continue;
 
                 FileInfo[] possbileFiles = kinematicDirectory.GetFiles(kinematicFilePattern);
-                if (possbileFiles.Length > 1) //check for having too many possible file matches. Now yell at Danny
+                //Danny wants us to report everything we find...
+                foreach (FileInfo file in possbileFiles)
                 {
-                    List<string> allFiles = (new List<FileInfo>(possbileFiles)).ConvertAll<string>(delegate(FileInfo fi) { return fi.Name; });
-                    string msg = "Error dummy. Found multiple files matching the search pattern.\n";
-                    msg += "Pattern: " + kinematicFilePattern + "\n\n";
-                    msg += String.Join("\n", allFiles.ToArray());
-                    throw new WristException(msg);
-                }
-                if (possbileFiles.Length==1)
-                {
+                    //we want to grab middle section of the filename to dispaly, so we need a regex
+                    string savePattern = String.Format("^{0}_Trial{1}_(.*)AbsTforms.csv$", _subject, trialNumberString);
+                    //I don't think this regex can fail, give the filter we used get the files....
+                    string subID = Regex.Match(file.Name, savePattern, RegexOptions.IgnoreCase).Groups[1].Value;
+                    //remove any trailing '_' that might be there
+                    subID = subID.TrimEnd('_');
+
                     //TODO: Save file information.... e.g. "{0}_Trial{1}_xyzptsBUTTER25_sm125AbsTforms.csv"
                     TrialInfo info = new TrialInfo();
                     info.KinematicFilename = possbileFiles[0].FullName;
-                    info.TrialName = String.Format("Trial{0:000}", trialNumber);
+                    info.TrialName = String.Format("T{0:00}", trialNumber);
+                    if (subID.Length > 0)
+                        info.TrialName += String.Format("-{0}", subID);
                     info.TrialNumber = trialNumber;
 
                     trialInfo.Add(info);
