@@ -1,4 +1,6 @@
-Version 1.X.X
+Version 1.8.0
+- Change: Now supports loading XROMM data
+- Change: Major backend abstraction.
 - Fixed bug: VMRL->IV now correctly scales output from Mimics 13
 - Fixed bug: No longer crashes on File->New
 
