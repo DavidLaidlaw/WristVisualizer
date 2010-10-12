@@ -64,7 +64,7 @@ namespace libWrist
             string boneFileName = Path.GetFileName(PathFirstIVFile);
             string boneFileNameNoExtension = Path.GetFileNameWithoutExtension(boneFileName);
 
-            Match m = Regex.Match(boneFileNameNoExtension, @"^(X\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
+            Match m = Regex.Match(boneFileNameNoExtension, @"^(X[a-z]*\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
             if (!m.Success)
                 throw new WristException("Initial IV file is not in a valid XROMM format");
 
@@ -108,13 +108,26 @@ namespace libWrist
                 string trialNumberString = m.Groups[1].Value.ToLower();
                 int trialNumber = Int32.Parse(trialNumberString);
 
-                //TODO: Change so it allows multiple filter types.... yar!
-                string kinematicFname = String.Format("{0}_Trial{1}_xyzptsBUTTER25_sm125AbsTforms.csv", _subject, trialNumberString);
-                string kinematicFilePath = Path.Combine(Path.Combine(trialDir.FullName, "XROMM"), kinematicFname);
-                if (File.Exists(kinematicFilePath))
+                string kinematicFilePattern = String.Format("{0}_Trial{1}_*AbsTforms.csv", _subject, trialNumberString);
+                DirectoryInfo kinematicDirectory = new DirectoryInfo(Path.Combine(trialDir.FullName, "XROMM"));
+                
+                //check that there is an XROMM directory
+                if (!kinematicDirectory.Exists) continue;
+
+                FileInfo[] possbileFiles = kinematicDirectory.GetFiles(kinematicFilePattern);
+                if (possbileFiles.Length > 1) //check for having too many possible file matches. Now yell at Danny
                 {
+                    List<string> allFiles = (new List<FileInfo>(possbileFiles)).ConvertAll<string>(delegate(FileInfo fi) { return fi.Name; });
+                    string msg = "Error dummy. Found multiple files matching the search pattern.\n";
+                    msg += "Pattern: " + kinematicFilePattern + "\n\n";
+                    msg += String.Join("\n", allFiles.ToArray());
+                    throw new WristException(msg);
+                }
+                if (possbileFiles.Length==1)
+                {
+                    //TODO: Save file information.... e.g. "{0}_Trial{1}_xyzptsBUTTER25_sm125AbsTforms.csv"
                     TrialInfo info = new TrialInfo();
-                    info.KinematicFilename = kinematicFilePath;
+                    info.KinematicFilename = possbileFiles[0].FullName;
                     info.TrialName = String.Format("Trial{0:000}", trialNumber);
                     info.TrialNumber = trialNumber;
 
@@ -146,7 +159,7 @@ namespace libWrist
                 string boneFileName = Path.GetFileName(PathFirstIVFile);
                 string boneFileNameNoExtension = Path.GetFileNameWithoutExtension(boneFileName);
 
-                Match m = Regex.Match(boneFileNameNoExtension, @"^(X\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
+                Match m = Regex.Match(boneFileNameNoExtension, @"^(X[a-z]*\d{5})_([a-z0-9]+)_([lr])$", RegexOptions.IgnoreCase);
                 if (!m.Success)
                     return false;
 
@@ -161,10 +174,12 @@ namespace libWrist
                 if (!Directory.Exists(Trial001_Folder))
                     return false;
 
-                string kinematicFname = String.Format("{0}_Trial001_xyzptsBUTTER25_sm125AbsTforms.csv", subject);
-                string kinematicFilePath = Path.Combine(Path.Combine(Trial001_Folder, "XROMM"), kinematicFname);
+                //Danny says my original assumption that the Trial001 will always have kinematic data is false
+                //string kinematicFname = String.Format("{0}_Trial001_xyzptsBUTTER25_sm125AbsTforms.csv", subject);
+                //string kinematicFilePath = Path.Combine(Path.Combine(Trial001_Folder, "XROMM"), kinematicFname);
 
-                return File.Exists(kinematicFilePath);
+                //return File.Exists(kinematicFilePath);
+                return true;
             }
             catch
             {
