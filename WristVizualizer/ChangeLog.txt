@@ -1,3 +1,7 @@
+Version 1.8.1
+- New: PosView mode now supports loading ligament fibers
+- Fixed bug: Fixed many small errors in PosView mode. Uses new method for reading ini files allowing for improved compatability
+
 Version 1.8.0
 - Change: Now supports loading XROMM data
 - Change: Major backend abstraction.
