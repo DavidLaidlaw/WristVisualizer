@@ -30,7 +30,7 @@ namespace libWrist
         {
             parsePosFile(posFilename);
             string iniFile = Path.Combine(Path.GetDirectoryName(posFilename),Path.GetFileNameWithoutExtension(posFilename)+".ini");
-            parsePosViewINIFiles(iniFile);
+            parsePosViewINIFiles2(iniFile);
         }
 
         #region Public Interfaces
@@ -70,7 +70,7 @@ namespace libWrist
             get { return _hamRadius; }
         }
 
-        public bool LoadLigaments
+        public bool HasLigaments
         {
             get { return _loadLigaments; }
         }
@@ -143,6 +143,46 @@ namespace libWrist
             {
                 throw new InvalidDataException(String.Format("Pos file ({0}) is in an invalid format!", fname), ex);
             }
+        }
+
+        private void parsePosViewINIFiles2(string fname)
+        {
+            if (!File.Exists(fname))
+                return;
+
+            Dictionary<string, Dictionary<string, List<string>>> conf = IniParser.parseINIFilesWithRepeatKeys(fname, StringComparer.CurrentCultureIgnoreCase);
+
+            if (conf.ContainsKey("global"))
+            {
+                if (conf["global"].ContainsKey("showham"))
+                    _showHams = conf["global"]["showham"][0].Trim().Equals("1") ? true : false;
+
+                if (conf["global"].ContainsKey("setcolor"))
+                    _setColor = conf["global"]["setcolor"][0].Trim().Equals("1") ? true : false;
+
+                if (conf["global"].ContainsKey("loadligaments"))
+                    _loadLigaments = conf["global"]["loadligaments"][0].Trim().Equals("1") ? true : false;
+
+                if (conf["global"].ContainsKey("basefiberpath"))
+                    _baseFiberPath = conf["global"]["basefiberpath"][0].Trim();
+
+                if (conf["global"].ContainsKey("fibername"))
+                    _fiberName = conf["global"]["fibername"][0].Trim();
+
+                if (conf["global"].ContainsKey("numfibers"))
+                    _numFibers = Int32.Parse(conf["global"]["numfibers"][0].Trim());
+
+                if (conf["global"].ContainsKey("hamlength"))
+                    _hamLength = float.Parse(conf["global"]["hamlength"][0].Trim());
+
+                if (conf["global"].ContainsKey("hamradius"))
+                    _hamRadius = float.Parse(conf["global"]["hamradius"][0].Trim());
+            }
+
+            //lets get the labels
+            if (conf.ContainsKey("label") && conf["label"].ContainsKey("msg"))
+                _labels = conf["label"]["msg"].ToArray();
+
         }
 
         private enum ParseSection

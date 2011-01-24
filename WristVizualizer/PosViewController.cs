@@ -17,6 +17,7 @@ namespace WristVizualizer
         Separator[] _bones;
         Material[] _boneMaterials;
         Switch _labels;
+        List<Switch> _ligaments;
 
         Separator _root;
         int _numPositions;
@@ -188,6 +189,8 @@ namespace WristVizualizer
                     _hamsSwitch[i].whichChild(_currentFrame);
             if (_posViewControl.ShowLabels) //only update label if we are showing
                 _labels.whichChild(_currentFrame);
+            foreach (Switch lig in _ligaments)
+                lig.whichChild(_currentFrame); //update any ligaments that exist
 
             if (_posViewControl.currentFrame != _currentFrame)
                 _posViewControl.currentFrame = _currentFrame;
@@ -351,7 +354,8 @@ namespace WristVizualizer
             _boneMaterials[boneIndex].setOverride(true); //for this material to apply to everything below it.
 
             _bones[boneIndex].addFile(pos.IvFileNames[boneIndex], false);  //load bone file once, it will referenced multiple times
-            _bones[boneIndex].insertNode(_boneMaterials[boneIndex], 0);
+            if (pos.SetColor) //only insert now if the config file says to
+                _bones[boneIndex].insertNode(_boneMaterials[boneIndex], 0);
 
             Transform[] transforms = DatParser.parsePosViewRTFileToTransforms(pos.RTFileNames[boneIndex]);
             _numPositions = transforms.Length;
@@ -365,6 +369,14 @@ namespace WristVizualizer
             s.whichChild(0); //set it to start at the first frame
             s.unrefNoDelete();
             return s;
+        }
+
+        private List<Switch> setupPosViewLigaments(PosViewReader pos)
+        {
+            List<Switch> ligaments = new List<Switch>();
+            if (!pos.HasLigaments) return ligaments;
+
+            return ligaments;
         }
 
         private void loadPosView(string posViewFilename)
@@ -392,6 +404,11 @@ namespace WristVizualizer
                     sec1.addNode(_bonesSwitch[i]);
                     sec1.addNode(_hamsSwitch[i]);
                 }
+                _ligaments = setupPosViewLigaments(_reader); //load all of the ligaments
+                foreach (Switch lig in _ligaments)
+                {
+                    sec1.addNode(lig); //add to scenegraph
+                }
                 if (_reader.HasLables)
                 {
                     setupPosViewLables(_reader);
@@ -410,7 +427,12 @@ namespace WristVizualizer
         }
         public static bool IsPosViewFile(string filename)
         {
-            return Path.GetExtension(filename).Equals("pos", StringComparison.InvariantCultureIgnoreCase);
+            /* Path.GetExtension is now returning '.pos', but the code had existed for 'pos'. 
+             * I'm not certain if an older version did not include the '.', but for now I am
+             * leaving both, "just in case". Most likely I can delete the first case though
+             */
+            return Path.GetExtension(filename).Equals("pos", StringComparison.InvariantCultureIgnoreCase) ||
+                Path.GetExtension(filename).Equals(".pos", StringComparison.InvariantCultureIgnoreCase);
         }
     }
 }

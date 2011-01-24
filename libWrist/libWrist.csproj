@@ -67,6 +67,7 @@
     <Compile Include="HelicalTransform.cs" />
     <Compile Include="InertialProperties.cs" />
     <Compile Include="IniFileParser.cs" />
+    <Compile Include="IniParser.cs" />
     <Compile Include="MRISubRegion\MRISubRegionMainForm.cs">
       <SubType>Form</SubType>
     </Compile>
