@@ -80,6 +80,22 @@ namespace libWrist
             get { return _numFibers; }
         }
 
+        public string LigamentFiberBasePath
+        {
+            get { return _baseFiberPath; }
+        }
+
+        public string[] LigamentFiberNames
+        {
+            get
+            {
+                if (String.IsNullOrEmpty(_fiberName)) return new string[0];
+                return _fiberName.Split(',');
+            }
+        }
+
+
+        [Obsolete("Not yet implemented, don't use",true)]
         public string[] LigamentFiberFilenames
         {
             get { return new string[0]; }  //TODO: Fix, need Mikes help with ligament file format

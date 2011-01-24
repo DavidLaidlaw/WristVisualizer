@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Text.RegularExpressions;
 using libWrist;
 using libCoin3D;
 using AviFile;
@@ -371,10 +372,61 @@ namespace WristVizualizer
             return s;
         }
 
-        private List<Switch> setupPosViewLigaments(PosViewReader pos)
+        /// <summary>
+        /// Fix a string which was setup using %d for sprintf in the c++ code 
+        /// to use the String.Format pattern involving {0}, etc.
+        /// </summary>
+        /// <param name="fname"></param>
+        /// <returns></returns>
+        private static string reformatFiberPattern(string fname)
+        {
+            int index = 0;
+            while (fname.IndexOf("%d") >= 0)
+            {
+                int pos = fname.IndexOf("%d");
+                string pat = String.Format("{{{0}}}", index);
+                fname = fname.Substring(0, pos) + pat + fname.Substring(pos + "%d".Length);
+                index++;
+            }
+            return fname;
+        }
+
+        private List<Switch> setupPosViewLigaments(PosViewReader pos, int numPositions)
         {
             List<Switch> ligaments = new List<Switch>();
             if (!pos.HasLigaments) return ligaments;
+
+            //so we actually create a switch for every ligament and ligament fiber...
+            string[] ligamentNames = pos.LigamentFiberNames;
+            /* we are really looping through ligaments here. Inside the loop we will
+             * look for individual fibers of each ligament
+             */
+            foreach (string ligamentName in ligamentNames)
+            {
+                //first reformat the filename, so that it goes from fprint
+                string ligamentPattern = Path.Combine(pos.LigamentFiberBasePath, reformatFiberPattern(ligamentName));
+
+                //lets loop through possible fiber strings
+                int fiberNumber = 1; //mike starts his counting at one
+                while (File.Exists(String.Format(ligamentPattern, 1, fiberNumber)))
+                {
+                    Switch fiberSwitch = new Switch();
+                    fiberSwitch.reference(); //prevent deletion while we work with it
+                    for (int i = 0; i < numPositions; i++)
+                    {
+                        //since Mike uses index of 1, we need to offset the position number
+                        string fname = String.Format(ligamentPattern, i+1, fiberNumber);
+                        Separator streamTube = new Separator();
+                        streamTube.addFile(fname);
+                        fiberSwitch.addChild(streamTube);
+                    }
+                    fiberSwitch.whichChild(0); //start at first frame
+                    fiberSwitch.unrefNoDelete();
+                    ligaments.Add(fiberSwitch);
+
+                    fiberNumber++;
+                }
+            }
 
             return ligaments;
         }
@@ -404,7 +456,7 @@ namespace WristVizualizer
                     sec1.addNode(_bonesSwitch[i]);
                     sec1.addNode(_hamsSwitch[i]);
                 }
-                _ligaments = setupPosViewLigaments(_reader); //load all of the ligaments
+                _ligaments = setupPosViewLigaments(_reader, _numPositions); //load all of the ligaments
                 foreach (Switch lig in _ligaments)
                 {
                     sec1.addNode(lig); //add to scenegraph
