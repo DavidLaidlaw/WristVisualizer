@@ -351,7 +351,8 @@ namespace WristVizualizer
             //create a material for that bone!
             _boneMaterials[boneIndex] = new Material();
             float[][] hamColors = PosViewSettings.PosViewColors;
-            _boneMaterials[boneIndex].setColor(hamColors[boneIndex][0], hamColors[boneIndex][1], hamColors[boneIndex][2]);
+            int colorIndex = boneIndex % hamColors.Length; //prevent index exception when we have more than 15 bones. (only 15 colors defined)
+            _boneMaterials[boneIndex].setColor(hamColors[colorIndex][0], hamColors[colorIndex][1], hamColors[colorIndex][2]);
             _boneMaterials[boneIndex].setOverride(true); //for this material to apply to everything below it.
 
             _bones[boneIndex].addFile(pos.IvFileNames[boneIndex], false);  //load bone file once, it will referenced multiple times

@@ -1,3 +1,6 @@
+Version 1.8.2
+- Fixed bug: PosView no longer crashes when loading more than 15 bones.
+
 Version 1.8.1
 - New: PosView mode now supports loading ligament fibers
 - Fixed bug: Fixed many small errors in PosView mode. Uses new method for reading ini files allowing for improved compatability
