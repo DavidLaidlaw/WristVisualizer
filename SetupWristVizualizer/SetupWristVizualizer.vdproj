@@ -57,12 +57,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_17F35B5FF8D74F52A8A0021386F53ECD"
-        "OwnerKey" = "8:_C48F18455D9F4023B963AEC2666664EA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_1A266CA7217EC8B01A63DA8D554A0929"
         "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
@@ -125,6 +119,12 @@
         {
         "MsmKey" = "8:_4EC925A366834187BF49A5CE2DA2C378"
         "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_534A34D7C59C420FBB4DE3C59151625D"
+        "OwnerKey" = "8:_F50C22A5A5EB4EE6906FEDF4E46EC3F6"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -225,12 +225,6 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C48F18455D9F4023B963AEC2666664EA"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_C72888FA2AA2736AF3337C7FC06FD509"
         "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
@@ -285,6 +279,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_F50C22A5A5EB4EE6906FEDF4E46EC3F6"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_FA287444373CFFE51203CE40808C07BD"
         "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
         "MsmSig" = "8:_UNDEFINED"
@@ -293,6 +293,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_80C0E60655A94B188B3AEA53719E7AC3"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -329,12 +335,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_1A266CA7217EC8B01A63DA8D554A0929"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_D048A19E73FC4C3986BE75EA1EE2B99F"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -451,7 +451,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.4041.18037, Culture=neutral, processorArchitecture=x86"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.4120.18247, Culture=neutral, processorArchitecture=x86"
                 "ScatterAssemblies"
                 {
                     "_0953C32CAF12873EE464628E361E704F"
@@ -562,7 +562,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.3775.19665, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.4120.18239, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_1A266CA7217EC8B01A63DA8D554A0929"
@@ -1175,7 +1175,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.3775.19665, Culture=neutral, processorArchitecture=MSIL"
+            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.4120.18239, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
                     "_D46AB7B823F1ED7AD141FC302DAB375F"
@@ -1480,14 +1480,14 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Wrist Vizualizer"
-        "ProductCode" = "8:{42774851-E228-4189-A59A-A5441A8A08BA}"
-        "PackageCode" = "8:{132FC056-DC7C-44E8-81D4-0A3EACCF98DD}"
+        "ProductCode" = "8:{DC7511B9-070C-4A27-A7C6-4B6135B57398}"
+        "PackageCode" = "8:{BE0C93DB-5911-4E5D-B3F8-D75A88B02813}"
         "UpgradeCode" = "8:{50416C8D-B318-44D1-B6F2-572663C9B62E}"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.8.1"
+        "ProductVersion" = "8:1.8.2"
         "Manufacturer" = "8:Networking Doc"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -2266,7 +2266,7 @@
         }
         "MergeModule"
         {
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_17F35B5FF8D74F52A8A0021386F53ECD"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_534A34D7C59C420FBB4DE3C59151625D"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2280,7 +2280,7 @@
             "Feature" = "8:"
             "IsolateTo" = "8:"
             }
-            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_C48F18455D9F4023B963AEC2666664EA"
+            "{CEE29DC0-9FBA-4B99-8D47-5BC643D9B626}:_F50C22A5A5EB4EE6906FEDF4E46EC3F6"
             {
             "UseDynamicProperties" = "11:TRUE"
             "IsDependency" = "11:TRUE"
@@ -2299,7 +2299,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_80C0E60655A94B188B3AEA53719E7AC3"
             {
-            "SourcePath" = "8:..\\WristVizualizer\\obj\\Debug\\WristVizualizer.exe"
+            "SourcePath" = "8:..\\WristVizualizer\\obj\\Release\\WristVizualizer.exe"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
@@ -2327,7 +2327,7 @@
             }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_D048A19E73FC4C3986BE75EA1EE2B99F"
             {
-            "SourcePath" = "8:..\\debug\\libCoin3D.dll"
+            "SourcePath" = "8:..\\release\\libCoin3D.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_DFD604275C1241BF8E046F45E1B14EDB"
