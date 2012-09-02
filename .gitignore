@@ -19,3 +19,5 @@
 /WristVizualizer/WristVizualizer.csproj.user
 /libWrist/libWrist.csproj.user
 /libCoin3D/libCoin3D.vcxproj.user
+/libCoin3D/Release
+/libCoin3D/Debug
