@@ -909,17 +909,6 @@ namespace WristVizualizer
             _currentController.calculateDistanceMapsToolClickedHandler();
         }
 
-        private void startHeadtrackingToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            WiiTracking _tracking = new WiiTracking(this, _viewer);
-            bool result = _tracking.TryConnect();
-            if (!result)
-            {
-                MessageBox.Show("Error connecting to Wiimote");
-                return;
-            }
-        }
-
         private ExaminerViewer.HighlighRenderTypes getSelectionHighlightRenderType()
         {
             if (boundingBoxToolStripMenuItem.Checked) return ExaminerViewer.HighlighRenderTypes.BOX_HIGHLIGHT_RENDER;
