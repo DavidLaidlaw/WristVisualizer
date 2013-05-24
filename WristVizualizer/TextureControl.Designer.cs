@@ -71,12 +71,12 @@ namespace WristVizualizer
             65536});
             this.numericUpDownCenterX.Location = new System.Drawing.Point(3, 267);
             this.numericUpDownCenterX.Maximum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             0});
             this.numericUpDownCenterX.Minimum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             -2147483648});
@@ -95,12 +95,12 @@ namespace WristVizualizer
             65536});
             this.numericUpDownCenterY.Location = new System.Drawing.Point(84, 267);
             this.numericUpDownCenterY.Maximum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             0});
             this.numericUpDownCenterY.Minimum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             -2147483648});
@@ -119,12 +119,12 @@ namespace WristVizualizer
             65536});
             this.numericUpDownCenterZ.Location = new System.Drawing.Point(165, 267);
             this.numericUpDownCenterZ.Maximum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             0});
             this.numericUpDownCenterZ.Minimum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             -2147483648});
@@ -215,12 +215,12 @@ namespace WristVizualizer
             65536});
             this.numericUpDownTransZ.Location = new System.Drawing.Point(165, 332);
             this.numericUpDownTransZ.Maximum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             0});
             this.numericUpDownTransZ.Minimum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             -2147483648});
@@ -239,12 +239,12 @@ namespace WristVizualizer
             65536});
             this.numericUpDownTransY.Location = new System.Drawing.Point(84, 332);
             this.numericUpDownTransY.Maximum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             0});
             this.numericUpDownTransY.Minimum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             -2147483648});
@@ -263,12 +263,12 @@ namespace WristVizualizer
             65536});
             this.numericUpDownTransX.Location = new System.Drawing.Point(3, 332);
             this.numericUpDownTransX.Maximum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             0});
             this.numericUpDownTransX.Minimum = new decimal(new int[] {
-            150,
+            350,
             0,
             0,
             -2147483648});

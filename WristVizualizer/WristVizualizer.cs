@@ -382,6 +382,9 @@ namespace WristVizualizer
 
                 _viewer.disableSelection();
                 _viewer.setBackgroundColor(0.8f, 0.8f, 0.8f);
+                //delete later
+                //_viewer.saveToBMP(@"Z:\course\FILE2.bmp");
+
                 this.Text = Application.ProductName + " - " + texture.DisplayTitle;
             }
             finally

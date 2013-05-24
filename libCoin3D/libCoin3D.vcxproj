@@ -88,6 +88,8 @@
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|x64'" />
+    <IncludePath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IncludePath)</IncludePath>
+    <LibraryPath Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -110,7 +112,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>$(COINDIR)\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(COINDIR)\include;$(ProjectDir)x64\glew-1.9.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>COIN_DLL;SOWIN_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <PrecompiledHeader>Use</PrecompiledHeader>
@@ -118,8 +120,8 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>coin3d.lib;sowin1d.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(COINDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;coin3d.lib;sowin1d.lib;OpenGL32.lib;GlU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(COINDIR)\lib;$(ProjectDir)x64\glew-1.9.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
@@ -176,19 +178,29 @@
   <ItemGroup>
     <ClCompile Include="ACS.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="CallbackNode.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CenterballDragger.cpp" />
     <ClCompile Include="Coin3DBase.cpp" />
     <ClCompile Include="ColoredBone.cpp" />
     <ClCompile Include="Contour.cpp" />
+    <ClCompile Include="CubeGeometry.cpp" />
+    <ClCompile Include="Evaluator.cpp" />
     <ClCompile Include="ExaminerViewer.cpp" />
     <ClCompile Include="HamAxis.cpp" />
     <ClCompile Include="Label2D.cpp" />
     <ClCompile Include="libCoin3D.cpp" />
+    <ClCompile Include="MasterCube.cpp" />
     <ClCompile Include="Material.cpp" />
     <ClCompile Include="MyViewport.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Plane.cpp" />
+    <ClCompile Include="ProxyPiece.cpp" />
+    <ClCompile Include="Scale.cpp" />
     <ClCompile Include="ScenegraphNode.cpp" />
+    <ClCompile Include="Segment.cpp" />
     <ClCompile Include="Separator.cpp" />
+    <ClCompile Include="ShaderHandler.cpp" />
     <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="Stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
@@ -199,33 +211,51 @@
     <ClCompile Include="Switch.cpp" />
     <ClCompile Include="TessellatedSurface.cpp" />
     <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="TextureHandler.cpp" />
     <ClCompile Include="Transform.cpp" />
+    <ClCompile Include="TransformBoxManip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ACS.h" />
+    <ClInclude Include="CallbackNode.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CenterballDragger.h" />
     <ClInclude Include="Coin3DBase.h" />
     <ClInclude Include="ColoredBone.h" />
     <ClInclude Include="Contour.h" />
+    <ClInclude Include="CubeGeometry.h" />
+    <ClInclude Include="Evaluator.h" />
     <ClInclude Include="ExaminerViewer.h" />
     <ClInclude Include="HamAxis.h" />
     <ClInclude Include="Label2D.h" />
     <ClInclude Include="libCoin3D.h" />
+    <ClInclude Include="MasterCube.h" />
     <ClInclude Include="Material.h" />
     <ClInclude Include="MyViewport.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="Plane.h" />
+    <ClInclude Include="ProxyPiece.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Scale.h" />
     <ClInclude Include="ScenegraphNode.h" />
+    <ClInclude Include="Segment.h" />
     <ClInclude Include="Separator.h" />
+    <ClInclude Include="ShaderHandler.h" />
     <ClInclude Include="Sphere.h" />
     <ClInclude Include="Stdafx.h" />
     <ClInclude Include="Switch.h" />
     <ClInclude Include="TessellatedSurface.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureHandler.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="TransformBoxManip.h" />
+    <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\WristVizualizer\TextureController.cs" />
     <None Include="app.ico" />
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram2.cd" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>

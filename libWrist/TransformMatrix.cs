@@ -342,6 +342,43 @@ namespace libWrist
             }
         }
 
+
+        public void createFromQuaternions(double q0, double q1, double q2, double q3, double[] center)
+        {
+            
+            if (center.Length != 3)
+                throw new ArgumentException("Center point must have 3 values");
+
+            TransformMatrix rotMat=new TransformMatrix();
+            TransformMatrix transMat = new TransformMatrix();
+            TransformMatrix transMatInverse = new TransformMatrix();
+
+
+            rotMat.quaternionToRotationMatrix(q0, q1, q2, q3);
+            transMat.setTranslation(center);
+            transMatInverse.setTranslation(-center[0], -center[1], -center[2]);
+            TransformMatrix final = transMat * rotMat * transMatInverse;
+            SetMatrix(final);
+        }
+
+
+        public void quaternionToRotationMatrix(double q0, double q1, double q2, double q3)
+        {
+            //X and Y are switched
+            Array[0][0] = q0 * q0 + q1 * q1 - q2 * q2 - q3 * q3;
+            Array[0][1] = 2 * (q1 * q2 - q0 * q3);
+            Array[0][2] = 2 * (q1 * q3 + q0 * q2);
+
+            Array[1][0] = 2 * (q1 * q2 + q0 * q3);
+            Array[1][1] = q0 * q0 - q1 * q1 + q2 * q2 - q3 * q3;
+            Array[1][2] = 2 * (q2 * q3 - q0 * q1);
+
+            Array[2][0] = 2 * (q1 * q3 - q0 * q2);
+            Array[2][1] = 2 * (q2 * q3 + q0 * q1);
+            Array[2][2] = q0 * q0 - q1 * q1 - q2 * q2 + q3 * q3;
+        }
+
+
         /// <summary>
         /// Sets matrix as a rotation matrix about the X axis for the amount specified
         /// </summary>
@@ -497,6 +534,11 @@ namespace libWrist
             SetMatrix(final);
         }
 
+
+        public void rotateAboutAngle()
+        {
+
+        }
 
         public void printToConsole()
         {

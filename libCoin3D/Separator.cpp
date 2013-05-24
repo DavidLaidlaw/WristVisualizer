@@ -25,6 +25,14 @@ void libCoin3D::Separator::addChild(Separator^ child)
 	_separator->addChild(child->getSoSeparator());
 }
 
+//////////////////////////////////////
+void libCoin3D::Separator::addChild(Node^ child)
+{
+	_separator->addChild(child->getNode());
+}
+/////////////////////////////////////////
+
+
 
 void libCoin3D::Separator::addFile(System::String^ filename)
 {

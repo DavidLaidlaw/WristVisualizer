@@ -14,6 +14,14 @@ public:
 	Separator(void);
 	Separator(SoSeparator* node);
 	void addChild(Separator^ child);
+	
+	///////////////////////////////////
+	void addChild(SoSeparator* child){
+		_separator->addChild(child);
+	}
+	
+	void addChild(Node^ child);
+	///////////////////////////////
 	void addFile(System::String^ filename);
 	void addFile(System::String^ filename, bool canhide);
 	void addNode(Node^ node);

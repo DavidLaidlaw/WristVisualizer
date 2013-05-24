@@ -1,0 +1,393 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{73E9A2A5-E5C8-450D-B7B6-CBA91AEAF75C}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>WristVizualizer</RootNamespace>
+    <AssemblyName>WristVizualizer</AssemblyName>
+    <ApplicationIcon>OrthoIcon.ico</ApplicationIcon>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation />
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\WristVizualizer.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Release\WristVizualizer.exe.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;C:\Program Files (x86)\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AnimationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="AnimationControl.Designer.cs">
+      <DependentUpon>AnimationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoneColors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoneColors.Designer.cs">
+      <DependentUpon>EditBoneColors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FullWristAnimationControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FullWristAnimationControl.Designer.cs">
+      <DependentUpon>FullWristAnimationControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SceneviewController.cs" />
+    <Compile Include="ShortAnimationController.cs" />
+    <Compile Include="AnimationCreatorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AnimationCreatorForm.Designer.cs">
+      <DependentUpon>AnimationCreatorForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="BatchMode.cs" />
+    <Compile Include="BoneHideChangeEventArgs.cs" />
+    <Compile Include="CommandLineOptions.cs" />
+    <Compile Include="Controller.cs" />
+    <Compile Include="CameraEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CameraEditor.Designer.cs">
+      <DependentUpon>CameraEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DistanceAndContourDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DistanceAndContourDialog.Designer.cs">
+      <DependentUpon>DistanceAndContourDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DistvController.cs" />
+    <Compile Include="FixedBoneChangeEventArgs.cs" />
+    <Compile Include="FullWristControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FullWristControl.Designer.cs">
+      <DependentUpon>FullWristControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FullWristController.cs">
+    </Compile>
+    <Compile Include="LoadTextureDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LoadTextureDialog.Designer.cs">
+      <DependentUpon>LoadTextureDialog.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MovieExportOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MovieExportOptions.Designer.cs">
+      <DependentUpon>MovieExportOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HelpAbout.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HelpAbout.Designer.cs">
+      <DependentUpon>HelpAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MaterialEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MaterialEditor.Designer.cs">
+      <DependentUpon>MaterialEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MRIViewer\MRIViewerMainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MRIViewer\MRIViewerMainForm.Designer.cs">
+      <DependentUpon>MRIViewerMainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PointSelection.Designer.cs">
+      <DependentUpon>PointSelection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PositionGraph.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PositionGraph.Designer.cs">
+      <DependentUpon>PositionGraph.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PosViewControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="PosViewControl.Designer.cs">
+      <DependentUpon>PosViewControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PosViewController.cs" />
+    <Compile Include="PosViewSettings.cs" />
+    <Compile Include="RegistrySettings.cs" />
+    <Compile Include="ScenegraphTreeViewer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ScenegraphTreeViewer.Designer.cs">
+      <DependentUpon>ScenegraphTreeViewer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SelectedSeriesChangedEventArgs.cs" />
+    <Compile Include="SideSelector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SideSelector.Designer.cs">
+      <DependentUpon>SideSelector.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextureControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="TextureControl.Designer.cs">
+      <DependentUpon>TextureControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TextureController.cs" />
+    <Compile Include="TextureSettings.cs" />
+    <Compile Include="VersionManager.cs" />
+    <Compile Include="WristPanelLayoutControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="WristPanelLayoutControl.Designer.cs">
+      <DependentUpon>WristPanelLayoutControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WristVizualizer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WristVizualizer.Designer.cs">
+      <DependentUpon>WristVizualizer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AnimationControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AnimationControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AnimationCreatorForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>AnimationCreatorForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CameraEditor.resx">
+      <DependentUpon>CameraEditor.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoneColors.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EditBoneColors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FullWristAnimationControl.resx">
+      <DependentUpon>FullWristAnimationControl.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DistanceAndContourDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>DistanceAndContourDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FullWristControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>FullWristControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LoadTextureDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LoadTextureDialog.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MovieExportOptions.resx">
+      <DependentUpon>MovieExportOptions.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HelpAbout.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>HelpAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MaterialEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MaterialEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MRIViewer\MRIViewerMainForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>MRIViewerMainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PointSelection.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PointSelection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PositionGraph.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PositionGraph.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PosViewControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>PosViewControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScenegraphTreeViewer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ScenegraphTreeViewer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SideSelector.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SideSelector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TextureControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TextureControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WristPanelLayoutControl.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WristPanelLayoutControl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WristVizualizer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>WristVizualizer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="WristVizualizerException.cs" />
+    <Compile Include="XrommController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AviFile\AviFile.csproj">
+      <Project>{ABB32A29-AF50-47FA-B243-5FD75A5ABA54}</Project>
+      <Name>AviFile</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneralMatrix\GeneralMatrix.csproj">
+      <Project>{6ABA6EAD-58B0-4FCE-A97F-BC884281A170}</Project>
+      <Name>GeneralMatrix</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libCoin3D\libCoin3D.vcxproj">
+      <Project>{34510B6D-EB60-4DBA-952B-49C6729C1367}</Project>
+      <Name>libCoin3D</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\libWrist\libWrist.csproj">
+      <Project>{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}</Project>
+      <Name>libWrist</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mono.GetOptions\Mono.GetOptions.csproj">
+      <Project>{77D5FD1D-325D-4379-9D45-00CAC7DE365E}</Project>
+      <Name>Mono.GetOptions</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="logo.gif" />
+    <Content Include="OrthoIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Windows.Installer.3.1">
+      <Visible>False</Visible>
+      <ProductName>Windows Installer 3.1</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -23,6 +23,10 @@
 #include <Inventor/events/SoEvent.h>
 #include <Inventor/nodes/SoEventCallback.h>
 
+#include <Inventor\draggers\SoCenterballDragger.h>
+#include <Inventor\manips\SoCenterballManip.h>
+#include <Inventor\SoType.h>
+
 libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ)
 {
 	_side = side;
@@ -34,8 +38,17 @@ libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double 
 	_voxelZ = voxelZ;
 	_draggerXY = NULL;
 	_draggerYZ = NULL;
+
+	//////////////////////////////////////
+	//_centerBall = new SoCenterballDragger();
+	//_centerBallManip=new SoCenterballManip();
+	//_centerballDragger=gcnew CenterballDragger();
+	//////////////////////////////////////
+
 }
 
+
+//DESTRUCTOR!
 libCoin3D::Texture::!Texture()
 {
 	if (_all_slice_dataXY != NULL) {
@@ -50,6 +63,12 @@ libCoin3D::Texture::!Texture()
 		delete _all_slice_dataYZ;
 	}
 }
+
+
+
+
+
+
 
 unsigned char** libCoin3D::Texture::allocateSliceStack(int numPixelsX, int numPixelsY, int numPixelsZ)
 {
@@ -78,10 +97,10 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 	SoDrawStyle* drawStyle = new SoDrawStyle();
 	bone->addChild(drawStyle);
 	bone->addChild(clr);
-	
+
 	drawStyle->style = SoDrawStyle::POINTS;
 	drawStyle->pointSize = 1;
-	drawStyle->setOverride(TRUE);
+	//drawStyle->setOverride(TRUE);
 
 	clr->rgb.setValue(SbColor(colorR, colorG, colorB));
 
@@ -108,17 +127,17 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 }
 
 struct TextureCBData {
-  libCoin3D::Texture::Planes plane;
-  SoTexture2 * texture; 
-  unsigned char** buffer;  
-  int sizeX;
-  int sizeY;
-  int sizeZ;
-  double sliceThickness;
-  int planeHeight;
-  int planeWidth;
-  int numSlices;
-  SoTranslate1Dragger* dragger;
+	libCoin3D::Texture::Planes plane;
+	SoTexture2 * texture; 
+	unsigned char** buffer;  
+	int sizeX;
+	int sizeY;
+	int sizeZ;
+	double sliceThickness;
+	int planeHeight;
+	int planeWidth;
+	int numSlices;
+	SoTranslate1Dragger* dragger;
 };	
 
 void updateTextureCB( void * data, SoSensor * )
@@ -156,10 +175,10 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 			buffer[i] = new unsigned char[_sizeX*_sizeY];
 			if (_sizeY >= _sizeX) {
 				/* Need to check the dimensions. For some reason, the SoTexture2 object maps 
-				 * itself differently onto the plane depending upon its aspect ratio. It seems
-				 * to try and always be oriented in a portrait mode (or square). So we check 
-				 * for that case here.
-				 */
+				* itself differently onto the plane depending upon its aspect ratio. It seems
+				* to try and always be oriented in a portrait mode (or square). So we check 
+				* for that case here.
+				*/
 				if (_side == Sides::RIGHT)
 					System::Runtime::InteropServices::Marshal::Copy((array<unsigned char>^)data[i],0,(System::IntPtr)buffer[i],_sizeX*_sizeY);
 				else
@@ -169,8 +188,8 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 			}
 			else {
 				/* This is the case for landscape, so when creating the buffer, we need to go 
-				 * and flip the X & Y coordinates of the image, so it displays correctly
-				 */
+				* and flip the X & Y coordinates of the image, so it displays correctly
+				*/
 				for (int j=0; j<_sizeY; j++) {
 					for (int k=0; k<_sizeX; k++) {
 						if (_side == Sides::RIGHT)
@@ -215,11 +234,60 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 }
 
 
+//////////////////////////////////////////////////////////////////////////////////
+//
+void ManipCallBack( void * userData, SoDragger *dragger )
+{
+	SoCenterballManip *manip=(SoCenterballManip*) userData;
+	float x,y,z;
+	manip->translation.getValue().getValue(x,y,z);
+	printf ("translation: %f %f %f \n", x, y,z);
+	fflush(stdout);
+	float rx,ry,rz,rw;
+	manip->rotation.getValue().getValue(rx,ry,rz,rw);
+	printf ("rotation: %f %f %f %f \n", rx, ry,rz,rw);
+	fflush(stdout);
+	//manip->translation.setValue(0,1,0);
+}
+
+void libCoin3D::Texture::makeCenterballManips(Separator^ bone){
+
+	// SoSeparator* separator = new SoSeparator;
+	// separator->ref();
+	// bone->addChild(separator);
+
+	// SoScale* myScale = new SoScale();
+	//separator->addChild(myScale);
+	//myScale->scaleFactor.setValue(16,16,16);
+
+	////SOSFVec3f* translation=new SOSFVec3;
+
+	//CenterballDragger^ _centerballDragger= gcnew CenterballDragger();
+	//float val=8.0/16.0;
+	//_centerballDragger->setTranslation(9*val,9*val,3.5*val);
+	//
+	// separator->addChild(_centerballDragger->getNode());
+
+	// //if the bone has a transform then use it to center the centerball
+	// //getNode()->translation.setValue(
+
+
+	// SoDrawStyle *drawStyle  = new SoDrawStyle;
+	//drawStyle->style=SoDrawStyle::FILLED;
+	//separator->addChild(drawStyle);
+
+
+	//_centerballDragger->getManip()->getDragger()->addValueChangedCallback(ManipCallBack,_centerballDragger->getManip());
+
+}
+/////////////////////////////////////////////////////////////////////////////////////
+
 libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, Planes plane)
 {
+
 	//copy data into local buffer :)
 	unsigned char** buffer = setupLocalBuffer(data, plane);
-	
+
 	SoSeparator* separator = new SoSeparator;
 
 	SoScale* myScale = new SoScale();
@@ -240,7 +308,12 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	separator->addChild(myTransform);
 	//separator->addChild(scaleSeparator);
 	scaleSeparator->addChild(myDragger);
-   
+
+
+	//////////
+	//separator->addChild(_centerballDragger->getNode());
+	////////
+
 	SoTexture2 *texture = new SoTexture2;
 
 	TextureCBData * textureCBdata = new TextureCBData;
@@ -250,7 +323,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	textureCBdata->sizeX = _sizeX;
 	textureCBdata->sizeY = _sizeY;
 	textureCBdata->sizeZ = _sizeZ;
-	
+
 	textureCBdata->dragger = myDragger;
 
 	SoCalculator *myCalc = new SoCalculator;
@@ -273,9 +346,9 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		textureCBdata->planeWidth = _sizeX;
 		if (_sizeY < _sizeX) {
 			/* Need to check for cases where we are wider then taller
-			 * Due to a problem with SoTexture2, images are always display in
-			 * portrain mode. For more info, see comments in function setupLocalBuffer()
-			 */
+			* Due to a problem with SoTexture2, images are always display in
+			* portrain mode. For more info, see comments in function setupLocalBuffer()
+			*/
 			textureCBdata->planeHeight = _sizeX;
 			textureCBdata->planeWidth = _sizeY;
 		}
@@ -297,7 +370,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 		_draggerYZ = myDragger;
 		break;
 	default:
-	   throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
+		throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
 	}
 
 	//Make a translation on z;
@@ -327,6 +400,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 
 	//show the image for the first slice
 	updateTextureCB((void*)textureCBdata,NULL);
+
 
 	return gcnew Separator(separator);
 }
@@ -381,10 +455,10 @@ SoSeparator* libCoin3D::Texture::makeRectangle(Planes plane)
 	// Define the FaceSet
 	SoFaceSet *myFaceSet = new SoFaceSet;
 	myFaceSet->numVertices.setValue(4);
-	
+
 	myFaceSet->vertexProperty.setValue(myVertexProperty);
 	rectangle->addChild(myFaceSet);
-	
+
 	rectangle->unrefNoDelete();
 	return rectangle;
 }
@@ -396,7 +470,7 @@ void myKeyPressCB( void * userData, SoEventCallback * eventCB )
 	if (texture==nullptr) //help
 		return; 
 	const SoEvent * event = eventCB->getEvent();
-	
+
 
 	if (SO_KEY_PRESS_EVENT(event, UP_ARROW)) { //Move through the slices in the Z coord
 		texture->moveDragger(libCoin3D::Texture::Planes::XY_PLANE,1);
@@ -404,7 +478,7 @@ void myKeyPressCB( void * userData, SoEventCallback * eventCB )
 	if (SO_KEY_PRESS_EVENT(event, DOWN_ARROW)) { //Move through the slices in the Z coord
 		texture->moveDragger(libCoin3D::Texture::Planes::XY_PLANE,-1);
 	}
-    if (SO_KEY_PRESS_EVENT(event, LEFT_ARROW)) { //Move through the slices in the Y coord
+	if (SO_KEY_PRESS_EVENT(event, LEFT_ARROW)) { //Move through the slices in the Y coord
 		texture->moveDragger(libCoin3D::Texture::Planes::YZ_PLANE,-1);
 		eventCB->setHandled();
 	}
@@ -442,9 +516,9 @@ void libCoin3D::Texture::moveDragger(Planes plane,int howFar) {
 	default:
 		throw gcnew System::ArgumentException("What the fuck");
 	}
-	
+
 	if (!dragger) return;  //ignore if we are not set yet
-    
+
 	float x,y,z;
 	dragger->translation.getValue().getValue(x,y,z);
 	dragger->translation.setValue(x+(howFar/6.),0,0);

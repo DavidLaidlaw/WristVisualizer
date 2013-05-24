@@ -241,6 +241,11 @@ namespace WristVizualizer
                 mri.Cropped_SizeX, mri.Cropped_SizeY, mri.Cropped_SizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ);
             Separator plane1 = _texture.makeDragerAndTexture(voxels, Texture.Planes.XY_PLANE);
             Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
+            /////////////////////////////////////////////
+            _texture.makeCenterballManips(_bones[0]);
+            //_texture.makeCenterballManips(_bones[1]);
+            //_texture.makeCenterballManips(_bones[2]);
+            ///////////////////////////////////////////
             _root.addChild(plane1);
             _root.addChild(plane2);
             _root.addChild(_texture.createKeyboardCallbackObject(_viewer.Parent_HWND));

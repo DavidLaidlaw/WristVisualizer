@@ -1,0 +1,185 @@
+Version 1.8.2
+- Fixed bug: PosView no longer crashes when loading more than 15 bones.
+
+Version 1.8.1
+- New: PosView mode now supports loading ligament fibers
+- Fixed bug: Fixed many small errors in PosView mode. Uses new method for reading ini files allowing for improved compatability
+
+Version 1.8.0
+- Change: Now supports loading XROMM data
+- Change: Major backend abstraction.
+- Fixed bug: VMRL->IV now correctly scales output from Mimics 13
+- Fixed bug: No longer crashes on File->New
+
+Version 1.7.9
+- New: Can export contours as IV files from batch mode.
+
+Version 1.7.8
+- New: Integrated old MRI SubRegion into WristVizualizer. Can now launch from the Tools menu.
+
+Version 1.7.7
+- New: New drag and drop options. When right-dragging, can choose how to open the file.
+- New: Added basic hotkeys for common viewpoints.
+
+Version 1.7.6
+- New: When a file is automatically reloaded (after external changes). Background color and camera position are maintained.
+
+Version 1.7.5
+- Fixed bug: Vizualization of left wrists now works correctly.
+
+Version 1.7.4
+- New: Added the ability to read analyze files in MRI Viewer (yeah....the name no longer makes any sense)
+- New: Can load analyze files in Texture (though left wrists don't work at all)
+
+Version 1.7.3
+- New: In PosView mode, can now set the length and radius of the HAM axis. (For Nick's little fish heads)
+
+Version 1.7.2
+- Fixed bug: Removed blue border from exported image. Also forced all output images to be sized as a multiple of 4, for compatability with video compression.
+- New: In batch mode, can create contour targeting a specific surface area
+
+Version 1.7.1
+- Fixed bug: Fixed problem when animating bones with no inertial information and no transformation.
+
+Version 1.7.0
+- Change: Significant refactoring of logic code. Hopefully have not broken too much.
+- New: Can use distance maps in animation
+- New: Can easily color bones and HAM axes during animation.
+- New: Added batch mode, for processing distance maps from the command line.
+
+Version 1.6.3
+- Fixed bug: Parsing motion files with an 'E' would fail (ie. 1.1233E-4)
+- New: Better error messages for exceptions
+
+Version 1.6.2
+- Fixed bug: Interpolating an identity matrix no longer gives crazy results. (Removed NaN error)
+
+Version 1.6.1
+- Fixed bug: Saving image multiple could cause a crash due to trying to reuse a deleted reference. Only when using cached renderer (ie exporting a movie)
+- New: Can copy image to clipboard in differnt sizes and smoothing factors
+- New: Can export movies using smoothing factor.
+
+Version 1.6.0
+- New: Can load stackfiles
+- New: Can create custom animation sequence. Still very buggy, but basic functionality appears to be working.
+
+Version 1.5.3
+- New: When converting VRML -> IV, can optionally detect output from Mimics 10 or greater and convert the output from m to mm. 
+
+Version 1.5.2
+- New: Added ability to copy image to clipboard
+- Fixed bug: screen capture is now the same size as what is shown on screen
+
+Version 1.5.1
+- Fixed bug: Fixed but with Version Checker not always giving the correct comparison of versions.
+
+Version 1.5.0
+- Upgrade: Upgraded from linking against Coin 2.5.0 to Coin 3.0.0. Major change, binary incompatability against previous versions of coin. This upgrade fixes a number of rendering problems from the past.
+- Fixed bug: Was crashing when loading full wrist without an ulna. Also corrected program to not show PS angle when there is no explicit AnatCoordSys_uln.dat file.
+
+Version 1.4.17
+- Fixed bug: For VRML->IV conversion, can now read VRML files from newer versions of Mimics
+
+Version 1.4.16
+- Fixed bug: Saving frame uses the current transparency for its rendering.
+
+Version 1.4.15
+- New: Added ability to quickly convert VRLM files to IV files (and will apply the scale factor)
+
+Version 1.4.14
+- New: Added tool for trimming material and camera headings from IV files
+- Fixed bug: When doing point intersection, the main panel is appropriatly resized so you can see the status strip.
+
+Version 1.4.13
+- New: Added list of recent files.
+
+Version 1.4.12
+- New: Can now delete nodes from the Scenegraph viewer. The Scenegraph viewer also updates its slected node as new nodes are selected in the main window.
+- Update: Pronation/Supination angle is now set relative to neutral.
+
+Version 1.4.11
+- New: Can now show the raw pronation/supination angle in full wrist mode.
+
+Version 1.4.10
+- New: Added ability to view and edit the parameters for the main Othrographic Camera in the scene.
+
+Version 1.4.9
+- Fixed bug: Fixed problem with the neutral position getting the capitate offset even when the reference bone was the mc3
+- New: Added text display for global wrist position in Full Wrist mode
+
+Version 1.4.8
+- Fixed bug: Fixed problem when hiding Inertial axes if there were problems showing them. Prevent null reference exception.
+- New: Added ability to show inertial axes for the metacarpals as well as the carpal bones. 
+- New: Added ability to show wrist position by a bone other then the capitate. (currently only the mc3)
+
+Version 1.4.7
+- New: Can change the render style for selected objects. Either bounding box or tight fiting lines.
+
+Version 1.4.6
+- Fixed bug: Can load linked iv files in full wrist mode.
+- New: Some really basic head tracking using a wiimote and led head bar. Very experimental, but a kind of fun toy.
+
+Version 1.4.5
+- Fixed bug: Inertial axes are now hidden with the bones.  Bug must have been introducted when I switched over to using ColoredBone type for displaying colors with Distv mode.
+
+Version 1.4.4
+- New: Can show all of the wrist positions on a plot of FE & RU. Also, clicking on the point will take you to that position.
+
+Version 1.4.3
+- New: Can set the color of the distance map contours. Currently it is only one color, but this should be fixed in later versions.
+- New: Can supply a config file that can rename the series names into something more human friendly
+- Fixed bug: Added basic error handling when files are open from the command line or using drag & drop.
+
+Version 1.4.2
+ - New: Can edit transforms in texture, and copy those values to the clipboard, for entry into a WristRegistration config file. 
+ - New: Can hide bones in texture. Not as pretty as it should be, but it works.
+
+Version 1.4.1
+- Fixed bug: Fixed problem with installer. Did not install coin3d dll files, so the program would not run.
+
+Version 1.4.0
+- Fixed bug: Texture no longer allows adjusting registration by default, to avoid the problem with loosing focus for key presses. 
+- New: Can choose to animate between positions, using very basic linear interpolation. "eye candy"
+- New: Can load distance fields if they exist, and generate distance maps for bones as well as contour information.
+- New: Can vizually edit the final optimized both transform that is output from the Wrist Registration Program
+
+Version 1.3.5
+- Fixed bug: Texture planes are now located in the center of each voxel
+- New: Texture allows you to step through each bone's registration in the auto_registr txt file from the registration code. There is a known bug with window focus and the arrow keys. They can get stuck on the registration window and stop controlling the texture slices.
+- Changed over to the latest release of Coin (2.5.0), Hopefully this will fix some strange rendering problems without creating new ones :)
+
+Version 1.3.4
+- Fixed bug: No longer crashes when trying to load texture (texture does't have a controller, so but was introduced in version 1.3.0)
+- Fixed bug: No longer crashes in texture when reading a classified scan
+- Fixed bug: Vertical plane loads correctly in texture for all images
+- Fixed bug: In MRIViewer, cleared auto-scale text box when not over a pixel
+
+Version 1.3.3
+- Fixed bug: in distv mode, would crash after the the relative bone was changed into non-radius for the second time (ie. radius-> non-radius -> radius -> non-radius).
+
+Version 1.3.2
+- Feature: Distv has been ported, now runs.
+- Fixed bug: In fullwrist mode, hitting hide-all or show-all would check bones that were disabled.
+
+Version 1.3.1
+- Fixed bug: MRIViewer can crash when trying to read pixels on bottom edge. Also, added additional text outputs for mouseover events.
+
+Version 1.3.0
+- Major re-write of main class, to move lots of ugly code into their own controller classes. There SHOULD be no major change to the end user.
+- Fixed bug: Removed warning when loading filename that starts with a number
+- Fixed bug: Corrected pixel identification in MRIViewer
+
+Version 1.2.3
+- Fixed bug. When loading new scene, force background to black.
+- Fixed bug. Removed warning when loading filename with space in it.
+- New Feature: MRIViewer. Pretty cool I say.
+
+Version 1.2.2
+- Fixed bug, so that when showing the scenegraph it tries to find the separator directly above, not starting with the second node
+
+Version 1.2.1
+- When loading an IV file, the filename is saved for the node name
+- When viewing scenegraph, it will try and highlight the separator for the currently selected node, instead of defaulting to the root node
+
+Version 1.2.0
+- New: Added Texture functionality. Ability to load the stack file (based on the original neutral scan) onto the CT image from various sources.

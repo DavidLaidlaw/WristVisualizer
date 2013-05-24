@@ -3,6 +3,11 @@
 #include <Inventor/nodes/SoTexture2.h>
 #include <Inventor/draggers/SoTranslate1Dragger.h>
 
+#include "CenterballDragger.h"
+#include <Inventor\draggers\SoCenterballDragger.h>
+#include <Inventor\manips\SoCenterballManip.h>
+
+
 #include "Separator.h"
 
 namespace libCoin3D {
@@ -17,16 +22,28 @@ public:
 
 	virtual Separator^ makeDragerAndTexture(array<array<System::Byte>^>^ data, Planes plane);
 
+
+	//for drawing the volume render stuff
+	//void myGLCallback(void *myData, SoAction *action);
+
+	///////////////////
+	void makeCenterballManips(Separator^ bone);
+	/////////////////////
+
 	static Separator^ createPointsFileObject(array<array<double>^>^ points, array<float>^ color);
 	static Separator^ createPointsFileObject(array<array<double>^>^ points, float colorR, float colorG, float colorB);
 	static Separator^ createPointsFileObject(array<array<double>^>^ points);
 
+	//methods called from input events
 	virtual Separator^ createKeyboardCallbackObject(int viewerParrentHWND);
 	virtual void moveDragger(Planes plane,int howFar);
+	//virtual void moveCenterballTracker(int number);
 
 	//static members, keeping track of all global ExaminerViewers
 	static System::Collections::Hashtable^ TexturesHashtable = gcnew System::Collections::Hashtable();
 	static Texture^ getTextureByParentWidget(int HWND);
+
+	//set centerball stuff
 private:
 	unsigned char** allocateSliceStack(int numPixelsX, int numPixelsY, int numPixelsZ);
 	SoSeparator* makeRectangle(Planes plane);
@@ -41,5 +58,15 @@ private:
 	unsigned char** _all_slice_dataYZ;
 	SoTranslate1Dragger* _draggerXY;
 	SoTranslate1Dragger* _draggerYZ;
+
+	//SoCenterballDragger* _centerBall;
+	//SoCenterballManip* _centerBallManip;
+	//CenterballDragger^ _centerballDragger;
+
+	CenterballDragger^ _centerballDragger0;
+	CenterballDragger^ _centerballDragger1;
+	CenterballDragger^ _centerballDragger2;
+
+
 };
 }

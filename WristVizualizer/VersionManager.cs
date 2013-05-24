@@ -30,6 +30,7 @@ namespace WristVizualizer
         private string _currentVersion;
         private bool _newerVersionAvailable = false;
 
+
         public event VersionUpdatedEventHandler VersionUpdated;
 
         public VersionManager()
