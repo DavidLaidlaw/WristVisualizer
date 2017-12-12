@@ -39,11 +39,6 @@ libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double 
 	_draggerXY = NULL;
 	_draggerYZ = NULL;
 
-	//////////////////////////////////////
-	//_centerBall = new SoCenterballDragger();
-	//_centerBallManip=new SoCenterballManip();
-	//_centerballDragger=gcnew CenterballDragger();
-	//////////////////////////////////////
 
 }
 
@@ -234,8 +229,7 @@ unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>
 }
 
 
-//////////////////////////////////////////////////////////////////////////////////
-//
+//dont think i use the following two functions
 void ManipCallBack( void * userData, SoDragger *dragger )
 {
 	SoCenterballManip *manip=(SoCenterballManip*) userData;
@@ -247,40 +241,10 @@ void ManipCallBack( void * userData, SoDragger *dragger )
 	manip->rotation.getValue().getValue(rx,ry,rz,rw);
 	printf ("rotation: %f %f %f %f \n", rx, ry,rz,rw);
 	fflush(stdout);
-	//manip->translation.setValue(0,1,0);
 }
 
 void libCoin3D::Texture::makeCenterballManips(Separator^ bone){
-
-	// SoSeparator* separator = new SoSeparator;
-	// separator->ref();
-	// bone->addChild(separator);
-
-	// SoScale* myScale = new SoScale();
-	//separator->addChild(myScale);
-	//myScale->scaleFactor.setValue(16,16,16);
-
-	////SOSFVec3f* translation=new SOSFVec3;
-
-	//CenterballDragger^ _centerballDragger= gcnew CenterballDragger();
-	//float val=8.0/16.0;
-	//_centerballDragger->setTranslation(9*val,9*val,3.5*val);
-	//
-	// separator->addChild(_centerballDragger->getNode());
-
-	// //if the bone has a transform then use it to center the centerball
-	// //getNode()->translation.setValue(
-
-
-	// SoDrawStyle *drawStyle  = new SoDrawStyle;
-	//drawStyle->style=SoDrawStyle::FILLED;
-	//separator->addChild(drawStyle);
-
-
-	//_centerballDragger->getManip()->getDragger()->addValueChangedCallback(ManipCallBack,_centerballDragger->getManip());
-
 }
-/////////////////////////////////////////////////////////////////////////////////////
 
 libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, Planes plane)
 {
@@ -306,13 +270,8 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 
 	SoTransform *myTransform = new SoTransform;
 	separator->addChild(myTransform);
-	//separator->addChild(scaleSeparator);
 	scaleSeparator->addChild(myDragger);
 
-
-	//////////
-	//separator->addChild(_centerballDragger->getNode());
-	////////
 
 	SoTexture2 *texture = new SoTexture2;
 

@@ -31,12 +31,18 @@ namespace WristVizualizer
         CenterballDragger _centerballDragger;//the current centerball dragger
         Separator _rootSeparator;//the eparator containing the centerball
         Boolean _centerballVisible = true;
+        Boolean drawVolume = false;
 
         //node for the volume render
         CallbackNode volNode;
+        Boolean isVolumeRenderEnabled;
 
-        public TextureController(Separator root, Separator[] bones, TransformParser parser)
+        CT mri;//for getting the texture info
+
+        public TextureController(Separator root, Separator[] bones, TransformParser parser,Boolean IsVolumeRenderEnabled)
         {
+
+            isVolumeRenderEnabled = IsVolumeRenderEnabled;
             _root = root;
             _bones = bones;
             _parser = parser;
@@ -57,6 +63,11 @@ namespace WristVizualizer
 
             _transformHashtables = parser.getArrayOfTransformHashtables();
             _textureControl = new TextureControl(parser.getArrayOfAllignmentSteps());
+            if (!isVolumeRenderEnabled)
+            {
+                _textureControl.disableVolumeItems();
+
+            }
             _fullWristControl = new FullWristControl();
             _fullWristControl.setupControl(WristFilesystem.LongBoneNames, false);
             _mainControlPanel = new WristPanelLayoutControl();
@@ -105,24 +116,59 @@ namespace WristVizualizer
 
           
             _rootSeparator.addChild(_centerballDragger);
-            //_centerballDragger.setRotation(rotation[0], rotation[1], rotation[2]);
-            //_centerballDragger.setCenter(center[0] / scaleValues[0], center[1] / scaleValues[1], center[2] / scaleValues[2]);
             beginningTranslation = _textureControl.getCurrentTranslation();
 
-            //tempFUNC myFuncObj = new tempFUNC(_textureControl_EditableTransformChangedFromCenterball);
             CenterballDragger.delFunc d = new CenterballDragger.delFunc(_textureControl_EditableTransformChangedFromCenterball);
             _centerballDragger.addCB(d);
-
-
-           //the vol node neads a texture--preferably some kind of int array
-            volNode = new CallbackNode();
-            volNode.setUpCallBack();
-            _root.addChild(volNode);
-            //////////////////////////////////////
 
             wasRotated();
         }
 
+
+
+        public void setMRI(CT m, bool isLeft)
+        {
+            mri = m;
+            //now need to gather information representing the CT data, then pass it to the volNode
+            //the volNode can then load it into openGL at will
+            int x = mri.width; int y=mri.height; int z=mri.depth;
+            int w = (int) (x*mri.voxelSizeX);
+            int h = (int) (y* mri.voxelSizeY);
+            int l = (int) (z* mri.voxelSizeZ);
+            Console.WriteLine("cropped size of mri data" + w + ", " + h + ", " + l);
+            int dataSize = x * y * z * 4;
+            int[] allDatint=new int[dataSize];
+            Console.WriteLine("data size from C# "+dataSize+", ");
+          
+            for(int i=0;i<x;i++){
+                for(int j=0;j<y;j++){
+                    for(int k=0;k<z;k++){
+                        int v = (i + x * (j + k * y)) ;
+                        //int v = (k + z * (j + i * y)) * 4;
+                        //for (int hl = 0; hl < 4; hl++)
+                        //{
+                        //    allDatint[v + hl] = mri.getVoxel_as(i, j, k, 0);
+                        //    //if (mri.getVoxel_as(i, j, k, 0) >254) Console.WriteLine(v + ": " + mri.getVoxel_as(i, j, k, 0) + " stored: " + allDatint[v + hl]);
+                        //}
+
+                        allDatint[v + 0] = mri.getVoxel_as(i, j, k, 0);
+                        allDatint[v + 1] = mri.getVoxel_as(i, j, k, 0);
+                        allDatint[v + 2] = mri.getVoxel_as(i, j, k, 0);
+                        allDatint[v + 3] = 255;
+                    }
+                }
+            }
+
+            //for (int ik = 0; ik < x * y * z * 4;ik++ )
+            //{
+            //    if(allDatint[ik]>100)Console.WriteLine("d: " + allDatint[ik]);
+            //}
+            Console.WriteLine("done printing data");
+            volNode = new CallbackNode(w,h,l,x,y,z,allDatint,isLeft);
+            volNode.setUpCallBack();
+            _root.addChild(volNode);
+
+        }
 
         public bool wasRotated()
         {
@@ -150,20 +196,20 @@ namespace WristVizualizer
 
         public void resetCenterball()
         {
-            if (_centerballDragger != null && _textureControl.isEnabled())//&& not disabled
+            if (_centerballDragger != null && _textureControl.isEnabled() && _textureControl.getshowManipulatorChecked())//&& not disabled
             {
                 //makevisible
                 if (!_centerballVisible)
                 {
                     _centerballVisible = true;
-                    _root.addChild(_rootSeparator);
+                    _root.addChildAtIndex(_rootSeparator,0);
                 }
 
                 _rootSeparator.removeChild(_centerballDragger);
 
                 _centerballDragger = null;
                 _centerballDragger = new CenterballDragger();
-                _rootSeparator.addChild(_centerballDragger);
+                _rootSeparator.addChildAtIndex(_centerballDragger,1);
 
                 float[] center = new float[3];
                 center = _textureControl.getCurrentCenterOfRotation();
@@ -184,7 +230,7 @@ namespace WristVizualizer
                 CenterballDragger.delFunc d = new CenterballDragger.delFunc(_textureControl_EditableTransformChangedFromCenterball);
                 _centerballDragger.addCB(d);
             }
-            else if (_centerballDragger != null && !_textureControl.isEnabled())//&& disabled
+            else if (_centerballDragger != null && (!_textureControl.isEnabled() || !_textureControl.getshowManipulatorChecked()))//&& disabled
             {
                 //hide
                 if (_centerballVisible)
@@ -211,7 +257,6 @@ namespace WristVizualizer
             _textureControl.SelectedTransformChanged += new TextureControl.SelectedTransformChangedHandler(_textureControl_SelectedTransformChanged);
             _textureControl.EditableTransformChanged += new EventHandler(_textureControl_EditableTransformChanged);
             _fullWristControl.BoneHideChanged += new BoneHideChangedHandler(_fullWristControl_BoneHideChanged);
-
             //setup up listeners for manipulators
         }
 
@@ -221,8 +266,6 @@ namespace WristVizualizer
             _textureControl.EditableTransformChanged -= new EventHandler(_textureControl_EditableTransformChanged);
             _fullWristControl.BoneHideChanged -= new BoneHideChangedHandler(_fullWristControl_BoneHideChanged);
             //remove listeners for manipulators
-
-
         }
 
 
@@ -238,14 +281,28 @@ namespace WristVizualizer
             }
             else
             {
-                _root.addChild(_bones[e.BoneIndex]);
+                //have to add child to beginning, otherwise rendering order is screwed up
+                //point clouds need to be rendered first
+                _root.addChildToBeginning(_bones[e.BoneIndex]);
                 _bones[e.BoneIndex].unref();
             }
         }
 
+        void _textureControl_DisplayVolumeCheckboxChanged()
+        {
+            //chnage the bool val for volNode or something
+            volNode.setDoDrawVolume(_textureControl.getDisplayVolumeChecked());
+
+        }
 
         void _textureControl_EditableTransformChanged(object sender, EventArgs e)
         {
+
+            if(volNode!=null){
+                volNode.setDoDrawVolume(_textureControl.getDisplayVolumeChecked());
+                volNode.setOpacity(_textureControl.getOpacity());
+                volNode.setSliceNum(_textureControl.getNumSlices());
+            }
 
             if (CBenabled)
             {
@@ -264,28 +321,6 @@ namespace WristVizualizer
 
                 //add edited
                 _bones[boneIndex].addTransform(tfrm);
-
-
-                ////call the manipulator method
-                //float[] rotation = _textureControl.getCurrentRotation();
-                //float[] translation = _textureControl.getCurrentTranslation();
-                //float[] center = _textureControl.getCurrentCenterOfRotation();
-                ////translation[0] += center[0];
-                ////translation[1] += center[1];
-                ////translation[2] += center[2];
-
-                //float xr,yr,zr,xt,yt,zt;
-                //xr=rotation[0] - currRotation[0];yr=rotation[1] - currRotation[1];zr= rotation[2] - currRotation[2];
-                //xt = currTranslation[0] - translation[0]; yt = currTranslation[1] - translation[1]; zt = currTranslation[2] - translation[2];
-              
-                //xt = translation[0]; yt = translation[1]; zt = translation[2];
-                //xt /= scaleValues[0]; yt /= scaleValues[1]; zt /= scaleValues[2];
-
-                //bool doTranslate = !wasRotated();
-                //_centerballDragger.memberCallbackFromText((translation[0] - beginningTranslation[0]) / scaleValues[0], (translation[1] - beginningTranslation[1]) / scaleValues[1], (translation[2] - beginningTranslation[2]) / scaleValues[2], xr, yr, zr, doTranslate);
-                //thisone//_centerballDragger.memberCallbackFromText((translation[0] + center[0]) / scaleValues[0], (translation[1] + center[1]) / scaleValues[1], (translation[2] + center[2]) / scaleValues[2], xr, yr, zr, doTranslate);
-                //_centerballDragger.memberCallbackFromText(xt,yt,zt, xr,yr,zr);
-
 
                 resetCenterball();
                 //next thing-after each text box thing, create a new centerball, give it the above calculated locaiton for a new center
@@ -309,9 +344,7 @@ namespace WristVizualizer
             //often times the values are too small so I have deciding to limit the manipulator to movement broader than m
             float[] center = _textureControl.getCurrentCenterOfRotation();
             float[] trans = _textureControl.getCurrentTranslation();
-
-
-
+            //an epsilon value to get rid of small movements
             float m = 0.0005f;
             if (Math.Abs(x) < m)
             {
@@ -350,16 +383,7 @@ namespace WristVizualizer
 
             wasRotated();
             CBenabled = true;
-
-            //if (Math.Abs(center[0] + trans[0] + x) > 252 || Math.Abs(center[1] + trans[1] + y) > 252 || Math.Abs(center[2] + trans[2] + z) > 252)
-            //{
-            //    Console.WriteLine("resetting");
-            //    resetCenterball();
-            //    //_centerballDragger.setCBEnabled(false);
-            //} 
         }
-
-
 
 
         void _textureControl_SelectedTransformChanged()

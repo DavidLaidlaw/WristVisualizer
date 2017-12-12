@@ -12,10 +12,14 @@ namespace WristVizualizer
     {
         public delegate void SelectedTransformChangedHandler();
         public event SelectedTransformChangedHandler SelectedTransformChanged;
-
         public event EventHandler EditableTransformChanged;
 
+        //IF ADDING NEW ADJUSTMENTS to the volume or any of the bones, can call the pre existing event handler
+        //public delegate void DisplayVolumeCheckboxHandler();
+        //public event DisplayVolumeCheckboxHandler DisplayVolumeCheckboxChanged;
+
         private bool localEditingInProgress;
+  
 
        
 
@@ -130,25 +134,6 @@ namespace WristVizualizer
             centerRotation[1] = (double)numericUpDownCenterY.Value;
             centerRotation[2] = (double)numericUpDownCenterZ.Value;
 
-
-            //convert rx,ry,rz, angle, into roll, pitch, yaw
-            //double q0 = Math.Cos(angle / 2);
-            //double q1 = Math.Sin(angle / 2) *Math.Cos(rx);
-            //double q2 = Math.Sin(angle / 2) * Math.Cos(ry);
-            //double q3 = Math.Sin(angle / 2) * Math.Cos(rz);
-
-            //to euler
-            //double roll = -1*(Math.Atan2(2 * (q0 * q1 + q2 * q3), 1 - 2 * (q1 * q1 + q2 * q2)));
-            //double pitch = Math.Asin(2 * (q0 * q2 - q3 * q1));
-            //double yaw = -Math.Atan2(2 * (q0 * q3 + q1 * q2), 1 - 2 * (q2 * q2 + q3 * q3));
-
-            //convert back to angle axis
-            //double cAngle = 2 * Math.Cos(Math.Cos(roll / 2) * Math.Cos(pitch / 2) * Math.Cos(yaw / 2) + Math.Sin(roll / 2) * Math.Sin(pitch / 2) * Math.Sin(yaw / 2));
-            //double cRx = Math.Acos((Math.Sin(roll / 2) * Math.Cos(pitch / 2) * Math.Cos(yaw / 2) - Math.Cos(roll / 2) * Math.Sin(pitch / 2) * Math.Sin(yaw / 2)) / Math.Sin(cAngle / 2));
-            //double cRy = Math.Acos((Math.Cos(roll / 2) * Math.Sin(pitch / 2) * Math.Cos(yaw / 2) + Math.Sin(roll / 2) * Math.Cos(pitch / 2) * Math.Sin(yaw / 2)) / Math.Sin(cAngle / 2));
-            //double cRz = Math.Acos((Math.Cos(roll / 2) * Math.Cos(pitch / 2) * Math.Sin(yaw / 2) - Math.Sin(roll / 2) * Math.Sin(pitch / 2) * Math.Cos(yaw / 2)) / Math.Sin(cAngle / 2));
-
-
             //use a method specially designed for getting roll, pitch, and yaw
             float[] quat = new float[4];
             quat[0] = q0;
@@ -172,16 +157,6 @@ namespace WristVizualizer
             if (yaw > 3.1416) yaw = -Math.PI + (yaw - Math.PI);
             if (yaw < -3.1416) yaw = Math.PI + (yaw - (-1) * Math.PI);
 
-            //Console.WriteLine("original angle, axis " + angle + ": " + rx + ", " + ry + ", " + rz);
-            //Console.WriteLine("converted angle, axis " + cAngle + ": " + cRx + ", " + cRy + ", " + cRz);
-            //Console.WriteLine("quats " + q0 + ", " + q1 + ", " + q2 + ", " + q3);
-            //Console.WriteLine("roll,pitch,yaw:  " + roll + ", " + pitch + ", " + yaw);
-            
-            //TODO convert directly to rotation matrix instead
-            //libWrist.TransformMatrix rotQuat = new libWrist.TransformMatrix();
-            //rotQuat.createFromQuaternions(q0, q1, q2, q3,centerRotation);//will also need to take the center into account
-
-            //Console.WriteLine("roll,pitch,yaw : " + (decimal)roll + ", " + (decimal)pitch + ", " + (decimal)yaw);
             //test
             numericUpDownRotX.Value = (decimal)yaw;
             numericUpDownRotY.Value = (decimal)pitch;
@@ -372,19 +347,70 @@ public void print_euler(float[] quat)
           to_angle(euler[2])+"\n");
 }
 
-//public int main1(float[] quat)
-//{
-
-//  //rot.setValue(SbVec3f(0,1,0), M_PI/2);
-//  //print_euler(rot);
-
-//  //rot.setValue(SbVec3f(1,0,0), M_PI/2);
-//  //print_euler(rot);
-
-//  //rot.setValue(SbVec3f(0,0,1), M_PI/2);
-//  //print_euler(rot);
-//}
 
 
+//determines whether or not the volume rendering of the CT data is visible
+private void checkBox1_CheckedChanged(object sender, EventArgs e)
+{
+    //disable or enable volume
+    //DisplayVolumeCheckboxChanged();
+
+    if (EditableTransformChanged != null)
+        EditableTransformChanged(this, new EventArgs());
+}
+
+public bool getDisplayVolumeChecked()
+{
+    return checkBox1.Checked;
+}
+
+
+//controls number of proxies geometries to texture
+private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+{
+
+    if (EditableTransformChanged != null)
+        EditableTransformChanged(this, new EventArgs());
+}
+
+public int getNumSlices()
+{
+    return (int) numberOfSlices.Value;
+}
+
+//changes the opacity of the displayed volume render
+private void numericUpDown1_ValueChanged_1(object sender, EventArgs e)
+
+{
+
+    if (EditableTransformChanged != null)
+        EditableTransformChanged(this, new EventArgs());
+
+}
+
+public float getOpacity()
+{
+    return (float)OpacityBox.Value;
+}
+
+private void showManipulator_CheckedChanged(object sender, EventArgs e)
+{
+    if (EditableTransformChanged != null)
+        EditableTransformChanged(this, new EventArgs());
+}
+
+public bool getshowManipulatorChecked()
+{
+    return showManipulator.Checked;
+}
+
+
+
+internal void disableVolumeItems()
+{
+    checkBox1.Enabled=(false);
+    OpacityBox.Enabled=(false);
+    numberOfSlices.Enabled=(false);
+}
     }
 }

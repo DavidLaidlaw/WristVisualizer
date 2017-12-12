@@ -1,7 +1,8 @@
 #pragma once
-
-#include "glew\glew-1.9.0\include\GL\glew.h"
+#include <Windows.h>
+#include "x64\glew-1.9.0\include\GL\glew.h"
 #include <gl\GL.h>
+#include "Vector.h"
 
 class TextureHandler
 {
@@ -12,7 +13,7 @@ public:
 	/*
 	 *  the binding location of the texture, and dimensions(width,height,length))
 	 */
-	GLuint* create3DTextureBonePreview();
+	GLuint create3DTextureBonePreview(int* d, Vector3 length);
 
 };
 

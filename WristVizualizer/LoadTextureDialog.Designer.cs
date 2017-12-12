@@ -32,6 +32,8 @@ namespace WristVizualizer
             this.buttonOK = new System.Windows.Forms.Button();
             this.textBoxSubjectDirectory = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.loadVolumeRender = new System.Windows.Forms.CheckBox();
+            this.checkBoxEnableStepping = new System.Windows.Forms.CheckBox();
             this.labelErrorImageFile = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.textBoxImageFile = new System.Windows.Forms.TextBox();
@@ -70,7 +72,6 @@ namespace WristVizualizer
             this.panel1 = new System.Windows.Forms.Panel();
             this.radioButtonManual = new System.Windows.Forms.RadioButton();
             this.radioButtonAutomatic = new System.Windows.Forms.RadioButton();
-            this.checkBoxEnableStepping = new System.Windows.Forms.CheckBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMaxZ)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinZ)).BeginInit();
@@ -113,6 +114,7 @@ namespace WristVizualizer
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.loadVolumeRender);
             this.groupBox1.Controls.Add(this.checkBoxEnableStepping);
             this.groupBox1.Controls.Add(this.labelErrorImageFile);
             this.groupBox1.Controls.Add(this.label14);
@@ -153,10 +155,34 @@ namespace WristVizualizer
             this.groupBox1.Controls.Add(this.panel1);
             this.groupBox1.Location = new System.Drawing.Point(12, 12);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(746, 426);
+            this.groupBox1.Size = new System.Drawing.Size(746, 439);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Texture";
+            // 
+            // loadVolumeRender
+            // 
+            this.loadVolumeRender.AutoSize = true;
+            this.loadVolumeRender.Checked = true;
+            this.loadVolumeRender.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.loadVolumeRender.Location = new System.Drawing.Point(112, 416);
+            this.loadVolumeRender.Name = "loadVolumeRender";
+            this.loadVolumeRender.Size = new System.Drawing.Size(126, 17);
+            this.loadVolumeRender.TabIndex = 45;
+            this.loadVolumeRender.Text = "Load Volume Render";
+            this.loadVolumeRender.UseVisualStyleBackColor = true;
+            this.loadVolumeRender.CheckedChanged += new System.EventHandler(this.loadVolumeRender_CheckedChanged);
+            // 
+            // checkBoxEnableStepping
+            // 
+            this.checkBoxEnableStepping.AutoSize = true;
+            this.checkBoxEnableStepping.Location = new System.Drawing.Point(111, 395);
+            this.checkBoxEnableStepping.Name = "checkBoxEnableStepping";
+            this.checkBoxEnableStepping.Size = new System.Drawing.Size(206, 17);
+            this.checkBoxEnableStepping.TabIndex = 44;
+            this.checkBoxEnableStepping.Text = "Enable Stepping Through Registration";
+            this.checkBoxEnableStepping.UseVisualStyleBackColor = true;
+            this.checkBoxEnableStepping.CheckedChanged += new System.EventHandler(this.checkBoxEnableStepping_CheckedChanged);
             // 
             // labelErrorImageFile
             // 
@@ -448,8 +474,8 @@ namespace WristVizualizer
             this.listBoxSeries.Name = "listBoxSeries";
             this.listBoxSeries.Size = new System.Drawing.Size(103, 160);
             this.listBoxSeries.TabIndex = 3;
-            this.listBoxSeries.DoubleClick += new System.EventHandler(this.listBoxSeries_DoubleClick);
             this.listBoxSeries.SelectedIndexChanged += new System.EventHandler(this.listBoxSeries_SelectedIndexChanged);
+            this.listBoxSeries.DoubleClick += new System.EventHandler(this.listBoxSeries_DoubleClick);
             // 
             // labelErrorSubject
             // 
@@ -539,16 +565,6 @@ namespace WristVizualizer
             this.radioButtonAutomatic.UseVisualStyleBackColor = true;
             this.radioButtonAutomatic.CheckedChanged += new System.EventHandler(this.radioButtonMode_CheckedChanged);
             // 
-            // checkBoxEnableStepping
-            // 
-            this.checkBoxEnableStepping.AutoSize = true;
-            this.checkBoxEnableStepping.Location = new System.Drawing.Point(111, 395);
-            this.checkBoxEnableStepping.Name = "checkBoxEnableStepping";
-            this.checkBoxEnableStepping.Size = new System.Drawing.Size(206, 17);
-            this.checkBoxEnableStepping.TabIndex = 44;
-            this.checkBoxEnableStepping.Text = "Enable Stepping Through Registration";
-            this.checkBoxEnableStepping.UseVisualStyleBackColor = true;
-            // 
             // LoadTextureDialog
             // 
             this.AcceptButton = this.buttonOK;
@@ -625,5 +641,6 @@ namespace WristVizualizer
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.TextBox textBoxImageFile;
         private System.Windows.Forms.CheckBox checkBoxEnableStepping;
+        private System.Windows.Forms.CheckBox loadVolumeRender;
     }
 }

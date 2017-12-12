@@ -6,13 +6,14 @@
 #include "Evaluator.h"
 #include "ShaderHandler.h"
 #include "Vector.h"
+#include "TextureHandler.h"
 
 using namespace std;
 
 class MasterCube
 {
 public:
-	MasterCube(void);
+	MasterCube(int w,int h, int l,int x,int y,int z, int* d, bool IsLeft);
 	~MasterCube(void);
 
 	void renderCube();
@@ -22,6 +23,11 @@ public:
 	void initializeGlew();
 	void createAndDrawProxyPieces();
 	Vector3 getViewingAngle();//just return (0,0,-1) for now?
+	void setProxNum(int num);
+	void setDoDrawVolume(bool b);
+	void setSliceNum(int num);
+	void setIsOpaque(bool b);
+	void setOpacity(float o);
 
 private:
 
@@ -47,6 +53,7 @@ private:
 	bool drawTexture;
 	//no interacting mesh;
 	int colorByNormals;
+	bool isLeft;
 
 	ShaderHandler shader;
 	//no draw methods
@@ -54,5 +61,12 @@ private:
 	bool glewIsInit;
 
 	Vector3 length;
+	Vector3 voxSize;
+	int* data;//the texture data
+	TextureHandler texHandler;
+
+	int actNumProx;
+
+	bool doDrawVolume;
 };
 

@@ -12,6 +12,8 @@ CubeGeometry::CubeGeometry(Vector3 c, Vector3 l)
 	setupCornersAndSegments();
 }
 
+
+//don't use this default constructor, its gross and a 2x2x2 cube is unlikely to happen
 CubeGeometry::CubeGeometry()
 {
 	center=Vector3(0,0,0);
@@ -25,21 +27,24 @@ CubeGeometry::~CubeGeometry(void)
 }
 
 
-
+//store values for corners and edge segments of the cube, for doing math on it later
 void CubeGeometry::setupCornersAndSegments(){
 	Vector3 hL=halfLength;
 	Vector3 c=center;
 
-	corners[0]=Vector3(c.x-hL.x,c.y-hL.y,c.z+hL.z);
-	corners[1]=Vector3(c.x-hL.x,c.y+hL.y,c.z+hL.z);
-	corners[2]=Vector3(c.x+hL.x,c.y+hL.y,c.z+hL.z);
-	corners[2]=Vector3(c.x+hL.x,c.y+hL.y,c.z+hL.z);
-	corners[3]=Vector3(c.x+hL.x,c.y-hL.y,c.z+hL.z);
+	//a margin of 3 seems to work well in cutting off edge noise
+	int margin=3;
 
-	corners[4]=Vector3(c.x-hL.x,c.y-hL.y,c.z-hL.z);
-	corners[5]=Vector3(c.x-hL.x,c.y+hL.y,c.z-hL.z);
-	corners[6]=Vector3(c.x+hL.x,c.y+hL.y,c.z-hL.z);
-	corners[7]=Vector3(c.x+hL.x,c.y-hL.y,c.z-hL.z);
+	//establish the corners of the volume's containing cube, cuts of the margin areas
+	corners[0]=Vector3(c.x-hL.x+margin,c.y-hL.y+margin,c.z+hL.z-margin);
+	corners[1]=Vector3(c.x-hL.x+margin,c.y+hL.y-margin,c.z+hL.z-margin);
+	corners[2]=Vector3(c.x+hL.x-margin,c.y+hL.y-margin,c.z+hL.z-margin);
+	corners[3]=Vector3(c.x+hL.x-margin,c.y-hL.y+margin,c.z+hL.z-margin);
+
+	corners[4]=Vector3(c.x-hL.x+margin,c.y-hL.y+margin,c.z-hL.z+margin);
+	corners[5]=Vector3(c.x-hL.x+margin,c.y+hL.y-margin,c.z-hL.z+margin);
+	corners[6]=Vector3(c.x+hL.x-margin,c.y+hL.y-margin,c.z-hL.z+margin);
+	corners[7]=Vector3(c.x+hL.x-margin,c.y-hL.y+margin,c.z-hL.z+margin);
 
 
 	segments[0]=Segment(corners[0],corners[1]);
@@ -63,8 +68,6 @@ void CubeGeometry::draw(){
 
 	glPushMatrix();
 	//these are the outlines of the cube
-
-	//figure this out in terms of corners[]
 	glBegin( GL_QUADS);
 	glColor3f(  1.0f,  1.0f, 0.0f );
 	glVertex3f( c.x+hCL.x, c.y-hCL.y, c.z+hCL.z );
@@ -106,6 +109,8 @@ void CubeGeometry::draw(){
 	glPopMatrix();
 }
 
+
+//i can't remember if i no longer use this function
 Vector3 CubeGeometry::convertModelToTextureCoord (Vector3 modCoord) const{
 	return Vector3((modCoord.x-center.x+halfLength.x)/length.x,(modCoord.y-center.y+halfLength.y)/length.y,(modCoord.z-center.z+halfLength.z)/length.z);
 }

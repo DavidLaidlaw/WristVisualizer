@@ -15,7 +15,7 @@ public:
 	bool hasCorners();
 	float comp(Vector3 c, Vector3 a, Vector3 b);
 	void sortPointsInClockwiseOrderAroundAverageCenter();
-	void draw();
+	void draw(bool isLeft);
 
 private:
 	CubeGeometry cube;

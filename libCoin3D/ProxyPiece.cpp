@@ -1,7 +1,8 @@
 #include "StdAfx.h"
 #include "ProxyPiece.h"
 #include <Windows.h>
-#include <GL/glew.h>
+#include "x64\glew-1.9.0\include\GL\glew.h"
+#include <gl\GL.h>
 
 ProxyPiece::ProxyPiece(const Plane& p, vector<Vector3>& co,const CubeGeometry& c):cube(c),corners(co),plane(p)
 {
@@ -103,7 +104,7 @@ void ProxyPiece::sortPointsInClockwiseOrderAroundAverageCenter(){
 	corners=newList;
 }
 
-void ProxyPiece::draw(){
+void ProxyPiece::draw(bool isLeft){
 	//just draw polys for now
 	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
 			glBegin(GL_POLYGON);
@@ -111,9 +112,17 @@ void ProxyPiece::draw(){
 			for(int i=0;i<corners.size(); i++){
 				//transform corners to local coordinates first? These might be world coordinates
 				Vector3 texCoord=cube.convertModelToTextureCoord(corners.at(i));
-				glTexCoord3f(texCoord.x, texCoord.y,texCoord.z); 
-				glColor4f(texCoord.x, texCoord.y,texCoord.z,0.2f);
-				glVertex3f( corners.at(i).x, corners.at(i).y,corners.at(i).z );
+				float xVal=texCoord.x;
+				if(isLeft){
+					xVal=1.0-xVal;
+				}
+				glTexCoord3f(xVal, texCoord.y,texCoord.z); 
+				//glColor4f(texCoord.x, texCoord.y,texCoord.z,0.2f);
+				
+				/*if (isLeft){
+					xVal=-xVal;
+				}*/
+				glVertex3f(corners.at(i).x, corners.at(i).y,corners.at(i).z );
 			}
 			glEnd();		
 }

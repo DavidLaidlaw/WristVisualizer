@@ -53,6 +53,7 @@ namespace WristVizualizer
         public LoadTextureDialog()
         {
             InitializeComponent();
+            loadVolumeRender.Enabled = false;
 
             labelErrorCropValues.Text = "";
             labelErrorSubject.Text = "";
@@ -170,7 +171,7 @@ namespace WristVizualizer
             _maxZ = Int32.Parse(numericUpDownMaxZ.Text);
         }
 
-        private void run()
+        private CT run()
         {
             _bones = new Separator[TextureSettings.ShortBNames.Length];
             _subjectPath = textBoxSubjectDirectory.Text.Trim();
@@ -241,14 +242,13 @@ namespace WristVizualizer
                 mri.Cropped_SizeX, mri.Cropped_SizeY, mri.Cropped_SizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ);
             Separator plane1 = _texture.makeDragerAndTexture(voxels, Texture.Planes.XY_PLANE);
             Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
-            /////////////////////////////////////////////
-            _texture.makeCenterballManips(_bones[0]);
-            //_texture.makeCenterballManips(_bones[1]);
-            //_texture.makeCenterballManips(_bones[2]);
-            ///////////////////////////////////////////
+
             _root.addChild(plane1);
             _root.addChild(plane2);
             _root.addChild(_texture.createKeyboardCallbackObject(_viewer.Parent_HWND));
+
+            //returning mri in order to pass it into the texture controller, to contrust a texture for volume rendering
+            return mri;
         }
 
         /// <summary>
@@ -260,12 +260,19 @@ namespace WristVizualizer
         {
             _viewer = viewer;
             _root = new Separator();
-            run();
+            CT mri=run();
             _viewer.setSceneGraph(_root);
-            if (checkBoxEnableStepping.Checked)
-                _controller = new TextureController(_root, _bones, _transformParser);
+            
+            if (checkBoxEnableStepping.Checked){
+                _controller = new TextureController(_root, _bones, _transformParser, loadVolumeRender.Checked);
+                if (loadVolumeRender.Checked)
+                {
+                    //if the check box is unchecked it won't bother loading mri stuff
+                    _controller.setMRI(mri, (_side == WristFilesystem.Sides.LEFT));
+                }
+             }
             else
-                _controller = new TextureController(_root, null, null); 
+                _controller = new TextureController(_root, null, null, loadVolumeRender.Checked); 
             return _controller;
         }
 
@@ -654,6 +661,16 @@ namespace WristVizualizer
         {
             //make it so double clicking a series loads that series
             this.buttonOK_Click(sender, null);
+        }
+
+        private void loadVolumeRender_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBoxEnableStepping_CheckedChanged(object sender, EventArgs e)
+        {
+            loadVolumeRender.Enabled = checkBoxEnableStepping.Checked;
         }
     }
 }

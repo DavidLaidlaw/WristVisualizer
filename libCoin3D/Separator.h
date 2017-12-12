@@ -19,8 +19,11 @@ public:
 	void addChild(SoSeparator* child){
 		_separator->addChild(child);
 	}
+
 	
 	void addChild(Node^ child);
+	void addChildToBeginning(Node^ child);
+	void addChildAtIndex(Node^ child, int index);
 	///////////////////////////////
 	void addFile(System::String^ filename);
 	void addFile(System::String^ filename, bool canhide);

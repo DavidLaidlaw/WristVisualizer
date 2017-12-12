@@ -1,16 +1,23 @@
 #include "StdAfx.h"
 #include "CallbackNode.h"
 #include <Inventor\actions\SoGLRenderAction.h>
+#include <Inventor\actions\SoPickAction.h>
+#include <Inventor\actions\SoHandleEventAction.h>
 #include <Inventor\elements\SoCacheElement.h>
 
 
-libCoin3D::CallbackNode::CallbackNode()
+libCoin3D::CallbackNode::CallbackNode(int w ,int h, int l,int x, int y, int z, array<int>^ d, bool IsLeft)
 {
 	//the node
 	volCallback=new SoCallback();
 	volCallback->ref();
-	mCube=new MasterCube();
 
+	//for(int i=0;i<d->Length;i++){
+	//	if(d[i]>100){printf("some data %i \n",d[i]);fflush(stdout);}
+	//}
+	isLeft=IsLeft;
+	cli::pin_ptr<int> pArrayElement = &d[0];
+	mCube=new MasterCube(w,h,l,x,y,z,pArrayElement,isLeft);
 }
 
 
@@ -24,14 +31,33 @@ libCoin3D::CallbackNode::~CallbackNode()
 //open gl rendering callback
 void myGLCallback(void *myData, SoAction *action)
 {
-	if (action->isOfType(SoGLRenderAction::getClassTypeId())){
-		SoCacheElement::invalidate(action->getState());//disables caching so it is always called
-		//printf("call back working\n");
 		MasterCube* mc=(MasterCube*) myData;
-		mc->renderCube();
-	}
+		//next track press and release of events
+
+		if (action->isOfType(SoGLRenderAction::getClassTypeId())){
+			//printf("call back working\n");
+			SoCacheElement::invalidate(action->getState());
+			mc->renderCube();
+		}
+	
+
 }
 
+void libCoin3D::CallbackNode::setDoDrawVolume(bool b){
+	mCube->setDoDrawVolume(b);
+}
+
+void libCoin3D::CallbackNode::setSliceNum(int num){
+		mCube->setSliceNum(num);
+}
+
+void libCoin3D::CallbackNode::SetIsOpaque(bool b){
+	mCube->setIsOpaque(b);
+}
+
+void libCoin3D::CallbackNode::setOpacity(float o){
+	mCube->setOpacity(o);
+}
 
 void libCoin3D::CallbackNode::setUpCallBack(){
 	//pass in the master cube as data 

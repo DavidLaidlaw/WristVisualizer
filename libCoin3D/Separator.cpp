@@ -30,6 +30,16 @@ void libCoin3D::Separator::addChild(Node^ child)
 {
 	_separator->addChild(child->getNode());
 }
+
+void libCoin3D::Separator::addChildToBeginning(Node^ child)
+{
+	_separator->insertChild(child->getNode(),0);
+}
+
+void libCoin3D::Separator::addChildAtIndex(Node^ child, int index)
+{
+	_separator->insertChild(child->getNode(),index);
+}
 /////////////////////////////////////////
 
 

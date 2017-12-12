@@ -5,84 +5,117 @@
 #include <gl\GL.h>
 #include <iostream>
 
-MasterCube::MasterCube(void)
+MasterCube::MasterCube(int w,int h, int l,int x,int y,int z, int* d, bool IsLeft)
 {
-	//initialize glew here
-	//will need it for shader loading
-	//glewInit();
+	doDrawVolume=false;	
 	glewIsInit=false;
+	data=new int[x*y*z*4];
+	isLeft=IsLeft;
 
-	numProxies=15;
-	origNumSlices=21;//will need to take as input
+	length=Vector3(w,h,l);
+	voxSize=Vector3(x,y,z);
+
+	//it is necessary to actually copy this data because the actual data appears to be released by gc in c#
+	for(int i=0;i<voxSize.x*voxSize.y*voxSize.z*4;i++){
+		data[i]=d[i];
+	}
+
+	//number of planes to use in texture render
+	numProxies=50;
+
+	origNumSlices=x;//passed into shader for opacity stuff
 	max=0.5;
 	curr=0;
-	opacityValue=1.0;
+	opacityValue=0.5;
 	threshValue=0.1;
 	startThresh=0.3;
-	isOpaque=1;
+	isOpaque=0;
 	calcNormsOnFly=1;
 	drawOutlines=true;
-	drawTexture=false;
+	drawTexture=true;
 	colorByNormals=0;
 
-	length=Vector3(150,150,130);
 
 	cube=CubeGeometry(Vector3(0,0,0),length);
-	eval;
+	//eval;
 	vector<ProxyPiece> proxyPieces;
 
-	//now time for shader setup
-
-	//glewInit();
-	
 	//then the texture handler will need to handle the textur
-	textureSize=Vector3(1,2,3);//just for holding place
+	textureSize=length;//just for holding place
 }
 
 
 MasterCube::~MasterCube(void)
 {
-	
+
 }
 
+
+void MasterCube::setDoDrawVolume(bool b){
+	doDrawVolume=b;
+}
+
+//the following two functions are the same, sadly
+void MasterCube::setSliceNum(int num){
+		numProxies=num;
+}
+void MasterCube::setProxNum(int num){
+	numProxies=num;
+}
+
+void MasterCube::setIsOpaque(bool b){
+	if(b) isOpaque=1;
+	else isOpaque=0;
+}
+
+
+void MasterCube::setOpacity(float o){
+	opacityValue=o;
+}
+
+
 void MasterCube::initializeGlew(){
-shader.loadTheShaders();
-//read in textures
+
+	shader.loadTheShaders();
+	//read in textures
+	boneBindingLoc = texHandler.create3DTextureBonePreview(data,voxSize);
 }
 
 void MasterCube::drawVolumes(){
-	glEnable(GL_DEPTH_TEST);
-	glPushMatrix();
-	//glLoadIdentity();			
+	if(doDrawVolume){
+		glEnable(GL_DEPTH_TEST);
+		glPushMatrix();	
 
-	glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
-	glTexParameteri( GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
-	glTranslatef(length.x/2,length.y/2,length.z/2);
-	//glRotated(rotations.y, 1.0, 0.0, 0.0);
-	//glRotated(rotations.x, 0.0, 1.0, 0.0);
-	
-	//don't yet know where to place it
-	if(drawOutlines){
-		cube.draw();
-		//this->createAndDrawProxyPieces();
+		glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+		glTexParameteri( GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_NEAREST_MIPMAP_NEAREST);
+		float xVal=length.x/2;
+		if(isLeft){
+			xVal=-xVal;
+		}
+		glTranslatef(xVal,length.y/2,length.z/2);
+
+
+		//for debugging you can uncomment this to see cube edges
+		//if(drawOutlines){
+		//	cube.draw();
+		//	this->createAndDrawProxyPieces();
+		//}
+
+		glColor4f(1,0,0,1);
+		glEnable( GL_CULL_FACE);
+
+		glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
+		glTexParameteri( GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);		
+		glEnable( GL_BLEND);
+		glBlendFunc ( GL_SRC_ALPHA,  GL_ONE_MINUS_SRC_ALPHA);
+
+		if(drawTexture){
+			this->enableTexturing();
+			this->createAndDrawProxyPieces();
+			this->disableTexturing();
+		}
+		glPopMatrix();
 	}
-
-	glColor4f(1,0,0,1);
-	glEnable( GL_CULL_FACE);
-
-	glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
-	glTexParameteri( GL_TEXTURE_3D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);		
-	glEnable( GL_BLEND);
-	glBlendFunc ( GL_SRC_ALPHA,  GL_ONE_MINUS_SRC_ALPHA);
-
-	if(drawTexture){
-		this->enableTexturing();
-		this->createAndDrawProxyPieces();
-		this->disableTexturing();
-	}
-
-	glPopMatrix();
-
 }
 
 
@@ -144,37 +177,27 @@ void MasterCube::createAndDrawProxyPieces(){
 	for(int i=0;i<newPieces.size();i++){
 		proxyPieces.insert(proxyPieces.begin()+i,newPieces.at(i));
 	}
-	////and always draw
-	//if(drawMethod==DrawMethod.triangles){
-	//glBegin(GL2.GL_TRIANGLES);
-	//for(int i=0;i<proxyPieces.size();i++){
-	//proxyPieces.at(i).draw();
-	//}
-	//glEnd();
-	//}
-	//else if(drawMethod==DrawMethod.polygons){
+
+	//for now just draw with polygons, doesn't make a noticeable difference
+	//triangle drawing code exists in the Java volume renderer
 	for(int i=0;i<proxyPieces.size();i++){
-		proxyPieces.at(i).draw();
-	//}
+		proxyPieces.at(i).draw(isLeft);
+		//}
 	}
 }
 
 void MasterCube::renderCube(){
-
+	//if glew didn't init then init glew!
 	if(!glewIsInit){
-	glewExperimental=GL_TRUE;
-    GLenum err = glewInit(); 
-
-    if (GLEW_OK != err)
-    {
-        /* Problem: glewInit failed, something is seriously wrong. */
-        fprintf(stderr, "Error1: %s\n", glewGetErrorString(err));
-
-    }
-
+		glewExperimental=GL_TRUE;
+		GLenum err = glewInit(); 
+		if (GLEW_OK != err)
+		{
+			/* glewInit failed and you probably want to kill yourself */
+			fprintf(stderr, "Error1: %s\n", glewGetErrorString(err));
+		}
 		printf("Error2: %s\n", glewGetErrorString(err));
 		fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));fflush(stdout);
-
 		if(err==GLEW_OK){
 			glewIsInit=true;
 			//a method to initialize glew
@@ -196,20 +219,6 @@ void MasterCube::renderCube(){
 	glEnable(GL_BLEND);
 	glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-	//GLfloat matrix[16]; 
-	//glGetFloatv (GL_MODELVIEW_MATRIX, matrix);
-	//printf("%f %f %f %f\n",matrix[0],matrix[1],matrix[2],matrix[3]);
-	//printf("%f %f %f %f\n",matrix[4],matrix[5],matrix[6],matrix[5]);
-	//printf("%f %f %f %f\n",matrix[8],matrix[9],matrix[10],matrix[11]);
-	//printf("%f %f %f %f\n",matrix[12],matrix[13],matrix[14],matrix[15]);
-	//glBegin(GL_QUADS);
-	//glColor4f(0, 0.7, 0,0.9);glVertex3f(150,0,0);
-	//glColor4f(0.7,0, 0,0.9);glVertex3f(150,150,120);
-	//glColor4f(0.7, 0.7,0,0.9);glVertex3f(0,150,120);
-	//glColor4f(0, 0.7, 0.7,0.9);glVertex3f(0,0,0);
-	//glEnd();
-	//glColor4f(1,1,1,1);
-
 	//time to draw volumes
 	drawVolumes();
 
@@ -226,10 +235,10 @@ Vector3 MasterCube::getViewingAngle(){
 	GLfloat mat[4*4];
 	glGetFloatv( GL_MODELVIEW_MATRIX, mat );
 	//return Vector3(0,0,-1);
-	return Vector3(mat[2],mat[6],mat[10]);
-/*
-		0123
-		4567
-		8901
-		2345*/
+	return Vector3(mat[2],mat[6],mat[10]);//Z-AXIS!!
+	/*
+	0123
+	4567
+	8901
+	2345*/
 }
