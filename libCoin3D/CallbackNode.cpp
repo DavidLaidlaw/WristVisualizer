@@ -6,7 +6,7 @@
 #include <Inventor\elements\SoCacheElement.h>
 
 
-libCoin3D::CallbackNode::CallbackNode(int w ,int h, int l,int x, int y, int z, array<int>^ d, bool IsLeft)
+libCoin3D::CallbackNode::CallbackNode(int w ,int h, int l,int x, int y, int z, cli::array<int>^ d, bool IsLeft)
 {
 	//the node
 	volCallback=new SoCallback();
