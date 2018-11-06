@@ -4,78 +4,6 @@
         <name>GeneralMatrix</name>
     </assembly>
     <members>
-        <!-- Badly formed XML comment ignored for member "T:DotNetMatrix.SingularValueDecomposition" -->
-        <member name="F:DotNetMatrix.SingularValueDecomposition.U">
-            <summary>Arrays for internal storage of U and V.
-            @serial internal storage of U.
-            @serial internal storage of V.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.SingularValueDecomposition.V">
-            <summary>Arrays for internal storage of U and V.
-            @serial internal storage of U.
-            @serial internal storage of V.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.SingularValueDecomposition.s">
-            <summary>Array for internal storage of singular values.
-            @serial internal storage of singular values.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.SingularValueDecomposition.m">
-            <summary>Row and column dimensions.
-            @serial row dimension.
-            @serial column dimension.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.SingularValueDecomposition.n">
-            <summary>Row and column dimensions.
-            @serial row dimension.
-            @serial column dimension.
-            </summary>
-        </member>
-        <member name="M:DotNetMatrix.SingularValueDecomposition.#ctor(DotNetMatrix.GeneralMatrix)">
-            <summary>Construct the singular value decomposition</summary>
-            <param name="Arg">   Rectangular matrix
-            </param>
-            <returns>     Structure to access U, S and V.
-            </returns>
-        </member>
-        <member name="M:DotNetMatrix.SingularValueDecomposition.GetU">
-            <summary>Return the left singular vectors</summary>
-            <returns>     U
-            </returns>
-        </member>
-        <member name="M:DotNetMatrix.SingularValueDecomposition.GetV">
-            <summary>Return the right singular vectors</summary>
-            <returns>     V
-            </returns>
-        </member>
-        <member name="M:DotNetMatrix.SingularValueDecomposition.Norm2">
-            <summary>Two norm</summary>
-            <returns>     max(S)
-            </returns>
-        </member>
-        <member name="M:DotNetMatrix.SingularValueDecomposition.Condition">
-            <summary>Two norm condition number</summary>
-            <returns>     max(S)/min(S)
-            </returns>
-        </member>
-        <member name="M:DotNetMatrix.SingularValueDecomposition.Rank">
-            <summary>Effective numerical matrix rank</summary>
-            <returns>     Number of nonnegligible singular values.
-            </returns>
-        </member>
-        <member name="P:DotNetMatrix.SingularValueDecomposition.SingularValues">
-            <summary>Return the one-dimensional array of singular values</summary>
-            <returns>     diagonal of S.
-            </returns>
-        </member>
-        <member name="P:DotNetMatrix.SingularValueDecomposition.S">
-            <summary>Return the diagonal matrix of singular values</summary>
-            <returns>     S
-            </returns>
-        </member>
         <member name="T:DotNetMatrix.CholeskyDecomposition">
             <summary>Cholesky Decomposition.
             For a symmetric, positive definite matrix A, the Cholesky decomposition
@@ -107,6 +35,11 @@
             <returns>     Structure to access L and isspd flag.
             </returns>
         </member>
+        <member name="P:DotNetMatrix.CholeskyDecomposition.SPD">
+            <summary>Is the matrix symmetric and positive definite?</summary>
+            <returns>     true if A is symmetric and positive definite.
+            </returns>
+        </member>
         <member name="M:DotNetMatrix.CholeskyDecomposition.GetL">
             <summary>Return triangular factor.</summary>
             <returns>     L
@@ -123,82 +56,82 @@
             <exception cref="T:System.SystemException"> Matrix is not symmetric positive definite.
             </exception>
         </member>
-        <member name="P:DotNetMatrix.CholeskyDecomposition.SPD">
-            <summary>Is the matrix symmetric and positive definite?</summary>
-            <returns>     true if A is symmetric and positive definite.
-            </returns>
-        </member>
-        <member name="T:DotNetMatrix.QRDecomposition">
-            <summary>QR Decomposition.
-            For an m-by-n matrix A with m >= n, the QR decomposition is an m-by-n
-            orthogonal matrix Q and an n-by-n upper triangular matrix R so that
-            A = Q*R.
+        <member name="T:DotNetMatrix.EigenvalueDecomposition">
+            <summary>Eigenvalues and eigenvectors of a real matrix. 
+            If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is
+            diagonal and the eigenvector matrix V is orthogonal.
+            I.e. A = V.Multiply(D.Multiply(V.Transpose())) and 
+            V.Multiply(V.Transpose()) equals the identity matrix.
+            If A is not symmetric, then the eigenvalue matrix D is block diagonal
+            with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues,
+            lambda + i*mu, in 2-by-2 blocks, [lambda, mu; -mu, lambda].  The
+            columns of V represent the eigenvectors in the sense that A*V = V*D,
+            i.e. A.Multiply(V) equals V.Multiply(D).  The matrix V may be badly
+            conditioned, or even singular, so the validity of the equation
+            A = V*D*Inverse(V) depends upon V.cond().
             
-            The QR decompostion always exists, even if the matrix does not have
-            full rank, so the constructor will never fail.  The primary use of the
-            QR decomposition is in the least squares solution of nonsquare systems
-            of simultaneous linear equations.  This will fail if IsFullRank()
-            returns false.
             </summary>
         </member>
-        <member name="F:DotNetMatrix.QRDecomposition.QR">
-            <summary>Array for internal storage of decomposition.
-            @serial internal array storage.
+        <member name="F:DotNetMatrix.EigenvalueDecomposition.n">
+            <summary>Row and column dimension (square matrix).
+            @serial matrix dimension.
             </summary>
         </member>
-        <member name="F:DotNetMatrix.QRDecomposition.m">
-            <summary>Row and column dimensions.
-            @serial column dimension.
-            @serial row dimension.
+        <member name="F:DotNetMatrix.EigenvalueDecomposition.issymmetric">
+            <summary>Symmetry flag.
+            @serial internal symmetry flag.
             </summary>
         </member>
-        <member name="F:DotNetMatrix.QRDecomposition.n">
-            <summary>Row and column dimensions.
-            @serial column dimension.
-            @serial row dimension.
+        <member name="F:DotNetMatrix.EigenvalueDecomposition.d">
+            <summary>Arrays for internal storage of eigenvalues.
+            @serial internal storage of eigenvalues.
             </summary>
         </member>
-        <member name="F:DotNetMatrix.QRDecomposition.Rdiag">
-            <summary>Array for internal storage of diagonal of R.
-            @serial diagonal of R.
+        <member name="F:DotNetMatrix.EigenvalueDecomposition.e">
+            <summary>Arrays for internal storage of eigenvalues.
+            @serial internal storage of eigenvalues.
             </summary>
         </member>
-        <member name="M:DotNetMatrix.QRDecomposition.#ctor(DotNetMatrix.GeneralMatrix)">
-            <summary>QR Decomposition, computed by Householder reflections.</summary>
-            <param name="A">   Rectangular matrix
+        <member name="F:DotNetMatrix.EigenvalueDecomposition.V">
+            <summary>Array for internal storage of eigenvectors.
+            @serial internal storage of eigenvectors.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.EigenvalueDecomposition.H">
+            <summary>Array for internal storage of nonsymmetric Hessenberg form.
+            @serial internal storage of nonsymmetric Hessenberg form.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.EigenvalueDecomposition.ort">
+            <summary>Working storage for nonsymmetric algorithm.
+            @serial working storage for nonsymmetric algorithm.
+            </summary>
+        </member>
+        <member name="M:DotNetMatrix.EigenvalueDecomposition.#ctor(DotNetMatrix.GeneralMatrix)">
+            <summary>Check for symmetry, then construct the eigenvalue decomposition</summary>
+            <param name="Arg">   Square matrix
             </param>
-            <returns>     Structure to access R and the Householder vectors and compute Q.
+            <returns>     Structure to access D and V.
             </returns>
         </member>
-        <member name="M:DotNetMatrix.QRDecomposition.Solve(DotNetMatrix.GeneralMatrix)">
-            <summary>Least squares solution of A*X = B</summary>
-            <param name="B">   A Matrix with as many rows as A and any number of columns.
-            </param>
-            <returns>     X that minimizes the two norm of Q*R*X-B.
-            </returns>
-            <exception cref="T:System.ArgumentException"> Matrix row dimensions must agree.
-            </exception>
-            <exception cref="T:System.SystemException"> Matrix is rank deficient.
-            </exception>
-        </member>
-        <member name="P:DotNetMatrix.QRDecomposition.FullRank">
-            <summary>Is the matrix full rank?</summary>
-            <returns>     true if R, and hence A, has full rank.
+        <member name="P:DotNetMatrix.EigenvalueDecomposition.RealEigenvalues">
+            <summary>Return the real parts of the eigenvalues</summary>
+            <returns>     real(diag(D))
             </returns>
         </member>
-        <member name="P:DotNetMatrix.QRDecomposition.H">
-            <summary>Return the Householder vectors</summary>
-            <returns>     Lower trapezoidal matrix whose columns define the reflections
+        <member name="P:DotNetMatrix.EigenvalueDecomposition.ImagEigenvalues">
+            <summary>Return the imaginary parts of the eigenvalues</summary>
+            <returns>     imag(diag(D))
             </returns>
         </member>
-        <member name="P:DotNetMatrix.QRDecomposition.R">
-            <summary>Return the upper triangular factor</summary>
-            <returns>     R
+        <member name="P:DotNetMatrix.EigenvalueDecomposition.D">
+            <summary>Return the block diagonal eigenvalue matrix</summary>
+            <returns>     D
             </returns>
         </member>
-        <member name="P:DotNetMatrix.QRDecomposition.Q">
-            <summary>Generate and return the (economy-sized) orthogonal factor</summary>
-            <returns>     Q
+        <member name="M:DotNetMatrix.EigenvalueDecomposition.GetV">
+            <summary>Return the eigenvector matrix</summary>
+            <returns>     V
             </returns>
         </member>
         <member name="M:DotNetMatrix.Maths.Hypot(System.Double,System.Double)">
@@ -269,6 +202,36 @@
             </param>
             <exception cref="T:System.ArgumentException">   Array length must be a multiple of m.
             </exception>
+        </member>
+        <member name="P:DotNetMatrix.GeneralMatrix.Array">
+            <summary>Access the internal two-dimensional array.</summary>
+            <returns>     Pointer to the two-dimensional array of matrix elements.
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.GeneralMatrix.ArrayCopy">
+            <summary>Copy the internal two-dimensional array.</summary>
+            <returns>     Two-dimensional array copy of matrix elements.
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.GeneralMatrix.ColumnPackedCopy">
+            <summary>Make a one-dimensional column packed copy of the internal array.</summary>
+            <returns>     Matrix elements packed in a one-dimensional array by columns.
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.GeneralMatrix.RowPackedCopy">
+            <summary>Make a one-dimensional row packed copy of the internal array.</summary>
+            <returns>     Matrix elements packed in a one-dimensional array by rows.
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.GeneralMatrix.RowDimension">
+            <summary>Get row dimension.</summary>
+            <returns>     m, the number of rows.
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.GeneralMatrix.ColumnDimension">
+            <summary>Get column dimension.</summary>
+            <returns>     n, the number of columns.
+            </returns>
         </member>
         <member name="M:DotNetMatrix.GeneralMatrix.Create(System.Double[][])">
             <summary>Construct a matrix from a copy of a 2-D array.</summary>
@@ -684,36 +647,6 @@
             <param name="info"></param>
             <param name="context"></param>
         </member>
-        <member name="P:DotNetMatrix.GeneralMatrix.Array">
-            <summary>Access the internal two-dimensional array.</summary>
-            <returns>     Pointer to the two-dimensional array of matrix elements.
-            </returns>
-        </member>
-        <member name="P:DotNetMatrix.GeneralMatrix.ArrayCopy">
-            <summary>Copy the internal two-dimensional array.</summary>
-            <returns>     Two-dimensional array copy of matrix elements.
-            </returns>
-        </member>
-        <member name="P:DotNetMatrix.GeneralMatrix.ColumnPackedCopy">
-            <summary>Make a one-dimensional column packed copy of the internal array.</summary>
-            <returns>     Matrix elements packed in a one-dimensional array by columns.
-            </returns>
-        </member>
-        <member name="P:DotNetMatrix.GeneralMatrix.RowPackedCopy">
-            <summary>Make a one-dimensional row packed copy of the internal array.</summary>
-            <returns>     Matrix elements packed in a one-dimensional array by rows.
-            </returns>
-        </member>
-        <member name="P:DotNetMatrix.GeneralMatrix.RowDimension">
-            <summary>Get row dimension.</summary>
-            <returns>     m, the number of rows.
-            </returns>
-        </member>
-        <member name="P:DotNetMatrix.GeneralMatrix.ColumnDimension">
-            <summary>Get column dimension.</summary>
-            <returns>     n, the number of columns.
-            </returns>
-        </member>
         <!-- Badly formed XML comment ignored for member "T:DotNetMatrix.LUDecomposition" -->
         <member name="F:DotNetMatrix.LUDecomposition.LU">
             <summary>Array for internal storage of decomposition.
@@ -753,24 +686,6 @@
             <returns>     Structure to access L, U and piv.
             </returns>
         </member>
-        <member name="M:DotNetMatrix.LUDecomposition.Determinant">
-            <summary>Determinant</summary>
-            <returns>     det(A)
-            </returns>
-            <exception cref="T:System.ArgumentException">  Matrix must be square
-            </exception>
-        </member>
-        <member name="M:DotNetMatrix.LUDecomposition.Solve(DotNetMatrix.GeneralMatrix)">
-            <summary>Solve A*X = B</summary>
-            <param name="B">  A Matrix with as many rows as A and any number of columns.
-            </param>
-            <returns>     X so that L*U*X = B(piv,:)
-            </returns>
-            <exception cref="T:System.ArgumentException"> Matrix row dimensions must agree.
-            </exception>
-            <exception cref="T:System.SystemException"> Matrix is singular.
-            </exception>
-        </member>
         <member name="P:DotNetMatrix.LUDecomposition.IsNonSingular">
             <summary>Is the matrix nonsingular?</summary>
             <returns>     true if U, and hence A, is nonsingular.
@@ -796,82 +711,167 @@
             <returns>     (double) piv
             </returns>
         </member>
-        <member name="T:DotNetMatrix.EigenvalueDecomposition">
-            <summary>Eigenvalues and eigenvectors of a real matrix. 
-            If A is symmetric, then A = V*D*V' where the eigenvalue matrix D is
-            diagonal and the eigenvector matrix V is orthogonal.
-            I.e. A = V.Multiply(D.Multiply(V.Transpose())) and 
-            V.Multiply(V.Transpose()) equals the identity matrix.
-            If A is not symmetric, then the eigenvalue matrix D is block diagonal
-            with the real eigenvalues in 1-by-1 blocks and any complex eigenvalues,
-            lambda + i*mu, in 2-by-2 blocks, [lambda, mu; -mu, lambda].  The
-            columns of V represent the eigenvectors in the sense that A*V = V*D,
-            i.e. A.Multiply(V) equals V.Multiply(D).  The matrix V may be badly
-            conditioned, or even singular, so the validity of the equation
-            A = V*D*Inverse(V) depends upon V.cond().
-            
-            </summary>
+        <member name="M:DotNetMatrix.LUDecomposition.Determinant">
+            <summary>Determinant</summary>
+            <returns>     det(A)
+            </returns>
+            <exception cref="T:System.ArgumentException">  Matrix must be square
+            </exception>
         </member>
-        <member name="F:DotNetMatrix.EigenvalueDecomposition.n">
-            <summary>Row and column dimension (square matrix).
-            @serial matrix dimension.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.EigenvalueDecomposition.issymmetric">
-            <summary>Symmetry flag.
-            @serial internal symmetry flag.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.EigenvalueDecomposition.d">
-            <summary>Arrays for internal storage of eigenvalues.
-            @serial internal storage of eigenvalues.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.EigenvalueDecomposition.e">
-            <summary>Arrays for internal storage of eigenvalues.
-            @serial internal storage of eigenvalues.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.EigenvalueDecomposition.V">
-            <summary>Array for internal storage of eigenvectors.
-            @serial internal storage of eigenvectors.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.EigenvalueDecomposition.H">
-            <summary>Array for internal storage of nonsymmetric Hessenberg form.
-            @serial internal storage of nonsymmetric Hessenberg form.
-            </summary>
-        </member>
-        <member name="F:DotNetMatrix.EigenvalueDecomposition.ort">
-            <summary>Working storage for nonsymmetric algorithm.
-            @serial working storage for nonsymmetric algorithm.
-            </summary>
-        </member>
-        <member name="M:DotNetMatrix.EigenvalueDecomposition.#ctor(DotNetMatrix.GeneralMatrix)">
-            <summary>Check for symmetry, then construct the eigenvalue decomposition</summary>
-            <param name="Arg">   Square matrix
+        <member name="M:DotNetMatrix.LUDecomposition.Solve(DotNetMatrix.GeneralMatrix)">
+            <summary>Solve A*X = B</summary>
+            <param name="B">  A Matrix with as many rows as A and any number of columns.
             </param>
-            <returns>     Structure to access D and V.
+            <returns>     X so that L*U*X = B(piv,:)
+            </returns>
+            <exception cref="T:System.ArgumentException"> Matrix row dimensions must agree.
+            </exception>
+            <exception cref="T:System.SystemException"> Matrix is singular.
+            </exception>
+        </member>
+        <member name="T:DotNetMatrix.QRDecomposition">
+            <summary>QR Decomposition.
+            For an m-by-n matrix A with m >= n, the QR decomposition is an m-by-n
+            orthogonal matrix Q and an n-by-n upper triangular matrix R so that
+            A = Q*R.
+            
+            The QR decompostion always exists, even if the matrix does not have
+            full rank, so the constructor will never fail.  The primary use of the
+            QR decomposition is in the least squares solution of nonsquare systems
+            of simultaneous linear equations.  This will fail if IsFullRank()
+            returns false.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.QRDecomposition.QR">
+            <summary>Array for internal storage of decomposition.
+            @serial internal array storage.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.QRDecomposition.m">
+            <summary>Row and column dimensions.
+            @serial column dimension.
+            @serial row dimension.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.QRDecomposition.n">
+            <summary>Row and column dimensions.
+            @serial column dimension.
+            @serial row dimension.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.QRDecomposition.Rdiag">
+            <summary>Array for internal storage of diagonal of R.
+            @serial diagonal of R.
+            </summary>
+        </member>
+        <member name="M:DotNetMatrix.QRDecomposition.#ctor(DotNetMatrix.GeneralMatrix)">
+            <summary>QR Decomposition, computed by Householder reflections.</summary>
+            <param name="A">   Rectangular matrix
+            </param>
+            <returns>     Structure to access R and the Householder vectors and compute Q.
             </returns>
         </member>
-        <member name="M:DotNetMatrix.EigenvalueDecomposition.GetV">
-            <summary>Return the eigenvector matrix</summary>
+        <member name="P:DotNetMatrix.QRDecomposition.FullRank">
+            <summary>Is the matrix full rank?</summary>
+            <returns>     true if R, and hence A, has full rank.
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.QRDecomposition.H">
+            <summary>Return the Householder vectors</summary>
+            <returns>     Lower trapezoidal matrix whose columns define the reflections
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.QRDecomposition.R">
+            <summary>Return the upper triangular factor</summary>
+            <returns>     R
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.QRDecomposition.Q">
+            <summary>Generate and return the (economy-sized) orthogonal factor</summary>
+            <returns>     Q
+            </returns>
+        </member>
+        <member name="M:DotNetMatrix.QRDecomposition.Solve(DotNetMatrix.GeneralMatrix)">
+            <summary>Least squares solution of A*X = B</summary>
+            <param name="B">   A Matrix with as many rows as A and any number of columns.
+            </param>
+            <returns>     X that minimizes the two norm of Q*R*X-B.
+            </returns>
+            <exception cref="T:System.ArgumentException"> Matrix row dimensions must agree.
+            </exception>
+            <exception cref="T:System.SystemException"> Matrix is rank deficient.
+            </exception>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:DotNetMatrix.SingularValueDecomposition" -->
+        <member name="F:DotNetMatrix.SingularValueDecomposition.U">
+            <summary>Arrays for internal storage of U and V.
+            @serial internal storage of U.
+            @serial internal storage of V.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.SingularValueDecomposition.V">
+            <summary>Arrays for internal storage of U and V.
+            @serial internal storage of U.
+            @serial internal storage of V.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.SingularValueDecomposition.s">
+            <summary>Array for internal storage of singular values.
+            @serial internal storage of singular values.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.SingularValueDecomposition.m">
+            <summary>Row and column dimensions.
+            @serial row dimension.
+            @serial column dimension.
+            </summary>
+        </member>
+        <member name="F:DotNetMatrix.SingularValueDecomposition.n">
+            <summary>Row and column dimensions.
+            @serial row dimension.
+            @serial column dimension.
+            </summary>
+        </member>
+        <member name="M:DotNetMatrix.SingularValueDecomposition.#ctor(DotNetMatrix.GeneralMatrix)">
+            <summary>Construct the singular value decomposition</summary>
+            <param name="Arg">   Rectangular matrix
+            </param>
+            <returns>     Structure to access U, S and V.
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.SingularValueDecomposition.SingularValues">
+            <summary>Return the one-dimensional array of singular values</summary>
+            <returns>     diagonal of S.
+            </returns>
+        </member>
+        <member name="P:DotNetMatrix.SingularValueDecomposition.S">
+            <summary>Return the diagonal matrix of singular values</summary>
+            <returns>     S
+            </returns>
+        </member>
+        <member name="M:DotNetMatrix.SingularValueDecomposition.GetU">
+            <summary>Return the left singular vectors</summary>
+            <returns>     U
+            </returns>
+        </member>
+        <member name="M:DotNetMatrix.SingularValueDecomposition.GetV">
+            <summary>Return the right singular vectors</summary>
             <returns>     V
             </returns>
         </member>
-        <member name="P:DotNetMatrix.EigenvalueDecomposition.RealEigenvalues">
-            <summary>Return the real parts of the eigenvalues</summary>
-            <returns>     real(diag(D))
+        <member name="M:DotNetMatrix.SingularValueDecomposition.Norm2">
+            <summary>Two norm</summary>
+            <returns>     max(S)
             </returns>
         </member>
-        <member name="P:DotNetMatrix.EigenvalueDecomposition.ImagEigenvalues">
-            <summary>Return the imaginary parts of the eigenvalues</summary>
-            <returns>     imag(diag(D))
+        <member name="M:DotNetMatrix.SingularValueDecomposition.Condition">
+            <summary>Two norm condition number</summary>
+            <returns>     max(S)/min(S)
             </returns>
         </member>
-        <member name="P:DotNetMatrix.EigenvalueDecomposition.D">
-            <summary>Return the block diagonal eigenvalue matrix</summary>
-            <returns>     D
+        <member name="M:DotNetMatrix.SingularValueDecomposition.Rank">
+            <summary>Effective numerical matrix rank</summary>
+            <returns>     Number of nonnegligible singular values.
             </returns>
         </member>
     </members>
