@@ -52,7 +52,6 @@
     <ROW Property="ALLUSERS" Value="1"/>
     <ROW Property="ARPCOMMENTS" Value="This installer database contains the logic and data required to install [|ProductName]." ValueLocId="*"/>
     <ROW Property="Manufacturer" Value="Brown University"/>
-    <ROW Property="MsiLogging" MultiBuildValue="DefaultBuild:vp"/>
     <ROW Property="ProductCode" Value="1033:{D6F343EA-4755-42D6-A9A0-AF0329813E19} " Type="16"/>
     <ROW Property="ProductLanguage" Value="1033"/>
     <ROW Property="ProductName" Value="WristVisualizer"/>
