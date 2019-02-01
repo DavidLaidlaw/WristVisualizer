@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeneralMatrix", "GeneralMat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "libWrist", "libWrist\libWrist.csproj", "{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupWristVizualizer", "SetupWristVizualizer\SetupWristVizualizer.vdproj", "{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AviFile", "AviFile\AviFile.csproj", "{ABB32A29-AF50-47FA-B243-5FD75A5ABA54}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.GetOptions", "Mono.GetOptions\Mono.GetOptions.csproj", "{77D5FD1D-325D-4379-9D45-00CAC7DE365E}"
@@ -123,22 +121,6 @@ Global
 		{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}.Release|Win32.ActiveCfg = Release|x64
 		{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}.Release|x64.ActiveCfg = Release|x64
 		{B4E7C69A-2C26-44BE-B11D-1D4340C3B8DB}.Release|x64.Build.0 = Release|x64
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.All|Any CPU.ActiveCfg = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.All|Mixed Platforms.ActiveCfg = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.All|Win32.ActiveCfg = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.All|x64.ActiveCfg = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|Any CPU.ActiveCfg = Debug
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|Any CPU.Build.0 = Debug
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|Mixed Platforms.ActiveCfg = Debug
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|Win32.ActiveCfg = Debug
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|Win32.Build.0 = Debug
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Debug|x64.ActiveCfg = Debug
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|Any CPU.ActiveCfg = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|Any CPU.Build.0 = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|Mixed Platforms.ActiveCfg = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|Win32.ActiveCfg = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|Win32.Build.0 = Release
-		{8E917AE5-DE4F-4F14-8A8A-5AB01BC68AF4}.Release|x64.ActiveCfg = Release
 		{ABB32A29-AF50-47FA-B243-5FD75A5ABA54}.All|Any CPU.ActiveCfg = Release|Any CPU
 		{ABB32A29-AF50-47FA-B243-5FD75A5ABA54}.All|Any CPU.Build.0 = Release|Any CPU
 		{ABB32A29-AF50-47FA-B243-5FD75A5ABA54}.All|Mixed Platforms.ActiveCfg = Release|Any CPU

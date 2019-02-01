@@ -2,6 +2,11 @@
 #include "Texture.h"
 
 #include <Inventor/nodes/SoSeparator.h>
+//======$$$
+#include <Inventor/nodes/SoCone.h>
+#include <Inventor/nodes/SoCube.h>
+#include <Inventor/nodes/SoRotationXYZ.h>
+//=========
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/nodes/SoCoordinate3.h>
 #include <Inventor/nodes/SoPointSet.h>
@@ -246,6 +251,70 @@ void ManipCallBack( void * userData, SoDragger *dragger )
 void libCoin3D::Texture::makeCenterballManips(Separator^ bone){
 }
 
+void
+modifyDragger(SoTranslate1Dragger *myDragger){
+    SoSeparator *myTranslator = new SoSeparator;
+    SoSeparator *myTranslatorActive = new SoSeparator;
+    myTranslator->ref();
+    myTranslatorActive->ref();
+   
+    // Materials for the dragger in regular and active states
+    SoMaterial *myMtl = new SoMaterial;
+    SoMaterial *myActiveMtl = new SoMaterial;
+    myMtl->diffuseColor.setValue(0.5,0.5,0.5);
+    myMtl->emissiveColor.setValue(0.5,0.5,0.5);
+    myActiveMtl->diffuseColor.setValue(0.5, 0.5, 0);
+    myActiveMtl->emissiveColor.setValue(0.5, 0.5, 0);
+
+    myTranslator->addChild(myMtl);
+    myTranslatorActive->addChild(myActiveMtl);
+   
+ 
+    SoSeparator* firstCone = new SoSeparator();
+    firstCone->ref();
+    SoCone* myCone = new SoCone();
+    myCone->bottomRadius = 2;
+    myCone->height = 1.5;
+    
+    
+    SoTranslation *myTranslationFirst = new SoTranslation();
+    myTranslationFirst->translation.setValue(5, 0,0);
+
+    SoRotationXYZ* firstRot = new SoRotationXYZ();
+    firstRot->axis=1;
+    firstRot->angle=-1.5708;
+    firstCone->addChild(myCone);
+    firstCone->addChild(myTranslationFirst);
+    firstCone->addChild(firstRot);
+
+    SoTranslation *myTranslationSecond = new SoTranslation();
+    
+    myTranslationSecond->translation.setValue(-5, 0,0);
+    SoRotationXYZ* secondRot = new SoRotationXYZ();
+    secondRot->axis=1;
+    secondRot->angle=1.5708;
+    SoSeparator* secondCone = new SoSeparator();
+    secondCone->ref();
+    secondCone->addChild(myCone);
+    secondCone->addChild(myTranslationSecond);
+    secondCone->addChild(secondRot);
+
+   // Same shape for both versions.
+    SoCube *myCube = new SoCube;
+    myCube->set("width 8 height 1 depth 1");
+    
+    myTranslator->addChild(myCube);
+    myTranslatorActive->addChild(myCube);
+
+    myTranslator->addChild(firstCone);
+    myTranslator->addChild(secondCone);
+    myTranslatorActive->addChild(firstCone);
+    myTranslatorActive->addChild(secondCone);
+
+    myDragger->setPart("translator",myTranslator);
+    myDragger->setPart("translatorActive",myTranslatorActive);
+}
+
 libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, Planes plane)
 {
 
@@ -263,11 +332,12 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	SoDrawStyle *drawStyle  = new SoDrawStyle;
 	drawStyle->style=SoDrawStyle::FILLED;
 	scaleSeparator->addChild(drawStyle);
-
+	
 
 	SoTranslate1Dragger *myDragger = new SoTranslate1Dragger;
+	//modifyDragger(myDragger);
 	myDragger->translation.setValue(0,0,0);
-
+	
 	SoTransform *myTransform = new SoTransform;
 	separator->addChild(myTransform);
 	scaleSeparator->addChild(myDragger);

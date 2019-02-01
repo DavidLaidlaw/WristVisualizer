@@ -231,8 +231,7 @@ libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<Syste
 	SoDrawStyle *drawStyle  = new SoDrawStyle;
 	drawStyle->style=SoDrawStyle::FILLED;
 	scaleSeparator->addChild(drawStyle);
-
-
+	
 	SoTranslate1Dragger *myDragger = new SoTranslate1Dragger;
 	myDragger->translation.setValue(0,0,0);
 

@@ -41,9 +41,11 @@ namespace WristVizualizer
         public float[] getCurrentCenterOfRotation()
         {
             float[] centerOfRotation = new float[3];
+
             centerOfRotation[0] = (float)numericUpDownCenterX.Value;
             centerOfRotation[1] = (float)numericUpDownCenterY.Value;
             centerOfRotation[2] = (float)numericUpDownCenterZ.Value;
+
             return centerOfRotation;
         }
 
@@ -56,12 +58,29 @@ namespace WristVizualizer
             return Rotation;
         }
 
+	public float[] getCenterBallStartPos()
+	{ 
+	    float[] Translation = new float[3];
+	    	    
+	      
+            Translation[0] = (float)(Math.Abs(numericUpDownCenterX.Maximum - numericUpDownCenterX.Minimum)/(decimal)2.0);
+            Translation[1] = (float)(Math.Abs(numericUpDownCenterY.Maximum - numericUpDownCenterY.Minimum)/(decimal)2.0);
+            Translation[2] = (float)(Math.Abs(numericUpDownCenterZ.Maximum - numericUpDownCenterZ.Minimum)/(decimal)2.0);
+	     return Translation;
+	}
         public float[] getCurrentTranslation()
         {
             float[] Translation = new float[3];
+
             Translation[0] = (float)numericUpDownTransX.Value;
             Translation[1] = (float)numericUpDownTransY.Value;
             Translation[2] = (float)numericUpDownTransZ.Value;
+
+/*
+            Translation[0] = (float)(Math.Abs(numericUpDownCenterX.Maximum) - Math.Abs(numericUpDownCenterX.Minimum)/(decimal)2.0);
+            Translation[1] = (float)(Math.Abs(numericUpDownCenterY.Maximum) - Math.Abs(numericUpDownCenterY.Minimum)/(decimal)2.0);
+            Translation[2] = (float)(Math.Abs(numericUpDownCenterZ.Maximum) - Math.Abs(numericUpDownCenterZ.Minimum)/(decimal)2.0);
+*/
             return Translation;
         }
 

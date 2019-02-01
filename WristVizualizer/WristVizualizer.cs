@@ -298,6 +298,9 @@ namespace WristVizualizer
         private void openFullWristToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog folder = new FolderBrowserDialog();
+	    string lastSubject = RegistrySettings.getSettingString("FullWristLastSubjectDirectory");
+             if (lastSubject.Length > 0)
+                folder.SelectedPath = lastSubject;
 #if DEBUG
             if (System.IO.Directory.Exists(@"L:\Data\NIH_Phase_I\Normal_Male\E17172"))
                 folder.SelectedPath = @"L:\Data\NIH_Phase_I\Normal_Male\E17172";
@@ -331,6 +334,8 @@ namespace WristVizualizer
                             return;
                     }
                     SmartOpenFiles(files, Controller.Types.FullWrist);
+		    //save last Path
+            RegistrySettings.saveSetting( "FullWristLastSubjectDirectory", folder.SelectedPath);
                 }
                 catch (ArgumentException ex)
                 {

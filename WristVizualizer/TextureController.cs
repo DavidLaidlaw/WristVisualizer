@@ -97,14 +97,18 @@ namespace WristVizualizer
             root.addChild(_rootSeparator);
             _centerballVisible = true;
             Scale myScale = new Scale();
-
+	    
+	    float[] _startPos = _textureControl.getCenterBallStartPos();
             _centerballDragger = new CenterballDragger();
-            //get the center of rotation from the form elements
-            center[0] += translate[0];
+	  
+
+	    //get the center of rotation from the form elements
+	    center[0] += translate[0];
             center[1] += translate[1];
             center[2] += translate[2];
-
-
+	    
+	   
+	    _centerballDragger.setCenter(_startPos[0],_startPos[1],_startPos[2] );		
 
             _rootSeparator.addNode(myScale);
             scaleValues = new float[3];
@@ -121,6 +125,7 @@ namespace WristVizualizer
             CenterballDragger.delFunc d = new CenterballDragger.delFunc(_textureControl_EditableTransformChangedFromCenterball);
             _centerballDragger.addCB(d);
 
+	   
             wasRotated();
         }
 
