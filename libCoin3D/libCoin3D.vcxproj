@@ -125,15 +125,19 @@
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>glew32.lib;coin3d.lib;sowin1d.lib;OpenGL32.lib;GlU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(SOWINDIR)\build\msvc9\Debug;$(COINDIR)\lib;$(ProjectDir)x64\glew-1.9.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;coin3d.lib;simage1d.lib;simvoleon2d.lib;sowin1d.lib;OpenGL32.lib;GlU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)x64\glew-1.9.0\lib;$(SolutionDir)Coin3D\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <PostBuildEvent>
       <Command>copy $(ProjectDir)x64\glew-1.9.0\lib\glew32.dll  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
-copy $(SOWINDIR)\build\msvc9\sowin1d.dll  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
-copy $(COINDIR)\bin\coin3d.dll   $(ProjectDir)..\WristVizualizer\bin\x64\Debug</Command>
+copy $(SolutionDir)Coin3D\lib\coin3d.lib $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(SolutionDir)Coin3D\lib\sowin1d.lib $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(SolutionDir)Coin3D\lib\simvoleon2d.lib  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(SolutionDir)Coin3D\lib\simage1d.lib  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(ProjectDir)f.fsh $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(ProjectDir)v.vsh $(ProjectDir)..\WristVizualizer\bin\x64\Debug</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -162,12 +166,18 @@ copy $(COINDIR)\bin\coin3d.dll   $(ProjectDir)..\WristVizualizer\bin\x64\Debug</
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>coin3s.lib;sowin1s.lib;glew32.lib;OpenGL32.lib;GlU32.lib</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(COINDIR)\lib;$(ProjectDir)x64\glew-1.9.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;coin3.lib;simage1.lib;simvoleon2.lib;sowin1.lib;OpenGL32.lib;GlU32.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)Coin3D\lib;$(ProjectDir)x64\glew-1.9.0\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)x64\glew-1.9.0\lib\glew32.dll  $(ProjectDir)..\WristVizualizer\bin\x64\Release</Command>
+      <Command>copy $(ProjectDir)x64\glew-1.9.0\lib\glew32.dll  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(SolutionDir)Coin3D\lib\coin3.lib $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(SolutionDir)Coin3D\lib\sowin1.lib $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(SolutionDir)Coin3D\lib\simvoleon2.lib  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(SolutionDir)Coin3D\lib\simage1.lib  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(ProjectDir)f.fsh $(ProjectDir)..\WristVizualizer\bin\x64\Debug
+copy $(ProjectDir)v.vsh $(ProjectDir)..\WristVizualizer\bin\x64\Debug</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
