@@ -8,22 +8,22 @@ DEF TRANSLATE1_ACTIVE_MATERIAL Material { diffuseColor 0.5 0.5 0  emissiveColor 
 
 DEF TRANSLATE1_GEOM Group {
    # "Line" connecting the cones.
-   #Cube { width 2  height 0.1  depth 0.1 } # Horizontal
-   Cube { width 10  height 1  depth 1 } # Horizontal
+   Cube { width 2  height 0.1  depth 0.1 } # Horizontal
+   #Cube { width 10  height 1  depth 1 } # Horizontal
 
    # First cone.
    Separator {
-    #  Translation { translation 1.25 0 0 }
-      Translation { translation 5 0 0 }
+      Translation { translation 1.25 0 0 }
+      #  Translation { translation 5 0 0 }
       RotationXYZ { axis Z  angle -1.5708 }
-    #  DEF TRANSLATE1_ARROWHEAD Cone { height 0.5  bottomRadius 0.25 }
-      DEF TRANSLATE1_ARROWHEAD Cone { height 2  bottomRadius 1.5 }
+      DEF TRANSLATE1_ARROWHEAD Cone { height 0.5  bottomRadius 0.25 }
+      #DEF TRANSLATE1_ARROWHEAD Cone { height 2  bottomRadius 1.5 }
    }
 
    # Second cone.
    Separator {
-     # Translation { translation -1.25 0 0 }
-      Translation { translation -5 0 0 }
+      Translation { translation -1.25 0 0 }
+      #Translation { translation -5 0 0 }
       RotationXYZ { axis Z  angle 1.5708 }
       USE TRANSLATE1_ARROWHEAD
    }
