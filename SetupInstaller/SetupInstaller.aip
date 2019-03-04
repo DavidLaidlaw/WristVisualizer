@@ -128,7 +128,7 @@
     <ROW Component="glew32.dll" ComponentId="{2E7464AA-CF30-49EC-B86C-08646BEE8CC2}" Directory_="APPDIR" Attributes="256" KeyPath="glew32.dll"/>
     <ROW Component="libCoin3D.dll" ComponentId="{A679E8D5-50B5-4474-9348-DCF4032C62E4}" Directory_="APPDIR" Attributes="256" KeyPath="libCoin3D.dll"/>
     <ROW Component="libCoin3D_PrimaryOutput" ComponentId="{81282C92-1181-41D5-BE70-2A24F06467D7}" Directory_="libCoin3D_Dir" Attributes="256" KeyPath="libCoin3D.dll_1"/>
-    <ROW Component="libCoin3D_SymbolsOutput" ComponentId="{B950CCB1-F383-4629-B74F-114BC6CB9819}" Directory_="libCoin3D_Dir" Attributes="0" KeyPath="libCoin3D.pdb"/>
+    <ROW Component="libCoin3D_SymbolsOutput" ComponentId="{A3B7F948-7F41-4458-9E9F-BDBF893790B2}" Directory_="libCoin3D_Dir" Attributes="0" KeyPath="libCoin3D.pdb"/>
     <ROW Component="libWrist.dll" ComponentId="{C2BF8A7D-8339-431E-BA38-8D7537DA424A}" Directory_="APPDIR" Attributes="256" KeyPath="libWrist.dll"/>
     <ROW Component="libWrist_PrimaryOutput" ComponentId="{0DB8E8F7-863D-47E2-936E-37C373C0DB69}" Directory_="libWrist_Dir" Attributes="256" KeyPath="libWrist.dll_1"/>
     <ROW Component="libWrist_References" ComponentId="{F717E199-F18F-44E0-97B6-FBE90AA203F8}" Directory_="libWrist_Dir" Attributes="256" KeyPath="Mono.GetOptions.dll_1"/>
