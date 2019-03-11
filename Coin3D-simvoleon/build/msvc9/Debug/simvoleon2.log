@@ -1,0 +1,74 @@
+﻿  CoinGLPerformance.cpp
+  VolumeSkinDetail.cpp
+  VolumeRenderDetail.cpp
+  VolumeDetail.cpp
+c:\volren\studywrist2\coin3d-simvoleon-99617b213037\lib\volumeviz\details\volumedetail.cpp(424): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+  OrthoSliceDetail.cpp
+  ObliqueSliceDetail.cpp
+  Generating Code...
+  dummy.cpp
+  VoxelBlockElement.cpp
+c:\volren\studywrist2\coin3d-simvoleon-99617b213037\lib\volumeviz\elements\voxelblockelement.cpp(294): warning C4838: conversion from 'const short' to 'const unsigned int' requires a narrowing conversion
+  TransferFunctionElement.cpp
+  StorageHintElement.cpp
+  PalettedTexturesElement.cpp
+  PageSizeElement.cpp
+  LightingElement.cpp
+  GLInterpolationElement.cpp
+  CompressedTexturesElement.cpp
+  Generating Code...
+  VoxelChunk.cpp
+  Util.cpp
+  ResourceManager.cpp
+  Gradient.cpp
+  GlobalRenderLock.cpp
+  GIMPGradient.cpp
+  CLUT.cpp
+  CentralDifferenceGradient.cpp
+  Generating Code...
+  VolumeTriangleStripSet.cpp
+  VolumeSkin.cpp
+  VolumeRendering.cpp
+  VolumeRender.cpp
+  volumeraypickintersection.cpp
+  VolumeIndexedTriangleStripSet.cpp
+  VolumeIndexedFaceSet.cpp
+  VolumeFaceSet.cpp
+  VolumeData.cpp
+c:\volren\studywrist2\coin3d-simvoleon-99617b213037\lib\volumeviz\nodes\volumedata.cpp(499): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+c:\volren\studywrist2\coin3d-simvoleon-99617b213037\lib\volumeviz\nodes\volumedata.cpp(737): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+  TransferFunction.cpp
+  OrthoSlice.cpp
+  ObliqueSlice.cpp
+  CvrTriangleStripSetRenderP.cpp
+  CvrNonIndexedSetRenderBaseP.cpp
+  CvrIndexedTriangleStripSetRenderP.cpp
+  CvrIndexedSetRenderBaseP.cpp
+  CvrIndexedFaceSetRenderP.cpp
+  CvrFaceSetRenderP.cpp
+  Generating Code...
+  VRVolFileReader.cpp
+  VRMemReader.cpp
+  VolumeReader.cpp
+  Generating Code...
+  PageHandler.cpp
+  2DTexSubPage.cpp
+  2DTexPage.cpp
+  Generating Code...
+  CubeHandler.cpp
+  3DTexSubCube.cpp
+  3DTexCube.cpp
+  Generating Code...
+  CvrTextureObject.cpp
+  CvrRGBATexture.cpp
+  CvrPaletteTexture.cpp
+  Cvr3DRGBATexture.cpp
+  Cvr3DPaletteTexture.cpp
+  Cvr3DPaletteGradientTexture.cpp
+  Cvr2DRGBATexture.cpp
+  Cvr2DPaletteTexture.cpp
+  Generating Code...
+  PointRendering.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1216,5): warning MSB8012: TargetPath(C:\volren\studyWrist2\Coin3D-simvoleon-99617b213037\build\msvc9\.\Debug\simvoleon2.dll) does not match the Linker's OutputFile property value (C:\volren\studyWrist2\Coin3D-simvoleon-99617b213037\build\msvc9\simvoleon2d.dll). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1218,5): warning MSB8012: TargetName(simvoleon2) does not match the Linker's OutputFile property value (simvoleon2d). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Link.OutputFile).
+coin3d.lib(coin3d.dll) : fatal error LNK1112: module machine type 'x64' conflicts with target machine type 'x86'

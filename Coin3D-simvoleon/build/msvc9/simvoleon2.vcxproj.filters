@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Documents">
+      <UniqueIdentifier>{4126faf6-939b-4f88-9962-97b840911950}</UniqueIdentifier>
+      <Extensions>;txt</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{0fedd09d-2c7b-44b7-92fd-d828dc4db16b}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\VolumeViz/caches sources">
+      <UniqueIdentifier>{b9440fcb-aae1-4c5d-919a-3eb555cdb045}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\VolumeViz/details sources">
+      <UniqueIdentifier>{c0bcfea5-e14c-4767-92a6-e97d0733733c}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\VolumeViz/elements sources">
+      <UniqueIdentifier>{3af28422-d874-4e40-b423-754dd0e24526}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\VolumeViz/nodes sources">
+      <UniqueIdentifier>{39c6213b-eb53-4cf5-83cb-ea44ec8266d7}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\VolumeViz/misc sources">
+      <UniqueIdentifier>{fcb2b8ae-0bb9-49c0-8659-b33d90d7f545}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\VolumeViz/readers sources">
+      <UniqueIdentifier>{3befe269-4abf-43b8-b36b-0c8b194bd277}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\render/2D sources">
+      <UniqueIdentifier>{86e1e7e2-55e9-4a75-a0ec-70ded75c62e3}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\render/3D sources">
+      <UniqueIdentifier>{8a7abbbb-56ba-4017-8f81-2edd8ff30cd4}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\render/common sources">
+      <UniqueIdentifier>{a6b308d3-65b9-408c-b3e9-a2a0d19874a1}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\render/Pointset sources">
+      <UniqueIdentifier>{bdd729ff-1d98-40bd-8c05-9cff448f1150}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\VolumeViz sources">
+      <UniqueIdentifier>{c186f9f1-a2c3-4105-9d3c-ab178924d811}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Coin/gl sources">
+      <UniqueIdentifier>{b2d60056-7c7b-4130-9bdd-67ac9fe1c1ca}</UniqueIdentifier>
+      <Extensions>c;cpp;ic;icc;h</Extensions>
+    </Filter>
+    <Filter Include="Public Headers">
+      <UniqueIdentifier>{42c62220-ac0d-45fe-8e60-ff1ce3c350e1}</UniqueIdentifier>
+      <Extensions>h;ic;icc</Extensions>
+    </Filter>
+    <Filter Include="Public Headers\VolumeViz%255cC headers">
+      <UniqueIdentifier>{da3b284a-2e5a-43f8-bf80-49c8c19d6771}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Headers\VolumeViz%255cdetails headers">
+      <UniqueIdentifier>{8d185d0f-2868-4211-84b8-097239bac4fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Headers\VolumeViz%255cnodes headers">
+      <UniqueIdentifier>{079952a3-4fdb-406f-a911-d31dd46334dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public Headers\VolumeViz%255creaders headers">
+      <UniqueIdentifier>{3a9cbed0-e69e-495b-932d-0b4a7672f2ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private Headers">
+      <UniqueIdentifier>{47db32dc-bd73-45c0-9dc7-48cf54b649cb}</UniqueIdentifier>
+      <Extensions>h;ic;icc</Extensions>
+    </Filter>
+    <Filter Include="Private Headers\3D local includes">
+      <UniqueIdentifier>{e92163a9-8a71-4e0a-ad81-ee891e9350ac}</UniqueIdentifier>
+      <Extensions>h;ic;icc</Extensions>
+    </Filter>
+    <Filter Include="Template Files">
+      <UniqueIdentifier>{bae1dfc8-fcbf-4e64-922e-e4347e880f73}</UniqueIdentifier>
+      <Extensions>in</Extensions>
+    </Filter>
+    <Filter Include="Public Headers\VolumeViz Coin gl headers">
+      <UniqueIdentifier>{548dd955-c22a-41a3-9a1f-ff5266a6a05c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\ChangeLog">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="..\..\COPYING">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="..\..\NEWS">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="..\..\README">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="..\..\RELNOTES">
+      <Filter>Documents</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\lib\VolumeViz\caches\GLTextureCache.cpp">
+      <Filter>Source Files\VolumeViz/caches sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\ObliqueSliceDetail.cpp">
+      <Filter>Source Files\VolumeViz/details sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\OrthoSliceDetail.cpp">
+      <Filter>Source Files\VolumeViz/details sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\VolumeDetail.cpp">
+      <Filter>Source Files\VolumeViz/details sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\VolumeRenderDetail.cpp">
+      <Filter>Source Files\VolumeViz/details sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\VolumeSkinDetail.cpp">
+      <Filter>Source Files\VolumeViz/details sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\CompressedTexturesElement.cpp">
+      <Filter>Source Files\VolumeViz/elements sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\GLInterpolationElement.cpp">
+      <Filter>Source Files\VolumeViz/elements sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\LightingElement.cpp">
+      <Filter>Source Files\VolumeViz/elements sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\PageSizeElement.cpp">
+      <Filter>Source Files\VolumeViz/elements sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\PalettedTexturesElement.cpp">
+      <Filter>Source Files\VolumeViz/elements sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\StorageHintElement.cpp">
+      <Filter>Source Files\VolumeViz/elements sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\TransferFunctionElement.cpp">
+      <Filter>Source Files\VolumeViz/elements sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\VoxelBlockElement.cpp">
+      <Filter>Source Files\VolumeViz/elements sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrFaceSetRenderP.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrIndexedFaceSetRenderP.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrIndexedSetRenderBaseP.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrIndexedTriangleStripSetRenderP.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrNonIndexedSetRenderBaseP.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrTriangleStripSetRenderP.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\ObliqueSlice.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\OrthoSlice.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\TransferFunction.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeData.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeFaceSet.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeIndexedFaceSet.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeIndexedTriangleStripSet.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\volumeraypickintersection.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeRender.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeRendering.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeSkin.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeTriangleStripSet.cpp">
+      <Filter>Source Files\VolumeViz/nodes sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\CentralDifferenceGradient.cpp">
+      <Filter>Source Files\VolumeViz/misc sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\CLUT.cpp">
+      <Filter>Source Files\VolumeViz/misc sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\GIMPGradient.cpp">
+      <Filter>Source Files\VolumeViz/misc sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\GlobalRenderLock.cpp">
+      <Filter>Source Files\VolumeViz/misc sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\Gradient.cpp">
+      <Filter>Source Files\VolumeViz/misc sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\ResourceManager.cpp">
+      <Filter>Source Files\VolumeViz/misc sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\Util.cpp">
+      <Filter>Source Files\VolumeViz/misc sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\VoxelChunk.cpp">
+      <Filter>Source Files\VolumeViz/misc sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\readers\VolumeReader.cpp">
+      <Filter>Source Files\VolumeViz/readers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\readers\VRMemReader.cpp">
+      <Filter>Source Files\VolumeViz/readers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\readers\VRVolFileReader.cpp">
+      <Filter>Source Files\VolumeViz/readers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\2D\2DTexPage.cpp">
+      <Filter>Source Files\render/2D sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\2D\2DTexSubPage.cpp">
+      <Filter>Source Files\render/2D sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\2D\PageHandler.cpp">
+      <Filter>Source Files\render/2D sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\3D\3DTexCube.cpp">
+      <Filter>Source Files\render/3D sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\3D\3DTexSubCube.cpp">
+      <Filter>Source Files\render/3D sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\3D\CubeHandler.cpp">
+      <Filter>Source Files\render/3D sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr2DPaletteTexture.cpp">
+      <Filter>Source Files\render/common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr2DRGBATexture.cpp">
+      <Filter>Source Files\render/common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr3DPaletteGradientTexture.cpp">
+      <Filter>Source Files\render/common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr3DPaletteTexture.cpp">
+      <Filter>Source Files\render/common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr3DRGBATexture.cpp">
+      <Filter>Source Files\render/common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\CvrPaletteTexture.cpp">
+      <Filter>Source Files\render/common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\CvrRGBATexture.cpp">
+      <Filter>Source Files\render/common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\CvrTextureObject.cpp">
+      <Filter>Source Files\render/common sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\Pointset\PointRendering.cpp">
+      <Filter>Source Files\render/Pointset sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\dummy.cpp">
+      <Filter>Source Files\VolumeViz sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\Coin\gl\CoinGLPerformance.cpp">
+      <Filter>Source Files\Coin/gl sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="lib\VolumeViz\C\basic.h">
+      <Filter>Public Headers\VolumeViz%255cC headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoObliqueSliceDetail.h">
+      <Filter>Public Headers\VolumeViz%255cdetails headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoOrthoSliceDetail.h">
+      <Filter>Public Headers\VolumeViz%255cdetails headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoVolumeDetail.h">
+      <Filter>Public Headers\VolumeViz%255cdetails headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoVolumeRenderDetail.h">
+      <Filter>Public Headers\VolumeViz%255cdetails headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoVolumeSkinDetail.h">
+      <Filter>Public Headers\VolumeViz%255cdetails headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoObliqueSlice.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoOrthoSlice.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoTransferFunction.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeData.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeFaceSet.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeIndexedFaceSet.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeIndexedTriangleStripSet.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeRender.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeRendering.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeSkin.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeTriangleStripSet.h">
+      <Filter>Public Headers\VolumeViz%255cnodes headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\readers\SoVolumeReader.h">
+      <Filter>Public Headers\VolumeViz%255creaders headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\lib\VolumeViz\readers\SoVRVolFileReader.h">
+      <Filter>Public Headers\VolumeViz%255creaders headers</Filter>
+    </ClInclude>
+    <ClInclude Include="lib\VolumeViz\Coin\gl\CoinGLPerformance.h">
+      <Filter>Public Headers\VolumeViz Coin gl headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\..\lib\VolumeViz\render\3D\Cvr3DTexCube.h">
+      <Filter>Private Headers\3D local includes</Filter>
+    </CustomBuild>
+  </ItemGroup>
+</Project>

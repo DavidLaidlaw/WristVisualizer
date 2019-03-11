@@ -1,0 +1,7 @@
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1397,5): warning MSB8012: TargetPath(C:\dl\WristVisualizer\x64\LIB (Debug)\simvoleon2.lib) does not match the Library's OutputFile property value (C:\dl\WristVisualizer\Coin3D-simvoleon\build\msvc9\simvoleon2sd.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1399,5): warning MSB8012: TargetName(simvoleon2) does not match the Library's OutputFile property value (simvoleon2sd). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+  simvoleon2.vcxproj -> C:\dl\WristVisualizer\x64\LIB (Debug)\simvoleon2.lib
+  The system cannot find the path specified.
+          0 file(s) copied.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(138,5): error MSB3073: The command "copy C:\dl\WristVisualizer\Coin3D-simvoleon\lib\simvoleon2.lib  C:\dl\WristVisualizer\Coin3D-simvoleon\build\msvc9\..\WristVizualizer\bin\x64\Debug
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(138,5): error MSB3073: :VCEnd" exited with code 1.

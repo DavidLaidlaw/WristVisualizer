@@ -1,0 +1,32 @@
+New in SIM Voleon v2.0.2a (so far):
+
+* bugfixes
+  [none]
+
+* new features
+  [none]
+
+New in SIM Voleon v2.0.1:
+
+* bugfixes
+  - mixing 2D-textures and 3D-textures with the same palette would
+    sometimes break, causing rendering artifacts
+  - fixed a major resource leak for OpenGL textures
+  - obscure bug in optimalization feature for tracking "open" areas fixed
+  - rendering code is now multithread-safe
+
+New in SIM Voleon v2.0.0:
+
+* new features
+  - SoObliqueSlice node
+  - SoVolumeFaceSet, SoVolumeIndexedFaceSet, SoVolumeTriangleStripSet
+    and SoVolumeIndexedTriangleStripSet nodes
+  - SoVolumeSkin node
+
+* bugfixes
+  - data was previously rendered flipped on the Y axis, now fixed --
+    note that this is a major semantic change which needs client code
+    to be updated, see the RELNOTES document
+  - 3D-texture based rendering for SoVolumeRender nodes now works
+    correctly for any preceding scene graph transformations
+  - many minor bugfixes

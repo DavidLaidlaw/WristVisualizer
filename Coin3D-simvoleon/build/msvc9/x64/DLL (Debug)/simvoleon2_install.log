@@ -1,0 +1,15 @@
+﻿  Installing to C:\Coin3D
+  Creating necessary directories...
+  mkdir C:\Coin3D\include\VolumeViz
+  mkdir C:\Coin3D\include\VolumeViz\C
+  mkdir C:\Coin3D\include\VolumeViz\details
+  mkdir C:\Coin3D\include\VolumeViz\nodes
+  mkdir C:\Coin3D\include\VolumeViz\readers
+  Installing header files...
+  Installing binaries...
+  C:simvoleon2d.dll
+  1 File(s) copied
+  Debug\simvoleon2d.pdb
+  1 File(s) copied
+  Debug\simvoleon2d.lib
+  1 File(s) copied

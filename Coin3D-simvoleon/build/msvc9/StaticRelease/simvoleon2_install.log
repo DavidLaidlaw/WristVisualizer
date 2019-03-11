@@ -1,0 +1,2 @@
+﻿EXEC : error : You do not seem to have compiled the release-version of simvoleon2 yet.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.MakeFile.Targets(44,5): error MSB3073: The command "..\misc\install-sdk.bat lib release msvc9 simvoleon2" exited with code -1.

@@ -1,0 +1,341 @@
+See also
+
+    docs/todo.txt
+
+for suggestions for major improvements and new features.
+
+========================================================================
+
+001 The set of 2D texture slices doesn't seem to cover the full
+    extents of the bounding box.
+
+    To reproduce, look at a very small volume data set. I noticed it
+    on the 41^3 "marschnerlobb" set. To debug this, it would probably
+    be wise to use an even smaller set to see the problem more
+    clearly.
+
+    This is a minor problem.
+
+    20030627 mortene.
+
+    UPDATE 20040212 mortene: handegar committed a fix for this, check
+    if it now works 100% correctly.
+
+    UPDATE 20041112 mortene: this is still not 100% correct, the span
+    of the volume will decrease (from the front side) when decreasing
+    the number of slices. This seems suboptimal.
+
+========================================================================
+
+002 When setting numSlices > actual depth, it seems more slices than
+    the depth are rendered.
+
+    This seems pointless. Investigate.
+
+    20030702 mortene.
+    
+    UPDATE 20040907 handegar: When rendering using 3D textures, this
+    might be a good thing, as an increase in number of slices (beyond
+    the actual depth) results in smoother volume surfaces and better
+    image quality due to the linear filtering. We might consider
+    clamping the number of slices when rendering with 2D textures,
+    though (unless we implement some kind of interpolation technique for
+    the 'in between' 2D ortho slices).
+
+========================================================================
+
+003 SoVolumeRender with 3D-textures may fail on Solaris?
+
+    Tingdahl reported that when running their app on a Solaris box and
+    remote displaying it on a Linux box, slices came up white instead
+    of textured.
+
+    (Could this simply be due to the disable-all-OpenGL-non-1.0-features
+    activation upon remote rendering?)
+
+    20040616 mortene.
+
+========================================================================
+
+006 Support for SoVolumeRender::viewAlignedSlices not implemented.
+
+    At least one potential client would use this. Should be simple to
+    fix.
+
+    handegar suggests that we can simply do it by forcing 2D textures,
+    which sounds like a good idea. Can probably be done simply by
+    changing the code around line 493 of VolumeRender.cpp to
+
+         if (cc_glglue_has_3d_textures(glue) && 
+                !CvrUtil::force2DTextureRendering() && 
+                this->viewAlignedSlices.getValue()) {
+                ...
+
+    ..but do some testing with this before committing.
+
+    One problem: SoVolumeRender::viewAlignedSlices is FALSE by
+    default, i.e. programmers should explicitly change it to TRUE to
+    get 3D textures -- that's how it seems to be documented to work
+    for TGS VolumeViz.
+
+    20040702 mortene.
+
+========================================================================
+
+007 Doxygen documentation should "connect" to Coin ditto.
+
+    As it is now, the Doxygen doc generation for SIM Voleon doesn't
+    know about the Coin classes, which means e.g. the class hierarchy
+    view is pretty worthless, and no links to doc of Coin classes are
+    made.
+
+    Need to check whether or not Doxygen supports ways to include data
+    from separately generated doc. If not, I don't know what to do
+    about this. :-/
+
+    Perhaps it would work to separate out the file list from
+    docs/simvoleon.doxygen.in, then integrate this into a larger "Coin
+    family" doxygen config file for doc generation http://for
+    doc.coin3d.org.
+
+    20040708 mortene.
+
+    UPDATE 20040708 mortene: Gerhard Reitmayr says it is indeed
+    possible to connect together several Doxygen documentation
+    generations, and provided this link for doc on this feature:
+
+        http://www.stack.nl/~dimitri/doxygen/doxytag_usage.html
+
+========================================================================
+
+008 Mac OS X configure & build set-up is sub-par.
+
+    Should match Coin's ditto.
+
+    20040710 mortene.
+
+========================================================================
+
+009 Implement support for SoVolumeData::storageHint MEMORY.
+
+    Should now be straightforward with 2D-texture based rendering, at
+    least: just delete texture immediately after rendering the quad in
+    Cvr2DTexSubPage.
+
+    20040716 mortene.
+
+========================================================================
+
+010 Normals are ignored for the SoVolume[Face|triangle]Set family.
+    
+    Lighting will not be correct for polygons that intersect the
+    volume as normals are ignored.
+
+    20040722 handegar.
+
+========================================================================
+
+012 There are seams between texture sub-cubes (3D textures) and
+    texture sub-pages (2D textures) of a volume.
+
+    To reproduce, look at a volume with 2D texturing (it is much
+    harder to spot for 3D texturing) and a transfer function with
+    sharp color changes, with interpolation set to "LINEAR". The seams
+    then visible is caused by the textures _not_ interpolating to the
+    neighboring row of texels at the texture borders.
+
+    This is a medium priority bug.
+
+    It is not trivial to fix: we need to generate textures that
+    "borrows" rows / columns from neighboring data blocks for the
+    texture borders, then shrink the textures so that only the "inner"
+    part (i.e. excluding the 1-texel borders) are used for the
+    textured polygons.
+
+    20040723 mortene.
+
+========================================================================
+
+015 Potentially inefficient utilization of texture memory when using
+    3D textures.
+
+    When rendering with 3D textures, all texture sub-cubes are always
+    of the same size, which means we will some times (perhaps often)
+    use much more texture memory than necessary.
+
+    Consider this example: a voxel set of dimensions 129x129x129, with
+    a sub-cube size of 128x128x128 will _not_ use cubes of lesser
+    dimensions for the voxel data outside the larger (128x128x128)
+    cube, but *all* sub-cubes will be 128x128x128, even for only a
+    single "line" of texture, or even just for the sub-cube where just
+    the 1x1x1 texture is needed.
+
+    Consider this a high priority item.
+
+    20040817 mortene.
+
+    UPDATE 20050607 kristian: A first attempt at fixing this can be
+    found in docs/efficient-texture-size.patch. The code has a bug in
+    the way the subcubes are sorted; instead of using the distance
+    from the camera to the center of each subcube, it uses the
+    distance to the closest corner of each subcube. However, since the
+    subcubes share corners the next closest corner must be used if the
+    first is equal (and so on). This last point has not yet been
+    implemented.
+
+    A second shortcoming is that the code which determines the sizes
+    of the subcubes only works correctly if the volume is a power of
+    two in at least two dimensions. This is the normal case, but the
+    code should handle other cases correctly as well (or at least
+    round two of the dimensions up to the closest power of two as a
+    quick fix).
+
+========================================================================
+
+016 Rendering SoObliqueSlice, SoOrthoSlice and SoVolume*Set nodes
+    using SoDrawStyle::LINES is not optimal as the volume texture is
+    loaded.
+
+    SIMVoleon should not be forced to load volume textures when
+    rendering in LINES mode. The LINES rendering is now done by the
+    3DTexSubCube/2DTexSubPage class which automatically loads the
+    texture when initialized.
+    
+    20040907 handegar.
+
+========================================================================
+
+017 An empty SoVolumeData node does not seem to be handled well.
+
+    When running the SoGuiExample volumerendering/voleonexplore with a
+    non-existent input-file, something is done in either Voleon, SoQt
+    or Coin that causes 5 internal Coin warning messages to be printed
+    (invalid actions attempted on empty SbBox3f, SbMatrix and
+    SbVec3f).
+
+    Seems most likely these are due to something Voleon does wrong, so
+    placing the bug report here.
+
+    20040919 mortene.
+
+========================================================================
+
+019 Missing SoTransferFunction should be handled with more grace.
+
+    According to the VolumeViz API-doc, a *missing* SoTransferFunction
+    should cause a volume to be rendered with the default
+    SoTransferFunction::GREY color map.
+
+    Best way to fix this is probably to kill the
+    SoTransferFunctionElement, and replace it with a new element which
+    actually carries the current transferfunction on the stack
+    (instead of just a pointer back to the SoTransferFunction node).
+
+    20040920 mortene.
+
+========================================================================
+
+021 VOL file import is not robust enough.
+
+    Will for instance assert() instead of gracefully handling various
+    unexpected conditions. See FIXMEs in readers/VRVOLFileReader.cpp.
+
+    20041014 mortene.
+
+========================================================================
+
+023 Integrate examples from SoGuiExamples into SIMVoleon module.
+
+    I believe that would be better, for various reasons
+    (maintainability, packaging of the examples, less "cruft" in
+    SoGuiExamples, ...).
+
+    Solve this by detecting in the configure script which So*-libs are
+    available, then instantiate the template example source code for
+    these, and build the examples.
+
+    20050309 mortene.
+
+========================================================================
+
+024 Lack of robustness.
+
+    The following iv-files will assert when read into a
+    (Voleon-capable) viewer:
+
+----------8<----- [snip] --------------------8<----- [snip] ----------------
+#Inventor V2.1 ascii
+
+SoOrthoSlice { }
+----------8<----- [snip] --------------------8<----- [snip] ----------------
+
+    ...with:
+
+----------8<----- [snip] --------------------8<----- [snip] ----------------
+examinerviewer: /home/sigma/mortene/code/Voleon/lib/VolumeViz/nodes/OrthoSlice.cpp:304: SbBool SoOrthoSliceP::confirmValidInContext(SoState *) const: Assertion `slices > 0' failed.
+Aborted
+----------8<----- [snip] --------------------8<----- [snip] ----------------
+
+    ...and
+
+----------8<----- [snip] --------------------8<----- [snip] ----------------
+#Inventor V2.1 ascii
+
+SoVolumeData { fileName "ENGINE.VOL" }
+SoOrthoSlice { }
+----------8<----- [snip] --------------------8<----- [snip] ----------------
+
+    ...with
+
+----------8<----- [snip] --------------------8<----- [snip] ----------------
+examinerviewer: /home/sigma/mortene/code/Voleon/lib/VolumeViz/misc/VoxelChunk.cpp:213: static class CvrCLUT * CvrVoxelChunk::getCLUT(const SoTransferFunctionElement *): Assertion `transferfunc != __null' failed.
+Aborted
+----------8<----- [snip] --------------------8<----- [snip] ----------------
+
+    We should be more robust than this.
+
+    20050413 mortene.
+
+========================================================================
+
+025 1024x1024x1024 causes too large values in one or more variables /
+    calculations?
+
+    There's been a report on coin-discuss that SIM Voleon doesn't
+    handle 1024^3 size datasets at all, even for systems with lots of
+    RAM. It fails in different ways.
+
+    Should do some testing on heavy machinery, and see if this is a
+    limitation caused by bad code in SIM Voleon, or whether it is
+    simply a resource availability problem.
+
+    20050530 mortene.
+
+========================================================================
+
+026 Rendering datasets with one dimension size < 4 using 2D textures
+    causes mem-corruption.
+
+    There seems to be some ugly memory corruption taking place when
+    rendering a dataset where one of the dimensions are less than 4,
+    f.ex 2x50x50. The error appears both when rendering a full volume
+    and when rendering a single OrthoSlice.
+
+    Take the example code from the SimVoleon doc mainpage and set the
+    size to 2x50x50. Set the envvar CVS_FORCE_2D_TEXTURES=1 to force
+    2D texture rendering.
+
+    The OrthoSlice only gets corrupted when rendering the X-axis
+    slices.
+
+    I suspect *one* of the causes to be the workaround @
+    VoxelChunk.cpp:484 where the dims are changed due to an old NVIDIA
+    driver bug, but changing this does only prevent certain asserts
+    from triggering. The X-axis texture slices are still corrupted.
+
+    Setting the dim to 4x50x50 avoids all these problems.
+
+    reported by <nicolas.remy@stanfordalumni.org>
+
+    20051003 handegar.
+

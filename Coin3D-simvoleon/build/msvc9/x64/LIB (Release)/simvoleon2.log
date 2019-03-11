@@ -1,0 +1,89 @@
+﻿  GLTextureCache.cpp
+  CoinGLPerformance.cpp
+  ObliqueSliceDetail.cpp
+  OrthoSliceDetail.cpp
+  VolumeDetail.cpp
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\details\volumedetail.cpp(424): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+  VolumeRenderDetail.cpp
+  VolumeSkinDetail.cpp
+  Generating Code...
+  dummy.cpp
+  CompressedTexturesElement.cpp
+  GLInterpolationElement.cpp
+  LightingElement.cpp
+  PageSizeElement.cpp
+  PalettedTexturesElement.cpp
+  StorageHintElement.cpp
+  TransferFunctionElement.cpp
+  VoxelBlockElement.cpp
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\elements\voxelblockelement.cpp(294): warning C4838: conversion from 'const short' to 'const unsigned int' requires a narrowing conversion
+  Generating Code...
+  CentralDifferenceGradient.cpp
+  CLUT.cpp
+  GIMPGradient.cpp
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\gimpgradient.cpp(52): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\gimpgradient.cpp(52): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\gimpgradient.cpp(54): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\gimpgradient.cpp(54): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+  GlobalRenderLock.cpp
+  Gradient.cpp
+  ResourceManager.cpp
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(79): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(79): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(92): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(92): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(99): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(99): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
+  Util.cpp
+  VoxelChunk.cpp
+  Generating Code...
+  CvrFaceSetRenderP.cpp
+  CvrIndexedFaceSetRenderP.cpp
+  CvrIndexedSetRenderBaseP.cpp
+  CvrIndexedTriangleStripSetRenderP.cpp
+  CvrNonIndexedSetRenderBaseP.cpp
+  CvrTriangleStripSetRenderP.cpp
+  ObliqueSlice.cpp
+  OrthoSlice.cpp
+  TransferFunction.cpp
+  VolumeData.cpp
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\nodes\volumedata.cpp(499): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\nodes\volumedata.cpp(737): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+  VolumeFaceSet.cpp
+  VolumeIndexedFaceSet.cpp
+  VolumeIndexedTriangleStripSet.cpp
+  volumeraypickintersection.cpp
+  VolumeRender.cpp
+  VolumeRendering.cpp
+  VolumeSkin.cpp
+  VolumeTriangleStripSet.cpp
+  Generating Code...
+  VolumeReader.cpp
+  VRMemReader.cpp
+  VRVolFileReader.cpp
+  Generating Code...
+  2DTexPage.cpp
+  2DTexSubPage.cpp
+  PageHandler.cpp
+  Generating Code...
+  3DTexCube.cpp
+  3DTexSubCube.cpp
+  CubeHandler.cpp
+  Generating Code...
+  Cvr2DPaletteTexture.cpp
+  Cvr2DRGBATexture.cpp
+  Cvr3DPaletteGradientTexture.cpp
+  Cvr3DPaletteTexture.cpp
+  Cvr3DRGBATexture.cpp
+  CvrPaletteTexture.cpp
+  CvrRGBATexture.cpp
+  CvrTextureObject.cpp
+  Generating Code...
+  PointRendering.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1397,5): warning MSB8012: TargetPath(C:\dl\WristVisualizer\x64\LIB (Release)\simvoleon2.lib) does not match the Library's OutputFile property value (C:\dl\WristVisualizer\Coin3D-simvoleon\build\msvc9\simvoleon2s.lib). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(1399,5): warning MSB8012: TargetName(simvoleon2) does not match the Library's OutputFile property value (simvoleon2s). This may cause your project to build incorrectly. To correct this, please make sure that $(OutDir), $(TargetName) and $(TargetExt) property values match the value specified in %(Lib.OutputFile).
+  simvoleon2.vcxproj -> C:\dl\WristVisualizer\x64\LIB (Release)\simvoleon2.lib
+  The system cannot find the path specified.
+          0 file(s) copied.
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(138,5): error MSB3073: The command "copy C:\dl\WristVisualizer\Coin3D-simvoleon\lib\simvoleon2.lib  C:\dl\WristVisualizer\Coin3D-simvoleon\build\msvc9\..\WristVizualizer\bin\x64\Release
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppCommon.targets(138,5): error MSB3073: :VCEnd" exited with code 1.

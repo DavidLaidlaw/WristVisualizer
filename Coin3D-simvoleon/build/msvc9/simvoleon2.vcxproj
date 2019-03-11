@@ -1,0 +1,1834 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DLL (Debug)|Win32">
+      <Configuration>DLL (Debug)</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DLL (Debug)|x64">
+      <Configuration>DLL (Debug)</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DLL (Release)|Win32">
+      <Configuration>DLL (Release)</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DLL (Release)|x64">
+      <Configuration>DLL (Release)</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{CEB94527-AFA8-4880-8B19-0E06465C6EC7}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <UseOfMfc>false</UseOfMfc>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="$(VCTargetsPath)Microsoft.CPP.UpgradeFromVC60.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.27924.0</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>.\StaticDebug\</OutDir>
+    <IntDir>.\StaticDebug\</IntDir>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+    <OutDir>$(ProjectDir)$(Platform)\$(Configuration)\</OutDir>
+    <TargetName>$(ProjectName)</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">
+    <OutDir>.\Release\</OutDir>
+    <IntDir>.\Release\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>.\StaticRelease\</OutDir>
+    <IntDir>.\StaticRelease\</IntDir>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+    <OutDir>$(MSBuildProjectDirectory)\$(Platform)\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">
+    <OutDir>.\Debug\</OutDir>
+    <IntDir>.\Debug\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules />
+    <CodeAnalysisRuleAssemblies />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;SIMVOLEON_DEBUG=1;HAVE_CONFIG_H;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_NOT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\StaticDebug/simvoleon2.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\StaticDebug/</AssemblerListingLocation>
+      <ObjectFileName>.\StaticDebug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\StaticDebug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0414</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>simvoleon2sd.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\StaticDebug/simvoleon2.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;$(MSBuildProjectDirectory)\lib\VolumeViz\Coin\gl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;SIMVOLEON_DEBUG=1;HAVE_CONFIG_H;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_NOT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\StaticDebug/simvoleon2.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\StaticDebug/</AssemblerListingLocation>
+      <ObjectFileName>.\StaticDebug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\StaticDebug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0414</Culture>
+    </ResourceCompile>
+    <Lib>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>$(ProjectDir)$(Platform)\$(Configuration)\$(ProjectName).lib</OutputFile>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\StaticDebug/simvoleon2.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>copy $(ProjectDir)$(Platform)\$(Configuration)\$(ProjectName).lib  $(SolutionDir)WristVizualizer\bin\x64\Debug\$(ProjectName)d.lib </Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Release/simvoleon2.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;SIMVOLEON_DEBUG=0;HAVE_CONFIG_H;SIMVOLEON_MAKE_DLL;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\Release/simvoleon2.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>$(COINDIR)\lib\coin3.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>simvoleon2.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ProgramDatabaseFile>.\Release/simvoleon2.pdb</ProgramDatabaseFile>
+      <SetChecksum>true</SetChecksum>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\Release/simvoleon2.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release/simvoleon2.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">
+    <Midl>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Release/simvoleon2.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;SIMVOLEON_DEBUG=0;HAVE_CONFIG_H;SIMVOLEON_MAKE_DLL;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\Release/simvoleon2.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Release/</AssemblerListingLocation>
+      <ObjectFileName>.\Release/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Release/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>$(COINDIR)\lib\coin3.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>simvoleon2.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <ProgramDatabaseFile>.\Release/simvoleon2.pdb</ProgramDatabaseFile>
+      <SetChecksum>true</SetChecksum>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>.\Release/simvoleon2.lib</ImportLibrary>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Release/simvoleon2.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;SIMVOLEON_DEBUG=0;HAVE_CONFIG_H;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_NOT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\StaticRelease/simvoleon2.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\StaticRelease/</AssemblerListingLocation>
+      <ObjectFileName>.\StaticRelease/</ObjectFileName>
+      <ProgramDataBaseFileName>.\StaticRelease/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0414</Culture>
+    </ResourceCompile>
+    <Lib>
+      <OutputFile>simvoleon2s.lib</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\StaticRelease/simvoleon2.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <AdditionalIncludeDirectories>C:\dl\WristVisualizer\Coin3D-simvoleon\build\msvc9\lib\VolumeViz\Coin\gl;lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;$(MSBuildProjectDirectory)\lib\VolumeViz\Coin\gl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_LIB;SIMVOLEON_DEBUG=0;HAVE_CONFIG_H;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_NOT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeaderOutputFile>.\StaticRelease/simvoleon2.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\StaticRelease/</AssemblerListingLocation>
+      <ObjectFileName>.\StaticRelease/</ObjectFileName>
+      <ProgramDataBaseFileName>.\StaticRelease/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0414</Culture>
+    </ResourceCompile>
+    <Lib>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+    </Lib>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\StaticRelease/simvoleon2.bsc</OutputFile>
+    </Bscmake>
+    <PostBuildEvent>
+      <Command>copy $(OutDir)$(TargetName)$(TargetExt) $(SolutionDir)WristVizualizer\bin\$(PlatformTarget)\$(Configuration)\</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TargetEnvironment>Win32</TargetEnvironment>
+      <TypeLibraryName>.\Debug/simvoleon2.tlb</TypeLibraryName>
+      <HeaderFileName />
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\lib\VolumeViz\Coin\gl;lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;SIMVOLEON_DEBUG=1;HAVE_CONFIG_H;SIMVOLEON_MAKE_DLL;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\Debug/simvoleon2.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>$(COINDIR)\lib\coin3d.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>simvoleon2d.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/simvoleon2d.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention />
+      <ImportLibrary>.\Debug/simvoleon2d.lib</ImportLibrary>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug/simvoleon2.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">
+    <Midl>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MkTypLibCompatible>true</MkTypLibCompatible>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <TypeLibraryName>.\Debug/simvoleon2.tlb</TypeLibraryName>
+      <HeaderFileName>
+      </HeaderFileName>
+    </Midl>
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>$(MSBuildProjectDirectory)\lib\VolumeViz\Coin\gl;lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;SIMVOLEON_DEBUG=1;HAVE_CONFIG_H;SIMVOLEON_MAKE_DLL;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeaderOutputFile>.\Debug/simvoleon2.pch</PrecompiledHeaderOutputFile>
+      <AssemblerListingLocation>.\Debug/</AssemblerListingLocation>
+      <ObjectFileName>.\Debug/</ObjectFileName>
+      <ProgramDataBaseFileName>.\Debug/</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Culture>0x0409</Culture>
+    </ResourceCompile>
+    <Link>
+      <AdditionalDependencies>$(COINDIR)\lib\coin3d.lib;opengl32.lib;winmm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>simvoleon2d.dll</OutputFile>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>.\Debug/simvoleon2d.pdb</ProgramDatabaseFile>
+      <RandomizedBaseAddress>false</RandomizedBaseAddress>
+      <DataExecutionPrevention>
+      </DataExecutionPrevention>
+      <ImportLibrary>.\Debug/simvoleon2d.lib</ImportLibrary>
+    </Link>
+    <Bscmake>
+      <SuppressStartupBanner>true</SuppressStartupBanner>
+      <OutputFile>.\Debug/simvoleon2.bsc</OutputFile>
+    </Bscmake>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="..\..\ChangeLog" />
+    <None Include="..\..\COPYING" />
+    <None Include="..\..\NEWS" />
+    <None Include="..\..\README" />
+    <None Include="..\..\RELNOTES" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\lib\VolumeViz\caches\GLTextureCache.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\caches/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\caches/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\caches/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\caches/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\caches/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\caches/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\caches/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\caches/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\caches/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\caches/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\caches/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\caches/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\caches/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\caches/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\caches/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\caches/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\Coin\gl\CoinGLPerformance.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\Coin\gl/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\Coin\gl/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\Coin\gl/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\Coin\gl/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\Coin\gl/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\Coin\gl/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\Coin\gl/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\Coin\gl/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\Coin\gl/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\Coin\gl/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\Coin\gl/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\Coin\gl/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\Coin\gl/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\Coin\gl/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\Coin\gl/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\Coin\gl/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\ObliqueSliceDetail.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\OrthoSliceDetail.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\VolumeDetail.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\VolumeRenderDetail.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\details\VolumeSkinDetail.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\details/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\details/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\details/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\details/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\dummy.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\CompressedTexturesElement.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\GLInterpolationElement.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\LightingElement.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\PageSizeElement.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\PalettedTexturesElement.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\StorageHintElement.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\TransferFunctionElement.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\elements\VoxelBlockElement.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\elements/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\elements/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\elements/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\CentralDifferenceGradient.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\CLUT.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\GIMPGradient.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\GlobalRenderLock.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\Gradient.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\ResourceManager.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\Util.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\misc\VoxelChunk.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\misc/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\misc/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\misc/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrFaceSetRenderP.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrIndexedFaceSetRenderP.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrIndexedSetRenderBaseP.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrIndexedTriangleStripSetRenderP.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrNonIndexedSetRenderBaseP.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\CvrTriangleStripSetRenderP.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\ObliqueSlice.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\OrthoSlice.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\TransferFunction.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeData.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeFaceSet.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeIndexedFaceSet.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeIndexedTriangleStripSet.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\volumeraypickintersection.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeRender.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeRendering.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeSkin.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\nodes\VolumeTriangleStripSet.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\nodes/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\nodes/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\readers\VolumeReader.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\readers/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\readers\VRMemReader.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\readers/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\readers\VRVolFileReader.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\VolumeViz\readers/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\VolumeViz\readers/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\VolumeViz\readers/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\VolumeViz\readers/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\VolumeViz\readers/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\2D\2DTexPage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\2D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\2D/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\2D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\2D/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\2D\2DTexSubPage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\2D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\2D/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\2D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\2D/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\2D\PageHandler.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\2D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\2D/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\2D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\2D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\2D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\2D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\2D/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\3D\3DTexCube.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\3D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\3D/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\3D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\3D/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\3D\3DTexSubCube.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\3D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\3D/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\3D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\3D/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\3D\CubeHandler.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\3D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\3D/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\3D/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\3D/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\3D/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\3D/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\3D/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr2DPaletteTexture.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\common/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\common/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr2DRGBATexture.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\common/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\common/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr3DPaletteGradientTexture.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\common/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\common/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr3DPaletteTexture.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\common/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\common/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\Cvr3DRGBATexture.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\common/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\common/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\CvrPaletteTexture.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\common/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\common/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\CvrRGBATexture.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\common/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\common/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\common\CvrTextureObject.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\common/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\common/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\common/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\common/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\common/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\common/</ProgramDataBaseFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\lib\VolumeViz\render\Pointset\PointRendering.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">.\Debug\render\Pointset/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">.\Debug\render\Pointset/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">Debug\render\Pointset/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">Debug\render\Pointset/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">.\Release\render\Pointset/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">.\Release\render\Pointset/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">Release\render\Pointset/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">Release\render\Pointset/</ProgramDataBaseFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\StaticDebug\render\Pointset/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\StaticDebug\render\Pointset/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">StaticDebug\render\Pointset/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">StaticDebug\render\Pointset/</ProgramDataBaseFileName>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">MaxSpeed</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">MaxSpeed</Optimization>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\StaticRelease\render\Pointset/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\StaticRelease\render\Pointset/</ObjectFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StaticRelease\render\Pointset/</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">StaticRelease\render\Pointset/</ProgramDataBaseFileName>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoObliqueSliceDetail.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoOrthoSliceDetail.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoVolumeDetail.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoVolumeRenderDetail.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\details\SoVolumeSkinDetail.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoObliqueSlice.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoOrthoSlice.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoTransferFunction.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeData.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeFaceSet.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeIndexedFaceSet.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeIndexedTriangleStripSet.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeRender.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeRendering.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeSkin.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\nodes\SoVolumeTriangleStripSet.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\readers\SoVolumeReader.h" />
+    <ClInclude Include="..\..\lib\VolumeViz\readers\SoVRVolFileReader.h" />
+    <CustomBuild Include="..\..\lib\VolumeViz\render\3D\Cvr3DTexCube.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DLL (Debug)|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='DLL (Release)|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </CustomBuild>
+    <ClInclude Include="lib\VolumeViz\Coin\gl\CoinGLPerformance.h" />
+    <ClInclude Include="lib\VolumeViz\C\basic.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

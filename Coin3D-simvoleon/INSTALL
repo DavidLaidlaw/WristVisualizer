@@ -1,0 +1,9 @@
+This is a stub. For more detailed installation instructions, see the
+INSTALL-file packaged with the Coin source code.
+
+Basic installation is done in the usual UNIX-style, i.e.
+
+        $ cd <builddir>
+        $ <srcdir>/SIMVoleon/configure --prefix=<instdir>
+        $ make install
+

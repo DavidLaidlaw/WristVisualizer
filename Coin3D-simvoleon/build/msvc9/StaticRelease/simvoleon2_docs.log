@@ -1,0 +1,41 @@
+﻿  Running doxygen (it may take a while)...
+EXEC : error : configuration file docs\simvoleon2.doxygen not found!
+  Doxygen version 1.8.14
+  Copyright Dimitri van Heesch 1997-2015
+  
+  You can use doxygen in a number of ways:
+  
+  1) Use doxygen to generate a template configuration file:
+      C:\Program Files (x86)\doxygen\bin\doxygen.exe [-s] -g [configName]
+  
+      If - is used for configName doxygen will write to standard output.
+  
+  2) Use doxygen to update an old configuration file:
+      C:\Program Files (x86)\doxygen\bin\doxygen.exe [-s] -u [configName]
+  
+  3) Use doxygen to generate documentation using an existing configuration file:
+      C:\Program Files (x86)\doxygen\bin\doxygen.exe [configName]
+  
+      If - is used for configName doxygen will read from standard input.
+  
+  4) Use doxygen to generate a template file controlling the layout of the
+     generated documentation:
+      C:\Program Files (x86)\doxygen\bin\doxygen.exe -l [layoutFileName.xml]
+  
+  5) Use doxygen to generate a template style sheet file for RTF, HTML or Latex.
+      RTF:        C:\Program Files (x86)\doxygen\bin\doxygen.exe -w rtf styleSheetFile
+      HTML:       C:\Program Files (x86)\doxygen\bin\doxygen.exe -w html headerFile footerFile styleSheetFile [configFile]
+      LaTeX:      C:\Program Files (x86)\doxygen\bin\doxygen.exe -w latex headerFile footerFile styleSheetFile [configFile]
+  
+  6) Use doxygen to generate a rtf extensions file
+      RTF:   C:\Program Files (x86)\doxygen\bin\doxygen.exe -e rtf extensionsFile
+  
+  If -s is specified the comments of the configuration items in the config file will be omitted.
+  If configName is omitted `Doxyfile' will be used as a default.
+  
+  -v print version string
+  Done.
+  Copying files...
+  ..\..\docs\doxygen\Coin_logo.png
+  1 File(s) copied
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.MakeFile.Targets(44,5): error MSB3073: The command "..\misc\build-docs.bat lib release msvc9 simvoleon2" exited with code -1.

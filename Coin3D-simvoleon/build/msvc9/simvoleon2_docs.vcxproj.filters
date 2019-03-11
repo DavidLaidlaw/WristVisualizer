@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{42823039-2bb5-4cb3-bc80-47d17a45e266}</UniqueIdentifier>
+      <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;bat</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\misc\build-docs.bat">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\html\index.html">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="docs\simvoleon2.doxygen">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+</Project>

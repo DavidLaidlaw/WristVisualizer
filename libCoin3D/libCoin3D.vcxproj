@@ -126,18 +126,19 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>glew32.lib;coin3d.lib;simage1d.lib;simvoleon2d.lib;sowin1d.lib;OpenGL32.lib;GlU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)x64\glew-1.9.0\lib;$(SolutionDir)Coin3D\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)x64\glew-1.9.0\lib;$(SolutionDir)Coin3D-simvoleon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)x64\glew-1.9.0\lib\glew32.dll  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
-copy $(SolutionDir)Coin3D\lib\coin3d.lib $(ProjectDir)..\WristVizualizer\bin\x64\Debug
-copy $(SolutionDir)Coin3D\lib\sowin1d.lib $(ProjectDir)..\WristVizualizer\bin\x64\Debug
-copy $(SolutionDir)Coin3D\lib\simvoleon2d.lib  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
-copy $(SolutionDir)Coin3D\lib\simage1d.lib  $(ProjectDir)..\WristVizualizer\bin\x64\Debug
-copy $(ProjectDir)f.fsh $(ProjectDir)..\WristVizualizer\bin\x64\Debug
-copy $(ProjectDir)v.vsh $(ProjectDir)..\WristVizualizer\bin\x64\Debug</Command>
+      <Command>copy $(ProjectDir)x64\glew-1.9.0\lib\glew32.dll  $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+copy $(SolutionDir)Coin3D-simvoleon\lib\coin3d.lib $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+copy $(SolutionDir)Coin3D-simvoleon\lib\sowin1d.lib $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+copy $(SolutionDir)Coin3D-simvoleon\lib\simvoleon2d.lib  $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+copy $(SolutionDir)Coin3D-simvoleon\lib\simage1d.lib  $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+copy $(ProjectDir)f.fsh $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+copy $(ProjectDir)v.vsh $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
