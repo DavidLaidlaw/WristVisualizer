@@ -14,6 +14,8 @@ namespace WristVizualizer
         public event SelectedTransformChangedHandler SelectedTransformChanged;
         public event EventHandler EditableTransformChanged;
 
+	public event EventHandler Trackbar1Changed;
+	public event EventHandler Trackbar2Changed;
         //IF ADDING NEW ADJUSTMENTS to the volume or any of the bones, can call the pre existing event handler
         //public delegate void DisplayVolumeCheckboxHandler();
         //public event DisplayVolumeCheckboxHandler DisplayVolumeCheckboxChanged;
@@ -79,7 +81,7 @@ namespace WristVizualizer
         public void setEditableTransform(double[] center, double[] rot, double[] translation)
         {
             if (center.Length != 3 || rot.Length != 3 || translation.Length != 3)
-                throw new ArgumentException("Invalid data for transform");
+	      throw new ArgumentException("Invalid data for transform");
             localEditingInProgress = true;
             numericUpDownCenterX.Value = (decimal)center[0];
             numericUpDownCenterY.Value = (decimal)center[1];
@@ -237,7 +239,7 @@ namespace WristVizualizer
         private void listBoxTransforms_SelectedIndexChanged(object sender, EventArgs e)
         {            
             if (SelectedTransformChanged != null)
-                SelectedTransformChanged();
+	      SelectedTransformChanged();
         }
 
         private void numericUpDown_ValueChanged(object sender, EventArgs e)
@@ -245,7 +247,7 @@ namespace WristVizualizer
             if (localEditingInProgress) return;
 
             if (EditableTransformChanged != null)
-                EditableTransformChanged(this, new EventArgs());
+	      EditableTransformChanged(this, new EventArgs());
         }
 
         private void buttonCopyToClipboard_Click(object sender, EventArgs e)
@@ -267,150 +269,176 @@ namespace WristVizualizer
 
 
 
-public void matrix2euler(float[] mat, float[] euler)
-{
-  // adapted from flipcode FAQ
-  // http://www.flipcode.com/documents/matrfaq.html#Q37
-  euler[1] = (float)Math.Asin(mat[2]);
-  float C = (float)Math.Cos( euler[1] );
+	public void matrix2euler(float[] mat, float[] euler)
+	{
+	    // adapted from flipcode FAQ
+	    // http://www.flipcode.com/documents/matrfaq.html#Q37
+	    euler[1] = (float)Math.Asin(mat[2]);
+	    float C = (float)Math.Cos( euler[1] );
 
-  float tx, ty;
+	    float tx, ty;
 
-  if (Math.Abs(C) > 0.005f) { // Gimball lock?
-    tx = mat[10] / C;
-    ty = -mat[6] / C;
+	    if (Math.Abs(C) > 0.005f) { // Gimball lock?
+		tx = mat[10] / C;
+		ty = -mat[6] / C;
 
-    euler[0] = (float)Math.Atan2(ty, tx);
+		euler[0] = (float)Math.Atan2(ty, tx);
 
-    tx = mat[0] / C;
-    ty = -mat[1] / C;
+		tx = mat[0] / C;
+		ty = -mat[1] / C;
 
-    euler[2] = (float)Math.Atan2(ty, tx);
-  }
-  else {
-    euler[0] = 0.0f;
-    tx = mat[5];
-    ty = mat[4];
-    euler[2] = (float)Math.Atan2(ty, tx);
-  }
-}
+		euler[2] = (float)Math.Atan2(ty, tx);
+	    }
+	    else {
+		euler[0] = 0.0f;
+		tx = mat[5];
+		ty = mat[4];
+		euler[2] = (float)Math.Atan2(ty, tx);
+	    }
+	}
 
-public void quat2matrix(float[] quat, float[] matrix)
-{
-  // adapted from Coin
-  float x = quat[0];
-  float y = quat[1];
-  float z = quat[2];
-  float w = quat[3];
+	public void quat2matrix(float[] quat, float[] matrix)
+	{
+	    // adapted from Coin
+	    float x = quat[0];
+	    float y = quat[1];
+	    float z = quat[2];
+	    float w = quat[3];
 
-  matrix[0] = w*w + x*x - y*y - z*z;
-  matrix[4] = 2.0f*x*y + 2.0f*w*z;
-  matrix[8] = 2.0f*x*z - 2.0f*w*y;
-  matrix[12] = 0.0f;
+	    matrix[0] = w*w + x*x - y*y - z*z;
+	    matrix[4] = 2.0f*x*y + 2.0f*w*z;
+	    matrix[8] = 2.0f*x*z - 2.0f*w*y;
+	    matrix[12] = 0.0f;
 
-  matrix[1] = 2.0f*x*y-2.0f*w*z;
-  matrix[5] = w*w - x*x + y*y - z*z;
-  matrix[9] = 2.0f*y*z + 2.0f*w*x;
-  matrix[13] = 0.0f;
+	    matrix[1] = 2.0f*x*y-2.0f*w*z;
+	    matrix[5] = w*w - x*x + y*y - z*z;
+	    matrix[9] = 2.0f*y*z + 2.0f*w*x;
+	    matrix[13] = 0.0f;
 
-  matrix[2] = 2.0f*x*z + 2.0f*w*y;
-  matrix[6] = 2.0f*y*z - 2.0f*w*x;
-  matrix[10] = w*w - x*x - y*y + z*z;
-  matrix[14] = 0.0f;
+	    matrix[2] = 2.0f*x*z + 2.0f*w*y;
+	    matrix[6] = 2.0f*y*z - 2.0f*w*x;
+	    matrix[10] = w*w - x*x - y*y + z*z;
+	    matrix[14] = 0.0f;
 
-  matrix[3] = 0.0f;
-  matrix[7] = 0.0f;
-  matrix[11] = 0.0f;
-  matrix[15] = w*w + x*x + y*y + z*z;
-}
+	    matrix[3] = 0.0f;
+	    matrix[7] = 0.0f;
+	    matrix[11] = 0.0f;
+	    matrix[15] = w*w + x*x + y*y + z*z;
+	}
 
-public void quat2euler(float[] quat, float[] euler)
-{
-  float[] m=new float[16];
-  quat2matrix(quat, m);
-  matrix2euler(m, euler);
-}
+	public void quat2euler(float[] quat, float[] euler)
+	{
+	    float[] m=new float[16];
+	    quat2matrix(quat, m);
+	    matrix2euler(m, euler);
+	}
 
-float to_angle(float rad)
-{
-  float angle = rad * 180.0f / (float)(Math.PI);
-  return angle;
-}
+	float to_angle(float rad)
+	{
+	    float angle = rad * 180.0f / (float)(Math.PI);
+	    return angle;
+	}
 
-public void print_euler(float[] quat)
-{
-  float[] euler=new float[3];
-  quat2euler(quat, euler);
-  Console.WriteLine("rot:"+
-          to_angle(euler[0])+", "+
-          to_angle(euler[1]) + ", " +
-          to_angle(euler[2])+"\n");
-}
-
-
-
-//determines whether or not the volume rendering of the CT data is visible
-private void checkBox1_CheckedChanged(object sender, EventArgs e)
-{
-    //disable or enable volume
-    //DisplayVolumeCheckboxChanged();
-
-    if (EditableTransformChanged != null)
-        EditableTransformChanged(this, new EventArgs());
-}
-
-public bool getDisplayVolumeChecked()
-{
-    return checkBox1.Checked;
-}
-
-
-//controls number of proxies geometries to texture
-private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-{
-
-    if (EditableTransformChanged != null)
-        EditableTransformChanged(this, new EventArgs());
-}
-
-public int getNumSlices()
-{
-    return (int) numberOfSlices.Value;
-}
-
-//changes the opacity of the displayed volume render
-private void numericUpDown1_ValueChanged_1(object sender, EventArgs e)
-
-{
-
-    if (EditableTransformChanged != null)
-        EditableTransformChanged(this, new EventArgs());
-
-}
-
-public float getOpacity()
-{
-    return (float)OpacityBox.Value;
-}
-
-private void showManipulator_CheckedChanged(object sender, EventArgs e)
-{
-    if (EditableTransformChanged != null)
-        EditableTransformChanged(this, new EventArgs());
-}
-
-public bool getshowManipulatorChecked()
-{
-    return showManipulator.Checked;
-}
+	public void print_euler(float[] quat)
+	{
+	    float[] euler=new float[3];
+	    quat2euler(quat, euler);
+	    Console.WriteLine("rot:"+
+			      to_angle(euler[0])+", "+
+			      to_angle(euler[1]) + ", " +
+			      to_angle(euler[2])+"\n");
+	}
 
 
 
-internal void disableVolumeItems()
-{
-    checkBox1.Enabled=(false);
-    OpacityBox.Enabled=(false);
-    numberOfSlices.Enabled=(false);
-}
+	//determines whether or not the volume rendering of the CT data is visible
+	private void checkBox1_CheckedChanged(object sender, EventArgs e)
+	{
+	    //disable or enable volume
+	    //DisplayVolumeCheckboxChanged();
+
+	    if (EditableTransformChanged != null)
+	      EditableTransformChanged(this, new EventArgs());
+	}
+
+	public bool getDisplayVolumeChecked()
+	{
+	    return checkBox1.Checked;
+	}
+
+
+	//controls number of proxies geometries to texture
+	private void numericUpDown1_ValueChanged(object sender, EventArgs e)
+	{
+
+	    if (EditableTransformChanged != null)
+	      EditableTransformChanged(this, new EventArgs());
+	}
+
+	public int getNumSlices()
+	{
+	    return (int) numberOfSlices.Value;
+	}
+
+	//changes the opacity of the displayed volume render
+	private void numericUpDown1_ValueChanged_1(object sender, EventArgs e)
+
+	{
+
+	    if (EditableTransformChanged != null)
+	      EditableTransformChanged(this, new EventArgs());
+
+	}
+
+	public float getOpacity()
+	{
+	    return (float)OpacityBox.Value;
+	}
+
+	private void showManipulator_CheckedChanged(object sender, EventArgs e)
+	{
+	    if (EditableTransformChanged != null)
+	      EditableTransformChanged(this, new EventArgs());
+	}
+
+	public bool getshowManipulatorChecked()
+	{
+	    return showManipulator.Checked;
+	}
+
+
+
+	internal void disableVolumeItems()
+	{
+	    checkBox1.Enabled=(false);
+	    OpacityBox.Enabled=(false);
+	    numberOfSlices.Enabled=(false);
+	}
+
+	public int getTrackBar1Value(){return trackBar1.Value;}
+	public void setTrackBar1Value(int v){ trackBar1.Value=v;}
+
+        private void TrackBar1_Scroll(object sender, EventArgs e)
+        {
+	    // horizontal bar
+	     if (Trackbar1Changed != null)
+	      Trackbar1Changed(this, new EventArgs());
+        }
+
+	public int getTrackBar2Value(){return trackBar2.Value;}
+	public void setTrackBar2Value(int v){ trackBar2.Value=v;}
+
+        private void TrackBar2_Scroll(object sender, EventArgs e)
+        {
+	    // vertical bar
+	     if (Trackbar2Changed != null)
+	      Trackbar2Changed(this, new EventArgs());
+        }
+	public void setMaxTracker1(int m){
+	    trackBar1.Maximum=m;
+	}
+	public void setMaxTracker2(int m){
+	    trackBar2.Maximum=m;
+	}
     }
 }

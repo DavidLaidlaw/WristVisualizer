@@ -29,6 +29,8 @@ namespace WristVizualizer
         float[] scaleValues;
         float[] beginningTranslation;
         CenterballDragger _centerballDragger;//the current centerball dragger
+	public TranslateDragger _translateDragger;
+	public TranslateDragger getTranslateDragger(){return _translateDragger;}
         Separator _rootSeparator;//the eparator containing the centerball
         Boolean _centerballVisible = true;
         Boolean drawVolume = false;
@@ -39,7 +41,7 @@ namespace WristVizualizer
 
         CT mri;//for getting the texture info
 
-        public TextureController(Separator root, Separator[] bones, TransformParser parser,Boolean IsVolumeRenderEnabled)
+        public TextureController(Separator root, Separator[] bones, TransformParser parser,Boolean IsVolumeRenderEnabled, Texture texture)
         {
 
             isVolumeRenderEnabled = IsVolumeRenderEnabled;
@@ -122,6 +124,11 @@ namespace WristVizualizer
             _centerballDragger.addCB(d);
 
             wasRotated();
+	    Texture.delFunc t1 = new Texture.delFunc(_textureControl_settrackbar1);
+	    Texture.delFunc t2 = new Texture.delFunc(_textureControl_settrackbar2);
+	    texture.addCBtrack1(t1);
+	    texture.addCBtrack1(t2);
+	    _translateDragger=new TranslateDragger(texture);
         }
 
 
@@ -258,6 +265,8 @@ namespace WristVizualizer
             _textureControl.EditableTransformChanged += new EventHandler(_textureControl_EditableTransformChanged);
             _fullWristControl.BoneHideChanged += new BoneHideChangedHandler(_fullWristControl_BoneHideChanged);
             //setup up listeners for manipulators
+	    _textureControl.Trackbar1Changed+= new EventHandler(_textureControl_Trackbar1Changed);
+	    _textureControl.Trackbar2Changed+= new EventHandler(_textureControl_Trackbar2Changed);
         }
 
         private void removeListeners()
@@ -266,6 +275,8 @@ namespace WristVizualizer
             _textureControl.EditableTransformChanged -= new EventHandler(_textureControl_EditableTransformChanged);
             _fullWristControl.BoneHideChanged -= new BoneHideChangedHandler(_fullWristControl_BoneHideChanged);
             //remove listeners for manipulators
+	    _textureControl.Trackbar1Changed-= new EventHandler(_textureControl_Trackbar1Changed);
+	    _textureControl.Trackbar2Changed-= new EventHandler(_textureControl_Trackbar2Changed);
         }
 
 
@@ -294,6 +305,15 @@ namespace WristVizualizer
             volNode.setDoDrawVolume(_textureControl.getDisplayVolumeChecked());
 
         }
+	void _textureControl_Trackbar1Changed(object sender, EventArgs e){
+	    int value = _textureControl.getTrackBar1Value();
+	    _translateDragger.updateTrackbar(_translateDragger.getTexture(),value,  Texture.Planes.XY_PLANE);
+	}
+
+	void _textureControl_Trackbar2Changed(object sender, EventArgs e){
+	      int value = _textureControl.getTrackBar2Value();
+	      _translateDragger.updateTrackbar(_translateDragger.getTexture(),value,Texture.Planes.YZ_PLANE);
+	}
 
         void _textureControl_EditableTransformChanged(object sender, EventArgs e)
         {
@@ -331,8 +351,14 @@ namespace WristVizualizer
                 CBenabled = true;
             }
         }
+	public delegate void tempFUNC2(int v);
 
-
+	void _textureControl_settrackbar1(int v){
+	    _textureControl.setTrackBar1Value(v);
+	}
+	void _textureControl_settrackbar2(int v){
+	    _textureControl.setTrackBar2Value(v);
+	}
         public delegate void tempFUNC(float x, float y, float z, float q0, float q1, float q2, float q3);
 
 
@@ -436,7 +462,11 @@ namespace WristVizualizer
             get { return _mainControlPanel; }
         }
 
-
-
+	public void setNumSlicesInTrackbar1(int slices){
+            _textureControl.setMaxTracker1(slices);
+	}
+	public void setNumSlicesInTrackbar2(int slices){
+            _textureControl.setMaxTracker2(slices);
+        }
     }
 }

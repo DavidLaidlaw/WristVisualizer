@@ -1,6 +1,6 @@
 #include "StdAfx.h"
 #include "Texture.h"
-
+#include "TextureCBData.h"
 #include <Inventor/nodes/SoSeparator.h>
 #include <Inventor/nodes/SoMaterial.h>
 #include <Inventor/nodes/SoCoordinate3.h>
@@ -26,7 +26,7 @@
 #include <Inventor\draggers\SoCenterballDragger.h>
 #include <Inventor\manips\SoCenterballManip.h>
 #include <Inventor\SoType.h>
-
+// mri.Cropped_SizeX, mri.Cropped_SizeY, mri.Cropped_SizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ
 libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ)
 {
 	_side = side;
@@ -38,10 +38,11 @@ libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double 
 	_voxelZ = voxelZ;
 	_draggerXY = NULL;
 	_draggerYZ = NULL;
-
+	bufferXY=nullptr;
+	bufferYZ=nullptr;
+	voxels=nullptr;
 
 }
-
 
 //DESTRUCTOR!
 libCoin3D::Texture::!Texture()
@@ -57,12 +58,8 @@ libCoin3D::Texture::!Texture()
 			delete _all_slice_dataYZ[i];
 		delete _all_slice_dataYZ;
 	}
+	
 }
-
-
-
-
-
 
 
 unsigned char** libCoin3D::Texture::allocateSliceStack(int numPixelsX, int numPixelsY, int numPixelsZ)
@@ -120,7 +117,7 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 
 	return gcnew Separator(bone);
 }
-
+/*
 struct TextureCBData {
 	libCoin3D::Texture::Planes plane;
 	SoTexture2 * texture; 
@@ -134,7 +131,7 @@ struct TextureCBData {
 	int numSlices;
 	SoTranslate1Dragger* dragger;
 };	
-
+*/
 void updateTextureCB( void * data, SoSensor * )
 {
 	int xf;
@@ -157,6 +154,48 @@ void updateTextureCB( void * data, SoSensor * )
 	System::Console::WriteLine("Updating plane to slice: {0} for dragger position {1} (voxels)",xf,(6*dragPos/sliceThickness));
 	//set the image to the texture
 	texture -> image.setValue(SbVec2s(textureCBdata->planeHeight, textureCBdata->planeWidth),1, (const unsigned char*) buffer[xf] );
+
+	switch(plane){
+	  case libCoin3D::Texture::Planes::XY_PLANE:
+	    if (libCoin3D::Texture::_CSharpTrack1CB != nullptr)
+	    {
+		libCoin3D::Texture::_CSharpTrack1CB(dragPos);
+	    }
+	    break;
+	  case libCoin3D::Texture::Planes::YZ_PLANE:
+	    if (libCoin3D::Texture::_CSharpTrack2CB != nullptr)
+	    {
+		libCoin3D::Texture::_CSharpTrack2CB(dragPos);
+	    }
+	    break;
+	  default:
+	    throw gcnew System::ArgumentException("Unknown value for plane in Texture::updateTextureCB");
+	}
+}
+
+void updateTextureCB( void * data, int positionValue, SoSensor * )
+{
+    int xf;
+    TextureCBData * textureCBdata  = (TextureCBData *) data;  
+
+    SoTexture2  * texture = textureCBdata->texture;
+    unsigned char** buffer = textureCBdata->buffer;
+
+    if ( texture == NULL )
+      return;
+
+	libCoin3D::Texture::Planes plane = textureCBdata -> plane;
+	SoTranslate1Dragger* dragger = textureCBdata->dragger;
+	float dragPos = (float)positionValue;
+	float sliceThickness = textureCBdata->sliceThickness;
+	float numSlices = (float)textureCBdata->numSlices;
+
+	//determine the index of the image data that we need (in the full buffer)
+	xf = (int)fabs(fmod(floor((6*dragPos/sliceThickness)+0.5f),numSlices));
+	System::Console::WriteLine("Updating plane to slice: {0} for dragger position {1} (voxels)",xf,(6*dragPos/sliceThickness));
+	//set the image to the texture
+	texture -> image.setValue(SbVec2s(textureCBdata->planeHeight, textureCBdata->planeWidth),1, (const unsigned char*) buffer[xf] );
+	texture -> image.touch();
 }
 
 unsigned char** libCoin3D::Texture::setupLocalBuffer(array<array<System::Byte>^>^ data, Planes plane)
@@ -249,119 +288,273 @@ void libCoin3D::Texture::makeCenterballManips(Separator^ bone){
 libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, Planes plane)
 {
 
-	//copy data into local buffer :)
-	unsigned char** buffer = setupLocalBuffer(data, plane);
+    if (voxels==nullptr)
+      voxels=data;
 
-	SoSeparator* separator = new SoSeparator;
+    //copy data into local buffer :)
+    //unsigned char**
+    unsigned char** buffer = setupLocalBuffer(data, plane);
+    switch(plane){
+      case Planes::XY_PLANE:
+	bufferXY=buffer;
+	break;
+      case Planes::YZ_PLANE:
+	bufferYZ=buffer;
+	break;
+      default:
+	throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
+    }
+    SoSeparator* separator = new SoSeparator;
 
-	SoScale* myScale = new SoScale();
-	SoSeparator* scaleSeparator = new SoSeparator();
-	scaleSeparator->ref();
-	separator->addChild(scaleSeparator); //hu
-	scaleSeparator->addChild(myScale);
-	myScale->scaleFactor.setValue(6,6,6);
-	SoDrawStyle *drawStyle  = new SoDrawStyle;
-	drawStyle->style=SoDrawStyle::FILLED;
-	scaleSeparator->addChild(drawStyle);
+    SoScale* myScale = new SoScale();
+    SoSeparator* scaleSeparator = new SoSeparator();
+    scaleSeparator->ref();
+    separator->addChild(scaleSeparator); //hu
+    scaleSeparator->addChild(myScale);
+    myScale->scaleFactor.setValue(6,6,6);
+    SoDrawStyle *drawStyle  = new SoDrawStyle;
+    drawStyle->style=SoDrawStyle::FILLED;
+    scaleSeparator->addChild(drawStyle);
 
 
-	SoTranslate1Dragger *myDragger = new SoTranslate1Dragger;
-	myDragger->translation.setValue(0,0,0);
+    SoTranslate1Dragger *myDragger = new SoTranslate1Dragger;
+    myDragger->translation.setValue(0,0,0);
 
-	SoTransform *myTransform = new SoTransform;
-	separator->addChild(myTransform);
-	scaleSeparator->addChild(myDragger);
+    SoTransform *myTransform = new SoTransform;
+    separator->addChild(myTransform);
+    scaleSeparator->addChild(myDragger);
 
 
-	SoTexture2 *texture = new SoTexture2;
+    SoTexture2 *texture = new SoTexture2;
 
-	TextureCBData * textureCBdata = new TextureCBData;
-	textureCBdata->plane = plane;
-	textureCBdata->texture = texture;
-	textureCBdata->buffer = buffer;
-	textureCBdata->sizeX = _sizeX;
-	textureCBdata->sizeY = _sizeY;
-	textureCBdata->sizeZ = _sizeZ;
+    TextureCBData * textureCBdata = new TextureCBData;
+    textureCBdata->plane = plane;
+    textureCBdata->texture = texture;
+    textureCBdata->buffer = buffer;
+    textureCBdata->sizeX = _sizeX;
+    textureCBdata->sizeY = _sizeY;
+    textureCBdata->sizeZ = _sizeZ;
 
-	textureCBdata->dragger = myDragger;
+    textureCBdata->dragger = myDragger;
 
-	SoCalculator *myCalc = new SoCalculator;
-	myCalc->ref();
-	myCalc->A.connectFrom(&myDragger->translation);
-	//myCalc -> b.setValue( (float)_voxelZ );
-	//myCalc -> c.setValue( ACCESS_INDEX_SIGN_I );
+    SoCalculator *myCalc = new SoCalculator;
+    myCalc->ref();
+    myCalc->A.connectFrom(&myDragger->translation);
+    //myCalc -> b.setValue( (float)_voxelZ );
+    //myCalc -> c.setValue( ACCESS_INDEX_SIGN_I );
 
-	switch ( plane ) 
-	{
-	case Planes::XY_PLANE:
-		_all_slice_dataXY = buffer;
-		myCalc -> a.setValue( (float)_sizeZ ); 
-		//myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))) % a)";
-		myCalc -> c.setValue( _voxelZ );
-		myCalc -> expression = "oA = vec3f(0,0,(floor((6*fabs(A[0])/c)+0.5) % a) * c + c/2)";
-		textureCBdata->sliceThickness = _voxelZ;
-		textureCBdata->numSlices = _sizeZ;
-		textureCBdata->planeHeight = _sizeY;
-		textureCBdata->planeWidth = _sizeX;
-		if (_sizeY < _sizeX) {
-			/* Need to check for cases where we are wider then taller
-			* Due to a problem with SoTexture2, images are always display in
-			* portrain mode. For more info, see comments in function setupLocalBuffer()
-			*/
-			textureCBdata->planeHeight = _sizeX;
-			textureCBdata->planeWidth = _sizeY;
-		}
-		_draggerXY = myDragger; //save reference to this
-		break;
-	case Planes::YZ_PLANE:
-		_all_slice_dataYZ = buffer;
-		myCalc -> a.setValue( (float)_sizeX );
-		myCalc -> c.setValue( _voxelX ); 
-		myCalc -> expression = "oA = vec3f((floor((6*fabs(A[0])/c)+0.5) % a)*c +c/2, 0,0)";
-		textureCBdata->sliceThickness = _voxelX;
-		textureCBdata->numSlices = _sizeX;
-		textureCBdata->planeHeight = _sizeZ;
-		textureCBdata->planeWidth = _sizeY;
-		if (_sizeZ*_voxelZ < _sizeY*_voxelY) {
-			textureCBdata->planeHeight = _sizeY;
-			textureCBdata->planeWidth = _sizeZ;
-		}
-		_draggerYZ = myDragger;
-		break;
-	default:
-		throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
+    switch ( plane ) 
+    {
+      case Planes::XY_PLANE:
+	_all_slice_dataXY = buffer;
+	bufferXY=buffer;
+
+	myCalc -> a.setValue( (float)_sizeZ ); 
+	//myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))) % a)";
+	myCalc -> c.setValue( _voxelZ );
+	myCalc -> expression = "oA = vec3f(0,0,(floor((6*fabs(A[0])/c)+0.5) % a) * c + c/2)";
+	textureCBdata->sliceThickness = _voxelZ;
+	textureCBdata->numSlices = _sizeZ;
+	textureCBdata->planeHeight = _sizeY;
+	textureCBdata->planeWidth = _sizeX;
+	if (_sizeY < _sizeX) {
+	    /* Need to check for cases where we are wider then taller
+	     * Due to a problem with SoTexture2, images are always display in
+	     * portrain mode. For more info, see comments in function setupLocalBuffer()
+	     */
+	    textureCBdata->planeHeight = _sizeX;
+	    textureCBdata->planeWidth = _sizeY;
 	}
+	_draggerXY = myDragger; //save reference to this
+	textureCBdataXY=textureCBdata;
+	break;
+      case Planes::YZ_PLANE:
+	_all_slice_dataYZ = buffer;
+	bufferYZ=buffer;
+	myCalc -> a.setValue( (float)_sizeX );
+	myCalc -> c.setValue( _voxelX ); 
+	myCalc -> expression = "oA = vec3f((floor((6*fabs(A[0])/c)+0.5) % a)*c +c/2, 0,0)";
+	textureCBdata->sliceThickness = _voxelX;
+	textureCBdata->numSlices = _sizeX;
+	textureCBdata->planeHeight = _sizeZ;
+	textureCBdata->planeWidth = _sizeY;
+	if (_sizeZ*_voxelZ < _sizeY*_voxelY) {
+	    textureCBdata->planeHeight = _sizeY;
+	    textureCBdata->planeWidth = _sizeZ;
+	}
+	_draggerYZ = myDragger;
+	textureCBdataYZ=textureCBdata;
+	break;
+      default:
+	throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
+    }
 
-	//Make a translation on z;
-	SoTranslation *myTranslation = new SoTranslation;
+    //Make a translation on z;
+    SoTranslation *myTranslation = new SoTranslation;
 
-	myTranslation -> translation.connectFrom( &myCalc -> oA);
+    myTranslation -> translation.connectFrom( &myCalc -> oA);
 
-	// Make  the  MRI group: drawing style + texture + rectangle 
-	SoDrawStyle *drawStyleMRI  = new SoDrawStyle;
-	drawStyleMRI -> style=SoDrawStyle::FILLED;	
+    // Make  the  MRI group: drawing style + texture + rectangle 
+    SoDrawStyle *drawStyleMRI  = new SoDrawStyle;
+    drawStyleMRI -> style=SoDrawStyle::FILLED;	
 
-	SoSeparator* separatorCT = new SoSeparator;
-	separator -> addChild( separatorCT );
-	separatorCT -> addChild( drawStyleMRI );
-	separatorCT -> addChild( texture );
-
-
-	//create a sensor, and attach it to the output from our translation,
-	//so that we know when our dragger is moved
-	SoFieldSensor* dragger_sensor = new SoFieldSensor( updateTextureCB, textureCBdata );
-	dragger_sensor -> attach(&myTranslation->translation);
-
-	separatorCT -> addChild( myTranslation );
-
-	// Make a  rectangle
-	separatorCT -> addChild( makeRectangle( plane ));
-
-	//show the image for the first slice
-	updateTextureCB((void*)textureCBdata,NULL);
+    SoSeparator* separatorCT = new SoSeparator;
+    separator -> addChild( separatorCT );
+    separatorCT -> addChild( drawStyleMRI );
+    separatorCT -> addChild( texture );
 
 
-	return gcnew Separator(separator);
+    //create a sensor, and attach it to the output from our translation,
+    //so that we know when our dragger is moved
+    SoFieldSensor* dragger_sensor = new SoFieldSensor( updateTextureCB, textureCBdata );
+    dragger_sensor -> attach(&myTranslation->translation);
+
+    separatorCT -> addChild( myTranslation );
+
+    // Make a  rectangle
+    separatorCT -> addChild( makeRectangle( plane ));
+
+    //show the image for the first slice
+    updateTextureCB((void*)textureCBdata,NULL);
+
+
+    return gcnew Separator(separator);
+}
+
+libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, int dragPos, Planes plane)
+{
+
+    if (voxels==nullptr)
+      voxels=data;
+
+    //copy data into local buffer :)
+    //unsigned char**
+    unsigned char** buffer = setupLocalBuffer(data, plane);
+    switch(plane){
+      case Planes::XY_PLANE:
+	bufferXY=buffer;
+	break;
+      case Planes::YZ_PLANE:
+	bufferYZ=buffer;
+	break;
+      default:
+	throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
+    }
+    SoSeparator* separator = new SoSeparator;
+
+    SoScale* myScale = new SoScale();
+    SoSeparator* scaleSeparator = new SoSeparator();
+    scaleSeparator->ref();
+    separator->addChild(scaleSeparator); //hu
+    scaleSeparator->addChild(myScale);
+    myScale->scaleFactor.setValue(6,6,6);
+    SoDrawStyle *drawStyle  = new SoDrawStyle;
+    drawStyle->style=SoDrawStyle::FILLED;
+    scaleSeparator->addChild(drawStyle);
+
+
+    SoTranslate1Dragger *myDragger = new SoTranslate1Dragger;
+    myDragger->translation.setValue(0,0,0);
+
+    SoTransform *myTransform = new SoTransform;
+    separator->addChild(myTransform);
+    scaleSeparator->addChild(myDragger);
+
+
+    SoTexture2 *texture = new SoTexture2;
+
+    TextureCBData * textureCBdata = new TextureCBData;
+    textureCBdata->plane = plane;
+    textureCBdata->texture = texture;
+    textureCBdata->buffer = buffer;
+    textureCBdata->sizeX = _sizeX;
+    textureCBdata->sizeY = _sizeY;
+    textureCBdata->sizeZ = _sizeZ;
+
+    textureCBdata->dragger = myDragger;
+
+    SoCalculator *myCalc = new SoCalculator;
+    myCalc->ref();
+    myCalc->A.connectFrom(&myDragger->translation);
+    //myCalc -> b.setValue( (float)_voxelZ );
+    //myCalc -> c.setValue( ACCESS_INDEX_SIGN_I );
+
+    switch ( plane ) 
+    {
+      case Planes::XY_PLANE:
+	_all_slice_dataXY = buffer;
+	bufferXY=buffer;
+
+	myCalc -> a.setValue( (float)_sizeZ ); 
+	//myCalc -> expression = "oA = vec3f(0,0,(floor(6*fabs(A[0]))) % a)";
+	myCalc -> c.setValue( _voxelZ );
+	myCalc -> expression = "oA = vec3f(0,0,(floor((6*fabs(A[0])/c)+0.5) % a) * c + c/2)";
+	textureCBdata->sliceThickness = _voxelZ;
+	textureCBdata->numSlices = _sizeZ;
+	textureCBdata->planeHeight = _sizeY;
+	textureCBdata->planeWidth = _sizeX;
+	if (_sizeY < _sizeX) {
+	    /* Need to check for cases where we are wider then taller
+	     * Due to a problem with SoTexture2, images are always display in
+	     * portrain mode. For more info, see comments in function setupLocalBuffer()
+	     */
+	    textureCBdata->planeHeight = _sizeX;
+	    textureCBdata->planeWidth = _sizeY;
+	}
+	_draggerXY = myDragger; //save reference to this
+	textureCBdataXY=textureCBdata;
+	break;
+      case Planes::YZ_PLANE:
+	_all_slice_dataYZ = buffer;
+	bufferYZ=buffer;
+	myCalc -> a.setValue( (float)_sizeX );
+	myCalc -> c.setValue( _voxelX ); 
+	myCalc -> expression = "oA = vec3f((floor((6*fabs(A[0])/c)+0.5) % a)*c +c/2, 0,0)";
+	textureCBdata->sliceThickness = _voxelX;
+	textureCBdata->numSlices = _sizeX;
+	textureCBdata->planeHeight = _sizeZ;
+	textureCBdata->planeWidth = _sizeY;
+	if (_sizeZ*_voxelZ < _sizeY*_voxelY) {
+	    textureCBdata->planeHeight = _sizeY;
+	    textureCBdata->planeWidth = _sizeZ;
+	}
+	_draggerYZ = myDragger;
+	textureCBdataYZ=textureCBdata;
+	break;
+      default:
+	throw gcnew System::ArgumentException("wrong value for axis in makeDraggerAndTexture()");
+    }
+
+    //Make a translation on z;
+    SoTranslation *myTranslation = new SoTranslation;
+
+    myTranslation -> translation.connectFrom( &myCalc -> oA);
+
+    // Make  the  MRI group: drawing style + texture + rectangle 
+    SoDrawStyle *drawStyleMRI  = new SoDrawStyle;
+    drawStyleMRI -> style=SoDrawStyle::FILLED;	
+
+    SoSeparator* separatorCT = new SoSeparator;
+    separator -> addChild( separatorCT );
+    separatorCT -> addChild( drawStyleMRI );
+    separatorCT -> addChild( texture );
+
+
+    //create a sensor, and attach it to the output from our translation,
+    //so that we know when our dragger is moved
+    SoFieldSensor* dragger_sensor = new SoFieldSensor( updateTextureCB, textureCBdata );
+    dragger_sensor -> attach(&myTranslation->translation);
+
+    separatorCT -> addChild( myTranslation );
+
+    // Make a  rectangle
+    separatorCT -> addChild( makeRectangle( plane ));
+
+    
+    updateTextureCB((void*)textureCBdata,dragPos, NULL);
+
+
+    return gcnew Separator(separator);
 }
 
 SoSeparator* libCoin3D::Texture::makeRectangle(Planes plane)
@@ -488,4 +681,14 @@ libCoin3D::Texture^ libCoin3D::Texture::getTextureByParentWidget(int HWND)
 	if (TexturesHashtable == nullptr)
 		return nullptr; //this should never happen, but just in case
 	return (Texture^)TexturesHashtable[HWND]; //return it
+}
+
+void 
+libCoin3D::Texture::addCBtrack1(delFunc^ f){
+    _CSharpTrack1CB=f;
+
+}
+void 
+libCoin3D::Texture::addCBtrack2(delFunc^ f){
+    _CSharpTrack2CB=f;
 }

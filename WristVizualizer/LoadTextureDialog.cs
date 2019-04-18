@@ -36,6 +36,7 @@ namespace WristVizualizer
         Modes _mode = Modes.AUTOMATIC;
 
         int _minX, _maxX, _minY, _maxY, _minZ, _maxZ;
+	Byte[][] voxels;
 
         private enum KinematicFileTypes
         {
@@ -197,7 +198,7 @@ namespace WristVizualizer
                 _LastImagePath = textBoxImageFile.Text.Trim(); //save filename, to use in cache
             }
 
-            Byte[][] voxels = mri.getCroppedRegionScaledToBytes((mri.Layers==1) ? 0 : 5);
+            voxels = mri.getCroppedRegionScaledToBytes((mri.Layers==1) ? 0 : 5);
             int min = 1000;
             int max = -10;
             for (int i = 0; i < voxels[0].Length; i++)
@@ -264,7 +265,7 @@ namespace WristVizualizer
             _viewer.setSceneGraph(_root);
             
             if (checkBoxEnableStepping.Checked){
-                _controller = new TextureController(_root, _bones, _transformParser, loadVolumeRender.Checked);
+                _controller = new TextureController(_root, _bones, _transformParser, loadVolumeRender.Checked, _texture);
                 if (loadVolumeRender.Checked)
                 {
                     //if the check box is unchecked it won't bother loading mri stuff
@@ -272,7 +273,12 @@ namespace WristVizualizer
                 }
              }
             else
-                _controller = new TextureController(_root, null, null, loadVolumeRender.Checked); 
+                _controller = new TextureController(_root, null, null, loadVolumeRender.Checked, _texture); 
+	    // now set trackbars with numSlices value
+	    _controller.setNumSlicesInTrackbar2((int)(Math.Ceiling(((double)(mri.Cropped_SizeZ/6))*mri.voxelSizeZ)-1.0));
+	    _controller.setNumSlicesInTrackbar1((int)(Math.Ceiling((double)(mri.Cropped_SizeX/6.0)*mri.voxelSizeX)-1.0));
+	     
+	     
             return _controller;
         }
 

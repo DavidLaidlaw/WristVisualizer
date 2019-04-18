@@ -238,6 +238,7 @@ copy $(ProjectDir)v.vsh $(ProjectDir)..\WristVizualizer\bin\x64\Debug</Command>
     <ClCompile Include="TextureHandler.cpp" />
     <ClCompile Include="Transform.cpp" />
     <ClCompile Include="TransformBoxManip.cpp" />
+    <ClCompile Include="TranslateDragger.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ACS.h" />
@@ -270,9 +271,11 @@ copy $(ProjectDir)v.vsh $(ProjectDir)..\WristVizualizer\bin\x64\Debug</Command>
     <ClInclude Include="Switch.h" />
     <ClInclude Include="TessellatedSurface.h" />
     <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureCBData.h" />
     <ClInclude Include="TextureHandler.h" />
     <ClInclude Include="Transform.h" />
     <ClInclude Include="TransformBoxManip.h" />
+    <ClInclude Include="TranslateDragger.h" />
     <ClInclude Include="Vector.h" />
   </ItemGroup>
   <ItemGroup>
