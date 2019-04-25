@@ -15,8 +15,6 @@ libCoin3D::TranslateDragger::TranslateDragger():
 	_translateDragger = new SoTranslate1Dragger();
 	_translateDragger->ref();
 
-
-
 }
 
 
@@ -44,16 +42,17 @@ libCoin3D::TranslateDragger::updateTrackbar(Texture^ texture,int value, libCoin3
     
     int xf; 
     switch(plane){
-     
+	// trackbar1 left-right
 	case libCoin3D::Texture::Planes::YZ_PLANE:
-	texture->_draggerXY->translation.setValue(value,0,0);
-	updateTextureCB(texture->textureCBdataXY, value, NULL);
+	  //texture->_draggerYZ->translation.setValue(value,0,0);
+	updateTextureCB(texture->textureCBdataYZ, value, NULL);
 	
 	  break;
+	  // trackbar2 up-down
        case libCoin3D::Texture::Planes::XY_PLANE:
 	
-	texture->_draggerYZ->translation.setValue(value,0,0);
-	updateTextureCB(texture->textureCBdataYZ, value, NULL);
+	 //texture->_draggerXY->translation.setValue(value,0,0);
+	updateTextureCB(texture->textureCBdataXY, value, NULL);
 
 	break;
       default:
@@ -61,12 +60,13 @@ libCoin3D::TranslateDragger::updateTrackbar(Texture^ texture,int value, libCoin3
     }
    
 }
+
+
 void 
-libCoin3D::TranslateDragger::updateTextureCB( void * data,int dragPosition1,  SoSensor * )
+libCoin3D::TranslateDragger::updateTextureCB( void * data,int sliceIndex,  SoSensor * )
 {
 	int xf;
 	TextureCBData * textureCBdata  = (TextureCBData *) data;  
-	int dragPosition = dragPosition1*textureCBdata->sliceThickness;
 	SoTexture2  * texture = textureCBdata->texture;
 	unsigned char** buffer = textureCBdata->buffer;
 
@@ -75,18 +75,19 @@ libCoin3D::TranslateDragger::updateTextureCB( void * data,int dragPosition1,  So
 
 	libCoin3D::Texture::Planes plane = textureCBdata -> plane;
 	SoTranslate1Dragger* dragger = textureCBdata->dragger;
-	float dragPos = (float)dragPosition;
+	
 	float sliceThickness = textureCBdata->sliceThickness;
 	float numSlices = (float)textureCBdata->numSlices;
 
-	//determine the index of the image data that we need (in the full buffer)
-	xf = (int)fabs(fmod(floor((6*dragPos/sliceThickness)+0.5f),numSlices));
-	//System::Console::WriteLine("Updating plane to slice: {0}=value  {1} for dragger position {2} (voxels)",dragPos,xf,(6*dragPos/sliceThickness));
-	//set the image to the texture
-	texture -> image.setValue(SbVec2s(textureCBdata->planeHeight, textureCBdata->planeWidth),1, (const unsigned char*) buffer[xf] );
+	// set the translation of the dragger and the callback to
+	// texture will take care of setting the slice This means
+	// mapping slice index back into voxel-based coords with which
+	// dragger position is represented
+	float dragPos = ((float)sliceIndex-0.5f)*(sliceThickness/6.0);
+	dragger->translation.setValue(dragPos,0,0);
+	
+
 }
-
-
 
 
 //delegate void tempCB( void * userData, SoDragger *dragger);

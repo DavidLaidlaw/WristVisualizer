@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Forms;
 using libCoin3D;
 using libWrist;
 
@@ -29,8 +30,8 @@ namespace WristVizualizer
         float[] scaleValues;
         float[] beginningTranslation;
         CenterballDragger _centerballDragger;//the current centerball dragger
-	public TranslateDragger _translateDragger;
-	public TranslateDragger getTranslateDragger(){return _translateDragger;}
+        public TranslateDragger _translateDragger;
+        public TranslateDragger getTranslateDragger() { return _translateDragger; }
         Separator _rootSeparator;//the eparator containing the centerball
         Boolean _centerballVisible = true;
         Boolean drawVolume = false;
@@ -41,7 +42,7 @@ namespace WristVizualizer
 
         CT mri;//for getting the texture info
 
-        public TextureController(Separator root, Separator[] bones, TransformParser parser,Boolean IsVolumeRenderEnabled, Texture texture)
+        public TextureController(Separator root, Separator[] bones, TransformParser parser, Boolean IsVolumeRenderEnabled, Texture texture)
         {
 
             isVolumeRenderEnabled = IsVolumeRenderEnabled;
@@ -116,7 +117,7 @@ namespace WristVizualizer
             _centerballDragger.setRotation(rotation[0], rotation[1], rotation[2]);
             _centerballDragger.setTranslation(center[0] / scaleValues[0], center[1] / scaleValues[1], center[2] / scaleValues[2]);
 
-          
+
             _rootSeparator.addChild(_centerballDragger);
             beginningTranslation = _textureControl.getCurrentTranslation();
 
@@ -124,11 +125,11 @@ namespace WristVizualizer
             _centerballDragger.addCB(d);
 
             wasRotated();
-	    Texture.delFunc t1 = new Texture.delFunc(_textureControl_settrackbar1);
-	    Texture.delFunc t2 = new Texture.delFunc(_textureControl_settrackbar2);
-	    texture.addCBtrack1(t1);
-	    texture.addCBtrack1(t2);
-	    _translateDragger=new TranslateDragger(texture);
+            Texture.delFunc t1 = new Texture.delFunc(_textureControl_settrackbar1);
+            Texture.delFunc t2 = new Texture.delFunc(_textureControl_settrackbar2);
+            texture.addCBtrack1(t1);
+            texture.addCBtrack2(t2);
+            _translateDragger = new TranslateDragger(texture);
         }
 
 
@@ -138,19 +139,22 @@ namespace WristVizualizer
             mri = m;
             //now need to gather information representing the CT data, then pass it to the volNode
             //the volNode can then load it into openGL at will
-            int x = mri.width; int y=mri.height; int z=mri.depth;
-            int w = (int) (x*mri.voxelSizeX);
-            int h = (int) (y* mri.voxelSizeY);
-            int l = (int) (z* mri.voxelSizeZ);
+            int x = mri.width; int y = mri.height; int z = mri.depth;
+            int w = (int)(x * mri.voxelSizeX);
+            int h = (int)(y * mri.voxelSizeY);
+            int l = (int)(z * mri.voxelSizeZ);
             Console.WriteLine("cropped size of mri data" + w + ", " + h + ", " + l);
             int dataSize = x * y * z * 4;
-            int[] allDatint=new int[dataSize];
-            Console.WriteLine("data size from C# "+dataSize+", ");
-          
-            for(int i=0;i<x;i++){
-                for(int j=0;j<y;j++){
-                    for(int k=0;k<z;k++){
-                        int v = (i + x * (j + k * y)) ;
+            int[] allDatint = new int[dataSize];
+            Console.WriteLine("data size from C# " + dataSize + ", ");
+
+            for (int i = 0; i < x; i++)
+            {
+                for (int j = 0; j < y; j++)
+                {
+                    for (int k = 0; k < z; k++)
+                    {
+                        int v = (i + x * (j + k * y));
                         //int v = (k + z * (j + i * y)) * 4;
                         //for (int hl = 0; hl < 4; hl++)
                         //{
@@ -171,7 +175,7 @@ namespace WristVizualizer
             //    if(allDatint[ik]>100)Console.WriteLine("d: " + allDatint[ik]);
             //}
             Console.WriteLine("done printing data");
-            volNode = new CallbackNode(w,h,l,x,y,z,allDatint,isLeft);
+            volNode = new CallbackNode(w, h, l, x, y, z, allDatint, isLeft);
             volNode.setUpCallBack();
             _root.addChild(volNode);
 
@@ -182,21 +186,22 @@ namespace WristVizualizer
             float[] rotation = _textureControl.getCurrentRotation();
             float[] translate = _textureControl.getCurrentTranslation();
 
-            if(rotation[0]!=currRotation[0] || rotation[1]!=currRotation[1] ||rotation[2]!=currRotation[2] ){
+            if (rotation[0] != currRotation[0] || rotation[1] != currRotation[1] || rotation[2] != currRotation[2])
+            {
                 currRotation[0] = rotation[0];
                 currRotation[1] = rotation[1];
                 currRotation[2] = rotation[2];
                 currTranslation[0] = translate[0];
                 currTranslation[1] = translate[1];
-                currTranslation[2] = translate[2]; 
+                currTranslation[2] = translate[2];
                 return true;
             }
             currRotation[0] = rotation[0];
             currRotation[1] = rotation[1];
             currRotation[2] = rotation[2];
-            currTranslation[0] = translate[0]; 
-            currTranslation[1] = translate[1]; 
-            currTranslation[2] = translate[2]; 
+            currTranslation[0] = translate[0];
+            currTranslation[1] = translate[1];
+            currTranslation[2] = translate[2];
 
             return false;
         }
@@ -209,14 +214,14 @@ namespace WristVizualizer
                 if (!_centerballVisible)
                 {
                     _centerballVisible = true;
-                    _root.addChildAtIndex(_rootSeparator,0);
+                    _root.addChildAtIndex(_rootSeparator, 0);
                 }
 
                 _rootSeparator.removeChild(_centerballDragger);
 
                 _centerballDragger = null;
                 _centerballDragger = new CenterballDragger();
-                _rootSeparator.addChildAtIndex(_centerballDragger,1);
+                _rootSeparator.addChildAtIndex(_centerballDragger, 1);
 
                 float[] center = new float[3];
                 center = _textureControl.getCurrentCenterOfRotation();
@@ -247,7 +252,7 @@ namespace WristVizualizer
                 }
 
             }
-            
+
             wasRotated();
         }
 
@@ -265,8 +270,10 @@ namespace WristVizualizer
             _textureControl.EditableTransformChanged += new EventHandler(_textureControl_EditableTransformChanged);
             _fullWristControl.BoneHideChanged += new BoneHideChangedHandler(_fullWristControl_BoneHideChanged);
             //setup up listeners for manipulators
-	    _textureControl.Trackbar1Changed+= new EventHandler(_textureControl_Trackbar1Changed);
-	    _textureControl.Trackbar2Changed+= new EventHandler(_textureControl_Trackbar2Changed);
+            _textureControl.Trackbar1Changed += new EventHandler(_textureControl_Trackbar1Changed);
+            _textureControl.Trackbar2Changed += new EventHandler(_textureControl_Trackbar2Changed);
+
+
         }
 
         private void removeListeners()
@@ -275,8 +282,9 @@ namespace WristVizualizer
             _textureControl.EditableTransformChanged -= new EventHandler(_textureControl_EditableTransformChanged);
             _fullWristControl.BoneHideChanged -= new BoneHideChangedHandler(_fullWristControl_BoneHideChanged);
             //remove listeners for manipulators
-	    _textureControl.Trackbar1Changed-= new EventHandler(_textureControl_Trackbar1Changed);
-	    _textureControl.Trackbar2Changed-= new EventHandler(_textureControl_Trackbar2Changed);
+            _textureControl.Trackbar1Changed -= new EventHandler(_textureControl_Trackbar1Changed);
+            _textureControl.Trackbar2Changed -= new EventHandler(_textureControl_Trackbar2Changed);
+
         }
 
 
@@ -305,20 +313,27 @@ namespace WristVizualizer
             volNode.setDoDrawVolume(_textureControl.getDisplayVolumeChecked());
 
         }
-	void _textureControl_Trackbar1Changed(object sender, EventArgs e){
-	    int value = _textureControl.getTrackBar1Value();
-	    _translateDragger.updateTrackbar(_translateDragger.getTexture(),value,  Texture.Planes.XY_PLANE);
-	}
+        void _textureControl_Trackbar1Changed(object sender, EventArgs e)
+        {
+            int value = _textureControl.getTrackBar1Value();
+            _translateDragger.updateTrackbar(_translateDragger.getTexture(), value, Texture.Planes.YZ_PLANE);
 
-	void _textureControl_Trackbar2Changed(object sender, EventArgs e){
-	      int value = _textureControl.getTrackBar2Value();
-	      _translateDragger.updateTrackbar(_translateDragger.getTexture(),value,Texture.Planes.YZ_PLANE);
-	}
+        }
+
+
+        void _textureControl_Trackbar2Changed(object sender, EventArgs e)
+        {
+            int value = _textureControl.getTrackBar2Value();
+            _translateDragger.updateTrackbar(_translateDragger.getTexture(), value, Texture.Planes.XY_PLANE);
+
+        }
+
 
         void _textureControl_EditableTransformChanged(object sender, EventArgs e)
         {
 
-            if(volNode!=null){
+            if (volNode != null)
+            {
                 volNode.setDoDrawVolume(_textureControl.getDisplayVolumeChecked());
                 volNode.setOpacity(_textureControl.getOpacity());
                 volNode.setSliceNum(_textureControl.getNumSlices());
@@ -351,14 +366,16 @@ namespace WristVizualizer
                 CBenabled = true;
             }
         }
-	public delegate void tempFUNC2(int v);
+        public delegate void tempFUNC2(int v);
 
-	void _textureControl_settrackbar1(int v){
-	    _textureControl.setTrackBar1Value(v);
-	}
-	void _textureControl_settrackbar2(int v){
-	    _textureControl.setTrackBar2Value(v);
-	}
+        void _textureControl_settrackbar1(int v)
+        {
+            _textureControl.setTrackBar1Value(v);
+        }
+        void _textureControl_settrackbar2(int v)
+        {
+            _textureControl.setTrackBar2Value(v);
+        }
         public delegate void tempFUNC(float x, float y, float z, float q0, float q1, float q2, float q3);
 
 
@@ -462,10 +479,12 @@ namespace WristVizualizer
             get { return _mainControlPanel; }
         }
 
-	public void setNumSlicesInTrackbar1(int slices){
+        public void setNumSlicesInTrackbar1(int slices)
+        {
             _textureControl.setMaxTracker1(slices);
-	}
-	public void setNumSlicesInTrackbar2(int slices){
+        }
+        public void setNumSlicesInTrackbar2(int slices)
+        {
             _textureControl.setMaxTracker2(slices);
         }
     }

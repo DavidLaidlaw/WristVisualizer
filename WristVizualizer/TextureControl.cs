@@ -36,6 +36,35 @@ namespace WristVizualizer
             clearEditableTransform();
         }
 
+	protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+	 {
+       
+        switch (keyData)
+        {
+            case Keys.Up:
+                trackBar2.Value = Math.Min(trackBar2.Value + trackBar2.SmallChange, trackBar2.Maximum);
+		Trackbar2Changed(this, new EventArgs());
+                break;
+            case Keys.Down:
+                trackBar2.Value = Math.Max(trackBar2.Value - trackBar2.SmallChange, trackBar2.Minimum);
+		Trackbar2Changed(this, new EventArgs());
+                break;
+            case Keys.PageUp:
+                trackBar1.Value = Math.Min(trackBar1.Value + trackBar1.LargeChange, trackBar1.Maximum);
+			Trackbar1Changed(this, new EventArgs());
+                break;
+            case Keys.PageDown:
+                trackBar1.Value = Math.Max(trackBar1.Value - trackBar1.LargeChange, trackBar1.Minimum);
+		
+                break;
+            default:
+                return base.ProcessCmdKey(ref msg, keyData);
+        }
+
+        
+        return true;
+    }
+	
         /**
          * 
          * 

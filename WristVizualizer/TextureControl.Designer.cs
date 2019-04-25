@@ -462,6 +462,7 @@ namespace WristVizualizer
             // trackBar1
             // 
             this.trackBar1.CausesValidation = false;
+            this.trackBar1.LargeChange = 1;
             this.trackBar1.Location = new System.Drawing.Point(87, 556);
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(406, 69);
@@ -472,10 +473,10 @@ namespace WristVizualizer
             // trackBar2
             // 
             this.trackBar2.CausesValidation = false;
-            this.trackBar2.Location = new System.Drawing.Point(12, 264);
+            this.trackBar2.Location = new System.Drawing.Point(12, 5);
             this.trackBar2.Name = "trackBar2";
             this.trackBar2.Orientation = System.Windows.Forms.Orientation.Vertical;
-            this.trackBar2.Size = new System.Drawing.Size(69, 329);
+            this.trackBar2.Size = new System.Drawing.Size(69, 588);
             this.trackBar2.TabIndex = 23;
             this.trackBar2.TickStyle = System.Windows.Forms.TickStyle.None;
             this.trackBar2.Scroll += new System.EventHandler(this.TrackBar2_Scroll);

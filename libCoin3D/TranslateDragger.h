@@ -9,17 +9,15 @@ class TextureCBData;
 namespace libCoin3D {
 public ref class TranslateDragger : Node
 {
-  public:
+ public:
     TranslateDragger();
     TranslateDragger(Texture^ texture);
     ~TranslateDragger();
     TranslateDragger(SoTranslate1Dragger* translateDragger);
-
-
-   
+  
     delegate void delFunc(int);
    
-	void updateTrackbar(Texture^ texture, int value, libCoin3D::Texture::Planes plane);
+    void updateTrackbar(Texture^ texture, int value, libCoin3D::Texture::Planes plane);
 	
     void updateTextureCB( void * data, int dragPosition, SoSensor * );
     
@@ -27,7 +25,7 @@ public ref class TranslateDragger : Node
     {
 	return nullptr;
     }
-  public:
+ public:
     void setDraggerXY(SoTranslate1Dragger* dragger)
     {
 	_draggerXY= dragger;
@@ -37,7 +35,7 @@ public ref class TranslateDragger : Node
 	_draggerYZ= dragger;
     }
     Texture^ getTexture(){return _texture;}
-  private: 
+ private: 
     SoTranslate1Dragger* _draggerXY;
     SoTranslate1Dragger* _draggerYZ;
    
@@ -45,10 +43,7 @@ public ref class TranslateDragger : Node
     // unused for now 
     SoTranslate1Dragger* _translateDragger;
     static delFunc^ _CSharpCallBack;
-   
-	
-
-
+ 
 };
 }
 

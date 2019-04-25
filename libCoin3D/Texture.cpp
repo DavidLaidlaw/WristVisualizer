@@ -148,24 +148,25 @@ void updateTextureCB( void * data, SoSensor * )
 	float dragPos = dragger->translation.getValue()[0];
 	float sliceThickness = textureCBdata->sliceThickness;
 	float numSlices = (float)textureCBdata->numSlices;
+	
 
 	//determine the index of the image data that we need (in the full buffer)
-	xf = (int)fabs(fmod(floor((6*dragPos/sliceThickness)+0.5f),numSlices));
-	System::Console::WriteLine("Updating plane to slice: {0} for dragger position {1} (voxels)",xf,(6*dragPos/sliceThickness));
+	xf = (int)fabs(fmod( floor(round(((6*dragPos/sliceThickness)+0.5f)*10000.0)/10000.0) ,numSlices));
+	//System::Console::WriteLine("Updating plane to slice: {0} for dragger position {1} (voxels), dragger translation: {2} ",xf,(6*dragPos/sliceThickness), dragger->translation.getValue()[0]);
 	//set the image to the texture
 	texture -> image.setValue(SbVec2s(textureCBdata->planeHeight, textureCBdata->planeWidth),1, (const unsigned char*) buffer[xf] );
 
 	switch(plane){
 	  case libCoin3D::Texture::Planes::XY_PLANE:
-	    if (libCoin3D::Texture::_CSharpTrack1CB != nullptr)
+	    if (libCoin3D::Texture::_CSharpTrack2CB != nullptr)
 	    {
-		libCoin3D::Texture::_CSharpTrack1CB(dragPos);
+		libCoin3D::Texture::_CSharpTrack2CB(xf);
 	    }
 	    break;
 	  case libCoin3D::Texture::Planes::YZ_PLANE:
-	    if (libCoin3D::Texture::_CSharpTrack2CB != nullptr)
+	    if (libCoin3D::Texture::_CSharpTrack1CB != nullptr)
 	    {
-		libCoin3D::Texture::_CSharpTrack2CB(dragPos);
+		libCoin3D::Texture::_CSharpTrack1CB(xf);
 	    }
 	    break;
 	  default:
@@ -192,7 +193,7 @@ void updateTextureCB( void * data, int positionValue, SoSensor * )
 
 	//determine the index of the image data that we need (in the full buffer)
 	xf = (int)fabs(fmod(floor((6*dragPos/sliceThickness)+0.5f),numSlices));
-	System::Console::WriteLine("Updating plane to slice: {0} for dragger position {1} (voxels)",xf,(6*dragPos/sliceThickness));
+	System::Console::WriteLine("My updateTextureCB - Updating plane to slice: {0} for dragger position {1} (voxels)",xf,(6*dragPos/sliceThickness));
 	//set the image to the texture
 	texture -> image.setValue(SbVec2s(textureCBdata->planeHeight, textureCBdata->planeWidth),1, (const unsigned char*) buffer[xf] );
 	texture -> image.touch();
@@ -284,7 +285,14 @@ void ManipCallBack( void * userData, SoDragger *dragger )
 
 void libCoin3D::Texture::makeCenterballManips(Separator^ bone){
 }
-
+int 
+libCoin3D::Texture::getNumSlicesYZ(){
+     return textureCBdataYZ->numSlices;
+}
+int 
+libCoin3D::Texture::getNumSlicesXY(){
+    return textureCBdataXY->numSlices;
+}
 libCoin3D::Separator^ libCoin3D::Texture::makeDragerAndTexture(array<array<System::Byte>^> ^data, Planes plane)
 {
 
@@ -654,7 +662,14 @@ libCoin3D::Separator^ libCoin3D::Texture::createKeyboardCallbackObject(int viewe
 	sep->addChild(myEventCB);
 	return wrapper;
 }
-
+void 
+libCoin3D::Texture::moveDraggerXY(int howFar) {
+    moveDragger(Planes::XY_PLANE,howFar) ;
+}
+void 
+libCoin3D::Texture::moveDraggerYZ(int howFar) {
+    moveDragger(Planes::YZ_PLANE,howFar) ;
+}
 void libCoin3D::Texture::moveDragger(Planes plane,int howFar) {
 	SoTranslate1Dragger* dragger;
 	switch (plane) 

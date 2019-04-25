@@ -36,7 +36,7 @@ namespace WristVizualizer
         Modes _mode = Modes.AUTOMATIC;
 
         int _minX, _maxX, _minY, _maxY, _minZ, _maxZ;
-	Byte[][] voxels;
+        Byte[][] voxels;
 
         private enum KinematicFileTypes
         {
@@ -146,7 +146,7 @@ namespace WristVizualizer
 
             if (Int32.Parse(numericUpDownMinZ.Text) < 0)
                 numericUpDownMinZ.Text = "0";
-            
+
             //are we a left or right?
             if (_mode == Modes.MANUAL)
             {
@@ -155,7 +155,7 @@ namespace WristVizualizer
             else
             {
                 //check that we have a radius
-                if (!File.Exists(Path.Combine(textBoxStackFileDirectory.Text,String.Format("rad{0}.stack",_stackSeriesKey))))
+                if (!File.Exists(Path.Combine(textBoxStackFileDirectory.Text, String.Format("rad{0}.stack", _stackSeriesKey))))
                     throw new ArgumentException("Unable to find radius stack file in directory. (" + textBoxStackFileDirectory.Text + ")");
             }
 
@@ -176,10 +176,10 @@ namespace WristVizualizer
         {
             _bones = new Separator[TextureSettings.ShortBNames.Length];
             _subjectPath = textBoxSubjectDirectory.Text.Trim();
-            
+
             //TODO: Figure out the image type....
             parseCropValues();
-            
+
             CT mri;
             //check if we have this MRI saved!!!, dirty cache
             //TODO: Check if the crop values are compatable!!!
@@ -198,7 +198,7 @@ namespace WristVizualizer
                 _LastImagePath = textBoxImageFile.Text.Trim(); //save filename, to use in cache
             }
 
-            voxels = mri.getCroppedRegionScaledToBytes((mri.Layers==1) ? 0 : 5);
+            voxels = mri.getCroppedRegionScaledToBytes((mri.Layers == 1) ? 0 : 5);
             int min = 1000;
             int max = -10;
             for (int i = 0; i < voxels[0].Length; i++)
@@ -239,7 +239,7 @@ namespace WristVizualizer
                 _root.addChild(_bones[i]);
             }
 
-            _texture = new Texture(_side == WristFilesystem.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT, 
+            _texture = new Texture(_side == WristFilesystem.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT,
                 mri.Cropped_SizeX, mri.Cropped_SizeY, mri.Cropped_SizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ);
             Separator plane1 = _texture.makeDragerAndTexture(voxels, Texture.Planes.XY_PLANE);
             Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
@@ -261,24 +261,25 @@ namespace WristVizualizer
         {
             _viewer = viewer;
             _root = new Separator();
-            CT mri=run();
+            CT mri = run();
             _viewer.setSceneGraph(_root);
-            
-            if (checkBoxEnableStepping.Checked){
+
+            if (checkBoxEnableStepping.Checked)
+            {
                 _controller = new TextureController(_root, _bones, _transformParser, loadVolumeRender.Checked, _texture);
                 if (loadVolumeRender.Checked)
                 {
                     //if the check box is unchecked it won't bother loading mri stuff
                     _controller.setMRI(mri, (_side == WristFilesystem.Sides.LEFT));
                 }
-             }
+            }
             else
-                _controller = new TextureController(_root, null, null, loadVolumeRender.Checked, _texture); 
-	    // now set trackbars with numSlices value
-	    _controller.setNumSlicesInTrackbar2((int)(Math.Ceiling(((double)(mri.Cropped_SizeZ/6))*mri.voxelSizeZ)-1.0));
-	    _controller.setNumSlicesInTrackbar1((int)(Math.Ceiling((double)(mri.Cropped_SizeX/6.0)*mri.voxelSizeX)-1.0));
-	     
-	     
+                _controller = new TextureController(_root, null, null, loadVolumeRender.Checked, _texture);
+            // now set trackbars with numSlices value
+            _controller.setNumSlicesInTrackbar2(_texture.getNumSlicesXY());
+            _controller.setNumSlicesInTrackbar1(_texture.getNumSlicesYZ());
+
+
             return _controller;
         }
 
@@ -296,7 +297,7 @@ namespace WristVizualizer
             }
             //save last Path
             RegistrySettings.saveSetting("TextureLastSubjectDirectory", textBoxSubjectDirectory.Text.Trim());
-            if (_seriesKey.Length>0)
+            if (_seriesKey.Length > 0)
                 RegistrySettings.saveSetting("TextureLastSeriesKey", _seriesKey);
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -365,7 +366,7 @@ namespace WristVizualizer
                 valid = false;
             }
 
-            
+
             if (_mode == Modes.MANUAL)
                 return; //below is automatic
 
@@ -375,7 +376,7 @@ namespace WristVizualizer
                 //check that the file is a CV file
                 try
                 {
-                   CropValuesParser parser = new CropValuesParser(textBoxCropValuesFilename.Text);
+                    CropValuesParser parser = new CropValuesParser(textBoxCropValuesFilename.Text);
                     _cvParser = parser;
                 }
                 catch (Exception ex)
@@ -409,7 +410,7 @@ namespace WristVizualizer
                     list.Add(m.Groups[1].Value + "L");
                 if (hasRight && !list.Contains(m.Groups[1].Value + "R"))
                     list.Add(m.Groups[1].Value + "R");
-                return; 
+                return;
             }
 
             //check for cropped file...
@@ -537,10 +538,10 @@ namespace WristVizualizer
                 textBoxImageFile.Text = textBoxImageFile.Text + (_side == WristFilesystem.Sides.LEFT ? "L" : "R");
 
             //try and find stackFile Directory
-            string neutralSeriesDir = String.Format("S15{0}",_seriesKey.Substring(2,1));
+            string neutralSeriesDir = String.Format("S15{0}", _seriesKey.Substring(2, 1));
             _stackSeriesKey = neutralSeriesDir.Substring(1, 3);
             string stackPath1 = Path.Combine(textBoxSubjectDirectory.Text, neutralSeriesDir);
-            string stackPath2 = Path.Combine(stackPath1,"Stack.files");
+            string stackPath2 = Path.Combine(stackPath1, "Stack.files");
             if (canLocateRadiusStackFileInDirectory(stackPath2)) //try Stack.files directory first
                 textBoxStackFileDirectory.Text = stackPath2;
             else if (canLocateRadiusStackFileInDirectory(stackPath1))

@@ -41,6 +41,8 @@ public:
 	//methods called from input events
 	virtual Separator^ createKeyboardCallbackObject(int viewerParrentHWND);
 	virtual void moveDragger(Planes plane,int howFar);
+	virtual void moveDraggerXY(int howFar);
+	virtual void moveDraggerYZ(int howFar);
 	//virtual void moveCenterballTracker(int number);
 
 	//static members, keeping track of all global ExaminerViewers
@@ -49,6 +51,10 @@ public:
  public:
 	SoTranslate1Dragger* get_draggerXY(){ return  _draggerXY;}
 	SoTranslate1Dragger* get_draggerYZ(){ return  _draggerYZ;}
+
+	int getNumSlicesYZ();
+	int getNumSlicesXY();
+
 	delegate void delFunc(int);
 	void addCBtrack1(delFunc^ f);
 	void addCBtrack2(delFunc^ f);
