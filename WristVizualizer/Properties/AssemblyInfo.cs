@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Networking Doc")]
 [assembly: AssemblyProduct("WristVizualizer")]
-[assembly: AssemblyCopyright("Copyright © Networking Doc 2010")]
+[assembly: AssemblyCopyright("Copyright © Brown University Orthopaedics")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -29,9 +29,9 @@ using System.Runtime.InteropServices;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("1.8.3.*")]
+[assembly: AssemblyVersion("1.8.4.*")]
 
 //Aditional settings for Mono.GetOptions.dll 
 [assembly: Mono.UsageComplement("[filename1] [filename2] ...")]
 [assembly: Mono.About("An advanced program for vizualing wrist data")]
-[assembly: Mono.Author("Evan Leventhal")]
+[assembly: Mono.Author("Brown Orthopaedics")]
