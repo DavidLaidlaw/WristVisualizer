@@ -10,28 +10,28 @@ the code builds with Visual Studio 2017 and above.
 ## Source 
 The repository contains 4 versions of the source each in a separate branch:
 
-- **VS2010 branch**.  Builds in Visual Studio 2010.  It is not fully
- self contained.  It requires separate download and installation of
- the Coin3D and SoWin packages. See [Install External Packages](./InstallExternalPackaged.md). It also lacks volume rendering and
- the latest enhancements.  No further development is planned for
- this version. 
+- **VS2010 branch**.  Builds in Visual Studio 2010.  This is an older
+ version. It is not fully self contained.  It requires separate
+ download and installation of the Coin3D and SoWin packages. See
+ [Install External Packages](./InstallExternalPackages.md). It also
+ lacks volume rendering and the latest enhancements.  No further
+ development is planned for this version.
 
 - **VS2017 branch**. This is the version of the VS2010 code that
  builds in VS2017 and above.  No further development is planned for
- this version. This version is has no changes since Jan. 2019. See
- [Install External Packages](./InstallExternalPackaged.md) to build required external
+ this version. This version has no changes since Jan. 2019. See
+ [Install External Packages](./InstallExternalPackages.md) to build required external
  packages.
 
 
 - **VS2017_with_Coin3D branch**. This is similar to the VS2017 branch
   but includes Coin3D and SoWin packages. Volume rendering is missing from
-  this version. Latest user interface enhancements not included.  No
+  this version. Latest user interface enhancements are not included.  No
   further enhancements are planned for this version as of March 2019.
 
-- **master**.  The lastest code with Coin3d and SoWin contained within
-  the version.  Volume rendering also included. All latest UI changes
-  are part of this version. Any future additions are planned for this
-  branch. If in doubt, use this branch
+- **master**.  The lastest code with Coin3D, SoWin, Volume rendering
+  and latest UI changes. Any future additions are planned for this
+  branch. If in doubt, use this branch.
 
 ## Getting WristVisualizer
 
