@@ -2,6 +2,8 @@
 *.opensdf
 *.suo
 *.vcxproj.user
+*~
+TAGS
 /AviFile/obj
 /AviFile/bin
 /GeneralMatrix/obj
