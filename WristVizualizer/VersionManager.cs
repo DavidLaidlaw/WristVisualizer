@@ -67,8 +67,10 @@ namespace WristVizualizer
                 }
                 else 
                 {
+		    /*
                     string msgBoxMesssage = String.Format("You have the most recent version of {0}", 
-                        System.Windows.Forms.Application.ProductName);
+		    System.Windows.Forms.Application.ProductName); */
+		    string msgBoxMesssage = String.Format("The latest version of WristVisualizer can be found at https://github.com/DavidLaidlaw/WristVisualizer/tree/master");  
                     MessageBox.Show(msgBoxMesssage);
                 }
 
