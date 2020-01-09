@@ -3,10 +3,12 @@
   ObliqueSliceDetail.cpp
   OrthoSliceDetail.cpp
   VolumeDetail.cpp
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\details\volumedetail.cpp(424): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\details\VolumeDetail.cpp(423,20): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\details\VolumeDetail.cpp(423,38): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
   VolumeRenderDetail.cpp
   VolumeSkinDetail.cpp
   Generating Code...
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\details\VolumeDetail.cpp(423,57): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
   dummy.cpp
   CompressedTexturesElement.cpp
   GLInterpolationElement.cpp
@@ -16,27 +18,29 @@ c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\details\volumedetail.cpp(42
   StorageHintElement.cpp
   TransferFunctionElement.cpp
   VoxelBlockElement.cpp
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\elements\voxelblockelement.cpp(294): warning C4838: conversion from 'const short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\elements\VoxelBlockElement.cpp(293,26): warning C4838: conversion from 'const short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\elements\VoxelBlockElement.cpp(293,50): warning C4838: conversion from 'const short' to 'const unsigned int' requires a narrowing conversion
   Generating Code...
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\elements\VoxelBlockElement.cpp(293,75): warning C4838: conversion from 'const short' to 'const unsigned int' requires a narrowing conversion
   CentralDifferenceGradient.cpp
   CLUT.cpp
   GIMPGradient.cpp
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\gimpgradient.cpp(52): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\gimpgradient.cpp(52): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\gimpgradient.cpp(54): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\gimpgradient.cpp(54): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\GIMPGradient.cpp(52,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\GIMPGradient.cpp(52,33): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\GIMPGradient.cpp(54,39): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   GlobalRenderLock.cpp
   Gradient.cpp
   ResourceManager.cpp
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(79): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(79): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(92): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(92): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(99): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(99): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\GIMPGradient.cpp(54,39): warning C4267: 'initializing': conversion from 'size_t' to 'const int', possible loss of data
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\ResourceManager.cpp(79,62): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\ResourceManager.cpp(79,62): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\ResourceManager.cpp(92,62): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\ResourceManager.cpp(92,62): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\ResourceManager.cpp(99,62): warning C4311: 'type cast': pointer truncation from 'const void *' to 'unsigned long'
   Util.cpp
   VoxelChunk.cpp
   Generating Code...
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\misc\ResourceManager.cpp(99,62): warning C4302: 'type cast': truncation from 'const void *' to 'unsigned long'
   CvrFaceSetRenderP.cpp
   CvrIndexedFaceSetRenderP.cpp
   CvrIndexedSetRenderBaseP.cpp
@@ -47,8 +51,11 @@ c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\misc\resourcemanager.cpp(99
   OrthoSlice.cpp
   TransferFunction.cpp
   VolumeData.cpp
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\nodes\volumedata.cpp(499): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
-c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\nodes\volumedata.cpp(737): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\nodes\VolumeData.cpp(498,32): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\nodes\VolumeData.cpp(498,62): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\nodes\VolumeData.cpp(498,93): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\nodes\VolumeData.cpp(736,32): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\nodes\VolumeData.cpp(736,62): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
   VolumeFaceSet.cpp
   VolumeIndexedFaceSet.cpp
   VolumeIndexedTriangleStripSet.cpp
@@ -58,6 +65,7 @@ c:\dl\wristvisualizer\coin3d-simvoleon\lib\volumeviz\nodes\volumedata.cpp(737): 
   VolumeSkin.cpp
   VolumeTriangleStripSet.cpp
   Generating Code...
+C:\dl\WristVisualizer\Coin3D-simvoleon\lib\VolumeViz\nodes\VolumeData.cpp(736,93): warning C4838: conversion from 'short' to 'const unsigned int' requires a narrowing conversion
   VolumeReader.cpp
   VRMemReader.cpp
   VRVolFileReader.cpp

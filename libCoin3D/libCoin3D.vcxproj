@@ -22,7 +22,7 @@
     <ProjectGuid>{34510B6D-EB60-4DBA-952B-49C6729C1367}</ProjectGuid>
     <RootNamespace>libCoin3D</RootNamespace>
     <Keyword>ManagedCProj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -30,26 +30,26 @@
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>true</CLRSupport>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -138,7 +138,8 @@ copy $(SolutionDir)Coin3D-simvoleon\lib\simvoleon2d.lib  $(ProjectDir)..\WristVi
 copy $(SolutionDir)Coin3D-simvoleon\lib\simage1d.lib  $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
 copy $(ProjectDir)f.fsh $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
 copy $(ProjectDir)v.vsh $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
-</Command>
+copy $(SolutionDir)Coin3D-simvoleon\bin\coin3d.dll $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+copy $(SolutionDir)Coin3D-simvoleon\bin\sowin1d.dll $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
