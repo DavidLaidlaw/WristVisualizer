@@ -481,11 +481,17 @@ namespace WristVizualizer
 
         public void setNumSlicesInTrackbar1(int slices)
         {
-            _textureControl.setMaxTracker1(slices);
+	    if (_textureControl!= null)
+	    {
+		_textureControl.setMaxTracker1(slices);
+	    }
         }
         public void setNumSlicesInTrackbar2(int slices)
         {
-            _textureControl.setMaxTracker2(slices);
+	    if (_textureControl!= null)
+	    {
+		_textureControl.setMaxTracker2(slices);
+	    }
         }
     }
 }
