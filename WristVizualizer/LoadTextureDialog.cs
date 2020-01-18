@@ -62,7 +62,7 @@ namespace WristVizualizer
             labelErrorStackFileDir.Text = "";
             labelErrorSeries.Text = "";
             labelErrorImageFile.Text = "";
-
+            textBox1.Text = Texture.gamma.ToString();
             string lastSubject = RegistrySettings.getSettingString("TextureLastSubjectDirectory");
             string lastSeries = RegistrySettings.getSettingString("TextureLastSeriesKey");
             if (lastSubject.Length > 0)
@@ -224,6 +224,10 @@ namespace WristVizualizer
                 }
             }
 
+            var v = !string.IsNullOrEmpty(textBox1.Text) ? float.Parse(textBox1.Text.Trim(),
+                System.Globalization.CultureInfo.InvariantCulture) : 1.0;
+            Texture.setGammaCorrection((float)v);
+
             //lets load each bone
             for (int i = 0; i < TextureSettings.ShortBNames.Length; i++)
             {
@@ -238,9 +242,11 @@ namespace WristVizualizer
                 }
                 _root.addChild(_bones[i]);
             }
-
+	    	
             _texture = new Texture(_side == WristFilesystem.Sides.LEFT ? Texture.Sides.LEFT : Texture.Sides.RIGHT,
                 mri.Cropped_SizeX, mri.Cropped_SizeY, mri.Cropped_SizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ);
+
+
             Separator plane1 = _texture.makeDragerAndTexture(voxels, Texture.Planes.XY_PLANE);
             Separator plane2 = _texture.makeDragerAndTexture(voxels, Texture.Planes.YZ_PLANE);
 
@@ -650,6 +656,11 @@ namespace WristVizualizer
         public string DisplayTitle
         {
             get { return _subject + "_" + _seriesKey + " - " + _subjectPath; }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
 
         public TextureController Controller

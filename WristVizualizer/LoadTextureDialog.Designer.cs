@@ -32,6 +32,8 @@ namespace WristVizualizer
             this.buttonOK = new System.Windows.Forms.Button();
             this.textBoxSubjectDirectory = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.loadVolumeRender = new System.Windows.Forms.CheckBox();
             this.checkBoxEnableStepping = new System.Windows.Forms.CheckBox();
             this.labelErrorImageFile = new System.Windows.Forms.Label();
@@ -84,21 +86,23 @@ namespace WristVizualizer
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(677, 457);
+            this.buttonCancel.Location = new System.Drawing.Point(964, 643);
+            this.buttonCancel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonCancel.Name = "buttonCancel";
-            this.buttonCancel.Size = new System.Drawing.Size(98, 29);
+            this.buttonCancel.Size = new System.Drawing.Size(147, 45);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
             // buttonOK
             // 
-            this.buttonOK.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonOK.Location = new System.Drawing.Point(573, 457);
+            this.buttonOK.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.buttonOK.Location = new System.Drawing.Point(809, 643);
+            this.buttonOK.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonOK.Name = "buttonOK";
-            this.buttonOK.Size = new System.Drawing.Size(98, 29);
+            this.buttonOK.Size = new System.Drawing.Size(147, 45);
             this.buttonOK.TabIndex = 0;
             this.buttonOK.Text = "OK";
             this.buttonOK.UseVisualStyleBackColor = true;
@@ -106,15 +110,21 @@ namespace WristVizualizer
             // 
             // textBoxSubjectDirectory
             // 
-            this.textBoxSubjectDirectory.Location = new System.Drawing.Point(111, 27);
+            this.textBoxSubjectDirectory.Location = new System.Drawing.Point(166, 42);
+            this.textBoxSubjectDirectory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxSubjectDirectory.Name = "textBoxSubjectDirectory";
-            this.textBoxSubjectDirectory.Size = new System.Drawing.Size(215, 20);
+            this.textBoxSubjectDirectory.Size = new System.Drawing.Size(320, 26);
             this.textBoxSubjectDirectory.TabIndex = 0;
             this.textBoxSubjectDirectory.TextChanged += new System.EventHandler(this.textBoxSubjectDirectory_TextChanged);
             // 
             // groupBox1
             // 
+            this.groupBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.groupBox1.Controls.Add(this.label12);
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this.buttonCancel);
             this.groupBox1.Controls.Add(this.loadVolumeRender);
+            this.groupBox1.Controls.Add(this.buttonOK);
             this.groupBox1.Controls.Add(this.checkBoxEnableStepping);
             this.groupBox1.Controls.Add(this.labelErrorImageFile);
             this.groupBox1.Controls.Add(this.label14);
@@ -153,21 +163,43 @@ namespace WristVizualizer
             this.groupBox1.Controls.Add(this.label19);
             this.groupBox1.Controls.Add(this.textBoxSubjectDirectory);
             this.groupBox1.Controls.Add(this.panel1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(18, 18);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(746, 439);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(1119, 804);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Texture";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(702, 609);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(143, 20);
+            this.label12.TabIndex = 47;
+            this.label12.Text = "Gamma Correction";
+            // 
+            // textBox1
+            // 
+            this.textBox1.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.textBox1.Location = new System.Drawing.Point(628, 606);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(63, 26);
+            this.textBox1.TabIndex = 46;
+            this.textBox1.Text = "1.0";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // loadVolumeRender
             // 
             this.loadVolumeRender.AutoSize = true;
             this.loadVolumeRender.Checked = true;
             this.loadVolumeRender.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.loadVolumeRender.Location = new System.Drawing.Point(112, 416);
+            this.loadVolumeRender.Location = new System.Drawing.Point(168, 640);
+            this.loadVolumeRender.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.loadVolumeRender.Name = "loadVolumeRender";
-            this.loadVolumeRender.Size = new System.Drawing.Size(126, 17);
+            this.loadVolumeRender.Size = new System.Drawing.Size(186, 24);
             this.loadVolumeRender.TabIndex = 45;
             this.loadVolumeRender.Text = "Load Volume Render";
             this.loadVolumeRender.UseVisualStyleBackColor = true;
@@ -176,9 +208,10 @@ namespace WristVizualizer
             // checkBoxEnableStepping
             // 
             this.checkBoxEnableStepping.AutoSize = true;
-            this.checkBoxEnableStepping.Location = new System.Drawing.Point(111, 395);
+            this.checkBoxEnableStepping.Location = new System.Drawing.Point(166, 608);
+            this.checkBoxEnableStepping.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.checkBoxEnableStepping.Name = "checkBoxEnableStepping";
-            this.checkBoxEnableStepping.Size = new System.Drawing.Size(206, 17);
+            this.checkBoxEnableStepping.Size = new System.Drawing.Size(306, 24);
             this.checkBoxEnableStepping.TabIndex = 44;
             this.checkBoxEnableStepping.Text = "Enable Stepping Through Registration";
             this.checkBoxEnableStepping.UseVisualStyleBackColor = true;
@@ -188,27 +221,30 @@ namespace WristVizualizer
             // 
             this.labelErrorImageFile.AutoSize = true;
             this.labelErrorImageFile.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorImageFile.Location = new System.Drawing.Point(404, 271);
+            this.labelErrorImageFile.Location = new System.Drawing.Point(606, 417);
+            this.labelErrorImageFile.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelErrorImageFile.Name = "labelErrorImageFile";
-            this.labelErrorImageFile.Size = new System.Drawing.Size(77, 13);
+            this.labelErrorImageFile.Size = new System.Drawing.Size(118, 20);
             this.labelErrorImageFile.TabIndex = 43;
             this.labelErrorImageFile.Text = "Error ImageFile";
             // 
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(6, 271);
+            this.label14.Location = new System.Drawing.Point(9, 417);
+            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(58, 13);
+            this.label14.Size = new System.Drawing.Size(87, 20);
             this.label14.TabIndex = 42;
             this.label14.Text = "Image File:";
             // 
             // textBoxImageFile
             // 
-            this.textBoxImageFile.Location = new System.Drawing.Point(111, 268);
+            this.textBoxImageFile.Location = new System.Drawing.Point(166, 412);
+            this.textBoxImageFile.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxImageFile.Name = "textBoxImageFile";
             this.textBoxImageFile.ReadOnly = true;
-            this.textBoxImageFile.Size = new System.Drawing.Size(287, 20);
+            this.textBoxImageFile.Size = new System.Drawing.Size(428, 26);
             this.textBoxImageFile.TabIndex = 4;
             this.textBoxImageFile.TextChanged += new System.EventHandler(this.textBoxImageFile_TextChanged);
             // 
@@ -216,9 +252,10 @@ namespace WristVizualizer
             // 
             this.labelErrorSeries.AutoSize = true;
             this.labelErrorSeries.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorSeries.Location = new System.Drawing.Point(220, 105);
+            this.labelErrorSeries.Location = new System.Drawing.Point(330, 162);
+            this.labelErrorSeries.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelErrorSeries.Name = "labelErrorSeries";
-            this.labelErrorSeries.Size = new System.Drawing.Size(61, 13);
+            this.labelErrorSeries.Size = new System.Drawing.Size(93, 20);
             this.labelErrorSeries.TabIndex = 40;
             this.labelErrorSeries.Text = "Error Series";
             // 
@@ -226,190 +263,209 @@ namespace WristVizualizer
             // 
             this.labelErrorStackFileDir.AutoSize = true;
             this.labelErrorStackFileDir.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorStackFileDir.Location = new System.Drawing.Point(404, 297);
+            this.labelErrorStackFileDir.Location = new System.Drawing.Point(606, 457);
+            this.labelErrorStackFileDir.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelErrorStackFileDir.Name = "labelErrorStackFileDir";
-            this.labelErrorStackFileDir.Size = new System.Drawing.Size(92, 13);
+            this.labelErrorStackFileDir.Size = new System.Drawing.Size(138, 20);
             this.labelErrorStackFileDir.TabIndex = 39;
             this.labelErrorStackFileDir.Text = "Error StackFile Dir";
             // 
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(6, 297);
+            this.label13.Location = new System.Drawing.Point(9, 457);
+            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(102, 13);
+            this.label13.Size = new System.Drawing.Size(150, 20);
             this.label13.TabIndex = 38;
             this.label13.Text = "Stack File Directory:";
             // 
             // textBoxStackFileDirectory
             // 
-            this.textBoxStackFileDirectory.Location = new System.Drawing.Point(111, 294);
+            this.textBoxStackFileDirectory.Location = new System.Drawing.Point(166, 452);
+            this.textBoxStackFileDirectory.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxStackFileDirectory.Name = "textBoxStackFileDirectory";
             this.textBoxStackFileDirectory.ReadOnly = true;
-            this.textBoxStackFileDirectory.Size = new System.Drawing.Size(287, 20);
+            this.textBoxStackFileDirectory.Size = new System.Drawing.Size(428, 26);
             this.textBoxStackFileDirectory.TabIndex = 5;
             this.textBoxStackFileDirectory.TextChanged += new System.EventHandler(this.textBoxStackFileDirectory_TextChanged);
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(560, 372);
+            this.label11.Location = new System.Drawing.Point(840, 572);
+            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(37, 13);
+            this.label11.Size = new System.Drawing.Size(52, 20);
             this.label11.TabIndex = 36;
             this.label11.Text = "MaxZ:";
             // 
             // numericUpDownMaxZ
             // 
-            this.numericUpDownMaxZ.Location = new System.Drawing.Point(601, 369);
+            this.numericUpDownMaxZ.Location = new System.Drawing.Point(902, 568);
+            this.numericUpDownMaxZ.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDownMaxZ.Maximum = new decimal(new int[] {
             511,
             0,
             0,
             0});
             this.numericUpDownMaxZ.Name = "numericUpDownMaxZ";
-            this.numericUpDownMaxZ.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMaxZ.Size = new System.Drawing.Size(63, 26);
             this.numericUpDownMaxZ.TabIndex = 15;
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(471, 372);
+            this.label10.Location = new System.Drawing.Point(706, 572);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(34, 13);
+            this.label10.Size = new System.Drawing.Size(48, 20);
             this.label10.TabIndex = 34;
             this.label10.Text = "MinZ:";
             // 
             // numericUpDownMinZ
             // 
-            this.numericUpDownMinZ.Location = new System.Drawing.Point(510, 369);
+            this.numericUpDownMinZ.Location = new System.Drawing.Point(765, 568);
+            this.numericUpDownMinZ.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDownMinZ.Maximum = new decimal(new int[] {
             511,
             0,
             0,
             0});
             this.numericUpDownMinZ.Name = "numericUpDownMinZ";
-            this.numericUpDownMinZ.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMinZ.Size = new System.Drawing.Size(63, 26);
             this.numericUpDownMinZ.TabIndex = 14;
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(379, 372);
+            this.label9.Location = new System.Drawing.Point(568, 572);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(37, 13);
+            this.label9.Size = new System.Drawing.Size(53, 20);
             this.label9.TabIndex = 32;
             this.label9.Text = "MaxY:";
             // 
             // numericUpDownMaxY
             // 
-            this.numericUpDownMaxY.Location = new System.Drawing.Point(419, 369);
+            this.numericUpDownMaxY.Location = new System.Drawing.Point(628, 568);
+            this.numericUpDownMaxY.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDownMaxY.Maximum = new decimal(new int[] {
             511,
             0,
             0,
             0});
             this.numericUpDownMaxY.Name = "numericUpDownMaxY";
-            this.numericUpDownMaxY.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMaxY.Size = new System.Drawing.Size(63, 26);
             this.numericUpDownMaxY.TabIndex = 13;
             // 
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(290, 372);
+            this.label8.Location = new System.Drawing.Point(435, 572);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(34, 13);
+            this.label8.Size = new System.Drawing.Size(49, 20);
             this.label8.TabIndex = 30;
             this.label8.Text = "MinY:";
             // 
             // numericUpDownMinY
             // 
-            this.numericUpDownMinY.Location = new System.Drawing.Point(328, 369);
+            this.numericUpDownMinY.Location = new System.Drawing.Point(492, 568);
+            this.numericUpDownMinY.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDownMinY.Maximum = new decimal(new int[] {
             511,
             0,
             0,
             0});
             this.numericUpDownMinY.Name = "numericUpDownMinY";
-            this.numericUpDownMinY.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMinY.Size = new System.Drawing.Size(63, 26);
             this.numericUpDownMinY.TabIndex = 12;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(198, 372);
+            this.label7.Location = new System.Drawing.Point(297, 572);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(37, 13);
+            this.label7.Size = new System.Drawing.Size(53, 20);
             this.label7.TabIndex = 28;
             this.label7.Text = "MaxX:";
             // 
             // numericUpDownMaxX
             // 
-            this.numericUpDownMaxX.Location = new System.Drawing.Point(237, 369);
+            this.numericUpDownMaxX.Location = new System.Drawing.Point(356, 568);
+            this.numericUpDownMaxX.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDownMaxX.Maximum = new decimal(new int[] {
             511,
             0,
             0,
             0});
             this.numericUpDownMaxX.Name = "numericUpDownMaxX";
-            this.numericUpDownMaxX.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMaxX.Size = new System.Drawing.Size(63, 26);
             this.numericUpDownMaxX.TabIndex = 11;
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(109, 372);
+            this.label5.Location = new System.Drawing.Point(164, 572);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.Size = new System.Drawing.Size(49, 20);
             this.label5.TabIndex = 26;
             this.label5.Text = "MinX:";
             // 
             // numericUpDownMinX
             // 
-            this.numericUpDownMinX.Location = new System.Drawing.Point(146, 369);
+            this.numericUpDownMinX.Location = new System.Drawing.Point(219, 568);
+            this.numericUpDownMinX.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numericUpDownMinX.Maximum = new decimal(new int[] {
             511,
             0,
             0,
             0});
             this.numericUpDownMinX.Name = "numericUpDownMinX";
-            this.numericUpDownMinX.Size = new System.Drawing.Size(42, 20);
+            this.numericUpDownMinX.Size = new System.Drawing.Size(63, 26);
             this.numericUpDownMinX.TabIndex = 10;
             // 
             // labelErrorKinematicFile
             // 
             this.labelErrorKinematicFile.AutoSize = true;
             this.labelErrorKinematicFile.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorKinematicFile.Location = new System.Drawing.Point(404, 346);
+            this.labelErrorKinematicFile.Location = new System.Drawing.Point(606, 532);
+            this.labelErrorKinematicFile.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelErrorKinematicFile.Name = "labelErrorKinematicFile";
-            this.labelErrorKinematicFile.Size = new System.Drawing.Size(78, 13);
+            this.labelErrorKinematicFile.Size = new System.Drawing.Size(117, 20);
             this.labelErrorKinematicFile.TabIndex = 23;
             this.labelErrorKinematicFile.Text = "Error Kinematic";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(6, 346);
+            this.label6.Location = new System.Drawing.Point(9, 532);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(75, 13);
+            this.label6.Size = new System.Drawing.Size(111, 20);
             this.label6.TabIndex = 22;
             this.label6.Text = "Kinematic File:";
             // 
             // textBoxKinematicFilename
             // 
-            this.textBoxKinematicFilename.Location = new System.Drawing.Point(111, 343);
+            this.textBoxKinematicFilename.Location = new System.Drawing.Point(166, 528);
+            this.textBoxKinematicFilename.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxKinematicFilename.Name = "textBoxKinematicFilename";
             this.textBoxKinematicFilename.ReadOnly = true;
-            this.textBoxKinematicFilename.Size = new System.Drawing.Size(287, 20);
+            this.textBoxKinematicFilename.Size = new System.Drawing.Size(428, 26);
             this.textBoxKinematicFilename.TabIndex = 9;
             this.textBoxKinematicFilename.TextChanged += new System.EventHandler(this.textBoxKinematicFilename_TextChanged);
             // 
             // radioButtonKinematicMotion
             // 
             this.radioButtonKinematicMotion.AutoSize = true;
-            this.radioButtonKinematicMotion.Location = new System.Drawing.Point(290, 320);
+            this.radioButtonKinematicMotion.Location = new System.Drawing.Point(435, 492);
+            this.radioButtonKinematicMotion.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.radioButtonKinematicMotion.Name = "radioButtonKinematicMotion";
-            this.radioButtonKinematicMotion.Size = new System.Drawing.Size(76, 17);
+            this.radioButtonKinematicMotion.Size = new System.Drawing.Size(111, 24);
             this.radioButtonKinematicMotion.TabIndex = 8;
             this.radioButtonKinematicMotion.Text = "Motion File";
             this.radioButtonKinematicMotion.UseVisualStyleBackColor = true;
@@ -418,9 +474,10 @@ namespace WristVizualizer
             // radioButtonKinematicRT
             // 
             this.radioButtonKinematicRT.AutoSize = true;
-            this.radioButtonKinematicRT.Location = new System.Drawing.Point(197, 320);
+            this.radioButtonKinematicRT.Location = new System.Drawing.Point(296, 492);
+            this.radioButtonKinematicRT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.radioButtonKinematicRT.Name = "radioButtonKinematicRT";
-            this.radioButtonKinematicRT.Size = new System.Drawing.Size(87, 17);
+            this.radioButtonKinematicRT.Size = new System.Drawing.Size(125, 24);
             this.radioButtonKinematicRT.TabIndex = 7;
             this.radioButtonKinematicRT.Text = "Collected RT";
             this.radioButtonKinematicRT.UseVisualStyleBackColor = true;
@@ -429,9 +486,10 @@ namespace WristVizualizer
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(6, 322);
+            this.label4.Location = new System.Drawing.Point(9, 495);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(102, 13);
+            this.label4.Size = new System.Drawing.Size(149, 20);
             this.label4.TabIndex = 18;
             this.label4.Text = "Kinematic File Type:";
             // 
@@ -439,9 +497,10 @@ namespace WristVizualizer
             // 
             this.radioButtonKinematicAutoRegistr.AutoSize = true;
             this.radioButtonKinematicAutoRegistr.Checked = true;
-            this.radioButtonKinematicAutoRegistr.Location = new System.Drawing.Point(111, 320);
+            this.radioButtonKinematicAutoRegistr.Location = new System.Drawing.Point(166, 492);
+            this.radioButtonKinematicAutoRegistr.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.radioButtonKinematicAutoRegistr.Name = "radioButtonKinematicAutoRegistr";
-            this.radioButtonKinematicAutoRegistr.Size = new System.Drawing.Size(80, 17);
+            this.radioButtonKinematicAutoRegistr.Size = new System.Drawing.Size(119, 24);
             this.radioButtonKinematicAutoRegistr.TabIndex = 6;
             this.radioButtonKinematicAutoRegistr.TabStop = true;
             this.radioButtonKinematicAutoRegistr.Text = "auto_registr";
@@ -452,27 +511,31 @@ namespace WristVizualizer
             // 
             this.labelErrorCropValues.AutoSize = true;
             this.labelErrorCropValues.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorCropValues.Location = new System.Drawing.Point(404, 79);
+            this.labelErrorCropValues.Location = new System.Drawing.Point(606, 122);
+            this.labelErrorCropValues.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelErrorCropValues.Name = "labelErrorCropValues";
-            this.labelErrorCropValues.Size = new System.Drawing.Size(86, 13);
+            this.labelErrorCropValues.Size = new System.Drawing.Size(131, 20);
             this.labelErrorCropValues.TabIndex = 16;
             this.labelErrorCropValues.Text = "Error CropValues";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 105);
+            this.label3.Location = new System.Drawing.Point(9, 162);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(58, 13);
+            this.label3.Size = new System.Drawing.Size(87, 20);
             this.label3.TabIndex = 15;
             this.label3.Text = "Series List:";
             // 
             // listBoxSeries
             // 
             this.listBoxSeries.FormattingEnabled = true;
-            this.listBoxSeries.Location = new System.Drawing.Point(111, 102);
+            this.listBoxSeries.ItemHeight = 20;
+            this.listBoxSeries.Location = new System.Drawing.Point(166, 157);
+            this.listBoxSeries.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.listBoxSeries.Name = "listBoxSeries";
-            this.listBoxSeries.Size = new System.Drawing.Size(103, 160);
+            this.listBoxSeries.Size = new System.Drawing.Size(152, 244);
             this.listBoxSeries.TabIndex = 3;
             this.listBoxSeries.SelectedIndexChanged += new System.EventHandler(this.listBoxSeries_SelectedIndexChanged);
             this.listBoxSeries.DoubleClick += new System.EventHandler(this.listBoxSeries_DoubleClick);
@@ -481,44 +544,49 @@ namespace WristVizualizer
             // 
             this.labelErrorSubject.AutoSize = true;
             this.labelErrorSubject.ForeColor = System.Drawing.Color.Red;
-            this.labelErrorSubject.Location = new System.Drawing.Point(438, 30);
+            this.labelErrorSubject.Location = new System.Drawing.Point(657, 46);
+            this.labelErrorSubject.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.labelErrorSubject.Name = "labelErrorSubject";
-            this.labelErrorSubject.Size = new System.Drawing.Size(68, 13);
+            this.labelErrorSubject.Size = new System.Drawing.Size(102, 20);
             this.labelErrorSubject.TabIndex = 12;
             this.labelErrorSubject.Text = "Error Subject";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 79);
+            this.label2.Location = new System.Drawing.Point(9, 122);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(86, 13);
+            this.label2.Size = new System.Drawing.Size(129, 20);
             this.label2.TabIndex = 11;
             this.label2.Text = "Crop Values File:";
             // 
             // textBoxCropValuesFilename
             // 
-            this.textBoxCropValuesFilename.Location = new System.Drawing.Point(111, 76);
+            this.textBoxCropValuesFilename.Location = new System.Drawing.Point(166, 117);
+            this.textBoxCropValuesFilename.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.textBoxCropValuesFilename.Name = "textBoxCropValuesFilename";
             this.textBoxCropValuesFilename.ReadOnly = true;
-            this.textBoxCropValuesFilename.Size = new System.Drawing.Size(287, 20);
+            this.textBoxCropValuesFilename.Size = new System.Drawing.Size(428, 26);
             this.textBoxCropValuesFilename.TabIndex = 2;
             this.textBoxCropValuesFilename.TextChanged += new System.EventHandler(this.textBoxCropValuesFilename_TextChanged);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 55);
+            this.label1.Location = new System.Drawing.Point(9, 85);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(37, 13);
+            this.label1.Size = new System.Drawing.Size(53, 20);
             this.label1.TabIndex = 8;
             this.label1.Text = "Mode:";
             // 
             // buttonBrowseSubject
             // 
-            this.buttonBrowseSubject.Location = new System.Drawing.Point(337, 26);
+            this.buttonBrowseSubject.Location = new System.Drawing.Point(506, 40);
+            this.buttonBrowseSubject.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonBrowseSubject.Name = "buttonBrowseSubject";
-            this.buttonBrowseSubject.Size = new System.Drawing.Size(95, 21);
+            this.buttonBrowseSubject.Size = new System.Drawing.Size(142, 32);
             this.buttonBrowseSubject.TabIndex = 1;
             this.buttonBrowseSubject.Text = "Browse";
             this.buttonBrowseSubject.UseVisualStyleBackColor = true;
@@ -527,9 +595,10 @@ namespace WristVizualizer
             // label19
             // 
             this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(6, 30);
+            this.label19.Location = new System.Drawing.Point(9, 46);
+            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(91, 13);
+            this.label19.Size = new System.Drawing.Size(134, 20);
             this.label19.TabIndex = 5;
             this.label19.Text = "Subject Directory:";
             // 
@@ -537,17 +606,19 @@ namespace WristVizualizer
             // 
             this.panel1.Controls.Add(this.radioButtonManual);
             this.panel1.Controls.Add(this.radioButtonAutomatic);
-            this.panel1.Location = new System.Drawing.Point(101, 42);
+            this.panel1.Location = new System.Drawing.Point(152, 65);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(270, 31);
+            this.panel1.Size = new System.Drawing.Size(405, 48);
             this.panel1.TabIndex = 24;
             // 
             // radioButtonManual
             // 
             this.radioButtonManual.AutoSize = true;
-            this.radioButtonManual.Location = new System.Drawing.Point(89, 10);
+            this.radioButtonManual.Location = new System.Drawing.Point(134, 15);
+            this.radioButtonManual.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.radioButtonManual.Name = "radioButtonManual";
-            this.radioButtonManual.Size = new System.Drawing.Size(60, 17);
+            this.radioButtonManual.Size = new System.Drawing.Size(86, 24);
             this.radioButtonManual.TabIndex = 1;
             this.radioButtonManual.Text = "Manual";
             this.radioButtonManual.UseVisualStyleBackColor = true;
@@ -556,9 +627,10 @@ namespace WristVizualizer
             // 
             this.radioButtonAutomatic.AutoSize = true;
             this.radioButtonAutomatic.Checked = true;
-            this.radioButtonAutomatic.Location = new System.Drawing.Point(11, 10);
+            this.radioButtonAutomatic.Location = new System.Drawing.Point(16, 15);
+            this.radioButtonAutomatic.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.radioButtonAutomatic.Name = "radioButtonAutomatic";
-            this.radioButtonAutomatic.Size = new System.Drawing.Size(72, 17);
+            this.radioButtonAutomatic.Size = new System.Drawing.Size(106, 24);
             this.radioButtonAutomatic.TabIndex = 0;
             this.radioButtonAutomatic.TabStop = true;
             this.radioButtonAutomatic.Text = "Automatic";
@@ -568,14 +640,13 @@ namespace WristVizualizer
             // LoadTextureDialog
             // 
             this.AcceptButton = this.buttonOK;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(787, 498);
+            this.ClientSize = new System.Drawing.Size(1180, 1050);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.buttonCancel);
-            this.Controls.Add(this.buttonOK);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "LoadTextureDialog";
@@ -642,5 +713,7 @@ namespace WristVizualizer
         private System.Windows.Forms.TextBox textBoxImageFile;
         private System.Windows.Forms.CheckBox checkBoxEnableStepping;
         private System.Windows.Forms.CheckBox loadVolumeRender;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Label label12;
     }
 }

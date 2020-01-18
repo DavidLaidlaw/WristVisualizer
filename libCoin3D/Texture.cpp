@@ -27,6 +27,7 @@
 #include <Inventor\manips\SoCenterballManip.h>
 #include <Inventor\SoType.h>
 // mri.Cropped_SizeX, mri.Cropped_SizeY, mri.Cropped_SizeZ, mri.voxelSizeX, mri.voxelSizeY, mri.voxelSizeZ
+
 libCoin3D::Texture::Texture(Sides side, int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ)
 {
 	_side = side;
@@ -80,6 +81,13 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 	return createPointsFileObject(points, 1.0f, 1.0f, 1.0f);
 }
 
+void libCoin3D::Texture::gammaCorrection(float& red, float& green, float& blue, 
+					  float gammaCorrection)
+{
+    red   = pow(255 * (red   / 255), gammaCorrection);
+    green = pow(255 * (green / 255),gammaCorrection);
+    blue  = pow(255 * (blue  / 255),gammaCorrection);
+}
 libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli::array<double >^,1> ^points, float colorR, float colorG, float colorB)
 {
 	SoSeparator* bone = new SoSeparator();
@@ -93,7 +101,8 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 	drawStyle->style = SoDrawStyle::POINTS;
 	drawStyle->pointSize = 1;
 	//drawStyle->setOverride(TRUE);
-
+	
+	gammaCorrection(colorR, colorG, colorB, gamma);
 	clr->rgb.setValue(SbColor(colorR, colorG, colorB));
 
 	SoCoordinate3* coord = new SoCoordinate3;

@@ -22,7 +22,8 @@ public:
 
 	Texture(Sides side, int sizeX, int sizeY, int sizeZ, double voxelX, double voxelY, double voxelZ);
 	!Texture();
-
+	static float gamma=1.0;
+	static void setGammaCorrection(float c){ gamma=c;}
 	virtual Separator^ makeDragerAndTexture(array<array<System::Byte>^>^ data, Planes plane);
 	virtual Separator^ makeDragerAndTexture(array<array<System::Byte>^>^ data, int dragPos, Planes plane);
 
@@ -37,6 +38,8 @@ public:
 	static Separator^ createPointsFileObject(array<array<double>^>^ points, array<float>^ color);
 	static Separator^ createPointsFileObject(array<array<double>^>^ points, float colorR, float colorG, float colorB);
 	static Separator^ createPointsFileObject(array<array<double>^>^ points);
+
+	static void gammaCorrection(float& red, float& green, float& blue,  float gammaCorrection);
 
 	//methods called from input events
 	virtual Separator^ createKeyboardCallbackObject(int viewerParrentHWND);
