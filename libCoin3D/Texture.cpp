@@ -84,9 +84,10 @@ libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli:
 void libCoin3D::Texture::gammaCorrection(float& red, float& green, float& blue, 
 					  float gammaCorrection)
 {
-    red   = pow(255 * (red   / 255), gammaCorrection);
-    green = pow(255 * (green / 255),gammaCorrection);
-    blue  = pow(255 * (blue  / 255),gammaCorrection);
+    double recip_gamma = 1.0/gammaCorrection;
+    red   = pow(255 * (red   / 255), recip_gamma);
+    green = pow(255 * (green / 255), recip_gamma);
+    blue  = pow(255 * (blue  / 255), recip_gamma);
 }
 libCoin3D::Separator^ libCoin3D::Texture::createPointsFileObject(cli::array<cli::array<double >^,1> ^points, float colorR, float colorG, float colorB)
 {
