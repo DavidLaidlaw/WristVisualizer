@@ -126,9 +126,9 @@
     <ROW Component="_cap_L.iv" ComponentId="{C7774FB3-631A-47A6-864E-2CB3A5EC7F81}" Directory_="LeftIV_Dir" Attributes="0" KeyPath="_cap_L.iv" Type="0"/>
     <ROW Component="_inertia_L.dat" ComponentId="{A7FBF50C-92FE-40FF-BA00-20E62A9595CF}" Directory_="LeftInfo_Dir" Attributes="0" KeyPath="_inertia_L.dat" Type="0"/>
     <ROW Component="centerballDragger.iv" ComponentId="{73787516-D677-4AE3-AA14-B9836F67C9F0}" Directory_="config_Dir" Attributes="0" KeyPath="centerballDragger.iv" Type="0"/>
-    <ROW Component="coin3d.dll" ComponentId="{0EA6E362-09A9-4F64-9993-E9D348285299}" Directory_="APPDIR" Attributes="256" KeyPath="coin3d.dll"/>
-    <ROW Component="glew32.dll" ComponentId="{2E7464AA-CF30-49EC-B86C-08646BEE8CC2}" Directory_="APPDIR" Attributes="256" KeyPath="glew32.dll"/>
-    <ROW Component="libCoin3D.dll" ComponentId="{A679E8D5-50B5-4474-9348-DCF4032C62E4}" Directory_="APPDIR" Attributes="256" KeyPath="libCoin3D.dll"/>
+    <ROW Component="coin3d.dll" ComponentId="{4503C878-525B-4BE7-A324-1A39B2CD25D7}" Directory_="APPDIR" Attributes="256" KeyPath="coin3d.dll"/>
+    <ROW Component="glew32d.dll" ComponentId="{4B81CE1B-9F63-46B2-86B9-D49181356F9F}" Directory_="APPDIR" Attributes="256" KeyPath="glew32d.dll"/>
+    <ROW Component="libCoin3D.dll" ComponentId="{B5093BB5-A222-4EFE-AD25-F54BC8614853}" Directory_="APPDIR" Attributes="256" KeyPath="libCoin3D.dll"/>
     <ROW Component="libCoin3D_PrimaryOutput" ComponentId="{81282C92-1181-41D5-BE70-2A24F06467D7}" Directory_="libCoin3D_Dir" Attributes="256" KeyPath="libCoin3D.dll_1"/>
     <ROW Component="libCoin3D_SymbolsOutput" ComponentId="{92271445-7B82-47F4-802D-CFDC0D20A3E0}" Directory_="libCoin3D_Dir" Attributes="0" KeyPath="libCoin3D.pdb"/>
     <ROW Component="libWrist.dll" ComponentId="{C2BF8A7D-8339-431E-BA38-8D7537DA424A}" Directory_="APPDIR" Attributes="256" KeyPath="libWrist.dll"/>
@@ -136,14 +136,14 @@
     <ROW Component="libWrist_References" ComponentId="{F717E199-F18F-44E0-97B6-FBE90AA203F8}" Directory_="libWrist_Dir" Attributes="256" KeyPath="Mono.GetOptions.dll_1"/>
     <ROW Component="libWrist_SymbolsOutput" ComponentId="{1D1FFAE5-5973-4B72-A9B7-F2CCE924572D}" Directory_="libWrist_Dir" Attributes="0" KeyPath="libWrist.pdb"/>
     <ROW Component="mscorlib.dll" ComponentId="{5474914B-F359-49B0-9431-9F88C0923927}" Directory_="APPDIR" Attributes="0" KeyPath="mscorlib.dll"/>
-    <ROW Component="sowin1d.dll" ComponentId="{12210377-BDEB-4AC6-8679-21F99CDFCF69}" Directory_="APPDIR" Attributes="256" KeyPath="sowin1d.dll"/>
+    <ROW Component="sowin1d.dll" ComponentId="{96B0136B-A0CD-4BFD-A486-BBA54962392B}" Directory_="APPDIR" Attributes="256" KeyPath="sowin1d.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFeatsComponent">
-    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AviFile.dll AviFile_PrimaryOutput AviFile_SymbolsOutput GeneralMatrix.dll GeneralMatrix_PrimaryOutput GeneralMatrix_SymbolsOutput Mono.GetOptions.dll Mono.GetOptions_PrimaryOutput Mono.GetOptions_SymbolsOutput ProductInformation SHORTCUTDIR System.Core.dll System.Data.dll System.Deployment.dll System.Drawing.dll System.Windows.Forms.dll System.Xml.dll System.dll WristVizualizer.exe.config WristVizualizer_PrimaryOutput WristVizualizer_References WristVizualizer_SymbolsOutput _ClinicalExam_L.txt _Motion01L.dat _Motion02L.dat _Motion03L.dat _Motion04L.dat _Motion05L.dat _Motion06L.dat _Motion07L.dat _Motion08L.dat _cap_L.iv _inertia_L.dat centerballDragger.iv coin3d.dll glew32.dll libCoin3D.dll libCoin3D_PrimaryOutput libCoin3D_SymbolsOutput libWrist.dll libWrist_PrimaryOutput libWrist_References libWrist_SymbolsOutput mscorlib.dll sowin1d.dll"/>
+    <ROW Feature="MainFeature" Title="MainFeature" Description="Description" Display="1" Level="1" Directory_="APPDIR" Attributes="0" Components="AviFile.dll AviFile_PrimaryOutput AviFile_SymbolsOutput GeneralMatrix.dll GeneralMatrix_PrimaryOutput GeneralMatrix_SymbolsOutput Mono.GetOptions.dll Mono.GetOptions_PrimaryOutput Mono.GetOptions_SymbolsOutput ProductInformation SHORTCUTDIR System.Core.dll System.Data.dll System.Deployment.dll System.Drawing.dll System.Windows.Forms.dll System.Xml.dll System.dll WristVizualizer.exe.config WristVizualizer_PrimaryOutput WristVizualizer_References WristVizualizer_SymbolsOutput _ClinicalExam_L.txt _Motion01L.dat _Motion02L.dat _Motion03L.dat _Motion04L.dat _Motion05L.dat _Motion06L.dat _Motion07L.dat _Motion08L.dat _cap_L.iv _inertia_L.dat centerballDragger.iv coin3d.dll glew32d.dll libCoin3D.dll libCoin3D_PrimaryOutput libCoin3D_SymbolsOutput libWrist.dll libWrist_PrimaryOutput libWrist_References libWrist_SymbolsOutput mscorlib.dll sowin1d.dll"/>
     <ATTRIBUTE name="CurrentFeature" value="MainFeature"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiFilesComponent">
-    <ROW File="AviFile.dll" Component_="AviFile.dll" FileName="AviFile.dll" Attributes="0" SourcePath="..\AviFile\bin\x64\Debug\AviFile.dll" SelfReg="false" NextFile="glew32.dll"/>
+    <ROW File="AviFile.dll" Component_="AviFile.dll" FileName="AviFile.dll" Attributes="0" SourcePath="..\AviFile\bin\x64\Debug\AviFile.dll" SelfReg="false" NextFile="AviFile.dll_1"/>
     <ROW File="AviFile.dll_1" Component_="AviFile_PrimaryOutput" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_AviFile.dll_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_AviFile.dll_1&gt;" SelfReg="false" NextFile="GeneralMatrix.dll_1"/>
     <ROW File="AviFile.dll_2" Component_="libWrist_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_AviFile.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_AviFile.dll_2&gt;" SelfReg="false" NextFile="Mono.GetOptions.dll_1"/>
     <ROW File="AviFile.dll_3" Component_="WristVizualizer_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_AviFile.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_AviFile.dll_3&gt;" SelfReg="false" NextFile="libWrist.dll_2"/>
@@ -153,7 +153,7 @@
     <ROW File="GeneralMatrix.dll_2" Component_="libWrist_References" FileName="GENERA~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_GeneralMatrix.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_GeneralMatrix.dll_2&gt;" SelfReg="false" NextFile="libCoin3D.dll_2"/>
     <ROW File="GeneralMatrix.dll_3" Component_="WristVizualizer_References" FileName="GENERA~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_GeneralMatrix.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_GeneralMatrix.dll_3&gt;" SelfReg="false" NextFile="libCoin3D.dll_3"/>
     <ROW File="GeneralMatrix.pdb" Component_="GeneralMatrix_SymbolsOutput" FileName="GENERA~2.PDB|[|AI_PROPPATH_FILENAME_PERBUILD_GeneralMatrix.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_GeneralMatrix.pdb&gt;" SelfReg="false" NextFile="libCoin3D.pdb"/>
-    <ROW File="Mono.GetOptions.dll" Component_="Mono.GetOptions.dll" FileName="MONOGE~1.DLL|Mono.GetOptions.dll" Attributes="0" SourcePath="..\Mono.GetOptions\bin\x64\Debug\Mono.GetOptions.dll" SelfReg="false" NextFile="libCoin3D.dll"/>
+    <ROW File="Mono.GetOptions.dll" Component_="Mono.GetOptions.dll" FileName="MONOGE~1.DLL|Mono.GetOptions.dll" Attributes="0" SourcePath="..\Mono.GetOptions\bin\x64\Debug\Mono.GetOptions.dll" SelfReg="false" NextFile="mscorlib.dll"/>
     <ROW File="Mono.GetOptions.dll_1" Component_="libWrist_References" FileName="MONOGE~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Mono.GetOptions.dll_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Mono.GetOptions.dll_1&gt;" SelfReg="false" NextFile="libWrist.pdb"/>
     <ROW File="Mono.GetOptions.dll_2" Component_="Mono.GetOptions_PrimaryOutput" FileName="MONOGE~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Mono.GetOptions.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Mono.GetOptions.dll_2&gt;" SelfReg="false" NextFile="Mono.GetOptions.pdb"/>
     <ROW File="Mono.GetOptions.dll_3" Component_="WristVizualizer_References" FileName="MONOGE~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_Mono.GetOptions.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_Mono.GetOptions.dll_3&gt;" SelfReg="false" NextFile="WristVizualizer.pdb"/>
@@ -228,13 +228,14 @@
     <ROW File="_volume_L.dat" Component_="_inertia_L.dat" FileName="66582_~5.DAT|66582_volume_L.dat" Attributes="0" SourcePath="..\SetupWristVizualizer\Sample Wrist\66582\LeftInfo\66582_volume_L.dat" SelfReg="false" NextFile="_volume_L_1.dat"/>
     <ROW File="_volume_L_1.dat" Component_="_inertia_L.dat" FileName="66582_~6.DAT|66582_volume_L_1.dat" Attributes="0" SourcePath="..\SetupWristVizualizer\Sample Wrist\66582\LeftInfo\66582_volume_L_1.dat" SelfReg="false" NextFile="_cap_L.iv"/>
     <ROW File="centerballDragger.iv" Component_="centerballDragger.iv" FileName="CENTER~1.IV|centerballDragger.iv" Attributes="0" SourcePath="..\WristVizualizer\config\centerballDragger.iv" SelfReg="false" NextFile="rotateCylindricalDragger.iv"/>
-    <ROW File="coin3d.dll" Component_="coin3d.dll" FileName="coin3d.dll" Attributes="0" SourcePath="..\..\..\Coin3D\bin\coin3d.dll" SelfReg="false" NextFile="AviFile.dll_1"/>
-    <ROW File="glew32.dll" Component_="glew32.dll" FileName="glew32.dll" Attributes="0" SourcePath="..\libCoin3D\x64\glew-1.9.0\bin\glew32.dll" SelfReg="false" NextFile="sowin1d.dll"/>
-    <ROW File="libCoin3D.dll" Component_="libCoin3D.dll" FileName="LIBCOI~1.DLL|libCoin3D.dll" Attributes="0" SourcePath="..\libCoin3D\Debug\libCoin3D.dll" SelfReg="false" NextFile="mscorlib.dll"/>
+    <ROW File="coin3d.dll" Component_="coin3d.dll" FileName="coin3d.dll" Attributes="0" SourcePath="..\Coin3D-simvoleon\bin\coin3d.dll" SelfReg="false" NextFile="sowin1d.dll"/>
+    <ROW File="f.fsh" Component_="WristVizualizer.exe.config" FileName="f.fsh" Attributes="0" SourcePath="..\libCoin3D\f.fsh" SelfReg="false" NextFile="coin3d.dll"/>
+    <ROW File="glew32d.dll" Component_="glew32d.dll" FileName="glew32d.dll" Attributes="0" SourcePath="..\libCoin3D\x64\glew-1.9.0\lib\Debug\glew32d.dll" SelfReg="false" NextFile="simvoleon2d.lib"/>
+    <ROW File="libCoin3D.dll" Component_="libCoin3D.dll" FileName="LIBCOI~1.DLL|libCoin3D.dll" Attributes="0" SourcePath="..\libCoin3D\Debug\libCoin3D.dll" SelfReg="false"/>
     <ROW File="libCoin3D.dll_1" Component_="libCoin3D_PrimaryOutput" FileName="LIBCOI~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_libCoin3D.dll_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_libCoin3D.dll_1&gt;" SelfReg="false" NextFile="libWrist.dll_1"/>
     <ROW File="libCoin3D.dll_2" Component_="libWrist_References" FileName="LIBCOI~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_libCoin3D.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_libCoin3D.dll_2&gt;" SelfReg="false" NextFile="AviFile.dll_2"/>
     <ROW File="libCoin3D.dll_3" Component_="WristVizualizer_References" FileName="LIBCOI~2.DLL|[|AI_PROPPATH_FILENAME_PERBUILD_libCoin3D.dll_3]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_libCoin3D.dll_3&gt;" SelfReg="false" NextFile="AviFile.dll_3"/>
-    <ROW File="libCoin3D.pdb" Component_="libCoin3D_SymbolsOutput" FileName="LIBCOI~2.PDB|[|AI_PROPPATH_FILENAME_PERBUILD_libCoin3D.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_libCoin3D.pdb&gt;" SelfReg="false"/>
+    <ROW File="libCoin3D.pdb" Component_="libCoin3D_SymbolsOutput" FileName="LIBCOI~2.PDB|[|AI_PROPPATH_FILENAME_PERBUILD_libCoin3D.pdb]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_libCoin3D.pdb&gt;" SelfReg="false" NextFile="glew32d.dll"/>
     <ROW File="libWrist.dll" Component_="libWrist.dll" FileName="libWrist.dll" Attributes="0" SourcePath="..\libWrist\bin\x64\Debug\libWrist.dll" SelfReg="false" NextFile="AviFile.dll"/>
     <ROW File="libWrist.dll_1" Component_="libWrist_PrimaryOutput" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_libWrist.dll_1]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_libWrist.dll_1&gt;" SelfReg="false" NextFile="GeneralMatrix.dll_2"/>
     <ROW File="libWrist.dll_2" Component_="WristVizualizer_References" FileName="[|AI_PROPPATH_FILENAME_PERBUILD_libWrist.dll_2]" Attributes="0" SourcePath="&lt;AI_APPPATH_PERBUILD_libWrist.dll_2&gt;" SelfReg="false" NextFile="Mono.GetOptions.dll_3"/>
@@ -242,9 +243,12 @@
     <ROW File="mscorlib.dll" Component_="mscorlib.dll" FileName="mscorlib.dll" Attributes="0" SourcePath="..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\Profile\Client\mscorlib.dll" SelfReg="false" NextFile="WristVizualizer.exe.config"/>
     <ROW File="rotateCylindricalDragger.iv" Component_="centerballDragger.iv" FileName="ROTATE~1.IV|rotateCylindricalDragger.iv" Attributes="0" SourcePath="..\WristVizualizer\config\rotateCylindricalDragger.iv" SelfReg="false" NextFile="rotateSphericalDragger.iv"/>
     <ROW File="rotateSphericalDragger.iv" Component_="centerballDragger.iv" FileName="ROTATE~2.IV|rotateSphericalDragger.iv" Attributes="0" SourcePath="..\WristVizualizer\config\rotateSphericalDragger.iv" SelfReg="false" NextFile="translate1Dragger.iv"/>
-    <ROW File="sowin1d.dll" Component_="sowin1d.dll" FileName="sowin1d.dll" Attributes="0" SourcePath="..\..\..\SoWin\build\msvc9\sowin1d.dll" SelfReg="false" NextFile="coin3d.dll"/>
+    <ROW File="simage1d.lib" Component_="WristVizualizer.exe.config" FileName="simage1d.lib" Attributes="0" SourcePath="..\Coin3D-simvoleon\lib\simage1d.lib" SelfReg="false" NextFile="v.vsh"/>
+    <ROW File="simvoleon2d.lib" Component_="WristVizualizer.exe.config" FileName="SIMVOL~1.LIB|simvoleon2d.lib" Attributes="0" SourcePath="..\Coin3D-simvoleon\lib\simvoleon2d.lib" SelfReg="false" NextFile="simage1d.lib"/>
+    <ROW File="sowin1d.dll" Component_="sowin1d.dll" FileName="sowin1d.dll" Attributes="0" SourcePath="..\Coin3D-simvoleon\bin\sowin1d.dll" SelfReg="false" NextFile="libCoin3D.dll"/>
     <ROW File="translate1Dragger.iv" Component_="centerballDragger.iv" FileName="TRANSL~1.IV|translate1Dragger.iv" Attributes="0" SourcePath="..\WristVizualizer\config\translate1Dragger.iv" SelfReg="false" NextFile="translate2Dragger.iv"/>
     <ROW File="translate2Dragger.iv" Component_="centerballDragger.iv" FileName="TRANSL~2.IV|translate2Dragger.iv" Attributes="0" SourcePath="..\WristVizualizer\config\translate2Dragger.iv" SelfReg="false" NextFile="AviFile.pdb"/>
+    <ROW File="v.vsh" Component_="WristVizualizer.exe.config" FileName="v.vsh" Attributes="0" SourcePath="..\libCoin3D\v.vsh" SelfReg="false" NextFile="f.fsh"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.AppPathsComponent">
     <ROW Name="AI_APPPATH_PERBUILD_AviFile.dll_1" Path="[|AI_PROPPATH_DIR_PERBUILD_AviFile.dll_1]\[|AI_PROPPATH_FILENAME_PERBUILD_AviFile.dll_1]" Type="2" Content="0"/>
@@ -339,7 +343,7 @@
     <ROW Action="SET_TARGETDIR_TO_APPDIR" Type="51" Source="TARGETDIR" Target="[APPDIR]"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiEnvComponent">
-    <ROW Environment="PATH" Name="=-*Path" Value="[~];C:\Program Files\Brown University\WristVisualizer" Component_="libCoin3D.dll"/>
+    <ROW Environment="PATH" Name="=-*Path" Value="[~];C:\Program Files\Brown University\WristVisualizer" Component_="AviFile.dll"/>
     <ROW Environment="SO_DRAGGER_DIR" Name="=-*SO_DRAGGER_DIR" Value="[config_Dir]" Component_="AviFile.dll"/>
   </COMPONENT>
   <COMPONENT cid="caphyon.advinst.msicomp.MsiInstExSeqComponent">

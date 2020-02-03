@@ -207,7 +207,7 @@
       <AdditionalIncludeDirectories>lib;..\..\lib;$(COINDIR)\include;$(COINDIR)\include\Inventor\annex;$(MSBuildProjectDirectory)\lib\VolumeViz\Coin\gl;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_LIB;SIMVOLEON_DEBUG=1;HAVE_CONFIG_H;CVR_DEBUG=0;SIMVOLEON_INTERNAL;_CRT_NONSTDC_NO_DEPRECATE;_CRT_SECURE_NO_WARNINGS;COIN_NOT_DLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <PrecompiledHeaderOutputFile>.\StaticDebug/simvoleon2.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>.\StaticDebug/</AssemblerListingLocation>
       <ObjectFileName>.\StaticDebug/</ObjectFileName>

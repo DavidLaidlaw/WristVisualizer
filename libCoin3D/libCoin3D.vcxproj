@@ -123,15 +123,16 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <CompileAsManaged>true</CompileAsManaged>
     </ClCompile>
     <Link>
       <AdditionalDependencies>glew32.lib;coin3d.lib;simage1d.lib;simvoleon2d.lib;sowin1d.lib;OpenGL32.lib;GlU32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)x64\glew-1.9.0\lib;$(SolutionDir)Coin3D-simvoleon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)x64\glew-1.9.0\lib\$(Configuration);$(SolutionDir)Coin3D-simvoleon\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AssemblyDebug>true</AssemblyDebug>
     </Link>
     <PostBuildEvent>
-      <Command>copy $(ProjectDir)x64\glew-1.9.0\lib\glew32.dll  $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
+      <Command>copy $(ProjectDir)x64\glew-1.9.0\lib\$(Configuration)\glew32*.dll  $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
 copy $(SolutionDir)Coin3D-simvoleon\lib\coin3d.lib $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
 copy $(SolutionDir)Coin3D-simvoleon\lib\sowin1d.lib $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
 copy $(SolutionDir)Coin3D-simvoleon\lib\simvoleon2d.lib  $(ProjectDir)..\WristVizualizer\bin\$(Platform)\$(OutDir)
