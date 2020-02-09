@@ -19,7 +19,14 @@ namespace libWrist
 
         protected int[] _imageAutoOffset;
         protected double[] _imageAutoScale;
-
+	static public float gamma = 1.0F;
+	static public void setGammaCorrection(float c){ gamma=c;}
+	static public int gammaCorrection(int color,  float gammaCorrection)
+	{
+	    double recip_gamma = 1.0/gammaCorrection;
+	    double tmp   = Math.Pow(255.0 * (color  / 255.0), recip_gamma);
+	    return (int)Math.Round(tmp);
+	}
         
         //crop settings
         protected int _xmin, _xmax, _ymin, _ymax, _zmin, _zmax;

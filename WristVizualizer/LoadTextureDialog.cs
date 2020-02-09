@@ -62,7 +62,7 @@ namespace WristVizualizer
             labelErrorStackFileDir.Text = "";
             labelErrorSeries.Text = "";
             labelErrorImageFile.Text = "";
-            textBox1.Text = Texture.gamma.ToString();
+            textBox1.Text = CT.gamma.ToString();
             string lastSubject = RegistrySettings.getSettingString("TextureLastSubjectDirectory");
             string lastSeries = RegistrySettings.getSettingString("TextureLastSeriesKey");
             if (lastSubject.Length > 0)
@@ -180,7 +180,13 @@ namespace WristVizualizer
             //TODO: Figure out the image type....
             parseCropValues();
 
+	    var v = !string.IsNullOrEmpty(textBox1.Text) ? float.Parse(textBox1.Text.Trim(),
+                System.Globalization.CultureInfo.InvariantCulture) : 1.0;
+
             CT mri;
+
+	    CT.setGammaCorrection((float)v);
+
             //check if we have this MRI saved!!!, dirty cache
             //TODO: Check if the crop values are compatable!!!
             if (false && _LastImagePath.ToLower().Equals(textBoxImageFile.Text.Trim().ToLower()))
@@ -190,6 +196,7 @@ namespace WristVizualizer
                 //pass crop values now, for faster read :)
                 mri = CT.SmartLoad(textBoxImageFile.Text);
                 mri.setCrop(_minX, _maxX, _minY, _maxY, _minZ, _maxZ);
+		
                 if (mri.Layers == 1)  //the default case, we want to load the only layer, echo 0
                     mri.loadImageData();
                 else //for other cases, we should try and load layer 5, the layer used by the Wrist Registration Code.
@@ -224,9 +231,9 @@ namespace WristVizualizer
                 }
             }
 
-            var v = !string.IsNullOrEmpty(textBox1.Text) ? float.Parse(textBox1.Text.Trim(),
-                System.Globalization.CultureInfo.InvariantCulture) : 1.0;
-            Texture.setGammaCorrection((float)v);
+           
+	    //            Texture.setGammaCorrection((float)v);
+	    // TextureController.setGammaCorrection((float)v);
 
             //lets load each bone
             for (int i = 0; i < TextureSettings.ShortBNames.Length; i++)

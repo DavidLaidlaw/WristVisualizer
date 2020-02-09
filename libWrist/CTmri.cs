@@ -32,9 +32,9 @@ namespace libWrist
 
         private double[] _coordOffset;
 
-		private ushort[][] _data;
+	private ushort[][] _data;
 
-
+       
         public CTmri(string mriDirectory)
 		{
 			_format = Formats.USign16;  //default value for now. According to dhl, that is the only format that MRI images come in....
@@ -294,6 +294,7 @@ namespace libWrist
                         for (int k = 0; k < _width; k++)
                         {
                             byte intensity = (byte)((_data[echo][i * _width * _height + j * _width + k] - _imageAutoOffset[echo]) * _imageAutoScale[echo]);
+			   
                             row[k * 4] = intensity;
                             row[k * 4 + 1] = intensity;
                             row[k * 4 + 2] = intensity;
@@ -339,13 +340,17 @@ namespace libWrist
             double scale = _imageAutoScale[echo];
             //lets build an array of bytes (unsigned 8bit data structure)
             Byte[][] voxels = new Byte[sizeZ][];
+	    int tmp;
             for (int z = 0; z < sizeZ; z++)  // Z coordinate
             {
                 voxels[z] = new Byte[sizeX * sizeY];
                 for (int y = 0; y < sizeY; y++)
                     for (int x = 0; x < sizeX; x++)
                     {
-                        voxels[z][(x * sizeY) + y] = (Byte)((_data[echo][(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - offset) * scale); //scale to correct range
+			//                        voxels[z][(x * sizeY) + y] = (Byte)((_data[echo][(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - offset) * scale); //scale to correct range
+			tmp = (int)((_data[echo][(z+_zmin) * _width * _height + (y+_ymin) * _width + (x+_xmin)] - offset) * scale);
+			 // apply gamma correction
+			voxels[z][(x * sizeY) + y] =(Byte)CT.gammaCorrection(tmp, CT.gamma);
                     }
             }
             return voxels;
