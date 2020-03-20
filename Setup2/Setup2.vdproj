@@ -3,7 +3,7 @@
 "VSVersion" = "3:800"
 "ProjectType" = "8:{978C614F-708E-4E1A-B201-565925725DBA}"
 "IsWebType" = "8:FALSE"
-"ProjectName" = "8:Setup2"
+"ProjectName" = "8:Microsoft Installer"
 "LanguageId" = "3:1033"
 "CodePage" = "3:1252"
 "UILanguageId" = "3:1033"
@@ -15,20 +15,20 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_05CC8A8F373A4A76B04B2A302216B4D2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_2E549449D3B990A90490BE9B43ABBE84"
-        "OwnerKey" = "8:_95845608E0174D19B7709691BCC296EA"
+        "OwnerKey" = "8:_BA10D630E5F047629396F120E49C1C95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_4C18D0EB9E058C8460D4D9B12A08E904"
-        "OwnerKey" = "8:_95845608E0174D19B7709691BCC296EA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_4EEBBB9FFA2F4D03B7DD1FAF801A1F24"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BA10D630E5F047629396F120E49C1C95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -39,13 +39,19 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_95845608E0174D19B7709691BCC296EA"
+        "MsmKey" = "8:_A5FFF80D06B14721BCF59292A61E4E35"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_A72D6C0B9B9042F59253B84C07AFB21C"
+        "MsmKey" = "8:_A6DA966B40534E299AA09AF427A470E8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_BA10D630E5F047629396F120E49C1C95"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -57,8 +63,14 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_BC57F547B82F4C828A4648F13A8795E6"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_D4398F8F5F6C5AE8A45A8BAC2696ECE9"
-        "OwnerKey" = "8:_95845608E0174D19B7709691BCC296EA"
+        "OwnerKey" = "8:_BA10D630E5F047629396F120E49C1C95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -69,20 +81,8 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_DC1ECAEB767C4FA18548020A62205D83"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_DF345DAC3B5C43198B0B3410937BF5C4"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_E741FBA4C8FD72D3AC73AA256689E485"
-        "OwnerKey" = "8:_95845608E0174D19B7709691BCC296EA"
+        "OwnerKey" = "8:_BA10D630E5F047629396F120E49C1C95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -94,13 +94,7 @@
         "Entry"
         {
         "MsmKey" = "8:_EA09D05BC528951CF9BB889090AB01E0"
-        "OwnerKey" = "8:_95845608E0174D19B7709691BCC296EA"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_F49F58621DD44857A3D73989A6A5F7AA"
-        "OwnerKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_BA10D630E5F047629396F120E49C1C95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -112,7 +106,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_95845608E0174D19B7709691BCC296EA"
+        "OwnerKey" = "8:_BA10D630E5F047629396F120E49C1C95"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -157,6 +151,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -173,6 +183,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -194,7 +220,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.6.1"
+                "FrameworkVersion" = "8:ANY"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=671728"
                 }
@@ -202,6 +228,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_05CC8A8F373A4A76B04B2A302216B4D2"
+            {
+            "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\sowin1d.lib"
+            "TargetName" = "8:sowin1d.lib"
+            "Tag" = "8:"
+            "Folder" = "8:_260D05B57ABE46C69F8BFF4D560AA684"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_2E549449D3B990A90490BE9B43ABBE84"
             {
             "AssemblyRegister" = "3:1"
@@ -264,26 +310,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_4EEBBB9FFA2F4D03B7DD1FAF801A1F24"
-            {
-            "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\WristVizualizer.exe.config"
-            "TargetName" = "8:WristVizualizer.exe.config"
-            "Tag" = "8:"
-            "Folder" = "8:_9F6876D352DD4870AEFF8D0553AC1A2C"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7B625ECA0FE349BC81F7D5C9409F63C8"
             {
             "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\v.vsh"
@@ -304,10 +330,30 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A72D6C0B9B9042F59253B84C07AFB21C"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A5FFF80D06B14721BCF59292A61E4E35"
             {
-            "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\glew32.dll"
-            "TargetName" = "8:glew32.dll"
+            "SourcePath" = "8:..\\WristVizualizer\\OrthoIcon.ico"
+            "TargetName" = "8:OrthoIcon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_260D05B57ABE46C69F8BFF4D560AA684"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A6DA966B40534E299AA09AF427A470E8"
+            {
+            "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\glew32d.dll"
+            "TargetName" = "8:glew32d.dll"
             "Tag" = "8:"
             "Folder" = "8:_260D05B57ABE46C69F8BFF4D560AA684"
             "Condition" = "8:"
@@ -344,11 +390,31 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_BC57F547B82F4C828A4648F13A8795E6"
+            {
+            "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\coin3d.dll"
+            "TargetName" = "8:coin3d.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_260D05B57ABE46C69F8BFF4D560AA684"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_D4398F8F5F6C5AE8A45A8BAC2696ECE9"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.7323.38842, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:libCoin3D, Version=1.0.7380.40377, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_D4398F8F5F6C5AE8A45A8BAC2696ECE9"
@@ -375,51 +441,11 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DC1ECAEB767C4FA18548020A62205D83"
-            {
-            "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\coin3d.dll"
-            "TargetName" = "8:coin3d.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_260D05B57ABE46C69F8BFF4D560AA684"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_DF345DAC3B5C43198B0B3410937BF5C4"
-            {
-            "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\simvoleon2d.dll"
-            "TargetName" = "8:simvoleon2d.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_260D05B57ABE46C69F8BFF4D560AA684"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_E741FBA4C8FD72D3AC73AA256689E485"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.7323.38826, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:GeneralMatrix, Version=1.0.7380.42162, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_E741FBA4C8FD72D3AC73AA256689E485"
@@ -450,7 +476,7 @@
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.7323.38826, Culture=neutral, processorArchitecture=AMD64"
+            "AssemblyAsmDisplayName" = "8:AviFile, Version=1.0.7380.42163, Culture=neutral, processorArchitecture=AMD64"
                 "ScatterAssemblies"
                 {
                     "_EA09D05BC528951CF9BB889090AB01E0"
@@ -477,26 +503,6 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_F49F58621DD44857A3D73989A6A5F7AA"
-            {
-            "SourcePath" = "8:..\\WristVizualizer\\bin\\x64\\Debug\\sowin1d.dll"
-            "TargetName" = "8:sowin1d.dll"
-            "Tag" = "8:"
-            "Folder" = "8:_260D05B57ABE46C69F8BFF4D560AA684"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
         }
         "FileType"
         {
@@ -505,7 +511,7 @@
         {
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_260D05B57ABE46C69F8BFF4D560AA684"
             {
-            "DefaultLocation" = "8:[ProgramFilesFolder][Manufacturer]\\[ProductName]"
+            "DefaultLocation" = "8:[ProgramFiles64Folder][Manufacturer]\\[ProductName]"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -552,9 +558,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:Setup2"
+        "ProductName" = "8:WristVisualizer"
         "ProductCode" = "8:{8198CBBE-65BD-4976-9286-75FC1D1A6B77}"
-        "PackageCode" = "8:{58D7CC55-B413-44CD-8B9B-06406DCC0301}"
+        "PackageCode" = "8:{3ACC687F-2A36-427A-B185-1AA1665EE1A8}"
         "UpgradeCode" = "8:{D756470D-D0F9-4C0B-BD5B-9AE52F46CB87}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -562,12 +568,12 @@
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:FALSE"
         "ProductVersion" = "8:1.0.0"
-        "Manufacturer" = "8:Default Company Name"
+        "Manufacturer" = "8:Brown University"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
         "Title" = "8:Setup2"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Default Company Name"
+        "ARPCONTACT" = "8:Brown University"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"
@@ -575,7 +581,7 @@
         "ARPIconIndex" = "3:0"
         "SearchPath" = "8:"
         "UseSystemSearchPath" = "11:TRUE"
-        "TargetPlatform" = "3:0"
+        "TargetPlatform" = "3:1"
         "PreBuildEvent" = "8:"
         "PostBuildEvent" = "8:"
         "RunPostBuildEvent" = "3:0"
@@ -674,6 +680,20 @@
         }
         "Shortcut"
         {
+            "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_9E577D0D19B741678BBEE02CEAADBF6E"
+            {
+            "Name" = "8:WristVisualizer"
+            "Arguments" = "8:"
+            "Description" = "8:"
+            "ShowCmd" = "3:1"
+            "IconIndex" = "3:0"
+            "Transitive" = "11:FALSE"
+            "Target" = "8:_BA10D630E5F047629396F120E49C1C95"
+            "Folder" = "8:_9F6876D352DD4870AEFF8D0553AC1A2C"
+            "WorkingFolder" = "8:_260D05B57ABE46C69F8BFF4D560AA684"
+            "Icon" = "8:_A5FFF80D06B14721BCF59292A61E4E35"
+            "Feature" = "8:"
+            }
         }
         "UserInterface"
         {
@@ -1073,7 +1093,7 @@
         }
         "ProjectOutput"
         {
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_95845608E0174D19B7709691BCC296EA"
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_BA10D630E5F047629396F120E49C1C95"
             {
             "SourcePath" = "8:..\\WristVizualizer\\obj\\x64\\Debug\\WristVizualizer.exe"
             "TargetName" = "8:"
