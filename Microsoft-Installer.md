@@ -1,4 +1,4 @@
-### Building the Microsoft Installer Project in WristVisualizer
+## Building the Microsoft Installer Project in WristVisualizer
 
 One of the projects within the WristVisualizer solution is a Microsoft
 Visual Studio Installer (Setup) project.  Currently, WristVisualizer
