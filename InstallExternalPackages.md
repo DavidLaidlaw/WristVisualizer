@@ -1,5 +1,4 @@
-# Building and Installing External Packages in Support of
-WristVisualizer 
+# Building and Installing External Packages in Support of WristVisualizer 
 
 The WristVisualizer application is based on the open
 source Open Inventor (Coin3D) and it's ancillary support package SoWin

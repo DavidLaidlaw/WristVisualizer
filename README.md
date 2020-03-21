@@ -64,3 +64,10 @@ application.  The directory
 *WristVisualizer/SetupWristVizualizer/Sample Wrist* has a example full
 wrist that can be opened using File>Open Full Wrist.
 
+### Building and Installing External Packages in Support of WristVisualizer 
+
+Read more [here](./InstallExternalPackages.md)
+
+### Building the Microsoft Installer Project in WristVisualizer
+
+Read more [here](./Microsoft-Installer.md)
