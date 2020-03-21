@@ -2,7 +2,7 @@
 
 One of the projects within the WristVisualizer solution is a Microsoft
 Visual Studio Installer (Setup) project.  Currently, WristVisualizer
-is not set up to build the Microsoft Installer project (named
+is not set up to build the Microsoft Installer project automatically (named
 "Microsoft Installer") because, on x64 Windows machines, this project can
 "hang" when being built.  
 
