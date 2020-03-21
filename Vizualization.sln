@@ -19,7 +19,7 @@ Project("{840C416C-B8F3-42BC-B0DD-F6BB14C9F8CB}") = "SetupInstaller", "SetupInst
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "simvoleon2", "Coin3D-simvoleon\build\msvc9\simvoleon2.vcxproj", "{CEB94527-AFA8-4880-8B19-0E06465C6EC7}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Setup2", "Setup2\Setup2.vdproj", "{FD72DE8E-2173-409E-9694-087589DBD95D}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Microsoft Installer", "Setup2\Setup2.vdproj", "{FD72DE8E-2173-409E-9694-087589DBD95D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
